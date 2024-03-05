@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+body {
+    background-color: #f8f8f8;
+  }
+
+  header {
+    background-color: #3457D5;
+    color: white;
+    padding: 10px;
+    text-align: center;
+  }
+
+  section.hero {
+    text-align: center;
+    padding: 50px;
+    background-color: #ddd;
+  }
+
+  section.about {
+    text-align: center;
+    padding: 30px;
+  }
+
+  section.menu {
+    text-align: center;
+    padding: 30px;
+    background-color: #eee;
+  }
+
+  section.specials {
+    text-align: center;
+    padding: 30px;
+  }
+
+  section.testimonials {
+    text-align: center;
+    padding: 30px;
+    background-color: #eee;
+  }
+
+  section.how-it-works {
+    text-align: center;
+    padding: 30px;
+  }
+
+  section.contact {
+    text-align: center;
+    padding: 30px;
+    background-color: #eee;
+  }
+
+  footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+  }
+  /* Add these styles to the existing CSS */
+
+nav {
+background-color: #eee;
+padding: 10px;
+text-align: center;
+}
+
+nav a {
+margin: 0 10px;
+text-decoration: none;
+color: #333;
+font-weight: bold;
+display: inline-block; /* Ensure each link is on a new line for small screens */
+}
+
+@media only screen and (max-width: 600px) {
+nav {
+  display: block; /* Show links vertically for small screens */
+}
+
+nav a {
+  display: block; /* Each link on a new line */
+  margin: 5px 0; /* Add some vertical spacing between links */
+}
+}
+
+
+  /* Add these styles to the existing CSS */
+@media only screen and (max-width: 600px) {
+section {
+  padding: 20px;
+}
+}
+
+@media only screen and (max-width: 480px) {
+header {
+  padding: 10px;
+}
+}
