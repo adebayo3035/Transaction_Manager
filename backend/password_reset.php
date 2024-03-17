@@ -1,6 +1,11 @@
 <?php
 session_start(); // Start session for potential error messages
-$unique_id = $_SESSION['customerID'];
+// Restrict access to this Page if E-mail has not been confirmed
+if(!isset($_SESSION['customerID'])){
+    header("location: ../index.php");
+}
+else{
+    $unique_id = $_SESSION['customerID'];
 // Include database connection file (replace with your connection details)
 require_once('config.php');
 
@@ -55,3 +60,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
 }
+
+}
+
