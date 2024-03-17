@@ -13,9 +13,9 @@
     <h2>Staff Manager</h2>
 
     <!-- Separate row for "Add New Customer" button -->
-    <!-- <div id="customer-form">
-      <button onclick="toggleModal()"><i class="fa fa-plus" aria-hidden="true"></i> Add New Unit</button>
-    </div> -->
+  <div id="customer-form">
+    <button onclick="addNewStaff()"><i class="fa fa-plus" aria-hidden="true"></i> Add New Staff</button>
+  </div>
 
     <!-- Live search input -->
     <div class="livesearch">
@@ -39,14 +39,36 @@
       </thead>
       <tbody>
         <!-- Customer rows will be dynamically added here -->
-        <?php include "backend/display_staff.php"; ?>
+        <?php 
+          include "backend/display_staff.php"; 
+          echo $_SESSION['role'];
+        
+        ?>
 
       </tbody>
     </table>
 
   </div>
+<script>
+  
+  function addNewStaff() {
+    var userRole = "<?php echo $_SESSION['role']; ?>";
+      if (userRole === "Super Admin") {
+        // Show admin-specific content or redirect to the admin dashboard
+        window.location.href = "admin_onboarding.php";
+      }
+      else {
+          // Handle any other roles or unauthenticated users
+          window.location.href = 'unauthorized.php';
+        }
+        
+  }
+  
+</script>
+  
 
-  <script src="scripts/add_unit.js" charset="UTF-8"></script>
+
+  
 
 </body>
 

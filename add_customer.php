@@ -12,7 +12,7 @@ include "navbar.php";
 ?>
 
   <header>
-    <h1>Add Customer Information</h1>
+    <h1>Onboard New Customer</h1>
   </header>
 
   <main>

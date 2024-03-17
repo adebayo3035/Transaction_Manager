@@ -9,6 +9,8 @@
     $password = mysqli_real_escape_string($conn, $_POST['password']);
     $secret_question = mysqli_real_escape_string($conn, $_POST['secret_question']);
     $secret_answer = mysqli_real_escape_string($conn, $_POST['secret_answer']);
+    $role = mysqli_real_escape_string($conn, $_POST['role']);
+
 
     // REGEX TO VALIDATE PASSWORD AND SECRET ANSWER
     $minLength = 8;
@@ -16,7 +18,7 @@
     $hasUpperCase = preg_match('/[A-Z]/', $password);
     $hasDigit = preg_match('/\d/', $password);
     // $group_id = $_SESSION['group_id'];
-    if(!empty($firstname) && !empty($lastname) && !empty($email) && !empty($phone) && !empty($password) && !empty($secret_question) && !empty($secret_answer)){
+    if(!empty($firstname) && !empty($lastname) && !empty($email) && !empty($phone) && !empty($password) && !empty($secret_question) && !empty($secret_answer) && !empty($role)){
         // Apply password validation to password fields
         if(((strlen($password)) < $minLength) || (!$hasSpecialChar) || (!$hasUpperCase) || (!$hasDigit)){
             echo "<script>alert(' Please Input a Valid Password.'); window.location.href='../admin_onboarding.php';</script>";
@@ -53,10 +55,10 @@
                                 $ran_id = rand(time(), 100000000);
                                 $status = "Active now";
                                 $encrypt_pass = md5($password);
-                                $encrypt_secret_question = md5($secret_question);
+                                $encrypt_secret_question = $secret_question;
                                 $encrypt_secret_answer = md5($secret_answer);
-                                $insert_query = mysqli_query($conn, "INSERT INTO admin_tbl (unique_id, firstname, lastname, email, phone, password, secret_question, secret_answer, photo)
-                                VALUES ({$ran_id}, '{$firstname}','{$lastname}', '{$email}', '{$phone}', '{$encrypt_pass}', '{$encrypt_secret_question}', '{$encrypt_secret_answer}', '{$new_img_name}')");
+                                $insert_query = mysqli_query($conn, "INSERT INTO admin_tbl (unique_id, firstname, lastname, email, phone, password, secret_question, secret_answer, photo, role)
+                                VALUES ({$ran_id}, '{$firstname}','{$lastname}', '{$email}', '{$phone}', '{$encrypt_pass}', '{$encrypt_secret_question}', '{$encrypt_secret_answer}', '{$new_img_name}','{$role}')");
                                 if($insert_query){
                                     $select_sql2 = mysqli_query($conn, "SELECT * FROM admin_tbl WHERE email = '{$email}'");
                                     if(mysqli_num_rows($select_sql2) > 0){
@@ -92,4 +94,3 @@
         echo "<script>alert(' Please fill all input fields'); window.location.href='../admin_onboarding.php';</script>";
     }
            
-?>

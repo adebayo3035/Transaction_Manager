@@ -1,18 +1,16 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Add New Admin</title>
-  <link rel="stylesheet" href="css/add_customer.css">
+  <title>Admin Registration</title>
+  <link rel="stylesheet" href="css/onboarding.css"> <!-- Include your styles file -->
 </head>
 <body>
-<?php 
-include "navbar.php"; 
-?>
 
   <header>
-    <h1>Onboard New Admin</h1>
+    <h1>Admin Registration</h1>
     
   </header>
 
@@ -39,11 +37,6 @@ include "navbar.php";
 
       <label for="secret_answer">Secret Answer:</label>
       <input type="password" id="secret_answer" name="secret_answer" required>
-
-      <label for="selectOption">Select Role:</label>
-      <select id="selectOption" name="role" required>
-        <option value="Super Admin">Super Admin</option>
-        <option value="Admin">Admin</option>
 
       <label for="photo">Photo:</label>
       <input type="file" id="photo" name="photo" accept="image/*" onchange="displayPhoto(this)" required>

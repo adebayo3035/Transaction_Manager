@@ -50,7 +50,7 @@
       <span class="close" onclick="toggleModal()">&times;</span>
       <!-- Form to add new group -->
       <form action="" method="POST" class="add_unit add_group add_team">
-      <span class="error_notifier"> </span>
+        <span class="error_notifier"> </span>
         <div class="form-input">
           <label for="group_name">Select Group:</label>
           <select name="group_id" id="group_name" class="group_name">
@@ -86,7 +86,7 @@
           <label for="group_name">Team Name:</label>
           <input type="text" name="team_name" class="group_name" required>
         </div>
-        
+
         <button type="submit" name="add_team" class="add_unit">Add Team</button>
       </form>
     </div>
@@ -95,8 +95,15 @@
   <script>
     // JavaScript to show/hide the modal
     function toggleModal() {
+      var userRole = "<?php echo $_SESSION['role']; ?>";
       var modal = document.getElementById("addGroupModal");
-      modal.style.display = (modal.style.display === "none" || modal.style.display === "") ? "block" : "none";
+      if (userRole === "Super Admin") {
+        modal.style.display = (modal.style.display === "none" || modal.style.display === "") ? "block" : "none";
+      }
+      else {
+        // Handle any other roles or unauthenticated users
+        window.location.href = 'unauthorized.php';
+      }
     }
 
 

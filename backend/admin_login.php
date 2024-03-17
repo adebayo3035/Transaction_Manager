@@ -16,6 +16,8 @@
                     $_SESSION['unique_id'] = $row['unique_id'];
                     $_SESSION['firstname'] = $row['firstname'];
                     $_SESSION['lastname'] = $row['lastname'];
+                    $_SESSION['role'] = $row['role'];
+                    $_SESSION['secret_answer'] = md5($row['secret_answer']);
                     echo "success";
                 // }
                 // else{
@@ -33,4 +35,4 @@
     else{
         echo "All input fields are required!";
     }
-?>
+// 

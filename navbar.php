@@ -16,6 +16,7 @@
             $lastname = $row['lastname'];
             $phone = $row['firstname'];
             $email = $row['lastname'];
+            $role = $row['role'];
          }
         
         $userId = isset($_SESSION['unique_id']) ? $_SESSION['unique_id'] : 'null';
@@ -40,6 +41,7 @@
             <?php echo "<a href='staff_profile.php?id=" . $row['unique_id'] . "'>Profile</a></td>"; ?>
               <a href="settings.php">Settings</a>
               <a href="backend/logout.php?logout_id=<?php echo $row['unique_id']; ?>">Logout</a>
+    
           </div>
       </div>
   </div>

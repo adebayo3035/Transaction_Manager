@@ -95,8 +95,16 @@
   <script>
     // JavaScript to show/hide the modal
     function toggleModal() {
+      var userRole = "<?php echo $_SESSION['role']; ?>";
       var modal = document.getElementById("addGroupModal");
-      modal.style.display = (modal.style.display === "none" || modal.style.display === "") ? "block" : "none";
+      if (userRole === "Super Admin") {
+        modal.style.display = (modal.style.display === "none" || modal.style.display === "") ? "block" : "none";
+      }
+      else {
+          // Handle any other roles or unauthenticated users
+          window.location.href = 'unauthorized.php';
+      }
+      
     }
 
 

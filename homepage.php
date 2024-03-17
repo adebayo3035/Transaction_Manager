@@ -23,6 +23,11 @@
       <section id="about" class="about">
         <h2>About Us</h2>
         <p>Briefly introduce your food vending business and highlight key features.</p>
+        <?php 
+        echo $_SESSION['role']; 
+        echo ($_SESSION['secret_answer']);
+        
+        ?>
       </section>
     
       <section id="menu" class="menu">
