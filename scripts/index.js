@@ -8,7 +8,7 @@ form.onsubmit = (e)=>{
 
 continueBtn.onclick = ()=>{
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", "backend/admin_login.php", true);
+    xhr.open("POST", "backend/admin_login3.php", true);
     xhr.onload = ()=>{
       if(xhr.readyState === XMLHttpRequest.DONE){
           if(xhr.status === 200){

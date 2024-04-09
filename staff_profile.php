@@ -9,12 +9,17 @@
 
 
 <body>
-<?php include "navbar.php"; ?>
+<?php include "navbar.php"; $unique_id = $_SESSION['unique_id'];?>
 <div class="profile-container">
     <div class="profile-header">
         <img src="backend/admin_photos/<?php echo $row['photo']; ?>" alt="Staff Photo">
+        <?php echo "<span><a href='change_picture.php?id=" . $unique_id . "'><span class='edit-icon'>&#9998;</span></a></span>"; ?>
         <h1> <?php echo "{$firstname} {$lastname}"; ?> </h1>
-        <p>Position: Project Manager</p>
+        
+        
+
+        
+        <p>Position: <?php echo "{$role}"; ?></p>
     </div>
     <div class="profile-details">
         <div class="detail">

@@ -20,7 +20,6 @@
                     $_SESSION['role'] = $row['role'];
                     $_SESSION['secret_answer'] = md5($row['secret_answer']);
                     echo "success";
-                    echo session_id();
                 // }
                 // else{
                 //     echo "Something went wrong. Please try again!";

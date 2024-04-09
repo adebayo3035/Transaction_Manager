@@ -12,7 +12,7 @@ if ($result->num_rows > 0) {
     // Output data of each row
     while ($row = $result->fetch_assoc()) {
         echo "<tr>";
-        echo "<td>" . $row['id'] . "</td>";
+        // echo "<td>" . $row['id'] . "</td>";
         echo "<td>" . $row['firstname'] . "</td>";
         echo "<td>" . $row['lastname'] . "</td>";
         echo "<td>" . $row['email'] . "</td>";

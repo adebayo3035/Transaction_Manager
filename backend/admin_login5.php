@@ -3,6 +3,7 @@
     include_once "config.php";
     $email = mysqli_real_escape_string($conn, $_POST['username']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
+    $currentDateTime = date("Y-m-d H:i:s");
 
     if(!empty($email) && !empty($password)){
         $sql = mysqli_query($conn, "SELECT * FROM admin_tbl WHERE email = '{$email}'");
@@ -12,19 +13,23 @@
             $enc_pass = $row['password'];
             if($user_pass === $enc_pass){
                 $status = "Active now";
-                // $sql2 = mysqli_query($conn, "UPDATE users SET status = '{$status}' WHERE unique_id = {$row['unique_id']}");
-                // if($sql2){
                     $_SESSION['unique_id'] = $row['unique_id'];
                     $_SESSION['firstname'] = $row['firstname'];
                     $_SESSION['lastname'] = $row['lastname'];
                     $_SESSION['role'] = $row['role'];
                     $_SESSION['secret_answer'] = md5($row['secret_answer']);
-                    echo "success";
-                    echo session_id();
-                // }
-                // else{
-                //     echo "Something went wrong. Please try again!";
-                // }
+                    $_SESSION['session_id'] = session_id();
+
+                    // Insert Record into session_manager table
+                    $insertSessionQuery = "INSERT INTO session_manager2 (user_id, session_id, last_activity) VALUES ('{$row['unique_id']}', '{$_SESSION['session_id']}', '{$currentDateTime}')";
+                    $insertSessionResult = mysqli_query($conn, $insertSessionQuery);
+
+                    if (!$insertSessionResult) {
+                        echo ('Error inserting session: ' . mysqli_error($conn));
+                    }
+                    else{
+                        echo "success";
+                    }
             }
             else{
                 echo "Email or Password is Incorrect!";

@@ -12,7 +12,7 @@ include "navbar.php";
 ?>
 
   <header>
-    <h1>Onboard New Admin</h1>
+    <h1>Staff Onboarding</h1>
     
   </header>
 
@@ -56,7 +56,15 @@ include "navbar.php";
     </form>
   </main>
 
-  <script src="scripts/photo_upload.js"></script>
+  <script src="scripts/photo_upload.js">
+    
+  </script>
+  <script>
+    document.getElementById('adminForm').addEventListener('submit', function(event)) {
+      // Prevent the default form submission behavior
+      event.preventDefault();
+    }
+  </script>
 
 </body>
 </html>

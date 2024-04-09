@@ -14,9 +14,11 @@
            $row = mysqli_fetch_assoc($sql);
            $firstname = $row['firstname'];
             $lastname = $row['lastname'];
-            $phone = $row['firstname'];
-            $email = $row['lastname'];
+            $phone = $row['phone'];
+            $email = $row['email'];
             $role = $row['role'];
+            $unique_id = $row['unique_id'];
+            // $session_id = $_SESSION['session_id'];
          }
         
         $userId = isset($_SESSION['unique_id']) ? $_SESSION['unique_id'] : 'null';

@@ -7,15 +7,17 @@
     <title>Beautiful Links</title>
 </head>
 <body>
-<?php include "navbar.php"; ?>
+<?php include "navbar.php"; $unique_id = $_SESSION['unique_id'];?>
 <div class="container">
     <h1>Explore Quick Links</h1>
     <ul class="links-list">
-        <li><a href="https://example1.com">Reset Password</a></li>
-        <li><a href="https://example2.com">Reset Secret Question and Answer</a></li>
-        <li><a href="https://example3.com">Edit Profile</a></li>
+        <?php
+            echo "<li><a href='edit_staff.php?id=" . $unique_id . "'>Edit Profile</a></li>";
+            echo "<li><a href='secret_answer.php?id=" . $unique_id . "'>Reset Secret Question and Answer</a></li>";
+        ?>
         <li><a href="https://example4.com">Delete Account</a></li>
         <li><a href="https://example5.com">Restrict Account</a></li>
+        
     </ul>
 </div>
 <?php echo $_SESSION["unique_id"]; ?>

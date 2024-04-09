@@ -9,3 +9,5 @@
         reader.readAsDataURL(file);
       }
     }
+
+    

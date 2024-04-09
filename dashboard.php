@@ -94,6 +94,7 @@
   </style>
 </head>
 <body>
+<?php include "navbar.php" ?>
 
   <!-- ... (rest of the HTML content remains unchanged) ... -->
   
@@ -101,7 +102,7 @@
     <h1>Food Vending Dashboard</h1>
   </header>
 
-  <nav>
+  <!-- <nav>
     <a href="dashboard.html">Dashboard</a>
     <a href="groups.html">Manage Groups</a>
     <a href="units.html">Manage Units</a>
@@ -109,7 +110,7 @@
     <a href="customers.html">Manage Customers</a>
     <a href="admin_onboarding.html">Manage Admins</a>
     <a href="transactions.html">Manage Transactions</a>
-  </nav>
+  </nav> -->
 
   <main>
 

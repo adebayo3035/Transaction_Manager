@@ -1,6 +1,7 @@
 <?php
 session_start();
 include_once "config.php";
+$currentDateTime = date("Y-m-d H:i:s");
 
 // Function to handle errors
 function handle_error($error_message) {
@@ -30,7 +31,7 @@ if (!$getUserInfoResult) {
     handle_error('Error executing query: ' . mysqli_error($conn));
 }
 
-if (mysqli_num_rows($getUserInfoResult) > 0) {
+if (mysqli_num_rows($getUserInfoResult) == 1) {
     $row = mysqli_fetch_assoc($getUserInfoResult);
     $user_id = $row['unique_id'];
 
@@ -44,7 +45,7 @@ if (mysqli_num_rows($getUserInfoResult) > 0) {
 
     if (mysqli_num_rows($checkSessionResult) > 0) {
         // Update existing session
-        $updateSessionQuery = "UPDATE sessions SET session_status = '{$inactive_session}' WHERE user_id = '{$user_id}'";
+        $updateSessionQuery = "UPDATE sessions SET session_status = '{$inactive_session}',last_activity = '{$currentDateTime}' WHERE user_id = '{$user_id}'";
         $updateSessionResult = mysqli_query($conn, $updateSessionQuery);
 
         if (!$updateSessionResult) {
@@ -54,7 +55,10 @@ if (mysqli_num_rows($getUserInfoResult) > 0) {
         // Destroy session
         session_destroy();
         session_unset();
-        echo "<script>window.location.href='../index.php';</script>";
+        unset($_SESSION['unique_id']);
+        unset($_SESSION['session_status']);
+        header("Location: {$_SERVER['PHP_SELF']}");
+        exit;
     } else {
         // Start new session
         $_SESSION['unique_id'] = $row['unique_id'];
@@ -64,7 +68,7 @@ if (mysqli_num_rows($getUserInfoResult) > 0) {
         $_SESSION['secret_answer'] = md5($row['secret_answer']);
 
         // Update session status or insert new session record
-        $currentDateTime = date("Y-m-d H:i:s");
+        
         $checkSessionQuery2 = "SELECT * FROM sessions WHERE user_id = '{$user_id}'";
         $checkSessionResult2 = mysqli_query($conn, $checkSessionQuery2);
 
@@ -74,7 +78,7 @@ if (mysqli_num_rows($getUserInfoResult) > 0) {
 
         if (mysqli_num_rows($checkSessionResult2) > 0) {
             // Update session status
-            $updateSessionQuery2 = "UPDATE sessions SET session_status = '{$active_session}' WHERE user_id = '{$user_id}'";
+            $updateSessionQuery2 = "UPDATE sessions SET session_status = '{$active_session}', last_activity = '{$currentDateTime}' WHERE user_id = '{$user_id}'";
             $updateSessionResult2 = mysqli_query($conn, $updateSessionQuery2);
 
             if (!$updateSessionResult2) {
