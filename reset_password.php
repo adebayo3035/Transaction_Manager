@@ -7,9 +7,28 @@
   <link rel="stylesheet" href="css/add_customer.css">
 </head>
 <body>
+<?php
+session_start();
+include_once "backend/config.php";
+// Check if the user is logged in
+if (isset($_SESSION['unique_id'])) {
+    // Redirect the logged-in user to home page)
+    header("Location: homepage.php");
+    exit(); // Stop further execution
+}
+
+// Set session variable to indicate user is coming from password_reset.php
+
+
+// // Redirect the user to reset_password.php
+// header("Location: reset_password.php");
+// exit(); // Stop further execution
+
+?>
 
   <header>
     <h1>Reset Your Password</h1>
+    <a href="index.php">Login</a>
     
   </header>
 
@@ -19,7 +38,7 @@
       <input type="email" id="emaile" name="email" required>
 
       <label for="secret_answer">Enter Your Secret Answer:</label>
-      <input type="text" id="secret_answer" name="secret_answer" required>
+      <input type="password" id="secret_answer" name="secret_answer" required>
       <button type="submit">Confirm E-mail</button>
     </form>
   </main>

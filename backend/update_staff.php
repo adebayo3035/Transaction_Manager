@@ -99,4 +99,4 @@ if (isset($_POST['btnUpdate'])) {
 // if (isset($_POST['btnCancel'])) {
 //     echo "<script>location.replace('user_list.php');</script>";
 // }
-//   ?>
+//  

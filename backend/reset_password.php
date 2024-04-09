@@ -19,7 +19,9 @@
             //store retrieved User ID in a session variable
             session_start();
             $_SESSION['customerID'] = $row['unique_id'];
-            echo "<script>window.location.href='../password_reset.php';</script>";
+            // Set session variable to indicate user is coming from reset_password.php
+            $_SESSION['from_reset_password'] = true;
+            echo "<script>window.location.href='../password_reset.php?id=" . $_SESSION['customerID'] . "';</script>";
         }
         else{
             echo "<script>alert(' Something went wrong, Please try again'); window.location.href='../index.php';</script>";
