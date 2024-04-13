@@ -39,9 +39,22 @@ if (isset($_SESSION['unique_id'])) {
 
       <label for="secret_answer">Enter Your Secret Answer:</label>
       <input type="password" id="secret_answer" name="secret_answer" required>
-      <button type="submit">Confirm E-mail</button>
+      <button type="submit" name ="btnPasswordChange">Confirm E-mail</button>
     </form>
   </main>
 </body>
 </html> 
 
+<?php
+// include_once "backend/config.php";
+// if (isset($_POST['btnPasswordChange'])) {
+//     $email = mysqli_real_escape_string($conn, $_POST['email']);
+//     $secret_answer = (md5(filter_var($_POST['secret_answer'], FILTER_SANITIZE_STRING)));
+//     // $secretAnswer = (md5(filter_var($_POST['secret_answer'], FILTER_SANITIZE_STRING)));
+//     // Validate email and secret answer
+
+//     echo $email . 'and'. $secret_answer;
+// }
+// else{
+//   echo "<script>alert(' Something went wrong, Please try again')".mysqli_error($conn)."; window.location.href='index.php';</script>";
+// }

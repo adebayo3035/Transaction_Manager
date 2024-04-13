@@ -15,7 +15,7 @@ if (!isset($_SESSION['from_reset_password']) || !$_SESSION['from_reset_password'
         $id = $_SESSION['customerID'];
         $new_password = mysqli_real_escape_string($conn, $_POST['new_password']);
         $confirm_password = mysqli_real_escape_string($conn, $_POST['confirm_password']);
-        if ($new_password == $confirm_password) {
+        if ($new_password === $confirm_password) {
             // REGEX TO VALIDATE PASSWORD AND SECRET ANSWER
             $minLength = 8;
             $hasSpecialChar = preg_match('/[!@#$%^&*(),.?":{}|<>_]/', $new_password);
