@@ -34,7 +34,7 @@
           <th>ID</th>
           <th>Group Name</th>
           <th>Unit Name</th>
-          <th colspan="2">Action</th>
+          <?php include('backend/check_role.php'); ?>
         </tr>
       </thead>
       <tbody>

@@ -5,6 +5,7 @@ include "config.php";
 // Fetch data from the database
 $query = "SELECT * FROM groups";
 $result = $conn->query($query);
+$staff_role = $_SESSION['role'];
 
 // Check if there are rows in the result
 if ($result->num_rows > 0) {
@@ -13,10 +14,12 @@ if ($result->num_rows > 0) {
         echo "<tr>";
         echo "<td>" . $row['group_id'] . "</td>";
         echo "<td>" . $row['group_name'] . "</td>";
-        
-        echo "<td><a href='edit.php?id=" . $row['group_id'] . "'><span class='edit-icon'>&#9998;</span></a></td>";
-        echo "<td><a href='delete.php?id=" . $row['group_id'] . "'><span class='delete-icon'>&#128465;</span></a></td>";
+
+        // Display edit and Delete Icons Only for Super Admin
+        require_once('check_role2.php');
+        DisplayTable($staff_role, $row['group_id']);
         echo "</tr>";
+
     }
 } else {
     echo "<tr><td colspan='5'>No records found</td></tr>";
