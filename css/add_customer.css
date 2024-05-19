@@ -57,6 +57,12 @@ body {
     border-radius: 4px;
     cursor: pointer;
   }
+  button.add_customer{
+    display: none;
+  }
+  #add_customer{
+    display: none;
+  }
 
   button:hover {
     background-color: #555;

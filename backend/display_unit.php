@@ -24,7 +24,10 @@ if ($result->num_rows > 0) {
             echo "<td>" . $row['unit_name'] . "</td>";
             // echo "<td>" . $row['group_name'] . "</td>";
             require_once('check_role2.php');
-            DisplayTable($staff_role, $row['unit_id']);
+            $path1 = 'edit_unit.php';
+            $path2 = 'delete_unit.php';
+            DisplayEditIcon($path1,$staff_role, $row['unit_id']);
+            DisplayDeleteIcon($path2,$staff_role, $row['unit_id']);
             echo "</tr>";
           }
 

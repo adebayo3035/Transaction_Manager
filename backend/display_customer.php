@@ -22,8 +22,9 @@ if ($result->num_rows > 0) {
             echo "<td>" . $row2['group_name'] . "</td>";
             echo "<td>" . $row3['unit_name'] . "</td>";
 
-            echo "<td><a href='edit.php?id=" . $row['customer_id'] . "'><span class='edit-icon'>&#9998;</span></a></td>";
-            echo "<td><a href='delete.php?id=" . $row['customer_id'] . "'><span class='delete-icon'>&#128465;</span></a></td>";
+            echo "<td><a href='edit_customer.php?id=" . $row['customer_id'] . "'><span class='edit-icon'>&#9998;</span></a></td>";
+            // echo "<td><a href='delete_customer.php?id=" . $row['customer_id'] . "'><span class='delete-icon'>&#128465;</span></a></td>";
+            echo '<td><span class="delete-icon" onclick="confirmDelete(\'' . $row['customer_id'] . '\')">&#128465;</span></td>';
             echo "</tr>";
 
         }

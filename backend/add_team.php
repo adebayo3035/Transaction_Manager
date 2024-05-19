@@ -7,11 +7,12 @@ $team_name = mysqli_real_escape_string($conn, $_POST['team_name']);
 
 if(!empty($group_id)){
     if (!empty($team_name)) {
-        $sql_check = mysqli_query($conn, "SELECT * FROM team WHERE team_name = '{$team_name}'");
+        $sql_check = mysqli_query($conn, "SELECT * FROM team WHERE team_name LIKE '%{$team_name}%'");
+       
     
         // Check if team already exist in DB
         if (mysqli_num_rows($sql_check) > 0) {
-            echo "Team Already Exist";
+            echo "A Team with this name already exist. Please Try Another  Name";
             exit();
         } 
         else {

@@ -20,11 +20,16 @@ if ($result->num_rows > 0) {
            
             echo "<tr>";
             echo "<td>" . $row['team_id'] . "</td>";
-            echo "<td>" . $row['team_name'] . "</td>";
             echo "<td>" . $row2['group_name'] . "</td>";
+            echo "<td>" . $row['team_name'] . "</td>";
+            
             // Display edit and Delete Icons Only for Super Admin
             require_once ('check_role2.php');
-            DisplayTable($staff_role, $row['team_id']);
+            require_once('check_role2.php');
+            $path1 = 'edit_team.php';
+            $path2 = 'delete_team.php';
+            DisplayEditIcon($path1,$staff_role, $row['team_id']);
+            DisplayDeleteIcon($path2,$staff_role, $row['team_id']);
             echo "</tr>";
             
           }

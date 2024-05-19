@@ -94,6 +94,7 @@ include "navbar.php";
   </main>
 
   <script src="scripts/photo_upload.js"></script>
+  
 
   <script>
         function displayInput() {
