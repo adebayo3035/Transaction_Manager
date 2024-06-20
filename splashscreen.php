@@ -17,7 +17,7 @@
 </head>
 <body>
     <div class="splash">
-        <img src="images/trans_manager.png" alt="">
+        <img src="images/trans_manager.png" alt="" class="rotate">
         <div class="loader">
             <div class="loader-text" id="loaderText"></div>
         </div>

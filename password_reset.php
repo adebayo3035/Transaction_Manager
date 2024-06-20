@@ -35,10 +35,10 @@ if (!isset($_SESSION['from_reset_password']) || !$_SESSION['from_reset_password'
   <main>
     <form id="adminForm" method="POST" action="backend/password_reset.php">
       <label for="new_password">Enter New Password:</label>
-      <input type="text" id="new_password" name="new_password" required>
+      <input type="password" id="new_password" name="new_password" required>
 
       <label for="confirm_password">Confirm Password</label>
-      <input type="text" id="confirm_password" name="confirm_password" required>
+      <input type="password" id="confirm_password" name="confirm_password" required>
       <button type="submit">Reset Password</button>
     </form>
   </main>

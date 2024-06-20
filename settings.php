@@ -13,6 +13,7 @@
     <ul class="links-list">
         <?php
             echo "<li><a href='edit_staff.php?id=" . $unique_id . "'>Edit Profile</a></li>";
+           
             echo "<li><a href='secret_answer.php?id=" . $unique_id . "'>Reset Secret Question and Answer</a></li>";
         ?>
         <li><a href="https://example4.com">Delete Account</a></li>

@@ -19,9 +19,9 @@
 
     <!-- Live search input -->
     <div class="livesearch">
-    <button type="submit">Search <i class="fa fa-search" aria-hidden="true"></i></button>
-      <input type="text" id="liveSearch" placeholder="Search for customers">
-      
+      <button type="submit">Search <i class="fa fa-search" aria-hidden="true"></i></button>
+      <input type="text" id="liveSearch" placeholder="Search for Unit...">
+
     </div>
 
 
@@ -32,9 +32,10 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>Group Name</th>
           <th>Unit Name</th>
-          <?php include('backend/check_role.php'); ?>
+          <th>Group Name</th>
+          <?php include ('backend/check_role.php'); ?>
+
         </tr>
       </thead>
       <tbody>
@@ -51,7 +52,8 @@
       <span class="close" onclick="toggleModal()">&times;</span>
       <!-- Form to add new group -->
       <form action="" method="POST" class="add_unit add_group">
-      <span class="error_notifier"> </span>
+        
+        <span class="error_notifier"> </span>
         <div class="form-input">
           <label for="group_name">Select Group:</label>
           <select name="group_id" id="group_name" class="group_name">
@@ -88,10 +90,12 @@
           <input type="text" name="unit_name" class="group_name" required>
         </div>
         
-        <button type="submit" name="add_group" class="add_unit">Add Unit</button>
+        <button type="submit" name="add_group">Add Unit</button>
       </form>
     </div>
   </div>
+
+  <!-- The Modal -->
 
   <script>
     // JavaScript to show/hide the modal
@@ -102,14 +106,24 @@
         modal.style.display = (modal.style.display === "none" || modal.style.display === "") ? "block" : "none";
       }
       else {
-          // Handle any other roles or unauthenticated users
-          window.location.href = 'unauthorized.php';
+        // Handle any other roles or unauthenticated users
+        window.location.href = 'unauthorized.php';
       }
-      
     }
 
+  
+      function toggleModal2() {
+        var modal2 = document.getElementById('editGroupModal');
+        if (modal2.style.display === "none" || modal2.style.display === "") {
+          modal2.style.display = "block";
+        } else {
+          modal2.style.display = "none";
+        }
+      }
+    
+
     // function to filter table row based on Search Query
-  function filterTable() {
+    function filterTable() {
       // Get input value and convert to lowercase
       var input = document.getElementById("liveSearch").value.toLowerCase();
       // Get table rows
@@ -142,10 +156,11 @@
 
     // Add event listener to input field
     document.getElementById("liveSearch").addEventListener("input", filterTable);
-
-
   </script>
   <script src="scripts/add_unit.js" charset="UTF-8"></script>
+  <script src="scripts/toggle_modal.js" charset="UTF-8"> </script>
+
+
 
 </body>
 

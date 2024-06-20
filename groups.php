@@ -20,7 +20,7 @@
     <!-- Live search input -->
     <div class="livesearch">
       <button type="submit">Search <i class="fa fa-search" aria-hidden="true"></i></button>
-      <input type="text" id="liveSearch" placeholder="Search for customers">
+      <input type="text" id="liveSearch" placeholder="Search for Groups...">
 
     </div>
 
@@ -50,12 +50,13 @@
     <div class="modal-content">
       <span class="close" onclick="toggleModal()">&times;</span>
       <!-- Form to add new group -->
+      
       <form action="" method="POST" class="add_group">
         <div class="form-input">
           <label for="group_name">Group Name:</label>
           <input type="text" name="group_name" class="group_name" required>
         </div>
-        <span class="error_notifier"> </span>
+        <span class="error_notifier" id ="error_notifier"> </span>
         <button type="submit" name="add_group">Add Group</button>
       </form>
     </div>
@@ -67,6 +68,7 @@
       <span class="close" onclick="toggleModal2()">&times;</span>
       <!-- Form to add new group -->
       <form action="" method="POST" class="add_group">
+      
         <div class="form-input">
           <label for="group_name">Group Name:</label>
           <input type="text" name="group_name" class="group_name" required>
@@ -82,8 +84,11 @@
     function toggleModal() {
       var userRole = "<?php echo $_SESSION['role']; ?>";
       var modal = document.getElementById("addGroupModal");
+      var error_notifier = document.getElementById('error_notifier');
       if (userRole === "Super Admin") {
         modal.style.display = (modal.style.display === "none" || modal.style.display === "") ? "block" : "none";
+        error_notifier.innerHTML = "";
+        error_notifier.textContent = "";
       }
       else {
         // Handle any other roles or unauthenticated users

@@ -20,8 +20,8 @@ if ($result->num_rows > 0) {
             
             echo "<tr>";
             echo "<td>" . $row['unit_id'] . "</td>";
-            echo "<td>" . $row2['group_name'] . "</td>";
             echo "<td>" . $row['unit_name'] . "</td>";
+            echo "<td>" . $row2['group_name'] . "</td>";
             // echo "<td>" . $row['group_name'] . "</td>";
             require_once('check_role2.php');
             $path1 = 'edit_unit.php';

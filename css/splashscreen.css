@@ -31,10 +31,11 @@ body {
 }
 .splash img{
     max-width: 500px;
-    height: 300px;
+    height: 250px;
     border-radius: 12px;
     box-shadow: 0 5px 4px rgba(0, 0, 0, 0.7);
     border: none;
+    margin-bottom: 50px;
 }
 
 .loader {
@@ -47,6 +48,18 @@ body {
 .loader-text::after {
     content: "Loading...";
     animation: changeText 11s infinite;
+}
+.rotate{
+    animation: rotate360 5s linear infinite;
+}
+
+@keyframes rotate360 {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 @keyframes changeText {

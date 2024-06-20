@@ -30,7 +30,7 @@
       <input type="file" id="photo" name="photo" accept="image/*" onchange="displayPhoto(this)" required>
 
       <label for="secret_answer">Secret Answer:</label>
-      <input type="text" id="secret_answer" name="secret_answer" required>
+      <input type="password" id="secret_answer" name="secret_answer" required>
       <input type="text" id="customer_id" name="customer_id" value = "<?php echo $row['customer_id']; ?>" hidden>
 
       <button type="submit" name = "btnChangeCustomerPicture">Change Picture</button>

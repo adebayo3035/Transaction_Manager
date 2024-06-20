@@ -18,6 +18,9 @@ addGroupBtn.onclick = ()=>{
               if(data === "success"){
                 errorNotifier.style.display = "block";
                 errorNotifier.textContent = "Group has been successfully Created";
+                setTimeout(function() {
+                  location.reload();
+              }, 1000);
                 errorNotifier.style.color = "green";
                 modal.style.display = none;
                 group_name.value = "";

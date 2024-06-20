@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Add New Admin</title>
+  <title>Change Profile Settings</title>
   <link rel="stylesheet" href="css/add_customer.css">
 </head>
 <body>
@@ -17,7 +17,7 @@
 
 
   <header>
-    <h1>Change Profile Picture</h1>
+    <h1>Change Profile Settings</h1>
     
   </header>
 
@@ -28,14 +28,17 @@
     </div>
     <label for="photo">Photo:</label>
       <input type="file" id="photo" name="photo" accept="image/*" onchange="displayPhoto(this)" required>
+      
 
       <label for="secret_answer">Secret Answer:</label>
       <input type="password" id="secret_answer" name="secret_answer" required>
 
       <button type="submit" name = "btnChangePicture">Change Picture</button>
     </form>
-  </main>
+    
+      </div>
 
+  </main>
   <script src="scripts/photo_upload.js">
     
   </script>

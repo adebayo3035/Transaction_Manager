@@ -138,11 +138,16 @@ body {
 
 .close {
   position: absolute;
-  top: -15px;
+  top: -2px;
   right: 5px;
   font-size: 30px;
   font-weight: 900;
   cursor: pointer;
+  /* border: 2px solid green; */
+  border-radius: 100%;
+  padding: 1px;
+  color: #3457D5;
+  /* background-color: #3457D5; */
 }
 .close:hover{
   color: red;
@@ -160,8 +165,10 @@ body {
 }
 .add_group .form-input{
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   margin-bottom: 10px;
+  /* border: 2px solid red; */
+  width: 100%;
 }
 .add_group input, .add_group select{
   border: 1px solid #ccc;
@@ -170,6 +177,7 @@ body {
   border-radius: 4px;
   padding: 5px;
   margin-left: 20px;
+  width: 300px;
 }
 .add_group button{
   background-color: #3457D5;
@@ -199,9 +207,6 @@ body {
   .modal-content{
     width: 80%;
   }
-  .add_group{
-    border: 2px solid red;
-  }
   .add_group .form-input{
     flex-direction: row;
     justify-content: space-around;
@@ -212,7 +217,7 @@ body {
     padding-bottom: 5px;
     text-align: center;
   }
-  .add_group .form-input input {
+  .add_group .form-input input, .add_group .form-input select {
     width: 60%;
   }
  
@@ -229,7 +234,7 @@ body {
     padding-bottom: 5px;
     text-align: center;
   }
-  .add_group .form-input input {
+  .add_group .form-input input, .add_group .form-input select {
     width: 80%;
   }
  
