@@ -33,7 +33,7 @@ if (isset($_SESSION['unique_id'])) {
   </header>
 
   <main>
-    <form id="adminForm" method="POST" action="backend/reset_password.php">
+    <form id="adminForm" method="POST" action="backend/reset_password2.php">
       <label for="email">Enter Your E-mail Address:</label>
       <input type="email" id="emaile" name="email" required>
 

@@ -7,16 +7,24 @@ $firstname = mysqli_real_escape_string($conn, $_POST['firstName']);
 $lastname = mysqli_real_escape_string($conn, $_POST['lastName']);
 $gender = mysqli_real_escape_string($conn, $_POST['gender']);
 $email = mysqli_real_escape_string($conn, $_POST['email']);
+$password = mysqli_real_escape_string($conn, $_POST['password']);
 $mobile_number = mysqli_real_escape_string($conn, $_POST['phoneNumber']);
 $address = mysqli_real_escape_string($conn, $_POST['address']);
 $group = mysqli_real_escape_string($conn, $_POST['group']);
 $unit = mysqli_real_escape_string($conn, $_POST['unit']);
 // $current_group = mysqli_real_escape_string($conn, $_POST['current_group']);
 // $currentn_unit = mysqli_real_escape_string($conn, $_POST['current_unit']);
-
+// REGEX TO VALIDATE PASSWORD AND SECRET ANSWER
+$minLength = 8;
+$hasSpecialChar = preg_match('/[!@#$%^&*(),.?":{}|<>_]/', $password);
+$hasUpperCase = preg_match('/[A-Z]/', $password);
+$hasDigit = preg_match('/\d/', $password);
 
 
 if (!empty($firstname) && !empty($lastname) && !empty($gender) && !empty($email) && !empty($mobile_number) && !empty($address) && !empty($group) && !empty($unit)) {
+    if(((strlen($password)) < $minLength) || (!$hasSpecialChar) || (!$hasUpperCase) || (!$hasDigit)){
+        echo "<script>alert(' Please Input a Valid Password.'); window.location.href='../add_customer.php';</script>";
+    }
     //check for email validation
     if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $sql_email = mysqli_query($conn, "SELECT email FROM customers WHERE email = '{$email}' && customer_id != '{$customer_id}' ");
@@ -31,8 +39,9 @@ if (!empty($firstname) && !empty($lastname) && !empty($gender) && !empty($email)
             exit();
         } 
         else{
+            $encrypt_password = md5($password);
             // updateCustomer($conn, $customer_id, $firstname, $lastname, $gender, $email, $mobile_number, $address, $group, $unit);
-            $updateteamQuery = "UPDATE customers SET firstname = '{$firstname}', lastname ='{$lastname}', gender = '{$gender}', email = '{$email}', mobile_number = '{$mobile_number}', address = '{$address}', group_id = '{$group}' , unit_id = '{$unit}' WHERE customer_id = '{$customer_id}'";
+            $updateteamQuery = "UPDATE customers SET firstname = '{$firstname}', lastname ='{$lastname}', gender = '{$gender}', email = '{$email}', password = '{$encrypt_password}', mobile_number = '{$mobile_number}', address = '{$address}', group_id = '{$group}' , unit_id = '{$unit}' WHERE customer_id = '{$customer_id}'";
             $updateteamResult = mysqli_query($conn, $updateteamQuery);
 
             if (!$updateteamResult) {

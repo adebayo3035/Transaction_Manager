@@ -18,7 +18,7 @@ if ($result->num_rows > 0) {
         // Display edit and Delete Icons Only for Super Admin
         require_once('check_role2.php');
         $path1 = 'edit_group.php';
-        $path2 = 'delete_group.php';
+        $path2 = 'backend/delete_group.php';
         DisplayEditIcon($path1,$staff_role, $row['group_id']);
         DisplayDeleteIcon($path2,$staff_role, $row['group_id']);
         echo "</tr>";

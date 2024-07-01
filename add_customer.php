@@ -33,6 +33,10 @@ include "navbar.php";
       <label for="email">Email:</label>
       <input type="email" id="email" name="email" required>
 
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+
+
       <label for="phoneNumber">Phone Number:</label>
       <input type="tel" id="phoneNumber" name="phoneNumber" required>
 

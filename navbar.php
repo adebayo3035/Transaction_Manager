@@ -31,7 +31,7 @@
         <a href="dashboard.php">Transactions</a>
         <a href="groups.php">Groups</a>
         <a href="units.php">Units</a>
-        <a href="teams.php">Teams</a>
+        <a href="food.php">Foods</a>
 
 
       <div class="dropdown">

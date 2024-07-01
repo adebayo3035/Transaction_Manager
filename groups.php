@@ -5,6 +5,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/customer.css">
+  <script>
+    // Confirmation Modal to Delete a customer record
+function confirmDelete(event, element) {
+    event.preventDefault(); // Prevent the default action (navigation)
+    
+    var userConfirmed = confirm("Are you sure you want to delete this record?");
+    
+    if (userConfirmed) {
+        // If the user confirmed, navigate to the delete URL
+        window.location.href = element.href;
+    }
+}
+</script>
 </head>
 
 <body>
@@ -23,6 +36,11 @@
       <input type="text" id="liveSearch" placeholder="Search for Groups...">
 
     </div>
+
+    <!-- Delete form -->
+    <form id="deleteForm" action="backend/delete_group.php" method="post">
+      <input type="hidden" name="group_id" value="">
+    </form>
 
 
 

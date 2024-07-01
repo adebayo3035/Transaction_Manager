@@ -24,4 +24,4 @@ if (isset($_GET['groupId'])) {
 }
 
 $conn->close();
-?>
+

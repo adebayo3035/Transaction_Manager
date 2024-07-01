@@ -31,10 +31,16 @@ $row=mysqli_fetch_array($query);
 $group_id = $row['group_id'];
 $query2=mysqli_query($conn,"select * from `groups` where group_id='$group_id'");
 $row2=mysqli_fetch_array($query2);
+if(!($row2['group_name'])){
+  $row2['group_name'] = "Group Not Found";
+}
 
 $unit_id = $row['unit_id'];
 $query3=mysqli_query($conn,"select * from `unit` where unit_id='$unit_id'");
 $row3=mysqli_fetch_array($query3);
+if(!($row3['unit_name'])){
+  $row3['unit_name'] = "Unit Not Found";
+}
 ?>
 
   <header>
@@ -68,6 +74,9 @@ $row3=mysqli_fetch_array($query3);
       <label for="email">Email:</label>
       <input type="email" id="email" name="email" required value = "<?php echo $row['email']; ?>">
       <input type="email" id="email" name="current_email" hidden value = "<?php echo $row['email']; ?>">
+
+      <label for="email">Password:</label>
+      <input type="password" id="password" name="password" required value = "<?php echo md5($row['password']); ?>">
 
       <label for="phoneNumber">Phone Number:</label>
       <input type="tel" id="phoneNumber" name="phoneNumber" required value = "<?php echo $row['mobile_number']; ?>">

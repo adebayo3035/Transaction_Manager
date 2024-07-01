@@ -6,17 +6,25 @@
     $lastname = mysqli_real_escape_string($conn, $_POST['lastName']);
     $gender = mysqli_real_escape_string($conn, $_POST['gender']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $password = mysqli_real_escape_string($conn, $_POST['password']);
     $mobile_number = mysqli_real_escape_string($conn, $_POST['phoneNumber']);
     $address = mysqli_real_escape_string($conn, $_POST['address']);
     $group= mysqli_real_escape_string($conn, $_POST['group']);
     $unit = mysqli_real_escape_string($conn, $_POST['unit']);
     $date_created = date('Y-m-d H:i:s');
     $date_updated = date('Y-m-d H:i:s');
-    // $team = 1;
-    // $group_id = (int)$group;
-    // $unit_id = (int)$unit;
+
+     // REGEX TO VALIDATE PASSWORD AND SECRET ANSWER
+     $minLength = 8;
+     $hasSpecialChar = preg_match('/[!@#$%^&*(),.?":{}|<>_]/', $password);
+     $hasUpperCase = preg_match('/[A-Z]/', $password);
+     $hasDigit = preg_match('/\d/', $password);
 
     if(!empty($firstname) && !empty($lastname) && !empty($gender) && !empty($email) && !empty($mobile_number) && !empty($address) && !empty($group) && !empty($unit)){
+        // Password validation
+        if(((strlen($password)) < $minLength) || (!$hasSpecialChar) || (!$hasUpperCase) || (!$hasDigit)){
+            echo "<script>alert(' Please Input a Valid Password.'); window.location.href='../add_customer.php';</script>";
+        }
         //check for email validation
         if(filter_var($email, FILTER_VALIDATE_EMAIL)){
             $sql_email = mysqli_query($conn, "SELECT * FROM customers WHERE email = '{$email}'");
@@ -50,15 +58,16 @@
                             if(move_uploaded_file($tmp_name,"customer_photos/".$new_img_name)){
                                 $customer_id = rand(time(), 100000000);
                                 $status = "Active now";
+                                $encrypt_pass = md5($password);
                                 
-                                $insert_query = mysqli_query($conn, "INSERT INTO customers (customer_id, firstname, lastname, gender, email, mobile_number, address, photo, group_id, unit_id, date_created, date_updated)
-                                VALUES ({$customer_id}, '{$firstname}','{$lastname}', '{$gender}', '{$email}', '{$mobile_number}', '{$address}', '{$new_img_name}' , '{$group}' , '{$unit}', '{$date_created}', '{$date_updated}')");
+                                $insert_query = mysqli_query($conn, "INSERT INTO customers (customer_id, firstname, lastname, gender, email, password, mobile_number, address, photo, group_id, unit_id, date_created, date_updated)
+                                VALUES ({$customer_id}, '{$firstname}','{$lastname}', '{$gender}', '{$email}', '{$encrypt_pass}', '{$mobile_number}', '{$address}', '{$new_img_name}' , '{$group}' , '{$unit}', '{$date_created}', '{$date_updated}')");
                                 if($insert_query){
                                     $select_sql2 = mysqli_query($conn, "SELECT * FROM customers WHERE email = '{$email}'");
                                     if(mysqli_num_rows($select_sql2) > 0){
                                         $result = mysqli_fetch_assoc($select_sql2);
                                         // $_SESSION['unique_id'] = $result['unique_id'];
-                                        echo "<script>alert(' Congratulations! Customer have been Successfully Onboarded.'); window.location.href='../homepage.php';</script>";
+                                        echo "<script>alert(' Congratulations! Customer have been Successfully Onboarded.'); window.location.href='../index.php';</script>";
                                     }else{
                                         echo "<script>alert(' This email doex not exist, Please try again'); window.location.href='../add_customer.php';</script>";
                                     }
