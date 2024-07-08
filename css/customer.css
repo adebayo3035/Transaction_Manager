@@ -170,14 +170,22 @@ body {
   /* border: 2px solid red; */
   width: 100%;
 }
+.add_group .form-input label{
+ align-self: center;
+ justify-self: center;font-size: 14px;
+}
 .add_group input, .add_group select{
   border: 1px solid #ccc;
   outline: none;
-  font-size: 14px;
+  font-size: 13px;
   border-radius: 4px;
-  padding: 5px;
-  margin-left: 20px;
+  padding: 7px 10px;
+  /* margin-left: 0px; */
+  margin-bottom: 10px;
   width: 300px;
+  /* border: 2px solid purple; */
+  align-self: center;
+ justify-self: center;
 }
 .add_group button{
   background-color: #3457D5;
@@ -204,38 +212,26 @@ body {
 }
 
 @media screen and (max-width: 850px) {
-  .modal-content{
-    width: 80%;
-  }
-  .add_group .form-input{
-    flex-direction: row;
-    justify-content: space-around;
-    width: 100%;
-  }
-  .add_group .form-input label{
-    font-size: 15px;
-    padding-bottom: 5px;
-    text-align: center;
-  }
-  .add_group .form-input input, .add_group .form-input select {
-    width: 60%;
-  }
- 
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 650px) {
   
   .add_group .form-input{
+    display: flex;
     flex-direction: column;
     width: 100%;
+    /* border: 2px solid green; */
+    justify-content: flex-start;
+    align-items: flex-start;
   }
   .add_group .form-input label{
-    font-size: 15px;
+    font-size: 14px;
     padding-bottom: 5px;
-    text-align: center;
+    text-align: justify;
   }
   .add_group .form-input input, .add_group .form-input select {
     width: 80%;
+    /* border: 2px solid red; */
   }
  
 }
@@ -267,6 +263,7 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  font-size: 13px;
 }
 
 table, th, td {
@@ -290,27 +287,12 @@ form {
 form label {
   display: block;
   margin-bottom: 5px;
-}
 
-form input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-}
-
-form button {
-  padding: 10px 15px;
-  background-color: #333;
-  color: #fff;
-  border: none;
-  cursor: pointer;
 }
 
 form button:hover {
   background-color: #555;
 }
-
-
 .order-form-container {
   max-width: 600px;
   margin: auto;
@@ -323,6 +305,7 @@ form button:hover {
 .order-form-container h2 {
   text-align: center;
   margin-bottom: 5px;
+  font-size: 16px;
 }
 
 /* ORDER SUMMARY SECTION */
@@ -330,6 +313,9 @@ form button:hover {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+}
+.order-summary-container h2{
+  font-size: 16px;
 }
 
 .order-summary-container th, 

@@ -1,11 +1,4 @@
 <?php 
-//   session_start();
-//   if(isset($_SESSION['unique_id'])){
-//     header("location: home.php");
-//   }
-?>
-
-<?php 
 include_once "../../header.php"; ?>
 <head> <link rel="stylesheet" href="../../css/style.css"> </head>
 

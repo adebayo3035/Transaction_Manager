@@ -28,7 +28,7 @@ while ($row = $resultTopMenuItems->fetch_assoc()) {
 }
 
 // Calculate total inflow from previous day
-$sqlTotalInflow = "SELECT SUM(total_amount) AS total_inflow FROM revenue WHERE DATE(transaction_date) = CURDATE()";
+$sqlTotalInflow = "SELECT SUM(total_amount) AS total_inflow FROM revenue WHERE DATE(transaction_date) = CURDATE() AND status = 'Approved'";
 // $sqlTotalInflow = "SELECT SUM(total_amount) AS total_inflow FROM revenue WHERE DATE(transaction_date) = CURDATE() - INTERVAL 1 DAY";
 $resultTotalInflow = $conn->query($sqlTotalInflow);
 $totalInflow = $resultTotalInflow->fetch_assoc()['total_inflow'];

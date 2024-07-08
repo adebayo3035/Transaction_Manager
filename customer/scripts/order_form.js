@@ -15,9 +15,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (isNaN(quantity) || isNaN(foodPrice)) {
             console.error('Invalid quantity or price');
             return;
-        }
-        else{
-            console.log ("Quantity and Price are Valid Data Type")
+        } else {
+            console.log("Quantity and Price are Valid Data Type");
         }
 
         if (foodId && quantity > 0) {
@@ -47,8 +46,8 @@ document.addEventListener('DOMContentLoaded', function () {
             `;
 
             orderSummaryTable.appendChild(row);
-            // CLEAR INPUT FIELD AFTER ADDING FOOD ITEM
-            foodSelect.value ="";
+            // Clear input fields after adding food item
+            foodSelect.value = "";
             quantityInput.value = "";
 
             // Add event listeners for edit and delete buttons
@@ -85,53 +84,60 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    document.getElementById('submitOrderButton').addEventListener('click', function () {
-        console.log('Order Items:', JSON.stringify({ order_items: orderItems })); // Add this line to debug
-        // Calculate the total amount
-        let totalAmount = 0;
-        orderItems.forEach(item => {
-           
-            totalAmount += parseFloat(item.total_price); // adding all the total_price for each item into the totalAmount variable
-        });
-       
-        
+    submitOrderButton.addEventListener('click', function () {
+        console.log('Order Items:', JSON.stringify({ order_items: orderItems }));
 
-        // Log the total amount for debugging
-        console.log('Total Amount:',(totalAmount));
-        console.log("Data Type of Total amount is: ", typeof(totalAmount))
-        fetch('../v2/place_order.php', {
+        // Validate quantities before sending the request
+        fetch('../v2/validate_quantities.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            // body: JSON.stringify({ order_items: orderItems })
-            body: JSON.stringify({ order_items: orderItems, total_amount: totalAmount })
+            body: JSON.stringify({ order_items: orderItems })
         })
             .then(response => response.json())
             .then(data => {
-                const message = document.getElementById('message');
-                // if (data.success) {
-                //     message.style.color = 'green';
-                //     message.textContent = data.message;
-                // } 
-                if (data.success) {
-                    alert('Order placed successfully.' + data.message);
-                    location.reload(); // Refresh the page
-                } else {
+                if (!data.success) {
                     alert('Failed to place order: ' + data.message);
+                    return;
                 }
-                // }else {
-                //     message.style.color = 'red';
-                //     message.textContent = data.message;
-                // }
+
+                // Calculate the total amount
+                let totalAmount = 0;
+                orderItems.forEach(item => {
+                    totalAmount += parseFloat(item.total_price);
+                });
+
+                console.log('Total Amount:', totalAmount);
+                console.log("Data Type of Total amount is:", typeof(totalAmount));
+
+                // Proceed with placing the order
+                fetch('../v2/place_order.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ order_items: orderItems, total_amount: totalAmount })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Order placed successfully.' + data.message);
+                            location.reload(); // Refresh the page
+                        } else {
+                            alert('Failed to place order: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        document.getElementById('message').textContent = 'An error occurred. Please try again.';
+                    });
             })
             .catch(error => {
                 console.error('Error:', error);
                 document.getElementById('message').textContent = 'An error occurred. Please try again.';
             });
     });
-
-
 
     function updateTotalAmount() {
         const totalAmountElement = document.getElementById('totalAmount');

@@ -7,12 +7,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Food Vending Dashboard</title>
   <link rel="stylesheet" href="css/dashboard.css"> <!-- Include your styles file -->
+  <link rel="stylesheet" href="css/navbar.css">
+  <style>
+    nav{
+      /* border: 2px solid red; */
+
+    }
+    nav ul{
+      display: flex;
+      
+    }
+    nav ul li{
+      list-style-type: none;
+    }
+    nav ul li a{
+      padding: 10px 15px;
+    }
+    nav ul li a:hover {
+    background-color: #555;
+    color: #fff;
+    border-radius: 8px;
+  }
+  </style>
 </head>
 <body>
 <?php include "navbar.php" ?>
   <header>
     <h1>Food Vending Dashboard</h1>
   </header>
+  <nav>
+    <ul>
+        <li><a href="dashboard.php" id="orderFood">Manage Orders</a></li>
+        <li><a href="pending_orders.php" id="viewOrders">View Pending Orders</a></li>
+        <li><a href="add_funds.php" id="fundWallet">Manage Revenue</a></li>
+        
+    </ul>
+    
+</nav>
 
   <main>
 

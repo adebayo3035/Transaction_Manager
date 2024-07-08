@@ -20,7 +20,7 @@
             <input type="text" id="customer_id" name="customer_id" value="<?php echo $_SESSION['customer_id']; ?>" hidden>
             <div class="form-input">
                 <label for="food-name">Select Food Item:</label>
-                <select name="food-name" id="food-name" class="group_name">
+                <select name="food-name" id="food-name" class="group_name" placeholder = "Select Food Item">
                     <?php
                     include '../../backend/config.php';
                     // Query to retrieve data from the groups table
@@ -50,7 +50,7 @@
             </div>
             <div class="form-input">
                 <label for="number-of-portion">Enter Number of Portions</label>
-                <input type="number" id="number-of-portion" name="number-of-portion" class="group_name" min="1">
+                <input type="number" id="number-of-portion" name="number-of-portion" class="group_name" min="1" placeholder ="Enter Number of Portions">
             </div>
             <!-- <div class="form-input">
                 <label for="total_amount_input">Total Amount</label>

@@ -12,9 +12,10 @@
     <table id="ordersTable">
         <thead>
             <tr>
-                <th>Order ID</th>
+                <!-- <th>Order ID</th> -->
                 <th>Order Date</th>
                 <th>Total Amount (N)</th>
+                <th>Status</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -35,12 +36,14 @@
                         <th>Number of Portions</th>
                         <th>Price per Portion (N)</th>
                         <th>Total Price (N)</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
                     <!-- Order details will be dynamically inserted here -->
                 </tbody>
             </table>
+           
         </div>
     </div>
 
@@ -130,9 +133,10 @@
             data.orders.forEach(order => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${order.order_id}</td>
+                    
                     <td>${order.order_date}</td>
                     <td>${order.total_amount}</td>
+                    <td>${order.status}</td>
                     <td><button class="view-details-btn" data-order-id="${order.order_id}">View Details</button></td>
                 `;
                 ordersTableBody.appendChild(row);
@@ -166,17 +170,22 @@ function fetchOrderDetails(orderId) {
     .then(data => {
         if (data.success) {
             const orderDetailsTableBody = document.querySelector('#orderDetailsTable tbody');
+            
             orderDetailsTableBody.innerHTML = '';
             data.order_details.forEach(detail => {
                 const row = document.createElement('tr');
+                
+               
                 row.innerHTML = `
                     <td>${detail.food_name}</td>
                     
                     <td>${detail.quantity}</td>
                     <td>${detail.price_per_unit}</td>
                     <td>${detail.total_price}</td>
+                    
                 `;
                 orderDetailsTableBody.appendChild(row);
+                
             });
             // Display the modal
             document.getElementById('orderModal').style.display = 'block';

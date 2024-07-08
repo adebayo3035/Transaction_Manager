@@ -2,16 +2,16 @@
 include 'config.php';
 session_start();
 
-if (!isset($_SESSION['customer_id'])) {
+if (!isset($_SESSION['unique_id'])) {
     echo json_encode(["success" => false, "message" => "Not logged in."]);
     exit();
 }
 
-$customerId = $_SESSION['customer_id'];
+// $customerId = $_SESSION['customer_id'];
 
-$query = "SELECT order_id, order_date, total_amount, status FROM orders WHERE customer_id = ? ORDER BY order_date DESC";
+$query = "SELECT order_id, order_date, total_amount, status FROM orders WHERE status = 'Pending' ORDER BY order_date DESC";
 $stmt = $conn->prepare($query);
-$stmt->bind_param("i", $customerId);
+// $stmt->bind_param("i", $customerId);
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -24,4 +24,4 @@ $stmt->close();
 $conn->close();
 
 echo json_encode(["success" => true, "orders" => $orders]);
-?>
+

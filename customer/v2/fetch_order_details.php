@@ -56,6 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                  order_details.total_price, food.food_name
            FROM order_details
           JOIN food ON order_details.food_id = food.food_id
+          
           WHERE order_details.order_id = ? AND EXISTS (SELECT 1 FROM orders WHERE orders.order_id = order_details.order_id AND orders.customer_id = ?)";
  $stmt = $conn->prepare($query);
     $stmt->bind_param("ii", $orderId , $customerId);
