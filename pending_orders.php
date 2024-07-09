@@ -272,7 +272,13 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('Order status updated to ' + status);
+                    if(status = "Declined"){
+                        alert('Order status updated to ' + status + " and Customer has been refunded");
+                    }
+                    else{
+                        alert("Order Status updated to " + status);
+                    }
+                   
                     location.reload(); // Refresh the page to reflect changes
                 } else {
                     console.error('Failed to update order status:', data.message);

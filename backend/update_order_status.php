@@ -55,6 +55,22 @@ if (isset($data['order_id']) && isset($data['status'])) {
         $order_details_stmt->execute();
         $order_details_stmt->close();
 
+        // Get total amount and customer id from the order
+        $stmt = $conn->prepare("SELECT total_amount, customer_id FROM orders WHERE order_id = ?");
+        $stmt->bind_param("i", $order_id);
+        $stmt->execute();
+        $stmt->bind_result($totalAmount, $customerId);
+        $stmt->fetch();
+        $stmt->close();
+
+        if ($status === 'Declined') {
+            // Refund the customer
+            $stmt = $conn->prepare("UPDATE wallets SET balance = balance + ? WHERE customer_id = ?");
+            $stmt->bind_param("di", $totalAmount, $customerId);
+            $stmt->execute();
+            $stmt->close();
+        }
+
         // Commit the transaction
         $conn->commit();
         echo json_encode(['success' => true, 'message' => 'Order status updated successfully.']);

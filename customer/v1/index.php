@@ -1,5 +1,5 @@
 <?php 
-include_once "../../header.php"; ?>
+include_once "header.php"; ?>
 <head> <link rel="stylesheet" href="../../css/style.css"> </head>
 
 <body>
@@ -21,7 +21,7 @@ include_once "../../header.php"; ?>
                 </div>
                 <div class="checkbox remember_me">
                     <label>
-                    <!-- <input type="checkbox" id="viewPassword" name="viewPassword" onchange="togglePasswordVisibility()"> Show Password -->
+                    <input type="checkbox" id="viewPassword" name="viewPassword" onchange="togglePasswordVisibility()"> Show Password 
                     </label>
                 </div>
                 <input type="submit" id="btnSubmit" class="button" value ="SIGN IN"></button>
@@ -66,6 +66,23 @@ include_once "../../header.php"; ?>
             message.textContent = 'An error occurred. Please try again.';
         });
     });
+
+    const passwordInput = document.getElementById('password');
+        const showPasswordCheckbox = document.getElementById('viewPassword');
+
+        // Function to toggle password visibility
+        function togglePasswordVisibility() {
+            if (showPasswordCheckbox.checked) {
+                // Display password in plain text
+                passwordInput.type = 'text';
+            } else {
+                // Encrypt password
+                passwordInput.type = 'password';
+            }
+        }
+
+        // Add event listener to checkbox
+        showPasswordCheckbox.addEventListener('change', togglePasswordVisibility);
     </script>
 
 </html>

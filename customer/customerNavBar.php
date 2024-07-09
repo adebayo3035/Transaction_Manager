@@ -8,6 +8,7 @@
 <?php
 session_start();
 include ("../v2/config.php");
+include ("../v1/header.php");
 
 if (!isset($_SESSION['customer_id'])) {
     header("Location: index.php");

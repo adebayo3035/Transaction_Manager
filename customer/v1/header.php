@@ -23,10 +23,10 @@
   <!-- Script to Log User Out whenever they are Inactive for some secs.. here we use 30 secs -->
   <script>
     // Get the ID of the logged in User
-    var userId = <?php echo isset($_SESSION['unique_id']) ? $_SESSION['unique_id'] : 'null'; ?>;
+    var userId = <?php echo isset($_SESSION['customer_id']) ? $_SESSION['customer_id'] : 'null'; ?>;
 
   // set the time for system to timeout
-    const inactivityTimeout = 1.5 * 60 * 1000; // 90 seconds in milliseconds
+    const inactivityTimeout = 1.5 * 60 * 1000; // 15 minutes in milliseconds
     let inactivityTimer;
 
     // Function to clear and set timeout
@@ -34,7 +34,7 @@
       clearTimeout(inactivityTimer);
       inactivityTimer = setTimeout(function() {
         // Redirect to logout page or trigger a logout function
-        window.location.href = 'backend/logout.php?logout_id=' + userId;
+        window.location.href = '../v2/logout.php?logout_id=' + userId;
       }, inactivityTimeout);
     }
     resetInactivityTimer(userId);
