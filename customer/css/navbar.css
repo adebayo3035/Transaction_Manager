@@ -12,6 +12,7 @@ header {
     background-color: #333;
     color: #fff;
     padding: 10px 20px;
+    
   }
   
   header h1 {
@@ -33,10 +34,12 @@ header {
     margin: 20px 0;
     background-color: #444;
     overflow: hidden;
+    
   }
   
   nav ul li {
     float: left;
+    
   }
   
   nav ul li a {
@@ -44,6 +47,8 @@ header {
     padding: 10px 20px;
     color: #fff;
     text-decoration: none;
+    
+    
   }
   
   nav ul li a:hover {
@@ -65,3 +70,26 @@ header {
   #walletBalance{
     font-size: 13px;
   }
+
+  @media (max-width: 600px) {
+    header{
+      
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 2px;
+    }
+    header h1{
+      font-size: 14px;
+    }
+    header .user-info{
+      display: flex;
+      flex-direction: column;
+      padding: 2px;
+      width: 100%;
+      
+    }
+    nav ul li a{
+      font-size: 12px;;
+  }
+}

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -61,8 +60,10 @@
         </form>
     </div>
 
-    <div class="order-summary-container">
+    <div class="order-summary-container container">
+           
         <h2>Order Summary</h2>
+     
         <table id="orderSummaryTable">
             <thead>
                 <tr>

@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 // Insert new session into customer_active_sessions table
                 $newSessionId = session_id();
                 $loginTime = date('Y-m-d H:i:s');
-                $stmt = $conn->prepare("INSERT INTO customer_active_sessions (customer_id, session_id, login_time) VALUES (?, ?, ?)");
+                $stmt = $conn->prepare("INSERT INTO customer_active_sessions (customer_id, session_id, login_time, status) VALUES (?, ?, ?, 'Active')");
                 $stmt->bind_param("iss", $customer_id, $newSessionId, $loginTime);
                 $stmt->execute();
                 echo json_encode(["success" => true, "message" => "Login successful."]);

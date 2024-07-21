@@ -26,7 +26,7 @@
     var userId = <?php echo isset($_SESSION['customer_id']) ? $_SESSION['customer_id'] : 'null'; ?>;
 
   // set the time for system to timeout
-    const inactivityTimeout = 1.5 * 60 * 1000; // 15 minutes in milliseconds
+    const inactivityTimeout = 8 * 60 * 1000; // 15 minutes in milliseconds
     let inactivityTimer;
 
     // Function to clear and set timeout

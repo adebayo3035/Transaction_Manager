@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 // Insert new session into customer_active_sessions table
                 $newSessionId = session_id();
                 $loginTime = date('Y-m-d H:i:s');
-                $stmt = $conn->prepare("INSERT INTO admin_active_sessions (unique_id, session_id, login_time) VALUES (?, ?, ?)");
+                $stmt = $conn->prepare("INSERT INTO admin_active_sessions (unique_id, session_id, login_time, status) VALUES (?, ?, ?, 'Active')");
                 $stmt->bind_param("iss", $admin_id, $newSessionId, $loginTime);
                 $stmt->execute();
                 echo "success";

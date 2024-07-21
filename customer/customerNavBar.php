@@ -21,6 +21,7 @@ $stmt = $conn->prepare("SELECT balance FROM wallets WHERE customer_id = ?");
         $stmt->bind_result($balance);
         $stmt->fetch();
         $stmt->close();
+        
 ?>
 <header>
     <h1>Customer Dashboard</h1>

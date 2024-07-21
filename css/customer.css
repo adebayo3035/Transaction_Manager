@@ -110,7 +110,7 @@ body {
 }
 
 /* MODAL BOX */
-/* Add this in your styles.css file or include it in the head of your HTML document */
+/* MODAL BOX */
 .modal {
   display: none;
   position: fixed;
@@ -120,11 +120,12 @@ body {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   animation: fadeIn 0.5s ease-in-out;
+  overflow: auto; /* Allow scrolling if content is too large */
 }
 
 .modal-content {
   position: absolute;
-  top: 40%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;
@@ -138,64 +139,64 @@ body {
 
 .close {
   position: absolute;
-  top: -2px;
-  right: 5px;
+  top: 10px;
+  right: 20px;
   font-size: 30px;
   font-weight: 900;
   cursor: pointer;
-  /* border: 2px solid green; */
   border-radius: 100%;
   padding: 1px;
   color: #3457D5;
-  /* background-color: #3457D5; */
 }
-.close:hover{
+
+.close:hover {
   color: red;
 }
-.add_group{
+
+.add_group {
   padding: 10px;
-  justify-content: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   width: 90%;
   margin: auto;
-
 }
-.add_group .form-input{
+
+.add_group .form-input {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   margin-bottom: 10px;
-  /* border: 2px solid red; */
   width: 100%;
 }
-.add_group .form-input label{
- align-self: center;
- justify-self: center;font-size: 14px;
+
+.add_group .form-input label {
+  align-self: center;
+  font-size: 12px;
+  width: 30%;
 }
-.add_group input, .add_group select{
+
+.add_group input,
+.add_group select {
   border: 1px solid #ccc;
   outline: none;
   font-size: 13px;
   border-radius: 4px;
   padding: 7px 10px;
-  /* margin-left: 0px; */
   margin-bottom: 10px;
-  width: 300px;
-  /* border: 2px solid purple; */
-  align-self: center;
- justify-self: center;
+  width: 100%;
+  box-sizing: border-box; /* Ensure padding and border are included in the width */
 }
-.add_group button{
-  background-color: #3457D5;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+
+.add_group button {
+  background-color: #34d564;
+  color: #000;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
-.error_notifier{
+
+.error_notifier {
   color: red;
   font-size: 12px;
   font-weight: 900;
@@ -204,38 +205,42 @@ body {
 
 @keyframes fadeIn {
   from {
-      opacity: 0;
+    opacity: 0;
   }
   to {
-      opacity: 1;
+    opacity: 1;
   }
 }
 
 @media screen and (max-width: 850px) {
+  .modal-content {
+    width: 60%;
+  }
 }
 
 @media screen and (max-width: 650px) {
+  .modal-content {
+    width: 80%;
+  }
   
-  .add_group .form-input{
-    display: flex;
+  .add_group .form-input {
     flex-direction: column;
-    width: 100%;
-    /* border: 2px solid green; */
-    justify-content: flex-start;
     align-items: flex-start;
   }
-  .add_group .form-input label{
-    font-size: 14px;
+  
+  .add_group .form-input label {
+    font-size: 10px;
     padding-bottom: 5px;
-    text-align: justify;
+    align-self: left;
+    width: 100%;
   }
-  .add_group .form-input input, .add_group .form-input select {
-    width: 80%;
-    /* border: 2px solid red; */
+  
+  .add_group input,
+  .add_group select {
+    width: 100%;
+    max-width: 100%;
   }
- 
 }
-
 
 /* CUSTOMER DASHBOARD */
 
@@ -357,4 +362,5 @@ form button:hover {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    width: 200px;
 }

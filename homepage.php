@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Transaction Manager - Homepage</title>
     <!-- font awesome -->
   <script src="https://kit.fontawesome.com/7cab3097e7.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -17,7 +17,7 @@
       <section class="hero">
         <h2>Welcome to Our Food Vending Service</h2>
         <p>Delicious and fresh food delivered to your doorstep!</p>
-        <a href="#menu">Explore Menu</a>
+        <a href="food.php">Explore Menu</a>
       </section>
     
       <section id="about" class="about">
