@@ -44,12 +44,6 @@
     outline: none;
 }
 
-/* h1 {
-    text-align: center;
-    margin-top: 20px;
-    color: #333;
-} */
-
 table {
     width: 90%;
     margin: 20px auto;
@@ -121,6 +115,24 @@ tr:nth-child(even) {
 
 .view-details-btn:hover {
     background-color: #292b2c;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}   
+
+.page-btn {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.page-btn.active {
+    background-color: #007bff;
+    color: #fff;
 }
 
 @media (max-width: 600px) {

@@ -102,11 +102,11 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    if(status = "Declined"){
+                    if(status === "Declined"){
                         alert('Order status updated to ' + status + " and Customer has been refunded");
                     }
                     else{
-                        alert("Order Status updated to " + status);
+                        alert("Order Status has been updated to " + status);
                     }
                    
                     location.reload(); // Refresh the page to reflect changes

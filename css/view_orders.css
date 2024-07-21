@@ -10,6 +10,7 @@ body {
     padding: 0;
     background-color: #f9f9f9;
 }
+
 h1 {
     text-align: center;
     margin-top: 20px;
@@ -159,6 +160,8 @@ tr:nth-child(even) {
     border: none;
     outline: none;
 }
+
+
 
 @media (max-width: 600px) {
     table, th, td {
