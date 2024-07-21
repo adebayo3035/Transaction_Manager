@@ -37,8 +37,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 <td>${orderItems.length}</td>
                 <td>${foodName}</td>
                 <td>${quantity}</td>
-                <td>$${foodPrice.toFixed(2)}</td>
-                <td class="total-price">$${totalPrice.toFixed(2)}</td>
+                <td>N ${foodPrice.toFixed(2)}</td>
+                <td class="total-price">N ${totalPrice.toFixed(2)}</td>
                 <td>
                     <button type="button" class="edit-button">Edit</button>
                     <button type="button" class="delete-button">Delete</button>
