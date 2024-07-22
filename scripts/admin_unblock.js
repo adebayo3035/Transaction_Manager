@@ -25,10 +25,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         form.reset();
                     } else {
                         errorContainer.style.display = "block";
+                        alert(response.message);
                         errorContainer.textContent = response.message;
                     }
                 } else {
                     errorContainer.style.display = "block";
+                    alert("An error occurred while processing your request. Please try again later.");
                     errorContainer.textContent = "An error occurred while processing your request. Please try again later.";
                 }
             }

@@ -27,7 +27,7 @@
         <?php endif; ?>
     </ul>
 </div>
-<?php echo $_SESSION["unique_id"]; ?>
+
 
 </body>
 </html>

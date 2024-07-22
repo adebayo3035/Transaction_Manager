@@ -29,12 +29,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($stmt->num_rows > 0) {
             $stmt->fetch();
 
-            if ($currentRestrictionId != 1 || $currentBlockId != 1) {
+            // if ($currentRestrictionId == 0 || $currentBlockId ==  1) {
+            //     echo json_encode(["success" => false, "message" => "There is no restriction on this account."]);
+            //     exit();
+            // }
+            if($columnToUpdate == 'restriction_id' && $currentRestrictionId == 0 ){
                 echo json_encode(["success" => false, "message" => "There is no restriction on this account."]);
-                exit();
+               exit();
             }
+            else if ($columnToUpdate == 'block_id' && $currentBlockId == 0){
+                echo json_encode(["success" => false, "message" => "There is no Block on this account."]);
+               
+               exit();
+            }
+            
 
-            $stmt->close();
+            // $stmt->close();
 
             // Update the restriction_id or block_id column
             $updateStmt = $conn->prepare("UPDATE admin_tbl SET $columnToUpdate = 0 WHERE unique_id = ?");

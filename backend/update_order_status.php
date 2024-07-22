@@ -69,6 +69,24 @@ if (isset($data['order_id']) && isset($data['status'])) {
             $stmt->bind_param("di", $totalAmount, $customerId);
             $stmt->execute();
             $stmt->close();
+
+            // Fetch the food items related to the order
+            $stmt = $conn->prepare("SELECT food_id, quantity FROM order_details WHERE order_id = ?");
+            $stmt->bind_param("i", $order_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            // Update the food stock quantities in the food table
+            while ($row = $result->fetch_assoc()) {
+                $foodId = $row['food_id'];
+                $quantity = $row['quantity'];
+                $updateFoodStmt = $conn->prepare("UPDATE food SET available_quantity = available_quantity + ? WHERE food_id = ?");
+                $updateFoodStmt->bind_param("ii", $quantity, $foodId);
+                $updateFoodStmt->execute();
+                $updateFoodStmt->close();
+            }
+
+            $stmt->close();
         }
 
         // Commit the transaction
@@ -85,4 +103,4 @@ if (isset($data['order_id']) && isset($data['status'])) {
 }
 
 $conn->close();
-?>
+

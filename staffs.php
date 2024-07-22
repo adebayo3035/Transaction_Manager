@@ -38,6 +38,8 @@
           <th>Last Name</th>
           <th>E-mail Address</th>
           <th>Phone Number</th>
+          <th>Restriction Indicator</th>
+          <th>Block Indicator</th>
         </tr>
       </thead>
       <tbody>

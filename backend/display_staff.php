@@ -17,6 +17,8 @@ if ($result->num_rows > 0) {
         echo "<td>" . $row['lastname'] . "</td>";
         echo "<td>" . $row['email'] . "</td>";
         echo "<td>" . $row['phone'] . "</td>";
+        echo "<td>" . $row['restriction_id'] . "</td>";
+        echo "<td>" . $row['block_id'] . "</td>";
 
         
         echo "</tr>";

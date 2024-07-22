@@ -35,9 +35,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($stmt->num_rows > 0) {
             $stmt->fetch();
 
-            if ($currentRestrictionId != 0 || $currentBlockId != 0) {
-                echo json_encode(["success" => false, "message" => "The account is already restricted or blocked."]);
-                exit();
+            // if ($currentRestrictionId != 0 || $currentBlockId != 0) {
+            //     echo json_encode(["success" => false, "message" => "The account is already restricted or blocked."]);
+            //     exit();
+            // }
+
+            if($columnToUpdate == 'restriction_id' && $currentRestrictionId == 1 ){
+                echo json_encode(["success" => false, "message" => "There is an existing restriction on this account."]);
+               exit();
+            }
+            else if ($columnToUpdate == 'block_id' && $currentBlockId == 1){
+                echo json_encode(["success" => false, "message" => "There is an existing Block on this account."]);
+               
+               exit();
             }
 
             $stmt->close();
@@ -54,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             echo json_encode(["success" => false, "message" => "No matching account found."]);
         }
-        $stmt->close();
+        // $stmt->close();
         $conn->close();
     }
     else{
