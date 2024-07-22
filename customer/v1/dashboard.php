@@ -56,7 +56,7 @@
                 <input type="number" id="total_amount_input" name="total_amount_input" class="group_name">
             </div> -->
             
-            <button type="button" id="addFoodButton">Add Food</button>
+            <button type="button" id="addFoodButton">Add to Cart</button>
         </form>
     </div>
 
@@ -83,7 +83,7 @@
             <h3>Total Amount: N<span id="totalAmount">0.00</span></h3>
             
         </div>
-        <button type="button" id="submitOrderButton">Submit Order</button>
+        <button type="button" id="submitOrderButton">Checkout</button>
     </div>
     <div id="message"></div>
 
