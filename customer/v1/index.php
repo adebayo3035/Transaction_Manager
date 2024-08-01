@@ -9,7 +9,7 @@ include_once "header.php"; ?>
         background-color: #fff;
     }
     .container {
-        background-color: #28a745;
+        /* background-color: #28a745; */
         border-radius: 10px;
        
     }
@@ -43,7 +43,7 @@ include_once "header.php"; ?>
 
 <body>
     <div class="container">
-        <header> WELCOME TO TRANSACTION MANAGER</header>
+        <header> <h1>WELCOME TO TRANSACTION MANAGER </h1></header>
 
         <div class="login">
             <h3 id="signInText">SIGN IN TO YOUR ACCOUNT</h3>

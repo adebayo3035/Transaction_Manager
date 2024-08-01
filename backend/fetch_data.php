@@ -48,7 +48,7 @@ $activeCustomers = [];
             $activeCustomers[] = $row;
         }
     } else {
-       $activeCustomers[] = "No Active Customer";
+       $activeCustomers = [];
     }
     // Output the result for debugging
 

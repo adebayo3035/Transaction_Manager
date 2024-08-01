@@ -1,6 +1,7 @@
 <?php
 if (isset($_POST['btnChangeCustomerPicture'])) {
     include_once('config.php');
+    include('restriction_checker.php');
     session_start();
     $staff_id = $_SESSION['unique_id'];
     $customer_id = (filter_var($_POST['customer_id'], FILTER_SANITIZE_STRING));

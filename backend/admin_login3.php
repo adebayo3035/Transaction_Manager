@@ -42,8 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $restriction_id = $row['restriction_id'];
             $block_id = $row['block_id'];
 
-            // Check if restriction_id and block_id are both 0
-            if ($restriction_id == 0 && $block_id == 0) {
+            // Check if there's a block_id on the staff account
+            if ($block_id == 0) {
                 if ($encrypted_password === $admin_password) {
                     $admin_id = $row['unique_id'];
 
@@ -57,6 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $_SESSION['firstname'] = $row['firstname'];
                     $_SESSION['lastname'] = $row['lastname'];
                     $_SESSION['role'] = $row['role'];
+                    $_SESSION['restriction_id'] = $row['restriction_id'];
                     $_SESSION['secret_answer'] = md5($row['secret_answer']);
 
                     // Insert new session into admin_active_sessions table
@@ -70,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     echo json_encode(["success" => false, "message" => "Email or Password is Incorrect!"]);
                 }
             } else {
-                echo json_encode(["success" => false, "message" => "Account is restricted or blocked."]);
+                echo json_encode(["success" => false, "message" => "Account is blocked. Kindly Contact Super Admin."]);
             }
         }
     } else {

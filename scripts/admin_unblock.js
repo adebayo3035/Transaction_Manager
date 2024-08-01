@@ -21,8 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (xhr.status === 200) {
                     let response = JSON.parse(xhr.response);
                     if (response.success) {
-                        alert("Operation successful!");
+                        // alert("Operation successful!");
+                        alert(response.message);
                         form.reset();
+                        location.reload();
                     } else {
                         errorContainer.style.display = "block";
                         alert(response.message);

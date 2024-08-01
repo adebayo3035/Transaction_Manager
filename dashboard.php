@@ -72,8 +72,9 @@
         <h2>Top Menu Items</h2>
         <!-- Dynamically populate this list with top menu items using JavaScript -->
       </ul>
+      
       <ul id="activeCustomers">
-        <h2> Active Customers</h2>
+      <h2> Active Customers</h2>
         <!-- Dynamically populate this list with Active Customers who are Online using JavaScript -->
       </ul>
     </section>

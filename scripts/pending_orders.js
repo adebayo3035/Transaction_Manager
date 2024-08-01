@@ -112,6 +112,7 @@
                     location.reload(); // Refresh the page to reflect changes
                 } else {
                     console.error('Failed to update order status:', data.message);
+                    alert("Failed to Update Customer Order: " + data.message);
                 }
             })
             .catch(error => {

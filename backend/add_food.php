@@ -4,6 +4,7 @@ ini_set('display_errors', 1);
 header('Content-Type: application/json');
 
 include ("config.php");
+include('restriction_checker.php');
 // Create connection
 // $conn = new mysqli($servername, $username, $password, $dbname);
 

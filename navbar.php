@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document Navbar 2</title>
+    <title>KaraKata - Transaction Manager </title>
     <link rel="stylesheet" href="css/navbar.css">
     <!-- font awesome -->
     <script src="https://kit.fontawesome.com/7cab3097e7.js" crossorigin="anonymous"></script>
@@ -26,6 +26,7 @@
         $email = $row['email'];
         $role = $row['role'];
         $unique_id = $row['unique_id'];
+        $restriction_id = $row['restriction_id'];
     }
     $userId = isset($_SESSION['unique_id']) ? $_SESSION['unique_id'] : 'null';
     ?>
@@ -37,9 +38,10 @@
         <a href="groups.php">Groups</a>
         <a href="units.php">Units</a>
         <a href="food.php">Foods</a>
-
+    
        
         <div class="dropdown">
+            <?php echo $_SESSION['restriction_id']; ?>
             <button class="dropbtn"><?php echo "Welcome, {$firstname} {$lastname}"; ?>
                 
                 <i class="fa fa-caret-down"></i>

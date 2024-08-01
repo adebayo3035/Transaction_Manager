@@ -1,5 +1,6 @@
 <?php
 include_once ('config.php');
+include('restriction_checker.php');
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

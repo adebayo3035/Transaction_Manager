@@ -9,7 +9,10 @@
     <link rel="stylesheet" href="css/view_orders.css">
 </head>
 <body>
-<?php include('navbar.php'); ?>
+<?php 
+include('navbar.php');
+echo $_SESSION['restriction_id'];
+?>
 <header>
     <h1>View Pending Orders</h1>
     <?php include('dashboard_navbar.php'); ?>

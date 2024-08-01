@@ -1,11 +1,13 @@
 <?php
 header('Content-Type: application/json');
+// Enable error reporting
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 // Include database connection file
 include('config.php');
-
-// Get the request data
-$data = json_decode(file_get_contents('php://input'), true);
+include('restriction_checker.php');
 
 if (isset($data['order_id']) && isset($data['status'])) {
     $order_id = $data['order_id'];
@@ -103,4 +105,3 @@ if (isset($data['order_id']) && isset($data['status'])) {
 }
 
 $conn->close();
-

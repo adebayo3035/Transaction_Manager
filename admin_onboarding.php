@@ -5,19 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Add New Admin</title>
   <link rel="stylesheet" href="css/add_customer.css">
+  <style>
+    #submitBtn {
+      visibility: hidden;
+    }
+  </style>
 </head>
 <body>
-<?php 
-include "navbar.php"; 
-?>
+  <?php include "navbar.php"; ?>
 
   <header>
     <h1>Staff Onboarding</h1>
-    
   </header>
 
   <main>
-    <form id="adminForm" method="POST" action="backend/admin_onboarding.php" enctype="multipart/form-data" autocomplete="off">
+    <form id="adminForm" method="POST" enctype="multipart/form-data" autocomplete="off">
       <label for="firstName">First Name:</label>
       <input type="text" id="firstName" name="firstName" required>
 
@@ -32,7 +34,7 @@ include "navbar.php";
 
       <label for="password">Password:</label>
       <input type="password" id="password" name="password" required>
-      <span id ="password_hint"> Password must not be less than 8 characters, it must contain uppercase, special character and digit </span>
+      <span id="password_hint">Password must not be less than 8 characters, it must contain uppercase, special character and digit</span>
 
       <label for="secret_question">Secret Question:</label>
       <input type="text" id="secret_question" name="secret_question" required>
@@ -44,27 +46,24 @@ include "navbar.php";
       <select id="selectOption" name="role" required>
         <option value="Super Admin">Super Admin</option>
         <option value="Admin">Admin</option>
+      </select>
 
       <label for="photo">Photo:</label>
       <input type="file" id="photo" name="photo" accept="image/*" onchange="displayPhoto(this)" required>
+
+      <!-- Hidden input to store the photo name -->
+      <input type="hidden" id="photo_name" name="photo_name">
 
       <div id="photoContainer">
         <img id="uploadedPhoto" src="#" alt="Uploaded Photo">
       </div>
 
-      <button type="submit">Register</button>
+      <button type="submit" id="submitBtn">Register</button>
     </form>
   </main>
+  <script src="scripts/admin_onboarding.js"></script>
+<script src="scripts/photo_upload.js"></script>
 
-  <script src="scripts/photo_upload.js">
-    
-  </script>
-  <script>
-    document.getElementById('adminForm').addEventListener('submit', function(event)) {
-      // Prevent the default form submission behavior
-      event.preventDefault();
-    }
-  </script>
-
+ 
 </body>
 </html>

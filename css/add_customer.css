@@ -57,12 +57,12 @@ body {
     border-radius: 4px;
     cursor: pointer;
   }
-  button.add_customer{
+  button#btnAddCustomer{
     display: none;
   }
-  #add_customer{
+  /* #add_customer{
     display: none;
-  }
+  } */
 
   button:hover {
     background-color: #555;

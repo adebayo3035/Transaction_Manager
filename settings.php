@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/settings.css">
-    <title>Beautiful Links</title>
+    <title>KaraKata - Transaction Manager Settings</title>
 </head>
 <body>
 <?php include "navbar.php"; $unique_id = $_SESSION['unique_id'];?>
@@ -12,7 +12,7 @@
     <h1>Explore Quick Links</h1>
     <ul class="links-list">
         <?php
-            echo "<li><a href='edit_staff.php?id=" . $unique_id . "'>Edit Profile</a></li>";
+            echo "<li><a href='edit_staff.php?id=" . $unique_id . "'>Edit Staff Profile and Information</a></li>";
            
             echo "<li><a href='secret_answer.php?id=" . $unique_id . "'>Reset Secret Question and Answer</a></li>";
         ?>

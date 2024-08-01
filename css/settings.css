@@ -30,8 +30,11 @@ h1 {
     list-style: none;
     padding: 0;
     /* border: 2px solid blue; */
-    display: flex;
-    justify-content: space-between;
+    /* display: flex;
+    justify-content: space-between; */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+     grid-gap: 20px;
 }
 
 .links-list li {
@@ -39,7 +42,7 @@ h1 {
 }
 
 .links-list a, .links-list button {
-    display: block;
+    /* display: block; */
     padding: 15px;
     text-decoration: none;
     background-color: #3498db;
@@ -48,6 +51,7 @@ h1 {
     transition: background-color 0.3s;
     cursor: pointer;
     border: none;
+    min-width: 300px;
 }
 button#block{
     background-color: #dc3545;

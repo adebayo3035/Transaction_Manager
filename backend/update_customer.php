@@ -1,6 +1,7 @@
 <?php
 // session_start();
 include_once "config.php";
+include('restriction_checker.php');
 
 $customer_id = mysqli_real_escape_string($conn, $_POST['customer_id']);
 $firstname = mysqli_real_escape_string($conn, $_POST['firstName']);
