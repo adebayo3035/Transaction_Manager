@@ -1,15 +1,27 @@
+<?php
+// Retrieve the card_number from the query parameters
+$cardNumber = isset($_GET['card_number']) ? htmlspecialchars($_GET['card_number']) : '';
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Add Funds</title>
     <link rel="stylesheet" href="../css/add_funds.css">
 </head>
+
 <body>
-    <?php include('../customerNavBar.php'); ?>
+    <?php include ('../customerNavBar.php'); ?>
     <div class="add-funds-container">
         <h2>Add Funds to Wallet</h2>
         <form id="addFundsForm">
+            <div class="form-input">
+                <!-- Display the card number in a readonly input box -->
+            <label for="card_number">Card Number:</label>
+            <input type="text" id="card_number" name="card_number" value="<?php echo $cardNumber; ?>" readonly>
+            </div>
+            
             <div class="form-input">
                 <label for="amount">Enter Amount:</label>
                 <input type="number" id="amount" name="amount" min="1" required>
@@ -20,7 +32,7 @@
     </div>
 
     <script>
-        document.getElementById('addFundsForm').addEventListener('submit', function(event) {
+        document.getElementById('addFundsForm').addEventListener('submit', function (event) {
             event.preventDefault();
 
             const amount = document.getElementById('amount').value;
@@ -34,21 +46,22 @@
                     'amount': amount
                 })
             })
-            .then(response => response.json())
-            .then(data => {
-                const message = document.getElementById('message');
-                if (data.success) {
-                    alert('Funds Added to Wallet Successfully.' + data.message);
-                    location.reload(); // Refresh the page
-                } else {
-                    alert('Failed to add Funds to Wallet: ' + data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('message').textContent = 'An error occurred. Please try again.';
-            });
+                .then(response => response.json())
+                .then(data => {
+                    const message = document.getElementById('message');
+                    if (data.success) {
+                        alert('Funds Added to Wallet Successfully.' + data.message);
+                        location.reload(); // Refresh the page
+                    } else {
+                        alert('Failed to add Funds to Wallet: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('message').textContent = 'An error occurred. Please try again.';
+                });
         });
     </script>
 </body>
+
 </html>

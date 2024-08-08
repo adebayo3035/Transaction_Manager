@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" class="card-form" id="card-form">
+        <label for="month">Month: </label><input type="month" name="month" id="month">
+        <button type="submit">Submit</button>
+    </form>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+    const monthControl = document.querySelector('input[type="month"]');
+
+    // Event listener for form submission or when the month is selected
+    document.getElementById('card-form').addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent default form submission
+        
+        const selectedDate = monthControl.value; // Gets value in YYYY-MM format
+        const [year, month] = selectedDate.split('-');
+        
+        // Convert to MM/YY format
+        const formattedDate = `${month}/${year}`;
+        
+        // For demonstration purposes, log the formatted date
+        console.log('Formatted Date:', formattedDate);
+        console.log(typeof(formattedDate));
+        console.log(typeof(monthControl.value));
+        
+        // You can now send `formattedDate` to the server or use it as needed
+        // Example using AJAX to send data:
+        // sendFormData(formattedDate);
+    });
+});
+
+    </script>
+</body>
+</html>
