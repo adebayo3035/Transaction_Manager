@@ -39,4 +39,15 @@ $decryption=openssl_decrypt ($encryption, $ciphering,
 
 // Display the decrypted string
 echo "Decrypted String: " . $decryption;
+echo "<br/>";
+$pin = '1234';
+$db_pin = "04ac6ff46fbeca79589a9f597a1e77bb";
+$encrypted_pin = md5('$pin');
+if($db_pin == $encrypted_pin){
+	echo "Pin Validation Successful";
+}
+else{
+	echo "Pin Validation Failed";
+}
+
 

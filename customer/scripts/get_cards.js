@@ -32,6 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     // Set the card number as a data attribute
                     cardElement.dataset.cardNumber = cardss.card_number;
+                    cardElement.dataset.cvv = cardss.cvv;
+                    cardElement.title = "Click to Add funds to your wallet";
+                    cardElement.style.cursor = "pointer";
 
                     cardElement.innerHTML = `
                         <div class="card-content">
@@ -53,8 +56,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Add click event listener to the card element
                     cardElement.addEventListener('click', () => {
                         const cardNumber = cardElement.dataset.cardNumber;
-                        window.location.href = `../v1/add_funds.php?card_number=${encodeURIComponent(cardNumber)}`;
-                    });
+                        const cvv = cardElement.dataset.cvv;
+                        window.location.href = `../v1/add_funds.php?card_number=${encodeURIComponent(cardNumber)}&cvv=${encodeURIComponent(cvv)}`;                    });
 
                     ordersTableBody.appendChild(cardElement);
                 });

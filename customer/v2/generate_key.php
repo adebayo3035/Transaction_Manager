@@ -42,4 +42,21 @@ echo "Encrypted Input String: " . $encrypted_string . "<br><br>";
 // Decrypt the string
 $decrypted_string = decryptString($encrypted_string, $encryption_key, $encryption_iv);
 echo "Decrypted Input String: " . $decrypted_string . "\n";
-?>
+
+include('config.php');
+function getStoredPinHash($cardNumber, $conn) {
+    $stmt = $conn->prepare("SELECT card_pin FROM cards WHERE card_number = ?");
+    $stmt->bind_param("s", $cardNumber);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $stmt->close();
+    return $row ? $row['card_pin'] : null;
+}
+
+// Validate PIN
+$storedPinHash = getStoredPinHash($cardNumber, $conn);
+if (md5('1234') <> $storedPinHash) {
+    echo "Invalid PIN";
+    exit;
+}

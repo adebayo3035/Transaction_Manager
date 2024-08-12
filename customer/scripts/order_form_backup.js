@@ -15,7 +15,9 @@ document.addEventListener('DOMContentLoaded', function () {
         if (isNaN(quantity) || isNaN(foodPrice)) {
             console.error('Invalid quantity or price');
             return;
-        } 
+        } else {
+            console.log("Quantity and Price are Valid Data Type");
+        }
 
         if (foodId && quantity > 0) {
             let totalPrice = foodPrice * quantity;
@@ -44,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
             `;
 
             orderSummaryTable.appendChild(row);
+            // Clear input fields after adding food item
             foodSelect.value = "";
             quantityInput.value = "";
 
@@ -56,8 +59,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (newQuantity !== null && !isNaN(newQuantity) && newQuantity > 0) {
                     const newTotalPrice = foodPrice * newQuantity;
                     row.cells[2].innerText = newQuantity;
-                    row.cells[4].innerText = `N ${newTotalPrice.toFixed(2)}`;
+                    row.cells[4].innerText = `$${newTotalPrice.toFixed(2)}`;
 
+                    // Update order items array
                     orderItem.quantity = newQuantity;
                     orderItem.total_price = newTotalPrice;
 
@@ -80,61 +84,66 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-   submitOrderButton.addEventListener('click', function () {
-    // Validate quantities before sending the request
-    fetch('../v2/validate_quantities.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ order_items: orderItems })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (!data.success) {
-            alert('Failed to place order: ' + data.message);
-            return;
-        }
+    submitOrderButton.addEventListener('click', function () {
+        console.log('Order Items:', JSON.stringify({ order_items: orderItems }));
 
-        // Calculate the total amount
-        let totalAmount = orderItems.reduce((sum, item) => sum + item.total_price, 0);
-        let serviceFee = 0.05 * totalAmount; // 5% service fee
-        let deliveryFee = 0.02 * totalAmount; // Fixed delivery fee
-
-        // Send the order details and total amount to the server for session storage
-        fetch('../v2/save_order_to_session.php', {
+        // Validate quantities before sending the request
+        fetch('../v2/validate_quantities.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ order_items: orderItems, total_amount: totalAmount.toFixed(2), service_fee: serviceFee, delivery_fee: deliveryFee })
+            body: JSON.stringify({ order_items: orderItems })
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // Redirect to checkout.php
-                window.location.href = '../v1/checkout.php';
-            } else {
-                alert('Failed to save order details.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            document.getElementById('message').textContent = 'An error occurred. Please try again.';
-        });
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        document.getElementById('message').textContent = 'An error occurred. Please try again.';
-    });
-});
+            .then(response => response.json())
+            .then(data => {
+                if (!data.success) {
+                    alert('Failed to place order: ' + data.message);
+                    return;
+                }
 
+                // Calculate the total amount
+                let totalAmount = 0;
+                orderItems.forEach(item => {
+                    totalAmount += parseFloat(item.total_price);
+                });
+
+                console.log('Total Amount:', totalAmount);
+                console.log("Data Type of Total amount is:", typeof(totalAmount));
+
+                // Proceed with placing the order
+                fetch('../v2/place_order.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ order_items: orderItems, total_amount: totalAmount })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Order placed successfully.' + data.message);
+                            location.reload(); // Refresh the page
+                        } else {
+                            alert('Failed to place order: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        document.getElementById('message').textContent = 'An error occurred. Please try again.';
+                    });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('message').textContent = 'An error occurred. Please try again.';
+            });
+    });
 
     function updateTotalAmount() {
         const totalAmountElement = document.getElementById('totalAmount');
         const totalAmountInput = document.getElementById('total_amount_input');
         let totalAmount = orderItems.reduce((sum, item) => sum + item.total_price, 0);
-        totalAmountElement.textContent = `N ${totalAmount.toFixed(2)}`;
+        totalAmountElement.textContent = totalAmount.toFixed(2);
         totalAmountInput.value = totalAmount.toFixed(2);
     }
 });

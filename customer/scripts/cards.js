@@ -66,6 +66,8 @@ document.getElementById('addCardsForm').addEventListener('submit', function (e) 
         .then(data => {
             if (data.success) {
                 console.log("Card has been Successfully added");
+                alert('Your Card has been successfully added');
+                modal.style.display = 'none';
                 // document.getElementById("orderModal").style.display = "none";
                 // window.location.reload();
             } else {

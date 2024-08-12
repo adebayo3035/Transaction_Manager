@@ -13,26 +13,26 @@
     <section class="container">
         <div class="card_menu">
             <ul class="card-menu">
-                <li> <a onclick = "toggleModal()">Add New Card</a></li>
+                <li> <a onclick="toggleModal()">Add New Card</a></li>
                 <li> <a href="">Delete Card Details</a></li>
-                <li> <a href ="add_funds.php">Fund Wallet</a></li>
-                <li> <a href ="add_funds.php">Fund Wallet</a></li>
-                <li> <a href ="add_funds.php">Change Password</a></li>
-                <li> <a href ="add_funds.php">Change Phone Number</a></li>
-                <!-- <li> <a href="">Modify Card Information</a></li> -->
-                
+                <li> <a href="add_funds.php">Fund Wallet</a></li>
+                <!-- <li> <a href ="add_funds.php">Fund Wallet</a></li> -->
+                <li> <a href="add_funds.php">Change Password</a></li>
+                <li> <a href="add_funds.php">Change Phone Number</a></li>
+                <li> <a href="generate_token.php">Generate Token</a></li>
+
                 <!-- <li> <a href="">View My Cards</a></li> -->
             </ul>
         </div>
 
         <!--  CARDS SECTION -->
-    <div class="card-container" id="card-container">
+        <div class="card-container" id="card-container">
 
-    </div>
- 
-    </div>
+        </div>
 
-    <!-- ADD NEW CARD FORM --> 
+        </div>
+
+        <!-- ADD NEW CARD FORM -->
     </section>
 
     <!-- Modal to add new Card -->
@@ -55,26 +55,31 @@
                 </div>
                 <div class="form-input date">
                     <div class="month">
-                    <label for="month">Expiry Date:</label>
-                    <!-- <input type="date" id="expiry_date" name="expiry_date" maxlength="2" required> -->
-                    <input type="month"id="expiry_date" name="expiry_date"required >
+                        <label for="month">Expiry Date:</label>
+                        <!-- <input type="date" id="expiry_date" name="expiry_date" maxlength="2" required> -->
+                        <input type="month" id="expiry_date" name="expiry_date" required>
                     </div>
-                    
                     <div class="cvv">
-                    <label for="cvv">CVV:</label>
-                    <input type="number" id="cvv" name="cvv" maxlength="3" required>
+                        <label for="pin">PIN:</label>
+                        <input type="password" id="pin" name="pin" maxlength="4" required>
+                    </div>
+
+
+                    <div class="cvv">
+                        <label for="cvv">CVV:</label>
+                        <input type="password" id="cvv" name="cvv" maxlength="3" required>
                     </div>
                     <input type="hidden" id="formatted_expiry_date" name="formatted_expiry_date">
-                    
+
                 </div>
                 <button type="submit">Add Card</button>
             </form>
             <div id="message"></div>
         </div>
     </div>
-    
-<script src="../scripts/cards.js"></script>
-<script src="../scripts/get_cards.js"></script>
+
+    <script src="../scripts/cards.js"></script>
+    <script src="../scripts/get_cards.js"></script>
 </body>
 
 </html>
