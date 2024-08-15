@@ -28,18 +28,20 @@
     box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 button {
     width: 70%;
+    max-width: 300px;
     padding: 10px;
-    background-color: #28a745;
+    background-color: #a72828;
     border: none;
     color: white;
     font-size: 16px;
     border-radius: 4px;
     cursor: pointer;
-    margin-bottom: 10px;
+    margin: 10px 0;
 }
 
 button:hover {

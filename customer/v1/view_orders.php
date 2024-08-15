@@ -15,7 +15,7 @@
             <input type="text" id="liveSearch" placeholder="Search for Order...">
             <button type="submit">Search <i class="fa fa-search" aria-hidden="true"></i></button>
         </div>
-        <h1>Your Orders</h1>
+        <h1>My Orders</h1>
     </div>
 
     <table id="ordersTable">

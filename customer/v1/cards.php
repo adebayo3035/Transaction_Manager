@@ -27,6 +27,7 @@
 
         <!--  CARDS SECTION -->
         <div class="card-container" id="card-container">
+            <!-- Customer Cards will be automatically populated here -->
 
         </div>
 

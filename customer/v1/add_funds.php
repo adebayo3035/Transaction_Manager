@@ -1,7 +1,8 @@
+
 <?php
-// Retrieve the card_number from the query parameters
-$cardNumber = isset($_GET['card_number']) ? htmlspecialchars($_GET['card_number']) : '';
-$cvv = isset($_GET['cvv']) ? htmlspecialchars($_GET['cvv']) : '';
+// Retrieve the card_number and cvv from the POST parameters
+$cardNumber = isset($_POST['card_number']) ? htmlspecialchars($_POST['card_number']) : '';
+$cvv = isset($_POST['cvv']) ? htmlspecialchars($_POST['cvv']) : '';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,18 +15,19 @@ $cvv = isset($_GET['cvv']) ? htmlspecialchars($_GET['cvv']) : '';
 
 <body>
     <?php include ('../customerNavBar.php'); ?>
+
     <div class="add-funds-container">
         <h2>Add Funds to Wallet</h2>
         <form id="addFundsForm">
             <div class="form-input">
                 <!-- Display the card number in a readonly input box -->
-                <label for="card_number">Card Number:</label>
-                <input type="text" id="card_number" name="card_number" value="<?php echo $cardNumber; ?>" readonly >
+               
+                <input type="text" id="card_number" name="card_number" value="<?php echo $cardNumber; ?>" readonly hidden>
             </div>
             <div class="form-input">
                 <!-- Display the card number in a readonly input box -->
-                <label for="card_number">CVV:</label>
-                <input type="text" id="cvv" name="cvv" value="<?php echo $cvv; ?>" readonly>
+                
+                <input type="password" id="cvv" name="cvv" value="<?php echo $cvv; ?>" readonly hidden>
             </div>
 
             <div class="form-input">
@@ -35,21 +37,22 @@ $cvv = isset($_GET['cvv']) ? htmlspecialchars($_GET['cvv']) : '';
             <div class="form-input">
                 <label for="pin">PIN:</label>
                 <input type="password" id="pin" name="pin" required>
+            </div>
 
-                <div class="form-input">
-                    <label for="token">Token:</label>
-                    <input type="text" id="token" name="token"  required>
-                    <button type="button" id="generateTokenBtn">Generate Token</button>
-                </div>
-               
+            <div class="form-input">
+                <label for="token">Token:</label>
+                <input type="text" id="token" name="token" readonly onpaste="handlePaste(event)" required>
+                <!-- <button type="button" id="generateTokenBtn">Generate Token</button> -->
             </div>
             <button type="submit">Add Funds</button>
-        </form>
-        <div id="message"></div>
+    </div>
+    
+    </form>
+    <div id="message"></div>
     </div>
 
     <script src="../scripts/add_funds.js">
-        
+
     </script>
 </body>
 

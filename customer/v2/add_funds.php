@@ -8,15 +8,29 @@ if (!isset($_SESSION['customer_id'])) {
     exit();
 }
 
-function getStoredPinHash($customerId, $conn) {
-    $stmt = $conn->prepare("SELECT card_pin FROM cards WHERE customer_id = ?");
-    $stmt->bind_param("i", $customerId);
+function getStoredPinHash($customerId, $cardNumber, $conn) {
+    $stmt = $conn->prepare("SELECT card_pin FROM cards WHERE customer_id = ? and card_number = ?");
+    $stmt->bind_param("is", $customerId, $cardNumber);
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
     $stmt->close();
     return $row ? $row['card_pin'] : null;
 }
+
+// function to check if customer has wallet
+function checkWalletExists($customerId, $conn) {
+    $walletId = '';
+    $balance = '';
+    $stmt = $conn->prepare("SELECT wallet_id, balance FROM wallets WHERE customer_id = ?");
+    $stmt->bind_param("i", $customerId);
+    $stmt->execute();
+    $stmt->bind_result($walletId, $balance);
+    $walletExists = $stmt->fetch();
+    $stmt->close();
+    return $walletExists ? ['wallet_id' => $walletId, 'balance' => $balance] : null;
+}
+
 
 function getCumulativeDeposit($customerId, $conn) {
     $today = date('Y-m-d');
@@ -52,28 +66,39 @@ if (!is_numeric($amount) || $amount <= 0 || $amount > 100000) {
 
 $cumulativeDeposit = getCumulativeDeposit($customerId, $conn);
 if (($cumulativeDeposit + $amount) > 300000) {
-    echo json_encode(['success' => false, 'message' => 'Cumulative deposit limit for the day exceeded']);
+    echo json_encode(['success' => false, 'message' => 'This transaction will make you exceed the Cumulative deposit limit today']);
     exit;
 }
 
-$storedPinHash = getStoredPinHash($customerId, $conn);
+$storedPinHash = getStoredPinHash($customerId,$encrypted_cardNumber, $conn);
 if ($encrypted_pin !== $storedPinHash) {
     echo json_encode([
         'success' => false,
-        'message' => 'Invalid PIN. Entered PIN (hashed): ' . $encrypted_pin ."  Stored Pin Hash is: ". $storedPinHash
+        'message' => 'Error Occured.Invalid Card Details'
     ]);
     exit;
 }
 
+$walletData = checkWalletExists($customerId, $conn);
 $description = "Wallet Funding";
 $paymentMethod = 'Card';
+
+if ($walletData) {
+    // Wallet exists, update the balance
+    $stmt = $conn->prepare("UPDATE wallets SET balance = balance + ?, date_last_updated = NOW() WHERE wallet_id = ?");
+    $stmt->bind_param("di", $amount, $walletData['wallet_id']);
+    $stmt->execute();
+    $stmt->close();
+} else {
+    // Wallet does not exist, create a new wallet
+    $stmt = $conn->prepare("INSERT INTO wallets (customer_id, balance, date_last_updated) VALUES (?, ?, NOW())");
+    $stmt->bind_param("id", $customerId, $amount);
+    $stmt->execute();
+    $walletId = $stmt->insert_id;
+    $stmt->close();
+}
 $stmt = $conn->prepare("INSERT INTO customer_transactions (customer_id, amount, date_created, transaction_type, payment_method, description) VALUES (?, ?, NOW(), 'credit', ?, ?)");
 $stmt->bind_param("idss", $customerId, $amount, $paymentMethod, $description);
-$stmt->execute();
-$stmt->close();
-
-$stmt = $conn->prepare("UPDATE wallets SET balance = balance + ? WHERE customer_id = ?");
-$stmt->bind_param("di", $amount, $customerId);
 $stmt->execute();
 $stmt->close();
 

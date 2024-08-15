@@ -6,7 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const bankTransferDetails = document.getElementById('bank_transfer_details');
     const bankAccountInput = document.getElementById('bank_account');
     const bankNameSelect = document.getElementById('bank_name');
-
+    const orderItems = JSON.parse(sessionStorage.getItem('order_items'));
+    if(orderItems.length == 0){
+        location.replace('../v1/dashboard.php');
+        exit();
+    }
     
 
 
@@ -84,6 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.success) {
                     alert('Payment processed successfully');
                     // Redirect to a different page or show success message
+                    location.replace('../v1/dashboard.php')
                 } else {
                     alert('Error: ' + data.message);
                 }

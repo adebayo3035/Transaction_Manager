@@ -85,7 +85,7 @@
                 </tbody>
             </table>
             <div class="total-amount">
-                <h3>Total Amount: N<span id="totalAmount">0.00</span></h3>
+                <h3>Total Amount: <span id="totalAmount">0.00</span></h3>
 
             </div>
             <button type="button" id="submitOrderButton">Checkout</button>

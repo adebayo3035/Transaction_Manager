@@ -1,0 +1,103 @@
+body{
+    display: flex;
+    flex-direction: column;
+}
+.token-container {
+    text-align: center;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+    margin: auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    align-self: center;
+    width: 50%;
+}
+.token-container h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+.token-container span.header{
+    font-size: 11px;
+    text-align: justify;
+    padding: 5px;
+}
+.token-container span.footer{
+    font-size: 9px;
+    text-align: justify;
+    padding: 5px;
+}
+
+.token-container input {
+    margin: 10px 20px;
+    text-align: left;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-input label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.token-container input {
+    width: 70%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    width: 70%;
+    padding: 10px;
+    background-color: #a72828;
+    border: none;
+    color: white;
+    font-size: 13px;
+    border-radius: 4px;
+    cursor: pointer;
+    
+    margin-bottom: 10px;
+}
+.copy-btn{
+    background-color: #2883a7;
+}
+
+.timer-container {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px dashed #ccc;
+    padding: 4px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.progress-ring {
+    transform: rotate(-90deg);
+}
+
+.progress-ring__circle {
+    stroke-dasharray: 339.292; /* 2 * π * r (circumference of the circle) */
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1s linear;
+}
+
+.timer-text {
+    position: absolute;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+@media screen and (max-width: 600px){
+    .token-container{
+        width: 80%;
+        margin: 5px auto;
+    }
+}

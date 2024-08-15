@@ -56,7 +56,8 @@ ul.card-menu li::before
 }
 ul.card-menu li a{
     text-decoration: none;
-    color: #218838;
+    
+    color: #a72828;;
     cursor: pointer;
     
    

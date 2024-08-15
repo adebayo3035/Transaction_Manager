@@ -1,34 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const generateTokenBtn = document.getElementById('generateTokenBtn');
-    const tokenInput = document.getElementById('token');
+    // const generateTokenBtn = document.getElementById('generateTokenBtn');
+    // const tokenInput = document.getElementById('token');
     const form = document.getElementById('addFundsForm');
     const messageDiv = document.getElementById('message');
-
-    // Function to copy token to clipboard
-    function copyToClipboard(text) {
-        navigator.clipboard.writeText(text).then(() => {
-            console.log('Copied to clipboard');
-        }).catch(err => {
-            console.error('Could not copy text: ', err);
-        });
-    }
-
-    // Generate a token
-    generateTokenBtn.addEventListener('click', function() {
-        fetch('../v2/generate_token.php')
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    tokenInput.value = data.token;
-                    copyToClipboard(data.token);
-                } else {
-                    messageDiv.textContent = 'Error generating token.';
-                }
-            })
-            .catch(error => {
-                messageDiv.textContent = 'Error: ' + error.message;
-            });
-    });
 
     // Handle form submission
     form.addEventListener('submit', function(event) {
@@ -63,3 +37,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// function to handle token Pasting
+function handlePaste(event) {
+    event.preventDefault();
+    const pasteData = event.clipboardData.getData('text');
+    const inputField = document.getElementById('token');
+    inputField.value = pasteData;
+}
