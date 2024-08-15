@@ -10,74 +10,82 @@
 </head>
 
 <body>
-<?php include ('../customerNavBar.php'); ?>
+    <?php include ('../customerNavBar.php'); ?>
+
     <script>
+
         document.addEventListener('DOMContentLoaded', function () {
-            // Retrieve order details from session
-            const orderItems = <?php echo json_encode($_SESSION['order_items'] ?? []); ?>;
-            const totalAmount = parseFloat(<?php echo $_SESSION['total_amount'] ?? 0; ?>);
-            const serviceFee = parseFloat(<?php echo $_SESSION['service_fee'] ?? 0; ?>);
-            const deliveryFee = parseFloat(<?php echo $_SESSION['delivery_fee'] ?? 0; ?>);
+            // Store the PHP session data into sessionStorage
+            sessionStorage.setItem('order_items', JSON.stringify(<?php echo json_encode($_SESSION['order_items'] ?? []); ?>));
+            sessionStorage.setItem('total_amount', "<?php echo $_SESSION['total_amount'] ?? 0; ?>");
+            sessionStorage.setItem('service_fee', "<?php echo $_SESSION['service_fee'] ?? 0; ?>");
+            sessionStorage.setItem('delivery_fee', "<?php echo $_SESSION['delivery_fee'] ?? 0; ?>");
 
-            const totalFee = totalAmount + serviceFee + deliveryFee;
-
-
-             // Populate the checkout page
-             const orderTableBody = document.getElementById('orderSummaryTable').querySelector('tbody');
-            orderItems.forEach((item, index) => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${index + 1}</td>
-                    <td>${item.food_name}</td>
-                    <td>${item.quantity}</td>
-                    <td>N ${item.price_per_unit.toFixed(2)}</td>
-                    <td class="total-price">N ${item.total_price.toFixed(2)}</td>
-                `;
-                orderTableBody.appendChild(row);
-            });
-            
+            // Clear session data after it has been stored in sessionStorage
             <?php
-            // Clear session data after it has been used
             $_SESSION['order_items'] = [];
             $_SESSION['total_amount'] = 0;
             $_SESSION['service_fee'] = 0;
             $_SESSION['delivery_fee'] = 0;
             ?>
 
+            // Retrieve order details from sessionStorage
+            const orderItems = JSON.parse(sessionStorage.getItem('order_items') || '[]');
+            const totalAmount = parseFloat(sessionStorage.getItem('total_amount') || 0);
+            const serviceFee = parseFloat(sessionStorage.getItem('service_fee') || 0);
+            const deliveryFee = parseFloat(sessionStorage.getItem('delivery_fee') || 0);
+
+            const totalFee = totalAmount + serviceFee + deliveryFee;
+
+            // Populate the checkout page
+            const orderTableBody = document.getElementById('orderSummaryTable').querySelector('tbody');
+            orderItems.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${item.food_name}</td>
+            <td>${item.quantity}</td>
+            <td>N ${item.price_per_unit.toFixed(2)}</td>
+            <td class="total-price">N ${item.total_price.toFixed(2)}</td>
+        `;
+                orderTableBody.appendChild(row);
+            });
+
             // Populate the checkout page
             document.getElementById('total-order').textContent = `N ${totalAmount.toFixed(2)}`;
             document.getElementById('service-fee').textContent = `N ${serviceFee.toFixed(2)}`;
             document.getElementById('delivery-fee').textContent = `N ${deliveryFee.toFixed(2)}`;
             document.getElementById('total-fee').textContent = `N ${totalFee.toFixed(2)}`;
-            // Other calculations and updates based on totalAmount
         });
     </script>
-   
+
+
+
     <div class="checkout-container">
         <h1>Order Checkout</h1>
 
-        <form id="checkoutForm">
-            <!-- Order Summary -->
-            <div class="order-summary">
-                <h2>Order Summary</h2>
-                
-                <div class="order-item">
-                    <span class="item-name">Order Price</span>
-                    <span class="total-order" id="total-order">0.00</span>
-                </div>
-                <div class="order-item">
-                    <span class="item-name">Service Fee</span>
-                    <span class="total-order" id="service-fee">0.00</span>
-                </div>
-                <div class="order-item">
-                    <span class="item-name">Delivery Fee</span>
-                    <span class="total-order" id="delivery-fee">0.00</span>
-                </div>
-                <div class="order-item">
-                    <span class="item-name">Total Amount</span>
-                    <span class="total-order" id="total-fee">0.00</span>
-                </div>
-                <table id="orderSummaryTable">
+
+        <!-- Order Summary -->
+        <div class="order-summary">
+            <h2>Order Summary</h2>
+
+            <div class="order-item">
+                <span class="item-name">Order Price</span>
+                <span class="total-order" id="total-order">0.00</span>
+            </div>
+            <div class="order-item">
+                <span class="item-name">Service Fee</span>
+                <span class="total-order" id="service-fee">0.00</span>
+            </div>
+            <div class="order-item">
+                <span class="item-name">Delivery Fee</span>
+                <span class="total-order" id="delivery-fee">0.00</span>
+            </div>
+            <div class="order-item">
+                <span class="item-name">Total Amount</span>
+                <span class="total-order" id="total-fee">0.00</span>
+            </div>
+            <table id="orderSummaryTable">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -91,13 +99,14 @@
                     <!-- Order items will be populated here -->
                 </tbody>
             </table>
-            </div>
+        </div>
 
-            <!-- Payment Method -->
+        <!-- Payment Method -->
+        <form id="checkoutForm">
             <div class="payment-method">
                 <h2>Select Payment Method</h2>
                 <div class="payment-option">
-                    <input type="radio" id="credit-card" name="payment_method" value="credit_card" checked>
+                    <input type="radio" id="credit-card" name="payment_method" value="Card" checked>
                     <label for="credit-card">Credit Card</label>
                 </div>
                 <div class="payment-option">
@@ -115,23 +124,28 @@
                 <h2>Credit Card Details</h2>
                 <div class="form-group">
                     <label for="card_number">Card Number:</label>
-                    <input type="text" id="card_number" name="card_number" placeholder="1234 5678 9012 3456" required>
+                    <input type="number" id="card_number" name="card_number" placeholder="1234 5678 9012 3456">
                 </div>
                 <div class="form-group">
                     <label for="card_expiry">Expiry Date:</label>
-                    <input type="text" id="card_expiry" name="card_expiry" placeholder="MM/YY" required>
+                    <input type="month" id="card_expiry" name="card_expiry" placeholder="December 1990">
                 </div>
                 <div class="form-group">
                     <label for="card_cvv">CVV:</label>
-                    <input type="text" id="card_cvv" name="card_cvv" placeholder="123" required>
+                    <input type="number" id="card_cvv" name="card_cvv" placeholder="123">
                 </div>
+                <div class="form-group">
+                    <label for="card_pin">PIN:</label>
+                    <input type="password" id="card_pin" name="card_pin" placeholder="****">
+                </div>
+                <input type="hidden" id="formatted_expiry_date" name="formatted_expiry_date">
             </div>
 
             <div class="payment-details" id="paypal-details">
                 <h2>PayPal Details</h2>
                 <div class="form-group">
                     <label for="paypal_email">PayPal Email:</label>
-                    <input type="email" id="paypal_email" name="paypal_email" placeholder="email@example.com" required>
+                    <input type="email" id="paypal_email" name="paypal_email" placeholder="email@example.com">
                 </div>
             </div>
 

@@ -66,8 +66,9 @@ if ($encrypted_pin !== $storedPinHash) {
 }
 
 $description = "Wallet Funding";
-$stmt = $conn->prepare("INSERT INTO customer_transactions (customer_id, amount, date_created, transaction_type, description) VALUES (?, ?, NOW(), 'credit', ?)");
-$stmt->bind_param("ids", $customerId, $amount, $description);
+$paymentMethod = 'Card';
+$stmt = $conn->prepare("INSERT INTO customer_transactions (customer_id, amount, date_created, transaction_type, payment_method, description) VALUES (?, ?, NOW(), 'credit', ?, ?)");
+$stmt->bind_param("idss", $customerId, $amount, $paymentMethod, $description);
 $stmt->execute();
 $stmt->close();
 
