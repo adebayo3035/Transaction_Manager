@@ -41,7 +41,7 @@
     
        
         <div class="dropdown">
-            <?php echo $_SESSION['restriction_id']; ?>
+            
             <button class="dropbtn"><?php echo "Welcome, {$firstname} {$lastname}"; ?>
                 
                 <i class="fa fa-caret-down"></i>

@@ -11,7 +11,7 @@
 <body>
 <?php 
 include('navbar.php');
-echo $_SESSION['restriction_id'];
+// echo $_SESSION['restriction_id'];
 ?>
 <header>
     <h1>View Pending Orders</h1>

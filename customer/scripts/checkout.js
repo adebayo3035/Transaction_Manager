@@ -7,73 +7,86 @@ document.addEventListener('DOMContentLoaded', () => {
     const bankAccountInput = document.getElementById('bank_account');
     const bankNameSelect = document.getElementById('bank_name');
     const orderItems = JSON.parse(sessionStorage.getItem('order_items'));
-    if(orderItems.length == 0){
+
+    if (!orderItems || orderItems.length === 0) {
         location.replace('../v1/dashboard.php');
-        exit();
+        return;
     }
-    
 
+    const clearInputFields = (...fields) => {
+        fields.forEach(fieldId => {
+            const field = document.getElementById(fieldId);
+            if (field) field.value = '';
+        });
+    };
 
-    // Use switch case to select Payment method
-    paymentMethods.forEach(method => {
-        method.addEventListener('change', function () {
-            if (method.value == 'bank_transfer') {
-
-                creditCardDetails.style.display = 'none';
-                paypalDetails.style.display = 'none';
-                bankTransferDetails.style.display = 'block';
-            }
-            else if (method.value === 'paypal') {
-                creditCardDetails.style.display = 'none';
-                paypalDetails.style.display = 'block';
-                bankTransferDetails.style.display = 'none';
-            }
-            else {
+    const togglePaymentDetails = (method) => {
+        const paymentDetails = {
+            'Card': () => {
                 creditCardDetails.style.display = 'block';
                 paypalDetails.style.display = 'none';
                 bankTransferDetails.style.display = 'none';
+                clearInputFields('bank_name', 'bank_account', 'paypal_email');
+            },
+            'paypal': () => {
+                creditCardDetails.style.display = 'none';
+                paypalDetails.style.display = 'block';
+                bankTransferDetails.style.display = 'none';
+                clearInputFields('card_number', 'card_expiry', 'card_cvv', 'card_pin', 'bank_name', 'bank_account');
+            },
+            'bank_transfer': () => {
+                creditCardDetails.style.display = 'none';
+                paypalDetails.style.display = 'none';
+                bankTransferDetails.style.display = 'block';
+                clearInputFields('card_number', 'card_expiry', 'card_cvv', 'card_pin', 'paypal_email');
             }
-        })
-    })
-    // Form submission
-    checkoutForm.addEventListener('submit', function (event) {
-        event.preventDefault(); // Prevent default form submission
+        };
 
-        // Get Order Items from the session storage
-        const orderItems = JSON.parse(sessionStorage.getItem('order_items'));
+        (paymentDetails[method.value] || (() => {}))();
+    };
+
+    paymentMethods.forEach(method => {
+        method.addEventListener('change', () => togglePaymentDetails(method));
+    });
+
+    const formatExpiryDate = (expiryDate) => {
+        const [year, month] = expiryDate.split('-');
+        return `${month.padStart(2, '0')}-${year}`;
+    };
+
+    checkoutForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
         const totalOrder = parseFloat(sessionStorage.getItem('total_amount'));
         const serviceFee = parseFloat(sessionStorage.getItem('service_fee'));
         const deliveryFee = parseFloat(sessionStorage.getItem('delivery_fee'));
-        const totalAmount = totalOrder + serviceFee + deliveryFee
+        const totalAmount = totalOrder + serviceFee + deliveryFee;
 
-        // format expiry Date
-        // Extract the expiry date value
-        const expiryDateInput = document.getElementById('card_expiry').value;
-        const [year, month] = expiryDateInput.split('-');
+        const selectedPaymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
 
-        // Format it as MM/YY for display
-        const formattedExpiryDate = `${month}/${year.slice(-2)}`;
-        document.getElementById('formatted_expiry_date').value = formattedExpiryDate;
-
-        // Format it as YYYY-MM for PHP processing
-        const formattedExpiryDateYYYYMM = `${month.padStart(2, '0')}-${year}`;
-
-        const paymentDetails = {
-            payment_method: document.querySelector('input[name="payment_method"]:checked').value,
-            card_number: document.getElementById('card_number').value,
-            // card_expiry: document.getElementById('card_expiry').value,
-            card_expiry: formattedExpiryDateYYYYMM,
-            card_cvv: document.getElementById('card_cvv').value,
-            card_pin: document.getElementById('card_pin').value,
-            paypal_email: document.getElementById('paypal_email').value,
-            bank_name: document.getElementById('bank_name').value,
-            bank_account: document.getElementById('bank_account').value,
+        let paymentDetails = {
+            payment_method: selectedPaymentMethod,
             order_items: orderItems,
             total_amount: totalAmount,
             service_fee: serviceFee,
             delivery_fee: deliveryFee,
             total_order: totalOrder
         };
+
+        if (selectedPaymentMethod === 'Card') {
+            paymentDetails = {
+                ...paymentDetails,
+                card_number: document.getElementById('card_number').value,
+                card_expiry: formatExpiryDate(document.getElementById('card_expiry').value),
+                card_cvv: document.getElementById('card_cvv').value,
+                card_pin: document.getElementById('card_pin').value
+            };
+        } else if (selectedPaymentMethod === 'paypal') {
+            paymentDetails.paypal_email = document.getElementById('paypal_email').value;
+        } else if (selectedPaymentMethod === 'bank_transfer') {
+            paymentDetails.bank_name = document.getElementById('bank_name').value;
+            paymentDetails.bank_account = document.getElementById('bank_account').value;
+        }
 
         fetch('../v2/process_payment.php', {
             method: 'POST',
@@ -82,47 +95,33 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             body: JSON.stringify(paymentDetails)
         })
-            // Send data to server
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Payment processed successfully');
-                    // Redirect to a different page or show success message
-                    location.replace('../v1/dashboard.php')
-                } else {
-                    alert('Error: ' + data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred. Please try again.'.error);
-            });
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Payment processed successfully');
+                location.replace('../v1/dashboard.php');
+            } else {
+                alert('Error: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        });
     });
 
-    bankNameSelect.addEventListener('change', function () {
-        const bankName = this.value;
-        const virtualBankAccountNumber = generateVirtualBankAccountNumber();
-        bankAccountInput.value = virtualBankAccountNumber;
+    bankNameSelect.addEventListener('change', () => {
+        bankAccountInput.value = generateVirtualBankAccountNumber();
     });
-    function generateVirtualBankAccountNumber() {
-        return Math.floor(1000000000 + Math.random() * 9000000000).toString();
 
-    }
+    const generateVirtualBankAccountNumber = () => Math.floor(1000000000 + Math.random() * 9000000000).toString();
+
+    const setMinMonth = () => {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        document.querySelector('input[type="month"]').min = `${year}-${month}`;
+    };
+
+    setMinMonth();
 });
-
-const monthControl = document.querySelector('input[type="month"]');
-
-// Function to set the minimum value of the month input
-function setMinMonth() {
-    // Get the current date
-    const now = new Date();
-    // Extract the current year and month
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based, so add 1
-    // Format the date in YYYY-MM
-    const currentMonth = `${year}-${month}`;
-    // Set the min attribute of the input element
-    monthControl.min = currentMonth;
-}
-// Call the function to set the minimum value
-setMinMonth();

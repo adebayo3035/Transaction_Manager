@@ -33,6 +33,9 @@ $totalAmount = $data['total_amount'] ?? 0;
 $serviceFee = $data['service_fee'] ?? 0;
 $deliveryFee = $data['delivery_fee'] ?? 0;
 $totalOrder = $data['total_order'] ?? 0;
+$bankName = $data['bank_name'] ?? null;
+$bankAccount = $data['bank_account'] ?? null;
+$paypalEmail = $data['paypal_email'] ?? null;
 
 // Initialize the response
 $response = ['success' => false, 'message' => 'Unknown error occurred'];
@@ -53,16 +56,24 @@ switch ($paymentMethod) {
             $response['message'] = 'Missing credit card details';
         }
         break;
-    case 'bank_transfer':
-        $bankName = $data['bank_name'] ?? null;
-        $bankAccount = $data['bank_account'] ?? null;
 
+    case 'bank_transfer':
         if ($bankName && $bankAccount) {
             // Perform bank transfer validation (assuming basic validation)
             $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $paymentMethod, $conn);
             $response['message'] = 'Congratulations! Bank transfer validation successful.';
         } else {
             $response['message'] = 'Missing bank transfer details';
+        }
+        break;
+
+    case 'paypal':
+        if ($paypalEmail) {
+            // Process PayPal payment here
+            $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $paymentMethod, $conn);
+            $response['message'] = 'PayPal payment processed successfully.';
+        } else {
+            $response['message'] = 'Missing PayPal details';
         }
         break;
 
@@ -190,7 +201,7 @@ function validateCardPayment($customerId, $inputCardNumber, $inputCVV, $inputExp
     $cardDetails = getDecryptedCardDetails($customerId, $dbConnection, $key, $iv);
     $validCard = validateCardOwnership($cardDetails, $inputCardNumber, $inputCVV, $inputExpiryDate);
     if (!$validCard) {
-        return ['success' => false, 'message' => 'Card details do not match our records.'];
+        return ['success' => false, 'message' => 'Invalid Card Details.'];
     }
     if (!validateCardPIN($inputCardPIN, $validCard['encryptedCardPIN'])) {
         return ['success' => false, 'message' => 'Invalid card PIN.'];

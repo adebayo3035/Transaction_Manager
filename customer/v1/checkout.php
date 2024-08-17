@@ -149,7 +149,7 @@
                 </div>
             </div>
 
-            <div class="form-input" id="bank_transfer_details">
+            <div class="form-input payment-details" id="bank_transfer_details">
                 <label for="bank_name">Bank Name:</label>
                 <select id="bank_name" name="bank_name">
                     <option value="">Select Bank</option>

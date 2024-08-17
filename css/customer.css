@@ -37,6 +37,7 @@ body {
     outline: none;
     background-color: transparent;
     margin-right: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 .container .livesearch button{
     padding: 11px 20px;
@@ -185,6 +186,7 @@ body {
   margin-bottom: 10px;
   width: 100%;
   box-sizing: border-box; /* Ensure padding and border are included in the width */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .add_group button {
@@ -239,6 +241,7 @@ body {
   .add_group select {
     width: 100%;
     max-width: 100%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
 }
 

@@ -33,7 +33,7 @@
             <div class="timer-text" id="timer">60</div>
         </div>
 
-        <button class="copy-btn" onclick="copyToken()">Copy Token</button>
+        <button class="copy-btn" id="copy-token" onclick="copyToken()">Copy Token</button>
         <button id="generate-token">Generate Token</button>
         <span class="footer"> This Token wil expire after 1 minute(s)</span>
     </div>
