@@ -38,7 +38,7 @@ if (isset($data['order_id']) && isset($data['status'])) {
         $stmt->close();
 
         // Update the status in the revenue table
-        $revenue_query = "UPDATE revenue SET status = ? WHERE order_id = ?";
+        $revenue_query = "UPDATE revenue SET status = ?, updated_at = NOW() WHERE order_id = ?";
         $revenue_stmt = $conn->prepare($revenue_query);
         if (!$revenue_stmt) {
             throw new Exception('Prepare statement failed for revenue: ' . $conn->error);
@@ -69,6 +69,15 @@ if (isset($data['order_id']) && isset($data['status'])) {
             // Refund the customer
             $stmt = $conn->prepare("UPDATE wallets SET balance = balance + ? WHERE customer_id = ?");
             $stmt->bind_param("di", $totalAmount, $customerId);
+            $stmt->execute();
+            $stmt->close();
+
+            //Insert Refund into customer_transaction table
+            // Insert into customer transaction table
+            $description = "Declined Food Order Refund for Order ID: ". $order_id;
+            $paymentMethod = "Transaction Refund";
+            $stmt = $conn->prepare("INSERT INTO customer_transactions (customer_id, amount, date_created, transaction_type, payment_method, description) VALUES (?, ?, NOW(), 'credit', ?, ?)");
+            $stmt->bind_param("idss", $customerId, $totalAmount, $paymentMethod, $description);
             $stmt->execute();
             $stmt->close();
 

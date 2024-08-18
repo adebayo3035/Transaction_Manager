@@ -18,15 +18,14 @@ $cvv = isset($_POST['cvv']) ? htmlspecialchars($_POST['cvv']) : '';
 
     <div class="add-funds-container">
         <h2>Add Funds to Wallet</h2>
-        <form id="addFundsForm">
+        <form id="addFundsForm1" class="addFundsForm">
             <div class="form-input">
                 <!-- Display the card number in a readonly input box -->
-               
-                <input type="text" id="card_number" name="card_number" value="<?php echo $cardNumber; ?>" readonly hidden>
+                <input type="text" id="card_number_addFunds" name="card_number_addFunds" value="<?php echo $cardNumber; ?>" readonly hidden>
             </div>
             <div class="form-input">
                 <!-- Display the card number in a readonly input box -->
-                
+
                 <input type="password" id="cvv" name="cvv" value="<?php echo $cvv; ?>" readonly hidden>
             </div>
 

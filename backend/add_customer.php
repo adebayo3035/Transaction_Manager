@@ -10,17 +10,19 @@ $email = mysqli_real_escape_string($conn, $_POST['email']);
 $password = mysqli_real_escape_string($conn, $_POST['password']);
 $mobile_number = mysqli_real_escape_string($conn, $_POST['phoneNumber']);
 $address = mysqli_real_escape_string($conn, $_POST['address']);
+$secret_question = mysqli_real_escape_string($conn, $_POST['secret_question']);
+$secret_answer = mysqli_real_escape_string($conn, $_POST['secret_answer']);
+$encrypted_answer = md5($secret_answer);
 $group= mysqli_real_escape_string($conn, $_POST['group']);
 $unit = mysqli_real_escape_string($conn, $_POST['unit']);
 $date_created = date('Y-m-d H:i:s');
 $date_updated = date('Y-m-d H:i:s');
-
 $minLength = 8;
 $hasSpecialChar = preg_match('/[!@#$%^&*(),.?":{}|<>_]/', $password);
 $hasUpperCase = preg_match('/[A-Z]/', $password);
 $hasDigit = preg_match('/\d/', $password);
 
-if (!empty($firstname) && !empty($lastname) && !empty($gender) && !empty($email) && !empty($mobile_number) && !empty($address) && !empty($group) && !empty($unit)) {
+if (!empty($firstname) && !empty($lastname) && !empty($gender) && !empty($email) && !empty($mobile_number) && !empty($address)  && !empty($secret_question) && !empty($secret_answer) && !empty($group) && !empty($unit)) {
     if (((strlen($password)) < $minLength) || (!$hasSpecialChar) || (!$hasUpperCase) || (!$hasDigit)) {
         echo json_encode(['success' => false, 'message' => 'Please input a valid password.']);
         exit();
@@ -56,8 +58,8 @@ if (!empty($firstname) && !empty($lastname) && !empty($gender) && !empty($email)
                             $status = "Active now";
                             $encrypt_pass = md5($password);
 
-                            $insert_query = mysqli_query($conn, "INSERT INTO customers (customer_id, firstname, lastname, gender, email, password, mobile_number, address, photo, group_id, unit_id, date_created, date_updated)
-                            VALUES ({$customer_id}, '{$firstname}', '{$lastname}', '{$gender}', '{$email}', '{$encrypt_pass}', '{$mobile_number}', '{$address}', '{$new_img_name}', '{$group}', '{$unit}', '{$date_created}', '{$date_updated}')");
+                            $insert_query = mysqli_query($conn, "INSERT INTO customers (customer_id, firstname, lastname, gender, email, password, mobile_number, address, secret_question, secret_answer, photo, group_id, unit_id, date_created, date_updated)
+                            VALUES ({$customer_id}, '{$firstname}', '{$lastname}', '{$gender}', '{$email}', '{$encrypt_pass}', '{$mobile_number}', '{$address}', '{$secret_question}', '{$encrypted_answer}', '{$new_img_name}', '{$group}', '{$unit}', '{$date_created}', '{$date_updated}')");
 
                             if ($insert_query) {
                                 echo json_encode(['success' => true]);

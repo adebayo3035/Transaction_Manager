@@ -9,20 +9,17 @@
 </head>
 
 <body>
-    <?php include ('../customerNavBar.php'); ?>
+    <?php include('../customerNavBar.php'); ?>
     <section class="container">
         <div class="card_menu">
             <ul class="card-menu">
-                <li> <a onclick="toggleModal()">Add New Card</a></li>
+                <li> <a onclick="toggleModal('orderModal')">Add New Card</a></li>
                 <li> <a href="">Delete Card Details</a></li>
-                <li> <a href="add_funds.php">Fund Wallet</a></li>
-                <!-- <li> <a href ="add_funds.php">Fund Wallet</a></li> -->
-                <li> <a href="add_funds.php">Change Password</a></li>
-                <li> <a href="add_funds.php">Change Phone Number</a></li>
+                <li> <a onclick="toggleModal('fundsModal')">Add Funds</a></li>
+                <li> <a onclick="toggleModal('customerInfoModal')">Update Customer Info</a></li>
                 <li> <a href="generate_token.php">Generate Token</a></li>
-
-                <!-- <li> <a href="">View My Cards</a></li> -->
             </ul>
+
         </div>
 
         <!--  CARDS SECTION -->
@@ -79,8 +76,94 @@
         </div>
     </div>
 
+    <!-- Modal to Add Funds -->
+    <div id="fundsModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add Funds</h2>
+            <form id="addFundsForm" class="addFundsForm">
+                <div class="form-input">
+                    <label for="card">Select Card to Fund:</label>
+                    <select id="card_numbers" name="card_numbers" required>
+                        <option value="" disabled selected>Select an option</option>
+                    </select>
+                </div>
+                <div class="form-input">
+                    <label for="amount">Amount:</label>
+                    <input type="number" id="amount" name="amount" required>
+                </div>
+                <div class="form-input">
+                    <label for="pin">Pin:</label>
+                    <input type="password" id="pin_addFund" name="pin_addFund" required>
+                </div>
+                <div class="form-input">
+                    <label for="card_cvv">CVV:</label>
+                    <input type="password" id="cvv_addFund" name="cvv_addFund" required>
+                </div>
+                <div class="form-input">
+                    <label for="token">Token:</label>
+                    <input type="text" id="token_addFund" name="token_addFund" required>
+                </div>
+                <button type="submit">Add Funds</button>
+            </form>
+            <div id="fundsMessage"></div>
+        </div>
+    </div>
+
+    <!-- Modal to Update Customer Information -->
+    <!-- Customer Information Update Modal -->
+    <div id="customerInfoModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeCustomerInfoModal">&times;</span>
+            <h2>Update Customer Information</h2>
+            <form id="customerInfoForm">
+                <div class="form-input">
+                    <label for="update_option">Select Update Type:</label>
+                    <select id="update_option" name="update_option" required>
+                        <option value="" disabled selected>Select an option</option>
+                        <option value="password">Password</option>
+                        <option value="phone_number">Phone Number</option>
+                        <option value="email">Email</option>
+                    </select>
+                </div>
+
+                <div id="updateFields" style="display: none;">
+                    <div class="form-input">
+                        <label for="current_data">Current Data:</label>
+                        <input type="text" id="current_data" name="current_data" required>
+                    </div>
+                    <div class="form-input">
+                        <label for="new_data">New Data:</label>
+                        <input type="text" id="new_data" name="new_data" required>
+                    </div>
+                    <div class="form-input">
+                        <label for="confirm_new_data">Confirm New Data:</label>
+                        <input type="text" id="confirm_new_data" name="confirm_new_data" required>
+                    </div>
+
+                    <div class="validation">
+                        <div class="form-input">
+                            <label for="token">Token:</label>
+                            <input type="text" id="token" name="token" required>
+                        </div>
+                        <div class="form-input">
+                            <label for="secret_answer">Secret Answer:</label>
+                            <input type="text" id="secret_answer" name="secret_answer" required>
+                        </div>
+
+                    </div>
+
+                    <button type="submit">Update Information</button>
+                </div>
+            </form>
+            <div id="customerInfoMessage"></div>
+        </div>
+    </div>
+
+
     <script src="../scripts/cards.js"></script>
     <script src="../scripts/get_cards.js"></script>
+    <script src="../scripts/update_customer.js"></script>
 </body>
 
 </html>

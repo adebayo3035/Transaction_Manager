@@ -40,6 +40,12 @@
     <label for="address">Address:</label>
     <input type="text" id="address" name="address" required>
 
+    <label for="secret_question">Secret Question:</label>
+    <input type="text" id="secret_question" name="secret_question" required>
+
+    <label for="secret_answer">Secret Answer:</label>
+    <input type="password" id="secret_answer" name="secret_answer" required>
+
     <label for="photo">Photo:</label>
     <input type="file" id="photo" name="photo" accept="image/*" required>
 

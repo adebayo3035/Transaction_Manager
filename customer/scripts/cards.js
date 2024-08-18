@@ -1,81 +1,133 @@
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelector('.modal .close').addEventListener('click', () => {
-        document.getElementById('orderModal').style.display = 'none';
-        document.getElementById('addCardsForm').reset();
-    });
-
-    window.addEventListener('click', (event) => {
-        if (event.target === document.getElementById('orderModal')) {
-            document.getElementById('orderModal').style.display = 'none';
-        }
-    });
-
-    const monthControl = document.getElementById('expiry_date');
-    const formattedExpiryDateInput = document.getElementById('formatted_expiry_date');
-
-});
-
-function toggleModal() {
-    let modal = document.getElementById("orderModal");
+// Function to toggle modals
+function toggleModal(modalId) {
+    let modal = document.getElementById(modalId);
     modal.style.display = (modal.style.display === "none" || modal.style.display === "") ? "block" : "none";
 }
 
-const monthControl = document.querySelector('input[type="month"]');
-
-// Function to set the minimum value of the month input
-function setMinMonth() {
-    // Get the current date
-    const now = new Date();
-
-    // Extract the current year and month
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based, so add 1
-
-    // Format the date in YYYY-MM
-    const currentMonth = `${year}-${month}`;
-
-    // Set the min attribute of the input element
-    monthControl.min = currentMonth;
-}
-
-// Call the function to set the minimum value
-setMinMonth();
-
-document.getElementById('addCardsForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-
-   
-    // Extract the expiry date value
-    const expiryDateInput = document.getElementById('expiry_date').value;
-    const [year, month] = expiryDateInput.split('-');
-
-    // Format it as MM/YY for display
-    const formattedExpiryDate = `${month}/${year.slice(-2)}`;
-    document.getElementById('formatted_expiry_date').value = formattedExpiryDate;
-
-    // Format it as YYYY-MM for PHP processing
-    const formattedExpiryDateYYYYMM = `${month.padStart(2, '0')}-${year}`;
-    const formData = new FormData(this);
-    formData.set('formatted_expiry_date', formattedExpiryDateYYYYMM);
-
-    fetch('../v2/add_cards.php', {
+document.addEventListener('DOMContentLoaded', () => {
+    fetch('../v2/get_cards.php', {
         method: 'POST',
-        body: formData
+        headers: {
+            'Content-Type': 'application/json'
+        }
     })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                console.log("Card has been Successfully added");
-                alert('Your Card has been successfully added');
-                modal.style.display = 'none';
-                // document.getElementById("orderModal").style.display = "none";
-                // window.location.reload();
-            } else {
-                alert(data.message);
+               // Get select option for card number
+                const cardSelect = document.querySelector('#card_numbers'); // Select input for card numbers
+            
+                // select each card for customer
+                data.cards.forEach(cardss => {
+                    const cardElement = document.createElement('option');
+                    cardElement.className = 'mycard';
+            
+                    // Mask the card number
+                    const maskedCardNumber = maskCardNumber(cardss.card_number);
+            
+                    // Create option element for the select input
+                    const optionElement = document.createElement('option');
+                    optionElement.value = cardss.card_number; // Use the unmasked card number as the value
+                    optionElement.textContent = maskedCardNumber + " - " + cardss.bank_name; // Display the masked card number
+            
+                    // Append option to the select input
+                    cardSelect.appendChild(optionElement);
+                });
+            }
+            else {
+                console.error('Failed to fetch Cards:', data.message);
             }
         })
         .catch(error => {
-            console.error('Error:', error);
-            alert('Error: ' + error.message);
+            console.error('Error fetching Cards:', error);
         });
+
+          // Function to mask the card number
+          function maskCardNumber(cardNumber) {
+            return cardNumber.slice(0, 4) + ' **** **** ' + cardNumber.slice(-4);
+        }
+
+    // Close modals
+    document.querySelectorAll('.modal .close').forEach(closeBtn => {
+        closeBtn.addEventListener('click', () => {
+            closeBtn.closest('.modal').style.display = 'none';
+        });
+    });
+
+    window.addEventListener('click', (event) => {
+        document.querySelectorAll('.modal').forEach(modal => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    });
+
+    // Set the minimum month for expiry date
+    setMinMonth();
+    const addFundsForm = document.getElementById('addFundsForm');
+    // Add funds form submission
+    function handleFormSubmission(form) {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const amount = form.querySelector('#amount').value;
+            const pin = form.querySelector('#pin_addFund').value;
+            const token = form.querySelector('#token_addFund').value;
+            const card_number = form.querySelector('#card_numbers').value;
+            const card_cvv = form.querySelector('#cvv_addFund').value;
+            const messageDiv = document.getElementById('fundsMessage');
+
+            fetch('../v2/add_funds.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `card_number=${card_number}&card_cvv=${card_cvv}&amount=${amount}&pin=${pin}&token=${token}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('Success:', data.message);
+                    messageDiv.textContent = 'Your wallet has been successfully Credited!';
+                    alert('Your wallet has been successfully Credited!')
+                    form.reset();
+                    window.location.href = '../v1/dashboard.php'
+                } else {
+                    console.log('Error:', data.message);
+                    messageDiv.textContent = data.message;
+                    alert(data.message)
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                messageDiv.textContent = 'Error: ' + error.message;
+                alert('An error occurred. Please Try Again Later')
+            });
+        });
+    }
+    handleFormSubmission(addFundsForm);
+
+    
+
+    // Function to set minimum month value
+    function setMinMonth() {
+        const monthControl = document.querySelector('input[type="month"]');
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const currentMonth = `${year}-${month}`;
+        monthControl.min = currentMonth;
+    }
+
+    // Show and hide fields based on selected update option
+    const updateOption = document.getElementById('update_option');
+    const updateFields = document.getElementById('updateFields');
+
+    updateOption.addEventListener('change', function () {
+        if (this.value !== "") {
+            updateFields.style.display = 'block';
+        } else {
+            updateFields.style.display = 'none';
+        }
+    });
 });

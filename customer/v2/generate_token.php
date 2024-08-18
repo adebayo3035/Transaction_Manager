@@ -14,7 +14,7 @@ $token = bin2hex(random_bytes(16)); // 32-character hex string
 // Store token and its expiration in the session
 $_SESSION['token'] = [
     'value' => $token,
-    'expires_at' => time() + 60 // Token expires in 60 seconds
+    'expires_at' => time() + 180 // Token expires in 60 seconds
 ];
 
 // Send token as JSON response

@@ -30,7 +30,7 @@
                 <circle class="progress-ring__circle" stroke="tomato" stroke-width="10" fill="transparent" r="54"
                     cx="60" cy="60" />
             </svg>
-            <div class="timer-text" id="timer">60</div>
+            <div class="timer-text" id="timer">180</div>
         </div>
 
         <button class="copy-btn" id="copy-token" onclick="copyToken()">Copy Token</button>

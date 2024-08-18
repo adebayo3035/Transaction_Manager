@@ -103,10 +103,12 @@ $stmt->execute();
 $stmt->close();
 
 // Set token value to empty and set expiry time to current time.
-echo json_encode(['success' => true, 'message' => 'Transaction successful']);
+echo json_encode(['success' => true, 'message' => 'Transaction successful', 'card_number' => $cardNumber]);
 $_SESSION['token'] = [
     'value' => '',
     'expires_at' => time() // Token expires in 60 seconds
 ];
 $conn->close();
+
+
 

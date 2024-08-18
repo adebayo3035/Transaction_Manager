@@ -1,44 +1,50 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // const generateTokenBtn = document.getElementById('generateTokenBtn');
-    // const tokenInput = document.getElementById('token');
-    const form = document.getElementById('addFundsForm');
+    const form1 = document.getElementById('addFundsForm1');
     const messageDiv = document.getElementById('message');
 
-    // Handle form submission
-    form.addEventListener('submit', function(event) {
-        event.preventDefault();
+    function handleFormSubmission(form) {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
 
-        const amount = document.getElementById('amount').value;
-        const pin = document.getElementById('pin').value;
-        const token = document.getElementById('token').value;
+            const amount = form.querySelector('#amount').value;
+            const pin = form.querySelector('#pin').value;
+            const token = form.querySelector('#token').value;
+            const card_number = form.querySelector('#card_number_addFunds').value;
+            const card_cvv = form.querySelector('#cvv').value;
 
-        fetch('../v2/add_funds.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: `amount=${amount}&pin=${pin}&token=${token}`
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                messageDiv.textContent = 'Your wallet has been successfully Credited!';
-                alert('Your wallet has been successfully Credited!')
-                form.reset();
-                window.location.href = '../v1/cards.php'
-            } else {
-                messageDiv.textContent = data.message;
-                alert(data.message)
-            }
-        })
-        .catch(error => {
-            messageDiv.textContent = 'Error: ' + error.message;
-            alert('An error occured. Please Try Again Later')
+            fetch('../v2/add_funds.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `card_number=${card_number}&card_cvv=${card_cvv}&amount=${amount}&pin=${pin}&token=${token}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('Success:', data.message);
+                    messageDiv.textContent = 'Your wallet has been successfully Credited!';
+                    alert('Your wallet has been successfully Credited!')
+                    form.reset();
+                    window.location.href = '../v1/cards.php'
+                } else {
+                    console.log('Error:', data.message);
+                    messageDiv.textContent = data.message;
+                    alert(data.message)
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                messageDiv.textContent = 'Error: ' + error.message;
+                alert('An error occurred. Please Try Again Later')
+            });
         });
-    });
+    }
+
+    handleFormSubmission(form1);
 });
 
-// function to handle token Pasting
+// Function to handle token pasting
 function handlePaste(event) {
     event.preventDefault();
     const pasteData = event.clipboardData.getData('text');

@@ -48,7 +48,7 @@ document.getElementById('copy-token').addEventListener('click', function() {
 
 
 const FULL_DASH_ARRAY = 339.292; // 2 * π * r (circumference of the circle)
-const TIME_LIMIT = 60; // seconds
+const TIME_LIMIT = 180; // seconds
 let timePassed = 0;
 let timeLeft = TIME_LIMIT;
 
