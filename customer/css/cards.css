@@ -226,7 +226,7 @@ label {
     font-weight: bold;
 }
 
-input[type="text"], input[type="date"],
+input[type="text"], input[type="date"], input[type="email"],
 input[type="number"], input[type="month"], input[type="password"], select {
     width: 100%;
     padding: 10px;

@@ -50,4 +50,7 @@ else{
 	echo "Pin Validation Failed";
 }
 
+$myanswer = "Business Analyst";
+echo md5($myanswer);
+
 

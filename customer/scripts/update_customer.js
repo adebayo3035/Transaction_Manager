@@ -9,14 +9,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updateOption.addEventListener('change', function () {
         if (this.value !== "") {
+            // Show the update fields
             updateFields.style.display = 'block';
+    
+            // Update placeholders
             currentDataInput.placeholder = `Current ${updateOption.value.replace('_', ' ')}`;
             newDataInput.placeholder = `New ${updateOption.value.replace('_', ' ')}`;
             confirmNewDataInput.placeholder = `Confirm New ${updateOption.value.replace('_', ' ')}`;
+    
+            // Update input types based on selected option
+            switch (updateOption.value) {
+                case 'email':
+                    currentDataInput.type = 'email';
+                    currentDataInput.style.textTransform = 'lowercase';
+                    currentDataInput.setAttribute("autocapitalize","off");
+                    newDataInput.type = 'email';
+                    newDataInput.style.textTransform = 'lowercase';
+                    confirmNewDataInput.type = 'email';
+                    confirmNewDataInput.style.textTransform = 'lowercase';
+                    break;
+                case 'phone_number':
+                    currentDataInput.type = 'number'; // 'tel' is better for phone numbers
+                    newDataInput.type = 'number';
+                    confirmNewDataInput.type = 'number';
+                    break;
+                case 'password':
+                    currentDataInput.type = 'password';
+                    newDataInput.type = 'password';
+                    confirmNewDataInput.type = 'password';
+                    break;
+                default:
+                    // Default type for other cases, if needed
+                    currentDataInput.type = 'text';
+                    newDataInput.type = 'text';
+                    confirmNewDataInput.type = 'text';
+                    break;
+            }
         } else {
+            // Hide the update fields if no option is selected
             updateFields.style.display = 'none';
         }
     });
+    
 
     form.addEventListener('submit', async (event) => {
         event.preventDefault();

@@ -33,6 +33,10 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
+  form h2{
+    text-align: center;
+    padding-bottom: 6px;
+  }
 
   label, #additionalInput label {
     display: block;
@@ -80,4 +84,11 @@ body {
     font-size: 11px;
     line-height: 10px;
     color: red;
+  }
+
+  @media screen and (max-width: 500px) {
+    form h2{
+      font-size: 15px;
+    }
+    
   }

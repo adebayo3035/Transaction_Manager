@@ -130,15 +130,15 @@
                 <div id="updateFields" style="display: none;">
                     <div class="form-input">
                         <label for="current_data">Current Data:</label>
-                        <input type="text" id="current_data" name="current_data" required>
+                        <input type="text" id="current_data" name="current_data" autocapitalize="off" required>
                     </div>
                     <div class="form-input">
                         <label for="new_data">New Data:</label>
-                        <input type="text" id="new_data" name="new_data" required>
+                        <input type="text" id="new_data" name="new_data" autocapitalize="off" required>
                     </div>
                     <div class="form-input">
                         <label for="confirm_new_data">Confirm New Data:</label>
-                        <input type="text" id="confirm_new_data" name="confirm_new_data" required>
+                        <input type="text" id="confirm_new_data" name="confirm_new_data" autocapitalize="off" required>
                     </div>
 
                     <div class="validation">
@@ -148,7 +148,7 @@
                         </div>
                         <div class="form-input">
                             <label for="secret_answer">Secret Answer:</label>
-                            <input type="text" id="secret_answer" name="secret_answer" required>
+                            <input type="password" id="secret_answer" name="secret_answer" required>
                         </div>
 
                     </div>

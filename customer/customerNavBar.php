@@ -5,6 +5,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito&family=Roboto&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="../css/navbar.css">
+<link rel="icon" href="../images/trans_manager.png">
 <?php
 session_start();
 include ("../v2/config.php");
@@ -36,7 +37,9 @@ $stmt = $conn->prepare("SELECT balance FROM wallets WHERE customer_id = ?");
     <ul>
         <li><a href="dashboard.php" id="orderFood">Order Food</a></li>
         <li><a href="view_orders.php" id="viewOrders">View Orders</a></li>
-        <li><a href="cards.php" id="fundWallet">My Account</a></li>
+        <li><a href="cards.php" id="fundWallet">Self Service</a></li>
+        <li><a href="profile.php" id="fundWallet">My Profile</a></li>
+        <li><a href="generate_token.php" id="fundWallet">Generate Token</a></li>
         <!-- <li><a href="checkout.php" id="fundWallet">Checkout Page</a></li> -->
         <!-- <li><a href="cards.php" id="addNewCard">Cards</a></li> -->
         

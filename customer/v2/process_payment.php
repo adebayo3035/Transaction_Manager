@@ -61,7 +61,7 @@ switch ($paymentMethod) {
         if ($bankName && $bankAccount) {
             // Perform bank transfer validation (assuming basic validation)
             $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $paymentMethod, $conn);
-            $response['message'] = 'Congratulations! Bank transfer validation successful.';
+            // $response['message'] = 'Congratulations! Bank transfer validation successful.';
         } else {
             $response['message'] = 'Missing bank transfer details';
         }
@@ -71,7 +71,7 @@ switch ($paymentMethod) {
         if ($paypalEmail) {
             // Process PayPal payment here
             $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $paymentMethod, $conn);
-            $response['message'] = 'PayPal payment processed successfully.';
+            // $response['message'] = 'PayPal payment processed successfully.';
         } else {
             $response['message'] = 'Missing PayPal details';
         }
