@@ -67,7 +67,7 @@ include_once "header.php"; ?>
                 <input type="submit" id="btnSubmit" class="button" value="SIGN IN"></button>
             </form>
             <div id="message"></div>
-            <a href="../../reset_password.php"> Forget your password?</a>
+            <a href="reset_password.php"> Forget your password?</a>
             <a href="secret_question.php"> Forgot your Secret Question?</a>
         </div>
     </div>

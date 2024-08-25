@@ -22,6 +22,7 @@ while ($row = $result->fetch_assoc()) {
     // $row['card_number'] = openssl_decrypt($row['card_number'], $cipher, $encryption_key, 0, $iv); 
     $row['card_number'] = decrypt($row['card_number'], $encryption_key, $encryption_iv);
     $row['cvv'] = decrypt($row['cvv'], $encryption_key, $encryption_iv);
+    $row['card_holder'] =  strtoupper($row['card_holder']);
 
     $cards[] = $row;
 }

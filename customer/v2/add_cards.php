@@ -1,7 +1,19 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 header('Content-Type: application/json');
 include_once "config.php";
 session_start();
+
+// Decode the JSON input
+$data = json_decode(file_get_contents('php://input'), true);
+// Check if JSON decoding was successful
+if (json_last_error() !== JSON_ERROR_NONE) {
+    echo json_encode(['success' => false, 'message' => 'Invalid JSON']);
+    exit;
+}
+
 //Function to check if a card number already exists
 function checkDuplicateCardNumber($conn, $encrypted_cardNumber)
 {
@@ -40,12 +52,12 @@ function userHasTwoCards($conn, $customerId)
 }
 
 // Variables Declaration
-$bank_name = mysqli_real_escape_string($conn, $_POST['bank_name']);
-$card_number = mysqli_real_escape_string($conn, $_POST['card_number']);
-$card_holder = mysqli_real_escape_string($conn, $_POST['card_holder']);
-$expiry_date = mysqli_real_escape_string($conn, $_POST['formatted_expiry_date']);
-$pin = mysqli_real_escape_string($conn, $_POST['pin']);
-$cvv = mysqli_real_escape_string($conn, $_POST['cvv']);
+$bank_name = mysqli_real_escape_string($conn,$data['bank_name']) ?? null;
+$card_number = mysqli_real_escape_string($conn, $data['card_number']) ?? null;
+$card_holder = mysqli_real_escape_string($conn, $data['card_holder']) ?? null;
+$expiry_date = mysqli_real_escape_string($conn, $data['expiry_date']) ?? null;
+$pin = mysqli_real_escape_string($conn, $data['card_pin']) ?? null;
+$cvv = mysqli_real_escape_string($conn, $data['card_cvv']) ?? null;
 $customerId = $_SESSION['customer_id'];
 $date_created = date('Y-m-d H:i:s');
 $date_updated = date('Y-m-d H:i:s');
@@ -127,7 +139,7 @@ if (!empty($card_number) && !empty($card_holder) && !empty($expiry_date) && !emp
         $customerName = $customer['firstname'] . " " . $customer['lastname'];
 
         // Check if the cardholder's name matches the customer's name
-        if ($card_holder !== $customerName) {
+        if (strtolower($card_holder) !== strtolower($customerName)) {
             echo json_encode(['success' => false, 'message' => 'Cardholder name does not match your account name.'. $customerName. " Card Holder: " . $card_holder]);
             exit();
         }
@@ -140,7 +152,12 @@ if (!empty($card_number) && !empty($card_holder) && !empty($expiry_date) && !emp
     $stmt->bind_param("ssssssi", $encrypted_card_number, $bank_name, $card_holder, $expiry_date, $encrypted_CVV, $encrypted_Pin, $customerId);
 
     if ($stmt->execute()) {
-        echo json_encode(['success' => true]);
+        echo json_encode([
+            'success' => true,
+            'message' => 'Customer Card Details has been successfully submitted.',
+            'customer_id' => $customerId, // Include customer_id in the response
+            'redirect' => '../v1/cards.php' // Prepare the redirect URL
+        ]);
     } else {
         echo json_encode(['success' => false, 'message' => 'Something went wrong, please try again.']);
         exit();

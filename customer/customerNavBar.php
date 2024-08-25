@@ -39,9 +39,8 @@ $stmt = $conn->prepare("SELECT balance FROM wallets WHERE customer_id = ?");
         <li><a href="view_orders.php" id="viewOrders">View Orders</a></li>
         <li><a href="cards.php" id="fundWallet">Self Service</a></li>
         <li><a href="profile.php" id="fundWallet">My Profile</a></li>
+        <li><a href="transactions.php" id="viewOrders">My Transactions</a></li>
         <li><a href="generate_token.php" id="fundWallet">Generate Token</a></li>
-        <!-- <li><a href="checkout.php" id="fundWallet">Checkout Page</a></li> -->
-        <!-- <li><a href="cards.php" id="addNewCard">Cards</a></li> -->
         
     </ul>
     

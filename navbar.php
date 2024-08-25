@@ -38,7 +38,6 @@
         <a href="groups.php">Groups</a>
         <a href="units.php">Units</a>
         <a href="food.php">Foods</a>
-    
        
         <div class="dropdown">
             
@@ -50,6 +49,7 @@
             <div class="dropdown-content">
                 <?php echo "<a href='staff_profile.php?id=" . $row['unique_id'] . "'>Profile</a>"; ?>
                 <a href="settings.php">Settings</a>
+                <a href="admin_notification.php">Notifications (<span id="notification-badge"> 0 </span>)</a>
                 <a href="backend/logout.php?logout_id=<?php echo $row['unique_id']; ?>">Logout</a>
             </div>
         </div>
@@ -66,6 +66,7 @@
             }
         }
     </script>
+    <script src = "scripts/notification.js"></script>
 </body>
 
 </html>

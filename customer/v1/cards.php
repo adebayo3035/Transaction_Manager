@@ -17,7 +17,7 @@
                 <li> <a onclick ="toggleModal('deleteCardModal')">Delete Card</a></li>
                 <li> <a onclick="toggleModal('fundsModal')">Add Funds</a></li>
                 <li> <a onclick="toggleModal('customerInfoModal')">Update Customer Info</a></li>
-                <li> <a href="generate_token.php">Generate Token</a></li>
+                <li> <a onclick = "toggleModal('resetQuestionAnswer')">Reset Secret Question and Answer</a></li>
             </ul>
 
         </div>
@@ -72,7 +72,7 @@
                 </div>
                 <button type="submit">Add Card</button>
             </form>
-            <div id="message"></div>
+            <div id="addCardmessage"></div>
         </div>
     </div>
 
@@ -115,7 +115,7 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Delete Card</h2>
-            <form id="deleteCardForm" class="deleteCardForm">
+            <form id="deleteCardsForm" class="deleteCardsForm">
                 <div class="form-input">
                     <label for="card">Select Card to Delete:</label>
                     <select id="select_card_delete" name="card_numbers" required>
@@ -124,7 +124,7 @@
                 </div>
                 <div class="form-input">
                     <label for="secret_answer_deleteCard">Secret Answer:</label>
-                    <input type="text" id="secret_answer_deleteCard" name="secret_answer_deleteCard" placeholder="Secret Answer" required>
+                    <input type="password" id="secret_answer_deleteCard" name="secret_answer_deleteCard" placeholder="Secret Answer" autocomplete="none" required>
                 </div>
                 <div class="form-input">
                     <label for="token_deleteCard">Token:</label>

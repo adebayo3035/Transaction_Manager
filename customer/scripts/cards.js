@@ -8,10 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to populate a select input with card options
     function populateCardSelect(selectId, cards) {
         const cardSelect = document.querySelector(`#${selectId}`); // Select input for card numbers
-
-        // Clear existing options
-        // cardSelect.innerHTML = '';
-
         // Populate options
         cards.forEach(card => {
             // Mask the card number
@@ -61,6 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.modal .close').forEach(closeBtn => {
         closeBtn.addEventListener('click', () => {
             closeBtn.closest('.modal').style.display = 'none';
+            location.reload();
         });
     });
 
@@ -74,8 +71,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Set the minimum month for expiry date
     setMinMonth();
-    const addFundsForm = document.getElementById('addFundsForm');
+
+   
     // Add funds form submission
+    const addFundsForm = document.getElementById('addFundsForm');
     function handleFormSubmission(form) {
         form.addEventListener('submit', function (event) {
             event.preventDefault();
@@ -114,10 +113,121 @@ document.addEventListener('DOMContentLoaded', () => {
                     alert('An error occurred. Please Try Again Later')
                 });
         });
+    }
+    handleFormSubmission(addFundsForm);
+
+    // function to format card expiry date
+    const formatExpiryDate = (expiryDate) => {
+        const [year, month] = expiryDate.split('-');
+        return `${month.padStart(2, '0')}-${year}`;
+    };
+
+    // Function to handle Adding new Card
+    const addCardsForm = document.getElementById('addCardsForm');
+    const addCardmessage = document.getElementById('addCardmessage');
+    function handleCardInsertion(form) {
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const bank_name = form.querySelector('#bank_name').value;
+            const card_number = form.querySelector('#card_number').value;
+            const card_holder = form.querySelector('#card_holder').value;
+            const card_pin = form.querySelector('#pin').value;
+            const card_cvv = document.getElementById('cvv').value;
+
+            let cardDetails = {
+                bank_name: bank_name,
+                card_number: card_number,
+                card_holder: card_holder,
+                // expiry_date: formatExpiryDate(document.getElementById('expiry_date').value),
+                expiry_date: formatExpiryDate(form.querySelector('#expiry_date').value),
+                card_pin: card_pin,
+                card_cvv: card_cvv
+            };
+
+            fetch('../v2/add_cards.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: JSON.stringify(cardDetails)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log('Success:', data.message);
+                        addCardmessage.textContent = data.message;
+                        alert(data.message)
+                        form.reset();
+                        window.location.href = '../v1/cards.php'
+                    } else {
+                        console.log('Error:', data.message);
+                        addCardmessage.textContent = data.message;
+                        alert(data.message)
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    addCardmessage.textContent = 'Error: ' + error.message;
+                    alert('An error occurred. Please Try Again Later')
+                });
+        });
+    }
+    handleCardInsertion(addCardsForm)
+
+    // Function to handle Deletion of Card
+    const deleteCardsForm = document.getElementById('deleteCardsForm');
+    const deleteCardmessage = document.getElementById('deleteCardMessage');
+    function handleCardDelete(form) {
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            // Show confirmation dialog before deleting
+            if (!confirm('Are you sure you want to delete this card?')) {
+                return; // Stop the form submission if not confirmed
+            }
+            const card_number = form.querySelector('#select_card_delete').value;
+            const secret_answer = form.querySelector('#secret_answer_deleteCard').value;
+            const token = form.querySelector('#token_deleteCard').value;
+
+            let cardDetails = {
+                card_number: card_number,
+                secret_answer: secret_answer,
+                token: token
+            };
+
+            fetch('../v2/delete_card.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: JSON.stringify(cardDetails)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message)
+                        console.log('Success:', data.message);
+                        deleteCardmessage.textContent = data.message;
+                        form.reset();
+                        window.location.href = '../v1/cards.php'
+                    } else {
+                        alert(data.message)
+                        console.log('Error:', data.message);
+                        deleteCardmessage.textContent = data.message;
+                       
+                    }
+                })
+                .catch(error => {
+                    alert('An error occurred. Please Try Again Later')
+                    console.error('Error:', error);
+                    deleteCardmessage.textContent = 'Error: ' + error.message;
+                    
+                });
+        });
 
         // Function to handle Card Delete
     }
-    handleFormSubmission(addFundsForm);
+    handleCardDelete(deleteCardsForm);
 
 
 

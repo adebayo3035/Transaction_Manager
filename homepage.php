@@ -143,6 +143,7 @@
   </footer>
 
   <script src="scripts/homepage.js"></script>
+  
 </body>
 
 </html>

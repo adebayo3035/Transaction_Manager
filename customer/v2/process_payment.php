@@ -149,6 +149,16 @@ function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deli
         $stmt->execute();
         $stmt->close();
 
+         // Insert into admin notification table
+         $title = "Food Order for customer ID: ". $customerId;
+         $event_type ="New Food Order";
+         $event_details = "Customer placed an Order on ".date('Y-m-d H:i:s');
+         $description = "Food Order";
+         $stmt = $conn->prepare("INSERT INTO admin_notifications (event_title, event_type, event_details, created_at) VALUES (?, ?, ?, NOW())");
+         $stmt->bind_param("sss", $title, $event_type, $event_details);
+         $stmt->execute();
+         $stmt->close();
+
         $conn->commit();
         $response = ["success" => true, "message" => "Order placed successfully."];
     } catch (Exception $e) {

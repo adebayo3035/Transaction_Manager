@@ -68,6 +68,8 @@ ul.card-menu li a:hover{
 }
 
 .card-content {
+    max-width: 400px;
+    max-height: 300px;
     width: 100%;
     padding-top: 62.5%; 
     /* 16:10 aspect ratio */

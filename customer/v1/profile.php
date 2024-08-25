@@ -12,7 +12,7 @@
     <?php include "../customerNavBar.php"; ?>
     <div class="profile-container">
         <div class="profile-header">
-            <img id="profile-picture" src="backend/customer_photos/default.jpeg" alt="Customer Profile Picture">
+            <img id="profile-picture" src="../../backend/customer_photos/default.jpg" alt="Customer Profile Picture">
             <span><a href='update_picture.php'><span class='edit-icon'>&#9998;</span></a></span>
             <h1 id="customer-name">My Name</h1>
         </div>
