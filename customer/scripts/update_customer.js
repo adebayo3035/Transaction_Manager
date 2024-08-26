@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const customerInfoMessage = document.getElementById('customerInfoMessage');
 
     updateOption.addEventListener('change', function () {
+       
         if (this.value !== "") {
             // Show the update fields
             updateFields.style.display = 'block';

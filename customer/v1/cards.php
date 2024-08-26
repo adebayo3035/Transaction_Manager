@@ -14,10 +14,10 @@
         <div class="card_menu">
             <ul class="card-menu">
                 <li> <a onclick="toggleModal('orderModal')">Add New Card</a></li>
-                <li> <a onclick ="toggleModal('deleteCardModal')">Delete Card</a></li>
+                <li> <a onclick="toggleModal('deleteCardModal')">Delete Card</a></li>
                 <li> <a onclick="toggleModal('fundsModal')">Add Funds</a></li>
                 <li> <a onclick="toggleModal('customerInfoModal')">Update Customer Info</a></li>
-                <li> <a onclick = "toggleModal('resetQuestionAnswer')">Reset Secret Question and Answer</a></li>
+                <li> <a onclick="toggleModal('resetQuestionModal')">Reset Secret Question and Answer</a></li>
             </ul>
 
         </div>
@@ -102,7 +102,7 @@
                 </div>
                 <div class="form-input">
                     <label for="token">Token:</label>
-                    <input type="text" id="token_addFund" name="token_addFund" required>
+                    <input type="password" id="token_addFund" name="token_addFund" required>
                 </div>
                 <button type="submit">Add Funds</button>
             </form>
@@ -124,11 +124,12 @@
                 </div>
                 <div class="form-input">
                     <label for="secret_answer_deleteCard">Secret Answer:</label>
-                    <input type="password" id="secret_answer_deleteCard" name="secret_answer_deleteCard" placeholder="Secret Answer" autocomplete="none" required>
+                    <input type="password" id="secret_answer_deleteCard" name="secret_answer_deleteCard"
+                        placeholder="Secret Answer" autocomplete="none" required>
                 </div>
                 <div class="form-input">
                     <label for="token_deleteCard">Token:</label>
-                    <input type="text" id="token_deleteCard" name="token_deleteCard" placeholder="Token" required>
+                    <input type="password" id="token_deleteCard" name="token_deleteCard" placeholder="Token" required>
                 </div>
                 <button type="submit">Delete Card</button>
             </form>
@@ -155,7 +156,7 @@
 
                 <div id="updateFields" style="display: none;">
                     <div class="form-input">
-                        <label for="current_data">Current Data:</label>
+                        <label for="current_data" id="currentDataLabel">Current Data:</label>
                         <input type="text" id="current_data" name="current_data" autocapitalize="off" required>
                     </div>
                     <div class="form-input">
@@ -170,7 +171,7 @@
                     <div class="validation">
                         <div class="form-input">
                             <label for="token">Token:</label>
-                            <input type="text" id="token" name="token" required>
+                            <input type="password" id="token" name="token" required>
                         </div>
                         <div class="form-input">
                             <label for="secret_answer">Secret Answer:</label>
@@ -183,6 +184,35 @@
                 </div>
             </form>
             <div id="customerInfoMessage"></div>
+        </div>
+    </div>
+
+    <!-- Modal to Reset Secret Question and Answer -->
+    <div id="resetQuestionModal" class="modal">
+        <div class="modal-content" id="card-form">
+            <span class="close">&times;</span>
+            <h2>Reset Secret Question and Answer</h2>
+            <form id="reset_seccret_question_answer">
+                <div class="form-input">
+                    <label for="new_question">Enter New Secret Question:</label>
+                    <input type="text" id="new_question" name="new_question" required>
+                </div>
+                <div class="form-input">
+                    <label for="new_answer">Enter New Secret Answer:</label>
+                    <input type="password" id="new_answer" name="new_answer" required>
+                </div>
+                <div class="form-input">
+                    <label for="card_holder">Confirm Secret Answer:</label>
+                    <input type="password" id="confirm_answer" name="confirm_answer" required>
+                </div>
+                <div class="form-input">
+                    <label for="token_question">Token:</label>
+                    <input type="password" id="token_question" name="token_question" required>
+                </div>
+
+                <button type="submit">Update Record</button>
+            </form>
+            <div id="updateQuestionmessage"></div>
         </div>
     </div>
 

@@ -229,6 +229,67 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     handleCardDelete(deleteCardsForm);
 
+    // Function to handle Deletion of Card
+    const updateQuestionForm = document.getElementById('reset_seccret_question_answer');
+    const updateQuestionmessage = document.getElementById('updateQuestionmessage');
+    function handleUpdateSecretQuestionAndAnswer(form) {
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            // Show confirmation dialog before deleting
+            if (!confirm('Are you sure you want to Change secret Question and Answer?')) {
+                return; // Stop the form submission if not confirmed
+            }
+            const new_question = form.querySelector('#new_question').value;
+            const new_answer = form.querySelector('#new_answer').value;
+            const confirm_answer = form.querySelector('#confirm_answer').value;
+            const token_question = form.querySelector('#token_question').value;
+
+            if(new_answer !== confirm_answer){
+                alert("Data Mismatch. Please Try again");
+                return;
+            }
+
+            let secretQuestion_Answer = {
+                new_question: new_question,
+                new_answer: new_answer,
+                confirm_answer : confirm_answer,
+                token_question: token_question
+            };
+
+            fetch('../v2/reset_question.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: JSON.stringify(secretQuestion_Answer)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message)
+                        console.log('Success:', data.message);
+                        updateQuestionmessage.textContent = data.message;
+                        form.reset();
+                        window.location.href = '../v1/cards.php'
+                    } else {
+                        alert(data.message)
+                        console.log('Error:', data.message);
+                        updateQuestionmessage.textContent = data.message;
+                       
+                    }
+                })
+                .catch(error => {
+                    alert('An error occurred. Please Try Again Later')
+                    console.error('Error:', error);
+                    updateQuestionmessage.textContent = 'Error: ' + error.message;
+                    
+                });
+        });
+
+        // Function to handle Card Delete
+    }
+    handleUpdateSecretQuestionAndAnswer(updateQuestionForm);
+
 
 
     // Function to set minimum month value

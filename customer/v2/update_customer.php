@@ -50,22 +50,28 @@ if (!isset($_SESSION['token']) || $_SESSION['token']['value'] !== $token || time
         exit;
     }
 
-    // Validate secret answer
+    // Validate Customer Inputs
     $hashedSecretAnswer = md5($secretAnswer);
     if ($customer['secret_answer'] !== $hashedSecretAnswer) {
         echo json_encode(['success' => false, 'message' => 'Customer Validation Failed.']);
         exit;
     }
+    
 
     // Validate new data and check for duplicates
     if ($updateOption === 'password') {
+        $newPasswordHash = md5($newData);
+        $oldPasswordHash = md5($currentData);
         if ($newData !== $confirmNewData) {
             echo json_encode(['success' => false, 'message' => 'New data and confirmation do not match.']);
             exit;
         }
+        // Check if Old Password is Correct
+        if ($customer['password'] !== $oldPasswordHash) {
+            echo json_encode(['success' => false, 'message' => 'The Old Password you input is Invalid.']);
+            exit;
+        }
         // Update password
-        $newPasswordHash = md5($newData);
-        $oldPasswordHash = md5($currentData);
         $stmt = $conn->prepare("UPDATE customers SET password = ? WHERE customer_id = ? AND password = ?");
         $stmt->bind_param("sis", $newPasswordHash, $customerId, $oldPasswordHash);
         $stmt->execute();
@@ -73,6 +79,11 @@ if (!isset($_SESSION['token']) || $_SESSION['token']['value'] !== $token || time
     } else if ($updateOption === 'phone_number') {
         if ($newData !== $confirmNewData) {
             echo json_encode(['success' => false, 'message' => 'New phone number and confirmation do not match.']);
+            exit;
+        }
+        // Check if Old Old Phone Number is Correct
+        if ($customer['mobile_number'] !== $currentData) {
+            echo json_encode(['success' => false, 'message' => 'The Old Phone Number you input is Invalid.']);
             exit;
         }
         // Check for duplicate phone number
@@ -93,6 +104,11 @@ if (!isset($_SESSION['token']) || $_SESSION['token']['value'] !== $token || time
             echo json_encode(['success' => false, 'message' => 'New email and confirmation do not match.']);
             exit;
         }
+        // Check if Old Old Phone Number is Correct
+        if ($customer['email'] !== $currentData) {
+            echo json_encode(['success' => false, 'message' => 'The E-mail Address you input is Invalid.']);
+            exit;
+        }
         // Check for duplicate email
         $stmt = $conn->prepare("SELECT * FROM customers WHERE email = ? AND customer_id <> ?");
         $stmt->bind_param("si", $newData, $customerId);
@@ -106,15 +122,11 @@ if (!isset($_SESSION['token']) || $_SESSION['token']['value'] !== $token || time
         $stmt->bind_param("sis", $newData, $customerId, $currentData);
         $stmt->execute();
 
-    } else {
+    } 
+    else {
         echo json_encode(['success' => false, 'message' => 'Invalid Customer update option.']);
         exit;
     }
-
-    // Success
-    
-    // echo json_encode(['success' => true, 'message' => 'Customer Information Update successful.']);
-      // Success
       echo json_encode([
         'success' => true,
         'message' => 'Customer Information Update successful.',
