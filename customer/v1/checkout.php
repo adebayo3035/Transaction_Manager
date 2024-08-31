@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <?php include ('../customerNavBar.php'); ?>
+    <?php include('../customerNavBar.php'); ?>
 
     <script>
 
@@ -160,9 +160,14 @@
                 <input type="text" id="bank_account" name="bank_account" readonly>
             </div>
 
-            <div class="form-group">
-                <button type="submit">Place Order</button>
+            <div class="form-group" id="buttons">
+                <button type="submit" id="place-orderBtn">Place Order</button>
+                <!-- Print Receipt Button (Initially Hidden) -->
+                    <button type="button" id="receipt-btn" style="display: none;">Print Receipt</button>
+                
             </div>
+            
+            
         </form>
     </div>
 

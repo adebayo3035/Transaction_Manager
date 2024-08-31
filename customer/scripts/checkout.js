@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const bankAccountInput = document.getElementById('bank_account');
     const bankNameSelect = document.getElementById('bank_name');
     const orderItems = JSON.parse(sessionStorage.getItem('order_items'));
+    const printReceiptBtn = document.getElementById('receipt-btn');
+    const placeOrderBtn = document.getElementById('place-orderBtn')
 
     if (!orderItems || orderItems.length === 0) {
         location.replace('../v1/dashboard.php');
@@ -42,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        (paymentDetails[method.value] || (() => {}))();
+        (paymentDetails[method.value] || (() => { }))();
     };
 
     paymentMethods.forEach(method => {
@@ -95,19 +97,21 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             body: JSON.stringify(paymentDetails)
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Payment processed successfully');
-                location.replace('../v1/dashboard.php');
-            } else {
-                alert('Error: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred. Please try again.');
-        });
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Payment processed successfully');
+                    printReceiptBtn.style.display = 'block';
+                    placeOrderBtn.style.display = 'none';
+                    // location.replace('../v1/dashboard.php');
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
     });
 
     bankNameSelect.addEventListener('change', () => {
@@ -124,4 +128,90 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     setMinMonth();
+
+    // Function to handle printing the receipt
+    function printReceipt() {
+        const printWindow = window.open('', '_blank', 'width=800,height=600');
+        const orderSummary = document.querySelector('.order-summary').innerHTML;
+        const now = new Date();
+        const dateTime = now.toLocaleString();
+
+        printWindow.document.write(`
+            <html>
+            <head>
+                <title>Receipt</title>
+                <style>
+                @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+                    body {
+                        box-sizing: border-box;
+                        font-family: 'Poppins', sans-serif;
+                        margin: 0;
+                        padding: 0;
+                        background-color: #fff;
+                    }
+                    .receipt-header {
+                        text-align: center;
+                        margin-bottom: 20px;
+                    }
+                    h2 {
+                        margin-top: 0;
+                    }
+                    .order-summary {
+                        margin-bottom: 20px;
+                    }
+                    #orderSummaryTable {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-top: 20px;
+                    }
+                    #orderSummaryTable th, #orderSummaryTable td {
+                        border: 1px solid #ddd;
+                        padding: 8px;
+                        text-align: left;
+                    }
+                    #orderSummaryTable th {
+                        background-color: #f2f2f2;
+                    }
+                    #orderSummaryTable tbody tr td a{
+                        text-decoration: none;
+                    }
+                    .order-item, .order-total {
+                        display: flex;
+                        justify-content: space-between;
+                        padding: 10px 0;
+                    }
+                    .receipt-footer {
+                        text-align: center;
+                        margin-top: 20px;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="receipt-header">
+                    <h2> KaraKata Receipts </h2>
+                    <h2>Your Receipt</h2>
+                    <p>Date & Time: ${dateTime}</p>
+                </div>
+                ${orderSummary}
+                <div class="receipt-footer">
+                    <p>Thank you for your purchase!</p>
+                </div>
+                <script>
+                    window.print();
+                    window.onafterprint = function() { window.close(); }
+                </script>
+            </body>
+            </html>
+        `);
+
+        printWindow.document.close();
+    }
+
+
+    // Assuming you have a button with ID 'printReceiptButton'
+    const printButton = document.getElementById('receipt-btn');
+    if (printButton) {
+        printButton.addEventListener('click', printReceipt);
+    }
+
 });

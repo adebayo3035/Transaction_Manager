@@ -13,16 +13,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Nunito&family=Roboto&display=swap" rel="stylesheet" />
     <!-- end of font awesome -->
-    <link rel="stylesheet" href="css/splashscreen.css">
+    <link rel="stylesheet" href="../../css/splashscreen.css">
 </head>
 <body>
-<?php include "session_checker.php"; ?>
     <div class="splash">
-        <img src="images/trans_manager.png" alt="" class="rotate">
+        <img src="../../images/trans_manager.png" alt="" class="rotate">
         <div class="loader">
             <div class="loader-text" id="loaderText"></div>
         </div>
     </div>
-    <script src="scripts/splashscreen.js"></script>
+    <script src="../scripts/splashscreen.js"></script>
 </body>
 </html>

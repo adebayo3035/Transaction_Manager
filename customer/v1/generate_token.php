@@ -30,12 +30,12 @@
                 <circle class="progress-ring__circle" stroke="tomato" stroke-width="10" fill="transparent" r="54"
                     cx="60" cy="60" />
             </svg>
-            <div class="timer-text" id="timer">180</div>
+            <div class="timer-text" id="timer"></div>
         </div>
 
         <button class="copy-btn" id="copy-token" onclick="copyToken()">Copy Token</button>
         <button id="generate-token">Generate Token</button>
-        <span class="footer"> This Token wil expire after 1 minute(s)</span>
+        <span class="footer"> This Token wil expire after 3 minute(s)</span>
     </div>
     <script src="../scripts/generate_token.js"></script>
 

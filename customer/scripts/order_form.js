@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <td>${quantity}</td>
                 <td>N ${foodPrice.toFixed(2)}</td>
                 <td class="total-price">N ${totalPrice.toFixed(2)}</td>
-                <td>
+                <td class="buttons">
                     <button type="button" class="edit-button">Edit</button>
                     <button type="button" class="delete-button">Delete</button>
                 </td>

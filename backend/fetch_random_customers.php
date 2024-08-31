@@ -10,8 +10,8 @@ $result = $conn->query($query);
 
 $customer_names = [];
 while ($row = $result->fetch_assoc()) {
-    $customer_names[] = $row['firstname'] . ' ' . $row['lastname'];
+    $customer_names[] = $row;
 }
 
-echo json_encode($customer_names);
+echo json_encode(["success" => true, "customer_names" => $customer_names]);
 

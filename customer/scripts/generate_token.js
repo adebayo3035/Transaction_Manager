@@ -48,7 +48,7 @@ document.getElementById('copy-token').addEventListener('click', function() {
 
 
 const FULL_DASH_ARRAY = 339.292; // 2 * π * r (circumference of the circle)
-const TIME_LIMIT = 180; // seconds
+const TIME_LIMIT = 30; // seconds
 let timePassed = 0;
 let timeLeft = TIME_LIMIT;
 
@@ -63,6 +63,7 @@ function startTimer() {
     timePassed = 0;
     timeLeft = TIME_LIMIT;
     const tokenBtn = document.getElementById('generate-token')
+    const btnCopyToken = document.getElementById('copy-token');
     tokenBtn.disabled = true; // Disable the button initially
     tokenBtn.textContent = 'Token Active';
     tokenBtn.style.cursor = "not-allowed"
@@ -89,6 +90,10 @@ function startTimer() {
             tokenBtn.style.backgroundColor = "#a72828";
             tokenBtn.style.cursor = "pointer"
             tokenInput.value = "";
+            btnCopyToken.disabled = true;
+            btnCopyToken.style.cursor = "not-allowed"
+            btnCopyToken.style.backgroundColor = "#ccc";
+            timerText.textContent = "";
             // Reset the circle progress bar for the next cycle
             circle.style.strokeDashoffset = FULL_DASH_ARRAY;
         }

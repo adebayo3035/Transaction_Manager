@@ -181,6 +181,7 @@ img.chip {
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
     padding-top: 60px;
+    
 }
 
 .modal-content {
@@ -188,13 +189,16 @@ img.chip {
     margin: 5% auto; /* 5% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 60%; /* Could be more or less, depending on screen size */
     max-height: 80vh; /* Maximum height of modal box */
     overflow-y: auto; /* Add vertical scrollbar */
 }
 
 .modal-content h2{
     text-align: center;
+    color: #ccc;
+    font-weight: 300;
+    padding-bottom: 6px;
 }
 
 /* Close button styling */
@@ -225,7 +229,7 @@ form {
 label {
     display: block;
     margin-bottom: 3px;
-    font-weight: bold;
+    font-weight: normal;
 }
 
 input[type="text"], input[type="date"], input[type="email"],
@@ -235,6 +239,8 @@ input[type="number"], input[type="month"], input[type="password"], select {
     margin: 5px 0 10px 0;
     border: 1px solid #ccc;
     border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    outline: none;
 }
 
 button {
@@ -245,10 +251,13 @@ button {
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
+    max-width: fit-content;
+    align-self: center;
 }
 
 button:hover {
-    background-color: #45a049; /* Darker green on hover */
+    /* background-color: #45a049; Darker green on hover */
+    background-color: #a72828;
 }
 .date, .validation{
     display: flex;
@@ -276,5 +285,8 @@ button:hover {
     button {
         padding: 8px;
         font-size: 14px;
+    }
+    .modal-content {
+        width: 80%;
     }
 }

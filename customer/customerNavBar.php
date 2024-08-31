@@ -1,9 +1,9 @@
 <!-- font awesome -->
-<script src="https://kit.fontawesome.com/7cab3097e7.js" crossorigin="anonymous"></script>
+<!-- <script src="https://kit.fontawesome.com/7cab3097e7.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito&family=Roboto&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito&family=Roboto&display=swap" rel="stylesheet" /> -->
 <link rel="stylesheet" href="../css/navbar.css">
 <link rel="icon" href="../images/trans_manager.png">
 <?php
@@ -25,12 +25,13 @@ $stmt = $conn->prepare("SELECT balance FROM wallets WHERE customer_id = ?");
         
 ?>
 <header>
-    <h1>Customer Dashboard</h1>
+    <h1><a href="homepage.php">KaraKata </a></h1>
     <div class="user-info">
         <span id="customerName">Welcome, <?php echo $_SESSION['customer_name']; ?></span>
         <span id="walletBalance">Your Current Balance is : N<?php echo $balance; ?></span>
         <button id="logoutButton"><a
-                href="../v2/logout.php?logout_id=<?php echo $_SESSION['customer_id']; ?>">Logout</a></button>
+                href="../v2/logout.php?logout_id=<?php echo $_SESSION['customer_id']; ?>">Logout</a>
+            </button>
     </div>
 </header>
 <nav>

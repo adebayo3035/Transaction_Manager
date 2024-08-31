@@ -32,6 +32,7 @@ body{
 .token-container input {
     margin: 10px 20px;
     text-align: left;
+    outline: none;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 

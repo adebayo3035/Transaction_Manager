@@ -190,8 +190,8 @@ body {
 }
 
 .add_group button {
-  background-color: #34d564;
-  color: #000;
+  background-color: #3B71CA;
+  color: #fff;
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
@@ -297,9 +297,13 @@ form label {
   margin-bottom: 5px;
 
 }
+form button{
+  background-color: #3457D5;
+}
 
 form button:hover {
   background-color: #555;
+  color: #fff;
 }
 .order-form-container {
   max-width: 600px;
@@ -338,12 +342,18 @@ form button:hover {
 }
 
 .order-summary-container td button {
-  background-color: #ff4c4c;
+  /* background-color: #ff4c4c; */
   color: #fff;
   border: none;
   padding: 5px 10px;
   cursor: pointer;
   border-radius: 3px;
+}
+.edit-button{
+  background-color: #E4A11B;
+}
+.delete-button{
+  background-color: #DC4C64;
 }
 
 .order-summary-container td button:hover {
@@ -366,4 +376,40 @@ form button:hover {
     border-radius: 4px;
     cursor: pointer;
     width: 200px;
+}
+
+@media screen and (max-width: 700px){
+  .order-summary-container thead tr th, .total-amount h3, .total-amount h3 #totalAmount{
+    font-size: 10px;
+  }
+  .order-summary-container td.buttons button  {
+   margin-bottom: 4px;
+  }
+}
+
+
+@media screen and (max-width: 600px){
+  .order-summary-container table {
+    width: 97%;
+    margin: 10px auto;
+  }
+  .order-summary-container th, 
+.order-summary-container td {
+  padding: 4px;
+  text-align: left;
+}
+
+.order-summary-container th {
+  text-align: center;
+}
+
+.order-summary-container td button {
+  padding: 3px 5px;
+  border-radius: 2px;
+}
+#submitOrderButton{
+  align-self: center;
+  margin-top: 10px;
+}
+
 }

@@ -11,7 +11,7 @@ document.getElementById('addCustomerForm').addEventListener('submit', function (
         .then(data => {
             if (data.success) {
                 alert('Congratulations! Customer has been successfully onboarded.');
-                window.location.href = '../customer.php';
+                window.location.href = '../transaction_manager/customer.php';
             } else {
                 alert(data.message);
             }

@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
+
 /* General Styles */
 body {
   font-family: 'Nunito', sans-serif;
@@ -17,13 +19,15 @@ body {
 /* Hero Section */
 .hero {
   position: relative;
-  text-align: left; /* Align text to the left */
+  text-align: left;
+  /* Align text to the left */
   color: white;
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/hero-image.jpg') no-repeat center center/cover;
   padding: 50px 20px;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Space between content and image */
+  justify-content: space-between;
+  /* Space between content and image */
 }
 
 .hero .hero-content {
@@ -62,96 +66,104 @@ body {
 /* Keyframes for animations */
 @keyframes fadeInDown {
   from {
-      opacity: 0;
-      transform: translateY(-50px);
+    opacity: 0;
+    transform: translateY(-50px);
   }
+
   to {
-      opacity: 1;
-      transform: translateY(0);
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
 @keyframes fadeInUp {
   from {
-      opacity: 0;
-      transform: translateY(50px);
+    opacity: 0;
+    transform: translateY(50px);
   }
+
   to {
-      opacity: 1;
-      transform: translateY(0);
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
 @keyframes slideInRight {
   from {
-      opacity: 0;
-      transform: translateX(50px);
+    opacity: 0;
+    transform: translateX(50px);
   }
+
   to {
-      opacity: 1;
-      transform: translateX(0);
-  }
-}
-
-/* Responsive Styles */
-@media (max-width: 768px) {
-  .hero {
-      flex-direction: column;
-      text-align: center;
-  }
-
-  .hero img.hero-image {
-      display: none;
-  }
-
-  .hero h2 {
-      font-size: 2.5em;
-  }
-
-  .hero p {
-      font-size: 1.2em;
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
 /* Keyframes for animations */
 @keyframes fadeInDown {
   from {
-      opacity: 0;
-      transform: translateY(-50px);
+    opacity: 0;
+    transform: translateY(-50px);
   }
+
   to {
-      opacity: 1;
-      transform: translateY(0);
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
 @keyframes fadeInUp {
   from {
-      opacity: 0;
-      transform: translateY(50px);
+    opacity: 0;
+    transform: translateY(50px);
   }
+
   to {
-      opacity: 1;
-      transform: translateY(0);
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
 @keyframes slideInRight {
   from {
-      opacity: 0;
-      transform: translateX(50px);
+    opacity: 0;
+    transform: translateX(50px);
   }
+
   to {
-      opacity: 1;
-      transform: translateX(0);
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
 /* About Section */
 .about {
   padding: 50px 20px;
-  text-align: center;
   background-color: #f9f9f9;
+  /* background-color: #ccc; */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.about h2 {
+  text-align: center;
+}
+
+.about p {
+  line-height: 40px;
+  text-align: justify;
+}
+
+#aboutText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#readMoreLink {
+  display: none;
+  color: #007bff;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 /* Menu Section */
@@ -212,6 +224,12 @@ body {
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+.testimonial .customerName{
+  color: #ccc;
+  font-style: italic;
+  font-size: 12px;
+  font-weight: 600;
+}
 
 /* How It Works Section */
 .how-it-works {
@@ -271,7 +289,7 @@ footer {
   border: 1px solid #ddd;
   padding: 20px;
   border-radius: 5px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .slick-dots {
@@ -290,31 +308,112 @@ footer {
 
 /* Responsive Styles */
 @media (max-width: 768px) {
-  .hero img.hero-image {
-      display: none;
+  .hero {
+    flex-direction: column;
+    text-align: center;
   }
 
-  .menu-items, .testimonials-items, .steps {
-      flex-direction: column;
+  .hero img.hero-image {
+    display: none;
+  }
+
+  .menu-items,
+  .testimonials-items,
+  .steps {
+    flex-direction: column;
   }
 
   .hero h2 {
-      font-size: 2.5em;
+    font-size: 2em;
   }
 
   .hero p {
-      font-size: 1.2em;
+    font-size: 1.2em;
   }
-  .menu-item, .testimonial,.step{
-   
+
+  .menu-item,
+  .testimonial,
+  .step {
+
     align-self: center;
   }
+
   .about {
-    
     text-align: justify;
-    
+
   }
-  .about h2{
+  .about h2 {
     text-align: center;
+  }
+  #aboutText {
+    height: 200px;
+    /* Adjust height based on the amount of visible text you want */
+  }
+
+  #readMoreLink {
+    display: inline;
+  }
+}
+
+/* Responsive Styles */
+@media (max-width: 650px) {
+
+  .hero h2 {
+    font-size: 1.2em;
+  }
+
+  .hero p {
+    font-size: 14px;
+    text-align: left;
+  }
+  .hero a.btn {
+    padding: 7px 10px;
+    font-size: 14px;
+  }
+  .about h2, .menu h2, .specials h2, .testimonials h2, .how-it-works h2, .contact h2{
+    font-size: 1.1em;
+  }
+  .menu h3{
+    font-size: 16px;
+  }
+  .about p, .menu p, .specials p, .testimonials p, .how-it-works p, .contact p, footer p{
+    font-size: 14px;
+  }
+  #aboutText {
+    height: 200px;
+    /* Adjust height based on the amount of visible text you want */
+  }
+}
+
+/* Responsive Styles */
+@media (max-width: 500px) {
+
+  .hero h2 {
+    font-size: 1em;
+  }
+
+  .hero p {
+    font-size: 12px;
+    text-align: left;
+  }
+  .hero a.btn {
+    padding: 5px 8px;
+    border-radius: 5px;
+    text-decoration: none;
+    animation: fadeInUp 1.2s ease-in-out;
+    font-size: 12px;
+  }
+  .about h2, .menu h2, .specials h2, .testimonials h2, .how-it-works h2, .contact h2{
+    font-size: 1em;
+  }
+  .menu h3{
+    font-size: 14px;
+  }
+  .about p, .menu p, .specials p, .testimonials p, .how-it-works p, .contact p, footer p{
+    font-size: 12px;
+  }
+  #aboutText {
+    height: 160px;
+    /* Adjust height based on the amount of visible text you want */
   }
 }

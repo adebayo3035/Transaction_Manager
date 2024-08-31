@@ -9,16 +9,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Content-Type': 'application/json'
             }
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                updateTable(data.orders);
-                updatePagination(data.total, data.page, data.limit);
-            } else {
-                console.error('Failed to fetch orders:', data.message);
-            }
-        })
-        .catch(error => console.error('Error fetching data:', error));
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    updateTable(data.orders);
+                    updatePagination(data.total, data.page, data.limit);
+                } else {
+                    console.error('Failed to fetch orders:', data.message);
+                }
+            })
+            .catch(error => console.error('Error fetching data:', error));
     }
 
     function updateTable(orders) {
@@ -72,29 +72,72 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             body: JSON.stringify({ order_id: orderId })
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                const orderDetailsTableBody = document.querySelector('#orderDetailsTable tbody');
-                orderDetailsTableBody.innerHTML = '';
-                data.order_details.forEach(detail => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${detail.food_name}</td>
-                        <td>${detail.quantity}</td>
-                        <td>${detail.price_per_unit}</td>
-                        <td>${detail.total_price}</td>
-                    `;
-                    orderDetailsTableBody.appendChild(row);
-                });
-                document.getElementById('orderModal').style.display = 'block';
-            } else {
-                console.error('Failed to fetch order details:', data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching order details:', error);
-        });
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const orderDetailsTableBody = document.querySelector('#orderDetailsTable tbody');
+                    orderDetailsTableBody.innerHTML = '';
+
+                    data.order_details.forEach(detail => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                <td>${detail.order_date}</td>
+                <td>${detail.food_name}</td>
+                <td>${detail.quantity}</td>
+                <td>${detail.price_per_unit}</td>
+                <td>${detail.status}</td>
+                <td>${detail.total_price}</td>
+            `;
+                        orderDetailsTableBody.appendChild(row);
+                    });
+
+                    // Assuming service_fee, delivery_fee, and total_order are the same for the entire order
+                    const firstDetail = data.order_details[0];
+
+                     // Add Total Order row
+                     const totalOrderRow = document.createElement('tr');
+                     totalOrderRow.innerHTML = `
+             <td colspan="5"><strong>Total Order</strong></td>
+             <td>${firstDetail.total_order}</td>
+         `;
+                     orderDetailsTableBody.appendChild(totalOrderRow);
+
+                    // Add Service Fee row
+                    const serviceFeeRow = document.createElement('tr');
+                    serviceFeeRow.innerHTML = `
+            <td colspan="5"><strong>Service Fee</strong></td>
+            <td>${firstDetail.service_fee}</td>
+        `;
+                    orderDetailsTableBody.appendChild(serviceFeeRow);
+
+                    // Add Delivery Fee row
+                    const deliveryFeeRow = document.createElement('tr');
+                    deliveryFeeRow.innerHTML = `
+            <td colspan="5"><strong>Delivery Fee</strong></td>
+            <td>${firstDetail.delivery_fee}</td>
+        `;
+                    orderDetailsTableBody.appendChild(deliveryFeeRow);
+
+                     // Add Delivery Fee row
+                     const TotalAmountRow = document.createElement('tr');
+                     TotalAmountRow.innerHTML = `
+             <td colspan="5"><strong>Total Amount</strong></td>
+             <td>${firstDetail.total_amount}</td>
+         `;
+                     orderDetailsTableBody.appendChild(TotalAmountRow);
+
+                   
+
+                    document.getElementById('orderModal').style.display = 'block';
+                } else {
+                    console.error('Failed to fetch order details:', data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching order details:', error);
+            });
+
+
     }
 
     document.querySelector('.modal .close').addEventListener('click', () => {
@@ -131,4 +174,66 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fetch initial orders
     fetchOrders(currentPage);
+
+    // Function to handle printing the receipt
+    function printReceipt() {
+        const orderDetails = document.querySelector('#orderDetailsTable').outerHTML;
+        const now = new Date();
+        const dateTime = now.toLocaleString();
+        const receiptWindow = window.open('', '', 'width=800,height=600');
+        receiptWindow.document.write('<html><head><title>Receipt</title>');
+        receiptWindow.document.write('<style>');
+        receiptWindow.document.write(`
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 20px;
+                color: #333;
+            }
+            h2 {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
+            th, td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: left;
+            }
+            th {
+                background-color: #f2f2f2;
+            }
+            @media print {
+                body {
+                    padding: 10px;
+                }
+                table {
+                    font-size: 12px;
+                }
+            }
+        `);
+        receiptWindow.document.write('</style></head><body>');
+        receiptWindow.document.write('<h2>KaraKata Foods</h2>');
+        receiptWindow.document.write('<h3>Order Details</h3>');
+
+        receiptWindow.document.write(orderDetails);
+        receiptWindow.document.write('<br>')
+        receiptWindow.document.write('Thank you for your Patronage <br/>');
+        receiptWindow.document.write('Date and Time: ' + dateTime)
+        receiptWindow.document.write('</body></html>');
+
+        receiptWindow.document.close();
+        receiptWindow.print();
+    }
+
+
+    // Assuming you have a button with ID 'printReceiptButton'
+    const printButton = document.getElementById('receipt-btn');
+    if (printButton) {
+        printButton.addEventListener('click', printReceipt);
+    }
 });

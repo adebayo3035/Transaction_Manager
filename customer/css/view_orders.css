@@ -49,6 +49,7 @@ table {
     margin: 20px auto;
     border-collapse: collapse;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 12px;
 }
 
 th, td {
@@ -144,7 +145,7 @@ tr:nth-child(even) {
     }
 
     th, td {
-        padding: 10px;
+        padding: 3px;
         text-align: left;
     }
 
@@ -165,6 +166,20 @@ tr:nth-child(even) {
         color: #fff;
         font-weight: 500;
     }
+    .modal-content {
+        margin: 1% auto;
+        padding: 10px;
+        border: 1px solid #888;
+        width: 95%;
+    }
+    .ordersTable th,
+        .ordersTable td {
+            padding: 4px;
+            border-bottom: 1px solid #ddd;
+        }
+        .ordersTable th{
+            text-align: center;
+        }
     
     
 }
