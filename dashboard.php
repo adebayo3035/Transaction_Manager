@@ -30,12 +30,16 @@
           <p id="totalOrders">Loading...</p>
         </div>
         <div class="card">
-          <h3>Revenue</h3>
+          <h3>Total Inflow for Today</h3>
           <p id="totalRevenue">Loading...</p>
         </div>
         <div class="card">
           <h3>Customers</h3>
           <p id="totalCustomers">Loading...</p>
+        </div>
+        <div class="card">
+          <h3>Drivers</h3>
+          <p id="totalDrivers">Loading...</p>
         </div>
         <div class="card">
           <h3>Pending Orders</h3>
@@ -53,10 +57,13 @@
       <table id="customer-table">
         <thead>
           <tr>
-
+            <th>Order ID</th>
             <th>Order Date</th>
             <th>Total Amount (N)</th>
             <th>Status</th>
+            <th>Delivery Status</th>
+            <th>Assigned to</th>
+            <th>Driver Name</th>
           </tr>
         </thead>
         <tbody>

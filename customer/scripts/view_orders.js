@@ -27,9 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
         orders.forEach(order => {
             const row = document.createElement('tr');
             row.innerHTML = `
+                <td>${order.order_id}</td>
                 <td>${order.order_date}</td>
                 <td>${order.total_amount}</td>
-                <td>${order.status}</td>
+                <td>${order.delivery_status}</td>
                 <td><button class="view-details-btn" data-order-id="${order.order_id}">View Details</button></td>
             `;
             ordersTableBody.appendChild(row);
@@ -81,53 +82,90 @@ document.addEventListener('DOMContentLoaded', () => {
                     data.order_details.forEach(detail => {
                         const row = document.createElement('tr');
                         row.innerHTML = `
-                <td>${detail.order_date}</td>
-                <td>${detail.food_name}</td>
-                <td>${detail.quantity}</td>
-                <td>${detail.price_per_unit}</td>
-                <td>${detail.status}</td>
-                <td>${detail.total_price}</td>
-            `;
+                            <td>${detail.order_date}</td>
+                            <td>${detail.food_name}</td>
+                            <td>${detail.quantity}</td>
+                            <td>${detail.price_per_unit}</td>
+                            <td>${detail.status}</td>
+                            <td>${detail.total_price}</td>
+                        `;
                         orderDetailsTableBody.appendChild(row);
                     });
 
                     // Assuming service_fee, delivery_fee, and total_order are the same for the entire order
                     const firstDetail = data.order_details[0];
 
-                     // Add Total Order row
-                     const totalOrderRow = document.createElement('tr');
-                     totalOrderRow.innerHTML = `
-             <td colspan="5"><strong>Total Order</strong></td>
-             <td>${firstDetail.total_order}</td>
-         `;
-                     orderDetailsTableBody.appendChild(totalOrderRow);
+                    // Add Total Order row
+                    const totalOrderRow = document.createElement('tr');
+                    totalOrderRow.innerHTML = `
+                        <td colspan="5"><strong>Total Order</strong></td>
+                        <td>${firstDetail.total_order}</td>
+                    `;
+                    orderDetailsTableBody.appendChild(totalOrderRow);
 
                     // Add Service Fee row
                     const serviceFeeRow = document.createElement('tr');
                     serviceFeeRow.innerHTML = `
-            <td colspan="5"><strong>Service Fee</strong></td>
-            <td>${firstDetail.service_fee}</td>
-        `;
+                        <td colspan="5"><strong>Service Fee</strong></td>
+                        <td>${firstDetail.service_fee}</td>
+                    `;
                     orderDetailsTableBody.appendChild(serviceFeeRow);
 
                     // Add Delivery Fee row
                     const deliveryFeeRow = document.createElement('tr');
                     deliveryFeeRow.innerHTML = `
-            <td colspan="5"><strong>Delivery Fee</strong></td>
-            <td>${firstDetail.delivery_fee}</td>
-        `;
+                        <td colspan="5"><strong>Delivery Fee</strong></td>
+                        <td>${firstDetail.delivery_fee}</td>
+                    `;
                     orderDetailsTableBody.appendChild(deliveryFeeRow);
 
-                     // Add Delivery Fee row
-                     const TotalAmountRow = document.createElement('tr');
-                     TotalAmountRow.innerHTML = `
-             <td colspan="5"><strong>Total Amount</strong></td>
-             <td>${firstDetail.total_amount}</td>
-         `;
-                     orderDetailsTableBody.appendChild(TotalAmountRow);
+                    // Add Delivery Fee row
+                    const TotalAmountRow = document.createElement('tr');
+                    TotalAmountRow.innerHTML = `
+                        <td colspan="5"><strong>Total Amount</strong></td>
+                        <td>${firstDetail.total_amount}</td>
+                     `;
+                    orderDetailsTableBody.appendChild(TotalAmountRow);
 
-                   
+                    //  Display Delivery Pin
+                    const deliveryPinRow = document.createElement('tr');
+                    deliveryPinRow.innerHTML = `
+                        <td colspan="5"><strong>Delivery Pin</strong></td>
+                        <td><h2>${firstDetail.delivery_pin}</h2></td>
+                    `;
+                    orderDetailsTableBody.appendChild(deliveryPinRow);
 
+                    //  Display Delivery Status
+                    const deliveryStatusRow = document.createElement('tr');
+                    deliveryStatusRow.innerHTML = `
+                        <td colspan="5"><strong>Delivery Status</strong></td>
+                        <td><h2>${firstDetail.delivery_status}</h2></td>
+                    `;
+                    orderDetailsTableBody.appendChild(deliveryStatusRow);
+                    // Display print button if delivery status is Delivered or Canceled
+                    const printButton = document.getElementById('receipt-btn');
+                    if(firstDetail.delivery_status === "Delivered" || firstDetail.delivery_status === "Canceled"){
+                        printButton.style.display = "block";
+                    }
+
+                    //  Display Delivery Person's details
+                    const driverDetailsRow = document.createElement('tr');
+                    driverDetailsRow.innerHTML = `
+                        <td colspan="5"><strong>Driver's Name</strong></td>
+                        <td>${firstDetail.driver_firstname}  ${firstDetail.driver_lastname}</td>
+                    `;
+                    // if driver firstname and lastname is not null, append it to the table on the frontend
+                    if(firstDetail.driver_firstname !== null && firstDetail.driver_lastname !== null){
+                        orderDetailsTableBody.appendChild(driverDetailsRow);
+                    }
+
+                    const driver_phoneNumberRow = document.createElement('tr')
+                    driver_phoneNumberRow.innerHTML = ` 
+                        <td colspan = "5"> <strong> Driver's Phone Number: </strong> </td>
+                        <td> ${ firstDetail.driver_phoneNumber} </td>
+                    `;
+                    orderDetailsTableBody.appendChild(driver_phoneNumberRow);
+                    
                     document.getElementById('orderModal').style.display = 'block';
                 } else {
                     console.error('Failed to fetch order details:', data.message);
@@ -199,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 border-collapse: collapse;
                 margin-top: 20px;
             }
-            th, td {
+            th, td, td h2 {
                 border: 1px solid #ddd;
                 padding: 8px;
                 text-align: left;

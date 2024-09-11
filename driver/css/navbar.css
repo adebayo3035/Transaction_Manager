@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+input[type="text"] {
+  text-transform: capitalize;
+}
+
+input[type="email"] {
+  text-transform: lowercase;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+
+}
+
+header h1 {
+  margin: 0;
+}
+
+header h1 a {
+  text-decoration: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-info span {
+  margin-right: 15px;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  background-color: #444;
+  overflow: hidden;
+
+}
+
+nav ul li {
+  float: left;
+
+}
+
+nav ul li a {
+  display: block;
+  padding: 10px 20px;
+  color: #fff;
+  text-decoration: none;
+
+
+}
+
+nav ul li a:hover {
+  background-color: #555;
+}
+
+#logoutButton {
+  background-color: #d9534f;
+  border: 0px;
+
+}
+
+#logoutButton a {
+  font-size: 16px;
+  padding: 10px;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+#walletBalance {
+  font-size: 13px;
+}
+
+@media(max-width: 780px) {
+  header h1 {
+    font-size: 17px;
+  }
+
+  .user-info span {
+    font-size: 13px;
+  }
+  #logoutButton a{
+    font-size: 13px;
+    padding: 5px;
+  }
+}
+
+@media (max-width: 710px) {
+  header {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2px;
+  }
+
+  header h1 {
+    font-size: 14px;
+  }
+
+  header .user-info {
+    display: flex;
+    flex-direction: column;
+    padding: 2px;
+    width: 100%;
+
+  }
+
+  nav ul li a {
+    font-size: 12px;
+    ;
+  }
+}

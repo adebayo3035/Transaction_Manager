@@ -24,70 +24,62 @@ if (isset($data['order_id']) && isset($data['status'])) {
     $conn->begin_transaction();
 
     try {
-        // Update the order status in the orders table
-        $query = "UPDATE orders SET status = ?, updated_at = NOW() WHERE order_id = ?";
-        $stmt = $conn->prepare($query);
-        if (!$stmt) {
-            throw new Exception('Prepare statement failed: ' . $conn->error);
-        }
-        $stmt->bind_param("si", $status, $order_id);
-        $stmt->execute();
-        if ($stmt->affected_rows === 0) {
-            throw new Exception('No rows updated in orders table.');
-        }
-        $stmt->close();
+        if ($status === 'Approved') {
+            // Find an available driver who is not restricted
+            $findDriverQuery = "SELECT id FROM driver WHERE status = 'Available' and restriction = 0 ORDER BY RAND() LIMIT 1";
+            $result = $conn->query($findDriverQuery);
+            
+            if ($result->num_rows > 0) {
+                $driver = $result->fetch_assoc();
+                $driver_id = $driver['id'];
 
-        // Update the status in the revenue table
-        $revenue_query = "UPDATE revenue SET status = ?, updated_at = NOW() WHERE order_id = ?";
-        $revenue_stmt = $conn->prepare($revenue_query);
-        if (!$revenue_stmt) {
-            throw new Exception('Prepare statement failed for revenue: ' . $conn->error);
-        }
-        $revenue_stmt->bind_param("si", $status, $order_id);
-        $revenue_stmt->execute();
-        $revenue_stmt->close();
+                // Assign the driver to the order and update the order and driver statuses
+                $assignDriverQuery  = "UPDATE orders SET driver_id = ?, delivery_status = 'Assigned', status = ?, updated_at = NOW() WHERE order_id = ?";
+                $updateDriverStatusQuery = "UPDATE driver SET status = 'Not Available' WHERE id = ?";
 
-        // Update the status in the order_details table
-        $order_details_query = "UPDATE order_details SET status = ?, updated_at = NOW() WHERE order_id = ?";
-        $order_details_stmt = $conn->prepare($order_details_query);
-        if (!$order_details_stmt) {
-            throw new Exception('Prepare statement failed for order_details: ' . $conn->error);
-        }
-        $order_details_stmt->bind_param("si", $status, $order_id);
-        $order_details_stmt->execute();
-        $order_details_stmt->close();
+                $stmt = $conn->prepare($assignDriverQuery);
+                $stmt->bind_param('isi', $driver_id, $status, $order_id);
+                $stmt->execute();
+                
+                $stmt = $conn->prepare($updateDriverStatusQuery);
+                $stmt->bind_param('i', $driver_id);
+                $stmt->execute();
+                $stmt->close();
 
-        // Get total amount and customer id from the order
-        $stmt = $conn->prepare("SELECT total_amount, customer_id FROM orders WHERE order_id = ?");
-        $stmt->bind_param("i", $order_id);
-        $stmt->execute();
-        $stmt->bind_result($totalAmount, $customerId);
-        $stmt->fetch();
-        $stmt->close();
-
-        if ($status === 'Declined') {
+                // Optionally, send a notification to the driver
+                // sendDriverNotification($driver_id, $order_id);
+            } else {
+                throw new Exception('No available drivers at the moment.');
+            }
+        } else if ($status === 'Declined') {
             // Refund the customer
+            $stmt = $conn->prepare("SELECT total_amount, customer_id FROM orders WHERE order_id = ?");
+            $stmt->bind_param("i", $order_id);
+            $stmt->execute();
+            $stmt->bind_result($totalAmount, $customerId);
+            $stmt->fetch();
+            $stmt->close();
+
+            // Update wallet balance
             $stmt = $conn->prepare("UPDATE wallets SET balance = balance + ? WHERE customer_id = ?");
             $stmt->bind_param("di", $totalAmount, $customerId);
             $stmt->execute();
             $stmt->close();
 
-            //Insert Refund into customer_transaction table
-            // Insert into customer transaction table
-            $description = "Declined Food Order Refund for Order ID: ". $order_id;
+            // Insert refund record into customer_transactions
+            $description = "Declined Food Order Refund for Order ID: " . $order_id;
             $paymentMethod = "Transaction Refund";
             $stmt = $conn->prepare("INSERT INTO customer_transactions (customer_id, amount, date_created, transaction_type, payment_method, description) VALUES (?, ?, NOW(), 'credit', ?, ?)");
             $stmt->bind_param("idss", $customerId, $totalAmount, $paymentMethod, $description);
             $stmt->execute();
             $stmt->close();
 
-            // Fetch the food items related to the order
+            // Update food stock quantities in the food table
             $stmt = $conn->prepare("SELECT food_id, quantity FROM order_details WHERE order_id = ?");
             $stmt->bind_param("i", $order_id);
             $stmt->execute();
             $result = $stmt->get_result();
 
-            // Update the food stock quantities in the food table
             while ($row = $result->fetch_assoc()) {
                 $foodId = $row['food_id'];
                 $quantity = $row['quantity'];
@@ -97,6 +89,27 @@ if (isset($data['order_id']) && isset($data['status'])) {
                 $updateFoodStmt->close();
             }
 
+            $stmt->close();
+
+            // Update the delivery_status to 'Cancelled'
+            $updateDeliveryStatusQuery = "UPDATE orders SET delivery_status = 'Cancelled', updated_at = NOW() WHERE order_id = ?";
+            $stmt = $conn->prepare($updateDeliveryStatusQuery);
+            $stmt->bind_param("i", $order_id);
+            $stmt->execute();
+            $stmt->close();
+        }
+
+        // Update the status in the orders, revenue, and order_details tables
+        $updateStatusQueries = [
+            "UPDATE orders SET status = ?, updated_at = NOW() WHERE order_id = ?",
+            "UPDATE revenue SET status = ?, updated_at = NOW() WHERE order_id = ?",
+            "UPDATE order_details SET status = ?, updated_at = NOW() WHERE order_id = ?"
+        ];
+
+        foreach ($updateStatusQueries as $query) {
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param("si", $status, $order_id);
+            $stmt->execute();
             $stmt->close();
         }
 
@@ -114,3 +127,4 @@ if (isset($data['order_id']) && isset($data['status'])) {
 }
 
 $conn->close();
+

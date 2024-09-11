@@ -33,8 +33,9 @@
     <div class="topnav" id="myTopnav">
         <a href="homepage.php" class="active">Home</a>
         <a href="staffs.php">Staffs</a>
+        <a href="view_drivers.php">Drivers</a>
         <a href="customer.php">Customers</a>
-        <a href="dashboard.php">Transactions</a>
+        <a href="dashboard.php">Dashboard</a>
         <a href="groups.php">Groups</a>
         <a href="units.php">Units</a>
         <a href="food.php">Foods</a>
@@ -65,6 +66,28 @@
                 x.className = "topnav";
             }
         }
+
+
+
+        const notificationBadge = document.getElementById('notification-badge');
+        function fetchNotificationsAndCount() {
+        fetch('backend/notification.php') // Replace with your PHP endpoint
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    notificationBadge.textContent = data.totalNotifications || '0'; // Default to 0 if undefined
+                } else {
+                    notificationBadge.textContent = '0'; // Default to 0 on error
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching notifications:', error);
+                notificationBadge.textContent = '0'; // Default to 0 on error
+            });
+    }
+
+    // Initial fetch of notifications and count
+    fetchNotificationsAndCount();
     </script>
     <script src = "scripts/notification.js"></script>
 </body>

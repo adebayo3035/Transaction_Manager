@@ -4,6 +4,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('pendingOrders').textContent = data.pendingOrders;
         document.getElementById('approvedOrders').textContent = data.approvedOrders;
         document.getElementById('declinedOrders').textContent = data.declinedOrders;
+        document.getElementById('transitOrders').textContent = data.transitOrders;
+        document.getElementById('deliveredOrders').textContent = data.deliveredOrders;
+        document.getElementById('cancelledOrders').textContent = data.cancelledOrders;
+        document.getElementById('assignedOrders').textContent = data.assignedOrders;
 
         // Create charts
         createPieChart(data);
@@ -21,6 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${transaction.total_amount}</td>
                 <td>${transaction.transaction_date}</td>
                 <td class="status">${transaction.status}</td>
+                <td>${transaction.delivery_status || 'N/A'}</td>
+                <td>${transaction.firstname && transaction.lastname ? `${transaction.firstname} ${transaction.lastname}` : 'No Driver Assigned'}</td>
                 <td>${transaction.updated_at}</td>
             `;
             revenueTableBody.appendChild(row);

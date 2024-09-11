@@ -1,0 +1,92 @@
+.ordersTable th,
+.ordersTable td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+tbody tr td input[type="text"],
+input[type="date"],
+tbody tr td input[type="email"],
+tbody tr td input[type="number"],
+tbody tr td input[type="month"],
+tbody tr td input[type="password"],
+tbody tr td select {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    outline: none;
+}
+
+tbody tr td input[type="email"] {
+    text-transform: lowercase;
+}
+
+.photo-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.driver-photo {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+}
+
+#deleteDriverBtn {
+    background-color: #a72828;
+    color: #fff;
+}
+
+#deleteDriverBtn:hover {
+    background-color: #000;
+
+}
+
+#updateDriverBtn {
+    background-image: #FFA500;
+    color: #fff;
+}
+
+#updateDriverBtn:hover {
+    background-color: #FFA500;
+    color: #fff;
+}
+#photo_container{
+    margin: 10px 0px; 
+    align-self: center; 
+}
+#photo_container img{
+    display: none; 
+    /* max-width: 100%; 
+    height: auto; */
+    width: 150px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+
+}
+.masking{
+    display: flex;
+    
+}
+.masking label{
+    padding-left: 10px;
+}
+@media screen and (max-width: 700px){
+    #customer-form{
+        display: flex;
+        justify-content: center;
+        margin: 10px 0px;
+    }
+    #customer-form button{
+        padding: 10px;
+        font-size: 13px;
+    }
+}

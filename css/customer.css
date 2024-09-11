@@ -94,6 +94,9 @@ body {
   .delete-icon{
     color: #d9534f
   }
+  #delivery_auth, #updateDeliveryStatus, #new-status, #cancelReasonContainer{
+    display: none;
+  }
 
   @media screen and (max-width: 500px) {
     .container .livesearch button{
@@ -105,7 +108,7 @@ body {
         justify-content: center;
     }
     #customer-form button{
-        padding: 5px;
+        padding: 10px;
         font-size: 13px;
     }
 }
@@ -177,7 +180,7 @@ body {
 }
 
 .add_group input,
-.add_group select {
+.add_group select, .add_group textarea {
   border: 1px solid #ccc;
   outline: none;
   font-size: 13px;
@@ -187,6 +190,7 @@ body {
   width: 100%;
   box-sizing: border-box; /* Ensure padding and border are included in the width */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  resize: none;
 }
 
 .add_group button {

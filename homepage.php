@@ -97,19 +97,19 @@
     <div class="testimonial-slider">
         <div class="testimonial">
             <p>"Amazing service! The food is always fresh and delicious."</p>
-            <p>- Customer Name</p>
+            <p class ="customerName">- Customer Name</p>
         </div>
         <div class="testimonial">
             <p>"I love the variety on the menu. Something new to try every time."</p>
-            <p>- Customer Name</p>
+            <p class="customerName">- Customer Name</p>
         </div>
         <div class="testimonial">
             <p>"Fast delivery and excellent customer service. Highly recommend!"</p>
-            <p>- Customer Name</p>
+            <p class="customerName">- Customer Name</p>
         </div>
         <div class="testimonial">
             <p>"Fast delivery and excellent customer service. Highly recommend!"</p>
-            <p>- Customer Name</p>
+            <p class="customerName">- Customer Name</p>
         </div>
     </div>
 </section>

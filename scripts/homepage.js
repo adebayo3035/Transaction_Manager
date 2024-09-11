@@ -15,7 +15,7 @@ $(document).ready(function () {
 
 document.addEventListener('DOMContentLoaded', (event) => {
     event.preventDefault();
-    fetch('../backend/fetch_random_customers.php', {
+    fetch('../transaction_manager/backend/fetch_random_customers.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

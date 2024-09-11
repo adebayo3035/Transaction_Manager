@@ -30,6 +30,7 @@
     <table id="ordersTable" class="ordersTable">
         <thead>
             <tr>
+                <th>Order ID</th>
                 <th>Order Date</th>
                 <th>Total Amount (N)</th>
                 <th>Status</th>
@@ -65,7 +66,7 @@
 
             </table>
 
-            <button type="button" id="receipt-btn">Print Receipt</button>
+            <button type="button" id="receipt-btn" style="display: none">Print Receipt</button>
         </div>
     </div>
 

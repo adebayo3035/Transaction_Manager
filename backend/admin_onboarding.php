@@ -17,6 +17,11 @@ $hasSpecialChar = preg_match('/[!@#$%^&*(),.?":{}|<>_]/', $password);
 $hasUpperCase = preg_match('/[A-Z]/', $password);
 $hasDigit = preg_match('/\d/', $password);
 
+if (!preg_match('/^\d{11}$/', $phone)) {
+    echo json_encode(['success' => false, 'message' => 'Please input a valid Phone Number.']);
+    exit();
+}
+
 if (!empty($firstname) && !empty($lastname) && !empty($email) && !empty($phone) && !empty($password) && !empty($secret_question) && !empty($secret_answer) && !empty($role)) {
     if ((strlen($password) < $minLength) || !$hasSpecialChar || !$hasUpperCase || !$hasDigit) {
         echo json_encode(['success' => false, 'message' => 'Please input a valid password.']);
@@ -79,4 +84,3 @@ if (!empty($firstname) && !empty($lastname) && !empty($email) && !empty($phone) 
 } else {
     echo json_encode(['success' => false, 'message' => 'Please fill all input fields.']);
 }
-?>

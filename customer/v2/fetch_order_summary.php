@@ -21,7 +21,13 @@ $totalResult = $stmt->get_result();
 $totalOrders = $totalResult->fetch_assoc()['total'];
 
 // Fetch paginated orders
-$query = "SELECT order_id, order_date, total_amount, status FROM orders WHERE customer_id = ? ORDER BY order_date DESC LIMIT ? OFFSET ?";
+$query = "
+    SELECT order_id, order_date, total_amount, delivery_status 
+    FROM orders 
+    WHERE customer_id = ? 
+    ORDER BY order_date DESC, delivery_status ASC 
+    LIMIT ? OFFSET ?";
+
 $stmt = $conn->prepare($query);
 $stmt->bind_param("iii", $customerId, $limit, $offset);
 $stmt->execute();

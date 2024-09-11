@@ -17,7 +17,9 @@
 
 
     <main>
+    <?php include('dashboard_navbar.php'); ?>
         <h1>Revenue Dashboard</h1>
+        
         <div class="dashboard-charts">
             <canvas id="revenuePieChart"></canvas>
             <canvas id="revenueLineChart"></canvas>
@@ -45,6 +47,22 @@
                 <h2>Declined Orders</h2>
                 <p id="declinedOrders">0</p>
             </div>
+            <div class="stat-card">
+                <h2>Assigned Orders</h2>
+                <p id="assignedOrders">0</p>
+            </div>
+            <div class="stat-card">
+                <h2>Orders In Transit</h2>
+                <p id="transitOrders">0</p>
+            </div>
+            <div class="stat-card">
+                <h2>Orders Delivered</h2>
+                <p id="deliveredOrders">0</p>
+            </div>
+            <div class="stat-card">
+                <h2>Cancelled Order</h2>
+                <p id="cancelledOrders">0</p>
+            </div>
         </div>
 
         <h2>Recent Transactions</h2>
@@ -56,6 +74,8 @@
                     <th>Total Amount</th>
                     <th>Transaction Date</th>
                     <th>Status</th>
+                    <th>Delivery Status</th>
+                    <th>Driver Name</th>
                     <th>Updated At</th>
                 </tr>
             </thead>
