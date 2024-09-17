@@ -16,7 +16,19 @@ if($role == "Admin"){
 $stmt->bind_param("i", $adminId);
 }
 else if($role = "Super Admin"){
-    $query = "SELECT order_id, order_date, total_amount, status FROM orders WHERE status = 'Pending' ORDER BY order_date DESC";
+    $query = "SELECT 
+    orders.order_id, 
+    orders.order_date, 
+    orders.total_amount, 
+    orders.status, 
+    orders.assigned_to, 
+    admin_tbl.firstname AS assigned_admin_firstname, 
+    admin_tbl.lastname AS assigned_admin_lastname
+FROM orders
+LEFT JOIN admin_tbl ON orders.assigned_to = admin_tbl.unique_id
+WHERE orders.status = 'Pending'
+ORDER BY orders.order_date DESC;
+";
     $stmt = $conn->prepare($query);
 // $stmt->bind_param("i", $adminId);
 }

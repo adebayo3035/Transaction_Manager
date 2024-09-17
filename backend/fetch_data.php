@@ -67,6 +67,8 @@ $totalCustomers = $resultCustomers->fetch_assoc()['total_customers'];
 $sqlRecentOrders = "
     SELECT 
         orders.order_id,
+        orders.assigned_to,
+        orders.approved_by,
         orders.order_date, 
         orders.total_amount, 
         orders.status, 
@@ -75,10 +77,14 @@ $sqlRecentOrders = "
         driver.firstname AS driver_firstname, 
         driver.lastname AS driver_lastname, 
         admin_tbl.firstname AS admin_firstname, 
-        admin_tbl.lastname AS admin_lastname 
+        admin_tbl.lastname AS admin_lastname,
+        admin_approver.firstname AS approver_firstname,
+        admin_approver.lastname AS approver_lastname 
     FROM orders 
     LEFT JOIN driver ON orders.driver_id = id 
-    LEFT JOIN admin_tbl ON orders.assigned_to = admin_tbl.unique_id ";
+    LEFT JOIN admin_tbl ON orders.assigned_to = admin_tbl.unique_id
+    LEFT JOIN admin_tbl AS admin_approver ON orders.approved_by = admin_approver.unique_id
+    ";
 
 // Modify query based on user role
 if ($role === 'Admin') {

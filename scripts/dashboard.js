@@ -44,7 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
                   <td>${order.total_amount || 'N/A'}</td>
                   <td style="color: ${statusColor}; padding: ${statusPadding}; font-weight: 900;">${order.status || 'Unknown'}</td>
                   <td>${order.delivery_status || 'Unknown'}</td>
-                  <td>${order.admin_firstname} ${order.admin_lastname}</td>
+                  <td>${order.admin_firstname} ${order.admin_lastname} - ${order.assigned_to}</td>
+                  <td>${order.approver_firstname} ${order.approver_lastname} - ${order.approved_by}</td>
                   <td>${order.driver_firstname && order.driver_lastname ? `${order.driver_firstname} ${order.driver_lastname}` : 'No Driver Assigned'}</td>
               `;
 

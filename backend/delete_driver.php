@@ -5,6 +5,11 @@ include('config.php'); // Replace with your actual database connection file
 // Get the JSON data from the request body
 $data = json_decode(file_get_contents("php://input"), true);
 
+$staff_role = $_SESSION['role'];
+if($staff_role !== "Super Admin"){
+    echo json_encode(["success" => false, "message" => "You do not have permission to Delete."]);
+    exit();
+}
 if (isset($data['id'])) {
     $driverId = $data['id'];
 

@@ -19,6 +19,28 @@
     <main>
     <?php include('dashboard_navbar.php'); ?>
         <h1>Revenue Dashboard</h1>
+
+        <!-- Separate row for "Add New Customer" button -->
+    <div id="customer-form">
+      <button onclick="openModal()"><i class="fa fa-plus" aria-hidden="true" id="createRevenueBtn"></i> Create New Revenue Type</button>
+    </div>
+
+    <!-- Modal for creating new revenue type -->
+    <div id="revenueTypeModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2>Create New Revenue Type</h2>
+                <form id="newRevenueTypeForm" action="backend/create_revenue_type.php" method="POST">
+                    <label for="revenue_type_name">Revenue Type Name:</label>
+                    <input type="text" id="revenue_type_name" name="revenue_type_name" required>
+
+                    <label for="revenue_description">Revenue Description:</label>
+                    <textarea id="revenue_description" name="revenue_description" required></textarea>
+
+                    <button type="submit">Create Revenue Type</button>
+                </form>
+            </div>
+        </div>
         
         <div class="dashboard-charts">
             <canvas id="revenuePieChart"></canvas>

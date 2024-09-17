@@ -9,6 +9,44 @@
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
+
+        .modal .reassign-form {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            display: flex;
+
+        }
+
+        .reassign-form h3 {
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .reassign-form label,
+        .reassign-form select,
+        .reassign-form button {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .reassign-form select {
+            width: 50%;
+            padding: 10px;
+            margin: 5px 0 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            outline: none;
+        }
+
+        .reassign-form button {
+            font-size: 14px;
+            padding: 10px;
+            background-color: #0275d8;
+            cursor: pointer;
+        }
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +58,7 @@
 <body>
     <?php include('navbar.php'); ?>
     <div class="container">
-    <?php include('dashboard_navbar.php'); ?>
+        <?php include('dashboard_navbar.php'); ?>
         <div class="livesearch">
             <input type="text" id="liveSearch" placeholder="Search for Order...">
             <button type="submit">Search <i class="fa fa-search" aria-hidden="true"></i></button>
@@ -50,11 +88,11 @@
     <div id="orderModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Order Details for Order: <span id ="orderID"> Order ID</span></h2> 
+            <h2>Order Details for Order: <span id="orderID"> Order ID</span></h2>
             <table id="orderDetailsTable" class="ordersTable">
                 <thead>
                     <tr>
-                        <th>Food ID</th>  
+                        <th>Food ID</th>
                         <th>Food Name</th>
                         <th>Number of Portions</th>
                         <th>Price per Portion (N)</th>
@@ -62,13 +100,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Order details will be dynamically inserted here -->
+                    <!-- Order details will be dynamically inserted here via a modal -->
                 </tbody>
 
             </table>
             <button type="button" id="receipt-btn">Print Receipt</button>
+            <button type="button" id="reassign-order">Reassign Order</button>
 
             <!-- <button type="button" id="receipt-btn" style="display: none">Print Receipt</button> -->
+            <!-- Reassign Order Form -->
+            <div class="reassign-form" id="reassignForm" style="display:none;">
+                <h3>Reassign Order</h3>
+                <div class="form-input">
+                    <label for="driver">Select Driver:</label>
+                    <select id="driver" name="driver">
+                        <!-- Options will be dynamically populated -->
+                         <option value="">-- Select Driver --</option>
+                    </select>
+                </div>
+                <button type="button" id="submitReassign">Submit</button>
+            </div>
         </div>
     </div>
 

@@ -16,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // $stmt = $conn->prepare("SELECT * FROM order_details WHERE order_id = ?");
     $query = "
     SELECT 
+    order_details.order_id,
       order_details.food_id, 
       order_details.quantity, 
       order_details.price_per_unit, 

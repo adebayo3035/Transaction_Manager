@@ -8,17 +8,20 @@ error_reporting(E_ALL);
 
 // Include database connection file
 include('config.php');
-include('restriction_checker.php');
-$approvalID = $_SESSION['unique_id'];
+session_start();
+$customer_id = $_SESSION['customer_id'];
+
+// Decode the incoming JSON request body
+$data = json_decode(json: file_get_contents(filename: 'php://input'), associative: true);
 
 if (isset($data['order_id']) && isset($data['status'])) {
     $order_id = $data['order_id'];
     $status = $data['status'];
 
     // Validate the status value
-    $valid_statuses = ['Approved', 'Declined'];
-    if (!in_array($status, $valid_statuses)) {
-        echo json_encode(['success' => false, 'message' => 'Invalid status value.']);
+    $valid_statuses = ['Cancelled'];
+    if (!in_array(needle: $status, haystack: $valid_statuses)) {
+        echo json_encode(value: ['success' => false, 'message' => 'Invalid status value.']);
         exit;
     }
 
@@ -26,33 +29,7 @@ if (isset($data['order_id']) && isset($data['status'])) {
     $conn->begin_transaction();
 
     try {
-        if ($status === 'Approved') {
-            // Find an available driver who is not restricted
-            $findDriverQuery = "SELECT id FROM driver WHERE status = 'Available' and restriction = 0 ORDER BY RAND() LIMIT 1";
-            $result = $conn->query($findDriverQuery);
-            
-            if ($result->num_rows > 0) {
-                $driver = $result->fetch_assoc();
-                $driver_id = $driver['id'];
-
-                // Assign the driver to the order and update the order and driver statuses
-                $assignDriverQuery  = "UPDATE orders SET driver_id = ?, delivery_status = 'Assigned', status = ?, updated_at = NOW(), approved_by = ? WHERE order_id = ?";
-                $stmt = $conn->prepare($assignDriverQuery);
-                $stmt->bind_param('isii', $driver_id, $status, $approvalID, $order_id);
-                $stmt->execute();
-                
-                $updateDriverStatusQuery = "UPDATE driver SET status = 'Not Available' WHERE id = ?";
-                $stmt = $conn->prepare($updateDriverStatusQuery);
-                $stmt->bind_param('i', $driver_id);
-                $stmt->execute();
-                $stmt->close();
-
-                // Optionally, send a notification to the driver
-                // sendDriverNotification($driver_id, $order_id);
-            } else {
-                throw new Exception('No available drivers at the moment.');
-            }
-        } else if ($status === 'Declined') {
+         if ($status === 'Cancelled') {
             // Refund the customer
             $stmt = $conn->prepare("SELECT total_amount, customer_id FROM orders WHERE order_id = ?");
             $stmt->bind_param("i", $order_id);
@@ -61,17 +38,35 @@ if (isset($data['order_id']) && isset($data['status'])) {
             $stmt->fetch();
             $stmt->close();
 
-            // Update wallet balance
+            // Deduct 20% cancellation fee and add balance to customer's wallet
+            $cancellation_fee = (0.2 * $totalAmount);
+            $balance = $totalAmount - $cancellation_fee;
             $stmt = $conn->prepare("UPDATE wallets SET balance = balance + ? WHERE customer_id = ?");
-            $stmt->bind_param("di", $totalAmount, $customerId);
+            $stmt->bind_param("di", $balance, $customerId);
             $stmt->execute();
             $stmt->close();
 
-            // Insert refund record into customer_transactions
-            $description = "Declined Food Order Refund for Order ID: " . $order_id;
-            $paymentMethod = "Transaction Refund";
+            // Insert revenue data into revenue table
+            // revenue type id for Order Inflow
+            $revenue_type = 1; 
+            $mystatus = "Order Cancellation Fee";
+            $stmt = $conn->prepare("INSERT INTO revenue (order_id, customer_id, total_amount, transaction_date, status, revenue_type_id) VALUES (?, ?, ?, NOW(), ?, ?)");
+            $stmt->bind_param("iidsi", $order_id, $customer_id, $cancellation_fee, $mystatus, $revenue_type);
+            $stmt->execute();
+            $stmt->close();
+
+            // Insert refund and cancellation fee record into customer_transactions
+            $description = "Refund for Cancelled Order: " . $order_id;
+            $paymentMethod = "Transaction Refund from Order Cancellation";
             $stmt = $conn->prepare("INSERT INTO customer_transactions (customer_id, amount, date_created, transaction_type, payment_method, description) VALUES (?, ?, NOW(), 'credit', ?, ?)");
-            $stmt->bind_param("idss", $customerId, $totalAmount, $paymentMethod, $description);
+            $stmt->bind_param("idss", $customerId, $balance, $paymentMethod, $description);
+            $stmt->execute();
+            $stmt->close();
+
+            $description = "Cancellation Fee for Order: " . $order_id;
+            $paymentMethod = "Direct Debit";
+            $stmt = $conn->prepare("INSERT INTO customer_transactions (customer_id, amount, date_created, transaction_type, payment_method, description) VALUES (?, ?, NOW(), 'debit', ?, ?)");
+            $stmt->bind_param("idss", $customerId, $cancellation_fee, $paymentMethod, $description);
             $stmt->execute();
             $stmt->close();
 
@@ -93,9 +88,10 @@ if (isset($data['order_id']) && isset($data['status'])) {
             $stmt->close();
 
             // Update the delivery_status to 'Cancelled'
-            $updateDeliveryStatusQuery = "UPDATE orders SET delivery_status = 'Declined', updated_at = NOW(), approved_by = ? WHERE order_id = ?";
+            $cancellationReason = 'Customer Cancelled Order';
+            $updateDeliveryStatusQuery = "UPDATE orders SET delivery_status = ?, cancellation_reason = ?, updated_at = NOW(), approved_by = ? WHERE order_id = ?";
             $stmt = $conn->prepare($updateDeliveryStatusQuery);
-            $stmt->bind_param("ii", $approvalID, $order_id);
+            $stmt->bind_param("ssii", $status, $cancellationReason, $customer_id, $order_id);
             $stmt->execute();
             $stmt->close();
         }
@@ -103,20 +99,31 @@ if (isset($data['order_id']) && isset($data['status'])) {
         // Update the status in the orders, revenue, and order_details tables
         $updateStatusQueries = [
             "UPDATE orders SET status = ?, updated_at = NOW() WHERE order_id = ?",
-            "UPDATE revenue SET status = ?, updated_at = NOW() WHERE order_id = ?",
+            "UPDATE revenue SET status = ?, updated_at = NOW() WHERE order_id = ? AND total_amount = ?",
             "UPDATE order_details SET status = ?, updated_at = NOW() WHERE order_id = ?"
         ];
-
+        
+        // Prepare statements
         foreach ($updateStatusQueries as $query) {
             $stmt = $conn->prepare($query);
-            $stmt->bind_param("si", $status, $order_id);
+        
+            if (strpos($query, 'total_amount') !== false) {
+                // For the second query (revenue table), bind totalAmount
+                $stmt->bind_param("sid", $status, $order_id, $totalAmount);
+            } else {
+                // For the other queries, bind status and order_id only
+                $stmt->bind_param("si", $status, $order_id);
+            }
+        
+            // Execute the statement
             $stmt->execute();
             $stmt->close();
         }
+        
 
         // Commit the transaction
         $conn->commit();
-        echo json_encode(['success' => true, 'message' => 'Order status updated successfully.']);
+        echo json_encode(['success' => true, 'message' => 'Your Order has been successfully Canceled.']);
 
     } catch (Exception $e) {
         // Rollback the transaction if an error occurred

@@ -63,6 +63,7 @@
             <th>Status</th>
             <th>Delivery Status</th>
             <th>Assigned to</th>
+            <th>Approved By</th>
             <th>Driver Name</th>
           </tr>
         </thead>

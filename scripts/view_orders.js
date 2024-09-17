@@ -10,6 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const orderModal = document.getElementById('orderModal');
     const orderDetailsTableBodyHeader = document.querySelector('#orderDetailsTable thead tr');
     orderDetailsTableBodyHeader.style.color = "#000";
+    const reassignButton = document.getElementById('reassign-order');
+    const reassignForm = document.getElementById('reassignForm');
+    const submitReassign = document.getElementById('submitReassign');
+    const driverSelect = document.getElementById('driver');
 
     // Fetch orders with pagination
     function fetchOrders(page = 1) {
@@ -31,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateTable(orders) {
         ordersTableBody.innerHTML = '';
         const fragment = document.createDocumentFragment();
-        
+
         orders.forEach(order => {
             const row = document.createElement('tr');
             row.innerHTML = `
@@ -63,16 +67,30 @@ document.addEventListener('DOMContentLoaded', () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ order_id: orderId })
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                populateOrderDetails(data.order_details);
-                orderModal.style.display = 'block';
-            } else {
-                console.error('Failed to fetch order details:', data.message);
-            }
-        })
-        .catch(error => console.error('Error fetching order details:', error));
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const headerText = document.getElementById('orderID').textContent = orderId;
+                    populateOrderDetails(data.order_details);
+                    // Check if the order status is "Assigned"
+                    const orderStatus = data.order_details[0].delivery_status; // Assuming it's in the first detail
+                    const reassignButton = document.getElementById('reassign-order');
+
+                    if (orderStatus === "Assigned") {
+                        // Enable the "Reassign Order" button if the status is "Assigned"
+                        reassignButton.style.display = 'block';
+                        reassignButton.disabled = false; // Ensure it's not disabled
+                    } else {
+                        // Disable or hide the button for other statuses
+                        reassignButton.style.display = 'none';
+                        reassignButton.disabled = true;
+                    }
+                    orderModal.style.display = 'block';
+                } else {
+                    console.error('Failed to fetch order details:', data.message);
+                }
+            })
+            .catch(error => console.error('Error fetching order details:', error));
     }
 
     // Populate order details table
@@ -99,7 +117,8 @@ document.addEventListener('DOMContentLoaded', () => {
         fragment.appendChild(createRow('Service Fee', firstDetail.service_fee));
         fragment.appendChild(createRow('Delivery Fee', firstDetail.delivery_fee));
         fragment.appendChild(createRow('Total Amount', firstDetail.total_amount));
-        fragment.appendChild(createRow('Supervisor In Charge', `${firstDetail.admin_firstname} ${firstDetail.admin_lastname}`));
+        fragment.appendChild(createRow('Supervisor In Charge', `${firstDetail.assigned_admin_firstname} ${firstDetail.assigned_admin_lastname}`));
+        fragment.appendChild(createRow('Order Approved By', `${firstDetail.approver_firstname} ${firstDetail.approver_lastname}`));
         fragment.appendChild(createRow("Customer's Name", `${firstDetail.customer_firstname} ${firstDetail.customer_lastname}`));
         fragment.appendChild(createRow("Customer's Mobile Number", firstDetail.customer_phone_number));
         fragment.appendChild(createRow('Delivery Status', firstDetail.delivery_status));
@@ -125,6 +144,64 @@ document.addEventListener('DOMContentLoaded', () => {
         return row;
     }
 
+    // REASSIGN ORDER MODULE
+    // Show the reassign form when the button is clicked
+    reassignButton.addEventListener('click', () => {
+        // fetchAvailableDrivers();
+        reassignForm.style.display = 'block';
+        fetchAvailableDrivers()
+    });
+
+    // Fetch available drivers and populate the dropdown
+    function fetchAvailableDrivers() {
+        fetch('backend/fetch_available_drivers.php')
+            .then(response => response.json())
+            .then(data => {
+                // driverSelect.innerHTML = ''; // Clear existing options
+                if (data.success) {
+                    data.drivers.forEach(driver => {
+                        const option = document.createElement('option');
+                        option.value = driver.driver_id;
+                        option.textContent = `${driver.driver_name} (" - "ID: ${driver.driver_id})`;
+                        driverSelect.appendChild(option);
+                    });
+                } else {
+                    console.error('Failed to fetch drivers:', data.message);
+                }
+            })
+            .catch(error => console.error('Error fetching drivers:', error));
+    }
+
+    // Handle form submission
+    submitReassign.addEventListener('click', () => {
+        const selectedDriver = driverSelect.value;
+        const orderId = document.getElementById('orderID').textContent;
+
+        if (selectedDriver === "") {
+            alert("Please Select a Valid Driver for Order " + orderId)
+            return
+        }
+
+        fetch('backend/reassign_order.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ order_id: orderId, driver_id: selectedDriver })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Order reassigned successfully');
+                    reassignForm.style.display = 'none'; // Hide form after submission
+                } else {
+                    console.error('Failed to reassign order:', data.message);
+                }
+            })
+            .catch(error => console.error('Error reassigning order:', error));
+    });
+
+
+    // END OF REASSIGN MODULE
+
     // Update pagination
     function updatePagination(totalItems, currentPage, itemsPerPage) {
         console.log("Total Items:", totalItems, "Current Page:", currentPage, "Items Per Page:", itemsPerPage);  // Debugging pagination data
@@ -136,12 +213,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const pageButton = document.createElement('button');
             pageButton.textContent = page;
             pageButton.classList.add('page-btn');
-            
+
             // Only add 'active' class if the page is the current page
             if (page === currentPage) {
                 pageButton.classList.add('active');
             }
-            
+
             pageButton.addEventListener('click', () => fetchOrders(page));
             fragment.appendChild(pageButton);
         }
@@ -168,9 +245,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Close modal event
-    document.querySelector('.modal .close').addEventListener('click', () => orderModal.style.display = 'none');
+    document.querySelector('.modal .close').addEventListener('click', () => {
+        orderModal.style.display = 'none'
+    });
     window.addEventListener('click', (event) => {
-        if (event.target === orderModal) {
+        if (event.target === orderModal || event.target === reassignForm) {
             orderModal.style.display = 'none';
         }
     });

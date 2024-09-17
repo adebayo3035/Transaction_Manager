@@ -163,5 +163,45 @@ function createDoughnutChart(data) {
             }
         }
     });
+
+}
+function openModal() {
+    document.getElementById('revenueTypeModal').style.display = 'block';
 }
 
+function closeModal() {
+    document.getElementById('revenueTypeModal').style.display = 'none';
+}
+
+// Close modal if user clicks outside of it
+window.onclick = function(event) {
+    const modal = document.getElementById('revenueTypeModal');
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
+}
+
+document.getElementById("newRevenueTypeForm").addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    // Use event.target to refer to the form element
+    const formData = new FormData(event.target);
+
+    fetch('backend/create_revenue_type.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('New Revenue Type added Successfully!');
+            closeModal();
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error occurred while adding revenue type');
+    });
+});

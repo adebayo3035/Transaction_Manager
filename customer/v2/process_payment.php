@@ -154,10 +154,13 @@ function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deli
             $stmt->close();
 
             // Insert revenue data
-            $stmt = $conn->prepare("INSERT INTO revenue (order_id, customer_id, total_amount, transaction_date) VALUES (?, ?, ?, NOW())");
-            $stmt->bind_param("iid", $orderId, $customerId, $totalAmount);
+            // revenue type id for Order Inflow
+            $revenue_type = 2; 
+            $stmt = $conn->prepare("INSERT INTO revenue (order_id, customer_id, total_amount, transaction_date, revenue_type_id) VALUES (?, ?, ?, NOW(), ?)");
+            $stmt->bind_param("iidi", $orderId, $customerId, $totalAmount, $revenue_type);
             $stmt->execute();
             $stmt->close();
+
 
             // Step 2: Insert the notification data into the admin_notifications table
             $title = "Food Order for customer ID: " . $customerId;

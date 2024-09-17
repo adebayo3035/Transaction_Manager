@@ -53,6 +53,7 @@
                 <thead>
                     <tr>
                         <th>Order Date</th>
+                        <th>Order ID</th>
                         <th>Food Name</th>
                         <th>Number of Portions</th>
                         <th>Price per Portion (N)</th>
@@ -67,6 +68,7 @@
             </table>
 
             <button type="button" id="receipt-btn" style="display: none">Print Receipt</button>
+            <button type="button" id="decline-btn" style="display: none">Cancel Order</button>
         </div>
     </div>
 
