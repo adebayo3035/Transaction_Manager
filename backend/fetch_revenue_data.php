@@ -2,7 +2,12 @@
 header('Content-Type: application/json');
 include 'config.php';
 
-$totalRevenueQuery = "SELECT SUM(total_amount) as totalRevenue FROM revenue WHERE status = 'Approved'";
+$totalRevenueQuery = "
+    SELECT SUM(total_amount) AS totalRevenue 
+    FROM revenue 
+    WHERE status IN ('Approved', 'Order Cancellation Fee')
+";
+
 $totalRevenueResult = $conn->query($totalRevenueQuery);
 $totalRevenue = $totalRevenueResult->fetch_assoc()['totalRevenue'];
 
@@ -26,7 +31,7 @@ $deliveredOrdersQuery = "SELECT COUNT(*) as deliveredOrders FROM orders WHERE de
 $deliveredOrdersResult = $conn->query($deliveredOrdersQuery);
 $deliveredOrders = $deliveredOrdersResult->fetch_assoc()['deliveredOrders'];
 
-$cancelledOrdersQuery = "SELECT COUNT(*) as cancelledOrders FROM orders WHERE delivery_status = 'Canceled'";
+$cancelledOrdersQuery = "SELECT COUNT(*) as cancelledOrders FROM orders WHERE delivery_status = 'Cancelled'";
 $cancelledOrdersResult = $conn->query($cancelledOrdersQuery);
 $cancelledOrders = $cancelledOrdersResult->fetch_assoc()['cancelledOrders'];
 

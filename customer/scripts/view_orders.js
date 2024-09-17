@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Add Total Order row
         const totalOrderRow = document.createElement('tr');
         totalOrderRow.innerHTML = `
-            <td colspan="5"><strong>Total Order</strong></td>
+            <td colspan="6"><strong>Total Order</strong></td>
             <td>${firstDetail.total_order}</td>
         `;
         orderDetailsTableBody.appendChild(totalOrderRow);
@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Add Service Fee row
         const serviceFeeRow = document.createElement('tr');
         serviceFeeRow.innerHTML = `
-            <td colspan="5"><strong>Service Fee</strong></td>
+            <td colspan="6"><strong>Service Fee</strong></td>
             <td>${firstDetail.service_fee}</td>
         `;
         orderDetailsTableBody.appendChild(serviceFeeRow);
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Add Delivery Fee row
         const deliveryFeeRow = document.createElement('tr');
         deliveryFeeRow.innerHTML = `
-            <td colspan="5"><strong>Delivery Fee</strong></td>
+            <td colspan="6"><strong>Delivery Fee</strong></td>
             <td>${firstDetail.delivery_fee}</td>
         `;
         orderDetailsTableBody.appendChild(deliveryFeeRow);
@@ -167,10 +167,37 @@ document.addEventListener('DOMContentLoaded', () => {
         // Add Total Amount row
         const totalAmountRow = document.createElement('tr');
         totalAmountRow.innerHTML = `
-            <td colspan="5"><strong>Total Amount</strong></td>
+            <td colspan="6"><strong>Total Amount</strong></td>
             <td>${firstDetail.total_amount}</td>
         `;
         orderDetailsTableBody.appendChild(totalAmountRow);
+
+        // Add Delivery Pin row
+        const deliveryPinRow = document.createElement('tr');
+        deliveryPinRow.innerHTML = `
+            <td colspan="6"><strong>Delivery Pin</strong></td>
+            <td>${firstDetail.delivery_pin}</td>
+        `;
+        orderDetailsTableBody.appendChild(deliveryPinRow);
+
+        // Add Driver's Name row
+        const driverNameRow = document.createElement('tr');
+        driverNameRow.innerHTML = `
+            <td colspan="6"><strong>Driver's Name</strong></td>
+            <td>${firstDetail.driver_firstname} ${firstDetail.driver_lastname}</td>
+        `;
+        orderDetailsTableBody.appendChild(driverNameRow);
+
+        // Add Driver's Name row
+        const driverPhoneRow = document.createElement('tr');
+        driverPhoneRow.innerHTML = `
+            <td colspan="6"><strong>Driver's Mobile Number</strong></td>
+            <td>${firstDetail.driver_phoneNumber}</td>
+        `;
+        orderDetailsTableBody.appendChild(driverPhoneRow);
+
+
+        
     }
 
     // Function to update order status
