@@ -34,7 +34,7 @@
         <a href="homepage.php" class="active">Home</a>
         <a href="staffs.php">Staffs</a>
         <a href="view_drivers.php">Drivers</a>
-        <a href="customer.php">Customers</a>
+        <a href="customer_new.php">Customers</a>
         <a href="dashboard.php">Dashboard</a>
         <a href="groups.php">Groups</a>
         <a href="units.php">Units</a>

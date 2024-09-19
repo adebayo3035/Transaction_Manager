@@ -1,44 +1,57 @@
 <?php
 include_once ('config.php');
 include('restriction_checker.php');
-session_start();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $customer_id = mysqli_real_escape_string($conn, $_POST['customer_id']);
+// Get the JSON data from the request body
+$data = json_decode(file_get_contents("php://input"), true);
 
-    if (!empty($customer_id)) {
-        $select_photo = mysqli_query($conn, "SELECT photo FROM customers WHERE customer_id='$customer_id'");
-        $row_customer = mysqli_fetch_array($select_photo);
+$staff_role = $_SESSION['role'];
+if($staff_role !== "Super Admin"){
+    echo json_encode(["success" => false, "message" => "You do not have permission to Delete."]);
+    exit();
+}
+if (isset($data['customer_id'])) {
+    $customerId = $data['customer_id'];
 
-        if ($row_customer) {
-            $customer_photo = ($row_customer['photo']);
-            $query = "DELETE FROM customers WHERE customer_id = '$customer_id'";
-            $result = mysqli_query($conn, $query);
+    // Prepare SQL query to get the photo filename
+    $selectSql = "SELECT photo FROM customers WHERE customer_id = ?";
+    $stmt = $conn->prepare($selectSql);
+    $stmt->bind_param("i", $customerId);
+    $stmt->execute();
+    $stmt->bind_result($photoFilename);
+    $stmt->fetch();
+    $stmt->close();
 
-            if ($result) {
-                $oldPicturePath = "customer_photos/" . $customer_photo;
-                    if (file_exists($oldPicturePath)) {
-                        unlink($oldPicturePath);
-                    }
-                    else{ echo "File Not Fount";}
-                echo "<script>alert('Customer deleted successfully.');window.location.href='../customer.php'; </script>";
-            } 
-            else {
-                echo "<script>alert('Error deleting customer: " . mysqli_error($conn) . "'); window.location.href='../customer.php';</script>";
+    // Prepare SQL query to delete the driver
+    $deleteSql = "DELETE FROM customers WHERE customer_id = ?";
+    $stmt = $conn->prepare($deleteSql);
+    $stmt->bind_param("i", $customerId);
+    
+    if ($stmt->execute()) {
+        // If there's a photo, delete it from the folder
+        if ($photoFilename) {
+            $photoPath = '../backend/customer_photos/' . $photoFilename;
+            if (file_exists($photoPath)) {
+                unlink($photoPath); // Delete the file
             }
         }
-        else {
-            echo "<script>alert('Customer Photo cannot be found: " . mysqli_error($conn) . "'); window.location.href='../customer.php';</script>";
-        }
-
-        
+        // Return success response
+        echo json_encode(["success" => true, "message" => "Customer has been Successfully Deleted."]);
     } else {
-        echo "<script>alert('Invalid Customer ID.'); window.location.href='../customer.php';</script>";
+        // Return error response
+        echo json_encode(["success" => false, "message" => "Failed to delete Customer."]);
     }
-} 
-else {
-    header('Location: customer.php');
+
+    // Close the statement
+    $stmt->close();
+} else {
+    // Return error response if the ID is not provided
+    echo json_encode(["success" => false, "message" => "Customer ID is required."]);
 }
+
+// Close the database connection
+$conn->close();
+
 
 
 

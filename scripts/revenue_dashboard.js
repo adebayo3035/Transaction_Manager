@@ -63,10 +63,10 @@ function createPieChart(data) {
     new Chart(ctx, {
         type: 'pie',
         data: {
-            labels: ['Pending', 'Approved', 'Declined'],
+            labels: ['Pending', 'Approved', 'Declined', 'Cancelled'],
             datasets: [{
-                data: [data.pendingOrders, data.approvedOrders, data.declinedOrders],
-                backgroundColor: ['orange', 'green', 'red']
+                data: [data.pendingOrders, data.approvedOrders, data.declinedOrders, data.cancelledOrders],
+                backgroundColor: ['orange', 'green', 'red', 'black']
             }]
         },
         options: {
@@ -144,10 +144,10 @@ function createDoughnutChart(data) {
     new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: ['Pending', 'Approved', 'Declined'],
+            labels: ['Pending', 'Approved', 'Declined', 'Cancelled'],
             datasets: [{
-                data: [data.pendingOrders, data.approvedOrders, data.declinedOrders],
-                backgroundColor: ['orange', 'green', 'red']
+                data: [data.pendingOrders, data.approvedOrders, data.declinedOrders, data.cancelledOrders],
+                backgroundColor: ['orange', 'green', 'red', 'black']
             }]
         },
         options: {

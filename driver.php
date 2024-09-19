@@ -94,7 +94,7 @@
 
                 <div class="form-input">
                     <label for="add_secret_answer">Secret Answer:</label>
-                    <input type="text" id="add_secret_answer" name="add_secret_answer" required>
+                    <input type="password" id="add_secret_answer" name="add_secret_answer" required>
                 </div>
 
                 <div class="form-input">

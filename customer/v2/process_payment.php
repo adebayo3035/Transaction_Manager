@@ -108,8 +108,8 @@ function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deli
             throw new Exception("Insufficient balance in wallet.");
         }
 
-        // Step 1: Select a random Admin TO ASSIGN ORDER TO
-        $superAdminQuery = "SELECT unique_id FROM admin_tbl WHERE role = 'Admin' ORDER BY RAND() LIMIT 1";
+        // Step 1: Select a random Admin who is not restricted and blocked TO ASSIGN ORDER TO for approval.
+        $superAdminQuery = "SELECT unique_id FROM admin_tbl WHERE role = 'Admin' and restriction_id = 0 and block_id = 0 ORDER BY RAND() LIMIT 1";
         $superAdminResult = $conn->query($superAdminQuery);
 
         if ($superAdminResult->num_rows > 0) {
