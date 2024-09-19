@@ -5,127 +5,104 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="customer/css/cards.css">
+    <link rel="stylesheet" href="customer/css/view_orders.css">
+    <link rel="stylesheet" href="css/view_driver.css">
+    
+    
+</head>
     <title>Staff Profile</title>
 </head>
 
-
 <body>
-
-    <?php
-    // function to mask E-mail Address
-    function maskEmail($email)
-    {
-        // Split email address into local part and domain
-        list($local_part, $domain) = explode("@", $email);
-
-        // Get the length of the local part and keep the first letter visible
-        $visible_chars = substr($local_part, 0, 1);
-
-        // Mask the remaining characters with asterisks
-        $masked_local_part = str_repeat("*", strlen($local_part) - 1);
-
-        // Concatenate the visible character with the masked local part and domain
-        $masked_email = $visible_chars . $masked_local_part . "@" . $domain;
-
-        return $masked_email;
-    }
-
-    // function to mask Phone Number
-    function maskPhoneNumber($phone) {
-        // Extract last four digits of the phone number
-        $last_four_digits = substr($phone, -4);
-        
-        // Mask the remaining digits with asterisks
-        $masked_number = str_repeat("*", strlen($phone) - 4) . $last_four_digits;
-        
-        return $masked_number;
-    }
-    
-
-    ?>
-    <?php include "navbar.php";
-    $unique_id = $_SESSION['unique_id']; ?>
+    <?php include "navbar.php"; ?>
     <div class="profile-container">
         <div class="profile-header">
-            <img src="backend/admin_photos/<?php echo $row['photo']; ?>" alt="Staff Photo">
-            <?php echo "<span><a href='change_picture.php?id=" . $unique_id . "'><span class='edit-icon'>&#9998;</span></a></span>"; ?>
-            <h1>
-                <?php echo "{$firstname} {$lastname}"; $masked_email = maskEmail($email); $masked_phone = maskPhoneNumber($phone)?>
-            </h1>
+            <img id="profile-picture" src="backend/customer_photos/default.jpg" alt="Staff Profile Picture">
+            <!-- <span><a href='update_picture.php'><span class='edit-icon'>&#9998;</span></a></span> -->
+            <span><a href="#" id="edit-profile-picture"><span class="edit-icon">&#9998;</span></a></span>
 
-            <p>Position:
-                <?php echo "{$role}"; ?>
-            </p>
+            <h1 id="customer-name">My Name</h1>
         </div>
         <div class="profile-details">
             <div class="detail">
                 <label>First Name:</label>
-                <p>
-                    <?php echo "{$firstname}"; ?>
-                </p>
+                <p id="first-name">First Name</p>
             </div>
             <div class="detail">
                 <label>Last Name:</label>
-                <p>
-                    <?php echo "{$lastname}"; ?>
-                </p>
+                <p id="last-name">Last Name</p>
             </div>
             <div class="detail">
                 <label>Email:</label>
                 <p>
-                <span class = "result" id="display-email"> <?php echo "{$masked_email}"; ?> </span>
+                    <span class="result" id="display-email"></span>
                     <br>
-                    <span class = "toggle-indicator">ON</span>
+                    <span class="toggle-indicator">ON</span>
                     <label class="switch">
                         <input type="checkbox" id="toggle-checkbox">
                         <span class="slider"></span>
                     </label>
-                    <span class = "toggle-indicator">OFF</span>
+                    <span class="toggle-indicator">OFF</span>
                 </p>
             </div>
             <div class="detail">
                 <label>Phone Number:</label>
                 <p>
-                    
-                    <span class = "result" id="display-phone"> <?php echo "{$masked_phone}"; ?> </span>
+                    <span class="result" id="display-phone"></span>
                     <br>
-                    <span class = "toggle-indicator">ON</span>
+                    <span class="toggle-indicator">ON</span>
                     <label class="switch">
-                        
                         <input type="checkbox" id="toggle-checkbox1">
                         <span class="slider"></span>
-                        
                     </label>
-                    <span class = "toggle-indicator"> OFF</span>
+                    <span class="toggle-indicator">OFF</span>
                 </p>
             </div>
+            <button id="modifyDriverDetails"> Edit Profile </button>
         </div>
     </div>
 
-<script>
-    var togglePhone = document.getElementById('toggle-checkbox1');
-    var toggleEmail = document.getElementById('toggle-checkbox');
-    var displayPhone = document.getElementById('display-phone')
-    var displayEmail = document.getElementById('display-email')
-    var phone = "<?php echo $phone; ?>";
-    var maskedPhone = "<?php echo $masked_phone; ?>";
-    var email = "<?php echo $email; ?>";
-    var maskedEmail = "<?php echo $masked_email; ?>";
+    <!-- Modal  to Update Driver Profile Picture Structure -->
+<div id="profileModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <form id="adminForm" method="POST" enctype="multipart/form-data" autocomplete="off">
+            <h2>Update Your Picture</h2>
+            <div id="photoContainer">
+                <img id="uploadedPhoto" alt="Uploaded Photo">
+            </div>
+            <label for="photo">Photo:</label>
+            <input type="file" id="photo" name="photo" accept="image/*" required>
 
-            function toggleDisplay(toggleCheckbox, resultElement, unmasked_data, maskedData) {
-                toggleCheckbox.addEventListener('change', function() {
-                var isChecked = toggleCheckbox.checked;
-                if (isChecked) {
-                    resultElement.textContent = unmasked_data;
-                } else {
-                    resultElement.textContent = maskedData;
-                }
-                
-            });
-}
-toggleDisplay(togglePhone, displayPhone, phone, maskedPhone)
-toggleDisplay(toggleEmail, displayEmail, email, maskedEmail)
-</script>
-</body>
+            <label for="secret_answer">Secret Answer:</label>
+            <input type="password" id="secret_answer" name="secret_answer" required>
 
-</html>
+            <!-- <input type="hidden" id="customer_id" name="customer_id" value="<?php echo $_SESSION['customer_id']; ?>"> -->
+
+            <button type="submit" name="btnChangeCustomerPicture">Change Picture</button>
+            <div class="message" id="message"></div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal to Update Admin Record -->
+<div id="orderModal" class="modal">
+        <div class="modal-content">
+            <span class="close2 close">&times;</span>
+            <h2>Staff Information</h2>
+            <div id="driverPhoto" class="photo-container">
+
+            </div>
+            <table id="orderDetailsTable" class="ordersTable">
+                <tbody>
+                    <!-- Driver details will be automatically populated here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <script src="scripts/staff_profile.js"></script>
+    </body>
+    </html>

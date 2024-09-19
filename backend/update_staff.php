@@ -1,102 +1,118 @@
 <?php
-if (isset($_POST['btnUpdate'])) {
-    include_once "config.php";
-    session_start();
-    $id = $_SESSION['unique_id'];
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $phone = mysqli_real_escape_string($conn, $_POST['phone']);
-    $secret_answer = md5(filter_var($_POST['secret_answer'], FILTER_SANITIZE_STRING));
-    if (!empty($email) && !empty($phone) && !empty($secret_answer)) {
-        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            // Prepare and execute a query to check if the email or phone number already exists
-            $sql_email = mysqli_prepare($conn, "SELECT email FROM admin_tbl WHERE unique_id != ? AND email = ?");
-            mysqli_stmt_bind_param($sql_email, "is", $id, $email);
-            mysqli_stmt_execute($sql_email);
-            $email_result = mysqli_stmt_get_result($sql_email);
+// Include database connection
+include('config.php'); // Replace with your actual database connection file
+session_start();
 
-            $sql_phone = mysqli_prepare($conn, "SELECT phone FROM admin_tbl WHERE unique_id != ? AND phone = ?");
-            mysqli_stmt_bind_param($sql_phone, "is", $id, $phone);
-            mysqli_stmt_execute($sql_phone);
-            $phone_result = mysqli_stmt_get_result($sql_phone);
+// Get the JSON data from the request body
+$data = json_decode(file_get_contents("php://input"), true);
 
-            // Check if email already exists in DB
-            if (mysqli_num_rows($email_result) > 0) {
-                echo "<script>alert('$email already exists. Please use a different email.');window.location.href='../edit_staff.php?id=" . $id . "';</script>";
-                exit();
-            } else if (mysqli_num_rows($phone_result) > 0) {
-                echo "<script>alert('$phone already exists. Please use a different Phone Number.'); window.location.href='../edit_staff.php?id=" . $id . "'; </script>";
-                exit();
-            } else {
-                // Perform secret answer Validation
-                $secret_answer_query = mysqli_query($conn, "select secret_answer from `admin_tbl` where unique_id='$id'");
-                $row = mysqli_fetch_array($secret_answer_query);
-                if ($row) {
-                    $decrypted_answer = ($row['secret_answer']);
-                    if ($secret_answer == $decrypted_answer) {
-                        //Update customer's phone number and E-mail address
-                        $updateAdminQuery = "UPDATE admin_tbl SET email = '{$email}', phone = '{$phone}'  WHERE unique_id = '{$id}'";
-                        $updateAdminResult = mysqli_query($conn, $updateAdminQuery);
+if (isset($data['admin_id'])) {
+    $adminId = $data['admin_id'];
+    $email = $data['email'];
+    $phone_number = $data['phone_number'];
+    $secret_answer = $data['secret_answer'];
+    $encrypted_answer = md5($secret_answer);
 
-                        if (!$updateAdminResult) {
-                            //handle_error('Error updating session: ' . mysqli_error($conn));
-                            echo "<script>alert('Error Updating Record')".mysqli_error($conn)." window.location.href='../edit_staff.php?id=" . $id . "'; </script>";
-                        }
-                        else{
-                            echo "<script>alert('$email and $phone has been successfully validated.'); window.location.href='logout.php?id=" . $id . "'; </script>";
-                        }
-                        
-                    } else {
-                        echo "<script>alert('Invalid Secret Answer.'); window.location.href='../edit_staff.php?id=" . $id . "'; </script>";
-                    }
-                } else {
-                    echo "Error: " . mysqli_error($conn);
-                }
-            }
-
-        } else {
-            echo "<script>alert(' $email is Invalid. Input a valid E-mail.'); </script>";
-        }
-    } else {
-        echo "<script>alert(' All Input fields are required.'); </script>";
+    // Validate required fields
+    if (empty($email) || empty($phone_number) || empty($secret_answer)) {
+        echo json_encode(['success' => false, 'message' => 'Please fill in all required fields.']);
+        exit;
     }
 
+    // Validate Driver Unique Identifier
+    if ($adminId !== $_SESSION['unique_id']) {
+        echo json_encode(['success' => false, 'message' => 'Error Validating Driver Identity.']);
+        exit();
+    }
+
+    // Email validation
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo json_encode(['success' => false, 'message' => 'Invalid E-mail address.']);
+        exit();
+    }
+
+    // Phone number validation
+    if (!preg_match('/^\d{11}$/', $phone_number)) {
+        echo json_encode(['success' => false, 'message' => 'Please input a valid Phone Number.']);
+        exit();
+    }
+
+    // Check for duplicate phone number or email, excluding the current driver ID
+    $checkQuery = "SELECT unique_id, phone, email FROM admin_tbl WHERE (phone = ? OR email = ?) AND unique_id != ?";
+    $stmt = $conn->prepare($checkQuery);
+    $stmt->bind_param("ssi", $phone_number, $email, $adminId);
+    $stmt->execute();
+    $stmt->store_result();
+
+    if ($stmt->num_rows > 0) {
+        // Fetch the result and check for duplicates
+        $stmt->bind_result($existingPhone, $existingEmail);
+        $stmt->fetch();
+
+        if ($existingPhone === $phone_number) {
+            echo json_encode(['success' => false, 'message' => 'Phone number already exists for another driver.']);
+            exit();
+        }
+
+        if ($existingEmail === $email) {
+            echo json_encode(['success' => false, 'message' => 'Email address already exists for another driver.']);
+            exit();
+        }
+    }
+
+    // Close the duplicate check statement
+    $stmt->close();
+
+    // Query to select only the secret_answer using unique_id for validation
+    $secretAnswerQuery = "SELECT secret_answer FROM admin_tbl WHERE unique_id = ?";
+    $stmt = $conn->prepare($secretAnswerQuery);
+    $stmt->bind_param("i", $adminId);  // Bind the unique_id (adminId)
+    $stmt->execute();
+    $stmt->store_result();
+
+    // Bind the result to a variable
+    $stmt->bind_result($stored_secret_answer);
+
+    // Fetch the secret_answer and perform validation
+    if ($stmt->num_rows > 0) {
+        $stmt->fetch();
+        // Compare the encrypted answers
+        if ($stored_secret_answer !== $encrypted_answer) {
+            echo json_encode(['success' => false, 'message' => 'Error Validating Secret Answer.']);
+            exit();
+        }
+    } else {
+        // No record found
+        echo json_encode([
+            'success' => false,
+            'message' => 'No secret answer found for the provided ID.'
+        ]);
+        exit();
+    }
+
+    // Close the secret answer validation statement
+    $stmt->close();
+
+    // Prepare SQL query to update the driver
+    $sql = "UPDATE admin_tbl SET email = ?, phone = ? WHERE unique_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssi", $email, $phone_number, $adminId);
+
+    // Execute the statement
+    if ($stmt->execute()) {
+        // Return success response
+        echo json_encode(["success" => true, "message" => "Your Record has been Successfully Updated."]);
+    } else {
+        // Return error response
+        echo json_encode(["success" => false, "message" => "Failed to update Staff record."]);
+    }
+
+    // Close the statement
+    $stmt->close();
+} else {
+    // Return error response if the ID is not provided
+    echo json_encode(["success" => false, "message" => "Driver ID is required."]);
 }
 
-
-
-
-
-
-//         }
-
-//         $sql = "SELECT secret_ FROM admin_tbl WHERE unique_id = '$id'AND email='$email'";
-//         $result = $conn->query($sql);
-//         $row = mysqli_fetch_array($result);
-//         if ($result->num_rows == 1) {
-//             $decrypted_answer = md5($row['$secret_answer']);
-//             if ($secret_answer == $decrypted_id) {
-//                 $Update_sql = "UPDATE admin_tbl SET email = '$email', phone = '$phone'WHERE unique_id = '$id'";
-//                 if (mysqli_query($conn, $Update_sql)) {
-//                     echo "User Information has been Successfully Updated";
-//                     echo "<script>location.replace('logout.php');</script>";
-//                 } else {
-//                     echo "<script>alert('An Error Occur, Please Try Again') </script>" . $sql . "<br>" . mysqli_error($conn);
-//                 }
-//             } else {
-//                 echo "<script>alert('Invalid Validation Parameter') </script>" . $sql . "<br>" . mysqli_error($conn);
-//             }
-
-
-//         } else {
-//             echo "<script>alert('Sorry, Email Address already been Used by another User, please Try another email!');</script>";
-//         }
-
-//     } else {
-//         echo "<script>alert('Sorry, You cannot Update this Record, Please Contact Admin!');</script>";
-//         echo "<script>location.replace('user_list.php');</script>";
-//     }
-// }
-// if (isset($_POST['btnCancel'])) {
-//     echo "<script>location.replace('user_list.php');</script>";
-// }
-//  
+// Close the database connection
+$conn->close();

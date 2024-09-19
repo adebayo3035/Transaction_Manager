@@ -59,7 +59,7 @@
                     <span class="toggle-indicator">OFF</span>
                 </p>
             </div>
-            <button id="modifyDriverDetails"> Update Profile </button>
+            <button id="modifyDriverDetails"> Edit Profile </button>
         </div>
     </div>
 

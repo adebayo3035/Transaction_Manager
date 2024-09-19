@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/profile.css">
+    <link rel="stylesheet" href="../css/cards.css">
+    <link rel="stylesheet" href="../css/view_orders.css">
+    <link rel="stylesheet" href="../../css/view_driver.css">
     <title>Customer Profile</title>
 </head>
 
@@ -13,7 +16,8 @@
     <div class="profile-container">
         <div class="profile-header">
             <img id="profile-picture" src="../../backend/customer_photos/default.jpg" alt="Customer Profile Picture">
-            <span><a href='update_picture.php'><span class='edit-icon'>&#9998;</span></a></span>
+            <!-- <span><a href='update_picture.php'><span class='edit-icon'>&#9998;</span></a></span> -->
+            <span><a href="#" id="edit-profile-picture"><span class="edit-icon">&#9998;</span></a></span>
             <h1 id="customer-name">My Name</h1>
         </div>
         <div class="profile-details">
@@ -53,6 +57,29 @@
             </div>
         </div>
     </div>
+
+     <!-- Modal  to Update Customer Profile Picture Structure -->
+<div id="profileModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <form id="adminForm" method="POST" enctype="multipart/form-data" autocomplete="off">
+            <h2>Update Your Picture</h2>
+            <div id="photoContainer">
+                <img id="uploadedPhoto" src="../../backend/customer_photos/default.jpg" alt="Uploaded Photo">
+            </div>
+            <label for="photo">Photo:</label>
+            <input type="file" id="photo" name="photo" accept="image/*" required>
+
+            <label for="secret_answer">Secret Answer:</label>
+            <input type="password" id="secret_answer" name="secret_answer" required>
+
+            <!-- <input type="hidden" id="customer_id" name="customer_id" value="<?php echo $_SESSION['customer_id']; ?>"> -->
+
+            <button type="submit" name="btnChangeCustomerPicture">Change Picture</button>
+            <div class="message" id="message"></div>
+        </form>
+    </div>
+</div>
     <script src="../scripts/profile.js"></script>
     </body>
     </html>
