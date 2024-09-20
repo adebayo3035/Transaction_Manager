@@ -79,6 +79,19 @@ tbody tr td input[type="email"] {
 .masking label{
     padding-left: 10px;
 }
+/* Groupsa and Unit Icons */
+.edit-icon, .delete-icon {
+    cursor: pointer;
+    font-weight: 900;
+    margin: 3px;
+    cursor: pointer;
+  }
+  .edit-icon{
+    color: #f0ad4e;
+  }
+  .delete-icon{
+    color: #d9534f
+  }
 @media screen and (max-width: 700px){
     #customer-form{
         display: flex;

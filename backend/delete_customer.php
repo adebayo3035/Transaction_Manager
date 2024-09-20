@@ -1,6 +1,12 @@
 <?php
 include_once ('config.php');
 include('restriction_checker.php');
+session_start();
+$user_id = $_SESSION['unique_id'] ?? null; // Assuming user ID is stored in session
+if (!$user_id) {
+    echo json_encode(['success' => false, 'message' => 'User not authenticated.']);
+    exit;
+}
 
 // Get the JSON data from the request body
 $data = json_decode(file_get_contents("php://input"), true);

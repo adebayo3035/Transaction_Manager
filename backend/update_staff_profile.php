@@ -2,28 +2,40 @@
 // Include database connection
 include('config.php'); // Replace with your actual database connection file
 session_start();
+if (!isset($_SESSION['unique_id'])) {
+    echo json_encode(["success" => false, "message" => "Not logged in."]);
+    exit();
+}
+$loggedInUserRole = $_SESSION['role'];
+$logged_in_user = $_SESSION['unique_id'];
+if($loggedInUserRole !== "Super Admin"){
+    echo json_encode(["success" => false, "message" => "Access Denied."]);
+    exit();
+}
 
 // Get the JSON data from the request body
 $data = json_decode(file_get_contents("php://input"), true);
 
-if (isset($data['admin_id'])) {
-    $adminId = $data['admin_id'];
+if (isset($data['staff_id'])) {
+    $adminId = $data['staff_id'];
+    $firstname = $data['firstname'];
+    $lastname = $data['lastname'];
     $email = $data['email'];
     $phone_number = $data['phone_number'];
-    $secret_answer = $data['secret_answer'];
-    $encrypted_answer = md5($secret_answer);
+    $role = $data['role'];
+    $gender = $data['gender'];
+    $address = $data['address'];
 
     // Validate required fields
-    if (empty($email) || empty($phone_number) || empty($secret_answer)) {
+    if (empty($email) || empty($phone_number) || empty($firstname) || empty($lastname) || empty($role) || empty($gender) || empty($address)) {
         echo json_encode(['success' => false, 'message' => 'Please fill in all required fields.']);
         exit;
     }
-
-    // Validate Driver Unique Identifier
-    if ($adminId !== $_SESSION['unique_id']) {
-        echo json_encode(['success' => false, 'message' => 'Error Validating Staff Identity.']);
-        exit();
+    if ($adminId == $logged_in_user) {
+        echo json_encode(['success' => false, 'message' => 'Action not allowed: You cannot update your own record.']);
+        exit;
     }
+    
 
     // Email validation
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -37,8 +49,29 @@ if (isset($data['admin_id'])) {
         exit();
     }
 
+    // Check if there's a restriction or block AND role on customer's account
+    $selectRest = "SELECT restriction_id, block_id, role FROM admin_tbl WHERE unique_id = ?";
+    $stmt = $conn->prepare($selectRest);
+    $stmt->bind_param("i", $adminId);
+    $stmt->execute();
+    $stmt->store_result();
+
+    if($stmt->num_rows > 0){
+        $stmt->bind_result($restriction, $block, $staff_role);
+        $stmt->fetch();
+        if ($restriction !== 0 or $block !== 0) {
+            echo json_encode(['success' => false, 'message' => 'This account is restricted. Kindly remove restriction before Updating']);
+            exit();
+        }
+        if ($staff_role === 'Super Admin' && $role !== 'Super Admin') {
+            echo json_encode(['success' => false, 'message' => 'You cannot downgrade Super Admin Account']);
+            exit();
+        }
+    }
+    $stmt->close();
+
     // Check for duplicate phone number or email, excluding the current driver ID
-    $checkQuery = "SELECT unique_id, phone, email FROM admin_tbl WHERE (phone = ? OR email = ?) AND unique_id != ?";
+    $checkQuery = "SELECT phone, email FROM admin_tbl WHERE (phone = ? OR email = ?) AND unique_id != ?";
     $stmt = $conn->prepare($checkQuery);
     $stmt->bind_param("ssi", $phone_number, $email, $adminId);
     $stmt->execute();
@@ -62,41 +95,10 @@ if (isset($data['admin_id'])) {
 
     // Close the duplicate check statement
     $stmt->close();
-
-    // Query to select only the secret_answer using unique_id for validation
-    $secretAnswerQuery = "SELECT secret_answer FROM admin_tbl WHERE unique_id = ?";
-    $stmt = $conn->prepare($secretAnswerQuery);
-    $stmt->bind_param("i", $adminId);  // Bind the unique_id (adminId)
-    $stmt->execute();
-    $stmt->store_result();
-
-    // Bind the result to a variable
-    $stmt->bind_result($stored_secret_answer);
-
-    // Fetch the secret_answer and perform validation
-    if ($stmt->num_rows > 0) {
-        $stmt->fetch();
-        // Compare the encrypted answers
-        if ($stored_secret_answer !== $encrypted_answer) {
-            echo json_encode(['success' => false, 'message' => 'Error Validating Secret Answer.']);
-            exit();
-        }
-    } else {
-        // No record found
-        echo json_encode([
-            'success' => false,
-            'message' => 'No secret answer found for the provided ID.'
-        ]);
-        exit();
-    }
-
-    // Close the secret answer validation statement
-    $stmt->close();
-
     // Prepare SQL query to update the driver
-    $sql = "UPDATE admin_tbl SET email = ?, phone = ? WHERE unique_id = ?";
+    $sql = "UPDATE admin_tbl SET firstname = ?, lastname = ?, email = ?, phone = ?, address = ?, gender = ?, role =? WHERE unique_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssi", $email, $phone_number, $adminId);
+    $stmt->bind_param("sssssssi", $firstname, $lastname, $email, $phone_number, $address, $gender, $role, $adminId);
 
     // Execute the statement
     if ($stmt->execute()) {
@@ -111,7 +113,7 @@ if (isset($data['admin_id'])) {
     $stmt->close();
 } else {
     // Return error response if the ID is not provided
-    echo json_encode(["success" => false, "message" => "Customer ID is missing."]);
+    echo json_encode(["success" => false, "message" => "Staff ID is missing."]);
 }
 
 // Close the database connection

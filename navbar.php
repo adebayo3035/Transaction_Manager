@@ -48,7 +48,7 @@
                 
             </button>
             <div class="dropdown-content">
-                <?php echo "<a href='staff_profile.php?id=" . $row['unique_id'] . "'>Profile</a>"; ?>
+                <?php echo "<a href='staff_profile.php'>Profile</a>"; ?>
                 <a href="settings.php">Settings</a>
                 <a href="admin_notification.php">Notifications (<span id="notification-badge"> 0 </span>)</a>
                 <a href="backend/logout.php?logout_id=<?php echo $row['unique_id']; ?>">Logout</a>

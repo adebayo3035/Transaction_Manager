@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             })
             .catch(error => {
-                console.error('Error fetching driver details:', error);
+                console.error('Error fetching Staff details:', error);
             });
     }
 
@@ -380,11 +380,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.getElementById('orderModal').style.display = 'none';
                     fetchCustomers(currentPage); // Refresh the table after update
                 } else {
-                    alert('Failed to update Customer Details: ' + data.message);
+                    alert('Failed to update Customer Records: ' + data.message);
                 }
             })
             .catch(error => {
-                console.error('Error updating driver:', error);
+                console.error('Error updating Staff Records:', error);
             });
     }
 
