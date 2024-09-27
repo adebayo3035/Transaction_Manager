@@ -37,7 +37,7 @@ $stmt = $conn->prepare("SELECT balance FROM wallets WHERE customer_id = ?");
 <nav>
     <ul>
         <li><a href="dashboard.php" id="orderFood">Order Food</a></li>
-        <li><a href="view_orders.php" id="viewOrders">View Orders</a></li>
+        <li><a href="view_orders.php" id="viewOrders">My Orders</a></li>
         <li><a href="cards.php" id="fundWallet">Self Service</a></li>
         <li><a href="profile.php" id="fundWallet">My Profile</a></li>
         <li><a href="transactions.php" id="viewOrders">My Transactions</a></li>

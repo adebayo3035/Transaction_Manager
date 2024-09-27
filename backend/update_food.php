@@ -9,12 +9,33 @@ if (json_last_error() !== JSON_ERROR_NONE) {
 }
 
 $id = $data['food_id'];
-$name = $data['name'];
-$description = $data['description'];
-$price = $data['price'];
-$quantity = $data['quantity'];
-$available = $data['available'];
+$name = $data['food_name'];
+$description = $data['food_description'];
+$price = $data['food_price'];
+$quantity = $data['food_quantity'];
+$available = $data['available_status'];
 
+// check for empty data
+if (
+    empty($id) || empty($name) || empty($description) ) {
+   
+    echo json_encode(["success" => false, "message" => 'Please fill in all required fields.']);
+    exit();
+}
+if ((!isset($quantity)) || (!isset($price)) || (!isset($available))) {
+    echo json_encode(["success" => false, "message" => 'Please fill in all required fields.']);
+    exit();
+}
+// ensure price only contains number and decimals only
+if (!preg_match('/^\d+(\.\d{1,2})?$/', $price)) {
+    echo json_encode(["success" => false, "message" => 'Invalid Price amount']);
+    exit();
+} 
+// ensure quantity contains number only
+if (!preg_match('/^\d+$/', $quantity)) {
+    echo json_encode(["success" => false, "message" => 'Invalid Quantity']);
+    exit();
+} 
 // Check for duplicate food names
 $sql = "SELECT COUNT(*) as count FROM food WHERE food_name = ? AND food_id != ?";
 $stmt = $conn->prepare($sql);

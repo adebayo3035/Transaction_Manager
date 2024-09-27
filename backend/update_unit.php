@@ -1,46 +1,65 @@
 <?php
-if (isset($_POST['btnUpdateUnit'])) {
-    include_once "config.php";
-    session_start();
-    $unit_name = mysqli_real_escape_string($conn, $_POST['unit_name']);
-    $current_unit = mysqli_real_escape_string($conn, $_POST['unit_name_hidden']);
-    $group_id = mysqli_real_escape_string($conn, $_POST['group_id']);
-    $unit_id = mysqli_real_escape_string($conn, $_POST['unit_id']);
-    if (!empty($unit_name) && !empty($group_id) && !empty($unit_id)) {
-        if ($unit_name != $current_unit) {
-            // Prepare and execute a query to check if the email or phone number already exists
-            $sql_Unit = mysqli_query($conn, "SELECT unit_name, group_id FROM unit WHERE unit_name = '{$unit_name}'");
-            if (mysqli_num_rows($sql_Unit) > 0) {
-                //echo $unit_name . " and ". $group_id;
-                echo "<script>alert('$unit_name already exists. Please use a different Unit Name.');window.location.href='../edit_unit.php?id=" . $unit_id . "';</script>";
-                exit();
-            } else {
-                $updateUnitQuery = "UPDATE unit SET unit_name = '{$unit_name}', group_id = '{$group_id}' WHERE unit_id = '{$unit_id}'";
-                $updateUnitResult = mysqli_query($conn, $updateUnitQuery);
+// Include database connection
+include('config.php'); // Replace with your actual database connection file
+session_start();
+if (!isset($_SESSION['unique_id'])) {
+    echo json_encode(["success" => false, "message" => "Not logged in."]);
+    exit();
+}
+$loggedInUserRole = $_SESSION['role'];
+$logged_in_user = $_SESSION['unique_id'];
+if($loggedInUserRole !== "Super Admin"){
+    echo json_encode(["success" => false, "message" => "Access Denied."]);
+    exit();
+}
 
-                if (!$updateUnitResult) {
-                    //handle_error('Error updating session: ' . mysqli_error($conn));
-                    echo "<script>alert('Error Updating Unit and Group Name')" . mysqli_error($conn) . " window.location.href='../edit_unit.php?id=" . $unit_id . "'; </script>";
-                } else {
-                    echo "<script>alert('Unit Information has been successfully Updated.'); window.location.href='../units.php'; </script>";
-                }
+// Get the JSON data from the request body
+$data = json_decode(file_get_contents("php://input"), true);
 
-            }
-        }
-        else{
-                $updateUnitQuery = "UPDATE unit SET unit_name = '{$unit_name}', group_id = '{$group_id}' WHERE unit_id = '{$unit_id}'";
-                $updateUnitResult = mysqli_query($conn, $updateUnitQuery);
+if (isset($data['unit_id'])) {
+    $unitId = $data['unit_id'];
+    $unit_name = $data['unit_name'];
+    $group_id = $data['group_id'];
 
-                if (!$updateUnitResult) {
-                    //handle_error('Error updating session: ' . mysqli_error($conn));
-                    echo "<script>alert('Error Updating Unit and Group Name')" . mysqli_error($conn) . " window.location.href='../edit_unit.php?id=" . $unit_id . "'; </script>";
-                } else {
-                    echo "<script>alert('Unit Information has been successfully Updated.'); window.location.href='../units.php'; </script>";
-                }
-        }
+    // Validate required fields
+    if (empty($unitId) || empty($group_id) || empty($unit_name)) {
+        echo json_encode(['success' => false, 'message' => 'Please fill in all required fields.']);
+        exit;
+    }
+   
 
+    // Check for Name Duplicates
+    $selectRest = "SELECT COUNT(*) AS unit_count FROM unit WHERE unit_name = ? and unit_id != ?";
+    $stmt = $conn->prepare($selectRest);
+    $stmt->bind_param("si", $unit_name, $unitId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+
+    if ($row['unit_count'] > 0) {
+        die(json_encode(["success" => false, "message" => "Unit with the same name already exists."]));
+    }
+    $stmt->close();
+    // Prepare SQL query to update the driver
+    $sql = "UPDATE unit SET unit_name = ?, group_id = ? WHERE unit_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sii", $unit_name, $group_id, $unitId);
+
+    // Execute the statement
+    if ($stmt->execute()) {
+        // Return success response
+        echo json_encode(["success" => true, "message" => "Unit Record has been Successfully Updated."]);
     } else {
-        echo "<script>alert(' All Input fields are required.'); </script>";
+        // Return error response
+        echo json_encode(["success" => false, "message" => "Failed to update Unit Details."]);
     }
 
+    // Close the statement
+    $stmt->close();
+} else {
+    // Return error response if the ID is not provided
+    echo json_encode(["success" => false, "message" => "Unit ID is missing."]);
 }
+
+// Close the database connection
+$conn->close();

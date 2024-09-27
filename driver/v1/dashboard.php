@@ -86,14 +86,14 @@
                         <option value="">-- Select Delivery Status --</option>
                         <option value="In Transit"> In Transit</option>
                         <option value="Delivered"> Delivered</option>
-                        <option value="Canceled"> Canceled</option>
+                        <option value="Cancelled"> Cancelled</option>
                     </select>
                 </div>
                 <div class="form-input" id="delivery_auth">
                     <label for="delivery_pin"> Enter Delivery Pin</label>
                     <input type="number" name="delivery_pin" id="delivery_pin" maxlength="4">
                 </div>
-                <!-- This textarea is hidden by default and will appear if the driver selects "Canceled" -->
+                <!-- This textarea is hidden by default and will appear if the driver selects "Cancelled" -->
                 <div class="form-input" id="cancelReasonContainer">
                     <label for="cancelReason">Reason for Cancellation:</label>
                     <textarea id="cancelReason" name="cancelReason" placeholder="Enter reason for cancellation"

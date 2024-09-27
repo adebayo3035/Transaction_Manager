@@ -172,6 +172,14 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
         orderDetailsTableBody.appendChild(totalAmountRow);
 
+        // Add Delivery Status row
+        const deliveryStatusRow = document.createElement('tr');
+        deliveryStatusRow.innerHTML = `
+            <td colspan="6"><strong>Delivery Status</strong></td>
+            <td>${firstDetail.delivery_status}</td>
+        `;
+        orderDetailsTableBody.appendChild(deliveryStatusRow);
+
         // Add Delivery Pin row
         const deliveryPinRow = document.createElement('tr');
         deliveryPinRow.innerHTML = `
@@ -182,19 +190,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Add Driver's Name row
         const driverNameRow = document.createElement('tr');
-        driverNameRow.innerHTML = `
-            <td colspan="6"><strong>Driver's Name</strong></td>
-            <td>${firstDetail.driver_firstname} ${firstDetail.driver_lastname}</td>
-        `;
+        if (firstDetail.driver_firstname == null || firstDetail.driver_lastname == null) {
+            driverNameRow.innerHTML = `
+                <td colspan="6"><strong>Driver's Name</strong></td>
+                <td> N/A </td>
+            `;
+        } else {
+            driverNameRow.innerHTML = `
+                <td colspan="6"><strong>Driver's Name</strong></td>
+                <td>${firstDetail.driver_firstname} ${firstDetail.driver_lastname}</td>
+            `;
+        }
+        
+        
         orderDetailsTableBody.appendChild(driverNameRow);
 
         // Add Driver's Name row
         const driverPhoneRow = document.createElement('tr');
-        driverPhoneRow.innerHTML = `
-            <td colspan="6"><strong>Driver's Mobile Number</strong></td>
-            <td>${firstDetail.driver_phoneNumber}</td>
-        `;
+        if (firstDetail.driver_phoneNumber == null) {
+            driverPhoneRow.innerHTML = `
+                <td colspan="6"><strong>Driver's Phone No.</strong></td>
+                <td> N/A </td>
+            `;
+        } else {
+            driverPhoneRow.innerHTML = `
+                <td colspan="6"><strong>Driver's Phone No.</strong></td>
+                <td>${firstDetail.driver_phoneNumber}</td>
+            `;
+        }
+        
         orderDetailsTableBody.appendChild(driverPhoneRow);
+
+        if(firstDetail.delivery_status == 'Delivered' || firstDetail.delivery_status == 'Cancelled' || firstDetail.delivery_status == 'Declined'){
+            document.querySelector('#receipt-btn').style.display = "block";
+        }
 
 
         
@@ -289,5 +318,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Attach print button event listener
-    document.querySelector('#print-receipt-btn').addEventListener('click', printReceipt);
+    document.querySelector('#receipt-btn').addEventListener('click', printReceipt);
 });

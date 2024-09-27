@@ -21,7 +21,6 @@ function destroySession($uniqueId, $conn)
     }
     $stmt->close();
 }
-
 header('Content-Type: application/json');
 include 'config.php';
 
@@ -42,15 +41,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $restriction_id = $row['restriction_id'];
             $block_id = $row['block_id'];
 
-            // Check if there's a block_id on the staff account
             if ($block_id == 0) {
                 if ($encrypted_password === $admin_password) {
                     $admin_id = $row['unique_id'];
 
-                    // Call destroySession function
                     destroySession($admin_id, $conn);
 
-                    // Start a new session
                     session_start();
                     session_regenerate_id(true);
                     $_SESSION['unique_id'] = $row['unique_id'];
@@ -60,12 +56,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $_SESSION['restriction_id'] = $row['restriction_id'];
                     $_SESSION['secret_answer'] = md5($row['secret_answer']);
 
-                    // Insert new session into admin_active_sessions table
                     $newSessionId = session_id();
                     $loginTime = date('Y-m-d H:i:s');
                     $stmt = $conn->prepare("INSERT INTO admin_active_sessions (unique_id, session_id, login_time, status) VALUES (?, ?, ?, 'Active')");
                     $stmt->bind_param("iss", $admin_id, $newSessionId, $loginTime);
                     $stmt->execute();
+
                     echo json_encode(["success" => true, "message" => "success"]);
                 } else {
                     echo json_encode(["success" => false, "message" => "Email or Password is Incorrect!"]);
@@ -80,4 +76,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->close();
     $conn->close();
 }
-

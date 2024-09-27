@@ -2,78 +2,105 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/customer.css">
-  <script>
-    // Confirmation Modal to Delete a customer record
-    // function confirmDelete(customerId) {
-    //   if (confirm('Are you sure you want to delete this food?')) {
-    //     document.getElementById('deleteForm').customer_id.value = customerId;
-    //     document.getElementById('deleteForm').submit();
-    //   }
-    // }
-  </script>
-  <title>Food Repository</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Groups</title>
+    <link rel="stylesheet" href="customer/css/view_orders.css">
+    <link rel="stylesheet" href="customer/css/checkout.css">
+    <link rel="stylesheet" href="customer/css/cards.css">
+    <link rel="stylesheet" href="css/view_driver.css">
 </head>
 
 <body>
-  <?php include "navbar.php" ?>
-  <div class="container">
-    <h2>Food Repository</h2>
+    <?php include('navbar.php'); ?>
+    <div class="container">
+        <h1>Food Repository</h1>
+        <!-- Separate row for "Add New Customer" button -->
+        <div id="customer-form">
+            <button onclick="toggleModal('addNewFoodModal')"><i class="fa fa-plus" aria-hidden="true"></i> Add New
+                Food Item</button>
+        </div>
+        <div class="livesearch">
+            <input type="text" id="liveSearch" placeholder="Search for Order...">
+            <button type="submit">Search <i class="fa fa-search" aria-hidden="true"></i></button>
+        </div>
 
-    <!-- Separate row for "Add New Customer" button -->
-    <div id="customer-form">
-      <button onclick="addNewFood()"><i class="fa fa-plus" aria-hidden="true"></i> Add New Food</button>
+
     </div>
 
-    <!-- Live search input -->
-    <div class="livesearch">
-      
-      <input type="text" id="liveSearch" placeholder="Search for Food...">
-      <button type="submit">Search <i class="fa fa-search" aria-hidden="true"></i></button>
+    <table id="ordersTable" class="ordersTable">
+        <thead>
+            <tr>
+                <th>Food ID</th>
+                <th>Food Name</th>
+                <th>Price Per Portion</th>
+                <th>Quantity Available</th>
+                <th>Availability Status</th>
+                <th colspan ="2">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Food Information will be dynamically inserted here -->
+        </tbody>
 
-    </div>
-
-    <!-- Delete form -->
-    <!-- <form id="deleteForm" action="backend/delete_food.php" method="post">
-      <input type="hidden" name="food_id" value="">
-    </form> -->
-
-
-
-
-    <!-- Customer table -->
-    <table id="customer-table">
-      <thead>
-        <tr>
-          <th>Food ID</th>
-          <th>Food Name</th>
-          <!-- <th>Description</th> -->
-          <th>Price Per Portion (N)</th>
-          <th>Quantity Available</th>
-          <th>Availability Status</th>
-          
-          <th colspan="2">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Customer rows will be dynamically added here -->
-        <?php include "backend/display_food.php"; ?>
-
-      </tbody>
     </table>
 
-  </div>
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Edit Food Item</h2>
+            
+
+            
+            <table id="orderDetailsTable" class="ordersTable">
+                <tbody>
+                    <!-- Driver details will be automatically populated here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 
-  <script>
-    function addNewFood() {
-      window.location.href = 'add_food.php';
-    }
-  </script>
-  <script src="scripts/filter_table.js"></script>
-  <script src="scripts/delete_food.js"></script>
+    <!-- Modal to add new Group -->
+    <div id="addNewFoodModal" class="modal">
+        <div class="modal-content" id="card-form">
+            <span class="close2 close">&times;</span>
+            <h2>Add New Food Item</h2>
+            <form id="addFoodForm">
+                <div class="form-input">
+                    <label for="add_food_name">Food Name:</label>
+                    <input type="text" id="add_food_name" name="add_food_name" required>
+                </div>
+                <div class="form-input">
+                    <label for="add_food_description">Food Description:</label>
+                    <input type="text" id="add_food_description" name="add_food_description" required>
+                </div>
+                <div class="form-input">
+                    <label for="add_food_price">Food Price:</label>
+                    <input type="number" id="add_food_price" name="add_food_price" required>
+                </div>
+                <div class="form-input">
+                    <label for="add_food_quantity">Quantity Available:</label>
+                    <input type="number" id="add_food_quantity" name="add_food_quantity" required>
+                </div>
+                <div class="form-group">
+                <label for="available">Available:</label>
+                <select id="available" name="available">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+                
+                
+                <button type="submit" id="submitBtnAdd">Add Food Item</button>
+            </form>
+
+            <div id="addFoodMessage"></div>
+
+        </div>
+    </div>
+
+    <script src="scripts/food.js"></script>
 </body>
 
 </html>

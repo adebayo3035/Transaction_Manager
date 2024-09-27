@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $group_id = $_POST['group'];
     $unit_id = $_POST['unit'];
 
-    //Declare validation variables
+    // Declare validation variables
     $minLength = 8;
     $hasSpecialChar = preg_match('/[!@#$%^&*(),.?":{}|<>_]/', $password);
     $hasUpperCase = preg_match('/[A-Z]/', $password);
@@ -32,42 +32,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         empty($address) || empty($password) || empty($secret_question) || empty($secret_answer) ||
         empty($group_id) || empty($unit_id)
     ) {
-
         $response['message'] = 'Please fill in all required fields.';
+        echo json_encode($response);
+        exit();
+    }
+    // Validate password strength
+    if (strlen($password) < $minLength || !$hasSpecialChar || !$hasUpperCase || !$hasDigit) {
+        echo json_encode(['success' => false, 'message' => 'Please input a valid password.']);
         exit();
     }
 
-    //CHECK FOR EMAIL AND PHONE NUMBER DUPLICATES
+    // Validate phone number
+    if (!preg_match('/^\d{11}$/', $phone_number)) {
+        echo json_encode(['success' => false, 'message' => 'Please input a valid Phone Number.']);
+        exit();
+    }
+
+    // Validate email format
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo json_encode(['success' => false, 'message' => "Invalid E-mail Address."]);
+        $response['message'] = "Invalid E-mail Address.";
+        echo json_encode($response);
         exit();
     }
 
     // Check if email already exists
     $sql_email = $conn->prepare("SELECT * FROM customers WHERE email = ?");
-    $sql_email->bind_param('s', $email); // 's' specifies that the parameter is a string
+    $sql_email->bind_param('s', $email);
     $sql_email->execute();
     $sql_email_result = $sql_email->get_result();
 
     if ($sql_email_result->num_rows > 0) {
-        echo json_encode(['success' => false, 'message' => "{$email} already exists. Please use a different email."]);
+        $response['message'] = "{$email} already exists. Please use a different email.";
+        echo json_encode($response);
         exit();
     }
     $sql_email->close();
 
     // Check if phone number already exists
     $sql_phone = $conn->prepare("SELECT * FROM customers WHERE mobile_number = ?");
-    $sql_phone->bind_param('s', $phone_number); // 's' specifies that the parameter is a string
+    $sql_phone->bind_param('s', $phone_number);
     $sql_phone->execute();
     $sql_phone_result = $sql_phone->get_result();
 
     if ($sql_phone_result->num_rows > 0) {
-        echo json_encode(['success' => false, 'message' => "{$phone_number} already exists. Please use a different phone number."]);
+        $response['message'] = "{$phone_number} already exists. Please use a different phone number.";
+        echo json_encode($response);
         exit();
     }
     $sql_phone->close();
 
-
+    // Handle photo upload
     if (isset($_FILES['add_photo'])) {
         $img_name = $_FILES['add_photo']['name'];
         $img_type = $_FILES['add_photo']['type'];
@@ -82,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $allowed_types = ["image/jpeg", "image/jpg", "image/png"];
 
         // Validate the image file
-        if (in_array($img_ext, $allowed_extensions) === true && in_array($img_type, $allowed_types) === true) {
+        if (in_array($img_ext, $allowed_extensions) && in_array($img_type, $allowed_types)) {
             $time = time(); // Use current time as a unique identifier for the image
             $new_img_name = $time . '_' . $img_name;
             $upload_path = "customer_photos/" . $new_img_name;
@@ -90,6 +104,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Check if the image already exists in the directory
             if (file_exists($upload_path)) {
                 $response['message'] = 'Image already exists.';
+                echo json_encode($response);
+                exit();
             } else {
                 // Start a transaction
                 $conn->begin_transaction();
@@ -106,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
                         $stmt = $conn->prepare($sql);
-                        $stmt->bind_param('issssssssssii', $customer_id, $first_name, $last_name, $gender, $email, $encrypted_password, $phone_number, $address, $secret_question, $encrypted_answer, $new_img_name, $group_id, $unit_id, );
+                        $stmt->bind_param('issssssssssii', $customer_id, $first_name, $last_name, $gender, $email, $encrypted_password, $phone_number, $address, $secret_question, $encrypted_answer, $new_img_name, $group_id, $unit_id);
 
                         if ($stmt->execute()) {
                             // Commit the transaction
@@ -144,5 +160,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 echo json_encode($response);
-
 $conn->close();

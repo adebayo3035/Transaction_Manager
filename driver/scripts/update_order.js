@@ -35,14 +35,14 @@ document.addEventListener('DOMContentLoaded', function () {
    // Add an event listener to the new Order Status
 orderStatus.addEventListener('change', function () {
     var orderValue = orderStatus.value;
-    var isDeliveryOrCancel = orderValue === "Delivered" || orderValue === "Canceled";
+    var isDeliveryOrCancel = orderValue === "Delivered" || orderValue === "Cancelled";
 
     // Toggle visibility for delivery authorization and update button based on the order status
     deliveryAuth.style.display = isDeliveryOrCancel ? "flex" : "none";
     updateDeliveryStatus.style.display = (isDeliveryOrCancel || orderValue === "In Transit") ? "flex" : "none";
 
-    // Show the cancellation reason input box only if the status is "Canceled"
-    if (orderValue === "Canceled") {
+    // Show the cancellation reason input box only if the status is "Cancelled"
+    if (orderValue === "Cancelled") {
         cancelReasonContainer.style.display = "flex";  // Show the reason input box
     } else {
         cancelReasonContainer.style.display = "none";   // Hide the reason input box

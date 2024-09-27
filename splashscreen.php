@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="css/splashscreen.css">
 </head>
 <body>
-<?php include "session_checker.php"; ?>
+<?php include "backend/activity_checker.php"; ?>
     <div class="splash">
         <img src="images/trans_manager.png" alt="" class="rotate">
         <div class="loader">

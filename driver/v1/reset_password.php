@@ -21,7 +21,7 @@
   </header>
 
   <main>
-    <form id="adminForm" method="POST" action="backend/reset_password2.php">
+    <form id="adminForm">
       <label for="email">Enter Your E-mail Address:</label>
       <input type="email" id="email" name="email" required>
 

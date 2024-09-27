@@ -1,44 +1,87 @@
 <?php
+// Include database connection
 include_once "config.php";
-if (isset($_POST['btnPasswordChange'])) {
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $secretAnswer = ((filter_var($_POST['secret_answer'], FILTER_SANITIZE_STRING)));
 
-    if (!empty($email) && !empty($secretAnswer)) {
-        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            // Prepare and execute a query to check if the email exists
-            // Perform E-mail address Validation
-            $email_query = mysqli_query($conn, "select * from `admin_tbl` where email='$email'");
-            if (mysqli_num_rows($email_query) == 1) {
-                $row = mysqli_fetch_assoc($email_query);
-                $encrypted_Answer = md5($secretAnswer);
-                $admin_email = ($row['email']);
-                $admin_answer = ($row['secret_answer']);
-                if (($email == $admin_email) && ($encrypted_Answer == $admin_answer)) {
-                    $uniqueID = $row['unique_id']; // Get admin ID for password update
-                    //store retrieved User ID in a session variable
-                    session_start();
-                    $_SESSION['customerID'] = $row['unique_id'];
-                    // Set session variable to indicate user is coming from reset_password.php
-                    $_SESSION['from_reset_password'] = true;
-                    echo "<script>alert('Validation Successful'); </script>";
-                    echo "<script>window.location.href='../password_reset.php?id=" . $_SESSION['customerID'] . "';</script>";
-                } 
-                else {
-                    echo "<script>alert('Invalid Credentials. Error Resetting Password.'); window.location.href='../index.php'; </script>";
+// Set content type to JSON
+header('Content-Type: application/json');
+
+// Get the POST data
+$data = json_decode(file_get_contents("php://input"), true);
+
+
+// Check if all required fields are provided
+if (isset($data['email'], $data['password'], $data['secret_answer'], $data['confirmPassword'])) {
+    $email = mysqli_real_escape_string($conn, $data['email']);
+    $password = mysqli_real_escape_string($conn, $data['password']);
+    $confirmPassword = mysqli_real_escape_string($conn, $data['confirmPassword']);
+    $secret_answer = mysqli_real_escape_string($conn, $data['secret_answer']);
+
+    // REGEX TO VALIDATE PASSWORD AND SECRET ANSWER
+    $minLength = 8;
+    $hasSpecialChar = preg_match('/[!@#$%^&*(),.?":{}|<>_]/', $password);
+    $hasUpperCase = preg_match('/[A-Z]/', $password);
+    $hasDigit = preg_match('/\d/', $password);
+
+    // Validate password strength
+    if (strlen($password) < $minLength || !$hasSpecialChar || !$hasUpperCase || !$hasDigit) {
+        echo json_encode(['success' => false, 'message' => 'Please input a valid password.']);
+        exit();
+    }
+
+    // Step 1: Validate email
+    $emailQuery = $conn->prepare("SELECT secret_answer, password FROM admin_tbl WHERE email = ?");
+    $emailQuery->bind_param("s", $email);
+    $emailQuery->execute();
+    $emailQuery->store_result();
+
+    if ($emailQuery->num_rows > 0) {
+        // Email exists in the database
+        $emailQuery->bind_result($db_secret_answer, $db_password);
+        $emailQuery->fetch();
+
+        // Step 2: Validate the secret answer (compare with md5 hash)
+        if (md5($secret_answer) === $db_secret_answer) {
+
+            // Step 3: Check if password and confirmPassword match
+            if ($password === $confirmPassword) {
+
+                // Step 4: Hash the new password (using password_hash)
+                $hashedPassword = md5($password);
+
+                // Step 5: Update the password in the database
+                $updateQuery = $conn->prepare("UPDATE admin_tbl SET password = ? WHERE email = ?");
+                $updateQuery->bind_param("ss", $hashedPassword, $email);
+
+                if ($updateQuery->execute()) {
+                    echo json_encode(['success' => true, 'message' => 'Password reset successfully.']);
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'Failed to update the password.']);
                 }
 
-            } 
-            else {
-                echo "<script>alert('Error Validating User Information')" . mysqli_error($conn) . " window.location.href='../index.php'; </script>";
+                $updateQuery->close();
+            } else {
+                // Password and Confirm Password do not match
+                echo json_encode(['success' => false, 'message' => 'Passwords do not match.']);
+                exit();
             }
-
-        } 
-        else {
-            echo "<script>alert('Invalid E-mail Address. Please Input a valid E-mail')" . mysqli_error($conn) . " window.location.href='../index.php'; </script>";
+        } else {
+            // Secret answer is incorrect
+            echo json_encode(['success' => false, 'message' => 'Secret answer is incorrect.']);
+            exit();
         }
-    } 
-    else {
-        echo "<script>alert('All Input Fields are required')" . mysqli_error($conn) . " window.location.href='../index.php'; </script>";
+    } else {
+        // Email not found
+        echo json_encode(['success' => false, 'message' => 'Email does not exist.']);
+        exit();
     }
+
+    $emailQuery->close();
+} else {
+    // Missing required fields
+    echo json_encode(['success' => false, 'message' => 'Missing required fields.']);
+    exit();
 }
+
+// Close the database connection
+$conn->close();
+

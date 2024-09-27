@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('resetModal');
     const closeModal = document.getElementById('closeModal');
     const resetPasswordForm = document.getElementById('resetPasswordForm');
+    let resetToken = ''; // Store the token here
 
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
@@ -26,26 +27,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const data = await response.json();
             if (data.success) {
-                // Show the modal if validation is successful
+                resetToken = data.token; // Store the token returned from the server
                 modal.style.display = 'block';
             } else {
-                alert('Invalid email or secret answer. Please try again.');
+                alert(`Error: ${data.message}`);
             }
         } catch (error) {
             console.error('An error occurred:', error);
             alert('An error occurred while validating the information.');
-        }
-    });
-
-    // Close the modal
-    closeModal.addEventListener('click', () => {
-        modal.style.display = 'none';
-    });
-
-    // Close the modal when clicking outside of it
-    window.addEventListener('click', (event) => {
-        if (event.target === modal) {
-            modal.style.display = 'none';
         }
     });
 
@@ -62,7 +51,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let newPasswordInfo = {
             email: document.getElementById('email').value,
-            new_password: newPassword
+            new_password: newPassword,
+            token: resetToken // Include the token in the password reset request
         };
 
         try {
@@ -79,13 +69,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('Password has been reset successfully.');
                 modal.style.display = 'none';
                 form.reset(); // Clear the form fields
-                window.location.href ="../v1/index.php";
+                window.location.href = "../v1/index.php";
             } else {
                 alert('An error occurred while resetting the password.');
             }
         } catch (error) {
             console.error('An error occurred:', error);
             alert('An error occurred while resetting the password.');
+        }
+    });
+     // Close the modal
+     closeModal.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    // Close the modal when clicking outside of it
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
         }
     });
 });

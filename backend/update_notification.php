@@ -7,6 +7,11 @@ if (!isset($_SESSION['unique_id'])) {
     exit();
 }
 
+if(isset($_SESSION['role']) == 'Super Admin'){
+    echo json_encode(["success" => true, "message" => "You cannot mark notification as read."]);
+    exit();
+}
+
 $userId = $_SESSION['unique_id'];
 $input = json_decode(file_get_contents('php://input'), true);
 

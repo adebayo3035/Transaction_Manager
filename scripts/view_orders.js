@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fragment.appendChild(createRow('Service Fee', firstDetail.service_fee));
         fragment.appendChild(createRow('Delivery Fee', firstDetail.delivery_fee));
         fragment.appendChild(createRow('Total Amount', firstDetail.total_amount));
-        fragment.appendChild(createRow('Supervisor In Charge', `${firstDetail.assigned_admin_firstname} ${firstDetail.assigned_admin_lastname}`));
+        fragment.appendChild(createRow('Order Assigned To', `${firstDetail.assigned_admin_firstname} ${firstDetail.assigned_admin_lastname}`));
         fragment.appendChild(createRow('Order Approved By', `${firstDetail.approver_firstname} ${firstDetail.approver_lastname}`));
         fragment.appendChild(createRow("Customer's Name", `${firstDetail.customer_firstname} ${firstDetail.customer_lastname}`));
         fragment.appendChild(createRow("Customer's Mobile Number", firstDetail.customer_phone_number));

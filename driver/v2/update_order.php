@@ -20,7 +20,7 @@ $driver_id = $_SESSION['driver_id'];
 // Invalid status transitions check
 $invalidTransitions = [
     ["from" => "Assigned", "to" => "Delivered"],
-    ["from" => "Assigned", "to" => "Canceled"],
+    ["from" => "Assigned", "to" => "Cancelled"],
     ["from" => "In Transit", "to" => "In Transit"]
 ];
 
@@ -31,8 +31,8 @@ foreach ($invalidTransitions as $transition) {
     }
 }
 
-// Validate the delivery pin if status is Delivered or Canceled
-if (($orderStatus === "Delivered" || $orderStatus === "Canceled") && isset($data['deliveryPin'])) {
+// Validate the delivery pin if status is Delivered or Cancelled
+if (($orderStatus === "Delivered" || $orderStatus === "Cancelled") && isset($data['deliveryPin'])) {
     $deliveryPin = $data['deliveryPin'];
     $sql = "SELECT delivery_pin FROM orders WHERE order_id = ? AND driver_id = ?";
     if ($stmt = $conn->prepare($sql)) {
@@ -57,13 +57,13 @@ $cancellationReason = null;
 $updateSql = "";
 
 // Handle different order statuses
-if ($orderStatus === "Canceled") {
+if ($orderStatus === "Cancelled") {
     if (!isset($data['cancelReason']) || empty($data['cancelReason'])) {
-        echo json_encode(["success" => false, "message" => "Cancellation reason is required for a canceled order."]);
+        echo json_encode(["success" => false, "message" => "Cancellation reason is required for a Cancelled order."]);
         exit();
     }
     $cancellationReason = $data['cancelReason'];
-    $updateSql = "UPDATE orders SET cancellation_reason = ?, delivery_status = 'Canceled' WHERE order_id = ? AND driver_id = ?";
+    $updateSql = "UPDATE orders SET cancellation_reason = ?, delivery_status = 'Cancelled' WHERE order_id = ? AND driver_id = ?";
 } elseif ($orderStatus === "Delivered") {
     $updateSql = "UPDATE orders SET delivery_status = 'Delivered' WHERE order_id = ? AND driver_id = ?";
 } elseif ($orderStatus === "In Transit") {
@@ -89,8 +89,8 @@ if ($stmt = $conn->prepare($updateSql)) {
     exit();
 }
 
-// Update driver status to 'Available' if Delivered or Canceled
-if ($orderStatus === "Delivered" || $orderStatus === "Canceled") {
+// Update driver status to 'Available' if Delivered or Cancelled
+if ($orderStatus === "Delivered" || $orderStatus === "Cancelled") {
     $sql = "UPDATE driver SET status = 'Available' WHERE id = ?";
     if ($stmt = $conn->prepare($sql)) {
         $stmt->bind_param("i", $driver_id);

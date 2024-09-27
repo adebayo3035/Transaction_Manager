@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KaraKata - Transaction Manager </title>
+    <title>KaraKata - Transaction Manager</title>
     <link rel="stylesheet" href="css/navbar.css">
     <!-- font awesome -->
     <script src="https://kit.fontawesome.com/7cab3097e7.js" crossorigin="anonymous"></script>
@@ -15,81 +15,32 @@
 </head>
 
 <body>
-    <?php include "session_checker.php"; ?>
-    <?php
-    $sql = mysqli_query($conn, "SELECT * FROM admin_tbl WHERE unique_id = {$_SESSION['unique_id']}");
-    if (mysqli_num_rows($sql) > 0) {
-        $row = mysqli_fetch_assoc($sql);
-        $firstname = $row['firstname'];
-        $lastname = $row['lastname'];
-        $phone = $row['phone'];
-        $email = $row['email'];
-        $role = $row['role'];
-        $unique_id = $row['unique_id'];
-        $restriction_id = $row['restriction_id'];
-    }
-    $userId = isset($_SESSION['unique_id']) ? $_SESSION['unique_id'] : 'null';
-    ?>
+    <!-- log user out after 2 minutes of Inactivity -->
+    <?php include "backend/activity_checker.php"; ?>
+
     <div class="topnav" id="myTopnav">
         <a href="homepage.php" class="active">Home</a>
-        <a href="staffs.php">Staffs</a>
-        <a href="view_drivers.php">Drivers</a>
-        <a href="customer_new.php">Customers</a>
+        <a href="staff.php">Staffs</a>
+        <a href="driver.php">Drivers</a>
+        <a href="customer.php">Customers</a>
         <a href="dashboard.php">Dashboard</a>
-        <a href="groups.php">Groups</a>
-        <a href="units.php">Units</a>
+        <a href="group.php">Groups</a>
+        <a href="unit.php">Units</a>
         <a href="food.php">Foods</a>
-       
+
         <div class="dropdown">
-            
-            <button class="dropbtn"><?php echo "Welcome, {$firstname} {$lastname}"; ?>
-                
-                <i class="fa fa-caret-down"></i>
-                
-            </button>
+            <button class="dropbtn" id="welcomeMessage">Welcome!  <i class="fa fa-caret-down"></i></button>
             <div class="dropdown-content">
-                <?php echo "<a href='staff_profile.php'>Profile</a>"; ?>
+                <a href='staff_profile.php'>Profile</a>
                 <a href="settings.php">Settings</a>
-                <a href="admin_notification.php">Notifications (<span id="notification-badge"> 0 </span>)</a>
-                <a href="backend/logout.php?logout_id=<?php echo $row['unique_id']; ?>">Logout</a>
+                <a href="admin_notification.php">Notifications (<span id="notification-badge">0</span>)</a>
+                <a href="javascript:void(0);" id="logoutButton">Logout</a>
             </div>
         </div>
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">&#9776;</a>
     </div>
-    <script>
-        /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
-        function myFunction() {
-            var x = document.getElementById("myTopnav");
-            if (x.className === "topnav") {
-                x.className += " responsive";
-            } else {
-                x.className = "topnav";
-            }
-        }
 
-
-
-        const notificationBadge = document.getElementById('notification-badge');
-        function fetchNotificationsAndCount() {
-        fetch('backend/notification.php') // Replace with your PHP endpoint
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    notificationBadge.textContent = data.totalNotifications || '0'; // Default to 0 if undefined
-                } else {
-                    notificationBadge.textContent = '0'; // Default to 0 on error
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching notifications:', error);
-                notificationBadge.textContent = '0'; // Default to 0 on error
-            });
-    }
-
-    // Initial fetch of notifications and count
-    fetchNotificationsAndCount();
-    </script>
-    <script src = "scripts/notification.js"></script>
+    <script src="scripts/navbar.js"></script>
 </body>
 
 </html>

@@ -1,41 +1,47 @@
 <?php
-// Include your database connection file
-include "config.php";
+include_once ('config.php');
+session_start();
+$user_id = $_SESSION['unique_id'] ?? null; // Assuming user ID is stored in session
+if (!$user_id) {
+    echo json_encode(['success' => false, 'message' => 'User not authenticated.']);
+    exit;
+}
 
-// Check if the 'id' parameter is set in the URL
-if (isset($_GET['id'])) {
-    // Get the 'id' parameter from the URL
-    $unit_id = intval($_GET['id']);
+// Get the JSON data from the request body
+$data = json_decode(file_get_contents("php://input"), true);
+
+$staff_role = $_SESSION['role'];
+if($staff_role !== "Super Admin"){
+    echo json_encode(["success" => false, "message" => "You do not have permission to Delete."]);
+    exit();
+}
+if (isset($data['unit_id'])) {
+    $unitId = $data['unit_id'];
+
+    // Prepare SQL query to delete the driver
+    $deleteSql = "DELETE FROM unit WHERE unit_id = ?";
+    $stmt = $conn->prepare($deleteSql);
+    $stmt->bind_param("i", $unitId);
     
-    // Prepare the DELETE statement
-    $query = "DELETE FROM unit WHERE unit_id = ?";
-    
-    // Initialize the statement
-    if ($stmt = $conn->prepare($query)) {
-        // Bind the 'id' parameter to the statement
-        $stmt->bind_param("i", $unit_id);
-        
-        // Execute the statement
-        if ($stmt->execute()) {
-            // If the delete was successful, redirect to a success page or display a success message
-            echo "<script>alert('Unit has been deleted Successfully.');window.location.href='../units.php'; </script>";
-            exit();
-        } else {
-            // If there was an error executing the statement, display an error message
-            echo "Error: Could not execute the delete statement.";
-        }
-        
-        // Close the statement
-        $stmt->close();
+    if ($stmt->execute()) {
+        // Return success response
+        echo json_encode(["success" => true, "message" => "unit has been Successfully Deleted."]);
     } else {
-        // If there was an error preparing the statement, display an error message
-        echo "Error: Could not prepare the delete statement.";
+        // Return error response
+        echo json_encode(["success" => false, "message" => "Failed to delete unit."]);
     }
+
+    // Close the statement
+    $stmt->close();
 } else {
-    // If the 'id' parameter is not set in the URL, display an error message
-    echo "Error: Invalid request.";
+    // Return error response if the ID is not provided
+    echo json_encode(["success" => false, "message" => "unit ID is required."]);
 }
 
 // Close the database connection
 $conn->close();
-?>
+
+
+
+
+

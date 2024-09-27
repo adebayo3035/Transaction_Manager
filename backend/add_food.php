@@ -3,7 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 header('Content-Type: application/json');
 
-include ("config.php");
+include("config.php");
 include('restriction_checker.php');
 // Create connection
 // $conn = new mysqli($servername, $username, $password, $dbname);
@@ -13,15 +13,34 @@ if ($conn->connect_error) {
     die(json_encode(["success" => false, "message" => "Connection failed: " . $conn->connect_error]));
 }
 
-$data = json_decode(file_get_contents('php://input'), true);
-
-$food_name = $data['name'];
-$description = $data['description'];
-$price = $data['price'];
-$quantity = $data['quantity'];
-$available = $data['available'];
+// $data = json_decode(file_get_contents('php://input'), true);
 
 
+$food_name = mysqli_real_escape_string($conn, $_POST['add_food_name']);
+$description = mysqli_real_escape_string($conn, $_POST['add_food_description']);
+$price = mysqli_real_escape_string($conn, $_POST['add_food_price']);
+$quantity = mysqli_real_escape_string($conn, $_POST['add_food_quantity']);
+$available = mysqli_real_escape_string($conn, $_POST['available']);
+
+if (empty($food_name) || empty($description)) {
+
+    echo json_encode(["success" => false, "message" => 'Please fill in all required fields.']);
+    exit();
+}
+if ((!isset($quantity)) || (!isset($price)) || (!isset($available))) {
+    echo json_encode(["success" => false, "message" => 'Please fill in all required fields.']);
+    exit();
+}
+// ensure price only contains number and decimals only
+if (!preg_match('/^\d+(\.\d{1,2})?$/', $price)) {
+    echo json_encode(["success" => false, "message" => 'Invalid Price amount']);
+    exit();
+}
+// ensure quantity contains number only
+if (!preg_match('/^\d+$/', $quantity)) {
+    echo json_encode(["success" => false, "message" => 'Invalid Quantity']);
+    exit();
+}
 function levenshteinPercentage($str1, $str2)
 {
     $lev = levenshtein($str1, $str2);
@@ -34,7 +53,7 @@ function levenshteinPercentage($str1, $str2)
 
 
 // Function to check if a similar group exists
-function isSimilarGroupExists($conn, $newFoodName, $threshold = 50)
+function isSimilarFoodExists($conn, $newFoodName, $threshold = 50)
 {
     $sql = "SELECT food_name FROM food WHERE food_name LIKE '%$newFoodName%'";
     $result = $conn->query($sql);
@@ -53,7 +72,7 @@ function isSimilarGroupExists($conn, $newFoodName, $threshold = 50)
 if (!empty($food_name)) {
     // $sql_check = mysqli_query($conn, "SELECT * FROM groups WHERE group_name = '{$group_name}'");
 
-    if (isSimilarGroupExists($conn, $food_name)) {
+    if (isSimilarFoodExists($conn, $food_name)) {
         echo "A similar food name exists. Please Try another Name.";
         exit();
     } else {
@@ -71,9 +90,3 @@ if (!empty($food_name)) {
         $conn->close();
     }
 }
-
-
-
-
-
-

@@ -1,55 +1,137 @@
+// Form submission logic
 const form = document.querySelector(".login form"),
-continueBtn = form.querySelector(".button"),
-errorText = form.querySelector(".errorContainer");
+    continueBtn = form.querySelector(".button"),
+    errorText = form.querySelector(".errorContainer");
 
-form.onsubmit = (e) => {
-    e.preventDefault();
-}
+form.onsubmit = (e) => e.preventDefault(); // Prevent default form submission
 
-continueBtn.onclick = () => {
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", "backend/admin_login3.php", true);
-    xhr.onload = () => {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                try {
-                    let data = JSON.parse(xhr.response);
-                    if (data.success) {
-                        location.href = "splashscreen.php";
-                    } else {
-                        errorText.style.display = "block";
-                        // errorText.textContent = data.message;
-                        alert("Error "+ data.message)
-                    }
-                } catch (e) {
-                    console.error("Error parsing JSON response:", e);
-                    errorText.style.display = "block";
-                    errorText.textContent = "An unexpected error occurred. Please try again later.";
-                }
-            } else {
-                console.error("Error: Server returned status", xhr.status);
-                errorText.style.display = "block";
-                errorText.textContent = "An error occurred while processing your request. Please try again later.";
-            }
+continueBtn.onclick = async () => {
+    const formData = new FormData(form);
+
+    try {
+        const response = await fetch("backend/admin_login3.php", {
+            method: "POST",
+            body: formData,
+        });
+
+        const data = await response.json();
+        if (response.ok && data.success) {
+            location.href = "splashscreen.php"; // Redirect on success
+        } else {
+            displayError(data.message);
         }
+    } catch (error) {
+        displayError("An error occurred while processing your request. Please try again later.");
     }
-    let formData = new FormData(form);
-    xhr.send(formData);
-}
+};
 
-const passwordInput = document.getElementById('password');
-const showPasswordCheckbox = document.getElementById('viewPassword');
+const displayError = (message) => {
+    errorText.style.display = "block";
+    errorText.textContent = message;
+};
 
-// Function to toggle password visibility
-function togglePasswordVisibility() {
-    if (showPasswordCheckbox.checked) {
-        // Display password in plain text
-        passwordInput.type = 'text';
-    } else {
-        // Encrypt password
-        passwordInput.type = 'password';
-    }
-}
+// Password visibility toggle
+const passwordInput = document.getElementById('password'),
+    showPasswordCheckbox = document.getElementById('viewPassword');
 
-// Add event listener to checkbox
-showPasswordCheckbox.addEventListener('change', togglePasswordVisibility);
+showPasswordCheckbox.addEventListener('change', () => {
+    passwordInput.type = showPasswordCheckbox.checked ? 'text' : 'password';
+});
+
+// Reusable modal toggle function
+const toggleModal = (modalId, display = "none") => {
+    const modal = document.getElementById(modalId);
+    modal.style.display = display;
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+    const resetPasswordBtn = document.getElementById("resetPasswordBtn"),
+        getSecretQuestionBtn = document.getElementById('getSecretQuestionBtn'),
+        modal1 = document.getElementById("passwordResetModal"),
+        modal2 = document.getElementById("getSecretQuestionModal"),
+        closeModalBtns = document.querySelectorAll(".close");
+
+    // Initialize modals as hidden
+    [modal1, modal2].forEach(modal => modal.style.display = "none");
+
+    // Toggle modals for reset password and secret question
+    resetPasswordBtn.onclick = (e) => {
+        e.preventDefault();
+        toggleModal("passwordResetModal", "flex");
+    };
+
+    getSecretQuestionBtn.onclick = (e) => {
+        e.preventDefault();
+        toggleModal("getSecretQuestionModal", "flex");
+    };
+
+    // Close modals when 'x' is clicked
+    closeModalBtns.forEach(closeBtn => {
+        closeBtn.onclick = () => closeBtn.closest(".modal").style.display = "none";
+    });
+
+    // Close modal when clicking outside of it
+    window.onclick = (e) => {
+        if (e.target == modal1) toggleModal("passwordResetModal");
+        if (e.target == modal2) toggleModal("getSecretQuestionModal");
+    };
+
+    // Reset Password Form Submission
+    const resetPasswordForm = document.getElementById("resetPasswordForm");
+
+    resetPasswordForm.onsubmit = async (e) => {
+        e.preventDefault();
+
+        const resetEmail = document.getElementById("resetEmail").value,
+            resetSecretAnswer = document.getElementById("resetSecretAnswer").value,
+            newPassword = document.getElementById("newPassword").value,
+            confirmPassword = document.getElementById("confirmPassword").value;
+
+        try {
+            const response = await fetch('backend/reset_password.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: resetEmail, password: newPassword, secret_answer: resetSecretAnswer, confirmPassword })
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                alert("Password reset successful!");
+                toggleModal("passwordResetModal");
+            } else {
+                alert(`Error resetting password: ${data.message}`);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert("An error occurred. Please try again.");
+        }
+    };
+
+    // Get Secret Question form
+    const getSecretQuestionForm = document.getElementById("getSecretQuestionForm");
+    getSecretQuestionForm.onsubmit = async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById("emailSecretQuestion").value,
+        password = document.getElementById("passwordSecretQuestion").value
+
+        try {
+            const response = await fetch('backend/secret_question.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email, password: password})
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                alert(`Your Secret Question is: " ${data.secret_question}`);
+                document.getElementById('displayQuestion').textContent = `Your Secret Question is: " ${data.secret_question}`;
+            } else {
+                alert(`Error fetching secret question: ${data.message}`);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert("An error occurred. Please try again.");
+        }
+    };
+});

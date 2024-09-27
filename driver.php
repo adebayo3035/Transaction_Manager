@@ -4,35 +4,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drivers</title>
+    <title>KaraKata Drivers</title>
+    <link rel="stylesheet" href="customer/css/view_orders.css">
+    <link rel="stylesheet" href="customer/css/checkout.css">
     <link rel="stylesheet" href="customer/css/cards.css">
+    <link rel="stylesheet" href="css/view_driver.css">
 </head>
 
 <body>
     <?php include('navbar.php'); ?>
-    <section class="container">
-        <div class="card_menu">
-            <ul class="card-menu">
-                <li> <a onclick="toggleModal('addNewDriverModal')">Add New Driver</a></li>
-                <li> <a href= "view_drivers.php">View Drivers Information</a></li>
-                
-            </ul>
-
+    <div class="container">
+        <h1>KaraKata Drivers</h1>
+        <!-- Separate row for "Add New Customer" button -->
+        <div id="customer-form">
+            <button onclick="toggleModal('addNewDriverModal')"><i class="fa fa-plus" aria-hidden="true"></i> Add New
+                Driver</button>
+        </div>
+        <div class="livesearch">
+            <input type="text" id="liveSearch" placeholder="Search for Order...">
+            <button type="submit">Search <i class="fa fa-search" aria-hidden="true"></i></button>
         </div>
 
-        <!--  DRIVERS SECTION -->
-        <div class="driver-container" id="driver-container">
-            <!-- driver info will be populated here -->
 
+    </div>
+
+    <table id="ordersTable" class="ordersTable">
+        <thead>
+            <tr>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>License Number</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Drivers will be dynamically inserted here -->
+        </tbody>
+
+    </table>
+    <div id="pagination" class="pagination"></div>
+
+
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Driver Information</h2>
+            <div id="driverPhoto" class="photo-container">
+
+            </div>
+            <table id="orderDetailsTable" class="ordersTable">
+                <tbody>
+                    <!-- Driver details will be automatically populated here -->
+                </tbody>
+            </table>
         </div>
+    </div>
 
-        <!-- ADD NEW CARD FORM -->
-    </section>
 
     <!-- Modal to add new Driver -->
     <div id="addNewDriverModal" class="modal">
         <div class="modal-content" id="card-form">
-            <span class="close">&times;</span>
+            <span class="close" id="closeaddNewDriverModal">&times;</span>
             <h2>Add New Driver</h2>
             <form id="addDriverForm">
                 <div class="form-input">
@@ -94,7 +127,7 @@
 
                 <div class="form-input">
                     <label for="add_secret_answer">Secret Answer:</label>
-                    <input type="password" id="add_secret_answer" name="add_secret_answer" required>
+                    <input type="text" id="add_secret_answer" name="add_secret_answer" required>
                 </div>
 
                 <div class="form-input">
@@ -102,41 +135,42 @@
                     <input type="file" id="add_photo" name="add_photo" accept="image/*" required
                         onchange="previewPhoto(event)">
                 </div>
-                
+                <div id="photo_container">
+                    <img id="photo_preview" src="#" alt="Photo Preview"
+                        style="display: none; max-width: 100%; height: auto;" />
+                </div>
+
                 <button type="submit">Add Driver</button>
             </form>
-            <div id="photo_container" style="margin-top: 10px;">
-                    <img id="photo_preview" src="#" alt="Photo Preview"
-                         />
-                </div>
+
             <div id="addDriverMessage"></div>
 
         </div>
-
     </div>
+
     <script src="scripts/driver.js"></script>
     <script>
         // function to handle Photo Upload
-    function previewPhoto(event) {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-    
-        reader.onload = function(e) {
-            const photoPreview = document.getElementById('photo_preview');
-            // photoPreview.src = e.target.result;
-            photoPreview.style.display = 'block';
-            photoPreview.style.maxWidth = '150px';
-            photoPreview.style.maxHeight = '100px';
-            photoPreview.style.alignSelf = 'center';
-            photoPreview.setAttribute('src', e.target.result);
-            // document.getElementById('photoContainer').style.display = 'block';
+        function previewPhoto(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                const photoPreview = document.getElementById('photo_preview');
+                // photoPreview.src = e.target.result;
+                photoPreview.style.display = 'block';
+                photoPreview.style.maxWidth = '150px';
+                photoPreview.style.maxHeight = '100px';
+                photoPreview.style.alignSelf = 'center';
+                photoPreview.setAttribute('src', e.target.result);
+                // document.getElementById('photoContainer').style.display = 'block';
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
         }
-    
-        if (file) {
-            reader.readAsDataURL(file);
-        }
-    }
-   
+
     </script>
 </body>
 
