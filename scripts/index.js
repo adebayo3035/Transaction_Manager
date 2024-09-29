@@ -1,29 +1,3 @@
-// Form submission logic
-const form = document.querySelector(".login form"),
-    continueBtn = form.querySelector(".button"),
-    errorText = form.querySelector(".errorContainer");
-
-form.onsubmit = (e) => e.preventDefault(); // Prevent default form submission
-
-continueBtn.onclick = async () => {
-    const formData = new FormData(form);
-
-    try {
-        const response = await fetch("backend/admin_login3.php", {
-            method: "POST",
-            body: formData,
-        });
-
-        const data = await response.json();
-        if (response.ok && data.success) {
-            location.href = "splashscreen.php"; // Redirect on success
-        } else {
-            displayError(data.message);
-        }
-    } catch (error) {
-        displayError("An error occurred while processing your request. Please try again later.");
-    }
-};
 
 const displayError = (message) => {
     errorText.style.display = "block";
@@ -113,13 +87,13 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
 
         const email = document.getElementById("emailSecretQuestion").value,
-        password = document.getElementById("passwordSecretQuestion").value
+            password = document.getElementById("passwordSecretQuestion").value
 
         try {
             const response = await fetch('backend/secret_question.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: email, password: password})
+                body: JSON.stringify({ email: email, password: password })
             });
 
             const data = await response.json();
@@ -134,4 +108,61 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("An error occurred. Please try again.");
         }
     };
+
+    // Login form submission
+    // Form submission logic
+    const loginForm = document.getElementById("loginForm");
+    const errorContainer = document.querySelector(".errorContainer");
+
+    // Event listener for form submission
+    loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault(); // Prevent default form submission
+
+        // Get values from input fields
+        const username = loginForm.querySelector('input[name="username"]').value;
+        const password = loginForm.querySelector('input[name="password"]').value;
+
+        // Basic validation
+        if (!username || !password) {
+            displayError("Please enter both username and password.");
+            return;
+        }
+
+        // Prepare data to send
+        const postData = {
+            username: username,
+            password: password
+        };
+
+        try {
+            // Send the data using fetch
+            const response = await fetch("backend/admin_login3.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json" // Send data as JSON
+                },
+                body: JSON.stringify(postData)
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                // Successful login, redirect the user
+                window.location.href = "splashscreen.php";
+            } else {
+                // Display error message from the server
+                displayError(data.message || "Login failed. Please try again.");
+            }
+        } catch (error) {
+            // Handle network or unexpected errors
+            displayError("An error occurred while processing your request. Please try again later.");
+        }
+    });
+
+    // Helper function to display error messages
+    function displayError(message) {
+        errorContainer.textContent = message;
+        errorContainer.style.display = "block"; // Show the error message container
+    }
+
 });

@@ -18,6 +18,7 @@
             <li><a href="#" id="reset-link">Reset Secret Question and Answer</a></li>
             <li><button id="block-account">Restrict/Block Account</button></li>
             <li><button id="unblock-account">Unblock/Remove Lien</button></li>
+            <li><button id="unlock-account">Unlock Account</button></li>
         </ul>
     </div>
 
@@ -127,6 +128,32 @@
             <p id="confirmationMessage2">Are you sure you want to proceed?</p>
             <button id="confirmButton2" class="confirmButton">Yes</button>
             <button id="cancelButton2" class="cancelButton">No</button>
+        </div>
+    </div>
+
+     <!-- Modal to Unlock Account -->
+     <div id="unlockModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Unlock Staff Account</h2>
+            <form id="unlockAccountForm" autocomplete="off">
+                <div class="input-box">
+                    <label for="staff_ID">Select an Account</label>
+                    <input type="text" id="staff_ID" name="staff_ID" placeholder ="Enter Phone Number, E-mail or Staff ID" required>
+                </div>
+
+                <input type="submit" class="button" id="unlockBtn" value="Submit">
+            </form>
+
+        </div>
+
+    </div>
+    <div id="confirmationModal3" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="confirmationMessage3">Are you sure you want to proceed?</p>
+            <button id="confirmButton3" class="confirmButton">Yes</button>
+            <button id="cancelButton3" class="cancelButton">No</button>
         </div>
     </div>
 

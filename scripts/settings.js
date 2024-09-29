@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const resetQuestionAnswerBtn = document.getElementById("reset-link");
     const restrictAccountBtn = document.getElementById('block-account');
     const unblockBtn = document.getElementById('unblock-account');
+    const unlockBtn = document.getElementById('unlock-account')
 
     resetQuestionAnswerBtn.onclick = (e) => {
         e.preventDefault();
@@ -44,6 +45,11 @@ document.addEventListener("DOMContentLoaded", () => {
     unblockBtn.onclick = (e) => {
         e.preventDefault();
         toggleModal("removeRestrictionModal", "flex");
+    };
+
+    unlockBtn.onclick = (e) => {
+        e.preventDefault();
+        toggleModal("unlockModal", "flex");
     };
 
     // fetch List of customers to Block or restrict
@@ -244,4 +250,48 @@ document.addEventListener("DOMContentLoaded", () => {
         confirmationModal2.style.display = "none";  // Close modal without submitting
     };
 
+    // Function to unlock an account
+    const unlockAccountForm = document.getElementById('unlockAccountForm');
+    const confirmationModal3 = document.getElementById("confirmationModal3");
+    const confirmButton3 = document.getElementById("confirmButton3");
+    const cancelButton3 = document.getElementById("cancelButton3");
+    let staff_ID;
+    unlockAccountForm.onsubmit = (e) => {
+        e.preventDefault();
+
+        // Get values from the form
+        staff_ID = document.getElementById("staff_ID").value;
+
+        // Show confirmation modal
+        confirmationModal3.style.display = "flex";
+    };
+    // Confirmation modal buttons
+    confirmButton3.onclick = async () => {
+        // Proceed with the request after confirmation
+        confirmationModal3.style.display = "none";  // Close the modal
+
+        try {
+            const response = await fetch('backend/unlock_account.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ staffID: staff_ID})
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                alert(`Account has been successfully Unlocked'}!`);
+                toggleModal("unlockModal");  // Assuming this closes the main form modal
+                location.reload();
+            } else {
+                alert(`Error Unlocking account: ${data.message}`);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert("An error occurred. Please try again.");
+        }
+    };
+
+    cancelButton3.onclick = () => {
+        confirmationModal3.style.display = "none";  // Close modal without submitting
+    };
 });

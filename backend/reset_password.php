@@ -27,6 +27,21 @@ if (isset($data['email'], $data['password'], $data['secret_answer'], $data['conf
         echo json_encode(['success' => false, 'message' => 'Please input a valid password.']);
         exit();
     }
+    $today = date('Y-m-d');
+
+    // Check if the user has exceeded the reset attempt limit for today
+    $stmtCheckAttempts = $conn->prepare("SELECT reset_attempts, last_attempt_date FROM admin_password_reset_attempts WHERE email = ?");
+    $stmtCheckAttempts->bind_param("s", $email);
+    $stmtCheckAttempts->execute();
+    $resultCheckAttempts = $stmtCheckAttempts->get_result();
+
+    if ($resultCheckAttempts->num_rows > 0) {
+        $rowAttempts = $resultCheckAttempts->fetch_assoc();
+        if ($rowAttempts['last_attempt_date'] == $today && $rowAttempts['reset_attempts'] >= 3) {
+            echo json_encode(['success' => false, 'message' => 'You have exceeded the reset attempts for today.']);
+            exit;
+        }
+    }
 
     // Step 1: Validate email
     $emailQuery = $conn->prepare("SELECT secret_answer, password FROM admin_tbl WHERE email = ?");

@@ -18,14 +18,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $today = date('Y-m-d');
 
     // Check if the user has exceeded the reset attempt limit for today
-    $stmtCheckAttempts = $conn->prepare("SELECT reset_attempts, last_attempt_date FROM driver_password_reset_attempts WHERE email = ?");
+    $stmtCheckAttempts = $conn->prepare("SELECT reset_attempts, last_attempt_date FROM driver_password_reset_attempts WHERE email = ? AND DATE(last_attempt_date) = CURDATE()");
     $stmtCheckAttempts->bind_param("s", $email);
     $stmtCheckAttempts->execute();
     $resultCheckAttempts = $stmtCheckAttempts->get_result();
 
     if ($resultCheckAttempts->num_rows > 0) {
         $rowAttempts = $resultCheckAttempts->fetch_assoc();
-        if ($rowAttempts['last_attempt_date'] == $today && $rowAttempts['reset_attempts'] >= 3) {
+        
+        if ($rowAttempts['reset_attempts'] >= 3) {
             echo json_encode(['success' => false, 'message' => 'You have exceeded the reset attempts for today.']);
             exit;
         }
@@ -40,9 +41,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         if ($row['secret_answer'] !== $hashedSecretAnswer) {
-            echo json_encode(['success' => false, 'message' => 'Customer Validation Failed.']);
+            echo json_encode(['success' => false, 'message' => 'Information Validation Unsuccessful.']);
             // Update or insert the reset attempt count logic here...
+            $stmt = $conn->prepare("SELECT * FROM driver_password_reset_attempts WHERE email = ? AND DATE(last_attempt_date) = CURDATE()");
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows == 0) {
+                // No reset attempt for today, insert new record
+                $attempt = 1;
+                $stmtInsert = $conn->prepare("INSERT INTO driver_password_reset_attempts (email, reset_attempts, last_attempt_date) VALUES (?, ?, NOW())");
+                $stmtInsert->bind_param("si", $email, $attempt);
+                $stmtInsert->execute();
+                $stmtInsert->close();
+            } else {
+                // Reset attempt exists for today, update the attempts count
+                $row = $result->fetch_assoc();
+                $reset_attempts = $row['reset_attempts'];
+                $new_attempt = $reset_attempts + 1;
+
+                $stmtResetAttempts = $conn->prepare("UPDATE driver_password_reset_attempts SET reset_attempts = ?, last_attempt_date = NOW() WHERE email = ? AND DATE(last_attempt_date) = CURDATE()");
+                $stmtResetAttempts->bind_param("is", $new_attempt, $email);
+                $stmtResetAttempts->execute();
+                $stmtResetAttempts->close();
+            }
+            $stmt->close();
             exit;
+
         } else {
             // Successful validation
             // Generate a unique token
@@ -58,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo json_encode(['success' => true, 'token' => $token]);
 
             // Reset the reset_attempts to 0 on successful validation
-            $stmtResetAttempts = $conn->prepare("UPDATE driver_password_reset_attempts SET reset_attempts = 0 WHERE email = ?");
+            $stmtResetAttempts = $conn->prepare("UPDATE driver_password_reset_attempts SET reset_attempts = 0, last_attempt_date = NOW() WHERE email = ? AND DATE(last_attempt_date) = CURDATE()");
             $stmtResetAttempts->bind_param("s", $email);
             $stmtResetAttempts->execute();
             $stmtResetAttempts->close();

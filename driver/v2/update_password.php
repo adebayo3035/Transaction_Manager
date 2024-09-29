@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 echo json_encode(['success' => true, 'message' => 'Password has been reset successfully.']);
 
                 // Delete the token after successful password reset
-                $stmtDeleteToken = $conn->prepare("DELETE FROM customer_password_reset_tokens WHERE email = ?");
+                $stmtDeleteToken = $conn->prepare("DELETE FROM driver_password_reset_tokens WHERE email = ?");
                 $stmtDeleteToken->bind_param("s", $email);
                 $stmtDeleteToken->execute();
                 $stmtDeleteToken->close();
