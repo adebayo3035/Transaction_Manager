@@ -111,6 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const firstDetail = details[0];
+        
 
         fragment.appendChild(createRow('Date Last Modified', firstDetail.updated_at));
         fragment.appendChild(createRow('Total Order', firstDetail.total_order));
@@ -118,7 +119,12 @@ document.addEventListener('DOMContentLoaded', () => {
         fragment.appendChild(createRow('Delivery Fee', firstDetail.delivery_fee));
         fragment.appendChild(createRow('Total Amount', firstDetail.total_amount));
         fragment.appendChild(createRow('Order Assigned To', `${firstDetail.assigned_admin_firstname} ${firstDetail.assigned_admin_lastname}`));
-        fragment.appendChild(createRow('Order Approved By', `${firstDetail.approver_firstname} ${firstDetail.approver_lastname}`));
+        if(firstDetail.delivery_status == 'Cancelled' && firstDetail.approver_firstname == null && firstDetail.approver_lastname == null){
+            fragment.appendChild(createRow('Order Approved By', `Customer Cancelled Order`));
+        }
+        else{
+            fragment.appendChild(createRow('Order Approved By', `${firstDetail.approver_firstname} ${firstDetail.approver_lastname}`));
+        }
         fragment.appendChild(createRow("Customer's Name", `${firstDetail.customer_firstname} ${firstDetail.customer_lastname}`));
         fragment.appendChild(createRow("Customer's Mobile Number", firstDetail.customer_phone_number));
         fragment.appendChild(createRow('Delivery Status', firstDetail.delivery_status));
@@ -126,10 +132,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (firstDetail.driver_firstname && firstDetail.driver_lastname) {
             fragment.appendChild(createRow("Driver's Name", `${firstDetail.driver_firstname} ${firstDetail.driver_lastname}`));
         }
+        if (firstDetail.delivery_status === "Cancelled") {
+            fragment.appendChild(createRow("Reason for Cancellation", `${firstDetail.cancellation_reason}`));
+        }
 
         orderDetailsTableBody.appendChild(fragment);
 
-        if (firstDetail.delivery_status === "Delivered" || firstDetail.delivery_status === "Canceled") {
+        if (firstDetail.delivery_status === "Delivered" || firstDetail.delivery_status === "Cancelled") {
             printButton.style.display = "block";
         }
     }
@@ -157,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fetch('backend/fetch_available_drivers.php')
             .then(response => response.json())
             .then(data => {
-                // driverSelect.innerHTML = ''; // Clear existing options
+                driverSelect.innerHTML = ''; // Clear existing options
                 if (data.success) {
                     data.drivers.forEach(driver => {
                         const option = document.createElement('option');
@@ -165,6 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         option.textContent = `${driver.driver_name} (" - "ID: ${driver.driver_id})`;
                         driverSelect.appendChild(option);
                     });
+                    
                 } else {
                     console.error('Failed to fetch drivers:', data.message);
                 }
@@ -193,6 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     alert('Order reassigned successfully');
                     reassignForm.style.display = 'none'; // Hide form after submission
                 } else {
+                    alert(data.message)
                     console.error('Failed to reassign order:', data.message);
                 }
             })
@@ -247,10 +258,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Close modal event
     document.querySelector('.modal .close').addEventListener('click', () => {
         orderModal.style.display = 'none'
+        reassignForm.style.display = 'none';
     });
     window.addEventListener('click', (event) => {
         if (event.target === orderModal || event.target === reassignForm) {
             orderModal.style.display = 'none';
+            reassignForm.style.display = 'none';
         }
     });
 

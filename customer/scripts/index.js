@@ -27,7 +27,7 @@ document.getElementById('login-form').addEventListener('submit', function (event
             console.error('Error:', error);
             const message = document.getElementById('message');
             message.style.color = 'red';
-            message.textContent = 'An error occurred. Please try again.';
+            message.textContent = 'An error occurred. Please try again.'.data.message;
         });
 });
 

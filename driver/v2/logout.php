@@ -2,11 +2,12 @@
 session_start();
 if (isset($_SESSION['driver_id'])) {
     include_once "config.php";
-    $logout_id = mysqli_real_escape_string($conn, $_GET['logout_id']);
+    // $logout_id = mysqli_real_escape_string($conn, $_GET['logout_id']);
+    $logout_id = $_SESSION['driver_id'];
     if (isset($logout_id)) {
         // Step 1: Retrieve the session_id using $logout_id
         $stmt = $conn->prepare("SELECT session_id FROM driver_active_sessions WHERE driver_id = ?");
-        $stmt->bind_param("s", $logout_id);
+        $stmt->bind_param("i", $logout_id);
         $stmt->execute();
         $stmt->bind_result($session_id);
         $stmt->fetch();

@@ -60,9 +60,19 @@ switch ($paymentMethod) {
         break;
 
     case 'bank_transfer':
+        // Define allowed banks and accounts
+        $allowedBanks = [
+            "providus",
+            "wema",
+        ];
         if ($bankName && $bankAccount) {
-            // Validate bank transfer and process the order
-            $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $paymentMethod, $conn);
+            // Check if the bank is allowed
+            if (!in_array($bankName, $allowedBanks)) {
+                $response['message'] = 'Unknown Bank Account';
+            } else {
+                // Validate bank transfer and process the order
+                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $paymentMethod, $conn);
+            }
         } else {
             $response['message'] = 'Missing bank transfer details';
         }
@@ -155,7 +165,7 @@ function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deli
 
             // Insert revenue data
             // revenue type id for Order Inflow
-            $revenue_type = 2; 
+            $revenue_type = 2;
             $stmt = $conn->prepare("INSERT INTO revenue (order_id, customer_id, total_amount, transaction_date, revenue_type_id) VALUES (?, ?, ?, NOW(), ?)");
             $stmt->bind_param("iidi", $orderId, $customerId, $totalAmount, $revenue_type);
             $stmt->execute();

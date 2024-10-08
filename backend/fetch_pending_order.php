@@ -11,9 +11,15 @@ if (!isset($_SESSION['unique_id'])) {
 $adminId = $_SESSION['unique_id'];
 $role = $_SESSION['role'];
 if($role == "Admin"){
-    $query = "SELECT order_id, order_date, total_amount, status FROM orders WHERE status = 'Pending' AND assigned_to = ? ORDER BY order_date DESC";
+    // Updated query to join the orders table with the admin_tbl
+    $query = "SELECT o.order_id, o.order_date, o.total_amount, o.status, a.firstname AS assigned_admin_firstname, a.lastname AS assigned_admin_lastname
+        FROM orders o
+        INNER JOIN admin_tbl a ON o.assigned_to = a.unique_id
+        WHERE o.status = 'Pending' AND o.assigned_to = ?
+        ORDER BY o.order_date DESC";
+
     $stmt = $conn->prepare($query);
-$stmt->bind_param("i", $adminId);
+    $stmt->bind_param("i", $adminId);
 }
 else if($role = "Super Admin"){
     $query = "SELECT 

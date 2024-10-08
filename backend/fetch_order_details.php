@@ -32,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     orders.delivery_pin,
     orders.delivery_status,
     orders.updated_at,
+    orders.cancellation_reason,
     driver.firstname AS driver_firstname, 
     driver.lastname AS driver_lastname,
     customers.firstname AS customer_firstname,

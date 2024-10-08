@@ -276,7 +276,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.getElementById('orderModal').style.display = 'none';
                     fetchDrivers(currentPage); // Refresh the table after update
                 } else {
+                    console.error('Failed to Update driver:', data.message)
                     alert('Failed to update driver: ' + data.message);
+                    
                 }
             })
             .catch(error => {
@@ -302,6 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         fetchDrivers(currentPage); // Refresh the driver list
                     } else {
                         console.error('Failed to delete driver:', data.message);
+                        alert('Failed to delete driver:', data.message)
                     }
                 })
                 .catch(error => {

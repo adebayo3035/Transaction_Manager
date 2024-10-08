@@ -27,23 +27,18 @@ h1 {
 .links-list {
     list-style: none;
     padding: 0;
-    /* border: 2px solid blue; */
-    /* display: flex;
-    justify-content: space-between; */
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-     grid-gap: 20px;
+    grid-gap: 20px;
+     
 }
-
 .links-list li {
     margin-bottom: 20px;
 }
 
-.links-list a, .links-list button {
-    /* display: block; */
+ .links-list button {
     padding: 15px;
     text-decoration: none;
-    background-color: #3498db;
     color: #fff;
     border-radius: 8px;
     transition: background-color 0.3s;
@@ -79,7 +74,7 @@ button#unblock{
     margin: 5% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 40%; /* Could be more or less, depending on screen size */
+    width: 60%; /* Could be more or less, depending on screen size */
     height: fit-content;
     border-radius: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

@@ -1,5 +1,5 @@
 <?php
-include_once "header.php"; ?>
+// include_once "header.php"; ?>
 
 <head>
     <link rel="stylesheet" href="../../css/style.css">
@@ -15,26 +15,25 @@ include_once "header.php"; ?>
     }
 
     h3#signInText {
-        color: #28a745;
+        color: #A020F0;
         font-weight: 700;
         text-align: center;
     }
     .container .login form #btnSubmit{
-        background-color: #28a745;
+        background-color: #A020F0;
         align-self: center;
         width: 100%
     }
     .container .login form #btnSubmit:hover{
         transition: background 0.3s, transform 0.3s;
-        color:#28a745;
+        color:#A020F0;
         background-color: #fff;
         font-weight: 800;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
-        border: 1px solid #28a745;
+        border: 1px solid #A020F0;
     }
     .container .login a{
-        color:#3B71CA;
+        color:#A020F0;
     }
     .container .login a:hover{
         color:#3457D5;

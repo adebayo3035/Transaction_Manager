@@ -3,6 +3,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
+    max-height: 100vh;
 }
 
 .nav-header {
@@ -18,8 +19,13 @@ main h1, h2{
     margin-top: 10px;
 }
 #customer-form {
-    margin-bottom: 20px;
-    margin-top: 20px;
+    margin: 20px auto;
+    display: flex;
+    justify-content: space-between;
+    width: 90%
+  }
+  #customer-form #manageRevenueBtn{
+    background-color: #A020F0;
   }
   #customer-form button{
     padding: 8px;
@@ -32,6 +38,7 @@ main h1, h2{
     outline: none;
     align-self: center;
   }
+ 
 
 .dashboard-stats {
     display: grid;
@@ -141,32 +148,21 @@ main h1, h2{
     cursor: pointer;
 }
 
+@media (max-width: 810px){
+    #customer-form {
+       flex-direction: column;
+        justify-content: space-between;
+    }
+    #customer-form button{
+        padding: 8px;
+        font-size: 16px;
+        margin: 10px;
+        width: 300px;
+      }
+}
 
 /* Media query for smaller screens */
-@media (max-width: 660px) {
-    .dashboard-charts {
-        grid-template-columns: 1fr;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .dashboard-charts canvas {
-        max-width: 100%;
-        width: 100%;
-        max-height: none;
-    }
-    main h1{
-        font-size: 16px;
-        color: blue;
-    }
-    #revenueTable th,
-#revenueTable td{
-    padding: 4px;
-    font-size: 11px;
-}
-}
-
-@media (max-width: 768px) {
+@media (max-width: 770px) {
 
     .navbar a:not(:first-child),
     .dropdown {
@@ -184,6 +180,57 @@ main h1, h2{
     
     main h1{
         font-size: 20px;
+    }
+    #customer-form {
+        display: flex;
+        justify-content: center;
+    }
+    #revenurTable{
+        overflow-x: scroll;
+    }
+    #revenueTable th, 
+    #revenueTable td {
+        font-size: 12px;
+        padding: 8px;
+    }
+    .stat-card{
+        padding: 10px;
+        margin: 0 5px;
+    }
+    .stat-card h2 {
+       font-size: 15px;
+    }
+    .stat-card p{
+        font-size: 12px;
+     }
+}
+@media (max-width: 660px) {
+    .dashboard-charts {
+        grid-template-columns: 1fr;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .dashboard-charts canvas {
+        max-width: 70%;
+        width: 50%;
+        max-height: none;
+    }
+    main h1{
+        font-size: 16px;
+        color: blue;
+    }
+    #revenueTable th,
+#revenueTable td{
+    padding: 4px;
+    font-size: 11px;
+}
+}
+@media (max-width: 480px) {
+    #revenueTable th, 
+    #revenueTable td {
+        font-size: 12px;
+        padding: 6px;
     }
 }
 

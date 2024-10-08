@@ -219,11 +219,17 @@ document.addEventListener('DOMContentLoaded', ()=>{
 function addNewfood(form) {
     form.addEventListener('submit', function (event){
         event.preventDefault();
-        const formData = new FormData(this)
+        const foodData = {
+            food_name: document.getElementById('add_food_name').value,
+            food_price: document.getElementById('add_food_price').value,
+            food_description: document.getElementById('add_food_description').value,
+            food_quantity: document.getElementById('add_food_quantity').value,
+            available_status: document.getElementById('available').value
+        };
         const messageDiv = document.getElementById('addFoodMessage');
         fetch('backend/add_food.php', {
             method: 'POST',
-            body: formData,
+            body: JSON.stringify(foodData),
         })
         .then(response => response.json())
         .then(data =>{

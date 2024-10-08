@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <?php include "../customerNavBar.php"; ?>
+<?php include ('customer_navbar.php'); ?>
     <div class="profile-container">
         <div class="profile-header">
             <img id="profile-picture" src="../../backend/customer_photos/default.jpg" alt="Customer Profile Picture">

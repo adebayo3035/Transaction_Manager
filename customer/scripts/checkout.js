@@ -6,14 +6,41 @@ document.addEventListener('DOMContentLoaded', () => {
     const bankTransferDetails = document.getElementById('bank_transfer_details');
     const bankAccountInput = document.getElementById('bank_account');
     const bankNameSelect = document.getElementById('bank_name');
-    const orderItems = JSON.parse(sessionStorage.getItem('order_items'));
     const printReceiptBtn = document.getElementById('receipt-btn');
     const placeOrderBtn = document.getElementById('place-orderBtn')
+
+    // Get Order Items stored in the session
+    const orderItems = JSON.parse(sessionStorage.getItem('order_items') || '[]');
+    const totalOrder = parseFloat(sessionStorage.getItem('total_amount') || 0);
+    const serviceFee = parseFloat(sessionStorage.getItem('service_fee') || 0);
+    const deliveryFee = parseFloat(sessionStorage.getItem('delivery_fee') || 0);
+
+    const totalAmount = totalOrder + serviceFee + deliveryFee;
 
     if (!orderItems || orderItems.length === 0) {
         location.replace('../v1/dashboard.php');
         return;
     }
+
+    // Populate the checkout page order table
+    const orderTableBody = document.getElementById('orderSummaryTable').querySelector('tbody');
+    orderItems.forEach((item, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+             <td>${index + 1}</td>
+             <td>${item.food_name}</td>
+             <td>${item.quantity}</td>
+             <td>N ${item.price_per_unit.toFixed(2)}</td>
+             <td class="total-price">N ${item.total_price.toFixed(2)}</td>
+         `;
+        orderTableBody.appendChild(row);
+    });
+
+    // Populate the total amounts on the checkout page
+    document.getElementById('total-order').textContent = `N ${totalOrder.toFixed(2)}`;
+    document.getElementById('service-fee').textContent = `N ${serviceFee.toFixed(2)}`;
+    document.getElementById('delivery-fee').textContent = `N ${deliveryFee.toFixed(2)}`;
+    document.getElementById('total-fee').textContent = `N ${totalAmount.toFixed(2)}`;
 
     const clearInputFields = (...fields) => {
         fields.forEach(fieldId => {
@@ -58,12 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     checkoutForm.addEventListener('submit', (event) => {
         event.preventDefault();
-
-        const totalOrder = parseFloat(sessionStorage.getItem('total_amount'));
-        const serviceFee = parseFloat(sessionStorage.getItem('service_fee'));
-        const deliveryFee = parseFloat(sessionStorage.getItem('delivery_fee'));
-        const totalAmount = totalOrder + serviceFee + deliveryFee;
-
         const selectedPaymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
 
         let paymentDetails = {

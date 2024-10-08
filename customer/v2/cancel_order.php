@@ -88,7 +88,7 @@ if (isset($data['order_id']) && isset($data['status'])) {
             $stmt->close();
 
             // Update the delivery_status to 'Cancelled'
-            $cancellationReason = 'Customer Cancelled Order';
+            $cancellationReason = 'Customer Cancelled Order before Delivery';
             $updateDeliveryStatusQuery = "UPDATE orders SET delivery_status = ?, cancellation_reason = ?, updated_at = NOW(), approved_by = ? WHERE order_id = ?";
             $stmt = $conn->prepare($updateDeliveryStatusQuery);
             $stmt->bind_param("ssii", $status, $cancellationReason, $customer_id, $order_id);
@@ -123,7 +123,7 @@ if (isset($data['order_id']) && isset($data['status'])) {
 
         // Commit the transaction
         $conn->commit();
-        echo json_encode(['success' => true, 'message' => 'Your Order has been successfully Canceled.']);
+        echo json_encode(['success' => true, 'message' => 'Your Order has been successfully Cancelled.']);
 
     } catch (Exception $e) {
         // Rollback the transaction if an error occurred

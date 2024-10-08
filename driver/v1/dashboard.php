@@ -28,8 +28,7 @@
 <body>
     <div class="dashboard">
         <?php
-        include('../driverNavBar.php');
-
+        include('driver_navbar.php');
         ?>
 
         <div class="order-form-container">
@@ -40,44 +39,11 @@
                 <div class="form-input">
                     <label for="food-name">Select Order:</label>
                     <select name="order-id" id="order-id" class="group_name" placeholder="Select Order">
-                        <?php
-                        include '../../backend/config.php';
-                        // Query to retrieve data from the orders table where delivery_status is 'Assigned' or 'In Transit'
-                        $driver_id = $_SESSION['driver_id'];
-                        $statuses = ["Assigned", "In Transit"];
-                        $placeholders = implode(',', array_fill(0, count($statuses), '?'));
-                        $stmt = $conn->prepare("SELECT * FROM orders WHERE driver_id = ? AND delivery_status IN ($placeholders)");
-
-                        // Bind parameters dynamically
-                        $params = array_merge([$driver_id], $statuses);
-                        $types = str_repeat('s', count($params));
-                        $stmt->bind_param($types, ...$params);
-
-                        $stmt->execute();
-
-                        // Bind the result variables
-                        $result = $stmt->get_result();
-
-                        // Fetch the results
-                        if ($result->num_rows > 0) {
-                            echo '<option value="">Select Order</option>';
-                            while ($row = $result->fetch_assoc()) {
-                                // Store delivery_status as a data attribute in each option
-                                echo '<option value="' . $row['order_id'] . '" data-status="' . $row['delivery_status'] . '">'
-                                    . $row['order_id'] . " - " . $row['order_date'] . " - " . $row['delivery_status']
-                                    . '</option>';
-                            }
-                        } else {
-                            echo '<option value = "">No Orders Available</option>';
-
-                        }
-
-                        // Close the database connection
-                        mysqli_close($conn);
-                        ?>
+                        <option value="">-- Select Order to Update--</option>
                     </select>
 
                     <input type="text" name="current-status" id="current-status" hidden>
+                    <input type="text" name="customer-id" id="customer-id" hidden>
 
                 </div>
                 <div class="form-input" id="new-status">

@@ -52,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let newPasswordInfo = {
             email: document.getElementById('email').value,
             new_password: newPassword,
+            confirm_password: confirmPassword,
             token: resetToken // Include the token in the password reset request
         };
 

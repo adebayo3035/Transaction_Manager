@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Get references to the select and input elements
     var selectElement = document.getElementById('order-id');
     var inputElement = document.getElementById('current-status');
+    const customerNumber = document.getElementById('customer-id');
     const deliveryAuth = document.getElementById('delivery_auth');
     const orderStatus = document.getElementById('order-status');
     const newStatus = document.getElementById('new-status');
@@ -24,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
         inputElement.value = deliveryStatus;
 
         // Toggle visibility of elements based on the selected option value
-        var isOptionSelected = selectElement.value !== "";
+        let isOptionSelected = selectElement.value !== "";
         newStatus.style.display = isOptionSelected ? "flex" : "none";
         deliveryAuth.style.display = "none";
         updateDeliveryStatus.style.display = "none"
@@ -54,12 +55,14 @@ orderStatus.addEventListener('change', function () {
         const orderID = document.getElementById('order-id').value;
         const orderStatus = document.getElementById('order-status').value;
         const currentStatus = document.getElementById('current-status').value;
+        const customerID = document.getElementById('customer-id').value;
         const deliveryPin = document.getElementById('delivery_pin').value;
         const cancelReason = document.getElementById('cancelReason').value;
         const orderData = {
             id: orderID,
             orderStatus: orderStatus,
             currentStatus: currentStatus,
+            customerID: customerID,
             deliveryPin: deliveryPin,
             cancelReason : cancelReason
         };

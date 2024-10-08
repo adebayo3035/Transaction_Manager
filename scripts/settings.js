@@ -255,12 +255,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const confirmationModal3 = document.getElementById("confirmationModal3");
     const confirmButton3 = document.getElementById("confirmButton3");
     const cancelButton3 = document.getElementById("cancelButton3");
-    let staff_ID;
+    let userID;
     unlockAccountForm.onsubmit = (e) => {
         e.preventDefault();
 
         // Get values from the form
-        staff_ID = document.getElementById("staff_ID").value;
+        userID = document.getElementById("userID").value;
+        accountType = document.getElementById('accountType').value;
 
         // Show confirmation modal
         confirmationModal3.style.display = "flex";
@@ -274,7 +275,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const response = await fetch('backend/unlock_account.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ staffID: staff_ID})
+                body: JSON.stringify({ userID: userID, accountType: accountType})
             });
 
             const data = await response.json();

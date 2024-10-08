@@ -8,59 +8,69 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $input = json_decode(file_get_contents('php://input'), true);
 
     // Retrieve the inputs (email/phone and password)
-    $emailOrPhone = $input['email'] ?? null;
+    $email = $input['email'] ?? null;
     $password = $input['password'] ?? null;
 
     // Validate input fields
-    if (!$emailOrPhone || !$password) {
-        echo json_encode(['success' => false, 'message' => 'Email/Phone and password are required']);
+    if (!$email || !$password) {
+        echo json_encode(['success' => false, 'message' => 'Email and password are required']);
         exit();
     }
 
-    try {
-        // Prepare SQL query to check either email or phone
-        $stmt = $conn->prepare("SELECT secret_question, password FROM admin_tbl WHERE (email = ? OR phone = ?) LIMIT 1");
-        $stmt->bind_param('ss', $emailOrPhone, $emailOrPhone);
-        $stmt->execute();
-        $result = $stmt->get_result();
+    // Define maximum attempts and lockout duration (in minutes)
+    $max_attempts = 3;
+    $lockout_duration = 15; // in minutes
 
-        // Check if user exists
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $hashedPassword = $row['password'];
+    // Check if the user exists
+    $stmt = $conn->prepare("SELECT unique_id, secret_question, password FROM admin_tbl WHERE email = ? LIMIT 1");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-            // Verify the password
-            if (md5($password) == $hashedPassword) { // Adjust if you're using another hashing algorithm
-                // If password matches, return the secret question
-                echo json_encode([
-                    'success' => true,
-                    'secret_question' => $row['secret_question']
-                ]);
-            } else {
-                echo json_encode([
-                    'success' => false,
-                    'message' => 'Invalid password. Please Try Again'
-                ]);
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $unique_id = $row['unique_id'];
+        $hashedPassword = $row['password'];
+        $secret_question = $row['secret_question'];
+
+        // Check if the account is locked
+        $stmtCheckLock = $conn->prepare("SELECT attempts, locked_until FROM admin_login_attempts WHERE unique_id = ? LIMIT 1");
+        $stmtCheckLock->bind_param('s', $unique_id);
+        $stmtCheckLock->execute();
+        $resultCheckLock = $stmtCheckLock->get_result();
+
+        if ($resultCheckLock->num_rows > 0) {
+            $rowLock = $resultCheckLock->fetch_assoc();
+            $attempts = $rowLock['attempts'];
+            $locked_until = new DateTime($rowLock['locked_until']);
+            $current_time = new DateTime();
+
+            // Check if the account is currently locked
+            if ($attempts >= $max_attempts && $current_time < $locked_until) {
+                $time_remaining = $locked_until->diff($current_time)->format('%i minutes %s seconds');
+                echo json_encode(['success' => false, 'message' => "Your account is locked. Please try again in $time_remaining."]);
+                exit();
             }
-        } else {
-            echo json_encode([
-                'success' => false,
-                'message' => 'User Authentication Failed'
-            ]);
         }
-    } catch (Exception $e) {
-        echo json_encode([
-            'success' => false,
-            'message' => 'Error fetching secret question: ' . $e->getMessage()
-        ]);
+
+        // Verify the password
+        if (md5($password) == $hashedPassword) { // Adjust hashing algorithm if needed
+            // Return the secret question since the account is not locked and the password is correct
+            echo json_encode([
+                'success' => true,
+                'secret_question' => $secret_question
+            ]);
+        } else {
+            // Password is incorrect
+            echo json_encode(['success' => false, 'message' => 'Invalid password. Please try again.']);
+        }
+    } else {
+        // User not found
+        echo json_encode(['success' => false, 'message' => 'User not found']);
     }
 } else {
-    echo json_encode([
-        'success' => false,
-        'message' => 'Invalid request method'
-    ]);
+    echo json_encode(['success' => false, 'message' => 'Invalid request method']);
 }
 
 // Close database connection
 $conn->close();
-

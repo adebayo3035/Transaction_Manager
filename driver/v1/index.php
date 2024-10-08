@@ -1,6 +1,3 @@
-<?php
-include_once "header.php"; ?>
-
 <head>
     <link rel="stylesheet" href="../../css/style.css">
 </head>

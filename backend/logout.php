@@ -36,7 +36,7 @@ if (isset($_SESSION['unique_id'])) {
                 session_destroy();
 
                 // Return a success response
-                echo json_encode(['success' => true]);
+                echo json_encode(['success' => true, "message" => "You have been successfully logged out"]);
                 exit();
             } else {
                 echo json_encode(['success' => false, 'error' => 'Failed to retrieve session ID for the provided logout ID.']);

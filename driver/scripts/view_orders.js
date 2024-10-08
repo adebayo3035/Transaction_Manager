@@ -135,22 +135,26 @@ document.addEventListener('DOMContentLoaded', () => {
         paginationContainer.appendChild(fragment);
     }
 
-    // Debounced search filtering
-    let searchTimeout;
-    liveSearchInput.addEventListener('input', () => {
-        clearTimeout(searchTimeout);
-        searchTimeout = setTimeout(filterTable, 300);
-    });
+    document.getElementById("liveSearch").addEventListener("input", filterTable);
 
     function filterTable() {
-        const input = liveSearchInput.value.toLowerCase();
-        const rows = ordersTableBody.getElementsByTagName("tr");
+        var input = document.getElementById("liveSearch").value.toLowerCase();
+        var rows = document.getElementById("orderSummaryTable").getElementsByTagName("tr");
 
-        Array.from(rows).forEach(row => {
-            const cells = row.getElementsByTagName("td");
-            const found = Array.from(cells).some(cell => cell.textContent.toLowerCase().includes(input));
-            row.style.display = found ? "" : "none";
-        });
+        for (var i = 1; i < rows.length; i++) {
+            var cells = rows[i].getElementsByTagName("td");
+            var found = false;
+            for (var j = 0; j < cells.length; j++) {
+                if (cells[j]) {
+                    var cellText = cells[j].textContent.toLowerCase();
+                    if (cellText.indexOf(input) > -1) {
+                        found = true;
+                        break;
+                    }
+                }
+            }
+            rows[i].style.display = found ? "" : "none";
+        }
     }
 
     // Close modal event

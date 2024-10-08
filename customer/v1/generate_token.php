@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <?php include ('../customerNavBar.php'); ?>
+<?php include ('customer_navbar.php'); ?>
     <div class="token-container">
         <h2> KaraKata e-Token</h2>
         <span class="header"> Click on the "Generate Token" button to get a One Time password to complete transactions securely.</span>

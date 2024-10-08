@@ -47,6 +47,13 @@
             background-color: #0275d8;
             cursor: pointer;
         }
+        .actionBtn{
+            display: flex;
+            justify-content: space-around;
+        }
+        .actionBtn button:hover{
+            background-color: #000; 
+        }
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -104,8 +111,12 @@
                 </tbody>
 
             </table>
+            <div class="actionBtn">
             <button type="button" id="receipt-btn">Print Receipt</button>
             <button type="button" id="reassign-order">Reassign Order</button>
+
+            </div>
+            
 
             <!-- <button type="button" id="receipt-btn" style="display: none">Print Receipt</button> -->
             <!-- Reassign Order Form -->

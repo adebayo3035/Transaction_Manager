@@ -4,6 +4,22 @@ document.addEventListener('DOMContentLoaded', function () {
     const orderSummaryTable = document.getElementById('orderSummaryTable').querySelector('tbody');
     let orderItems = [];
 
+    // Fetch available food items from the backend API
+    fetch('../v2/get_food.php')
+        .then(response => response.json())
+        .then(data => {
+            const foodSelect = document.getElementById('food-name');
+            
+            data.forEach(item => {
+                let option = document.createElement('option');
+                option.value = item.food_id;
+                option.setAttribute('data-price', item.food_price);
+                option.text = item.food_name;
+                foodSelect.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error fetching food items:', error));
+
     addFoodButton.addEventListener('click', function () {
         const foodSelect = document.getElementById('food-name');
         const foodId = foodSelect.value;
@@ -86,7 +102,6 @@ document.addEventListener('DOMContentLoaded', function () {
             alert('Your cart is empty. Please add items to your cart before proceeding to checkout.');
             return; // Stop further execution
         }
-
         // Validate quantities before sending the request
         fetch('../v2/validate_quantities.php', {
             method: 'POST',
@@ -102,41 +117,28 @@ document.addEventListener('DOMContentLoaded', function () {
                     return;
                 }
 
-                // Calculate the total amount
-                let totalAmount = orderItems.reduce((sum, item) => sum + item.total_price, 0);
-                let serviceFee = 0.05 * totalAmount; // 5% service fee
-                let deliveryFee = 0.02 * totalAmount; // Fixed delivery fee
 
-                // Send the order details and total amount to the server for session storage
-                fetch('../v2/save_order_to_session.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ order_items: orderItems, total_amount: totalAmount.toFixed(2), service_fee: serviceFee, delivery_fee: deliveryFee })
-                })
-                    .then(response => response.json())
-                    .then(data => {
+                // Save the order details in sessionStorage
+                sessionStorage.setItem('order_items', JSON.stringify(orderItems));
 
-                        if (data.success) {
+                // Store total amount
+                const totalAmount = orderItems.reduce((sum, item) => sum + item.total_price, 0);
+                sessionStorage.setItem('total_amount', totalAmount.toFixed(2));
 
-                            // Redirect to checkout.php
-                            window.location.href = '../v1/checkout.php';
-                        } else {
-                            alert('Failed to save order details.');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        document.getElementById('message').textContent = 'An error occurred. Please try again.';
-                    });
+                // adding service and delivery fees 
+                let serviceFee = 0.06 * totalAmount; // 6% service fee
+                let deliveryFee = 0.10 * totalAmount; // 10% delivery fee
+                sessionStorage.setItem('service_fee', serviceFee.toFixed(2));
+                sessionStorage.setItem('delivery_fee', deliveryFee.toFixed(2));
+
+                // Redirect to checkout page
+                window.location.href = '../v1/checkout.php';
             })
             .catch(error => {
                 console.error('Error:', error);
                 document.getElementById('message').textContent = 'An error occurred. Please try again.';
             });
     });
-
 
     function updateTotalAmount() {
         const totalAmountElement = document.getElementById('totalAmount');

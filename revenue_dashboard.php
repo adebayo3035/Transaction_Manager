@@ -12,25 +12,28 @@
 
 <body>
     <header class="nav-header">
-        <?php include ('navbar.php'); ?>
+        <?php include('navbar.php'); ?>
     </header>
 
 
     <main>
-    <?php include('dashboard_navbar.php'); ?>
+        <?php include('dashboard_navbar.php'); ?>
         <h1>Revenue Dashboard</h1>
 
         <!-- Separate row for "Add New Customer" button -->
-    <div id="customer-form">
-      <button onclick="openModal()"><i class="fa fa-plus" aria-hidden="true" id="createRevenueBtn"></i> Create New Revenue Type</button>
-    </div>
+        <div id="customer-form">
+            <button onclick="openModal()"><i class="fa fa-plus" aria-hidden="true" id="createRevenueBtn"></i> Create New
+                Revenue Type</button>
+            <button onclick="openModal2('revenue_type.php')" id="manageRevenueBtn"><i class="fa fa-eye" aria-hidden="true"
+                    id="createRevenueBtn"></i> Manage Revenue Type</button>
+        </div>
 
-    <!-- Modal for creating new revenue type -->
-    <div id="revenueTypeModal" class="modal">
+        <!-- Modal for creating new revenue type -->
+        <div id="revenueTypeModal" class="modal">
             <div class="modal-content">
                 <span class="close" onclick="closeModal()">&times;</span>
                 <h2>Create New Revenue Type</h2>
-                <form id="newRevenueTypeForm" action="backend/create_revenue_type.php" method="POST">
+                <form id="newRevenueTypeForm">
                     <label for="revenue_type_name">Revenue Type Name:</label>
                     <input type="text" id="revenue_type_name" name="revenue_type_name" required>
 
@@ -41,7 +44,27 @@
                 </form>
             </div>
         </div>
-        
+
+        <!-- Modal for creating new revenue type -->
+        <div id="manageRevenueModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2>Manage Revenue Type</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Revenue ID</th>
+                            <th> Revenue Name</th>
+                            <th> Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Revenue Types will be populated Here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
         <div class="dashboard-charts">
             <canvas id="revenuePieChart"></canvas>
             <canvas id="revenueLineChart"></canvas>

@@ -10,60 +10,10 @@
 </head>
 
 <body>
-    <?php include('../customerNavBar.php'); ?>
-
-    <script>
-
-        document.addEventListener('DOMContentLoaded', function () {
-            // Store the PHP session data into sessionStorage
-            sessionStorage.setItem('order_items', JSON.stringify(<?php echo json_encode($_SESSION['order_items'] ?? []); ?>));
-            sessionStorage.setItem('total_amount', "<?php echo $_SESSION['total_amount'] ?? 0; ?>");
-            sessionStorage.setItem('service_fee', "<?php echo $_SESSION['service_fee'] ?? 0; ?>");
-            sessionStorage.setItem('delivery_fee', "<?php echo $_SESSION['delivery_fee'] ?? 0; ?>");
-
-            // Clear session data after it has been stored in sessionStorage
-            <?php
-            $_SESSION['order_items'] = [];
-            $_SESSION['total_amount'] = 0;
-            $_SESSION['service_fee'] = 0;
-            $_SESSION['delivery_fee'] = 0;
-            ?>
-
-            // Retrieve order details from sessionStorage
-            const orderItems = JSON.parse(sessionStorage.getItem('order_items') || '[]');
-            const totalAmount = parseFloat(sessionStorage.getItem('total_amount') || 0);
-            const serviceFee = parseFloat(sessionStorage.getItem('service_fee') || 0);
-            const deliveryFee = parseFloat(sessionStorage.getItem('delivery_fee') || 0);
-
-            const totalFee = totalAmount + serviceFee + deliveryFee;
-
-            // Populate the checkout page
-            const orderTableBody = document.getElementById('orderSummaryTable').querySelector('tbody');
-            orderItems.forEach((item, index) => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${item.food_name}</td>
-            <td>${item.quantity}</td>
-            <td>N ${item.price_per_unit.toFixed(2)}</td>
-            <td class="total-price">N ${item.total_price.toFixed(2)}</td>
-        `;
-                orderTableBody.appendChild(row);
-            });
-
-            // Populate the checkout page
-            document.getElementById('total-order').textContent = `N ${totalAmount.toFixed(2)}`;
-            document.getElementById('service-fee').textContent = `N ${serviceFee.toFixed(2)}`;
-            document.getElementById('delivery-fee').textContent = `N ${deliveryFee.toFixed(2)}`;
-            document.getElementById('total-fee').textContent = `N ${totalFee.toFixed(2)}`;
-        });
-    </script>
-
-
+<?php include('customer_navbar.php'); ?>
 
     <div class="checkout-container">
         <h1>Order Checkout</h1>
-
 
         <!-- Order Summary -->
         <div class="order-summary">

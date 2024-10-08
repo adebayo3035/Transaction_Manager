@@ -14,7 +14,7 @@ $cvv = isset($_POST['cvv']) ? htmlspecialchars($_POST['cvv']) : '';
 </head>
 
 <body>
-    <?php include ('../customerNavBar.php'); ?>
+    <?php include ('customer_navbar.php'); ?>
 
     <div class="add-funds-container">
         <h2>Add Funds to Wallet</h2>

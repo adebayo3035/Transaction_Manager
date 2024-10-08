@@ -83,9 +83,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 
 
                 // Reset block_id
-                $block_id = 0;
-                $stmtUnblock = $conn->prepare("UPDATE admin_tbl SET block_id = ? WHERE unique_id = ?");
-                $stmtUnblock->bind_param("ii", $block_id, $unique_id);
+                // $block_id = 0;
+                // $stmtUnblock = $conn->prepare("UPDATE admin_tbl SET block_id = ? WHERE unique_id = ?");
+                // $stmtUnblock->bind_param("ii", $block_id, $unique_id);
 
                 // Update admin_lock_history table
                 $status = 'unlocked'; // New status to indicate the account is unlocked
@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 
                 $stmtUnlockHistory = $conn->prepare("UPDATE admin_lock_history SET status = ?, unlocked_by = ?, unlock_method = ?, unlocked_at = NOW() WHERE unique_id = ? AND status = 'locked'");
                 $stmtUnlockHistory->bind_param("sisi", $status, $adminID, $unlock_method, $unique_id);
-                $stmtUnblock->execute();
+                // $stmtUnblock->execute();
                 $stmtResetAttempts->execute();
                 $stmtUnlockHistory->execute();
 
@@ -185,10 +185,10 @@ function handleFailedLogin($conn, $unique_id, $max_attempts, $lockout_duration)
                 $stmtLock->bind_param("isi", $attemptss, $lock_period, $unique_id);
                 if ($stmtLock->execute()) {
                     // Block the account in the admin table
-                    $block_id = 1;
-                    $stmtBlock = $conn->prepare("UPDATE admin_tbl SET block_id = ? WHERE unique_id = ?");
-                    $stmtBlock->bind_param("ii", $block_id, $unique_id);
-                    $stmtBlock->execute();
+                    // $block_id = 1;
+                    // $stmtBlock = $conn->prepare("UPDATE admin_tbl SET block_id = ? WHERE unique_id = ?");
+                    // $stmtBlock->bind_param("ii", $block_id, $unique_id);
+                    // $stmtBlock->execute();
 
                     // Inserrt into admin lock history table
 

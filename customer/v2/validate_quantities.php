@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->bind_result($available_quantity, $food_name);
         $stmt->fetch();
         $stmt->close();
-        $available_food = round($available_quantity/4);
+        $available_food = round($available_quantity/1.5);
         if ($quantity > $available_food) {
             echo json_encode(["success" => false, "message" => "The requested quantity for $food_name is not available. Available quantity is : $available_food"]);
             exit();

@@ -8,8 +8,8 @@ if (!isset($_SESSION['driver_id'])) {
 }
 
 $driverId = $_SESSION['driver_id'];
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+$page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+$limit = isset($_GET['limit']) ? (int) $_GET['limit'] : 10;
 $offset = ($page - 1) * $limit;
 
 // Fetch total count of orders for the customer
@@ -35,6 +35,22 @@ while ($row = $result->fetch_assoc()) {
     $orders[] = $row;
 }
 
+$statuses = ["Assigned", "In Transit"];
+$placeholders = implode(',', array_fill(0, count($statuses), '?'));
+$stmt = $conn->prepare("SELECT * FROM orders WHERE driver_id = ? AND delivery_status IN ($placeholders)");
+
+// Bind parameters dynamically
+$params = array_merge([$driverId], $statuses);
+$types = str_repeat('s', count($params));
+$stmt->bind_param($types, ...$params);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$pending_orders = [];
+while ($row2 = $result->fetch_assoc()) {
+    $pending_orders[] = $row2;
+}
+
 $stmt->close();
 $conn->close();
 
@@ -43,7 +59,8 @@ echo json_encode([
     "orders" => $orders,
     "total" => $totalOrders,
     "page" => $page,
-    "limit" => $limit
+    "limit" => $limit,
+    "pending_orders" => $pending_orders
 ]);
 
 

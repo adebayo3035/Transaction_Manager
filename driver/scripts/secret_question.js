@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Display success message
                 alert("Your Secret Question is: " + data.secret_question);
                 console.log("Your Secret Question is: " + data.secret_question);
+                refreshPage();
             } else {
                 console.error('Unable to fetch Secret Question:', data.message);
                 alert('Unable to fetch Secret Question: ' + data.message); // Alert failure message
@@ -45,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('An error occurred:', error);
             alert('An error occurred while fetching the secret question.');
         }
-        refreshPage();
+       
     });
     
    

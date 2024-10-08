@@ -1,8 +1,17 @@
 <?php
 include 'config.php';
 session_start();
-
 header('Content-Type: application/json');
+$role = $_SESSION['role'];
+if(!isset($_SESSION['unique_id'])){
+    echo json_encode(["success" => false, "message" => "Access Denied! Kindly login first."]);
+    exit();
+}
+
+if($role !== "Super Admin"){
+    echo json_encode(["success" => false, "message" => "Access Denied! Permission not granted."]);
+    exit();
+}
 
 // Get the POST data
 $data = json_decode(file_get_contents("php://input"), true);

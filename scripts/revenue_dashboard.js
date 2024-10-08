@@ -168,7 +168,9 @@ function createDoughnutChart(data) {
 function openModal() {
     document.getElementById('revenueTypeModal').style.display = 'block';
 }
-
+function openModal2(url) {
+    location.href = url;
+}
 function closeModal() {
     document.getElementById('revenueTypeModal').style.display = 'none';
 }

@@ -38,7 +38,7 @@
 </head>
 
 <body>
-<?php include ('../customerNavBar.php'); ?>
+<?php include ('customer_navbar.php'); ?>
 
   <section class="hero">
     <div class="hero-content">

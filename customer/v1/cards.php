@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <?php include('../customerNavBar.php'); ?>
+<?php include ('customer_navbar.php'); ?>
     <section class="container">
         <div class="card_menu">
             <ul class="card-menu">

@@ -11,6 +11,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const orderDetailsTableBodyHeader = document.querySelector('#orderDetailsTable thead tr');
     orderDetailsTableBodyHeader.style.color = "#000";
 
+    // Fetch Pending orders 
+    fetch('../v2/fetch_pending_order.php')
+        .then(response => response.json())
+        .then(data => {
+            // Assuming the structure has `pending_orders` inside the response
+            const pending_orders = data.pending_orders;
+
+            if (Array.isArray(pending_orders)) {
+                const orderSelect = document.getElementById('order-id');
+
+                pending_orders.forEach(item => {
+                    let option = document.createElement('option');
+                    option.value = item.order_id;
+                    option.setAttribute('data-status', item.delivery_status);
+                    option.text = `${item.order_id} ${item.order_date} ${item.delivery_status}${item.customer_id}`;
+                    orderSelect.appendChild(option);
+                });
+            } else {
+                console.error('Expected pending_orders to be an array.');
+            }
+        })
+        .catch(error => console.error('Error fetching food items:', error));
+
+
     // Fetch orders with pagination
     function fetchOrders(page = 1) {
         fetch(`../v2/fetch_pending_order.php?page=${page}&limit=${limit}`)
@@ -30,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateTable(orders) {
         ordersTableBody.innerHTML = '';
         const fragment = document.createDocumentFragment();
-        
+
         orders.forEach(order => {
             const row = document.createElement('tr');
             row.innerHTML = `
@@ -61,16 +85,16 @@ document.addEventListener('DOMContentLoaded', () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ order_id: orderId })
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                populateOrderDetails(data.order_details);
-                orderModal.style.display = 'block';
-            } else {
-                console.error('Failed to fetch order details:', data.message);
-            }
-        })
-        .catch(error => console.error('Error fetching order details:', error));
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    populateOrderDetails(data.order_details);
+                    orderModal.style.display = 'block';
+                } else {
+                    console.error('Failed to fetch order details:', data.message);
+                }
+            })
+            .catch(error => console.error('Error fetching order details:', error));
     }
 
     // Populate order details table
@@ -134,24 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         paginationContainer.appendChild(fragment);
     }
-
-    // Debounced search filtering
-    // let searchTimeout;
-    // liveSearchInput.addEventListener('input', () => {
-    //     clearTimeout(searchTimeout);
-    //     searchTimeout = setTimeout(filterTable, 300);
-    // });
-
-    // function filterTable() {
-    //     const input = liveSearchInput.value.toLowerCase();
-    //     const rows = ordersTableBody.getElementsByTagName("tr");
-
-    //     Array.from(rows).forEach(row => {
-    //         const cells = row.getElementsByTagName("td");
-    //         const found = Array.from(cells).some(cell => cell.textContent.toLowerCase().includes(input));
-    //         row.style.display = found ? "" : "none";
-    //     });
-    // }
 
     // Close modal event
     document.querySelector('.modal .close').addEventListener('click', () => orderModal.style.display = 'none');

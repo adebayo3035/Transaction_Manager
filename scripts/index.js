@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const response = await fetch('backend/reset_password.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: resetEmail, password: newPassword, secret_answer: resetSecretAnswer, confirmPassword })
+                body: JSON.stringify({ email: resetEmail, password: newPassword, secret_answer: resetSecretAnswer, confirmPassword: confirmPassword })
             });
 
             const data = await response.json();

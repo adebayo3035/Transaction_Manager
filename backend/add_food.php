@@ -5,88 +5,76 @@ header('Content-Type: application/json');
 
 include("config.php");
 include('restriction_checker.php');
-// Create connection
-// $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
-if ($conn->connect_error) {
-    die(json_encode(["success" => false, "message" => "Connection failed: " . $conn->connect_error]));
-}
+// Get and sanitize input data
+$data = json_decode(file_get_contents('php://input'), true);
+$food_name = trim($data['food_name'] ?? '');
+$food_description = trim($data['food_description'] ?? '');
+$food_price = trim($data['food_price'] ?? '');
+$food_quantity = trim($data['food_quantity'] ?? '');
+$available = trim($data['available_status'] ?? '');
 
-// $data = json_decode(file_get_contents('php://input'), true);
-
-
-$food_name = mysqli_real_escape_string($conn, $_POST['add_food_name']);
-$description = mysqli_real_escape_string($conn, $_POST['add_food_description']);
-$price = mysqli_real_escape_string($conn, $_POST['add_food_price']);
-$quantity = mysqli_real_escape_string($conn, $_POST['add_food_quantity']);
-$available = mysqli_real_escape_string($conn, $_POST['available']);
-
-if (empty($food_name) || empty($description)) {
-
+// Validate required fields
+if (empty($food_name) || empty($food_description) || !isset($food_quantity) || !isset($food_price) || !isset($available)) {
     echo json_encode(["success" => false, "message" => 'Please fill in all required fields.']);
     exit();
 }
-if ((!isset($quantity)) || (!isset($price)) || (!isset($available))) {
-    echo json_encode(["success" => false, "message" => 'Please fill in all required fields.']);
+
+// Validate price (ensure it only contains numbers and up to 2 decimal places)
+if (!preg_match('/^\d+(\.\d{1,2})?$/', $food_price)) {
+    echo json_encode(["success" => false, "message" => 'Invalid price amount.']);
     exit();
 }
-// ensure price only contains number and decimals only
-if (!preg_match('/^\d+(\.\d{1,2})?$/', $price)) {
-    echo json_encode(["success" => false, "message" => 'Invalid Price amount']);
+
+// Validate quantity (ensure it is a whole number)
+if (!preg_match('/^\d+$/', $food_quantity)) {
+    echo json_encode(["success" => false, "message" => 'Invalid quantity.']);
     exit();
 }
-// ensure quantity contains number only
-if (!preg_match('/^\d+$/', $quantity)) {
-    echo json_encode(["success" => false, "message" => 'Invalid Quantity']);
-    exit();
-}
-function levenshteinPercentage($str1, $str2)
-{
+
+// Function to calculate the similarity percentage between two strings
+function levenshteinPercentage($str1, $str2) {
     $lev = levenshtein($str1, $str2);
     $maxLen = max(strlen($str1), strlen($str2));
-    if ($maxLen == 0) {
-        return 100; // Both strings are empty
-    }
-    return (1 - $lev / $maxLen) * 100;
+    return ($maxLen == 0) ? 100 : (1 - $lev / $maxLen) * 100;
 }
 
+// Function to check if a similar food name exists
+function isSimilarFoodExists($conn, $newFoodName, $threshold = 50) {
+    $stmt = $conn->prepare("SELECT food_name FROM food WHERE food_name LIKE ?");
+    $searchTerm = '%' . $newFoodName . '%';
+    $stmt->bind_param("s", $searchTerm);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-// Function to check if a similar group exists
-function isSimilarFoodExists($conn, $newFoodName, $threshold = 50)
-{
-    $sql = "SELECT food_name FROM food WHERE food_name LIKE '%$newFoodName%'";
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $existingFoodName = $row['food_name'];
-            if (levenshteinPercentage($existingFoodName, $newFoodName) >= $threshold) {
-                return true;
-            }
+    while ($row = $result->fetch_assoc()) {
+        if (levenshteinPercentage($row['food_name'], $newFoodName) >= $threshold) {
+            $stmt->close();
+            return true;
         }
     }
+    
+    $stmt->close();
     return false;
 }
 
-if (!empty($food_name)) {
-    // $sql_check = mysqli_query($conn, "SELECT * FROM groups WHERE group_name = '{$group_name}'");
-
-    if (isSimilarFoodExists($conn, $food_name)) {
-        echo "A similar food name exists. Please Try another Name.";
-        exit();
-    } else {
-        $sql = "INSERT INTO food (food_name, food_description, food_price, available_quantity, availability_status) VALUES (?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssdis", $food_name, $description, $price, $quantity, $available);
-
-        if ($stmt->execute()) {
-            echo json_encode(["success" => true]);
-        } else {
-            echo json_encode(["success" => false, "message" => "Failed to add food item: " . $stmt->error]);
-        }
-
-        $stmt->close();
-        $conn->close();
-    }
+// Check for similar food name
+if (isSimilarFoodExists($conn, $food_name)) {
+    echo json_encode(["success" => false, "message" => "A similar food name exists. Please try another name."]);
+    exit();
 }
+
+// Prepare the SQL statement for inserting the new food item
+$stmt = $conn->prepare("INSERT INTO food (food_name, food_description, food_price, available_quantity, availability_status) VALUES (?, ?, ?, ?, ?)");
+$stmt->bind_param("ssdis", $food_name, $food_description, $food_price, $food_quantity, $available);
+
+// Execute the statement and return the result
+if ($stmt->execute()) {
+    echo json_encode(["success" => true, "message" => "Food item added successfully."]);
+} else {
+    echo json_encode(["success" => false, "message" => "Failed to add food item: " . $stmt->error]);
+}
+
+// Clean up
+$stmt->close();
+$conn->close();

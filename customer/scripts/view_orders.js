@@ -319,4 +319,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Attach print button event listener
     document.querySelector('#receipt-btn').addEventListener('click', printReceipt);
+
+    document.getElementById("liveSearch").addEventListener("input", filterTable);
+
+    function filterTable() {
+        var input = document.getElementById("liveSearch").value.toLowerCase();
+        var rows = document.getElementById("ordersTable").getElementsByTagName("tr");
+
+        for (var i = 1; i < rows.length; i++) {
+            var cells = rows[i].getElementsByTagName("td");
+            var found = false;
+            for (var j = 0; j < cells.length; j++) {
+                if (cells[j]) {
+                    var cellText = cells[j].textContent.toLowerCase();
+                    if (cellText.indexOf(input) > -1) {
+                        found = true;
+                        break;
+                    }
+                }
+            }
+            rows[i].style.display = found ? "" : "none";
+        }
+    }
 });

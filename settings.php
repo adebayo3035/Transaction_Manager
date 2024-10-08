@@ -11,14 +11,16 @@
 
 <body>
     <?php include 'navbar.php'; ?> <!-- Include the navbar -->
+    
 
     <div class="container">
         <h1>Explore Quick Links</h1>
         <ul class="links-list">
-            <li><a href="#" id="reset-link">Reset Secret Question and Answer</a></li>
-            <li><button id="block-account">Restrict/Block Account</button></li>
-            <li><button id="unblock-account">Unblock/Remove Lien</button></li>
-            <li><button id="unlock-account">Unlock Account</button></li>
+            <li><button id = "reset-link" style="background-color: #000;">Reset Secret Question and Answer</button></li>
+            <li><button id="block-account" style="background-color: #f44336;">Restrict/Block Account</button></li>
+            <li><button id="unblock-account" style="background-color: orange;">Unblock/Remove Lien</button></li>
+            <li><button id="unlock-account" style="background-color: #111827;">Unlock Account</button></li>
+            
         </ul>
     </div>
 
@@ -135,11 +137,20 @@
      <div id="unlockModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Unlock Staff Account</h2>
+            <h2>Unlock Account</h2>
             <form id="unlockAccountForm" autocomplete="off">
+            <div class="input-box">
+                    <label for="accountType">Select Account Type</label>
+                    <select name="accountType" id="accountType" required>
+                    <option value="">-- Select Account Type -- </option>
+                        <option value="Customer">Customer's Account</option>
+                        <option value="Driver">Driver's Account</option>
+                        <option value="Staff">Staff Account</option>
+                    </select>
+                </div>
                 <div class="input-box">
-                    <label for="staff_ID">Select an Account</label>
-                    <input type="text" id="staff_ID" name="staff_ID" placeholder ="Enter Phone Number, E-mail or Staff ID" required>
+                    <label for="userID">E-mail or Phone Number</label>
+                    <input type="text" id="userID" name="userID" placeholder ="Enter Phone Number or E-mail Address " required>
                 </div>
 
                 <input type="submit" class="button" id="unlockBtn" value="Submit">

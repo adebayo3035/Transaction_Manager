@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <?php include ('../customerNavBar.php'); ?>
+<?php include ('customer_navbar.php'); ?>
     <div class="container">
         <div class="livesearch">
             <input type="text" id="liveSearch" placeholder="Search for Order...">
