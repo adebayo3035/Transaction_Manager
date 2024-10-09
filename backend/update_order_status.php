@@ -67,6 +67,51 @@ if (isset($data['order_id']) && isset($data['status'])) {
             $stmt->execute();
             $stmt->close();
 
+            // Update revenue table
+            $retained_amount = $totalAmount - $totalAmount;
+            $stmt = $conn->prepare("UPDATE revenue SET refunded_amount = ?, retained_amount = ? WHERE order_id = ?");
+            $stmt->bind_param("ddi", $totalAmount, $retained_amount, $order_id);
+            $stmt->execute();
+            $stmt->close();
+
+            // Update transactions table to Failed
+            $stmt = $conn->prepare("SELECT transaction_ref FROM transactions WHERE order_id = ?");
+            $stmt->bind_param("i", $order_id);
+            $stmt->execute();
+            $stmt->bind_result( $transaction_ref);
+            $stmt->fetch();
+            $stmt->close();
+
+            $transaction_status = 'Failed';
+            $stmt = $conn->prepare("UPDATE transactions SET status = ? WHERE order_id = ? AND transaction_ref = ?");
+            $stmt->bind_param("sis", $transaction_status,$order_id, $transaction_ref);
+            $stmt->execute();
+            $stmt->close();
+
+            function generateTransactionReference() {
+                // Add a prefix for identification
+                $prefix = 'TRX';
+                // Generate a unique ID based on the current time with higher entropy (more randomness)
+                $uniqueId = uniqid($prefix, true);
+                // Generate a random number (for extra randomness)
+                $randomNumber = mt_rand(1000, 9999);
+                // Create the transaction reference
+                $transactionRef = strtoupper($uniqueId . $randomNumber);
+                // Optionally, remove any dots or special characters in the reference
+                $transactionRef = str_replace('.', '', $transactionRef);
+                return $transactionRef;
+            }
+
+            $transactionReference = generateTransactionReference();
+            $transaction_type = 'Debit';
+            $status1 = 'Completed';
+            $paymentMethod = 'Direct Debit';
+            $revenue_type = 6;
+            $stmt = $conn->prepare("INSERT INTO transactions (transaction_ref, customer_id, order_id, transaction_type, amount, transaction_date, payment_method, status, created_at, revenue_type_id) VALUES (?, ?, ?, ?, ?, NOW(), ?, ?, NOW(), ?)");
+            $stmt->bind_param("siisdssi", $transactionReference, $customerId, $order_id, $transaction_type, $totalAmount, $paymentMethod, $status1, $revenue_type);
+            $stmt->execute();
+            $stmt->close();
+
             // Insert refund record into customer_transactions
             $description = "Declined Food Order Refund for Order ID: " . $order_id;
             $paymentMethod = "Transaction Refund";

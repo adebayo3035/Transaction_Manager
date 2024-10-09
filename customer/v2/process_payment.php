@@ -7,6 +7,7 @@ error_reporting(E_ALL);
 
 header('Content-Type: application/json');
 
+
 // Fetch customer ID from session
 $customerId = $_SESSION['customer_id'] ?? null;
 if (!$customerId) {
@@ -166,8 +167,39 @@ function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deli
             // Insert revenue data
             // revenue type id for Order Inflow
             $revenue_type = 2;
-            $stmt = $conn->prepare("INSERT INTO revenue (order_id, customer_id, total_amount, transaction_date, revenue_type_id) VALUES (?, ?, ?, NOW(), ?)");
-            $stmt->bind_param("iidi", $orderId, $customerId, $totalAmount, $revenue_type);
+            $refunded_amount = 0.0;
+            $stmt = $conn->prepare("INSERT INTO revenue (order_id, customer_id, total_amount, refunded_amount, retained_amount, transaction_date, revenue_type_id) VALUES (?, ?, ?, ?, ?, NOW(), ?)");
+            $stmt->bind_param("iidddi", $orderId, $customerId, $totalAmount, $refunded_amount, $totalAmount,$revenue_type);
+            $stmt->execute();
+            $stmt->close();
+
+             // revenue type id for Order Inflow
+            $revenue_type = 2;
+            function generateTransactionReference() {
+                // Add a prefix for identification
+                $prefix = 'TRX';
+            
+                // Generate a unique ID based on the current time with higher entropy (more randomness)
+                $uniqueId = uniqid($prefix, true);
+            
+                // Generate a random number (for extra randomness)
+                $randomNumber = mt_rand(1000, 9999);
+            
+                // Create the transaction reference
+                $transactionRef = strtoupper($uniqueId . $randomNumber);
+            
+                // Optionally, remove any dots or special characters in the reference
+                $transactionRef = str_replace('.', '', $transactionRef);
+            
+                return $transactionRef;
+            }
+            
+            // Example usage
+            $transactionReference = generateTransactionReference();
+            $transaction_type = 'Credit';
+            $status = 'Pending';
+            $stmt = $conn->prepare("INSERT INTO transactions (transaction_ref, customer_id, order_id, transaction_type, amount, transaction_date, payment_method, status, created_at, revenue_type_id) VALUES (?, ?, ?, ?, ?, NOW(), ?, ?, NOW(), ?)");
+            $stmt->bind_param("siisdssi", $transactionReference, $customerId, $orderId, $transaction_type, $totalAmount,$paymentMethod, $status, $revenue_type);
             $stmt->execute();
             $stmt->close();
 

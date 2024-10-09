@@ -127,6 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     // location.replace('../v1/dashboard.php');
                 } else {
                     alert('Error: ' + data.message);
+                    console.log(data.message);
                 }
             })
             .catch(error => {

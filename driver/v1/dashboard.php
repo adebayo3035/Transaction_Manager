@@ -52,7 +52,7 @@
                         <option value="">-- Select Delivery Status --</option>
                         <option value="In Transit"> In Transit</option>
                         <option value="Delivered"> Delivered</option>
-                        <option value="Cancelled"> Cancelled</option>
+                        <option value="Cancelled on Delivery"> Cancelled</option>
                     </select>
                 </div>
                 <div class="form-input" id="delivery_auth">

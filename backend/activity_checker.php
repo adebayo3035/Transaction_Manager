@@ -3,7 +3,7 @@
   include_once "config.php";
  
 // Set session timeout to 2 minutes
-$session_timeout = 20 * 60; // 2 minutes in seconds
+$session_timeout = 200 * 60; // 2 minutes in seconds
 
 // Check if user is logged in
 if(isset($_SESSION['unique_id'])) {

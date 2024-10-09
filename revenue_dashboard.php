@@ -105,8 +105,12 @@
                 <p id="deliveredOrders">0</p>
             </div>
             <div class="stat-card">
-                <h2>Cancelled Order</h2>
+                <h2>Orders Cancelled by Customer</h2>
                 <p id="cancelledOrders">0</p>
+            </div>
+            <div class="stat-card">
+                <h2>Orders Cancelled on Delivery</h2>
+                <p id="cancelledOnDelivery">0</p>
             </div>
         </div>
 

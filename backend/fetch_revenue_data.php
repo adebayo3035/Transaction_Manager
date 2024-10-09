@@ -35,6 +35,10 @@ $cancelledOrdersQuery = "SELECT COUNT(*) as cancelledOrders FROM orders WHERE de
 $cancelledOrdersResult = $conn->query($cancelledOrdersQuery);
 $cancelledOrders = $cancelledOrdersResult->fetch_assoc()['cancelledOrders'];
 
+$orderCancelledOnDeliveryQuery = "SELECT COUNT(*) as orderCancelledOnDelivery FROM orders WHERE delivery_status = 'Cancelled on Delivery'";
+$orderCancelledOnDeliveryResult = $conn->query($orderCancelledOnDeliveryQuery);
+$orderCancelledOnDelivery = $orderCancelledOnDeliveryResult->fetch_assoc()['orderCancelledOnDelivery'];
+
 $assignedOrdersQuery = "SELECT COUNT(*) as assignedOrders FROM orders WHERE delivery_status = 'Assigned'";
 $assignedOrdersResult = $conn->query($assignedOrdersQuery);
 $assignedOrders = $assignedOrdersResult->fetch_assoc()['assignedOrders'];
@@ -75,7 +79,8 @@ $response = [
     'deliveredOrders' => $deliveredOrders,
     'cancelledOrders' => $cancelledOrders,
     'assignedOrders' => $assignedOrders,
-    'recentTransactions' => $recentTransactions
+    'recentTransactions' => $recentTransactions,
+    'orderCancelledOnDelivery' => $orderCancelledOnDelivery
 ];
 
 echo json_encode($response);

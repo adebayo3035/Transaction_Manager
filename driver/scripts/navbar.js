@@ -23,7 +23,7 @@ function loadDriverInfo() {
     });
 }
 
-const inactivityTimeout = 3 * 60 * 1000; // 3 minute in milliseconds
+const inactivityTimeout = 30 * 60 * 1000; // 3 minute in milliseconds
 let inactivityTimer;
 
 // Function to reset the inactivity timer

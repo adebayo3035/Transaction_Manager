@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('deliveredOrders').textContent = data.deliveredOrders;
         document.getElementById('cancelledOrders').textContent = data.cancelledOrders;
         document.getElementById('assignedOrders').textContent = data.assignedOrders;
+        document.getElementById('cancelledOnDelivery').textContent = data.orderCancelledOnDelivery
 
         // Create charts
         createPieChart(data);
@@ -17,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const revenueTableBody = document.querySelector('#revenueTable tbody');
         revenueTableBody.innerHTML = '';
-        data.recentTransactions.forEach(transaction => {
+        data.recentTransactions.forEach(transaction =>{
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${transaction.order_id}</td>
@@ -63,10 +64,10 @@ function createPieChart(data) {
     new Chart(ctx, {
         type: 'pie',
         data: {
-            labels: ['Pending', 'Approved', 'Declined', 'Cancelled'],
+            labels: ['Pending', 'Approved', 'Declined', 'Cancelled', 'Cancelled on Delivery'],
             datasets: [{
-                data: [data.pendingOrders, data.approvedOrders, data.declinedOrders, data.cancelledOrders],
-                backgroundColor: ['orange', 'green', 'red', 'black']
+                data: [data.pendingOrders, data.approvedOrders, data.declinedOrders, data.cancelledOrders, data.orderCancelledOnDelivery],
+                backgroundColor: ['orange', 'green', 'red', 'black', 'purple']
             }]
         },
         options: {
@@ -144,10 +145,10 @@ function createDoughnutChart(data) {
     new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: ['Pending', 'Approved', 'Declined', 'Cancelled'],
+            labels: ['Pending', 'Approved', 'Declined', 'Cancelled', 'Cancelled on Delivery'],
             datasets: [{
-                data: [data.pendingOrders, data.approvedOrders, data.declinedOrders, data.cancelledOrders],
-                backgroundColor: ['orange', 'green', 'red', 'black']
+                data: [data.pendingOrders, data.approvedOrders, data.declinedOrders, data.cancelledOrders, data.orderCancelledOnDelivery],
+                backgroundColor: ['orange', 'green', 'red', 'black', 'purple']
             }]
         },
         options: {
@@ -176,7 +177,7 @@ function closeModal() {
 }
 
 // Close modal if user clicks outside of it
-window.onclick = function(event) {
+window.onclick = function (event) {
     const modal = document.getElementById('revenueTypeModal');
     if (event.target == modal) {
         modal.style.display = 'none';
@@ -193,17 +194,17 @@ document.getElementById("newRevenueTypeForm").addEventListener('submit', (event)
         method: 'POST',
         body: formData
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert('New Revenue Type added Successfully!');
-            closeModal();
-        } else {
-            alert(data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Error occurred while adding revenue type');
-    });
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('New Revenue Type added Successfully!');
+                closeModal();
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error occurred while adding revenue type');
+        });
 });

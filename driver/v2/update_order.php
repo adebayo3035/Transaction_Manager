@@ -16,12 +16,11 @@ $orderId = $data['id'];
 $current_status = $data['currentStatus'];
 $orderStatus = $data['orderStatus'];
 $driver_id = $_SESSION['driver_id'];
-// $customerId = $data['customerID'];
 
 // Invalid status transitions check
 $invalidTransitions = [
     ["from" => "Assigned", "to" => "Delivered"],
-    ["from" => "Assigned", "to" => "Cancelled"],
+    ["from" => "Assigned", "to" => "Cancelled on Delivery"],
     ["from" => "In Transit", "to" => "In Transit"]
 ];
 
@@ -33,7 +32,7 @@ foreach ($invalidTransitions as $transition) {
 }
 
 // Validate the delivery pin if status is Delivered or Cancelled
-if (($orderStatus === "Delivered" || $orderStatus === "Cancelled") && isset($data['deliveryPin'])) {
+if (($orderStatus === "Delivered" || $orderStatus === "Cancelled on Delivery") && isset($data['deliveryPin'])) {
     $deliveryPin = $data['deliveryPin'];
     $sql = "SELECT delivery_pin FROM orders WHERE order_id = ? AND driver_id = ?";
     if ($stmt = $conn->prepare($sql)) {
@@ -61,12 +60,12 @@ try {
     $cancellationReason = null;
     $updateSql = "";
 
-    if ($orderStatus === "Cancelled") {
+    if ($orderStatus === "Cancelled on Delivery") {
         if (!isset($data['cancelReason']) || empty($data['cancelReason'])) {
             throw new Exception("Cancellation reason is required for a Cancelled order.");
         }
         $cancellationReason = $data['cancelReason'];
-        $updateSql = "UPDATE orders SET cancellation_reason = ?, delivery_status = 'Cancelled' WHERE order_id = ? AND driver_id = ?";
+        $updateSql = "UPDATE orders SET cancellation_reason = ?, delivery_status = 'Cancelled on Delivery' WHERE order_id = ? AND driver_id = ?";
     } elseif ($orderStatus === "Delivered") {
         $updateSql = "UPDATE orders SET delivery_status = 'Delivered' WHERE order_id = ? AND driver_id = ?";
     } elseif ($orderStatus === "In Transit") {
@@ -88,7 +87,7 @@ try {
     }
 
     // Update driver status to 'Available' if Delivered or Cancelled
-    if ($orderStatus === "Delivered" || $orderStatus === "Cancelled") {
+    if ($orderStatus === "Delivered" || $orderStatus === "Cancelled on Delivery") {
         $sql = "UPDATE driver SET status = 'Available' WHERE id = ?";
         if ($stmt = $conn->prepare($sql)) {
             $stmt->bind_param("i", $driver_id);
@@ -99,8 +98,16 @@ try {
         }
     }
 
+    // Select transaction reference for the order
+    $stmt = $conn->prepare("SELECT transaction_ref FROM transactions WHERE order_id = ?");
+    $stmt->bind_param("i", $orderId);
+    $stmt->execute();
+    $stmt->bind_result($transaction_ref);
+    $stmt->fetch();
+    $stmt->close();
+
     // Handle order cancellation logic and refunds
-    if ($orderStatus === 'Cancelled') {
+    if ($orderStatus === 'Cancelled on Delivery') {
         // Refund logic
         $stmt = $conn->prepare("SELECT total_amount, customer_id FROM orders WHERE order_id = ?");
         $stmt->bind_param("i", $orderId);
@@ -118,8 +125,11 @@ try {
         $stmt->close();
 
         // Insert cancellation fee and refund into customer transactions
-        $stmt = $conn->prepare("INSERT INTO customer_transactions (customer_id, amount, date_created, transaction_type, payment_method, description) 
-                                VALUES (?, ?, NOW(), 'credit', 'Refund', 'Refund for Cancelled Order on Delivery'), (?, ?, NOW(), 'debit', 'Order Cancellation Fee on Delivery', 'Fee deducted for Order Cancelled on Delivery')");
+        $stmt = $conn->prepare("INSERT INTO customer_transactions 
+            (customer_id, amount, date_created, transaction_type, payment_method, description) 
+            VALUES 
+            (?, ?, NOW(), 'credit', 'Refund', 'Refund for Cancelled Order $orderId on Delivery'),
+            (?, ?, NOW(), 'debit', 'Order Cancellation Fee on Delivery', 'Fee deducted for Order: $orderId Cancelled on Delivery')");
         $stmt->bind_param("idid", $customerId, $balance, $customerId, $cancellation_fee);
         $stmt->execute();
         $stmt->close();
@@ -141,12 +151,24 @@ try {
 
         $stmt->close();
 
-        // Insert revenue data into the revenue table
-        $revenue_type = 4; // Revenue Type for Order Cancellation on Delivery
-        $mystatus = "Order Cancellation Fee on Delivery";
-        $stmt = $conn->prepare("INSERT INTO revenue (order_id, customer_id, total_amount, transaction_date, status, revenue_type_id) 
-                                VALUES (?, ?, ?, NOW(), ?, ?)");
-        $stmt->bind_param("iidsi", $orderId, $customerId, $cancellation_fee, $mystatus, $revenue_type);
+        // Update revenue table
+        $refunded_amount = $totalAmount - $cancellation_fee;
+        $stmt = $conn->prepare("UPDATE revenue SET refunded_amount = ?, retained_amount = ?, status = ? WHERE order_id = ?");
+        $stmt->bind_param("ddsi", $refunded_amount, $cancellation_fee, $orderStatus, $orderId);
+        $stmt->execute();
+        $stmt->close();
+
+        // Update transactions table to 'Failed'
+        $transaction_status = 'Failed';
+        $stmt = $conn->prepare("UPDATE transactions SET status = ? WHERE order_id = ? AND transaction_ref = ?");
+        $stmt->bind_param("sis", $transaction_status, $orderId, $transaction_ref);
+        $stmt->execute();
+        $stmt->close();
+    } elseif ($orderStatus === 'Delivered') {
+        // Update transaction to 'Completed' when the order is delivered
+        $transaction_status = 'Completed';
+        $stmt = $conn->prepare("UPDATE transactions SET status = ? WHERE order_id = ? AND transaction_ref = ?");
+        $stmt->bind_param("sis", $transaction_status, $orderId, $transaction_ref);
         $stmt->execute();
         $stmt->close();
     }
