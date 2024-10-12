@@ -81,9 +81,26 @@ if (!empty($firstname) && !empty($lastname) && !empty($email) && !empty($phone) 
             if (in_array($img_ext, $extensions) === true) {
                 $types = ["image/jpeg", "image/jpg", "image/png"];
                 if (in_array($img_type, $types) === true) {
-                    $time = time();
-                    $new_img_name = $time . $img_name;
-                    if (move_uploaded_file($tmp_name, "admin_photos/" . $new_img_name)) {
+
+                    // Specify Upload Directory
+                    $upload_dir = 'admin_photos/';
+
+                    // Generate a unique hash of the file's contents to check for duplicates
+                    $file_hash = md5_file($tmp_name);
+                    $file_name = $file_hash . '.' . $img_ext;
+                    $upload_file = $upload_dir . $file_name;
+
+                    // Check if the file already exists in the directory
+                    if (file_exists($upload_file)) {
+                        echo json_encode(['success' => false, 'message' => 'This image has already been uploaded by another user.']);
+                        exit;
+                    }
+                    // Check file size (limit to 500KB)
+                    if ($_FILES["add_photo"]["size"] > 500000) {
+                        echo json_encode(['success' => false, 'message' => 'Sorry, your file is too large.']);
+                        exit;
+                    }
+                    if (move_uploaded_file($tmp_name, "admin_photos/" . $file_name)) {
 
                         // Insert into the database
                         $ran_id = rand(time(), 100000000);
@@ -93,7 +110,7 @@ if (!empty($firstname) && !empty($lastname) && !empty($email) && !empty($phone) 
 
                         // Prepared statement for insert
                         $insert_query = $conn->prepare("INSERT INTO admin_tbl (unique_id, firstname, lastname, email, phone, address, gender, password, secret_question, secret_answer, photo, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                        $insert_query->bind_param('isssssssssss', $ran_id, $firstname, $lastname, $email, $phone, $address, $gender, $encrypt_pass, $secret_question, $encrypt_secret_answer, $new_img_name, $role);
+                        $insert_query->bind_param('isssssssssss', $ran_id, $firstname, $lastname, $email, $phone, $address, $gender, $encrypt_pass, $secret_question, $encrypt_secret_answer, $file_name, $role);
 
                         if ($insert_query->execute()) {
                             echo json_encode(['success' => true, 'message' => 'New Staff has been successfully Onboarded!']);

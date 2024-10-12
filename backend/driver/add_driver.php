@@ -62,19 +62,27 @@ try {
 
     // Photo validation
     if (!empty($photo)) {
-        $target_dir = "driver_photos/";
-        $target_file = $target_dir . basename($photo);
+        // Specify Upload Directory
+        $upload_dir = 'driver_photos/';
+        $tmp_name = $_FILES["add_photo"]["tmp_name"];
+        $img_ext = pathinfo($photo, PATHINFO_EXTENSION);
+
+        // Generate a unique hash of the file's contents
+        $file_hash = md5_file($tmp_name);
+        $file_name = $file_hash . '.' . $img_ext;
+        $upload_file = $upload_dir . $file_name;
+        $target_file = $upload_dir . basename($photo);
         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
         // Check if image file is an actual image or fake image
-        $check = getimagesize($_FILES["add_photo"]["tmp_name"]);
+        $check = getimagesize($tmp_name);
         if ($check === false) {
             echo json_encode(['success' => false, 'message' => 'File is not an image.']);
             exit;
         }
 
-        // Check file size (limit to 2MB)
-        if ($_FILES["add_photo"]["size"] > 2000000) {
+        // Check file size (limit to 500KB)
+        if ($_FILES["add_photo"]["size"] > 500000) {
             echo json_encode(['success' => false, 'message' => 'Sorry, your file is too large.']);
             exit;
         }
@@ -85,9 +93,9 @@ try {
             exit;
         }
 
-        // Check if file already exists in the target directory
-        if (file_exists($target_file)) {
-            echo json_encode(['success' => false, 'message' => 'Sorry, file already exists.']);
+        // Check if the file already exists in the directory
+        if (file_exists($upload_file)) {
+            echo json_encode(['success' => false, 'message' => 'This image has already been uploaded by another user.']);
             exit;
         }
     }
@@ -97,17 +105,18 @@ try {
     $hashed_secret_answer = md5($secret_answer);
 
     $stmt = $conn->prepare("INSERT INTO driver (firstname, lastname, gender, email, phone_number, address, license_number, vehicle_type, password, secret_question, secret_answer, photo, date_created, date_updated, status, restriction) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?)");
-    $stmt->bind_param("ssssssssssssss", $first_name, $last_name, $gender, $email, $phone_number, $address, $license_number, $vehicle_type, $hashed_password, $secret_question, $hashed_secret_answer, $photo, $status, $restriction);
+    $stmt->bind_param("ssssssssssssss", $first_name, $last_name, $gender, $email, $phone_number, $address, $license_number, $vehicle_type, $hashed_password, $secret_question, $hashed_secret_answer, $file_name, $status, $restriction);
 
     if ($stmt->execute()) {
         // If insert was successful, upload the photo
         if (!empty($photo)) {
-            if (move_uploaded_file($_FILES["add_photo"]["tmp_name"], $target_file)) {
+            if (move_uploaded_file($tmp_name, $target_file)) {
                 echo json_encode(['success' => true, 'message' => 'Driver has been successfully onboarded and photo uploaded.']);
             } else {
                 // If the photo upload fails, rollback the database insertion
+                $last_id = $conn->insert_id;
                 $stmt = $conn->prepare("DELETE FROM driver WHERE id = ?");
-                $stmt->bind_param("i", $conn->insert_id);
+                $stmt->bind_param("i", $last_id);
                 $stmt->execute();
                 echo json_encode(['success' => false, 'message' => 'Driver record was inserted but photo upload failed. Record has been removed.']);
             }

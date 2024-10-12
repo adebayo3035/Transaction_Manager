@@ -97,32 +97,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Validate the image file
         if (in_array($img_ext, $allowed_extensions) && in_array($img_type, $allowed_types)) {
-            $time = time(); // Use current time as a unique identifier for the image
-            $new_img_name = $time . '_' . $img_name;
-            $upload_path = "customer_photos/" . $new_img_name;
+            // Specify Upload Directory
+            $upload_dir = 'customer_photos/';
 
-            // Check if the image already exists in the directory
-            if (file_exists($upload_path)) {
-                $response['message'] = 'Image already exists.';
-                echo json_encode($response);
-                exit();
+            // Generate a unique hash of the file's contents to check for duplicates
+            $file_hash = md5_file($tmp_name);
+            $file_name = $file_hash . '.' . $img_ext;
+            $upload_file = $upload_dir . $file_name;
+
+            // Check if the file already exists in the directory
+            if (file_exists($upload_file)) {
+                echo json_encode(['success' => false, 'message' => 'This image has already been uploaded by another user.']);
+                exit;
             } else {
                 // Start a transaction
                 $conn->begin_transaction();
 
                 try {
                     // Upload image to a specific folder
-                    if (move_uploaded_file($tmp_name, $upload_path)) {
+                    if (move_uploaded_file($tmp_name, "customer_photos/" . $file_name)) {
                         // Generate a unique customer ID
                         $customer_id = rand(time(), 100000000);
                         $status = "Active now";
+                        // Check file size (limit to 500KB)
+                        if ($_FILES["add_photo"]["size"] > 500000) {
+                            echo json_encode(['success' => false, 'message' => 'Sorry, your file is too large.']);
+                            exit;
+                        }
 
                         // Insert customer data into the database using a prepared statement
                         $sql = "INSERT INTO customers (customer_id, firstname, lastname, gender, email, password, mobile_number, address, secret_question, secret_answer, photo, group_id, unit_id) 
                                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
                         $stmt = $conn->prepare($sql);
-                        $stmt->bind_param('issssssssssii', $customer_id, $first_name, $last_name, $gender, $email, $encrypted_password, $phone_number, $address, $secret_question, $encrypted_answer, $new_img_name, $group_id, $unit_id);
+                        $stmt->bind_param('issssssssssii', $customer_id, $first_name, $last_name, $gender, $email, $encrypted_password, $phone_number, $address, $secret_question, $encrypted_answer, $file_name, $group_id, $unit_id);
 
                         if ($stmt->execute()) {
                             // Commit the transaction
