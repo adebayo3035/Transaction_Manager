@@ -30,6 +30,7 @@ if (isset($_SESSION['role'])) {
         <?php if ($role === 'Super Admin'): ?>
             <li><a href="revenue_dashboard.php" id="fundWallet">Manage Revenue</a></li>
             <li><a href="orders.php" id="allOrder">All Orders</a></li>
+            <li><a href="transactions.php" id="allOrder">Transactions</a></li>
         <?php endif; ?>
     </ul>
     

@@ -6,13 +6,13 @@ error_reporting(E_ALL);
 header('Content-Type: application/json');
 include 'config.php';
 
-$customer_id = $_SESSION['customer_id'];
+$driver_id = $_SESSION['driver_id'];
 $response = ['success' => false, 'message' => ''];
 
 // Fetch current profile picture
-$sql = "SELECT photo, secret_answer FROM customers WHERE customer_id = ?";
+$sql = "SELECT photo, secret_answer FROM driver WHERE id = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param('i', $customer_id);
+$stmt->bind_param('i', $driver_id);
 $stmt->execute();
 $stmt->bind_result($current_photo, $secret_answer);
 $stmt->fetch();
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
 
                 // Specify Upload Directory
-                $upload_dir = '../../backend/customer_photos/';
+                $upload_dir = '../../backend/driver_photos/';
                 
                 // Generate a unique hash of the file's contents to check for duplicates
                 $file_hash = md5_file($tmp_name);
@@ -62,10 +62,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 // If the file doesn't exist, move it to the directory
                 if (move_uploaded_file($tmp_name, $upload_file)) {
-                    // Update the customer's profile with the new photo
-                    $sql = "UPDATE customers SET photo = ? WHERE customer_id = ?";
+                    // Update the driver's profile with the new photo
+                    $sql = "UPDATE driver SET photo = ? WHERE id = ?";
                     $stmt = $conn->prepare($sql);
-                    $stmt->bind_param('si', $file_name, $customer_id);
+                    $stmt->bind_param('si', $file_name, $driver_id);
 
                     if ($stmt->execute()) {
                         // Delete the old picture if it exists

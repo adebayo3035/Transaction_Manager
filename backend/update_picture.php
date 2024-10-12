@@ -42,22 +42,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $types = ["image/jpeg", "image/jpg", "image/png"];
             if (in_array($img_type, $types) === true) {
                 if ($_FILES["photo"]["size"] > 500000) {
-                    echo json_encode(['success' => false, 'message' => 'Image size is too Large.']);
+                    echo json_encode(['success' => false, 'message' => 'Image size is too large.']);
                     exit;
                 }
 
                 // Specify Upload Directory
                 $upload_dir = 'admin_photos/';
-                $time = time();
-                $file_name = $time . $img_name;
+                
+                // Generate a unique hash of the file's contents to check for duplicates
+                $file_hash = md5_file($tmp_name);
+                $file_name = $file_hash . '.' . $img_ext;
                 $upload_file = $upload_dir . $file_name;
 
+                // Check if the file already exists in the directory
+                if (file_exists($upload_file)) {
+                    echo json_encode(['success' => false, 'message' => 'This image has already been uploaded by another user.']);
+                    exit;
+                }
+
+                // If the file doesn't exist, move it to the directory
                 if (move_uploaded_file($tmp_name, $upload_file)) {
+                    // Update the admin's profile with the new photo
                     $sql = "UPDATE admin_tbl SET photo = ? WHERE unique_id = ?";
                     $stmt = $conn->prepare($sql);
                     $stmt->bind_param('si', $file_name, $admin_id);
 
                     if ($stmt->execute()) {
+                        // Delete the old picture if it exists
                         $oldPicturePath = $upload_dir . $current_photo;
                         if (file_exists($oldPicturePath)) {
                             unlink($oldPicturePath);
@@ -76,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $response['message'] = 'Uploaded file is not a valid image.';
             }
         } else {
-            $response['message'] = 'File upload error: ' . $file['error'];
+            $response['message'] = 'File upload error: ' . $_FILES['photo']['error'];
         }
     } else {
         $response['message'] = 'Invalid secret answer.';
@@ -87,4 +98,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $conn->close();
 echo json_encode($response);
 exit;
-

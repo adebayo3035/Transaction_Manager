@@ -13,16 +13,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Content-Type': 'application/json'
             }
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                updateTable(data.orders);
-                updatePagination(data.total, data.page, data.limit);
-            } else {
-                console.error('Failed to fetch orders:', data.message);
-            }
-        })
-        .catch(error => console.error('Error fetching data:', error));
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    updateTable(data.orders);
+                    updatePagination(data.total, data.page, data.limit);
+                } else {
+                    console.error('Failed to fetch orders:', data.message);
+                }
+            })
+            .catch(error => console.error('Error fetching data:', error));
     }
 
     // Function to update orders table
@@ -80,15 +80,15 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             body: JSON.stringify({ order_id: orderId })
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                displayOrderDetails(data.order_details);
-            } else {
-                console.error('Failed to fetch order details:', data.message);
-            }
-        })
-        .catch(error => console.error('Error fetching order details:', error));
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    displayOrderDetails(data.order_details);
+                } else {
+                    console.error('Failed to fetch order details:', data.message);
+                }
+            })
+            .catch(error => console.error('Error fetching order details:', error));
     }
 
     // Function to display order details
@@ -131,7 +131,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (declineButton) {
             declineButton.addEventListener('click', () => {
                 const orderId = declineButton.dataset.orderId;
-                updateOrderStatus(orderId, 'Cancelled');
+                // Show JavaScript confirmation dialog
+                const userConfirmed = confirm("Are you sure you want to cancel this order? This action cannot be undone.");
+
+                if (userConfirmed) {
+                    // If the user clicked "OK", proceed with order cancellation
+                    updateOrderStatus(orderId, 'Cancelled');
+                } else {
+                    // If the user clicked "Cancel", do nothing
+                    console.log("Order cancellation aborted by the user.");
+                }
             });
         }
     }
@@ -201,8 +210,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${firstDetail.driver_firstname} ${firstDetail.driver_lastname}</td>
             `;
         }
-        
-        
+
+
         orderDetailsTableBody.appendChild(driverNameRow);
 
         // Add Driver's Name row
@@ -218,15 +227,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${firstDetail.driver_phoneNumber}</td>
             `;
         }
-        
+
         orderDetailsTableBody.appendChild(driverPhoneRow);
 
-        if(firstDetail.delivery_status == 'Delivered' || firstDetail.delivery_status == 'Cancelled' || firstDetail.delivery_status == 'Declined'){
+        if (firstDetail.delivery_status == 'Delivered' || firstDetail.delivery_status == 'Cancelled' || firstDetail.delivery_status == 'Declined') {
             document.querySelector('#receipt-btn').style.display = "block";
         }
 
 
-        
+
     }
 
     // Function to update order status
@@ -238,19 +247,19 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             body: JSON.stringify({ order_id: orderId, status: status })
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Your Order has been Successfully ' + status);
-                location.reload(); // Refresh the page to reflect changes
-            } else {
-                console.error('Failed to update order status:', data.message);
-                alert("Failed to Update Customer Order: " + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error updating order status:', error);
-        });
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Your Order has been Successfully ' + status);
+                    location.reload(); // Refresh the page to reflect changes
+                } else {
+                    console.error('Failed to update order status:', data.message);
+                    alert("Failed to Update Customer Order: " + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error updating order status:', error);
+            });
     }
 
     // Handle modal close

@@ -126,7 +126,7 @@ tr:nth-child(even) {
     width: 100%;
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 10px;
 }
 .container h1{
     text-align: center;

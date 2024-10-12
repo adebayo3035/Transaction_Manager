@@ -67,8 +67,13 @@ nav a.icon2 {
   font-weight: 900;
 
 }
+@media screen and (max-width: 970px){
+  nav ul li {
+    font-size: 13px;
+  }
+}
 
-@media screen and (max-width: 810px) {
+@media screen and (max-width: 853px) {
   header h1 {
     font-size: 17px;
   }
@@ -78,6 +83,7 @@ nav a.icon2 {
     flex-direction: column;
     justify-content: flex-start;
     width: 100%;
+    
   }
 
   nav ul li {
