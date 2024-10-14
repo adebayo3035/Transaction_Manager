@@ -50,7 +50,7 @@
     <div id="orderModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Driver Information</h2>
+            <h2>Customer Information</h2>
             <div id="driverPhoto" class="photo-container">
 
             </div>

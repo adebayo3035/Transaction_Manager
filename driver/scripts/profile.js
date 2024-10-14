@@ -42,8 +42,8 @@ document.addEventListener('DOMContentLoaded', function () {
     fetch('../v2/profile.php')
         .then(response => response.json())
         .then(data => {
-            document.getElementById('profile-picture').src = '../../backend/driver/driver_photos/' + data.photo;
-            document.getElementById('uploadedPhoto').src = '../../backend/driver/driver_photos/' + data.photo;
+            document.getElementById('profile-picture').src = '../../backend/driver_photos/' + data.photo;
+            document.getElementById('uploadedPhoto').src = '../../backend/driver_photos/' + data.photo;
             document.getElementById('customer-name').textContent = data.firstname + ' ' + data.lastname;
             document.getElementById('first-name').textContent = data.firstname;
             document.getElementById('last-name').textContent = data.lastname;
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 var messageElement = document.getElementById('message');
                 if (data.success) {
-                    document.getElementById('uploadedPhoto').src = '../../backend/driver/driver_photos/' + data.file;
+                    document.getElementById('uploadedPhoto').src = '../../backend/driver_photos/' + data.file;
                     messageElement.textContent = 'Profile picture updated successfully!';
                     messageElement.style.color = 'green';
                     console.log(data.message);
@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (data.photo) {
 
                 const photo = data.photo;
-                photoCell.innerHTML = `<img src="../../backend/driver/driver_photos/${photo}" alt="Driver Photo" class="driver-photo">`;
+                photoCell.innerHTML = `<img src="../../backend/driver_photos/${photo}" alt="Driver Photo" class="driver-photo">`;
             } else {
                 photoCell.innerHTML = `<p>No photo available</p>`;
             }

@@ -2,11 +2,6 @@
 // session_start();
 include_once "config.php";
 include('restriction_checker.php');
-// $minLength = 8;
-// $hasSpecialChar = preg_match('/[!@#$%^&*(),.?":{}|<>_]/', $password);
-// $hasUpperCase = preg_match('/[A-Z]/', $password);
-// $hasDigit = preg_match('/\d/', $password);
-
 
 // Get the JSON data from the request body
 $data = json_decode(file_get_contents("php://input"), true);

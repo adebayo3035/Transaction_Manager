@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Display photo if available
         if (driver_details.photo) {
             const photo = driver_details.photo;
-            photoCell.innerHTML = `<img src="backend/driver/driver_photos/${photo}" alt="Driver Photo" class="driver-photo">`;
+            photoCell.innerHTML = `<img src="backend/driver_photos/${photo}" alt="Driver Photo" class="driver-photo">`;
         } else {
             photoCell.innerHTML = `<p>No photo available</p>`;
         }
@@ -379,7 +379,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const formData = new FormData(this);
             const messageDiv = document.getElementById('addDriverMessage');
 
-            fetch('backend/driver/add_driver.php', {
+            fetch('backend/add_driver.php', {
                 method: 'POST',
                 // headers: {
                 //     'Content-Type': 'application/x-www-form-urlencoded'

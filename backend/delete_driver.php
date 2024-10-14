@@ -71,7 +71,7 @@ if (isset($data['id'])) {
     if ($stmt->execute()) {
         // If there's a photo, delete it from the folder
         if ($photoFilename) {
-            $photoPath = '../backend/driver/driver_photos/' . $photoFilename;
+            $photoPath = '../backend/driver_photos/' . $photoFilename;
             if (file_exists($photoPath)) {
                 unlink($photoPath); // Delete the file
             }
