@@ -42,15 +42,15 @@ nav ul {
 nav ul li {
   list-style-type: none;
   /* border: 2px solid green; */
-  padding: 10px 15px;
+  padding: 7px 9px;
 }
 
 nav ul li a {
-  padding: 10px 15px;
+  padding: 7px 10px;
   text-decoration: none;
   color: #000;
   border-radius: 12px;
-  /* border: 2px solid red; */
+  font-size: 12px;
 }
 
 nav ul li a:hover {
@@ -73,7 +73,7 @@ nav a.icon2 {
   }
 }
 
-@media screen and (max-width: 853px) {
+@media screen and (max-width: 835px) {
   header h1 {
     font-size: 17px;
   }

@@ -5,6 +5,11 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 header('Content-Type: application/json');
 include 'config.php'; // Adjust the path as needed
+if (!isset($_SESSION['driver_id'])) {
+    http_response_code(401);  // Unauthorized
+    echo json_encode(['error' => 'Unauthorized access']);
+    exit();
+}
 
 $driver_id = $_SESSION['driver_id'];
 

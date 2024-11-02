@@ -16,7 +16,7 @@
 
 <body>
     <!-- log user out after 2 minutes of Inactivity -->
-    <?php include "backend/activity_checker.php"; ?>
+  
 
     <div class="topnav" id="myTopnav">
         <a href="homepage.php" class="active">Home</a>

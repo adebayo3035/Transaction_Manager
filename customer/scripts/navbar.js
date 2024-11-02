@@ -1,41 +1,43 @@
-// Function to load customer info
-function loadCustomerInfo() {
-    fetch('../v2/wallet_balance.php', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Unauthorized or failed to fetch balance');
-        }
-        return response.json();
-    })
-    .then(data => {
-        document.getElementById('customerName').textContent = `Welcome, ${data.customer_name}`;
-        document.getElementById('walletBalance').textContent = `Your Current Balance is: N${data.balance}`;
-    })
-    .catch(error => {
-        document.getElementById('customerName').textContent = 'Error loading customer name';
-        document.getElementById('walletBalance').textContent = 'Error loading balance';
-        console.error('Error:', error);
-    });
+// Global variables
+const inactivityTimeout = 60 * 1000; // 1 minute for testing; adjust as needed
+const inactivityTimers = {}; // Stores individual timers for each user
+
+// Helper function to set text content and handle errors
+function setTextContent(elementId, message) {
+    const element = document.getElementById(elementId);
+    if (element) element.textContent = message;
 }
 
-const inactivityTimeout = 30 * 60 * 1000; // 3 minute in milliseconds
-let inactivityTimer;
+// Function to load customer info
+function loadCustomerInfo() {
+    fetch('../v2/wallet_balance.php')
+        .then(response => {
+            if (!response.ok) throw new Error('Unauthorized or failed to fetch balance');
+            return response.json();
+        })
+        .then(data => {
+            setTextContent('customerName', `Welcome, ${data.customer_name}`);
+            setTextContent('walletBalance', `Your Current Balance is: N${data.balance}`);
+        })
+        .catch(error => {
+            setTextContent('customerName', 'Error loading customer name');
+            setTextContent('walletBalance', 'Error loading balance');
+            console.error('Error:', error);
+        });
+}
 
-// Function to reset the inactivity timer
+// Function to reset inactivity timer for a specific user
 function resetInactivityTimer(userId) {
-    clearTimeout(inactivityTimer);
-    inactivityTimer = setTimeout(function () {
-        // Session has timed out due to inactivity, redirect to logout
-        window.location.href = '../v2/logout.php';
+    // Clear any existing timer for this user
+    clearTimeout(inactivityTimers[userId]);
+
+    // Set a new timeout for this user
+    inactivityTimers[userId] = setTimeout(() => {
+        window.location.href = `../v2/logout.php?logout_id=${userId}`;
     }, inactivityTimeout);
 }
 
-// Fetch session data (customer_id) from the server
+// Function to set up session data and initialize inactivity tracking
 function getSessionData() {
     fetch('../v2/session_data.php')
         .then(response => response.json())
@@ -43,27 +45,22 @@ function getSessionData() {
             const userId = data.customer_id;
             if (userId) {
                 resetInactivityTimer(userId);
-
+                
                 // Add event listeners for user interaction to reset inactivity timer
-                document.addEventListener('mousemove', function () {
-                    resetInactivityTimer(userId);
-                });
-                document.addEventListener('keydown', function () {
-                    resetInactivityTimer(userId);
-                });
+                ['mousemove', 'keydown'].forEach(event =>
+                    document.addEventListener(event, () => resetInactivityTimer(userId))
+                );
             } else {
-                // No session: Redirect to login page
-                window.location.href = '../v1/index.php';
+                window.location.href = '../v1/index.php'; // Redirect if no session
             }
         })
         .catch(error => {
             console.error('Error fetching session data:', error);
-            // If there's an error in fetching, redirect to login page as a fallback
-            window.location.href = '../v1/index.php';
+            window.location.href = '../v1/index.php'; // Redirect on error
         });
 }
 
-// Combine both functions inside a single onload event
+// Load session data and customer info on page load
 window.onload = function() {
     getSessionData();
     loadCustomerInfo();

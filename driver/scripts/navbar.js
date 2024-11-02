@@ -1,41 +1,39 @@
-// Function to load customer info
-function loadDriverInfo() {
-    fetch('../v2/profile.php', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Unauthorized or failed to fetch balance');
-        }
-        return response.json();
-    })
-    .then(data => {
-        document.getElementById('customerName').textContent = `Welcome, ${data.firstname} - ${data.lastname}`;
-        document.getElementById('walletBalance').textContent = `Your Current Status is: ${data.status}`;
-    })
-    .catch(error => {
-        document.getElementById('customerName').textContent = 'Error loading Driver Name';
-        document.getElementById('walletBalance').textContent = 'Error loading current Status';
-        console.error('Error:', error);
-    });
+// Global variables
+const inactivityTimeout = 60 * 1000; // 1 minute for testing; adjust as needed
+let inactivityTimers = {};
+
+// Helper function to set error message
+function setError(elementId, message) {
+    document.getElementById(elementId).textContent = message;
 }
 
-const inactivityTimeout = 30 * 60 * 1000; // 3 minute in milliseconds
-let inactivityTimer;
+// Function to load driver info
+function loadDriverInfo() {
+    fetch('../v2/profile.php')
+        .then(response => {
+            if (!response.ok) throw new Error('Unauthorized or failed to fetch driver info');
+            return response.json();
+        })
+        .then(data => {
+            document.getElementById('customerName').textContent = `Welcome, ${data.firstname} - ${data.lastname}`;
+            document.getElementById('walletBalance').textContent = `Your Current Status is: ${data.status}`;
+        })
+        .catch(error => {
+            setError('customerName', 'Error loading Driver Name');
+            setError('walletBalance', 'Error loading current Status');
+            console.error('Error:', error);
+        });
+}
 
-// Function to reset the inactivity timer
+// Function to reset inactivity timer and log out if timeout is reached
 function resetInactivityTimer(userId) {
-    clearTimeout(inactivityTimer);
-    inactivityTimer = setTimeout(function () {
-        // Session has timed out due to inactivity, redirect to logout
-        window.location.href = '../v2/logout.php';
+    clearTimeout(inactivityTimers[userId]);
+    inactivityTimers[userId] = setTimeout(() => {
+        window.location.href = `../v2/logout.php?logout_id=${userId}`;
     }, inactivityTimeout);
 }
 
-// Fetch session data (customer_id) from the server
+// Function to set up session data and initialize inactivity tracking
 function getSessionData() {
     fetch('../v2/session_data.php')
         .then(response => response.json())
@@ -43,27 +41,21 @@ function getSessionData() {
             const userId = data.driver_id;
             if (userId) {
                 resetInactivityTimer(userId);
-
                 // Add event listeners for user interaction to reset inactivity timer
-                document.addEventListener('mousemove', function () {
-                    resetInactivityTimer(userId);
-                });
-                document.addEventListener('keydown', function () {
-                    resetInactivityTimer(userId);
-                });
+                ['mousemove', 'keydown'].forEach(event =>
+                    document.addEventListener(event, () => resetInactivityTimer(userId))
+                );
             } else {
-                // No session: Redirect to login page
-                window.location.href = '../v1/index.php';
+                window.location.href = '../v1/index.php'; // Redirect if no session
             }
         })
         .catch(error => {
             console.error('Error fetching session data:', error);
-            // If there's an error in fetching, redirect to login page as a fallback
-            window.location.href = '../v1/index.php';
+            window.location.href = '../v1/index.php'; // Redirect on error
         });
 }
 
-// Combine both functions inside a single onload event
+// Load session data and driver info on page load
 window.onload = function() {
     getSessionData();
     loadDriverInfo();

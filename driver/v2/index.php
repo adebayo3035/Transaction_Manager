@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $driver_id = $row['id']; // Get the user's unique ID
 
         // Log driver_id found for user
-        error_log("Customer ID for user: " . $driver_id);
+        error_log("Driver ID for user: " . $driver_id);
 
         // Step 2: Check if the user is locked due to too many failed login attempts
         $stmtCheckAttempts = $conn->prepare("SELECT attempts, locked_until FROM driver_login_attempts WHERE driver_id = ?");
@@ -144,10 +144,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 echo json_encode(["success" => false, "message" => "Account is blocked. Kindly contact Super Admin."]);
             }
         }
-    } else {
-        echo json_encode(["success" => false, "message" => "This Email or Phone Number does not exist!"]);
-        error_log("No record found for this username: " . $username); // Debugging
-    }
+        else {
+            echo json_encode(["success" => false, "message" => "This Email or Phone Number does not exist!"]);
+            error_log("No record found for this username: " . $username); // Debugging
+        }
+    } 
 
     $stmt->close();
     $conn->close();

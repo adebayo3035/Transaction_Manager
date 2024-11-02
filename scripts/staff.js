@@ -44,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${maskDetails(staff.email)}</td>
                 <td>${restrictionText}</td>
                 <td>${blockText}</td>
+                 <td>${staff.admin_status}</td>
                 <td><button class="view-details-btn" data-staff-id="${staff.unique_id}">View Details</button></td>
             `;
             ordersTableBody.appendChild(row);

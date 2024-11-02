@@ -230,6 +230,7 @@ label {
     display: block;
     margin-bottom: 3px;
     font-weight: normal;
+    font-size: 12px;
 }
 
 input[type="text"], input[type="date"], input[type="email"],
@@ -250,7 +251,7 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
     max-width: fit-content;
     align-self: center;
 }

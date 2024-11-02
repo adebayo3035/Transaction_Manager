@@ -40,6 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${driver.firstname}</td>
                 <td>${driver.lastname}</td>
                 <td>${maskDetails(driver.license_number)}</td>
+                <td>${maskDetails(driver.phone_number)}</td>
+                <td>${maskDetails(driver.email)}</td>
                 <td>${driver.status}</td>
                 <td><button class="view-details-btn" data-driver-id="${driver.id}">View Details</button></td>
             `;

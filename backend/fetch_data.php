@@ -126,11 +126,14 @@ while ($row = $resultTopMenuItems->fetch_assoc()) {
 
 // Fetch Active Customers Online
 // SQL query to join the tables and fetch customer names where status is Active
-$sqlActiveCustomers = "SELECT customers.customer_id, customers.firstname, customers.lastname
-FROM customer_active_sessions
-JOIN customers ON customer_active_sessions.customer_id = customers.customer_id
-WHERE customer_active_sessions.status = 'Active';
+$sqlActiveCustomers = " SELECT customers.customer_id, customers.firstname, customers.lastname
+    FROM customer_active_sessions
+    JOIN customers ON customer_active_sessions.customer_id = customers.customer_id
+    WHERE customer_active_sessions.status = 'Active'
+    ORDER BY customer_active_sessions.login_time DESC
+    LIMIT 5;
 ";
+
 
 $resultActiveCustomers = $conn->query($sqlActiveCustomers);
 $activeCustomers = [];

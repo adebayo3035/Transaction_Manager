@@ -117,4 +117,4 @@ window.addEventListener('load', () => {
 // Refresh the page every 60 seconds
 setInterval(() => {
   location.reload();
-}, 60000); // 60000 milliseconds = 60 seconds
+}, 120000); // 120000 milliseconds = 120 seconds

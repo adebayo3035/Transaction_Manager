@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const prevPageButton = document.getElementById('prev-page');
     const nextPageButton = document.getElementById('next-page');
     const currentPageDisplay = document.getElementById('current-page');
+    const markAllButton = document.getElementById('mark-all')
 
 
     let currentPage = 1;
@@ -37,13 +38,13 @@ document.addEventListener('DOMContentLoaded', () => {
                             // Add "Mark as Read" button only for Admin users
                             if (data.role === 'Admin') {
                                 const markAsReadButton = document.createElement('button');
+                                
                                 markAsReadButton.className = 'mark-as-read-btn';
                                 markAsReadButton.textContent = 'Mark as Read';
                                 markAsReadButton.dataset.id = notification.id;
 
                                 // Event listener for marking as read
                                 markAsReadButton.addEventListener('click', () => markNotificationAsRead(notification.id));
-
                                 // Append the button to the notification
                                 notificationElement.appendChild(markAsReadButton);
                             }
@@ -73,6 +74,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Event listener for refresh button
     refreshButton.addEventListener('click', () => fetchNotificationsAndCount(currentPage));
+     // Event listener for mark all notifications as read
+     markAllButton.addEventListener('click', () => markAllNotificationAsRead());
 
     // Event listeners for pagination buttons
     prevPageButton.addEventListener('click', () => {
@@ -111,6 +114,35 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => {
                 console.error('Error marking notification as read:', error);
             });
+    }
+
+    // Function to mark all notifications as read with confirmation
+    function markAllNotificationAsRead() {
+        // Display a confirmation modal
+        if (confirm("Are you sure you want to mark all notifications as read?")) {
+            // If the user clicks "Yes", proceed with the fetch request
+            fetch('backend/update_all_notification.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Refresh the notifications list
+                        alert(data.message);
+                        fetchNotificationsAndCount();
+                        location.reload();
+                    } else {
+                        console.error('Error marking notification as read:', data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error marking notification as read:', error);
+                });
+        } else {
+            // If the user clicks "No", do nothing
+            console.log("Action cancelled by user.");
+        }
     }
 
 });

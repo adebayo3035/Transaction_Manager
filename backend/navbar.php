@@ -2,7 +2,7 @@
 include "config.php"; // Include database connection file
 session_start();
 if (!isset($_SESSION['unique_id'])) {
-    header("Location: login.php"); // Redirect to login page if not logged in
+    header("Location: index.php"); // Redirect to login page if not logged in
     exit();
 }
 

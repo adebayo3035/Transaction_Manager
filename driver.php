@@ -34,6 +34,8 @@
                 <th>FirstName</th>
                 <th>LastName</th>
                 <th>License Number</th>
+                <th>Phone Number</th>
+                <th>E-mail Address</th>
                 <th>Status</th>
                 <th>Actions</th>
             </tr>
@@ -104,9 +106,13 @@
                 <div class="form-input">
                     <label for="add_vehicle_type">Type of Vehicle:</label>
                     <select id="add_vehicle_type" name="add_vehicle_type" required>
-                        <option value="Bike">Bike</option>
                         <option value="Bicycle">Bicycle</option>
+                        <option value="Mototcycle">Motorcycle</option>
+                        <option value="Tricycle">Tricycle</option>
                         <option value="Car">Car</option>
+                        <option value="Bus">Bus</option>
+                        <option value="Lorry">Lorry</option>
+                        <option value="Others">-- Specify Others --</option>
                     </select>
                 </div>
 

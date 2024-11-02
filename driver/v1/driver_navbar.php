@@ -9,7 +9,7 @@
 
 <body>
     <header>
-        <h1><a href="homepage.php">KaraKata </a></h1>
+        <h1><a href="dashboard.php">KaraKata </a></h1>
         <div class="user-info">
             <span id="customerName">Loading...</span>
             <span id="walletBalance">Loading Status...</span>
@@ -22,6 +22,7 @@
             <li><a href="dashboard.php" id="orderFood">Update Order Status</a></li>
             <li><a href="view_orders.php" id="viewOrders">View Order History</a></li>
             <li><a href="profile.php" id="fundWallet">My Profile</a></li>
+           
 
         </ul>
 

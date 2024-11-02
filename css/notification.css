@@ -1,114 +1,157 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
+
 body {
-    background-color: #f8f8f8;
+    background-color: #f0f2f5;
     margin: 0;
     padding: 0;
 }
-div.header {
-    background-color: #333;
-    color: white;
-    padding: 0.5em;
-    text-align: center;
-    font-size: 16px;
-    margin-top: 1em;
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
 }
 
-main, #notifications-container {
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.header h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+.mark-read-btn {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.mark-read-btn:hover {
+    background-color: #333; 
+}
+.mark-as-read-btn {
+    padding: 0.3em 0.8em; /* Smaller padding for a compact size */
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px; /* Slightly smaller text */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.mark-as-read-btn:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+.mark-as-read-btn:active {
+    background-color: #3e8e41; /* Even darker when clicked */
+    box-shadow: 0 2px #666;
+    transform: translateY(2px);
+}
+
+/* Ensure proper alignment inside the notification card */
+.notification .mark-as-read-btn {
+    align-self: flex-end;
+    margin-top: 8px;
+}
+
+@media screen and (max-width: 600px) {
+    .mark-as-read-btn {
+        font-size: 11px;
+        padding: 0.25em 0.6em; /* Adjust size for smaller screens */
+    }
+}
+
+
+.notification-section {
+    margin-top: 20px;
+}
+
+.notifications-list {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 90%;
-    margin: 10px;
-    padding: 1em;
-}
-
-#notifications-container {
-    margin-bottom: 1em;
+    gap: 15px;
 }
 
 .notification {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 1em;
-    margin: auto;
-    margin-bottom: 1em;
-    background-color: #f9f9f9;
-    width: 50%;
-   
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s;
+    border-left: 4px solid #007bff;
 }
-.notification:hover{
-    color: #fff;
-    background-color: brown;
 
-}
-.notification:hover .event-details{
-    color: #fff;
+.notification:hover {
+    background-color: #007bff;
+    color: white;
 }
 
 .notification .event-title {
     font-weight: bold;
-    padding: 6px;
-    
+    margin-bottom: 8px;
+    font-size: 18px;
 }
 
 .notification .event-details {
-    font-size: 0.9em;
+    font-size: 14px;
     color: #555;
-    padding: 6px;
 }
 
-.notification button {
-    padding: 0.5em 1em;
-    background-color: #007bff;
-    color: white;
+.refresh-btn {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #ffc107;
+    color: black;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    min-width: fit-content;
+    font-size: 14px;
+    transition: background-color 0.3s;
 }
 
-.notification button:hover {
-    background-color: #da190b;
-}
-#refresh-notifications{
-    padding: 0.5em 1em;
-    background-color: white;
-  color: black;
-  border: 2px solid #04AA6D;
-    border-radius: 5px;
-    cursor: pointer;
-    min-width: fit-content;
+
+.refresh-btn:hover {
+    background-color: #e0a800;
 }
 
-/* Container for the pagination */
+/* Pagination controls */
 .pagination-controls {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 10px 0px;
-    gap: 10px;
-    font-size: 12px;
+    margin-top: 20px;
+    gap: 15px;
+    font-size: 14px;
 }
 
-/* Pagination numbers container */
-#current-page {
-    display: flex;
-    gap: 8px;
-}
-
-/* Pagination buttons */
 .pagination-btn {
-    padding: 5px;
+    padding: 10px 15px;
     background-color: #007bff;
     color: white;
     border: none;
@@ -121,59 +164,32 @@ main, #notifications-container {
     background-color: #0056b3;
 }
 
-/* Pagination number buttons */
-.pagination-number {
-    padding: 8px 12px;
-    font-size: 16px;
-    background-color: #f1f1f1;
-    color: #333;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.pagination-number:hover {
-    background-color: #007bff;
-    color: white;
-}
-
-.pagination-number.active {
-    background-color: #007bff;
-    color: white;
-    font-weight: bold;
-}
-
-/* Disable the Previous and Next buttons if needed */
 .pagination-btn:disabled {
     background-color: #ccc;
     cursor: not-allowed;
 }
 
+#current-page {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+}
 
 @media screen and (max-width: 800px) {
     .notification {
-       font-size: 12px;
-       width: 70%;
+        padding: 10px;
     }
-    .notification button{
-     
-            padding: 4px;
-            font-size: 11px;
-            
-      
-    }
-}
 
-@media screen and (max-width: 700px) {
-    .notification {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-        width: 90%;
+    .notification .event-title {
+        font-size: 16px;
     }
-    div.header h1{
-        font-size: 13px;
+
+    .notification .event-details {
+        font-size: 12px;
+    }
+
+    .mark-read-btn, .refresh-btn {
+        padding: 8px 15px;
+        font-size: 12px;
     }
 }

@@ -11,7 +11,7 @@ function destroySession($customerId, $conn)
     if ($stmt->fetch()) {
         // Log session ID being destroyed
         error_log("Destroying session for session_id: " . $sessionId);
-        
+
         // Destroy the session
         session_id($sessionId);
         session_start();
@@ -80,13 +80,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 error_log("Unlocking account for customer_id: " . $customer_id);
                 $stmtResetAttempts = $conn->prepare("DELETE FROM customer_login_attempts WHERE customer_id = ?");
                 $stmtResetAttempts->bind_param("i", $customer_id);
-                
+
 
                 // Update customer_lock_history table
                 $status = 'unlocked'; // New status to indicate the account is unlocked
                 $unlock_method = 'System unlock'; // Method used to unlock the account
                 $customerID = 0; // DEFAULT SYSTEM ID
-                
+
                 $stmtUnlockHistory = $conn->prepare("UPDATE customer_lock_history SET status = ?, unlocked_by = ?, unlock_method = ?, unlocked_at = NOW() WHERE customer_id = ? AND status = 'locked'");
                 $stmtUnlockHistory->bind_param("sisi", $status, $customerID, $unlock_method, $customer_id);
                 // $stmtUnblock->execute();
@@ -106,46 +106,47 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $customer_data = $result->fetch_assoc();
             $customer_password = $customer_data['password'];
 
-            
-            if ($encrypted_password === $customer_password) {
-                    // Step 4: Successful login - Reset login attempts
-                    destroySession($customer_id, $conn);
-                    session_start();
-                    session_regenerate_id(true);
 
-                    // Set session variables
-                    $_SESSION['customer_id'] = $customer_data['customer_id'];
-                    $_SESSION['customer_name'] = $row['firstname']." ". $row['lastname'];
+            if ($encrypted_password === $customer_password) {
+                // Step 4: Successful login - Reset login attempts
+                destroySession($customer_id, $conn);
+                session_start();
+                session_regenerate_id(true);
+
+                // Set session variables
+                $_SESSION['customer_id'] = $customer_data['customer_id'];
+                $_SESSION['customer_name'] = $row['firstname'] . " " . $row['lastname'];
                 // $_SESSION['wallet_balance'] = $row['wallet_balance'];
 
-                    // Create a new session
-                    $newSessionId = session_id();
-                    $loginTime = date('Y-m-d H:i:s');
-                    $stmt = $conn->prepare("INSERT INTO customer_active_sessions (customer_id, session_id, login_time, status) VALUES (?, ?, ?, 'Active')");
-                    $stmt->bind_param("iss", $customer_id, $newSessionId, $loginTime);
-                    $stmt->execute();
+                // Create a new session
+                $newSessionId = session_id();
+                $loginTime = date('Y-m-d H:i:s');
+                $stmt = $conn->prepare("INSERT INTO customer_active_sessions (customer_id, session_id, login_time, status) VALUES (?, ?, ?, 'Active')");
+                $stmt->bind_param("iss", $customer_id, $newSessionId, $loginTime);
+                $stmt->execute();
 
-                    // Reset login attempts
-                    $stmtResetAttempts = $conn->prepare("DELETE FROM customer_login_attempts WHERE customer_id = ?");
-                    $stmtResetAttempts->bind_param("i", $customer_id);
-                    $stmtResetAttempts->execute();
+                // Reset login attempts
+                $stmtResetAttempts = $conn->prepare("DELETE FROM customer_login_attempts WHERE customer_id = ?");
+                $stmtResetAttempts->bind_param("i", $customer_id);
+                $stmtResetAttempts->execute();
 
-                    echo json_encode(["success" => true, "message" => "Login successful"]);
-                } else {
-                    error_log("Invalid password for customer_id: " . $customer_id);
-                    handleFailedLogin($conn, $customer_id, $max_attempts, $lockout_duration);
-                }
+                echo json_encode(["success" => true, "message" => "Login successful"]);
             } else {
-                echo json_encode(["success" => false, "message" => "Account is blocked. Kindly contact Super Admin."]);
+                error_log("Invalid password for customer_id: " . $customer_id);
+                handleFailedLogin($conn, $customer_id, $max_attempts, $lockout_duration);
             }
+        } else {
+            echo json_encode(["success" => false, "message" => "Account is blocked. Kindly contact Super Admin."]);
         }
-    } else {
+    }
+    else {
         echo json_encode(["success" => false, "message" => "This Email or Phone Number does not exist!"]);
         error_log("No record found for this username: " . $username); // Debugging
     }
+} 
 
-    $stmt->close();
-    $conn->close();
+$stmt->close();
+$conn->close();
 
 
 // Function to handle failed login attempts
@@ -175,7 +176,7 @@ function handleFailedLogin($conn, $customer_id, $max_attempts, $lockout_duration
                 $stmtLock = $conn->prepare("UPDATE customer_login_attempts SET attempts = ?, locked_until = ? WHERE customer_id = ?");
                 $stmtLock->bind_param("isi", $attemptss, $lock_period, $customer_id);
                 if ($stmtLock->execute()) {
-                    
+
                     // Inserrt into customer lock history table
 
                     $locked_by = 0000; // Default system id
@@ -185,9 +186,9 @@ function handleFailedLogin($conn, $customer_id, $max_attempts, $lockout_duration
                     INSERT INTO customer_lock_history (customer_id, status, locked_by, lock_reason, lock_method, locked_at) 
                     VALUES (?, 'locked', ?, ?, ?, NOW())
                 ");
-                $stmtInsertLock->bind_param("iiss", $customer_id, $locked_by, $lock_reason, $lock_method);
-                $stmtInsertLock->execute();
-                // $stmtInsertLock->close();
+                    $stmtInsertLock->bind_param("iiss", $customer_id, $locked_by, $lock_reason, $lock_method);
+                    $stmtInsertLock->execute();
+                    // $stmtInsertLock->close();
 
                     echo json_encode(["success" => false, "message" => "Too many failed login attempts. Your account is locked for 1 hour."]);
                 } else {

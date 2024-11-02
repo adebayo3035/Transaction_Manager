@@ -20,7 +20,23 @@ $totalResult = $stmt->get_result();
 $totalStaffs = $totalResult->fetch_assoc()['total'];
 
 // Fetch paginated drivers
-$query = "SELECT * FROM admin_tbl ORDER BY updated_at DESC LIMIT ? OFFSET ?";
+// $query = "SELECT * FROM admin_tbl  ORDER BY updated_at DESC LIMIT ? OFFSET ?";
+$query = "
+    SELECT 
+        admin_tbl.*, 
+        admin_active_sessions.status as admin_status
+    FROM 
+        admin_tbl
+    LEFT JOIN 
+        admin_active_sessions 
+    ON 
+        admin_tbl.unique_id = admin_active_sessions.unique_id 
+    ORDER BY 
+        admin_tbl.updated_at DESC 
+    LIMIT ? 
+    OFFSET ?
+";
+
 $stmt = $conn->prepare($query);
 $stmt->bind_param("ii", $limit, $offset);
 $stmt->execute();
