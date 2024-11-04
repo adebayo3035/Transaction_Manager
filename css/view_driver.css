@@ -11,6 +11,7 @@ tbody tr td input[type="email"],
 tbody tr td input[type="number"],
 tbody tr td input[type="month"],
 tbody tr td input[type="password"],
+tbody tr td input[type="datetime-local"],
 tbody tr td select {
     width: 100%;
     padding: 10px;

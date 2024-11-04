@@ -234,7 +234,7 @@ label {
 }
 
 input[type="text"], input[type="date"], input[type="email"],
-input[type="number"], input[type="month"], input[type="password"], select {
+input[type="number"], input[type="month"], input[type="password"], select, textarea {
     width: 100%;
     padding: 10px;
     margin: 5px 0 10px 0;
@@ -243,6 +243,15 @@ input[type="number"], input[type="month"], input[type="password"], select {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     outline: none;
 }
+textarea{
+    resize: none;
+}
+.char-counter {
+    font-size: 11px; /* Adjust size as needed */
+    color: #555; /* Color for the character counter */
+    margin-top: 1px; /* Space between textarea and counter */
+}
+
 
 button {
     padding: 10px;

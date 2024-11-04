@@ -18,6 +18,7 @@ if ($role === 'Super Admin') {
     $menuItems[] = ['name' => 'All Orders', 'link' => 'orders.php', 'id' => 'allOrder'];
     $menuItems[] = ['name' => 'Transactions', 'link' => 'transactions.php', 'id' => 'allTransactions'];
     $menuItems[] = ['name' => 'Inflow and Outflow', 'link' => 'revenue.php', 'id' => 'allRevenues'];
+    $menuItems[] = ['name' => 'Promos', 'link' => 'promo.php', 'id' => 'promo'];
 }
 
 echo json_encode(['menuItems' => $menuItems]);
