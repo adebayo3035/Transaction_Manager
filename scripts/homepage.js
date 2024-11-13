@@ -15,7 +15,7 @@ $(document).ready(function () {
 
 document.addEventListener('DOMContentLoaded', (event) => {
     event.preventDefault();
-    fetch('../transaction_manager/backend/fetch_random_customers.php', {
+    fetch('backend/fetch_random_customers.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -35,6 +35,33 @@ document.addEventListener('DOMContentLoaded', (event) => {
         })
         .catch(error => {
             console.error('Error fetching Customers Info:', error);
+        });
+
+        // fetch Ongoing Promos
+        fetch('backend/get_promo.php')
+        .then(response => response.json())
+        .then(data => {
+            const specialsSection = document.getElementById('specials');
+            
+            if (data.promos.ongoing && data.promos.ongoing.length > 0) {
+                data.promos.ongoing.forEach(promo => {
+                    const promoElement = document.createElement('div');
+                    promoElement.classList.add('promo');
+                    promoElement.innerHTML = `
+                        <h3>${promo.promo_name}</h3>
+                        <p>${promo.promo_description}</p>
+                        <p>Code: <strong>${promo.promo_code}</strong></p>
+                        <p>Discount: ${promo.discount_value}%</p>
+                        ${promo.max_discount ? `<p>Max Discount: ${promo.max_discount}</p>` : ''}
+                    `;
+                    specialsSection.appendChild(promoElement);
+                });
+            } else {
+                specialsSection.innerHTML += '<p>No ongoing promotions at the moment.</p>';
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching promotions:', error);
         });
 
 })

@@ -47,12 +47,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->execute();
         $stmt->close();
 
+        // Fetch the last inserted record ID
+        $sql = "SELECT order_id FROM orders ORDER BY order_id DESC LIMIT 1";
+        $result = $conn->query($sql);
+        $newId = 0;
+        
+        if ($result->num_rows > 0) {
+            $lastRecord = $result->fetch_assoc();
+            $newId = $lastRecord['order_id'] + 1; // Increment the last ID by 1
+        } else {
+            $newId = 1; // If no records found, set to 1
+        }
+        
+        // Concatenate the new ID to the description
+        $description = "Food Order " . $newId;
+        
         // Insert into customer transaction table
-        $description = "Food Order";
         $stmt = $conn->prepare("INSERT INTO customer_transactions (customer_id, amount, date_created, transaction_type, description) VALUES (?, ?, NOW(), 'debit', ?)");
         $stmt->bind_param("ids", $customerId, $totalAmount, $description);
         $stmt->execute();
         $stmt->close();
+        
         // Insert into orders table
         $stmt = $conn->prepare("INSERT INTO orders (customer_id, order_date, total_amount) VALUES (?, NOW(), ?)");
         $stmt->bind_param("id", $customerId, $totalAmount);

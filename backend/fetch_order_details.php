@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // $stmt = $conn->prepare("SELECT * FROM order_details WHERE order_id = ?");
     $query = "
-    SELECT 
+   SELECT 
     order_details.food_id, 
     order_details.quantity, 
     order_details.price_per_unit, 
@@ -41,7 +41,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     admin_tbl.firstname AS assigned_admin_firstname, 
     admin_tbl.lastname AS assigned_admin_lastname,
     admin_approver.firstname AS approver_firstname,
-    admin_approver.lastname AS approver_lastname
+    admin_approver.lastname AS approver_lastname,
+    promo_usage.discount_value,
+    promo_usage.promo_code,
+    promo_usage.percentage_discount
 FROM order_details
 JOIN food ON order_details.food_id = food.food_id
 JOIN orders ON orders.order_id = order_details.order_id
@@ -49,7 +52,9 @@ LEFT JOIN driver ON orders.driver_id = driver.id
 LEFT JOIN customers ON orders.customer_id = customers.customer_id
 LEFT JOIN admin_tbl ON orders.assigned_to = admin_tbl.unique_id
 LEFT JOIN admin_tbl AS admin_approver ON orders.approved_by = admin_approver.unique_id
+LEFT JOIN promo_usage ON orders.order_id = promo_usage.order_id
 WHERE order_details.order_id = ?
+
 
     ";
 

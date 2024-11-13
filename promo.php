@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="customer/css/checkout.css">
     <link rel="stylesheet" href="customer/css/cards.css">
     <link rel="stylesheet" href="css/view_driver.css">
+    <!-- <link rel="stylesheet" href="css/promo.css"> -->
 </head>
 
 <body>

@@ -1,0 +1,43 @@
+input:disabled {
+    background-color: #f0f0f0; /* Light gray background */
+    color: #a1a1a1;            /* Gray text color */
+    cursor: not-allowed;       /* "Not allowed" cursor */
+    border: 1px solid #d3d3d3; /* Light gray border */
+    opacity: 0.7;              /* Slightly transparent */
+}
+#actionButtons td, #changeDateRow td{
+    text-align: center;
+}
+#updatePromoBtn {
+    background-color: #007bff; /* Blue */
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;           /* White text */
+}
+
+#updatePromoBtn:hover {
+    background-color: #218838; /* Darker blue for hover */
+}
+
+#deletePromoBtn{
+    background-color: #dc3545; /* Red */
+    color: #ffffff;            /* White text */
+    border: none;
+    padding: 8px 16px;
+}
+#deletePromoBtn:hover {
+    background-color: #c82333; /* Darker red for hover */
+}
+
+#changeDateBtn{
+    background-color: #000; /* Red */
+    color: #ffffff;            /* White text */
+    border: none;
+    padding: 8px 16px;
+}
+#changeDateBtn:hover{
+    background-color: #fff;
+    color: #000;
+    border: 2px solid #000; /* Black border */
+    box-shadow: 4px 8px 12px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+}

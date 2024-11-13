@@ -10,7 +10,7 @@
 </head>
 
 <body>
-<?php include('customer_navbar.php'); ?>
+    <?php include('customer_navbar.php'); ?>
 
     <div class="checkout-container">
         <h1>Order Checkout</h1>
@@ -31,10 +31,20 @@
                 <span class="item-name">Delivery Fee</span>
                 <span class="total-order" id="delivery-fee">0.00</span>
             </div>
+            <div class="order-item" id="discount-item">
+                <span class="item-name">Discount (#)</span>
+                <span class="total-order" id="discount-value">0.00</span>
+            </div>
             <div class="order-item">
-                <span class="item-name">Total Amount</span>
+                <span class="item-name" id="totalAmount-label">Total Amount</span>
                 <span class="total-order" id="total-fee">0.00</span>
             </div>
+            <div class="order-item" id="total-after-discount">
+                <span class="item-name" id="after-discount">Total Amount After Discount</span>
+                <span class="total-order" id="total-fee-after">0.00</span>
+            </div>
+            
+            
             <table id="orderSummaryTable">
                 <thead>
                     <tr>
@@ -51,8 +61,24 @@
             </table>
         </div>
 
+        <div class="promoIndicator">
+            <input type="checkbox" id="promoCheckBox" name="promoCheckbox" class="promoCheckBox"> 
+            <label for="promoCheckBox">Apply Promo Code</label>
+        </div>
+
+
+        <div class="promoContainer" id="promoContainer">
+            <div class="form-group">
+                <label for="promo_code">Enter Promo Code:</label>
+                <input type="text" id="promo_code" name="promo_code" placeholder="XXXXXXXXXXX">
+            </div>
+            <div class="form-group">
+                <button type="submit" id="validate_promo">Validate Promo Code</button>
+            </div>
+        </div>
+
         <!-- Payment Method -->
-        <form id="checkoutForm">
+        <form id="checkoutForm" class="checkoutForm">
             <div class="payment-method">
                 <h2>Select Payment Method</h2>
                 <div class="payment-option">
@@ -113,11 +139,11 @@
             <div class="form-group" id="buttons">
                 <button type="submit" id="place-orderBtn">Place Order</button>
                 <!-- Print Receipt Button (Initially Hidden) -->
-                    <button type="button" id="receipt-btn" style="display: none;">Print Receipt</button>
-                
+                <button type="button" id="receipt-btn" style="display: none;">Print Receipt</button>
+
             </div>
-            
-            
+
+
         </form>
     </div>
 

@@ -31,14 +31,15 @@ if (isset($data['order_id']) && isset($data['status'])) {
     try {
          if ($status === 'Cancelled') {
             // Refund the customer
-            $stmt = $conn->prepare("SELECT total_amount, customer_id FROM orders WHERE order_id = ?");
+            $stmt = $conn->prepare("SELECT total_amount, discount, customer_id FROM orders WHERE order_id = ?");
             $stmt->bind_param("i", $order_id);
             $stmt->execute();
-            $stmt->bind_result($totalAmount, $customerId);
+            $stmt->bind_result($totalAmount, $discount, $customerId);
             $stmt->fetch();
             $stmt->close();
 
-            // Deduct 20% cancellation fee and add balance to customer's wallet
+            // Deduct 20% cancellation fee and recover any discount iven initially and add balance to customer's wallet
+            $totalAmount += $discount;
             $cancellation_fee = (0.2 * $totalAmount);
             $balance = $totalAmount - $cancellation_fee;
             $stmt = $conn->prepare("UPDATE wallets SET balance = balance + ? WHERE customer_id = ?");

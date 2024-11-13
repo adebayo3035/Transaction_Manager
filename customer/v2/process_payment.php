@@ -32,14 +32,27 @@ $cardExpiry = $data['card_expiry'] ?? null;
 $cardCvv = $data['card_cvv'] ?? null;
 $cardPin = $data['card_pin'] ?? null;
 $orderItems = $data['order_items'] ?? [];
-$totalAmount = $data['total_amount'] ?? 0;
+// $totalAmount = $data['total_amount'] ?? 0;
 $serviceFee = $data['service_fee'] ?? 0;
 $deliveryFee = $data['delivery_fee'] ?? 0;
 $totalOrder = $data['total_order'] ?? 0;
+
+
 $bankName = $data['bank_name'] ?? null;
 $bankAccount = $data['bank_account'] ?? null;
 $paypalEmail = $data['paypal_email'] ?? null;
 
+$usingPromo = $data['using_promo'] ?? false;
+$promo_code = $data['promo_code'] ?? null;
+$discount = $data['discount'] ?? 0;
+$discount_percent = $data['discount_percent'] ?? 0;
+
+// Apply the discount if promo is used
+if ($usingPromo) {
+    $totalAmount = $data['total_amount'] - $discount;
+} else {
+    $totalAmount = $data['total_amount'] ?? 0;
+}
 // Initialize the response
 $response = ['success' => false, 'message' => 'Unknown error occurred'];
 
@@ -51,7 +64,7 @@ switch ($paymentMethod) {
             $validationResult = validateCardPayment($customerId, $cardNumber, $cardCvv, $cardExpiry, $cardPin, $conn, $encryption_iv, $encryption_key);
             if ($validationResult['success']) {
                 // Proceed with order processing
-                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $paymentMethod, $conn);
+                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn);
             } else {
                 $response = $validationResult;
             }
@@ -72,7 +85,7 @@ switch ($paymentMethod) {
                 $response['message'] = 'Unknown Bank Account';
             } else {
                 // Validate bank transfer and process the order
-                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $paymentMethod, $conn);
+                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn);
             }
         } else {
             $response['message'] = 'Missing bank transfer details';
@@ -82,7 +95,7 @@ switch ($paymentMethod) {
     case 'paypal':
         if ($paypalEmail) {
             // Process PayPal payment and the order
-            $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $paymentMethod, $conn);
+            $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn);
         } else {
             $response['message'] = 'Missing PayPal details';
         }
@@ -96,18 +109,18 @@ switch ($paymentMethod) {
 // Return the final response as JSON
 echo json_encode($response);
 
-function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $paymentMethod, $conn)
+function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn)
 {
     $response = ['success' => false, 'message' => 'Unknown error occurred'];
     $conn->begin_transaction();
-    $balance = '';
-    // $service_f = '';
+
     try {
+        // Validate total amount
         if ($totalAmount == 0) {
             throw new Exception("Your Order Cart is empty.");
         }
-
-        // Check customer's wallet balance
+        $balance = null;
+        // Check wallet balance
         $stmt = $conn->prepare("SELECT balance FROM wallets WHERE customer_id = ?");
         $stmt->bind_param("i", $customerId);
         $stmt->execute();
@@ -115,123 +128,140 @@ function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deli
         $stmt->fetch();
         $stmt->close();
 
-        if ($balance < $totalAmount) {
+        if ($balance === null || $balance < $totalAmount) {
             throw new Exception("Insufficient balance in wallet.");
         }
 
-        // Step 1: Select a random Admin who is not restricted and blocked TO ASSIGN ORDER TO for approval.
-        $superAdminQuery = "SELECT unique_id FROM admin_tbl WHERE role = 'Admin' and restriction_id = 0 and block_id = 0 ORDER BY RAND() LIMIT 1";
-        $superAdminResult = $conn->query($superAdminQuery);
+        // Select a random Admin
+        // Step 1: Get the minimum and maximum unique_id for eligible admins
+        $idRangeQuery = "SELECT MIN(unique_id) AS min_id, MAX(unique_id) AS max_id FROM admin_tbl WHERE role = 'Admin' AND restriction_id = 0 AND block_id = 0";
+        $idRangeResult = $conn->query($idRangeQuery);
+        $idRangeRow = $idRangeResult->fetch_assoc();
+        $minId = $idRangeRow['min_id'];
+        $maxId = $idRangeRow['max_id'];
 
-        if ($superAdminResult->num_rows > 0) {
-            // Fetch the unique_id of the randomly selected Super Admin
-            $superAdmin = $superAdminResult->fetch_assoc();
-            $superAdminUniqueId = $superAdmin['unique_id'];
+        if ($minId !== null && $maxId !== null) {
+            // Step 2: Generate a random unique_id within this range
+            $randomId = rand($minId, $maxId);
 
-            // Deduct the amount from the customer wallet
-            $newBalance = $balance - $totalAmount;
-            $stmt = $conn->prepare("UPDATE wallets SET balance = ? WHERE customer_id = ?");
-            $stmt->bind_param("di", $newBalance, $customerId);
-            $stmt->execute();
-            $stmt->close();
+            // Step 3: Find the first admin with an ID greater than or equal to this random ID
+            $superAdminQuery = "SELECT unique_id FROM admin_tbl WHERE unique_id >= $randomId AND role = 'Admin' AND restriction_id = 0 AND block_id = 0 LIMIT 1";
+            $superAdminResult = $conn->query($superAdminQuery);
 
-            // Insert transaction into customer_transactions
-            $description = "Food Order";
-            $stmt = $conn->prepare("INSERT INTO customer_transactions (customer_id, amount, date_created, transaction_type, payment_method, description) VALUES (?, ?, NOW(), 'debit', ?, ?)");
-            $stmt->bind_param("idss", $customerId, $totalAmount, $paymentMethod, $description);
-            $stmt->execute();
-            $stmt->close();
-
-            // Insert the order into the orders table
-            $pin = rand(1000, 9999); // Generate 4-digit delivery pin
-            $stmt = $conn->prepare("INSERT INTO orders (customer_id, order_date, service_fee, delivery_fee, total_order, total_amount, delivery_pin, assigned_to) VALUES (?, NOW(), ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("iddddii", $customerId, $serviceFee, $deliveryFee, $totalOrder, $totalAmount, $pin, $superAdminUniqueId);
-            $stmt->execute();
-            $orderId = $stmt->insert_id;
-            $stmt->close();
-
-            // Insert each item into the order_details table and update food quantities
-            $stmt = $conn->prepare("INSERT INTO order_details (order_id, food_id, quantity, price_per_unit, total_price, order_date) VALUES (?, ?, ?, ?, ?, NOW())");
-            foreach ($orderItems as $item) {
-                $stmt->bind_param("iiidd", $orderId, $item['food_id'], $item['quantity'], $item['price_per_unit'], $item['total_price']);
-                $stmt->execute();
-
-                // Update available quantity for each food item selected
-                $update_stmt = $conn->prepare("UPDATE food SET available_quantity = available_quantity - ? WHERE food_id = ?");
-                $update_stmt->bind_param("ii", $item['quantity'], $item['food_id']);
-                $update_stmt->execute();
-                $update_stmt->close();
+            if ($superAdminResult->num_rows > 0) {
+                $superAdmin = $superAdminResult->fetch_assoc();
+                $superAdminUniqueId = $superAdmin['unique_id'];
+            } else {
+                throw new Exception("No eligible Super Admin found.");
             }
-            $stmt->close();
-
-            // Insert revenue data
-            // revenue type id for Order Inflow
-            $revenue_type = 2;
-            $refunded_amount = 0.0;
-            $stmt = $conn->prepare("INSERT INTO revenue (order_id, customer_id, total_amount, refunded_amount, retained_amount, transaction_date, revenue_type_id) VALUES (?, ?, ?, ?, ?, NOW(), ?)");
-            $stmt->bind_param("iidddi", $orderId, $customerId, $totalAmount, $refunded_amount, $totalAmount,$revenue_type);
-            $stmt->execute();
-            $stmt->close();
-
-             // revenue type id for Order Inflow
-            $revenue_type = 2;
-            function generateTransactionReference() {
-                // Add a prefix for identification
-                $prefix = 'TRX';
-            
-                // Generate a unique ID based on the current time with higher entropy (more randomness)
-                $uniqueId = uniqid($prefix, true);
-            
-                // Generate a random number (for extra randomness)
-                $randomNumber = mt_rand(1000, 9999);
-            
-                // Create the transaction reference
-                $transactionRef = strtoupper($uniqueId . $randomNumber);
-            
-                // Optionally, remove any dots or special characters in the reference
-                $transactionRef = str_replace('.', '', $transactionRef);
-            
-                return $transactionRef;
-            }
-            
-            // Example usage
-            $transactionReference = generateTransactionReference();
-            $transaction_type = 'Credit';
-            $status = 'Pending';
-            $stmt = $conn->prepare("INSERT INTO transactions (transaction_ref, customer_id, order_id, transaction_type, amount, transaction_date, payment_method, status, created_at, revenue_type_id) VALUES (?, ?, ?, ?, ?, NOW(), ?, ?, NOW(), ?)");
-            $stmt->bind_param("siisdssi", $transactionReference, $customerId, $orderId, $transaction_type, $totalAmount,$paymentMethod, $status, $revenue_type);
-            $stmt->execute();
-            $stmt->close();
-
-
-            // Step 2: Insert the notification data into the admin_notifications table
-            $title = "Food Order for customer ID: " . $customerId;
-            $event_type = "New Food Order";
-            $event_details = "Customer placed an Order on " . date('Y-m-d H:i:s');
-            $description = "Food Order";
-
-            // Prepare the SQL statement to insert into admin_notifications with the selected Super Admin's unique_id
-            $stmt = $conn->prepare("INSERT INTO admin_notifications (event_title, event_type, event_details, created_at, user_id) VALUES (?, ?, ?, NOW(), ?)");
-            $stmt->bind_param("ssss", $title, $event_type, $event_details, $superAdminUniqueId);
-            $stmt->execute();
-            $stmt->close();
         } else {
-            throw new Exception("Super Admin Cannot be found.");
+            throw new Exception("No eligible Super Admin available.");
         }
 
-        // Commit the transaction
-        $conn->commit();
+        // Deduct amount from wallet
+        $newBalance = $balance - $totalAmount;
+        $stmt = $conn->prepare("UPDATE wallets SET balance = ? WHERE customer_id = ?");
+        $stmt->bind_param("di", $newBalance, $customerId);
+        $stmt->execute();
+        $stmt->close();
 
+        // Generate and insert transaction description
+        $orderQuery = "SELECT order_id FROM orders ORDER BY order_id DESC LIMIT 1 FOR UPDATE";
+        $orderResult = $conn->query($orderQuery);
+
+        $newId = ($orderResult->num_rows > 0) ? $orderResult->fetch_assoc()['order_id'] + 1 : 1;
+        $orderDescription = "Food Order: " . $newId;
+        $stmt = $conn->prepare("INSERT INTO customer_transactions (customer_id, amount, date_created, transaction_type, payment_method, description) VALUES (?, ?, NOW(), 'debit', ?, ?)");
+        $stmt->bind_param("idss", $customerId, $totalAmount, $paymentMethod, $orderDescription);
+        $stmt->execute();
+        $stmt->close();
+
+        // Insert order
+        $deliveryPin = rand(1000, 9999);
+        $stmt = $conn->prepare("INSERT INTO orders (customer_id, order_date, service_fee, delivery_fee, total_order, discount, total_amount, delivery_pin, assigned_to) VALUES (?, NOW(), ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("idddddii", $customerId, $serviceFee, $deliveryFee, $totalOrder, $discount, $totalAmount, $deliveryPin, $superAdminUniqueId);
+        $stmt->execute();
+        $orderId = $stmt->insert_id;
+        $stmt->close();
+
+        // Insert items and update food quantities
+        $stmt = $conn->prepare("INSERT INTO order_details (order_id, food_id, quantity, price_per_unit, total_price, order_date) VALUES (?, ?, ?, ?, ?, NOW())");
+        foreach ($orderItems as $item) {
+            $stmt->bind_param("iiidd", $orderId, $item['food_id'], $item['quantity'], $item['price_per_unit'], $item['total_price']);
+            $stmt->execute();
+
+            $updateStmt = $conn->prepare("UPDATE food SET available_quantity = available_quantity - ? WHERE food_id = ?");
+            $updateStmt->bind_param("ii", $item['quantity'], $item['food_id']);
+            $updateStmt->execute();
+            $updateStmt->close();
+        }
+        $stmt->close();
+
+        // Insert revenue data
+        $revenueType = 2;
+        $refundedAmount = 0.0;
+        $stmt = $conn->prepare("INSERT INTO revenue (order_id, customer_id, total_amount, refunded_amount, retained_amount, transaction_date, revenue_type_id) VALUES (?, ?, ?, ?, ?, NOW(), ?)");
+        $stmt->bind_param("iidddi", $orderId, $customerId, $totalAmount, $refundedAmount, $totalAmount, $revenueType);
+        $stmt->execute();
+        $stmt->close();
+
+        // Promo code usage
+        if ($promo_code !== "") {
+            $stmt = $conn->prepare("INSERT INTO promo_usage (promo_code, customer_id, order_id, percentage_discount, discount_value, date_used) VALUES (?, ?, ?, ?, ?, NOW())");
+            $stmt->bind_param("siidd", $promo_code, $customerId, $orderId, $discount_percent, $discount);
+            $stmt->execute();
+            $stmt->close();
+        }
+        function generateTransactionReference()
+        {
+            // Add a prefix for identification
+            $prefix = 'TRX';
+
+            // Generate a unique ID based on the current time with higher entropy (more randomness)
+            $uniqueId = uniqid($prefix, true);
+
+            // Generate a random number (for extra randomness)
+            $randomNumber = mt_rand(1000, 9999);
+
+            // Create the transaction reference
+            $transactionRef = strtoupper($uniqueId . $randomNumber);
+
+            // Optionally, remove any dots or special characters in the reference
+            $transactionRef = str_replace('.', '', $transactionRef);
+
+            return $transactionRef;
+        }
+
+        // Example usage
+        $transactionReference = generateTransactionReference();
+        $transaction_type = 'Credit';
+        $status = 'Pending';
+        $stmt = $conn->prepare("INSERT INTO transactions (transaction_ref, customer_id, order_id, transaction_type, amount, transaction_date, payment_method, status, created_at, revenue_type_id) VALUES (?, ?, ?, ?, ?, NOW(), ?, ?, NOW(), ?)");
+        $stmt->bind_param("siisdssi", $transactionReference, $customerId, $orderId, $transaction_type, $totalAmount, $paymentMethod, $status, $revenueType);
+        $stmt->execute();
+        $stmt->close();
+
+        // Admin notification
+        $title = "Food Order for customer ID: " . $customerId;
+        $eventType = "New Food Order";
+        $eventDetails = "Customer placed an order on " . date('Y-m-d H:i:s');
+        $stmt = $conn->prepare("INSERT INTO admin_notifications (event_title, event_type, event_details, created_at, user_id) VALUES (?, ?, ?, NOW(), ?)");
+        $stmt->bind_param("ssss", $title, $eventType, $eventDetails, $superAdminUniqueId);
+        $stmt->execute();
+        $stmt->close();
+
+        // Commit transaction
+        $conn->commit();
         $response = ['success' => true, 'message' => 'Order placed successfully.'];
 
     } catch (Exception $e) {
-        // Rollback transaction on failure
         $conn->rollback();
         $response = ['success' => false, 'message' => "Error placing order: " . $e->getMessage()];
     }
 
     return $response;
 }
+
 
 function getDecryptedCardDetails($customerId, $dbConnection, $key, $iv)
 {

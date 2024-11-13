@@ -24,6 +24,7 @@
         <li><a href="profile.php" id="fundWallet">My Profile</a></li>
         <li><a href="transactions.php" id="viewOrders">My Transactions</a></li>
         <li><a href="generate_token.php" id="fundWallet">Generate Token</a></li>
+        <li><a href="promo.php" id="fundWallet">Promos</a></li>
     </ul>
 </nav>
 

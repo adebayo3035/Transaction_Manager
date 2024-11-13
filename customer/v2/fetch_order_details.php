@@ -26,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       order_details.status,
       orders.service_fee,
       orders.delivery_fee,
+      orders.discount,
       orders.total_order,
       orders.total_amount,
       orders.delivery_pin,

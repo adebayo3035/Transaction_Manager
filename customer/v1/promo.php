@@ -12,7 +12,7 @@
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Orders</title>
+    <title>View Ongoing Promos</title>
     <link rel="stylesheet" href="../css/view_orders.css">
     <link rel="stylesheet" href="../css/checkout.css">
 </head>
@@ -24,18 +24,18 @@
             <input type="text" id="liveSearch" placeholder="Search for Order...">
             <button type="submit">Search <i class="fa fa-search" aria-hidden="true"></i></button>
         </div>
-        <h1>My Orders</h1>
+        <h1>Ongoing Promos</h1>
     </div>
 
     <table id="ordersTable" class="ordersTable">
         <thead>
             <tr>
-                <th>Order ID</th>
-                <th>Order Date</th>
-                <th>Total Amount (N)</th>
-                <th>Discount (N)</th>
+                <<th>Promo Code</th>
+                <th>Promo Name</th>
+                <th>Start Date</th>
+                <th>End Date</th>
                 <th>Status</th>
-                <th>Actions</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -49,31 +49,20 @@
     <div id="orderModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Order Details</h2>
+            <h2>Promo Details</h2>
             <table id="orderDetailsTable" class="ordersTable">
                 <thead>
-                    <tr>
-                        <th>Order Date</th>
-                        <th>Order ID</th>
-                        <th>Food Name</th>
-                        <th>Number of Portions</th>
-                        <th>Price per Portion (N)</th>
-                        <th>Status</th>
-                        <th>Total Price (N)</th>
-                    </tr>
+                    
                 </thead>
                 <tbody>
                     <!-- Order details will be dynamically inserted here -->
                 </tbody>
 
             </table>
-
-            <button type="button" id="receipt-btn" style="display: none">Print Receipt</button>
-            <button type="button" id="decline-btn" style="display: none">Cancel Order</button>
         </div>
     </div>
 
-    <script src="../scripts/view_orders.js"></script>
+    <script src="../scripts/view_promo.js"></script>
 </body>
 
 </html>

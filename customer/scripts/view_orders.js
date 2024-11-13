@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${order.order_id}</td>
                 <td>${order.order_date}</td>
                 <td>${order.total_amount}</td>
+                 <td>${order.discount}</td>
                 <td>${order.delivery_status}</td>
                 <td><button class="view-details-btn" data-order-id="${order.order_id}">View Details</button></td>
             `;
@@ -172,6 +173,14 @@ document.addEventListener('DOMContentLoaded', () => {
             <td>${firstDetail.delivery_fee}</td>
         `;
         orderDetailsTableBody.appendChild(deliveryFeeRow);
+
+        // Add Discount Fee row
+        const discountFeeRow = document.createElement('tr');
+        discountFeeRow.innerHTML = `
+            <td colspan="6"><strong>Discount</strong></td>
+            <td>${firstDetail.discount}</td>
+        `;
+        orderDetailsTableBody.appendChild(discountFeeRow);
 
         // Add Total Amount row
         const totalAmountRow = document.createElement('tr');

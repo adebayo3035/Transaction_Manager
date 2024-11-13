@@ -16,6 +16,18 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+.promoIndicator{
+    margin-bottom: 10px;
+}
+
+.promoIndicator .promoCheckBox{
+    font-size: 12px;
+    padding-bottom: 5px;
+    border: 2px solid red;
+}
+.promoContainer{
+    display: none;
+}
 
 h1 {
     text-align: center;
@@ -36,6 +48,9 @@ h2 {
     padding: 10px 0;
 }
 
+#discount-item, #total-after-discount{
+    display: none;
+}
 .payment-option {
     margin-bottom: 10px;
 }

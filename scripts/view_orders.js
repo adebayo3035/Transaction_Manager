@@ -117,12 +117,25 @@ document.addEventListener('DOMContentLoaded', () => {
         fragment.appendChild(createRow('Total Order', firstDetail.total_order));
         fragment.appendChild(createRow('Service Fee', firstDetail.service_fee));
         fragment.appendChild(createRow('Delivery Fee', firstDetail.delivery_fee));
+       
+        if(firstDetail.percentage_discount !== null){
+            fragment.appendChild(createRow('Percentage Discount (%)', firstDetail.percentage_discount));
+        }
+        if(firstDetail.discount_value !== null){
+            fragment.appendChild(createRow('Discount Value (N)', firstDetail.discount_value));
+        }
         fragment.appendChild(createRow('Total Amount', firstDetail.total_amount));
-        fragment.appendChild(createRow('Order Assigned To', `${firstDetail.assigned_admin_firstname} ${firstDetail.assigned_admin_lastname}`));
+        if(firstDetail.promo_code !== null){
+            fragment.appendChild(createRow('Promo Code', firstDetail.promo_code));
+        }
+        if(firstDetail.assigned_admin_firstname !== null && firstDetail.assigned_admin_lastname !== null){
+            fragment.appendChild(createRow('Order Assigned To', `${firstDetail.assigned_admin_firstname} ${firstDetail.assigned_admin_lastname}`));
+        }
+        
         if(firstDetail.delivery_status == 'Cancelled' && firstDetail.approver_firstname == null && firstDetail.approver_lastname == null){
             fragment.appendChild(createRow('Order Approved By', `Customer Cancelled Order`));
         }
-        else{
+        else if(firstDetail.approver_firstname !== null && firstDetail.approver_lastname !== null){
             fragment.appendChild(createRow('Order Approved By', `${firstDetail.approver_firstname} ${firstDetail.approver_lastname}`));
         }
         fragment.appendChild(createRow("Customer's Name", `${firstDetail.customer_firstname} ${firstDetail.customer_lastname}`));

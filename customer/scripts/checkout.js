@@ -9,13 +9,95 @@ document.addEventListener('DOMContentLoaded', () => {
     const printReceiptBtn = document.getElementById('receipt-btn');
     const placeOrderBtn = document.getElementById('place-orderBtn')
 
+    let usePromo = false;
+    let discount_value = 0;
+    let promoCode = '';
+    
+    // toggle display of Promo Container
+    document.getElementById('promoCheckBox').addEventListener('change', function() {
+        const promoContainer = document.getElementById('promoContainer');
+        const checkoutForm = document.getElementById('checkoutForm');
+        
+        if (this.checked) {
+            promoContainer.style.display = 'block';
+            checkoutForm.style.display = 'none';
+        } else {
+            promoContainer.style.display = 'none';
+            checkoutForm.style.display = 'block';
+        }
+    });
+    
+    const promoBtn = document.getElementById('validate_promo');
+    // validate promo code
+    promoBtn.addEventListener('click', () => {
+        const promoInput = document.getElementById('promo_code');
+        const discountItem = document.getElementById('discount-item');
+        const totalAfterDiscount = document.getElementById('total-after-discount');
+        const totalAmountLabel = document.getElementById('totalAmount-label');
+        const discountValueElem = document.getElementById('discount-value');
+        const totalFeeAfterElem = document.getElementById('total-fee-after');
+        const promoCheckBox = document.getElementById('promoCheckBox');
+    
+        // Show confirmation dialog
+        if (!confirm("Are you sure you want to validate this promo code?")) {
+            promoInput.value = ''; // Clear input if user cancels
+            return;
+        }
+    
+        // Proceed with validation if the user confirms
+        const promoDetails = {
+            promo_code: promoInput.value,
+            total_order: totalOrder
+        };
+    
+        fetch('../v2/validate_promo.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(promoDetails)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.eligible) {
+                alert('Promo Code has been successfully Validated.');
+                usePromo = true;
+                discount_value = data.discount;
+                discount_percent = data.discount_percent,
+                promoCode = data.promo_code;
+                totalAmountAfter = totalAmount - discount_value;
+    
+                // Update UI with discount information
+                discountItem.style.display = "flex";
+                totalAfterDiscount.style.display = "flex";
+                totalAmountLabel.textContent = 'Total Amount Before Discount';
+                discountValueElem.textContent = `N ${discount_value.toFixed(2)}`;
+                totalFeeAfterElem.textContent = `N ${totalAmountAfter.toFixed(2)}`;
+    
+                // Disable promo elements
+                promoCheckBox.disabled = true;
+                promoBtn.disabled = true;
+                promoBtn.style.cursor = 'not-allowed';
+                promoBtn.style.backgroundColor = '#ccc';
+                promoInput.disabled = true;
+    
+                checkoutForm.style.display = 'block';
+            } else {
+                alert('Error: ' + data.message);
+                console.error(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        });
+    });
+    
+    
     // Get Order Items stored in the session
     const orderItems = JSON.parse(sessionStorage.getItem('order_items') || '[]');
     const totalOrder = parseFloat(sessionStorage.getItem('total_amount') || 0);
     const serviceFee = parseFloat(sessionStorage.getItem('service_fee') || 0);
     const deliveryFee = parseFloat(sessionStorage.getItem('delivery_fee') || 0);
-
-    const totalAmount = totalOrder + serviceFee + deliveryFee;
+    let totalAmount = ((totalOrder - discount_value) + serviceFee + deliveryFee);
 
     if (!orderItems || orderItems.length === 0) {
         location.replace('../v1/dashboard.php');
@@ -93,7 +175,11 @@ document.addEventListener('DOMContentLoaded', () => {
             total_amount: totalAmount,
             service_fee: serviceFee,
             delivery_fee: deliveryFee,
-            total_order: totalOrder
+            total_order: totalOrder,
+            using_promo : usePromo,
+            discount: discount_value,
+            discount_percent : discount_percent,
+            promo_code: promoCode
         };
 
         if (selectedPaymentMethod === 'Card') {

@@ -2,11 +2,12 @@ function toggleModal(modalId) {
     let modal = document.getElementById(modalId);
     modal.style.display = (modal.style.display === "none" || modal.style.display === "") ? "block" : "none";
 }
+
 document.addEventListener('DOMContentLoaded', () => {
 
     function updateDateTimeInputs(startDateId, endDateId) {
         const now = new Date();
-        const formattedNow = now.toISOString().slice(0, 16); // Formats to 'YYYY-MM-DDTHH:MM'
+        const formattedNow = now.toISOString().slice(0, 16);
         const startDateInput = document.getElementById(startDateId);
         const endDateInput = document.getElementById(endDateId);
 
@@ -14,25 +15,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
         startDateInput.addEventListener("change", () => {
             const selectedStartDate = new Date(startDateInput.value);
-
             endDateInput.min = startDateInput.value;
 
             if (selectedStartDate.toDateString() === now.toDateString()) {
-                const formattedEndMin = now.toISOString().slice(0, 16); // Current time
+                const formattedEndMin = now.toISOString().slice(0, 16);
                 endDateInput.min = formattedEndMin;
             }
 
             if (new Date(endDateInput.value) < selectedStartDate) {
-                endDateInput.value = ""; // Clear end date
+                endDateInput.value = "";
             }
         });
     }
-
-    // Usage
     updateDateTimeInputs("start_date", "end_date");
 
-
-    const limit = 10; // Number of items per page
+    const limit = 10;
     let currentPage = 1;
 
     function fetchPromos(page = 1) {
@@ -45,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    updateTable(data.promos);
+                    updateTable(data.promos.all);
                     updatePagination(data.total, data.page, data.limit);
                 } else {
                     console.error('Failed to fetch Promo Details:', data.message);
@@ -58,20 +55,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const ordersTableBody = document.querySelector('#ordersTable tbody');
         ordersTableBody.innerHTML = '';
         promos.forEach(promo => {
-
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${promo.promo_code}</td>
                 <td>${promo.promo_name}</td>
                 <td>${promo.start_date}</td>
                 <td>${promo.end_date}</td>
-                 <td>${promo.status}</td>
+                <td>${promo.status}</td>
                 <td><button class="view-details-btn" data-promo-id="${promo.promo_id}">View Details</button></td>
             `;
             ordersTableBody.appendChild(row);
         });
 
-        // Attach event listeners to the view details buttons
         document.querySelectorAll('.view-details-btn').forEach(button => {
             button.addEventListener('click', (event) => {
                 const promoId = event.target.getAttribute('data-promo-id');
@@ -79,10 +74,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
     function updatePagination(totalItems, currentPage, itemsPerPage) {
         const paginationContainer = document.getElementById('pagination');
         paginationContainer.innerHTML = '';
-
         const totalPages = Math.ceil(totalItems / itemsPerPage);
 
         for (let page = 1; page <= totalPages; page++) {
@@ -100,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function fetchPromoDetails(promoId) {
-        fetch(`backend/fetch_promo_details.php`, {
+        fetch('backend/fetch_promo_details.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -109,117 +104,126 @@ document.addEventListener('DOMContentLoaded', () => {
         })
             .then(response => response.json())
             .then(data => {
-                console.log(data); // Log the entire response to the console
                 if (data.success) {
                     populatePromoDetails(data.promo_details, data.logged_in_user_role);
-                    console.log(data.logged_in_user_role);
                     document.getElementById('orderModal').style.display = 'block';
+                    // Ensure all your DOM manipulations are here or after this event 
+                    const dateCreatedElement = document.getElementById('dateCreated');
+                    if (dateCreatedElement) {
+                        const dateCreated = dateCreatedElement.value;
+                        updateDateTimeInputs("startDate", "endDate", dateCreated);
+                    }
+                    else {
+                        console.error('Date Created input not found.');
+                    }
                 } else {
                     console.error('Failed to fetch Promo details:', data.message);
                 }
             })
-            .catch(error => {
-                console.error('Error fetching Promo details:', error);
-            });
+            .catch(error => console.error('Error fetching Promo details:', error));
     }
 
     function populatePromoDetails(promo_details, logged_in_user_role) {
         const orderDetailsTable = document.querySelector('#orderDetailsTable tbody');
-
-        // Disable input fields if the logged-in user is not a "Super Admin"
         const isSuperAdmin = logged_in_user_role === 'Super Admin';
         const disableAttribute = isSuperAdmin ? '' : 'disabled';
 
         orderDetailsTable.innerHTML = `
-        <tr>
-    <td>Promo ID</td>
-    <td><input type="text" id="promoID" value="${promo_details.promo_id}" disabled></td>
-</tr>
-<tr>
-    <td>Promo Code</td>
-    <td><input type="text" id="promoCode" value="${promo_details.promo_code}" disabled></td>
-</tr>
-<tr>
-    <td>Promo Name</td>
-    <td><input type="text" id="promoName" value="${promo_details.promo_name}" ${disableAttribute}></td>
-</tr>
-<tr>
-    <td>Description</td>
-    <td>
-        <textarea id="promoDescriptions" ${disableAttribute} required maxlength = "150">${promo_details.promo_description}</textarea>
-        <span id="charCounter" class="char-counter">150 characters remaining</div>
-    </td>
-</tr>
+            <!-- HTML content here for promo details -->
+              <tr>
+        <td>Promo ID</td>
+        <td><input type="text" id="promoID" value="${promo_details.promo_id}" disabled></td>
+    </tr>
+    <tr>
+        <td>Promo Code</td>
+        <td><input type="text" id="promoCode" value="${promo_details.promo_code}" disabled></td>
+    </tr>
+    <tr>
+        <td>Date Created</td>
+        <td><input type="datetime-local" id="dateCreated" value="${promo_details.date_created}" disabled></td>
+    </tr>
+    <tr>
+        <td>Promo Name</td>
+        <td><input type="text" id="promoName" value="${promo_details.promo_name}" ${disableAttribute}></td>
+    </tr>
+    
+    <tr>
+        <td>Start Date</td>
+        <td><input type="datetime-local" id="startDate" value="${promo_details.start_date}" ${disableAttribute}></td>
+    </tr>
+    <tr>
+        <td>End Date</td>
+        <td><input type="datetime-local" id="endDate" value="${promo_details.end_date}" ${disableAttribute}></td>
+    </tr>
+        <td>Description</td>
+        <td>
+            <textarea id="promoDescriptions" ${disableAttribute} required maxlength = "150" value= "${promo_details.promo_description}">${promo_details.promo_description}</textarea>
+            <span id="charCounter" class="char-counter">150 characters remaining</div>
+        </td>
+    </tr>
+    <tr>
+        <td>Discount Type</td>
+        <td>
+            <select id="discountType" ${disableAttribute}>
+                <option value="percentage" ${promo_details.discount_type === 'percentage' ? 'selected' : ''}>Percentage</option>
+                <option value="flat" ${promo_details.discount_type === 'flat' ? 'selected' : ''}>Flat Rate</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>Discount Value (%)</td>
+        <td><input type="number" id="discountPercentage" value="${promo_details.discount_value}" min="1" max="100" ${disableAttribute}></td>
+    </tr>
+    <tr>
+        <td>Eligibility Criteria</td>
+        <td>
+            <select id="eligibilityCriteria" ${disableAttribute}>
+                <option value="All Customers" ${promo_details.eligibility_criteria === 'All Customers' ? 'selected' : ''}>All Customers</option>
+                <option value="New Customers" ${promo_details.eligibility_criteria === 'New Customers' ? 'selected' : ''}>New Customers</option>
+                <option value="Others" ${promo_details.eligibility_criteria === 'Others' ? 'selected' : ''}>Others</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>Minimum Order Value</td>
+        <td><input type="number" id="min_order_value" value="${promo_details.min_order_value}" ${disableAttribute}></td>
+    </tr>
+    <tr>
+        <td>Maximum Discount</td>
+        <td><input type="number" id="max_discount" value="${promo_details.max_discount}" ${disableAttribute}></td>
+    </tr>
+    
+    
+    <tr>
+        <td>Status</td>
+        <td>
+            <select id="status" ${disableAttribute}>
+                <option value="1" ${promo_details.status === '1' ? 'selected' : ''}>Active</option>
+                <option value="0" ${promo_details.status === '0' ? 'selected' : ''}>Inactive</option>
+            </select>
+        </td>
+    </tr>
+        `;
 
-<tr>
-    <td>Start Date</td>
-    <td><input type="datetime-local" id="startDate" value="${promo_details.start_date}" ${disableAttribute}></td>
-</tr>
-<tr>
-    <td>End Date</td>
-    <td><input type="datetime-local" id="endDate" value="${promo_details.end_date}" ${disableAttribute}></td>
-</tr>
-<tr>
-    <td>Discount Type</td>
-    <td>
-        <select id="discountType" ${disableAttribute}>
-            <option value="percentage" ${promo_details.discount_type === 'percentage' ? 'selected' : ''}>Percentage</option>
-            <option value="flat" ${promo_details.discount_type === 'flat' ? 'selected' : ''}>Flat Rate</option>
-        </select>
-    </td>
-</tr>
-<tr>
-    <td>Discount Value (%)</td>
-    <td><input type="number" id="discountPercentage" value="${promo_details.discount_value}" min="1" max="100" ${disableAttribute}></td>
-</tr>
-<tr>
-    <td>Eligibility Criteria</td>
-    <td>
-        <select id="eligibilityCriteria" ${disableAttribute}>
-            <option value="All Customers" ${promo_details.eligibility_criteria === 'All Customers' ? 'selected' : ''}>All Customers</option>
-            <option value="New Customers" ${promo_details.eligibility_criteria === 'New Customers' ? 'selected' : ''}>New Customers</option>
-            <option value="Others" ${promo_details.eligibility_criteria === 'Others' ? 'selected' : ''}>Others</option>
-        </select>
-    </td>
-</tr>
-<tr>
-    <td>Minimum Order Value</td>
-    <td><input type="number" id="min_order_value" value="${promo_details.min_order_value}" ${disableAttribute}></td>
-</tr>
-<tr>
-    <td>Maximum Discount</td>
-    <td><input type="number" id="max_discount" value="${promo_details.max_discount}" ${disableAttribute}></td>
-</tr>
-
-
-<tr>
-    <td>Status</td>
-    <td>
-        <select id="status" ${disableAttribute}>
-            <option value="1" ${promo_details.status === '1' ? 'selected' : ''}>Active</option>
-            <option value="0" ${promo_details.status === '0' ? 'selected' : ''}>Inactive</option>
-        </select>
-    </td>
-</tr>
-    `;
-
-        // Conditionally add "Update" and "Delete" buttons if the logged-in user is a "Super Admin"
         if (isSuperAdmin) {
             const actionButtons = `
-            <tr>
-                <td colspan="2" style="text-align: center;">
-                    <button id="updatePromoBtn">Update</button>
-                    <button id="deletePromoBtn">Delete</button>
-                </td>
-            </tr>
-        `;
+                <tr>
+                    <td colspan="2" style="text-align: center;">
+                        <button id="updatePromoBtn">Update</button>
+                        <button id="deletePromoBtn">Delete</button>
+                    </td>
+                </tr>
+                <tr id="updateDateBtnRow" style="display: none;">
+                    <td colspan="2" style="text-align: center;">
+                        <button id="confirmDateUpdateBtn">Confirm Date Update</button>
+                    </td>
+                </tr>
+            `;
             orderDetailsTable.innerHTML += actionButtons;
 
-            // Event listeners for update and delete buttons
             document.getElementById('updatePromoBtn').addEventListener('click', () => {
                 updatePromo(promo_details.promo_id);
             });
-
             document.getElementById('deletePromoBtn').addEventListener('click', () => {
                 deletePromo(promo_details.promo_id);
             });
@@ -227,15 +231,39 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function updateDateTimeUpdate(startDateId, endDateId, dateCreated) {
+        const startDateInput = document.getElementById(startDateId);
+        const endDateInput = document.getElementById(endDateId);
+
+        const formattedDateCreated = new Date(dateCreated).toISOString().slice(0, 16);
+        startDateInput.min = formattedDateCreated;
+
+        startDateInput.addEventListener("change", () => {
+            const selectedStartDate = new Date(startDateInput.value);
+            endDateInput.min = startDateInput.value;
+
+            if (new Date(selectedStartDate).toDateString() === new Date(dateCreated).toDateString()) {
+                const formattedEndMin = new Date().toISOString().slice(0, 16); // Current time
+                endDateInput.min = formattedEndMin;
+            }
+
+            if (new Date(endDateInput.value) < selectedStartDate) {
+                endDateInput.value = ""; // Clear end date
+            }
+        });
+    }
+
     function updatePromo(promoId) {
-        updateDateTimeInputs("startDate", "endDate");
+        const dateCreated = document.getElementById('dateCreated').value;
+        updateDateTimeUpdate("startDate", "endDate", dateCreated);
 
         // Collect and parse promo data for the update request
         const promoData = {
             promo_id: promoId,
             promo_code: document.getElementById('promoCode').value,
             promo_name: document.getElementById('promoName').value,
-            description: document.getElementById('promoDescription').value,
+            description: document.getElementById('promoDescriptions').value,
+            date_created: document.getElementById('dateCreated').value,
             start_date: document.getElementById('startDate').value,
             end_date: document.getElementById('endDate').value,
             discount_type: document.getElementById('discountType').value,
@@ -269,6 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('An error occurred while updating Promo Details. Please try again later.');
             });
     }
+
     function deletePromo(promoId) {
         if (confirm('Are you sure you want to delete this Promo Offer?')) {
             fetch('backend/delete_promo.php', {
@@ -337,7 +366,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Fetch initial drivers data
     fetchPromos(currentPage);
 
     // Add New Promo Offer submission
@@ -412,12 +440,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const textarea = document.getElementById(textareaId);
         const charCount = document.getElementById(charCountId);
         const maxLength = textarea.maxLength; // Get the maximum length
-    
+
         // Function to update character count
         function updateCharCount() {
             const remaining = maxLength - textarea.value.length; // Calculate remaining characters
             charCount.textContent = `${remaining} characters remaining`; // Update the counter text
-    
+
             // Optional: Change the color of the counter if limit is reached
             if (remaining < 0) {
                 charCount.style.color = 'red'; // Change color to red if limit exceeded
@@ -425,16 +453,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 charCount.style.color = '#555'; // Reset color
             }
         }
-    
+
         // Event listener for input in the textarea
         textarea.addEventListener('input', updateCharCount);
         // Initial call to set the character count on page load
         updateCharCount();
     }
-    
+
     // Usage
     addCharacterCounter('promoDescription', 'charCount');
-    
 
     document.getElementById('promo_code').addEventListener('click', generatePromoCode())
     handleFormSubmission(addPromoForm);

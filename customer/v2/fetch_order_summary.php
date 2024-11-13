@@ -22,7 +22,7 @@ $totalOrders = $totalResult->fetch_assoc()['total'];
 
 // Fetch paginated orders
 $query = "
-    SELECT order_id, order_date, total_amount, delivery_status 
+    SELECT order_id, order_date, total_amount, discount, delivery_status 
     FROM orders 
     WHERE customer_id = ? 
     ORDER BY order_date DESC, delivery_status ASC 
