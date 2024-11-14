@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const limit = 6;
+    const limit = 10;
     let currentPage = 1;
 
     // Fetch promos on page load

@@ -9,7 +9,9 @@ if (!isset($_SESSION['customer_id'])) {
 }
 
 // Generate a random token
-$token = bin2hex(random_bytes(16)); // 32-character hex string
+$tokenOld = bin2hex(random_bytes(16)); // 32-character hex string
+$token = str_pad(random_int(0, 9999999999), 10, '0', STR_PAD_LEFT); // Ensures 10 digits
+
 
 // Store token and its expiration in the session
 $_SESSION['token'] = [

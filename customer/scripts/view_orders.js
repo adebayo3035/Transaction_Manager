@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const limit = 6; // Number of items per page
+    const limit = 10; // Number of items per page
     let currentPage = 1;
 
     // Fetch orders on page load

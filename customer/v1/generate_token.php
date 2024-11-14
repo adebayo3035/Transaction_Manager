@@ -35,7 +35,7 @@
 
         <button class="copy-btn" id="copy-token" onclick="copyToken()">Copy Token</button>
         <button id="generate-token">Generate Token</button>
-        <span class="footer"> This Token wil expire after 3 minute(s)</span>
+        <span class="footer"> This Token wil expire after 1 minute</span>
     </div>
     <script src="../scripts/generate_token.js"></script>
 
