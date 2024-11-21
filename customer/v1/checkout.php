@@ -70,7 +70,7 @@
         <div class="promoContainer" id="promoContainer">
             <div class="form-group">
                 <label for="promo_code">Enter Promo Code:</label>
-                <input type="text" id="promo_code" name="promo_code" placeholder="XXXXXXXXXXX">
+                <input type="text" id="promo_code" name="promo_code" placeholder="XXXXXXXXXXX" maxlength="8">
             </div>
             <div class="form-group">
                 <button type="submit" id="validate_promo">Validate Promo Code</button>
@@ -92,6 +92,10 @@
                 <div class="payment-option">
                     <input type="radio" id="bank-transfer" name="payment_method" value="bank_transfer">
                     <label for="bank-transfer">Bank Transfer</label>
+                </div>
+                <div class="payment-option">
+                    <input type="radio" id="credit" name="payment_method" value="credit">
+                    <label for="credit">Order on Credit</label>
                 </div>
             </div>
 
@@ -122,6 +126,14 @@
                 <div class="form-group">
                     <label for="paypal_email">PayPal Email:</label>
                     <input type="email" id="paypal_email" name="paypal_email" placeholder="email@example.com">
+                </div>
+            </div>
+
+            <div class="payment-details" id="credit-details">
+                <h2>Customer Details</h2>
+                <div class="form-group">
+                    <label for="customer_secret_answer">Enter Your Secret Answer:</label>
+                    <input type="password" id="customer_secret_answer" name="customer_secret_answer" autocomplete = "off">
                 </div>
             </div>
 

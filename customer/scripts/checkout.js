@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const paymentMethods = document.querySelectorAll('input[name="payment_method"]');
     const creditCardDetails = document.getElementById('credit-card-details');
     const paypalDetails = document.getElementById('paypal-details');
+    const creditDetails = document.getElementById('credit-details');
     const bankTransferDetails = document.getElementById('bank_transfer_details');
     const bankAccountInput = document.getElementById('bank_account');
     const bankNameSelect = document.getElementById('bank_name');
@@ -11,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let usePromo = false;
     let discount_value = 0;
+    let discount_percent = 0;
     let promoCode = '';
     
     // toggle display of Promo Container
@@ -137,19 +139,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 creditCardDetails.style.display = 'block';
                 paypalDetails.style.display = 'none';
                 bankTransferDetails.style.display = 'none';
-                clearInputFields('bank_name', 'bank_account', 'paypal_email');
+                creditDetails.style.display = 'none';
+                clearInputFields('bank_name', 'bank_account', 'paypal_email', 'customer_secret_answer');
             },
             'paypal': () => {
                 creditCardDetails.style.display = 'none';
                 paypalDetails.style.display = 'block';
                 bankTransferDetails.style.display = 'none';
-                clearInputFields('card_number', 'card_expiry', 'card_cvv', 'card_pin', 'bank_name', 'bank_account');
+                creditDetails.style.display = 'none';
+                clearInputFields('card_number', 'card_expiry', 'card_cvv', 'card_pin', 'bank_name', 'bank_account', 'customer_secret_answer');
             },
             'bank_transfer': () => {
                 creditCardDetails.style.display = 'none';
                 paypalDetails.style.display = 'none';
                 bankTransferDetails.style.display = 'block';
-                clearInputFields('card_number', 'card_expiry', 'card_cvv', 'card_pin', 'paypal_email');
+                creditDetails.style.display = 'none';
+                clearInputFields('card_number', 'card_expiry', 'card_cvv', 'card_pin', 'paypal_email', 'customer_secret_answer');
+            },
+            'credit': () => {
+                creditCardDetails.style.display = 'none';
+                paypalDetails.style.display = 'none';
+                bankTransferDetails.style.display = 'none';
+                creditDetails.style.display = 'block';
+                clearInputFields('card_number', 'card_expiry', 'card_cvv', 'card_pin', 'bank_name', 'bank_account','paypal_email');
             }
         };
 
@@ -195,6 +207,10 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (selectedPaymentMethod === 'bank_transfer') {
             paymentDetails.bank_name = document.getElementById('bank_name').value;
             paymentDetails.bank_account = document.getElementById('bank_account').value;
+        }
+        else if (selectedPaymentMethod === 'credit') {
+            paymentDetails.customer_secret_answer = document.getElementById('customer_secret_answer').value;
+            paymentDetails.is_credit = true;
         }
 
         fetch('../v2/process_payment.php', {

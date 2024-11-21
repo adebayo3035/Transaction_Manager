@@ -30,23 +30,44 @@ if (isset($data['order_id']) && isset($data['status'])) {
             // Find an available driver who is not restricted
             $findDriverQuery = "SELECT id FROM driver WHERE status = 'Available' and restriction = 0 ORDER BY RAND() LIMIT 1";
             $result = $conn->query($findDriverQuery);
-            
+        
             if ($result->num_rows > 0) {
                 $driver = $result->fetch_assoc();
                 $driver_id = $driver['id'];
-
+        
                 // Assign the driver to the order and update the order and driver statuses
-                $assignDriverQuery  = "UPDATE orders SET driver_id = ?, delivery_status = 'Assigned', status = ?, updated_at = NOW(), approved_by = ? WHERE order_id = ?";
+                $assignDriverQuery = "UPDATE orders SET driver_id = ?, delivery_status = 'Assigned', status = ?, updated_at = NOW(), approved_by = ? WHERE order_id = ?";
                 $stmt = $conn->prepare($assignDriverQuery);
                 $stmt->bind_param('isii', $driver_id, $status, $approvalID, $order_id);
                 $stmt->execute();
-                
+        
                 $updateDriverStatusQuery = "UPDATE driver SET status = 'Not Available' WHERE id = ?";
                 $stmt = $conn->prepare($updateDriverStatusQuery);
                 $stmt->bind_param('i', $driver_id);
                 $stmt->execute();
                 $stmt->close();
-
+        
+                // Check if the order is a credit order
+                $checkCreditQuery = "SELECT is_credit, total_amount, customer_id FROM orders WHERE order_id = ?";
+                $stmt = $conn->prepare($checkCreditQuery);
+                $stmt->bind_param("i", $order_id);
+                $stmt->execute();
+                $stmt->bind_result($isCredit, $totalAmount, $customerId);
+                $stmt->fetch();
+                $stmt->close();
+        
+                if ($isCredit) {
+                    // Calculate due date as current date + 14 days
+                    $dueDate = (new DateTime())->modify('+14 days')->format('Y-m-d');
+        
+                    // Insert into credit_orders table
+                    $insertCreditOrderQuery = "INSERT INTO credit_orders (order_id, customer_id, total_credit_amount, due_date) VALUES (?, ?, ?, ?)";
+                    $stmt = $conn->prepare($insertCreditOrderQuery);
+                    $stmt->bind_param("iids", $order_id, $customerId, $totalAmount, $dueDate);
+                    $stmt->execute();
+                    $stmt->close();
+                }
+                
                 // Optionally, send a notification to the driver
                 // sendDriverNotification($driver_id, $order_id);
             } else {
@@ -78,17 +99,18 @@ if (isset($data['order_id']) && isset($data['status'])) {
             $stmt = $conn->prepare("SELECT transaction_ref FROM transactions WHERE order_id = ?");
             $stmt->bind_param("i", $order_id);
             $stmt->execute();
-            $stmt->bind_result( $transaction_ref);
+            $stmt->bind_result($transaction_ref);
             $stmt->fetch();
             $stmt->close();
 
             $transaction_status = 'Failed';
             $stmt = $conn->prepare("UPDATE transactions SET status = ? WHERE order_id = ? AND transaction_ref = ?");
-            $stmt->bind_param("sis", $transaction_status,$order_id, $transaction_ref);
+            $stmt->bind_param("sis", $transaction_status, $order_id, $transaction_ref);
             $stmt->execute();
             $stmt->close();
 
-            function generateTransactionReference() {
+            function generateTransactionReference()
+            {
                 // Add a prefix for identification
                 $prefix = 'TRX';
                 // Generate a unique ID based on the current time with higher entropy (more randomness)
