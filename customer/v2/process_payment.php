@@ -154,13 +154,8 @@ function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deli
                 $stmt->bind_param("di", $newBalance, $customerId);
                 $stmt->execute();
                 $stmt->close();
-
             }
-           
-
         }
-
-
         // Select a random Admin
         // Step 1: Get the minimum and maximum unique_id for eligible admins
         $idRangeQuery = "SELECT MIN(unique_id) AS min_id, MAX(unique_id) AS max_id FROM admin_tbl WHERE role = 'Admin' AND restriction_id = 0 AND block_id = 0";
