@@ -38,10 +38,17 @@ try {
     $repayment_status = $credit_order['repayment_status'];
     $amount_paid = floatval($credit_order['amount_paid']);
     $order_id = $credit_order['order_id'];
+    $status = $credit_order['status'];
 
     // Validation checks
     if ($repayment_status === 'Paid') {
         throw new Exception("This credit order is already fully paid.");
+    }
+    if ($repayment_status === 'Void' && $status == 'Declined') {
+        throw new Exception("This credit order has been Cancelled. There's no need for repayment");
+    }
+    if($status === 'Pending'){
+        throw new Exception("This Order is still Pending. Kindly wait for approval before making Repayment");
     }
 
     if (($amount_paid + $amount_paying) > $total_credit_amount) {

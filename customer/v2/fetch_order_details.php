@@ -31,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       orders.total_amount,
       orders.delivery_pin,
       orders.delivery_status,
+      orders.is_credit,
       driver.firstname AS driver_firstname, 
       driver.lastname AS driver_lastname,
        driver.phone_number AS driver_phoneNumber

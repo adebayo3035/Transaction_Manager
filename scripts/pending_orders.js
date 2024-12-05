@@ -104,13 +104,7 @@ function updateOrderStatus(orderId, status) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                if (status === "Declined") {
-                    alert('Order status updated to ' + status + " and Customer has been refunded");
-                }
-                else {
-                    alert("Order Status has been updated to " + status);
-                }
-
+                    alert('Order has been successfully ' + status + "");
                 location.reload(); // Refresh the page to reflect changes
             } else {
                 console.error('Failed to update order status:', data.message);

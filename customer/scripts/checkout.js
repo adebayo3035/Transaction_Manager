@@ -223,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('Payment processed successfully');
+                    alert('Your Order has been successfully received. Kindly wait for approval.');
                     printReceiptBtn.style.display = 'block';
                     placeOrderBtn.style.display = 'none';
                     // location.replace('../v1/dashboard.php');

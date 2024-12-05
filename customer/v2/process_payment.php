@@ -182,18 +182,6 @@ function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deli
             throw new Exception("No eligible Super Admin available.");
         }
 
-
-        // Generate and insert transaction description
-        $orderQuery = "SELECT order_id FROM orders ORDER BY order_id DESC LIMIT 1 FOR UPDATE";
-        $orderResult = $conn->query($orderQuery);
-
-        $newId = ($orderResult->num_rows > 0) ? $orderResult->fetch_assoc()['order_id'] + 1 : 1;
-        $orderDescription = "Food Order: " . $newId;
-        $stmt = $conn->prepare("INSERT INTO customer_transactions (customer_id, amount, date_created, transaction_type, payment_method, description) VALUES (?, ?, NOW(), 'debit', ?, ?)");
-        $stmt->bind_param("idss", $customerId, $totalAmount, $paymentMethod, $orderDescription);
-        $stmt->execute();
-        $stmt->close();
-
         // Insert order
         $deliveryPin = rand(1000, 9999);
         $stmt = $conn->prepare("INSERT INTO orders (customer_id, order_date, service_fee, delivery_fee, total_order, discount, total_amount, delivery_pin, assigned_to, is_credit) VALUES (?, NOW(), ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -215,13 +203,17 @@ function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deli
         }
         $stmt->close();
 
-        // Insert revenue data
-        $revenueType = 2;
-        $refundedAmount = 0.0;
-        $stmt = $conn->prepare("INSERT INTO revenue (order_id, customer_id, total_amount, refunded_amount, retained_amount, transaction_date, revenue_type_id) VALUES (?, ?, ?, ?, ?, NOW(), ?)");
-        $stmt->bind_param("iidddi", $orderId, $customerId, $totalAmount, $refundedAmount, $totalAmount, $revenueType);
-        $stmt->execute();
-        $stmt->close();
+        //if Order is placed on Credit, Insert into credit order table
+        if ($isCredit == true) {
+            // Calculate due date as current date + 14 days
+            $dueDate = (new DateTime())->modify('+14 days')->format('Y-m-d');
+            $insertCreditOrderQuery = "INSERT INTO credit_orders (order_id, customer_id, total_credit_amount, due_date) VALUES (?, ?, ?, ?)";
+            $stmt = $conn->prepare($insertCreditOrderQuery);
+            $stmt->bind_param("iids", $orderId, $customerId, $totalAmount, $dueDate);
+            $stmt->execute();
+            $stmt->close();
+        }
+
 
         // Promo code usage
         if ($promo_code !== "") {
@@ -249,16 +241,6 @@ function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deli
 
             return $transactionRef;
         }
-
-        // Example usage
-        $transactionReference = generateTransactionReference();
-        $transaction_type = 'Credit';
-        $status = 'Pending';
-        $stmt = $conn->prepare("INSERT INTO transactions (transaction_ref, customer_id, order_id, transaction_type, amount, transaction_date, payment_method, status, created_at, revenue_type_id) VALUES (?, ?, ?, ?, ?, NOW(), ?, ?, NOW(), ?)");
-        $stmt->bind_param("siisdssi", $transactionReference, $customerId, $orderId, $transaction_type, $totalAmount, $paymentMethod, $status, $revenueType);
-        $stmt->execute();
-        $stmt->close();
-
         // Admin notification
         $title = "Food Order for customer ID: " . $customerId;
         $eventType = "New Food Order";
@@ -335,7 +317,7 @@ function validateCardPayment($customerId, $inputCardNumber, $inputCVV, $inputExp
     return ['success' => true, 'message' => 'Card validated successfully.'];
 }
 // Function to check credit eligibility
-function checkCreditEligibility($conn, $customerId, $orderAmount, $providedAnswer, $creditThreshold = 10000)
+function checkCreditEligibility($conn, $customerId, $orderAmount, $providedAnswer, $creditThreshold = 100000)
 {
     try {
         // Step 1: Validate secret answer
@@ -371,9 +353,9 @@ function checkCreditEligibility($conn, $customerId, $orderAmount, $providedAnswe
 
         // Step 3: Check for outstanding debts
         $debtQuery = "
-            SELECT COUNT(*) AS outstanding_debts
-            FROM credit_orders
-            WHERE customer_id = ? AND repayment_status != 'Paid'";
+        SELECT COUNT(*) AS outstanding_debts
+        FROM credit_orders
+        WHERE customer_id = ? AND repayment_status NOT IN ('Paid', 'Void') AND status != 'Declined'";
         $debtStmt = $conn->prepare($debtQuery);
         $debtStmt->bind_param("i", $customerId);
         $debtStmt->execute();
@@ -421,7 +403,7 @@ function checkCreditEligibility($conn, $customerId, $orderAmount, $providedAnswe
             return ["success" => false, "message" => "Customer has a history of credit defaults."];
         }
 
-        if ($totalOrders < 5) { // Assuming a minimum of 5 orders defines a non-new customer
+        if ($totalOrders < 0) { // Assuming a minimum of 5 orders defines a non-new customer
             return ["success" => false, "message" => "Your successful Order History does not meets the Order Criteria."];
         }
 

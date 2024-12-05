@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const repaymentButton = document.getElementById('repay-btn');
                     
 
-                    if (creditStatus === "Pending" || creditStatus === "Partially Paid") {
+                    if (creditStatus === "Pending" || creditStatus === "Partially Paid" ) {
                         // Enable the "Reassign Order" button if the status is "Assigned"
                         repaymentButton.style.display = 'block';
                         repaymentButton.disabled = false; // Ensure it's not disabled

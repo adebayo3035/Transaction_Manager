@@ -1,96 +1,64 @@
 <?php
-// Include database connection
 include('config.php');
 session_start();
 
-// Get the JSON data from the request body
 $data = json_decode(file_get_contents("php://input"), true);
 
-// Validate required inputs
+// Constants for statuses and configuration
+const STATUS_CANCELLED = 'Cancelled on Delivery';
+const STATUS_DELIVERED = 'Delivered';
+const STATUS_IN_TRANSIT = 'In Transit';
+const CANCELLATION_FEE_PERCENTAGE = 0.7;
+
+// Validate inputs
 if (!isset($data['id'], $data['currentStatus'], $data['orderStatus'])) {
-    echo json_encode(["success" => false, "message" => "Invalid order - Order details missing."]);
-    exit();
+    respond(false, "Invalid order - Order details missing.");
 }
 
 $orderId = $data['id'];
-$current_status = $data['currentStatus'];
+$currentStatus = $data['currentStatus'];
 $orderStatus = $data['orderStatus'];
-$driver_id = $_SESSION['driver_id'];
+$driverId = $_SESSION['driver_id'];
 
-// Invalid status transitions check
-$invalidTransitions = [
-    ["from" => "Assigned", "to" => "Delivered"],
-    ["from" => "Assigned", "to" => "Cancelled on Delivery"],
-    ["from" => "In Transit", "to" => "In Transit"]
-];
-
-foreach ($invalidTransitions as $transition) {
-    if ($current_status === $transition['from'] && $orderStatus === $transition['to']) {
-        echo json_encode(["success" => false, "message" => "Invalid Order Status - From {$transition['from']} to {$transition['to']}"]);
-        exit();
-    }
+// Check invalid transitions
+if (isInvalidTransition($currentStatus, $orderStatus)) {
+    respond(false, "Invalid Order Status - From {$currentStatus} to {$orderStatus}");
 }
 
-// Validate the delivery pin if status is Delivered or Cancelled
-if (($orderStatus === "Delivered" || $orderStatus === "Cancelled on Delivery") && isset($data['deliveryPin'])) {
+// Verify delivery pin if required
+if (($orderStatus === STATUS_DELIVERED || $orderStatus === STATUS_CANCELLED) && isset($data['deliveryPin'])) {
     $deliveryPin = $data['deliveryPin'];
-    $sql = "SELECT delivery_pin FROM orders WHERE order_id = ? AND driver_id = ?";
-    if ($stmt = $conn->prepare($sql)) {
-        $stmt->bind_param("ii", $orderId, $driver_id);
-        $stmt->execute();
-        $stmt->bind_result($storedPin);
-        $stmt->fetch();
-        $stmt->close();
+    $orderDetails = getOrderDetailsWithCustomer($orderId, $driverId);
 
-        if ($storedPin !== $deliveryPin) {
-            echo json_encode(["success" => false, "message" => "Invalid delivery pin. Please try again."]);
-            exit();
-        }
-    } else {
-        echo json_encode(["success" => false, "message" => "Prepare failed: " . $conn->error]);
-        exit();
+    if ($orderDetails['is_credit']) {
+        respond(false, 'You cannot cancel an order placed on credit.');
+    }
+
+    if ($orderDetails['delivery_pin'] !== $deliveryPin) {
+        respond(false, "Invalid delivery pin. Please try again.");
     }
 }
 
-// Start a transaction
+// Begin transaction
 $conn->begin_transaction();
 
 try {
-    // Prepare to update the order status in the orders table
-    $cancellationReason = null;
-    $updateSql = "";
+    $transactionReference = generateTransactionReference();
 
-    if ($orderStatus === "Cancelled on Delivery") {
-        if (!isset($data['cancelReason']) || empty($data['cancelReason'])) {
-            throw new Exception("Cancellation reason is required for a Cancelled order.");
-        }
-        $cancellationReason = $data['cancelReason'];
-        $updateSql = "UPDATE orders SET cancellation_reason = ?, delivery_status = 'Cancelled on Delivery' WHERE order_id = ? AND driver_id = ?";
-    } elseif ($orderStatus === "Delivered") {
-        $updateSql = "UPDATE orders SET delivery_status = 'Delivered' WHERE order_id = ? AND driver_id = ?";
-    } elseif ($orderStatus === "In Transit") {
-        $updateSql = "UPDATE orders SET delivery_status = 'In Transit' WHERE order_id = ? AND driver_id = ?";
-    }
-
-    // Execute the update for the order status
-    if ($stmt = $conn->prepare($updateSql)) {
-        if ($cancellationReason) {
-            $stmt->bind_param("sii", $cancellationReason, $orderId, $driver_id);
-        } else {
-            $stmt->bind_param("ii", $orderId, $driver_id);
-        }
-
-        if (!$stmt->execute() || $stmt->affected_rows === 0) {
-            throw new Exception("Failed to update the order status.");
-        }
-        $stmt->close();
+    if ($orderStatus === STATUS_CANCELLED) {
+        handleOrderCancellation($orderId, $driverId, $data['cancelReason'], $transactionReference);
+    } elseif ($orderStatus === STATUS_DELIVERED) {
+        handleOrderDelivery($orderId, $driverId, $transactionReference);
+    } else {
+        $status = 'Pending';
+        updateOrderStatus($orderId, $driverId, $status, $orderStatus);
     }
 
     // Update driver status to 'Available' if Delivered or Cancelled
-    if ($orderStatus === "Delivered" || $orderStatus === "Cancelled on Delivery") {
+    if ($orderStatus === STATUS_CANCELLED || $orderStatus === STATUS_DELIVERED) {
         $sql = "UPDATE driver SET status = 'Available' WHERE id = ?";
         if ($stmt = $conn->prepare($sql)) {
-            $stmt->bind_param("i", $driver_id);
+            $stmt->bind_param("i", $driverId);
             $stmt->execute();
             $stmt->close();
         } else {
@@ -98,90 +66,202 @@ try {
         }
     }
 
-    // Select transaction reference for the order
-    $stmt = $conn->prepare("SELECT transaction_ref FROM transactions WHERE order_id = ?");
-    $stmt->bind_param("i", $orderId);
-    $stmt->execute();
-    $stmt->bind_result($transaction_ref);
-    $stmt->fetch();
-    $stmt->close();
-
-    // Handle order cancellation logic and refunds
-    if ($orderStatus === 'Cancelled on Delivery') {
-        // Refund logic
-        $stmt = $conn->prepare("SELECT total_amount, customer_id FROM orders WHERE order_id = ?");
-        $stmt->bind_param("i", $orderId);
-        $stmt->execute();
-        $stmt->bind_result($totalAmount, $customerId);
-        $stmt->fetch();
-        $stmt->close();
-
-        // Deduct 70% cancellation fee and add balance to customer's wallet
-        $cancellation_fee = (0.7 * $totalAmount);
-        $balance = $totalAmount - $cancellation_fee;
-        $stmt = $conn->prepare("UPDATE wallets SET balance = balance + ? WHERE customer_id = ?");
-        $stmt->bind_param("di", $balance, $customerId);
-        $stmt->execute();
-        $stmt->close();
-
-        // Insert cancellation fee and refund into customer transactions
-        $stmt = $conn->prepare("INSERT INTO customer_transactions 
-            (customer_id, amount, date_created, transaction_type, payment_method, description) 
-            VALUES 
-            (?, ?, NOW(), 'credit', 'Refund', 'Refund for Cancelled Order $orderId on Delivery'),
-            (?, ?, NOW(), 'debit', 'Order Cancellation Fee on Delivery', 'Fee deducted for Order: $orderId Cancelled on Delivery')");
-        $stmt->bind_param("idid", $customerId, $balance, $customerId, $cancellation_fee);
-        $stmt->execute();
-        $stmt->close();
-
-        // Update food stock quantities
-        $stmt = $conn->prepare("SELECT food_id, quantity FROM order_details WHERE order_id = ?");
-        $stmt->bind_param("i", $orderId);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        while ($row = $result->fetch_assoc()) {
-            $foodId = $row['food_id'];
-            $quantity = $row['quantity'];
-            $updateFoodStmt = $conn->prepare("UPDATE food SET available_quantity = available_quantity + ? WHERE food_id = ?");
-            $updateFoodStmt->bind_param("ii", $quantity, $foodId);
-            $updateFoodStmt->execute();
-            $updateFoodStmt->close();
-        }
-
-        $stmt->close();
-
-        // Update revenue table
-        $refunded_amount = $totalAmount - $cancellation_fee;
-        $stmt = $conn->prepare("UPDATE revenue SET refunded_amount = ?, retained_amount = ?, status = ? WHERE order_id = ?");
-        $stmt->bind_param("ddsi", $refunded_amount, $cancellation_fee, $orderStatus, $orderId);
-        $stmt->execute();
-        $stmt->close();
-
-        // Update transactions table to 'Failed'
-        $transaction_status = 'Failed';
-        $stmt = $conn->prepare("UPDATE transactions SET status = ? WHERE order_id = ? AND transaction_ref = ?");
-        $stmt->bind_param("sis", $transaction_status, $orderId, $transaction_ref);
-        $stmt->execute();
-        $stmt->close();
-    } elseif ($orderStatus === 'Delivered') {
-        // Update transaction to 'Completed' when the order is delivered
-        $transaction_status = 'Completed';
-        $stmt = $conn->prepare("UPDATE transactions SET status = ? WHERE order_id = ? AND transaction_ref = ?");
-        $stmt->bind_param("sis", $transaction_status, $orderId, $transaction_ref);
-        $stmt->execute();
-        $stmt->close();
-    }
-
-    // Commit the transaction after all updates
     $conn->commit();
-    echo json_encode(["success" => true, "message" => "Your Order has been successfully updated."]);
-
+    respond(true, "Your Order has been successfully updated.");
 } catch (Exception $e) {
-    // Rollback transaction in case of failure
     $conn->rollback();
-    echo json_encode(["success" => false, "message" => "Transaction failed: " . $e->getMessage()]);
+    respond(false, "Transaction failed: " . $e->getMessage());
 }
 
-// Close the database connection
 $conn->close();
+
+/**
+ * Function definitions
+ */
+
+function respond($success, $message) {
+    echo json_encode(["success" => $success, "message" => $message]);
+    exit();
+}
+
+function isInvalidTransition($current, $target) {
+    $invalidTransitions = [
+        ["from" => "Assigned", "to" => STATUS_DELIVERED],
+        ["from" => "Assigned", "to" => STATUS_CANCELLED],
+        ["from" => STATUS_IN_TRANSIT, "to" => STATUS_IN_TRANSIT],
+    ];
+
+    foreach ($invalidTransitions as $transition) {
+        if ($current === $transition['from'] && $target === $transition['to']) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function getOrderDetailsWithCustomer($orderId, $driverId) {
+    global $conn;
+    $sql = "SELECT total_amount, customer_id, order_date, delivery_pin, is_credit 
+            FROM orders WHERE order_id = ? AND driver_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ii", $orderId, $driverId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_assoc();
+}
+
+function generateTransactionReference() {
+    $prefix = 'TRX';
+    $uniqueId = uniqid($prefix, true);
+    $randomNumber = mt_rand(1000, 9999);
+    return strtoupper(str_replace('.', '', $uniqueId . $randomNumber));
+}
+
+function handleOrderCancellation($orderId, $driverId, $cancelReason, $transactionReference) {
+    global $conn;
+
+    $orderDetails = getOrderDetailsWithCustomer($orderId, $driverId);
+    $totalAmount = $orderDetails['total_amount'];
+    $customerId = $orderDetails['customer_id'];
+    $cancellationFee = CANCELLATION_FEE_PERCENTAGE * $totalAmount;
+    $refundAmount = $totalAmount - $cancellationFee;
+    $transactionDate = $orderDetails['order_date'];
+
+    // Update order status
+    $stmt = $conn->prepare("UPDATE orders SET status = 'Cancelled', delivery_status = 'Cancelled on Delivery', cancellation_reason = ? WHERE order_id = ?");
+    $stmt->bind_param("si", $cancelReason, $orderId);
+    if (!$stmt->execute()) {
+        throw new Exception("Failed to update order status: " . $stmt->error);
+    }
+    // Update Order Details table
+    $stmt = $conn->prepare("UPDATE order_details SET status = 'Cancelled' WHERE order_id = ?");
+    $stmt->bind_param("i",$orderId);
+    if (!$stmt->execute()) {
+        throw new Exception("Failed to update order status: " . $stmt->error);
+    }
+
+    // Update customer wallet
+    $stmt = $conn->prepare("UPDATE wallets SET balance = balance + ? WHERE customer_id = ?");
+    $stmt->bind_param("di", $refundAmount, $customerId);
+    if (!$stmt->execute()) {
+        throw new Exception("Failed to update customer wallet: " . $stmt->error);
+    }
+
+    // Update food stock quantities
+    $stmt = $conn->prepare("SELECT food_id, quantity FROM order_details WHERE order_id = ?");
+    $stmt->bind_param("i", $orderId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    while ($row = $result->fetch_assoc()) {
+        $foodId = $row['food_id'];
+        $quantity = $row['quantity'];
+        $updateFoodStmt = $conn->prepare("UPDATE food SET available_quantity = available_quantity + ? WHERE food_id = ?");
+        $updateFoodStmt->bind_param("ii", $quantity, $foodId);
+        $updateFoodStmt->execute();
+        $updateFoodStmt->close();
+    }
+
+    $stmt->close();
+
+    // Insert transactions and revenue
+    $revenueTypeId = 4;
+    insertCustomerTransaction($transactionReference, $customerId, $refundAmount, 'credit', 'Order Refund', "Refund for Cancelled Order ID: $orderId on Delivery" );
+    insertCustomerTransaction($transactionReference, $customerId, $cancellationFee, 'debit', 'Order Cancellation Fee on Delivery', "Cancellation fee for Order ID: $orderId on Delivery");
+    insertTransaction($transactionReference, $customerId, $orderId, 'Credit', $cancellationFee, $transactionDate, "Direct Debit Cancelled order on Delivery.", 'Completed', $revenueTypeId );
+    insertRevenue($orderId, $customerId, $totalAmount, $refundAmount, $cancellationFee, $orderDetails['order_date'], 'Cancelled', 4);
+}
+
+function handleOrderDelivery($orderId, $driverId, $transactionReference) {
+    global $conn;
+
+    $orderDetails = getOrderDetailsWithCustomer($orderId, $driverId);
+    $totalAmount = $orderDetails['total_amount'];
+    $customerId = $orderDetails['customer_id'];
+    $transactionDate = $orderDetails['order_date'];
+
+    $stmt = $conn->prepare("UPDATE order_details SET status = 'Delivered' WHERE order_id = ?");
+    $stmt->bind_param("i",$orderId);
+    if (!$stmt->execute()) {
+        throw new Exception("Failed to update order status: " . $stmt->error);
+    }
+
+    // Update order status
+    $status = 'Completed';
+    updateOrderStatus($orderId, $driverId, $status, STATUS_DELIVERED);
+    $revenueTypeId = 2;
+    // Insert revenue and transaction
+    insertCustomerTransaction($transactionReference, $customerId, $totalAmount, 'debit', 'Direct Debit', "Food Order Payment for Order ID: $orderId");
+    insertTransaction($transactionReference, $customerId, $orderId, 'Credit', $totalAmount, $transactionDate, "Food Order Payment for Order ID: $orderId", 'Completed', $revenueTypeId );
+    insertRevenue($orderId, $customerId, $totalAmount, 0, $totalAmount, $orderDetails['order_date'], $status, 2);
+}
+
+function updateOrderStatus($orderId, $driverId, $status, $delivery_status) {
+    global $conn;
+    $stmt = $conn->prepare("UPDATE orders SET status = ?, delivery_status = ? WHERE order_id = ? AND driver_id = ?");
+    $stmt->bind_param("ssii", $status, $delivery_status, $orderId, $driverId);
+    $stmt->execute();
+}
+
+function insertCustomerTransaction($transactionRef, $customerId, $amount, $transactionType, $paymentMethod, $description) {
+    global $conn;
+
+    $stmt = $conn->prepare(
+        "INSERT INTO customer_transactions 
+        (transaction_ref, customer_id, amount, date_created, transaction_type, payment_method, description) 
+        VALUES (?, ?, ?, NOW(), ?, ?, ?)"
+    );
+    $stmt->bind_param("sidsss", $transactionRef, $customerId, $amount, $transactionType, $paymentMethod, $description);
+    if (!$stmt->execute()) {
+        throw new Exception("Failed to insert customer transaction: " . $stmt->error);
+    }
+}
+
+function insertTransaction(
+    $transactionRef, 
+    $customerId, 
+    $orderId, 
+    $transactionType, 
+    $amount, 
+    $transaction_date,
+    $paymentMethod, 
+    $status, 
+    $revenueTypeId
+) {
+    global $conn;
+
+    $stmt = $conn->prepare(
+        "INSERT INTO transactions 
+        (transaction_ref, customer_id, order_id, transaction_type, amount, transaction_date, payment_method, status, created_at, updated_at, revenue_type_id) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?)"
+    );
+
+    $stmt->bind_param(
+        "siisdsssi", 
+        $transactionRef, 
+        $customerId, 
+        $orderId, 
+        $transactionType, 
+        $amount, 
+        $transaction_date,
+        $paymentMethod, 
+        $status, 
+        $revenueTypeId
+    );
+
+    if (!$stmt->execute()) {
+        throw new Exception("Failed to insert transaction: " . $stmt->error);
+    }
+
+    $stmt->close();
+}
+
+
+function insertRevenue($orderId, $customerId, $totalAmount, $balance, $retained_amount, $orderDate, $status, $revenue_type_id) {
+    global $conn;
+    $stmt = $conn->prepare("INSERT INTO revenue (order_id, customer_id, total_amount, refunded_amount, retained_amount, transaction_date, status, updated_at, revenue_type_id) VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), ?)");
+    $stmt->bind_param("iidddssi", $orderId, $customerId, $totalAmount, $balance, $retained_amount, $orderDate, $status, $revenue_type_id);
+    if (!$stmt->execute()) {
+        throw new Exception("Failed to insert revenue: " . $stmt->error);
+    }
+}

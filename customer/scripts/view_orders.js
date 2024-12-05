@@ -238,6 +238,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         orderDetailsTableBody.appendChild(driverPhoneRow);
+        const isCredit = document.createElement('tr');
+        if(firstDetail.is_credit == 1){
+            isCredit.innerHTML = `<td colspan="6"><strong>Is Credit</strong></td>
+                <td> Yes </td>`;
+        }
+        else{
+            isCredit.innerHTML = `<td colspan="6"><strong>Is Credit</strong></td>
+            <td> No </td>`;
+        }
+        orderDetailsTableBody.appendChild(isCredit);
 
         if (firstDetail.delivery_status == 'Delivered' || firstDetail.delivery_status == 'Cancelled' || firstDetail.delivery_status == 'Declined') {
             document.querySelector('#receipt-btn').style.display = "block";
