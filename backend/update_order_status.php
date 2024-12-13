@@ -128,7 +128,7 @@ if (isset($data['order_id']) && isset($data['status'])) {
                 $stmt->close();
 
                 //Update Credit Orders Status and repayment_status to Cancelled when Admin Cancels an Order
-                $updateCreditOrderStatusQuery = "UPDATE credit_orders SET status = 'Cancelled', repayment_status = 'Void' WHERE order_id = ?";
+                $updateCreditOrderStatusQuery = "UPDATE credit_orders SET status = 'Declined', repayment_status = 'Void' WHERE order_id = ?";
                 $stmt = $conn->prepare($updateCreditOrderStatusQuery);
                 $stmt->bind_param('i', $order_id);
                 $stmt->execute();

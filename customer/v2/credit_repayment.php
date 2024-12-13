@@ -10,6 +10,13 @@ if (!isset($_SESSION['customer_id'])) {
 
 $customerId = $_SESSION['customer_id'];
 $input = json_decode(file_get_contents('php://input'), true);
+function generateTransactionReference()
+{
+    $prefix = 'TRX';
+    $uniqueId = uniqid($prefix, true);
+    $randomNumber = mt_rand(1000, 9999);
+    return strtoupper(str_replace('.', '', $uniqueId . $randomNumber));
+}
 
 try {
     // Start the transaction
@@ -39,6 +46,7 @@ try {
     $amount_paid = floatval($credit_order['amount_paid']);
     $order_id = $credit_order['order_id'];
     $status = $credit_order['status'];
+    $due_date = $credit_order['due_date'];
 
     // Validation checks
     if ($repayment_status === 'Paid') {
@@ -47,7 +55,7 @@ try {
     if ($repayment_status === 'Void' && $status == 'Declined') {
         throw new Exception("This credit order has been Cancelled. There's no need for repayment");
     }
-    if($status === 'Pending'){
+    if ($status === 'Pending') {
         throw new Exception("This Order is still Pending. Kindly wait for approval before making Repayment");
     }
 
@@ -68,37 +76,53 @@ try {
     $wallet = $wallet_result->fetch_assoc();
     $wallet_balance = floatval($wallet['balance']);
 
-    if ($wallet_balance < $amount_paying) {
-        throw new Exception("Insufficient wallet balance to process the repayment.");
+    // Get the current date and time
+    $current_date = date('Y-m-d H:i:s');
+
+    // Debit the wallet and calculate late payment fee if due_date has passed
+    if ($due_date < $current_date) {
+        // Apply 30% late payment fee
+        $late_payment_fee = (0.3 * $total_credit_amount);
+        $amount_paying += $late_payment_fee;
+        if ($wallet_balance < $new_credit) {
+            throw new Exception("Insufficient wallet balance to process your repayment.");
+        }
+    }
+    else{
+        if ($wallet_balance < $amount_paying) {
+            throw new Exception("Insufficient wallet balance to process your repayment.");
+        }
     }
 
-    // Debit the wallet
+    // Calculate the new wallet balance
     $new_wallet_balance = $wallet_balance - $amount_paying;
+
+    // Update the wallet balance in the database
     $debit_wallet_stmt = $conn->prepare("UPDATE wallets SET balance = ? WHERE customer_id = ?");
     $debit_wallet_stmt->bind_param("di", $new_wallet_balance, $customerId);
     $debit_wallet_stmt->execute();
 
-    // Calculate new remaining balance and repayment status
+    // Calculate the new remaining balance and repayment status
     $amount_paid += $amount_paying;
     $new_remaining_balance = $total_credit_amount - $amount_paid;
     $new_repayment_status = ($amount_paid < $total_credit_amount) ? 'Partially Paid' : 'Paid';
 
-    // Update the credit_orders table
-    // Prepare the statement
+    // Prepare the update query for the credit_orders table
     $update_stmt = $conn->prepare("
-        UPDATE credit_orders
-        SET remaining_balance = ?, repayment_status = ?, amount_paid = ?, date_last_modified = ?
-        WHERE credit_order_id = ?
-    ");
+    UPDATE credit_orders
+    SET remaining_balance = ?, repayment_status = ?, amount_paid = ?, date_last_modified = ?
+    WHERE credit_order_id = ?
+");
 
-    // Get the current timestamp
+    // Get the current timestamp for the update
     $date_last_updated = date('Y-m-d H:i:s');
 
-    // Bind the parameters
+    // Bind the parameters to the query
     $update_stmt->bind_param("dsssi", $new_remaining_balance, $new_repayment_status, $amount_paid, $date_last_updated, $credit_order_id);
 
-    // Execute the statement
+    // Execute the update statement
     $update_stmt->execute();
+
 
     //Update Revenue Table
     $update_stmt = $conn->prepare("
@@ -143,14 +167,15 @@ try {
     $insert_stmt->execute();
 
     // Insert transaction into customer_transactions table
+    $transactionReference = generateTransactionReference();
     $transaction_stmt = $conn->prepare("
-        INSERT INTO customer_transactions (customer_id, amount, date_created, transaction_type, payment_method, description) VALUES (?, ?, NOW(), ?, ?, ?)")
+        INSERT INTO customer_transactions (transaction_ref, customer_id, amount, date_created, transaction_type, payment_method, description) VALUES (?, ?, ?, NOW(), ?, ?, ?)")
     ;
     $transaction_type = "Debit";
     $payment_method = 'Diredct Debit';
     $description = "Repayment of credit order #$credit_order_id for Order #$order_id";
 
-    $transaction_stmt->bind_param("idsss", $customerId, $amount_paying, $transaction_type, $payment_method, $description);
+    $transaction_stmt->bind_param("sidsss", $transactionReference, $customerId, $amount_paying, $transaction_type, $payment_method, $description);
     $transaction_stmt->execute();
 
     // Commit the transaction

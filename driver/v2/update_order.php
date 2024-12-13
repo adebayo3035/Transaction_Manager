@@ -29,13 +29,15 @@ if (isInvalidTransition($currentStatus, $orderStatus)) {
 if (($orderStatus === STATUS_DELIVERED || $orderStatus === STATUS_CANCELLED) && isset($data['deliveryPin'])) {
     $deliveryPin = $data['deliveryPin'];
     $orderDetails = getOrderDetailsWithCustomer($orderId, $driverId);
-
-    if ($orderDetails['is_credit']) {
-        respond(false, 'You cannot cancel an order placed on credit.');
-    }
-
     if ($orderDetails['delivery_pin'] !== $deliveryPin) {
         respond(false, "Invalid delivery pin. Please try again.");
+    }
+}
+
+if ($orderStatus === STATUS_CANCELLED) {
+    $orderDetails = getOrderDetailsWithCustomer($orderId, $driverId);
+    if ($orderDetails['is_credit']) {
+        respond(false, 'You cannot cancel an order placed on credit.');
     }
 }
 
@@ -67,7 +69,7 @@ try {
     }
 
     $conn->commit();
-    respond(true, "Your Order has been successfully updated.");
+    respond(true, "Your Order has been successfully $orderStatus");
 } catch (Exception $e) {
     $conn->rollback();
     respond(false, "Transaction failed: " . $e->getMessage());
@@ -79,12 +81,14 @@ $conn->close();
  * Function definitions
  */
 
-function respond($success, $message) {
+function respond($success, $message)
+{
     echo json_encode(["success" => $success, "message" => $message]);
     exit();
 }
 
-function isInvalidTransition($current, $target) {
+function isInvalidTransition($current, $target)
+{
     $invalidTransitions = [
         ["from" => "Assigned", "to" => STATUS_DELIVERED],
         ["from" => "Assigned", "to" => STATUS_CANCELLED],
@@ -99,7 +103,8 @@ function isInvalidTransition($current, $target) {
     return false;
 }
 
-function getOrderDetailsWithCustomer($orderId, $driverId) {
+function getOrderDetailsWithCustomer($orderId, $driverId)
+{
     global $conn;
     $sql = "SELECT total_amount, customer_id, order_date, delivery_pin, is_credit 
             FROM orders WHERE order_id = ? AND driver_id = ?";
@@ -110,14 +115,16 @@ function getOrderDetailsWithCustomer($orderId, $driverId) {
     return $result->fetch_assoc();
 }
 
-function generateTransactionReference() {
+function generateTransactionReference()
+{
     $prefix = 'TRX';
     $uniqueId = uniqid($prefix, true);
     $randomNumber = mt_rand(1000, 9999);
     return strtoupper(str_replace('.', '', $uniqueId . $randomNumber));
 }
 
-function handleOrderCancellation($orderId, $driverId, $cancelReason, $transactionReference) {
+function handleOrderCancellation($orderId, $driverId, $cancelReason, $transactionReference)
+{
     global $conn;
 
     $orderDetails = getOrderDetailsWithCustomer($orderId, $driverId);
@@ -135,7 +142,7 @@ function handleOrderCancellation($orderId, $driverId, $cancelReason, $transactio
     }
     // Update Order Details table
     $stmt = $conn->prepare("UPDATE order_details SET status = 'Cancelled' WHERE order_id = ?");
-    $stmt->bind_param("i",$orderId);
+    $stmt->bind_param("i", $orderId);
     if (!$stmt->execute()) {
         throw new Exception("Failed to update order status: " . $stmt->error);
     }
@@ -166,70 +173,184 @@ function handleOrderCancellation($orderId, $driverId, $cancelReason, $transactio
 
     // Insert transactions and revenue
     $revenueTypeId = 4;
-    insertCustomerTransaction($transactionReference, $customerId, $refundAmount, 'credit', 'Order Refund', "Refund for Cancelled Order ID: $orderId on Delivery" );
+    insertCustomerTransaction($transactionReference, $customerId, $refundAmount, 'credit', 'Order Refund', "Refund for Cancelled Order ID: $orderId on Delivery");
     insertCustomerTransaction($transactionReference, $customerId, $cancellationFee, 'debit', 'Order Cancellation Fee on Delivery', "Cancellation fee for Order ID: $orderId on Delivery");
-    insertTransaction($transactionReference, $customerId, $orderId, 'Credit', $cancellationFee, $transactionDate, "Direct Debit Cancelled order on Delivery.", 'Completed', $revenueTypeId );
+    insertTransaction($transactionReference, $customerId, $orderId, 'Credit', $cancellationFee, $transactionDate, "Direct Debit Cancelled order on Delivery.", 'Completed', $revenueTypeId);
     insertRevenue($orderId, $customerId, $totalAmount, $refundAmount, $cancellationFee, $orderDetails['order_date'], 'Cancelled', 4);
 }
 
-function handleOrderDelivery($orderId, $driverId, $transactionReference) {
+
+// function to Handle Paid Delivery
+function handlePaidOrderDelivery($orderId, $driverId, $transactionReference, $orderDetails)
+{
     global $conn;
 
-    $orderDetails = getOrderDetailsWithCustomer($orderId, $driverId);
-    $totalAmount = $orderDetails['total_amount'];
     $customerId = $orderDetails['customer_id'];
     $transactionDate = $orderDetails['order_date'];
-
-    $stmt = $conn->prepare("UPDATE order_details SET status = 'Delivered' WHERE order_id = ?");
-    $stmt->bind_param("i",$orderId);
-    if (!$stmt->execute()) {
-        throw new Exception("Failed to update order status: " . $stmt->error);
-    }
-
-    // Update order status
+    $amount = $orderDetails['total_amount']; // Actual amount
     $status = 'Completed';
-    updateOrderStatus($orderId, $driverId, $status, STATUS_DELIVERED);
     $revenueTypeId = 2;
-    // Insert revenue and transaction
-    insertCustomerTransaction($transactionReference, $customerId, $totalAmount, 'debit', 'Direct Debit', "Food Order Payment for Order ID: $orderId");
-    insertTransaction($transactionReference, $customerId, $orderId, 'Credit', $totalAmount, $transactionDate, "Food Order Payment for Order ID: $orderId", 'Completed', $revenueTypeId );
-    insertRevenue($orderId, $customerId, $totalAmount, 0, $totalAmount, $orderDetails['order_date'], $status, 2);
+
+    // Start transaction
+    $conn->begin_transaction();
+
+    try {
+        // Update order status in the database
+        $stmt = $conn->prepare("UPDATE order_details SET status = 'Delivered' WHERE order_id = ?");
+        $stmt->bind_param("i", $orderId);
+        if (!$stmt->execute()) {
+            throw new Exception("Failed to update order status: " . $stmt->error);
+        }
+
+        // Update order status
+        updateOrderStatus($orderId, $driverId, $status, STATUS_DELIVERED);
+
+        // Insert customer transaction with actual amount
+        insertCustomerTransaction(
+            $transactionReference,
+            $customerId,
+            $amount,
+            'debit',
+            'Direct Debit',
+            "Food Order Payment for Order ID: $orderId",
+        );
+
+        // Insert transaction record with actual amount
+        insertTransaction(
+            $transactionReference,
+            $customerId,
+            $orderId,
+            'Credit',
+            $amount,
+            $transactionDate,
+            "Food Order Payment for Order ID: $orderId",
+            'Completed',
+            $revenueTypeId,
+        );
+
+        // Insert revenue record with actual amount
+        insertRevenue($orderId, $customerId, $amount, 0, $amount, $transactionDate, $status, $revenueTypeId);
+
+        // Commit the transaction
+        $conn->commit();
+        respond(true, "Outright payment order successfully delivered.");
+    } catch (Exception $e) {
+        $conn->rollback();
+        error_log($e->getMessage(), 0);
+        respond(false, "An error occurred while delivering the outright payment order. Please try again.");
+    }
 }
 
-function updateOrderStatus($orderId, $driverId, $status, $delivery_status) {
+// Handle Order Delivery on Credit
+function handleCreditOrderDelivery($orderId, $driverId, $transactionReference, $orderDetails)
+{
+    global $conn;
+
+    $customerId = $orderDetails['customer_id'];
+    $transactionDate = $orderDetails['order_date'];
+    $amount = 0.00; // Amount is 0 for credit orders
+    $status = 'Completed';
+    $revenueTypeId = 2;
+
+    // Start transaction
+    $conn->begin_transaction();
+
+    try {
+        // Update order status in the database
+        $stmt = $conn->prepare("UPDATE order_details SET status = 'Delivered' WHERE order_id = ?");
+        $stmt->bind_param("i", $orderId);
+        if (!$stmt->execute()) {
+            throw new Exception("Failed to update order status: " . $stmt->error);
+        }
+
+        // Update order status
+        updateOrderStatus($orderId, $driverId, $status, STATUS_DELIVERED);
+
+        // Insert customer transaction with zero amount
+        insertCustomerTransaction(
+            $transactionReference,
+            $customerId,
+            $amount,
+            'debit',
+            'Direct Debit',
+            "Food Order Payment for Order ID: $orderId",
+        );
+
+        // Insert transaction record with zero amount
+        insertTransaction(
+            $transactionReference,
+            $customerId,
+            $orderId,
+            'Credit',
+            $amount,
+            $transactionDate,
+            "Food Order Payment for Order ID: $orderId",
+            'Completed',
+            $revenueTypeId,
+            
+        );
+
+        // Insert revenue record with zero amount
+        insertRevenue($orderId, $customerId, $amount, 0, $amount, $transactionDate, $status, $revenueTypeId);
+
+        // Commit the transaction
+        $conn->commit();
+        respond(true, "Credit order successfully delivered.");
+    } catch (Exception $e) {
+        $conn->rollback();
+        error_log($e->getMessage(), 0);
+        respond(false, "An error occurred while delivering the credit order. Please try again.");
+    }
+}
+
+function handleOrderDelivery($orderId, $driverId, $transactionReference)
+{
+    try {
+        $orderDetails = getOrderDetailsWithCustomer($orderId, $driverId);
+
+        if ($orderDetails['is_credit']) {
+            handleCreditOrderDelivery($orderId, $driverId, $transactionReference, $orderDetails);
+        } else {
+            handlePaidOrderDelivery($orderId, $driverId, $transactionReference, $orderDetails);
+        }
+    } catch (Exception $e) {
+        error_log($e->getMessage(), 0);
+        respond(false, "An error occurred while handling the order delivery. Please try again.");
+    }
+}
+
+
+
+function updateOrderStatus($orderId, $driverId, $status, $delivery_status)
+{
     global $conn;
     $stmt = $conn->prepare("UPDATE orders SET status = ?, delivery_status = ? WHERE order_id = ? AND driver_id = ?");
     $stmt->bind_param("ssii", $status, $delivery_status, $orderId, $driverId);
     $stmt->execute();
 }
 
-function insertCustomerTransaction($transactionRef, $customerId, $amount, $transactionType, $paymentMethod, $description) {
+function insertCustomerTransaction($transactionRef, $customerId, $amount, $transactionType, $paymentMethod, $description)
+{
     global $conn;
-
+    // Prepare the insert statement
     $stmt = $conn->prepare(
         "INSERT INTO customer_transactions 
         (transaction_ref, customer_id, amount, date_created, transaction_type, payment_method, description) 
         VALUES (?, ?, ?, NOW(), ?, ?, ?)"
     );
+
     $stmt->bind_param("sidsss", $transactionRef, $customerId, $amount, $transactionType, $paymentMethod, $description);
+
     if (!$stmt->execute()) {
         throw new Exception("Failed to insert customer transaction: " . $stmt->error);
     }
+
+    $stmt->close();
 }
 
-function insertTransaction(
-    $transactionRef, 
-    $customerId, 
-    $orderId, 
-    $transactionType, 
-    $amount, 
-    $transaction_date,
-    $paymentMethod, 
-    $status, 
-    $revenueTypeId
-) {
+function insertTransaction($transactionRef,$customerId,$orderId,$transactionType,$amount,$transaction_date,$paymentMethod,$status, $revenueTypeId,) {
     global $conn;
-
+   
     $stmt = $conn->prepare(
         "INSERT INTO transactions 
         (transaction_ref, customer_id, order_id, transaction_type, amount, transaction_date, payment_method, status, created_at, updated_at, revenue_type_id) 
@@ -237,15 +358,15 @@ function insertTransaction(
     );
 
     $stmt->bind_param(
-        "siisdsssi", 
-        $transactionRef, 
-        $customerId, 
-        $orderId, 
-        $transactionType, 
-        $amount, 
+        "siisdsssi",
+        $transactionRef,
+        $customerId,
+        $orderId,
+        $transactionType,
+        $amount,
         $transaction_date,
-        $paymentMethod, 
-        $status, 
+        $paymentMethod,
+        $status,
         $revenueTypeId
     );
 
@@ -257,7 +378,8 @@ function insertTransaction(
 }
 
 
-function insertRevenue($orderId, $customerId, $totalAmount, $balance, $retained_amount, $orderDate, $status, $revenue_type_id) {
+function insertRevenue($orderId, $customerId, $totalAmount, $balance, $retained_amount, $orderDate, $status, $revenue_type_id)
+{
     global $conn;
     $stmt = $conn->prepare("INSERT INTO revenue (order_id, customer_id, total_amount, refunded_amount, retained_amount, transaction_date, status, updated_at, revenue_type_id) VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), ?)");
     $stmt->bind_param("iidddssi", $orderId, $customerId, $totalAmount, $balance, $retained_amount, $orderDate, $status, $revenue_type_id);

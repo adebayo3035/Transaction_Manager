@@ -8,6 +8,14 @@ if (!isset($_SESSION['customer_id'])) {
     exit();
 }
 
+function generateTransactionReference()
+{
+    $prefix = 'TRX';
+    $uniqueId = uniqid($prefix, true);
+    $randomNumber = mt_rand(1000, 9999);
+    return strtoupper(str_replace('.', '', $uniqueId . $randomNumber));
+}
+
 function getStoredPinHash($customerId, $cardNumber, $conn) {
     $stmt = $conn->prepare("SELECT card_pin FROM cards WHERE customer_id = ? and card_number = ?");
     $stmt->bind_param("is", $customerId, $cardNumber);
@@ -97,8 +105,9 @@ if ($walletData) {
     $walletId = $stmt->insert_id;
     $stmt->close();
 }
-$stmt = $conn->prepare("INSERT INTO customer_transactions (customer_id, amount, date_created, transaction_type, payment_method, description) VALUES (?, ?, NOW(), 'credit', ?, ?)");
-$stmt->bind_param("idss", $customerId, $amount, $paymentMethod, $description);
+$transactionReference = generateTransactionReference();
+$stmt = $conn->prepare("INSERT INTO customer_transactions (transaction_ref, customer_id, amount, date_created, transaction_type, payment_method, description) VALUES (?, ?, ?, NOW(), 'credit', ?, ?)");
+$stmt->bind_param("sidss", $transactionReference, $customerId, $amount, $paymentMethod, $description);
 $stmt->execute();
 $stmt->close();
 

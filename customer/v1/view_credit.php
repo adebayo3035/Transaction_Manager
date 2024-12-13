@@ -113,7 +113,7 @@
 
             </table>
 
-            <button type="button" id="repay-btn" style="display: none">Liquidate Credit</button>
+            <button type="button" id="repay-btn" style="display: none">Repay Loan</button>
 
             <!-- <button type="button" id="receipt-btn" style="display: none">Print Receipt</button> -->
             <!-- Reassign Order Form -->

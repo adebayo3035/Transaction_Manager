@@ -213,14 +213,17 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('.modal .close').addEventListener('click', () => {
         orderModal.style.display = 'none'
         repaymentForm.style.display = 'none';
+        location.reload();
     });
     document.querySelector('.closeRepaymentForm').addEventListener('click', ()=>{
         repaymentForm.style.display = 'none';
+        location.reload();
     })
     window.addEventListener('click', (event) => {
         if (event.target === orderModal || event.target === repaymentForm) {
             orderModal.style.display = 'none';
             repaymentForm.style.display = 'none';
+            location.reload();
         }
     });
 
