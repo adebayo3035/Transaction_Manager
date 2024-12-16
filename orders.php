@@ -79,7 +79,7 @@
                 <th>Order ID</th>
                 <th>Order Date</th>
                 <th>Customer ID</th>
-                <th>Total Amount (N)</th>
+                <th>Initial Price (N)</th>
                 <th>Delivery Status</th>
                 <th>View Details</th>
             </tr>

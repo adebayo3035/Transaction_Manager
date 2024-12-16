@@ -21,7 +21,7 @@ $totalResult = $stmt->get_result();
 $totalTransactions = $totalResult->fetch_assoc()['total'];
 
 // Fetch paginated orders
-$query = "SELECT id, amount, date_created, transaction_type, payment_method, description FROM customer_transactions WHERE customer_id = ? ORDER BY date_created DESC LIMIT ? OFFSET ?";
+$query = "SELECT id, transaction_ref, amount, date_created, transaction_type, payment_method, description FROM customer_transactions WHERE customer_id = ? ORDER BY date_created DESC LIMIT ? OFFSET ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("iii", $customerId, $limit, $offset);
 $stmt->execute();

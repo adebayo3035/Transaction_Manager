@@ -56,6 +56,10 @@
         .actionBtn button:hover {
             background-color: #000;
         }
+        #repayAmountLabel, #repayAmountInput, #submitRepayment{
+            display: none;
+        }
+
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -123,7 +127,13 @@
                 <div class="form-input">
                     <label for="amount">Credit ID:</label>
                     <input type="text" id="creditID" disabled>
-                    <label for="amount">Input Amount:</label>
+                    <label for=" repayment_method"> Select Repayment Method</label>
+                    <select name="repayment_method" id="repayment_method">
+                        <option value="">--Select an Option--</option>
+                        <option value="Full Repayment">Full Repayment</option>
+                        <option value="Partial Repayment">Partial Repayment</option>
+                    </select>
+                    <label for="amount"  id="repayAmountLabel">Input Amount:</label>
                     <input type="text" id="repayAmountInput" placeholder="0000">
                 </div>
                 <button type="button" id="submitRepayment">Submit</button>

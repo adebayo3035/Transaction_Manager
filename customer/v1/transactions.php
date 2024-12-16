@@ -21,6 +21,8 @@
     <table id="ordersTable">
         <thead>
             <tr>
+                <th>Trans ID</th>
+                <th>Transaction Reference</th>
                 <th>Transaction Date</th>
                 <th>Total Amount (N)</th>
                 <th>Transaction Type</th>

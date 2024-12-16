@@ -27,6 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
         transactions.forEach(transaction => {
             const row = document.createElement('tr');
             row.innerHTML = `
+                <td>${transaction.id}</td>
+                <td>${transaction.transaction_ref}</td>
                 <td>${transaction.date_created}</td>
                 <td>${transaction.amount}</td>
                 <td>${transaction.transaction_type}</td>

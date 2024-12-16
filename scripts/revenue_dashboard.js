@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
             row.innerHTML = `
                 <td>${transaction.order_id}</td>
                 <td>${transaction.customer_id}</td>
-                <td>${transaction.total_amount}</td>
+                <td>${transaction.retained_amount}</td>
                 <td>${transaction.transaction_date}</td>
                 <td class="status">${transaction.status}</td>
                 <td>${transaction.delivery_status || 'N/A'}</td>
@@ -93,7 +93,7 @@ function createLineChart(data) {
             labels: data.recentTransactions.map(transaction => transaction.transaction_date),
             datasets: [{
                 label: 'Total Amount',
-                data: data.recentTransactions.map(transaction => transaction.total_amount),
+                data: data.recentTransactions.map(transaction => transaction.retained_amount),
                 borderColor: 'blue',
                 fill: false
             }]
@@ -121,7 +121,7 @@ function createBarChart(data) {
             labels: data.recentTransactions.map(transaction => transaction.transaction_date),
             datasets: [{
                 label: 'Total Amount',
-                data: data.recentTransactions.map(transaction => transaction.total_amount),
+                data: data.recentTransactions.map(transaction => transaction.retained_amount),
                 backgroundColor: 'blue'
             }]
         },

@@ -77,7 +77,7 @@ orderStatus.addEventListener('change', function () {
             .then(data => {
                 if (data.success) {
                     console.log(data.message)
-                    alert('Order updated successfully.');
+                    alert('Delivery Status has been successfully Updated to.' + orderStatus);
                     location.reload();
 
                 } else {

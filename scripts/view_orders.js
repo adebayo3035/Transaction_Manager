@@ -112,11 +112,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const firstDetail = details[0];
         
-
+        fragment.appendChild(createRow('Delivery Status', firstDetail.delivery_status));
         fragment.appendChild(createRow('Date Last Modified', firstDetail.updated_at));
         fragment.appendChild(createRow('Total Order', firstDetail.total_order));
         fragment.appendChild(createRow('Service Fee', firstDetail.service_fee));
         fragment.appendChild(createRow('Delivery Fee', firstDetail.delivery_fee));
+       
+        fragment.appendChild(createRow('Refunded Amount', firstDetail.refunded_amount));
+       
        
         if(firstDetail.percentage_discount !== null){
             fragment.appendChild(createRow('Percentage Discount (%)', firstDetail.percentage_discount));
@@ -124,7 +127,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if(firstDetail.discount_value !== null){
             fragment.appendChild(createRow('Discount Value (N)', firstDetail.discount_value));
         }
-        fragment.appendChild(createRow('Total Amount', firstDetail.total_amount));
+        // fragment.appendChild(createRow('Total Amount', firstDetail.total_amount));
+        fragment.appendChild(createRow('Balance', firstDetail.retained_amount));
         if(firstDetail.promo_code !== null){
             fragment.appendChild(createRow('Promo Code', firstDetail.promo_code));
         }
@@ -140,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         fragment.appendChild(createRow("Customer's Name", `${firstDetail.customer_firstname} ${firstDetail.customer_lastname}`));
         fragment.appendChild(createRow("Customer's Mobile Number", firstDetail.customer_phone_number));
-        fragment.appendChild(createRow('Delivery Status', firstDetail.delivery_status));
+       
 
         if (firstDetail.driver_firstname && firstDetail.driver_lastname) {
             fragment.appendChild(createRow("Driver's Name", `${firstDetail.driver_firstname} ${firstDetail.driver_lastname}`));

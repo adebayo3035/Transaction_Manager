@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const repaymentForm = document.getElementById('reassignForm');
     const submitRepayment = document.getElementById('submitRepayment');
     const repayAmountInput = document.getElementById('repayAmountInput');
+    const repaymentMethodSelect = document.getElementById('repayment_method');
+    const repayAmountLabel = document.getElementById('repayAmountLabel');
 
     // Fetch orders with pagination
     function fetchCredits(page = 1) {
@@ -142,26 +144,55 @@ document.addEventListener('DOMContentLoaded', () => {
         // fetchAvailableDrivers();
         repaymentForm.style.display = 'block';
     });
+
+    // Event listener for repayment method change
+    repaymentMethodSelect.addEventListener('change', () => {
+        const selectedMethod = repaymentMethodSelect.value;
+        if (selectedMethod === "Full Repayment") {
+            repayAmountInput.style.display = 'none';
+            repayAmountLabel.style.display = 'none';
+            submitRepayment.style.display = "flex";
+        } else if (selectedMethod === "Partial Repayment") {
+            repayAmountInput.style.display = 'block';
+            repayAmountLabel.style.display = 'block';
+            submitRepayment.style.display = "flex";
+        }
+        else{
+            repayAmountInput.style.display = 'none';
+            repayAmountLabel.style.display = 'none';
+            submitRepayment.style.display = "none";
+        }
+    });
     // Handle form submission
     submitRepayment.addEventListener('click', () => {
-        const repayAmount = document.getElementById('repayAmountInput').value
+        const selectedMethod = repaymentMethodSelect.value;
+        const repayAmount = document.getElementById('repayAmountInput').value;
         const creditId = document.getElementById('creditID').value;
-        fetch('../v2/credit_repayment.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ credit_order_id: creditId, repay_amount: repayAmount })
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Your RePayment has been successfully submitted');
-                    repaymentForm.style.display = 'none'; // Hide form after submission
-                } else {
-                    alert(data.message)
-                    console.error('Failed to Repay Credit Order:', data.message);
-                }
+        
+        // Show confirmation dialog
+        const confirmMessage = selectedMethod === "Full Repayment" ? 
+            "Are you sure you want to make a full repayment?" :
+            `Are you sure you want to make a partial repayment of ${repayAmount}?`;
+
+        if (confirm(confirmMessage)) {
+            fetch('../v2/credit_repayment.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ credit_order_id: creditId, repay_amount: selectedMethod === "Full Repayment" ? "Full" : repayAmount, repaymentMethod: selectedMethod })
             })
-            .catch(error => console.error('Error Repaying Credit Order:', error));
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Your repayment has been successfully submitted');
+                        // Hide form after successful submission
+                        document.querySelector('.reassign-form').style.display = 'none';
+                    } else {
+                        alert(data.message);
+                        console.error('Failed to repay credit order:', data.message);
+                    }
+                })
+                .catch(error => console.error('Error repaying credit order:', error));
+        }
     });
 
 

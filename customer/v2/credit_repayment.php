@@ -25,6 +25,7 @@ try {
     // Input parameters
     $credit_order_id = $input['credit_order_id'];
     $amount_paying = floatval($input['repay_amount']);
+    $repayment_type = $input['repaymentMethod'];
     $payment_date = date('Y-m-d H:i:s'); // Assuming the current timestamp for payment date
 
     // Fetch the credit order details
@@ -63,6 +64,21 @@ try {
         throw new Exception("The payment amount exceeds the total credit amount.");
     }
 
+    // Handle repayment type
+    if ($repayment_type === "Full Repayment") {
+        $amount_paying = $remaining_balance; // Full repayment clears the balance
+    } else if ($repayment_type === "Partial Repayment") {
+        if ($amount_paying <= 0 || $amount_paying > $remaining_balance) {
+            throw new Exception("Invalid repayment amount for partial repayment.");
+        }
+        // Apply late payment fee for partial payments if overdue
+        // $current_date = date('Y-m-d H:i:s');
+        // if ($due_date < $current_date) {
+        //     $late_payment_fee = (0.3 * $total_credit_amount);
+        //     $amount_paying += $late_payment_fee;
+        // }
+    }
+
     // Fetch wallet balance
     $wallet_stmt = $conn->prepare("SELECT balance FROM wallets WHERE customer_id = ? FOR UPDATE");
     $wallet_stmt->bind_param("i", $customerId);
@@ -84,7 +100,7 @@ try {
         // Apply 30% late payment fee
         $late_payment_fee = (0.3 * $total_credit_amount);
         $amount_paying += $late_payment_fee;
-        if ($wallet_balance < $new_credit) {
+        if ($wallet_balance < $amount_paying) {
             throw new Exception("Insufficient wallet balance to process your repayment.");
         }
     }
