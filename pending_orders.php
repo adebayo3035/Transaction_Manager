@@ -45,7 +45,7 @@ include('navbar.php');
     <div id="orderModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Order Details</h2>
+             <h2 id ="order_details">Order Details</h2>
             <table id="orderDetailsTable">
                 <thead>
                     <tr>

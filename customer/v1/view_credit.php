@@ -3,62 +3,7 @@
 
 <head>
     <style>
-        .ordersTable th,
-        .ordersTable td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .modal .reassign-form {
-            margin-top: 20px;
-            padding: 20px;
-            border: 1px solid #ccc;
-            background-color: #f9f9f9;
-            display: flex;
-
-        }
-
-        .reassign-form h3 {
-            margin-bottom: 10px;
-            text-align: center;
-        }
-
-        .reassign-form label,
-        .reassign-form select,
-        .reassign-form button {
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .reassign-form select {
-            width: 50%;
-            padding: 10px;
-            margin: 5px 0 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            outline: none;
-        }
-
-        .reassign-form button {
-            font-size: 14px;
-            padding: 10px;
-            background-color: #0275d8;
-            cursor: pointer;
-        }
-
-        .actionBtn {
-            display: flex;
-            justify-content: space-around;
-        }
-
-        .actionBtn button:hover {
-            background-color: #000;
-        }
-        #repayAmountLabel, #repayAmountInput, #submitRepayment{
-            display: none;
-        }
+        
 
     </style>
     <meta charset="UTF-8">
@@ -66,6 +11,7 @@
     <title>View Credits History</title>
     <link rel="stylesheet" href="../css/view_orders.css">
     <link rel="stylesheet" href="../css/checkout.css">
+    <link rel="stylesheet" href="../../css/credit_history.css">
 </head>
 
 <body>
@@ -127,6 +73,7 @@
                 <div class="form-input">
                     <label for="amount">Credit ID:</label>
                     <input type="text" id="creditID" disabled>
+                    <br/>
                     <label for=" repayment_method"> Select Repayment Method</label>
                     <select name="repayment_method" id="repayment_method">
                         <option value="">--Select an Option--</option>

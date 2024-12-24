@@ -57,16 +57,14 @@ try {
     }
 
     // Update driver status to 'Available' if Delivered or Cancelled
-    if ($orderStatus === STATUS_CANCELLED || $orderStatus === STATUS_DELIVERED) {
-        $sql = "UPDATE driver SET status = 'Available' WHERE id = ?";
-        if ($stmt = $conn->prepare($sql)) {
-            $stmt->bind_param("i", $driverId);
-            $stmt->execute();
-            $stmt->close();
-        } else {
-            throw new Exception("Failed to update driver status.");
-        }
-    }
+    // if ($orderStatus === STATUS_CANCELLED || $orderStatus === STATUS_DELIVERED) {
+    //     try {
+    //         updateDriverStatus($conn, $driverId, 'Available');
+    //     } catch (Exception $e) {
+    //         // Log or handle the error as needed
+    //         error_log("Failed to update driver status: " . $e->getMessage());
+    //     }
+    // }
 
     $conn->commit();
     respond(true, "Your Order has been successfully $orderStatus");
@@ -87,6 +85,22 @@ function respond($success, $message)
     exit();
 }
 
+function updateDriverStatus($conn, $driverId, $status)
+{
+    $sql = "UPDATE driver SET status = ? WHERE id = ?";
+    try {
+        $stmt = $conn->prepare($sql);
+        if (!$stmt) {
+            throw new Exception("Failed to prepare statement: " . $conn->error);
+        }
+        $stmt->bind_param("si", $status, $driverId);
+        $stmt->execute();
+        $stmt->close();
+    } catch (Exception $e) {
+        error_log("Driver status update failed: " . $e->getMessage());
+        throw new Exception("Failed to update driver status.");
+    }
+}
 function isInvalidTransition($current, $target)
 {
     $invalidTransitions = [
@@ -154,6 +168,8 @@ function handleOrderCancellation($orderId, $driverId, $cancelReason, $transactio
         throw new Exception("Failed to update customer wallet: " . $stmt->error);
     }
 
+    updateDriverStatus($conn, $driverId, 'Available');
+
     // Update food stock quantities
     $stmt = $conn->prepare("SELECT food_id, quantity FROM order_details WHERE order_id = ?");
     $stmt->bind_param("i", $orderId);
@@ -204,6 +220,9 @@ function handlePaidOrderDelivery($orderId, $driverId, $transactionReference, $or
 
         // Update order status
         updateOrderStatus($orderId, $driverId, $status, STATUS_DELIVERED);
+
+        // Update Driver Status
+        updateDriverStatus($conn, $driverId, 'Available');
 
         // Insert customer transaction with actual amount
         insertCustomerTransaction(
@@ -266,6 +285,9 @@ function handleCreditOrderDelivery($orderId, $driverId, $transactionReference, $
         // Update order status
         updateOrderStatus($orderId, $driverId, $status, STATUS_DELIVERED);
 
+        // Update Driver Status
+        updateDriverStatus($conn, $driverId, 'Available');
+
         // Insert customer transaction with zero amount
         insertCustomerTransaction(
             $transactionReference,
@@ -287,7 +309,7 @@ function handleCreditOrderDelivery($orderId, $driverId, $transactionReference, $
             "Food Order Payment for Order ID: $orderId",
             'Completed',
             $revenueTypeId,
-            
+
         );
 
         // Insert revenue record with zero amount
@@ -348,9 +370,10 @@ function insertCustomerTransaction($transactionRef, $customerId, $amount, $trans
     $stmt->close();
 }
 
-function insertTransaction($transactionRef,$customerId,$orderId,$transactionType,$amount,$transaction_date,$paymentMethod,$status, $revenueTypeId,) {
+function insertTransaction($transactionRef, $customerId, $orderId, $transactionType, $amount, $transaction_date, $paymentMethod, $status, $revenueTypeId, )
+{
     global $conn;
-   
+
     $stmt = $conn->prepare(
         "INSERT INTO transactions 
         (transaction_ref, customer_id, order_id, transaction_type, amount, transaction_date, payment_method, status, created_at, updated_at, revenue_type_id) 

@@ -93,12 +93,14 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .catch(error => console.error('Error fetching credit details:', error));
     }
+    let currentOrderId = null; // Variable to store the current order_id
 
     // Populate order details table
     function populateCreditDetails(details) {
         const orderDetailsTableBody = document.querySelector('#orderDetailsTable tbody');
         orderDetailsTableBody.innerHTML = '';
        details.forEach(detail => {
+        currentOrderId = detail.order_id; // Store the order_id for later use
         document.getElementById('creditID').value = detail.credit_order_id;
             const row = document.createElement('tr');
             row.innerHTML = `
@@ -178,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
             fetch('../v2/credit_repayment.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ credit_order_id: creditId, repay_amount: selectedMethod === "Full Repayment" ? "Full" : repayAmount, repaymentMethod: selectedMethod })
+                body: JSON.stringify({ credit_order_id: creditId, repay_amount: selectedMethod === "Full Repayment" ? "Full" : repayAmount, repaymentMethod: selectedMethod, order_id: currentOrderId })
             })
                 .then(response => response.json())
                 .then(data => {

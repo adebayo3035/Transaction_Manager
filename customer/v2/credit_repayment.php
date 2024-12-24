@@ -27,6 +27,7 @@ try {
     $amount_paying = floatval($input['repay_amount']);
     $repayment_type = $input['repaymentMethod'];
     $payment_date = date('Y-m-d H:i:s'); // Assuming the current timestamp for payment date
+    $order_id = $input['order_id'];
 
     // Fetch the credit order details
     $stmt = $conn->prepare("SELECT * FROM credit_orders WHERE credit_order_id = ? FOR UPDATE");
@@ -176,10 +177,10 @@ try {
 
     // Insert into repayment_history table
     $insert_stmt = $conn->prepare("
-        INSERT INTO repayment_history (credit_order_id, customer_id, amount_paid, payment_date)
-        VALUES (?, ?, ?, ?)
+        INSERT INTO repayment_history (order_id, credit_order_id, customer_id, amount_paid, payment_date)
+        VALUES (?, ?, ?, ?, ?)
     ");
-    $insert_stmt->bind_param("iids", $credit_order_id, $customerId, $amount_paying, $payment_date);
+    $insert_stmt->bind_param("iiids", $order_id, $credit_order_id, $customerId, $amount_paying, $payment_date);
     $insert_stmt->execute();
 
     // Insert transaction into customer_transactions table

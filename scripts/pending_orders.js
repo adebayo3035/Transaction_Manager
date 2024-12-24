@@ -52,9 +52,13 @@ function fetchOrderDetails(orderId) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
+                const orderDetailsLabel = document.getElementById('order_details');
                 const orderDetailsTableBody = document.querySelector('#orderDetailsTable tbody');
                 orderDetailsTableBody.innerHTML = '';
                 data.order_details.forEach(detail => {
+                    if(detail.is_credit){
+                        orderDetailsLabel.textContent = "Credit Order Details";
+                    }
                     const row = document.createElement('tr');
                     row.innerHTML = `
                             <td>${detail.food_name}</td>

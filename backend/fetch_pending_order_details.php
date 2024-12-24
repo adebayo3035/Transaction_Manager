@@ -13,7 +13,13 @@ if (isset($data['order_id'])) {
     $order_id = $data['order_id'];
 
     // Fetch order details
-    $query = "SELECT od.*, f.food_name FROM order_details od JOIN food f ON od.food_id = f.food_id WHERE od.order_id = ?";
+    $query = "
+    SELECT od.*, f.food_name, o.is_credit 
+    FROM order_details od
+    JOIN food f ON od.food_id = f.food_id
+    JOIN orders o ON od.order_id = o.order_id
+    WHERE od.order_id = ?";
+
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $order_id);
     $stmt->execute();
