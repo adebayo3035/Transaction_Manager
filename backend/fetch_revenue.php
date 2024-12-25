@@ -14,7 +14,7 @@ $totalRow = $totalResult->fetch_assoc();
 $total = $totalRow['total'];
 
 // Fetch revenue
-$query = "SELECT revenue_id, order_id, customer_id, total_amount, status, transaction_date, updated_at FROM revenue ORDER BY updated_at DESC LIMIT ?, ?";
+$query = "SELECT revenue_id, order_id, customer_id, retained_amount, status, transaction_date, updated_at FROM revenue ORDER BY updated_at DESC LIMIT ?, ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("ii", $offset, $limit);
 $stmt->execute();

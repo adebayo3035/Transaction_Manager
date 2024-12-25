@@ -153,7 +153,7 @@ $activeCustomers = [];
 $sqlTotalInflow = "
     SELECT SUM(retained_amount) AS total_inflow
     FROM revenue
-    WHERE status IN ('Completed') AND DATE(updated_at) = CURDATE()
+    WHERE DATE(updated_at) = CURDATE()
 ";
 
 // $sqlTotalInflow = "SELECT SUM(total_amount) AS total_inflow FROM revenue WHERE DATE(transaction_date) = CURDATE() - INTERVAL 1 DAY";

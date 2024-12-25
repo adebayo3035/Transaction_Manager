@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${revenue.revenue_id}</td>
                 <td>${revenue.order_id}</td>
                 <td>${revenue.customer_id}</td>
-                <td>${revenue.total_amount}</td>
+                <td>${revenue.retained_amount}</td>
                 <td>${revenue.status}</td>
                 <td>${revenue.transaction_date}</td>
                 <td>${revenue.updated_at}</td>

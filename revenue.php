@@ -92,7 +92,7 @@
                 <th>Revenue ID</th>
                 <th>Order ID</th>
                 <th>Customer ID</th>
-                <th>Total Amount (N)</th>
+                <th>Amount (N)</th>
                 <th>Status</th>
                 <th>Date Initiated</th>
                 <th>Date Last Updated</th>
