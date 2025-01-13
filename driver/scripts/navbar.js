@@ -17,10 +17,12 @@ function loadDriverInfo() {
         .then(data => {
             document.getElementById('customerName').textContent = `Welcome, ${data.firstname} - ${data.lastname}`;
             document.getElementById('walletBalance').textContent = `Your Current Status is: ${data.status}`;
+            document.getElementById('wallet').textContent = `Wallet Balance: N ${data.wallet_balance}`;
         })
         .catch(error => {
             setError('customerName', 'Error loading Driver Name');
             setError('walletBalance', 'Error loading current Status');
+            setError('wallet', 'Error loading Wallet Balance');
             console.error('Error:', error);
         });
 }

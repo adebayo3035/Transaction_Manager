@@ -55,17 +55,6 @@ try {
         $status = 'Pending';
         updateOrderStatus($orderId, $driverId, $status, $orderStatus);
     }
-
-    // Update driver status to 'Available' if Delivered or Cancelled
-    // if ($orderStatus === STATUS_CANCELLED || $orderStatus === STATUS_DELIVERED) {
-    //     try {
-    //         updateDriverStatus($conn, $driverId, 'Available');
-    //     } catch (Exception $e) {
-    //         // Log or handle the error as needed
-    //         error_log("Failed to update driver status: " . $e->getMessage());
-    //     }
-    // }
-
     $conn->commit();
     respond(true, "Your Order has been successfully $orderStatus");
 } catch (Exception $e) {
@@ -120,7 +109,7 @@ function isInvalidTransition($current, $target)
 function getOrderDetailsWithCustomer($orderId, $driverId)
 {
     global $conn;
-    $sql = "SELECT total_amount, customer_id, order_date, delivery_pin, is_credit 
+    $sql = "SELECT total_amount, delivery_fee, customer_id, order_date, delivery_pin, is_credit 
             FROM orders WHERE order_id = ? AND driver_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ii", $orderId, $driverId);
@@ -144,6 +133,7 @@ function handleOrderCancellation($orderId, $driverId, $cancelReason, $transactio
     $orderDetails = getOrderDetailsWithCustomer($orderId, $driverId);
     $totalAmount = $orderDetails['total_amount'];
     $customerId = $orderDetails['customer_id'];
+    $delivery_fee = $orderDetails['delivery_fee'];
     $cancellationFee = CANCELLATION_FEE_PERCENTAGE * $totalAmount;
     $refundAmount = $totalAmount - $cancellationFee;
     $transactionDate = $orderDetails['order_date'];
@@ -193,6 +183,7 @@ function handleOrderCancellation($orderId, $driverId, $cancelReason, $transactio
     insertCustomerTransaction($transactionReference, $customerId, $cancellationFee, 'debit', 'Order Cancellation Fee on Delivery', "Cancellation fee for Order ID: $orderId on Delivery");
     insertTransaction($transactionReference, $customerId, $orderId, 'Credit', $cancellationFee, $transactionDate, "Direct Debit Cancelled order on Delivery.", 'Completed', $revenueTypeId);
     insertRevenue($orderId, $customerId, $totalAmount, $refundAmount, $cancellationFee, $orderDetails['order_date'], 'Cancelled', 4);
+    creditDeliveryFee($conn, $orderId, $driverId, $delivery_fee, $transactionReference, $customerId, $transactionDate, 8);
 }
 
 
@@ -204,6 +195,7 @@ function handlePaidOrderDelivery($orderId, $driverId, $transactionReference, $or
     $customerId = $orderDetails['customer_id'];
     $transactionDate = $orderDetails['order_date'];
     $amount = $orderDetails['total_amount']; // Actual amount
+    $delivery_fee = $orderDetails['delivery_fee'];
     $status = 'Completed';
     $revenueTypeId = 2;
 
@@ -249,6 +241,7 @@ function handlePaidOrderDelivery($orderId, $driverId, $transactionReference, $or
 
         // Insert revenue record with actual amount
         insertRevenue($orderId, $customerId, $amount, 0, $amount, $transactionDate, $status, $revenueTypeId);
+        creditDeliveryFee($conn, $orderId, $driverId, $delivery_fee, $transactionReference, $customerId, $transactionDate, 8);
 
         // Commit the transaction
         $conn->commit();
@@ -267,6 +260,7 @@ function handleCreditOrderDelivery($orderId, $driverId, $transactionReference, $
 
     $customerId = $orderDetails['customer_id'];
     $transactionDate = $orderDetails['order_date'];
+    $delivery_fee = $orderDetails['delivery_fee'];
     $amount = 0.00; // Amount is 0 for credit orders
     $status = 'Completed';
     $revenueTypeId = 2;
@@ -314,6 +308,7 @@ function handleCreditOrderDelivery($orderId, $driverId, $transactionReference, $
 
         // Insert revenue record with zero amount
         insertRevenue($orderId, $customerId, $amount, 0, $amount, $transactionDate, $status, $revenueTypeId);
+        creditDeliveryFee($conn, $orderId, $driverId, $delivery_fee, $transactionReference, $customerId, $transactionDate, 8);
 
         // Commit the transaction
         $conn->commit();
@@ -408,5 +403,37 @@ function insertRevenue($orderId, $customerId, $totalAmount, $balance, $retained_
     $stmt->bind_param("iidddssi", $orderId, $customerId, $totalAmount, $balance, $retained_amount, $orderDate, $status, $revenue_type_id);
     if (!$stmt->execute()) {
         throw new Exception("Failed to insert revenue: " . $stmt->error);
+    }
+}
+
+function creditDeliveryFee($conn, $orderId, $driverId, $amount, $transactionReference, $customerId, $transactionDate, $revenueTypeId) {
+    $conn->begin_transaction();
+    try {
+        // Insert into the delivery_fee table
+        $deliveryFeeSql = "INSERT INTO delivery_fee (order_id, driver_id, delivery_fee, status, created_at) VALUES (?, ?, ?, 'Credited', NOW())";
+        $stmt = $conn->prepare($deliveryFeeSql);
+        $stmt->bind_param("iid",  $orderId, $driverId, $amount);
+        $stmt->execute();
+        
+        // Update driver's wallet
+        $walletUpdateSql = "UPDATE driver SET wallet_balance = wallet_balance + ? WHERE id = ?";
+        $stmt = $conn->prepare($walletUpdateSql);
+        $stmt->bind_param("di", $amount, $driverId);
+        $stmt->execute();
+
+        insertTransaction($transactionReference, $customerId, $orderId, 'Debit', $amount, $transactionDate, "Driver Delivery Fee.", 'Completed', $revenueTypeId);
+
+        // Insert into the transactions table
+        // $transactionSql = "INSERT INTO transactions (driver_id, amount, type, description, created_at) VALUES (?, ?, 'Credit', ?, NOW())";
+        // $description = "Delivery Fee for Order #$orderId";
+        // $stmt = $conn->prepare($transactionSql);
+        // $stmt->bind_param("ids", $driverId, $amount, $description);
+        // $stmt->execute();
+
+        $conn->commit();
+    } catch (Exception $e) {
+        $conn->rollback();
+        error_log("Failed to credit delivery fee: " . $e->getMessage());
+        throw new Exception("Transaction failed.");
     }
 }

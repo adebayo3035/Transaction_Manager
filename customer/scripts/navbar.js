@@ -17,7 +17,7 @@ function loadCustomerInfo() {
         })
         .then(data => {
             setTextContent('customerName', `Welcome, ${data.customer_name}`);
-            setTextContent('walletBalance', `Your Current Balance is: N${data.balance}`);
+            setTextContent('walletBalance', `Wallet Balance: ₦ ${data.balance || 0}`);
         })
         .catch(error => {
             setTextContent('customerName', 'Error loading customer name');

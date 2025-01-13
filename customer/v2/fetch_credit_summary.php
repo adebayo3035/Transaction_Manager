@@ -15,9 +15,9 @@ $offset = ($page - 1) * $limit;
 
 try {
     // Fetch credits with pagination
-    $stmt = $conn->prepare("SELECT credit_order_id, order_id, created_at, remaining_balance, repayment_status 
-                            FROM credit_orders where customer_id = ?
-                            LIMIT ? OFFSET ?");
+    $stmt = $conn->prepare("SELECT credit_order_id, order_id, created_at, remaining_balance, repayment_status, due_date
+                            FROM credit_orders where customer_id = ? ORDER BY credit_order_id DESC
+                            LIMIT ? OFFSET ? ");
     $stmt->bind_param("iii", $customerId, $limit, $offset);
     $stmt->execute();
     $result = $stmt->get_result();

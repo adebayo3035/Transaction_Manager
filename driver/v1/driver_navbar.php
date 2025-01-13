@@ -22,10 +22,8 @@
             <li><a href="dashboard.php" id="orderFood">Update Order Status</a></li>
             <li><a href="view_orders.php" id="viewOrders">View Order History</a></li>
             <li><a href="profile.php" id="fundWallet">My Profile</a></li>
-           
-
         </ul>
-
+        <span id="wallet">Loading Balance...</span>
     </nav>
     <script src="../scripts/navbar.js"></script>
 </body>

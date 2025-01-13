@@ -86,9 +86,9 @@ nav ul li a:hover {
   cursor: pointer;
 }
 
-#walletBalance {
+/* #walletBalance {
   font-size: 13px;
-}
+} */
 
 @media(max-width: 780px) {
   header h1 {

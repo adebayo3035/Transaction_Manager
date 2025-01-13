@@ -3,6 +3,11 @@ header('Content-Type: application/json');
 require 'config.php';
 session_start();
 
+// Enable error reporting for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Check if the customer is logged in
 if (!isset($_SESSION['customer_id'])) {
     echo json_encode(["success" => false, "message" => "Not logged in."]);
     exit();
@@ -10,6 +15,14 @@ if (!isset($_SESSION['customer_id'])) {
 
 $customerId = $_SESSION['customer_id'];
 $input = json_decode(file_get_contents('php://input'), true);
+
+// Validate input
+if (!isset($input['credit_order_id'], $input['repay_amount'], $input['repaymentMethod'], $input['order_id'])) {
+    echo json_encode(["success" => false, "message" => "Invalid input data."]);
+    exit();
+}
+
+// Generate unique transaction reference
 function generateTransactionReference()
 {
     $prefix = 'TRX';
@@ -19,17 +32,16 @@ function generateTransactionReference()
 }
 
 try {
-    // Start the transaction
+    // Start transaction
     $conn->begin_transaction();
 
-    // Input parameters
     $credit_order_id = $input['credit_order_id'];
     $amount_paying = floatval($input['repay_amount']);
     $repayment_type = $input['repaymentMethod'];
-    $payment_date = date('Y-m-d H:i:s'); // Assuming the current timestamp for payment date
     $order_id = $input['order_id'];
+    $payment_date = date('Y-m-d H:i:s');
 
-    // Fetch the credit order details
+    // Fetch credit order details
     $stmt = $conn->prepare("SELECT * FROM credit_orders WHERE credit_order_id = ? FOR UPDATE");
     $stmt->bind_param("i", $credit_order_id);
     $stmt->execute();
@@ -40,129 +52,96 @@ try {
     }
 
     $credit_order = $result->fetch_assoc();
-
-    // Extract necessary fields
     $remaining_balance = floatval($credit_order['remaining_balance']);
     $total_credit_amount = floatval($credit_order['total_credit_amount']);
     $repayment_status = $credit_order['repayment_status'];
     $amount_paid = floatval($credit_order['amount_paid']);
-    $order_id = $credit_order['order_id'];
-    $status = $credit_order['status'];
     $due_date = $credit_order['due_date'];
+    $status = $credit_order['status'];
 
-    // Validation checks
+    $current_date = date('Y-m-d H:i:s');
+
+    // Validate repayment
     if ($repayment_status === 'Paid') {
         throw new Exception("This credit order is already fully paid.");
     }
-    if ($repayment_status === 'Void' && $status == 'Declined') {
-        throw new Exception("This credit order has been Cancelled. There's no need for repayment");
+    if ($repayment_status === 'Void' && $status === 'Declined') {
+        throw new Exception("This credit order has been canceled. No repayment is required.");
     }
     if ($status === 'Pending') {
-        throw new Exception("This Order is still Pending. Kindly wait for approval before making Repayment");
+        throw new Exception("Order approval is pending. Please wait before making repayment.");
     }
-
     if (($amount_paid + $amount_paying) > $total_credit_amount) {
-        throw new Exception("The payment amount exceeds the total credit amount.");
+        throw new Exception("Your Payment exceeds Remaining Balance.");
+    }
+    if (($repayment_type === "Partial Repayment") && ((strtotime($due_date) < strtotime($current_date)))) {
+        throw new Exception("Your Credit Order is Over Due. Partial Repayment not allowed");
     }
 
-    // Handle repayment type
-    if ($repayment_type === "Full Repayment") {
-        $amount_paying = $remaining_balance; // Full repayment clears the balance
-    } else if ($repayment_type === "Partial Repayment") {
-        if ($amount_paying <= 0 || $amount_paying > $remaining_balance) {
-            throw new Exception("Invalid repayment amount for partial repayment.");
-        }
-        // Apply late payment fee for partial payments if overdue
-        // $current_date = date('Y-m-d H:i:s');
-        // if ($due_date < $current_date) {
-        //     $late_payment_fee = (0.3 * $total_credit_amount);
-        //     $amount_paying += $late_payment_fee;
-        // }
+   // Handle repayment type
+if ($repayment_type === "Full Repayment") {
+    $amount_paying = $remaining_balance; // Set remaining balance to the amount the customer is paying if Full Repayment
+} elseif ($repayment_type === "Partial Repayment") {
+    if ($amount_paying <= 0 || $amount_paying > $remaining_balance) {
+        throw new Exception("Invalid repayment amount for partial repayment.");
     }
+}
 
-    // Fetch wallet balance
-    $wallet_stmt = $conn->prepare("SELECT balance FROM wallets WHERE customer_id = ? FOR UPDATE");
-    $wallet_stmt->bind_param("i", $customerId);
-    $wallet_stmt->execute();
-    $wallet_result = $wallet_stmt->get_result();
+// Fetch wallet balance
+$wallet_stmt = $conn->prepare("SELECT balance FROM wallets WHERE customer_id = ? FOR UPDATE");
+$wallet_stmt->bind_param("i", $customerId);
+$wallet_stmt->execute();
+$wallet_result = $wallet_stmt->get_result();
 
-    if ($wallet_result->num_rows === 0) {
-        throw new Exception("Wallet not found for the customer.");
-    }
+if ($wallet_result->num_rows === 0) {
+    throw new Exception("Wallet not found for the customer.");
+}
 
-    $wallet = $wallet_result->fetch_assoc();
-    $wallet_balance = floatval($wallet['balance']);
+$wallet = $wallet_result->fetch_assoc();
+$wallet_balance = floatval($wallet['balance']);
 
-    // Get the current date and time
-    $current_date = date('Y-m-d H:i:s');
+$late_payment_fee = 0;
 
-    // Debit the wallet and calculate late payment fee if due_date has passed
-    if ($due_date < $current_date) {
-        // Apply 30% late payment fee
-        $late_payment_fee = (0.3 * $total_credit_amount);
-        $amount_paying += $late_payment_fee;
-        if ($wallet_balance < $amount_paying) {
-            throw new Exception("Insufficient wallet balance to process your repayment.");
-        }
-    }
-    else{
-        if ($wallet_balance < $amount_paying) {
-            throw new Exception("Insufficient wallet balance to process your repayment.");
-        }
-    }
+// Calculate late payment fee
+if (strtotime($due_date) < strtotime($current_date)) {
+    $late_payment_fee = 0.3 * $total_credit_amount;
+}
 
-    // Calculate the new wallet balance
-    $new_wallet_balance = $wallet_balance - $amount_paying;
+$total_debit = $amount_paying + $late_payment_fee;
+if ($wallet_balance < $total_debit) {
+    $outstanding_debt = $total_debit - $wallet_balance;
+    throw new Exception(
+        "Insufficient wallet balance for repayment and late payment fee. " .
+        "Outstanding debt: $amount_paying. " .
+        "Late payment fee: $late_payment_fee."
+    );
+}
 
-    // Update the wallet balance in the database
+    // Debit wallet
+    $new_wallet_balance = $wallet_balance - $total_debit;
     $debit_wallet_stmt = $conn->prepare("UPDATE wallets SET balance = ? WHERE customer_id = ?");
     $debit_wallet_stmt->bind_param("di", $new_wallet_balance, $customerId);
     $debit_wallet_stmt->execute();
 
-    // Calculate the new remaining balance and repayment status
+    // Update credit order
     $amount_paid += $amount_paying;
     $new_remaining_balance = $total_credit_amount - $amount_paid;
     $new_repayment_status = ($amount_paid < $total_credit_amount) ? 'Partially Paid' : 'Paid';
 
-    // Prepare the update query for the credit_orders table
-    $update_stmt = $conn->prepare("
-    UPDATE credit_orders
-    SET remaining_balance = ?, repayment_status = ?, amount_paid = ?, date_last_modified = ?
-    WHERE credit_order_id = ?
-");
-
-    // Get the current timestamp for the update
-    $date_last_updated = date('Y-m-d H:i:s');
-
-    // Bind the parameters to the query
-    $update_stmt->bind_param("dsssi", $new_remaining_balance, $new_repayment_status, $amount_paid, $date_last_updated, $credit_order_id);
-
-    // Execute the update statement
-    $update_stmt->execute();
-
-
-    //Update Revenue Table
-    $update_stmt = $conn->prepare("
-        UPDATE revenue
-        SET total_amount = ?, retained_amount = ?,  updated_at = ?, revenue_type_id = ?
-        WHERE order_id = ?
+    $update_credit_stmt = $conn->prepare("
+        UPDATE credit_orders
+        SET remaining_balance = ?, repayment_status = ?, amount_paid = ?, date_last_modified = ?
+        WHERE credit_order_id = ?
     ");
-
-    // Get the current timestamp
-    $updated_at = date('Y-m-d H:i:s');
-    $revenue_type_id = 7;
-
-    // Bind the parameters
-    $update_stmt->bind_param("ddsii", $amount_paid, $amount_paid, $updated_at, $revenue_type_id, $order_id);
-
-    // Execute the statement
-    $update_stmt->execute();
+    $date_last_updated = date('Y-m-d H:i:s');
+    $update_credit_stmt->bind_param("dsssi", $new_remaining_balance, $new_repayment_status, $amount_paid, $date_last_updated, $credit_order_id);
+    $update_credit_stmt->execute();
 
     //Update transaction Table
     $update_stmt = $conn->prepare("
         UPDATE transactions
         SET amount = ?, updated_at = ?, revenue_type_id = ?
-        WHERE order_id = ?
+        WHERE order_id = ? AND revenue_type_id IN (2,7)
     ");
 
     // Get the current timestamp
@@ -175,43 +154,95 @@ try {
     // Execute the statement
     $update_stmt->execute();
 
-    // Insert into repayment_history table
-    $insert_stmt = $conn->prepare("
-        INSERT INTO repayment_history (order_id, credit_order_id, customer_id, amount_paid, payment_date)
-        VALUES (?, ?, ?, ?, ?)
+    //Update Revenue Table
+    $update_stmt = $conn->prepare("
+       UPDATE revenue
+       SET total_amount = ?, retained_amount = ?,  updated_at = ?, revenue_type_id = ?
+       WHERE order_id = ? AND revenue_type_id IN (2, 7)
+   ");
+    // Get the current timestamp
+    $updated_at = date('Y-m-d H:i:s');
+    $revenue_type_id = 7;
+    // Bind the parameters
+    $update_stmt->bind_param("ddsii", $amount_paid, $amount_paid, $updated_at, $revenue_type_id, $order_id);
+    // Execute the statement
+    $update_stmt->execute();
+
+    // Insert late payment fee into revenue and transactions if applicable
+    if ($late_payment_fee > 0) {
+        $transaction_ref = generateTransactionReference();
+        $description = "Late payment fee for Credit Order #$order_id";
+        $insert_revenue_stmt = $conn->prepare("
+            INSERT INTO revenue (order_id, customer_id, total_amount, retained_amount, transaction_date, status, revenue_type_id)
+            VALUES (?, ?, ?, ?, ?, 'Completed', 9)
+        ");
+        $insert_revenue_stmt->bind_param("iidds", $order_id, $customerId, $late_payment_fee, $late_payment_fee, $current_date);
+        $insert_revenue_stmt->execute();
+
+        $insert_transaction_stmt = $conn->prepare("
+            INSERT INTO customer_transactions (transaction_ref, customer_id, amount, date_created, transaction_type, payment_method, description)
+            VALUES (?, ?, ?, NOW(), 'Debit', 'Wallet', ?)
+        ");
+        $insert_transaction_stmt->bind_param("sids", $transaction_ref, $customerId, $late_payment_fee, $description);
+        $insert_transaction_stmt->execute();
+
+        // Insert into transactions table
+        $transactionType2 = "Credit";
+        $paymentMethod2 = "Direct Credit for Late Payment on Credit Order with Order ID: #$order_id";
+        $status = "Completed";
+        $revenue_type_id = 9;
+        $insertTransactionStmt = $conn->prepare("
+        INSERT INTO transactions (transaction_ref, customer_id, order_id, transaction_type, amount, transaction_date, payment_method, status, created_at, updated_at, revenue_type_id)
+        VALUES (?, ?, ?, ?, ?, NOW(), ?, ?, NOW(), NOW(), ?)
     ");
-    $insert_stmt->bind_param("iiids", $order_id, $credit_order_id, $customerId, $amount_paying, $payment_date);
-    $insert_stmt->execute();
+        if (!$insertTransactionStmt) {
+            throw new Exception("Failed to prepare transaction statement: " . $conn->error);
+        }
+        $insertTransactionStmt->bind_param("siisdssi", $transaction_ref, $customerId, $order_id, $transactionType2, $late_payment_fee, $paymentMethod2, $status, $revenue_type_id);
+        if (!$insertTransactionStmt->execute()) {
+            throw new Exception("Failed to insert into transactions table: " . $conn->error);
+        }
+        $insertTransactionStmt->close();
 
-    // Insert transaction into customer_transactions table
-    $transactionReference = generateTransactionReference();
-    $transaction_stmt = $conn->prepare("
-        INSERT INTO customer_transactions (transaction_ref, customer_id, amount, date_created, transaction_type, payment_method, description) VALUES (?, ?, ?, NOW(), ?, ?, ?)")
-    ;
-    $transaction_type = "Debit";
-    $payment_method = 'Diredct Debit';
-    $description = "Repayment of credit order #$credit_order_id for Order #$order_id";
+    }
 
-    $transaction_stmt->bind_param("sidsss", $transactionReference, $customerId, $amount_paying, $transaction_type, $payment_method, $description);
-    $transaction_stmt->execute();
+    // Final transaction insertion
+    $transaction_ref = generateTransactionReference();
+    $description = "Repayment for credit order #$credit_order_id.";
+    $insert_transaction_stmt = $conn->prepare("
+        INSERT INTO customer_transactions (transaction_ref, customer_id, amount, date_created, transaction_type, payment_method, description)
+        VALUES (?, ?, ?, NOW(), 'Debit', 'Wallet', ?)
+    ");
+    $insert_transaction_stmt->bind_param("sids", $transaction_ref, $customerId, $total_debit, $description);
+    $insert_transaction_stmt->execute();
 
-    // Commit the transaction
+    // Insert into repayment history
+    $repayment_history_stmt = $conn->prepare("
+     INSERT INTO repayment_history (order_id, credit_order_id, customer_id, amount_paid, payment_date)
+     VALUES (?, ?, ?, ?, ?)
+ ");
+    $repayment_history_stmt->bind_param("iiids", $order_id, $credit_order_id, $customerId, $amount_paying, $payment_date);
+    $repayment_history_stmt->execute();
+
+    // Commit transaction
     $conn->commit();
 
-    // Return success response
     echo json_encode([
         'success' => true,
         'message' => 'Repayment processed successfully.',
         'remaining_balance' => $new_remaining_balance,
-        'repayment_status' => $new_repayment_status
+        'repayment_status' => $new_repayment_status,
     ]);
 } catch (Exception $e) {
-    // Rollback the transaction on error
+    // Rollback transaction and handle errors
     $conn->rollback();
-
-    // Return error response
-    echo json_encode([
-        'success' => false,
-        'message' => $e->getMessage()
-    ]);
+    echo json_encode(['success' => false, 'message' => $e->getMessage()]);
 }
+
+
+
+// Amend and Investigate code why repayment for due loan is not updating the remaining_balance for loan
+//Disable Partial Payment when a loan is due
+// Disable it on both front end and backend
+// refactor entire code
+

@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('totalOrders').textContent = data.totalOrders || 0;
     document.getElementById('totalCustomers').textContent = data.totalCustomers || 0;
     document.getElementById('totalRevenue').textContent = data.totalInflow || 0;
+    document.getElementById('totalOutflow').textContent = data.totalOutflow || 0;
     document.getElementById('pendingOrders').textContent = data.pendingOrders || 0;
     document.getElementById('totalDrivers').textContent = data.totalDrivers || 0;
 
@@ -114,7 +115,7 @@ window.addEventListener('load', () => {
   fetchData('backend/fetch_data.php', updateDashboard);
 });
 
-// Refresh the page every 60 seconds
+// Refresh the page every 120 seconds
 setInterval(() => {
   location.reload();
 }, 120000); // 120000 milliseconds = 120 seconds

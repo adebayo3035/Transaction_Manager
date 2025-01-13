@@ -18,6 +18,9 @@
                 <li> <a onclick="toggleModal('fundsModal')">Add Funds</a></li>
                 <li> <a onclick="toggleModal('customerInfoModal')">Update Customer Info</a></li>
                 <li> <a onclick="toggleModal('resetQuestionModal')">Reset Secret Question and Answer</a></li>
+                <li><a href="generate_token.php" id="fundWallet">Generate Token</a></li>
+                <li><a href="promo.php" id="fundWallet">Promos</a></li>
+                
             </ul>
 
         </div>

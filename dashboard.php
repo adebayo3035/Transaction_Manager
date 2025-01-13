@@ -34,6 +34,10 @@
           <p id="totalRevenue">Loading...</p>
         </div>
         <div class="card">
+          <h3>Total Outflow for Today</h3>
+          <p id="totalOutflow">Loading...</p>
+        </div>
+        <div class="card">
           <h3>Customers</h3>
           <p id="totalCustomers">Loading...</p>
         </div>

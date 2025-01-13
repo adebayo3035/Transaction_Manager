@@ -160,12 +160,23 @@ $sqlTotalInflow = "
 $resultTotalInflow = $conn->query($sqlTotalInflow);
 $totalInflow = $resultTotalInflow->fetch_assoc()['total_inflow'];
 
+$sqlTotalOutflow = "
+    SELECT SUM(amount) AS total_outflow
+    FROM transactions
+    WHERE transaction_type = 'Debit' AND DATE(updated_at) = CURDATE()
+";
+
+// $sqlTotalInflow = "SELECT SUM(total_amount) AS total_inflow FROM revenue WHERE DATE(transaction_date) = CURDATE() - INTERVAL 1 DAY";
+$resultTotalOutflow= $conn->query($sqlTotalOutflow);
+$totalOutflow= $resultTotalOutflow->fetch_assoc()['total_outflow'];
+
 $data = [
     "totalOrders" => $totalOrders,
     "totalCustomers" => $totalCustomers,
     "recentOrders" => $recentOrders,
     "topMenuItems" => $topMenuItems,
     "totalInflow" => $totalInflow,
+    "totalOutflow" => $totalOutflow,
     "pendingOrders" => $totalPendingOrders,
     "activeCustomers" => $activeCustomers,
     "totalDrivers" => $totalDrivers 

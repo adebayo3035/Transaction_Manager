@@ -78,7 +78,7 @@
                     <select name="repayment_method" id="repayment_method">
                         <option value="">--Select an Option--</option>
                         <option value="Full Repayment">Full Repayment</option>
-                        <option value="Partial Repayment">Partial Repayment</option>
+                        <option value="Partial Repayment" id="partial">Partial Repayment</option>
                     </select>
                     <label for="amount"  id="repayAmountLabel">Input Amount:</label>
                     <input type="text" id="repayAmountInput" placeholder="0000">

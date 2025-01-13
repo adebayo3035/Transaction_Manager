@@ -19,13 +19,15 @@
 <nav>
     <ul>
         <li><a href="dashboard.php" id="orderFood">Order Food</a></li>
-        <li><a href="view_orders.php" id="viewOrders">My Orders</a></li>
-        <li><a href="view_credit.php" id="viewOrders">My Credit History</a></li>
+        <li><a href="view_orders.php" id="viewOrders">Orders</a></li>
+        <li><a href="view_credit.php" id="viewOrders">Credit History</a></li>
+        
+        <!-- <li><a href="profile.php" id="fundWallet">My Profile</a></li> -->
+        <li><a href="transactions.php" id="viewOrders">Transactions</a></li>
+        <li><a href="profile.php" id="fundWallet">Profile</a></li>
         <li><a href="cards.php" id="fundWallet">Self Service</a></li>
-        <li><a href="profile.php" id="fundWallet">My Profile</a></li>
-        <li><a href="transactions.php" id="viewOrders">My Transactions</a></li>
-        <li><a href="generate_token.php" id="fundWallet">Generate Token</a></li>
-        <li><a href="promo.php" id="fundWallet">Promos</a></li>
+        <!-- <li><a href="generate_token.php" id="fundWallet">Generate Token</a></li> -->
+        
     </ul>
 </nav>
 
