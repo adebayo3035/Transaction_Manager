@@ -18,19 +18,18 @@ $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Default page is 1
 $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 5; // Default limit is 5 notifications per page
 $offset = ($page - 1) * $limit;
 
-// Check if the logged-in user is a Super Admin
 $sqlRole = "SELECT role FROM admin_tbl WHERE unique_id = ?";
 $stmtRole = $conn->prepare($sqlRole);
 $stmtRole->bind_param("i", $adminId);
 $stmtRole->execute();
 $resultRole = $stmtRole->get_result();
-$userRole = $resultRole->fetch_assoc()['role'];
+$userRole = $resultRole->fetch_assoc()['role'] ?? null;
 $stmtRole->close();
 
 if ($adminId) {
     if ($userRole === 'Super Admin') {
         // Fetch unread notifications for Super Admins with pagination
-        $sql = "SELECT * FROM admin_notifications WHERE is_read = 'No' ORDER BY created_at DESC LIMIT ?, ?";
+        $sql = "SELECT * FROM admin_notifications WHERE super_admin_read IS NULL AND is_read = 'No' ORDER BY created_at DESC LIMIT ?, ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ii", $offset, $limit); // Bind offset and limit
     } else {
@@ -39,6 +38,7 @@ if ($adminId) {
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("iii", $adminId, $offset, $limit); // Bind adminId, offset, and limit
     }
+
 
     $stmt->execute();
     $result = $stmt->get_result();
@@ -52,7 +52,7 @@ if ($adminId) {
 
     // Fetch total unread notification count (for pagination)
     if ($userRole === 'Super Admin') {
-        $sqlCountNotification = "SELECT COUNT(*) AS total_notifications FROM admin_notifications WHERE is_read = 'No'";
+        $sqlCountNotification = "SELECT COUNT(*) AS total_notifications FROM admin_notifications WHERE is_read = 'No' and super_admin_read IS NULL";
         $stmtCount = $conn->prepare($sqlCountNotification);
     } else {
         $sqlCountNotification = "SELECT COUNT(*) AS total_notifications FROM admin_notifications WHERE is_read = 'No' AND user_id = ?";

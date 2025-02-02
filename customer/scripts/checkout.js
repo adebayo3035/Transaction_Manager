@@ -8,18 +8,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const bankAccountInput = document.getElementById('bank_account');
     const bankNameSelect = document.getElementById('bank_name');
     const printReceiptBtn = document.getElementById('receipt-btn');
-    const placeOrderBtn = document.getElementById('place-orderBtn')
+    const placeOrderBtn = document.getElementById('place-orderBtn');
+    const promoCheckBox = document.getElementById('promoCheckBox');
+    const promoInput = document.getElementById('promo_code');
+    const promoBtn = document.getElementById('validate_promo');
 
     let usePromo = false;
     let discount_value = 0;
     let discount_percent = 0;
     let promoCode = '';
-    
-    // toggle display of Promo Container
-    document.getElementById('promoCheckBox').addEventListener('change', function() {
+
+    creditDetails.style.display = "none";
+
+    // Toggle display of Promo Container
+    promoCheckBox.addEventListener('change', function () {
         const promoContainer = document.getElementById('promoContainer');
-        const checkoutForm = document.getElementById('checkoutForm');
-        
         if (this.checked) {
             promoContainer.style.display = 'block';
             checkoutForm.style.display = 'none';
@@ -28,72 +31,68 @@ document.addEventListener('DOMContentLoaded', () => {
             checkoutForm.style.display = 'block';
         }
     });
-    
-    const promoBtn = document.getElementById('validate_promo');
-    // validate promo code
+
+    // Validate promo code
     promoBtn.addEventListener('click', () => {
-        const promoInput = document.getElementById('promo_code');
         const discountItem = document.getElementById('discount-item');
         const totalAfterDiscount = document.getElementById('total-after-discount');
         const totalAmountLabel = document.getElementById('totalAmount-label');
         const discountValueElem = document.getElementById('discount-value');
         const totalFeeAfterElem = document.getElementById('total-fee-after');
-        const promoCheckBox = document.getElementById('promoCheckBox');
-    
+
         // Show confirmation dialog
         if (!confirm("Are you sure you want to validate this promo code?")) {
             promoInput.value = ''; // Clear input if user cancels
             return;
         }
-    
+
         // Proceed with validation if the user confirms
         const promoDetails = {
             promo_code: promoInput.value,
             total_order: totalOrder
         };
-    
+
         fetch('../v2/validate_promo.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(promoDetails)
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.eligible) {
-                alert('Promo Code has been successfully Validated.');
-                usePromo = true;
-                discount_value = data.discount;
-                discount_percent = data.discount_percent,
-                promoCode = data.promo_code;
-                totalAmountAfter = totalAmount - discount_value;
-    
-                // Update UI with discount information
-                discountItem.style.display = "flex";
-                totalAfterDiscount.style.display = "flex";
-                totalAmountLabel.textContent = 'Total Amount Before Discount';
-                discountValueElem.textContent = `N ${discount_value.toFixed(2)}`;
-                totalFeeAfterElem.textContent = `N ${totalAmountAfter.toFixed(2)}`;
-    
-                // Disable promo elements
-                promoCheckBox.disabled = true;
-                promoBtn.disabled = true;
-                promoBtn.style.cursor = 'not-allowed';
-                promoBtn.style.backgroundColor = '#ccc';
-                promoInput.disabled = true;
-    
-                checkoutForm.style.display = 'block';
-            } else {
-                alert('Error: ' + data.message);
-                console.error(data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred. Please try again.');
-        });
+            .then(response => response.json())
+            .then(data => {
+                if (data.eligible) {
+                    alert('Promo Code has been successfully Validated.');
+                    usePromo = true;
+                    discount_value = data.discount;
+                    discount_percent = data.discount_percent;
+                    promoCode = data.promo_code;
+                    totalAmountAfter = totalAmount - discount_value;
+
+                    // Update UI with discount information
+                    discountItem.style.display = "flex";
+                    totalAfterDiscount.style.display = "flex";
+                    totalAmountLabel.textContent = 'Total Amount Before Discount';
+                    discountValueElem.textContent = `N ${discount_value.toFixed(2)}`;
+                    totalFeeAfterElem.textContent = `N ${totalAmountAfter.toFixed(2)}`;
+
+                    // Disable promo elements
+                    promoCheckBox.disabled = true;
+                    promoBtn.disabled = true;
+                    promoBtn.style.cursor = 'not-allowed';
+                    promoBtn.style.backgroundColor = '#ccc';
+                    promoInput.disabled = true;
+
+                    checkoutForm.style.display = 'block';
+                } else {
+                    alert('Error: ' + data.message);
+                    console.error(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
     });
-    
-    
+
     // Get Order Items stored in the session
     const orderItems = JSON.parse(sessionStorage.getItem('order_items') || '[]');
     const totalOrder = parseFloat(sessionStorage.getItem('total_amount') || 0);
@@ -161,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 paypalDetails.style.display = 'none';
                 bankTransferDetails.style.display = 'none';
                 creditDetails.style.display = 'block';
-                clearInputFields('card_number', 'card_expiry', 'card_cvv', 'card_pin', 'bank_name', 'bank_account','paypal_email');
+                clearInputFields('card_number', 'card_expiry', 'card_cvv', 'card_pin', 'bank_name', 'bank_account', 'paypal_email');
             }
         };
 
@@ -188,9 +187,9 @@ document.addEventListener('DOMContentLoaded', () => {
             service_fee: serviceFee,
             delivery_fee: deliveryFee,
             total_order: totalOrder,
-            using_promo : usePromo,
+            using_promo: usePromo,
             discount: discount_value,
-            discount_percent : discount_percent,
+            discount_percent: discount_percent,
             promo_code: promoCode
         };
 
@@ -207,8 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (selectedPaymentMethod === 'bank_transfer') {
             paymentDetails.bank_name = document.getElementById('bank_name').value;
             paymentDetails.bank_account = document.getElementById('bank_account').value;
-        }
-        else if (selectedPaymentMethod === 'credit') {
+        } else if (selectedPaymentMethod === 'credit') {
             paymentDetails.customer_secret_answer = document.getElementById('customer_secret_answer').value;
             paymentDetails.is_credit = true;
         }
@@ -226,7 +224,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     alert('Your Order has been successfully received. Kindly wait for approval.');
                     printReceiptBtn.style.display = 'block';
                     placeOrderBtn.style.display = 'none';
-                    // location.replace('../v1/dashboard.php');
+
+                    // Disable all input fields, radio buttons, and checkboxes
+                    disableFormElements();
                 } else {
                     alert('Error: ' + data.message);
                     console.log(data.message);
@@ -237,6 +237,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('An error occurred. Please try again.');
             });
     });
+
+    // Function to disable form elements
+    function disableFormElements() {
+        // Disable radio buttons
+        paymentMethods.forEach(method => {
+            method.disabled = true;
+        });
+
+        // Disable promo checkbox and input
+        promoCheckBox.disabled = true;
+        promoInput.disabled = true;
+        promoBtn.disabled = true;
+
+        // Disable input fields in payment details sections
+        const inputFields = document.querySelectorAll('input, select, textarea');
+        inputFields.forEach(field => {
+            field.disabled = true;
+        });
+    }
 
     bankNameSelect.addEventListener('change', () => {
         bankAccountInput.value = generateVirtualBankAccountNumber();
@@ -253,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setMinMonth();
 
-    // Function to handle printing the receipt
+    // Print Receipt function
     function printReceipt() {
         const printWindow = window.open('', '_blank', 'width=800,height=600');
         const orderSummary = document.querySelector('.order-summary').innerHTML;
@@ -264,61 +283,21 @@ document.addEventListener('DOMContentLoaded', () => {
             <html>
             <head>
                 <title>Receipt</title>
-                <style>
-                @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-                    body {
-                        box-sizing: border-box;
-                        font-family: 'Poppins', sans-serif;
-                        margin: 0;
-                        padding: 0;
-                        background-color: #fff;
-                    }
-                    .receipt-header {
-                        text-align: center;
-                        margin-bottom: 20px;
-                    }
-                    h2 {
-                        margin-top: 0;
-                    }
-                    .order-summary {
-                        margin-bottom: 20px;
-                    }
-                    #orderSummaryTable {
-                        width: 100%;
-                        border-collapse: collapse;
-                        margin-top: 20px;
-                    }
-                    #orderSummaryTable th, #orderSummaryTable td {
-                        border: 1px solid #ddd;
-                        padding: 8px;
-                        text-align: left;
-                    }
-                    #orderSummaryTable th {
-                        background-color: #f2f2f2;
-                    }
-                    #orderSummaryTable tbody tr td a{
-                        text-decoration: none;
-                    }
-                    .order-item, .order-total {
-                        display: flex;
-                        justify-content: space-between;
-                        padding: 10px 0;
-                    }
-                    .receipt-footer {
-                        text-align: center;
-                        margin-top: 20px;
-                    }
-                </style>
+                <link rel ="stylesheet" href = "../css/receipt.css">
             </head>
             <body>
-                <div class="receipt-header">
-                    <h2> KaraKata Receipts </h2>
-                    <h2>Your Receipt</h2>
-                    <p>Date & Time: ${dateTime}</p>
-                </div>
-                ${orderSummary}
-                <div class="receipt-footer">
-                    <p>Thank you for your purchase!</p>
+                <div class="receipt-container">
+                    <div class="receipt-header">
+                        <h1>KaraKata Receipts</h1>
+                        <h2>Your Receipt</h2>
+                        <p>Date & Time: ${dateTime}</p>
+                    </div>
+                    <div class="order-summary">
+                        ${orderSummary}
+                    </div>
+                    <div class="receipt-footer">
+                        <p>Thank you for your purchase!</p>
+                    </div>
                 </div>
                 <script>
                     window.print();
@@ -331,11 +310,17 @@ document.addEventListener('DOMContentLoaded', () => {
         printWindow.document.close();
     }
 
-
     // Assuming you have a button with ID 'printReceiptButton'
     const printButton = document.getElementById('receipt-btn');
     if (printButton) {
         printButton.addEventListener('click', printReceipt);
     }
-
+    // Redirect to Order Page when the checkout Page is refreshed
+    const navigationEntries = performance.getEntriesByType("navigation");
+    if (navigationEntries.length > 0) {
+        const navigationEntry = navigationEntries[0];
+        if (navigationEntry.type === "reload") {
+            window.location.href = '../v1/dashboard.php';
+        }
+    }
 });

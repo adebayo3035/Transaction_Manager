@@ -14,10 +14,11 @@ if (isset($data['id'])) {
     $gender = $data['gender'];
     $address = $data['address'];
     $vehicle_type = $data['vehicle_type'];
+    $statusNew = $data['status'];
     $restriction = $data['restriction'];
 
     // Validate required fields
-    if (empty($firstname) || empty($lastname) || empty($email) || empty($phone_number) || empty($gender) || empty($vehicle_type) || empty($address)) {
+    if (empty($firstname) || empty($lastname) || empty($email) || empty($phone_number) || empty($gender) || empty($vehicle_type) || empty($address) || empty($statusNew)) {
         echo json_encode(['success' => false, 'message' => 'Please fill in all required fields.']);
         exit;
     }
@@ -46,6 +47,13 @@ if (isset($data['id'])) {
         echo json_encode(['success' => false, 'message' => 'Invalid gender. Must be Male, Female, or Other.']);
         exit();
     }
+
+     // Gender validation: Only 'Male', 'Female', or 'Other' are allowed
+     $allowedStatus = ['Available', 'Not Available'];
+     if (!in_array($statusNew, $allowedStatus)) {
+         echo json_encode(['success' => false, 'message' => 'Invalid Status. Must be Available or Not Available.']);
+         exit();
+     }
 
     // Vehicle type validation: Only 'Bicycle', 'Bike', or 'Car' are allowed
     $allowedVehicleTypes = ['Bicycle', 'Bike', 'Car'];
@@ -92,6 +100,11 @@ if (isset($data['id'])) {
             echo json_encode(['success' => false, 'message' => 'Driver is currently assigned to an Order and cannot be Restricted.']);
             exit();
         }
+         // Fail update if restriction is requested and driver is currently unavailable due to an assigned order
+         if ($statusNew == 'Not Available' && $restriction == "1") {
+            echo json_encode(['success' => false, 'message' => 'Driver cannot be Unavailable and also Restricted.']);
+            exit();
+        }
     }
 
     // Prepare SQL query to update the driver
@@ -103,6 +116,7 @@ if (isset($data['id'])) {
                 gender = ?, 
                 address = ?, 
                 vehicle_type = ?, 
+                status = ?,
                 restriction = ? 
             WHERE id = ?";
 
@@ -110,12 +124,12 @@ if (isset($data['id'])) {
     $stmt = $conn->prepare($sql);
 
     // Bind the parameters
-    $stmt->bind_param("ssssssssi", $firstname, $lastname, $email, $phone_number, $gender, $address, $vehicle_type, $restriction, $driverId);
+    $stmt->bind_param("sssssssssi", $firstname, $lastname, $email, $phone_number, $gender, $address, $vehicle_type, $statusNew, $restriction, $driverId);
 
     // Execute the statement
     if ($stmt->execute()) {
         // Return success response
-        echo json_encode(["success" => true, "message" => "Driver updated successfully."]);
+        echo json_encode(["success" => true, "message" => "Driver updated successfully. $statusNew"]);
     } else {
         // Return error response with more detailed info
         echo json_encode(["success" => false, "message" => "Failed to update driver. Error: " . $stmt->error]);

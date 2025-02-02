@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="icon" href="../images/trans_manager.png">
+    <script src="https://kit.fontawesome.com/7cab3097e7.js" crossorigin="anonymous"></script>
     <title>Dashboard</title>
 </head>
 <body>

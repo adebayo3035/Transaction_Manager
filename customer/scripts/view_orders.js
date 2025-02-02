@@ -239,11 +239,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         orderDetailsTableBody.appendChild(driverPhoneRow);
         const isCredit = document.createElement('tr');
-        if(firstDetail.is_credit == 1){
+        if (firstDetail.is_credit == 1) {
             isCredit.innerHTML = `<td colspan="6"><strong>Is Credit</strong></td>
                 <td> Yes </td>`;
         }
-        else{
+        else {
             isCredit.innerHTML = `<td colspan="6"><strong>Is Credit</strong></td>
             <td> No </td>`;
         }
@@ -284,11 +284,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Handle modal close
     document.querySelector('.modal .close').addEventListener('click', () => {
         document.getElementById('orderModal').style.display = 'none';
+        location.reload();
     });
 
     window.addEventListener('click', (event) => {
         if (event.target === document.getElementById('orderModal')) {
             document.getElementById('orderModal').style.display = 'none';
+            location.reload();
         }
     });
 

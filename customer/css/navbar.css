@@ -47,7 +47,7 @@ header h1 a {
 nav ul {
   list-style: none;
   padding: 0;
-  margin: 20px 0;
+  margin: 10px 0;
   background-color: #444;
   overflow: hidden;
 
@@ -55,6 +55,7 @@ nav ul {
 
 nav ul li {
   float: left;
+  font-size: 13px;
 
 }
 
@@ -74,12 +75,11 @@ nav ul li a:hover {
 #logoutButton {
   background-color: #d9534f;
   border: 0px;
-
 }
 
 #logoutButton a {
-  font-size: 16px;
-  padding: 10px;
+  font-size: 12px;
+  padding: 5px;
   text-decoration: none;
   color: #fff;
   font-weight: 900;
@@ -130,3 +130,5 @@ nav ul li a:hover {
     ;
   }
 }
+
+

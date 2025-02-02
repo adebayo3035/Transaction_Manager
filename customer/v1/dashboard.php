@@ -26,7 +26,7 @@
                     <label for="number-of-portion">Enter Number of Portions:</label>
                     <input type="number" id="number-of-portion" name="number-of-portion" min="1" placeholder="Enter Number of Portions">
                 </div>
-                <button type="button" id="addFoodButton">Add to Cart</button>
+                <button type="button" id="addFoodButton"><i class="fa-solid fa-plus"></i> Add to Cart </button>
             </form>
         </div>
 

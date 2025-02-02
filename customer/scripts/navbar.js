@@ -1,5 +1,5 @@
 // Global variables
-const inactivityTimeout = 600 * 1000; // 1 minute for testing; adjust as needed
+const inactivityTimeout = 60 * 10000; // 1 minute for testing; adjust as needed
 const inactivityTimers = {}; // Stores individual timers for each user
 
 // Helper function to set text content and handle errors
@@ -65,3 +65,14 @@ window.onload = function() {
     getSessionData();
     loadCustomerInfo();
 };
+
+// Nav bar 
+document.addEventListener('DOMContentLoaded', () => {
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    menuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+});
+

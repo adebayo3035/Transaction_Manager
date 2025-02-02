@@ -1,135 +1,430 @@
 <?php
 session_start();
-include 'config.php'; // Ensure this file has the database connection and encryption details
-include 'payment_validations.php'; // Include the modular validation functions
-
-$customerId = $_SESSION['customer_id'];
+include 'config.php';
+include 'activity_logger.php';
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 header('Content-Type: application/json');
 
-$data = json_decode(file_get_contents('php://input'), true);
 
-// Check if decoding was successful
+// Fetch customer ID from session
+$customerId = $_SESSION['customer_id'] ?? null;
+if (!$customerId) {
+    logActivity("Customer ID not found in session.");
+    echo json_encode(['success' => false, 'message' => 'Customer ID not found.']);
+    exit;
+}
+
+// Decode the JSON input from request body
+$input = file_get_contents('php://input');
+$data = json_decode($input, true);
+
+// Check if JSON decoding was successful
 if (json_last_error() !== JSON_ERROR_NONE) {
+    logActivity("Invalid JSON input received.");
     echo json_encode(['success' => false, 'message' => 'Invalid JSON']);
     exit;
 }
-$response = [];
 
-$paymentMethod = isset($data['payment_method']) ? $data['payment_method'] : null;
-$cardNumber = isset($data['card_number']) ? $data['card_number'] : null;
-$cardExpiry = isset($data['card_expiry']) ? $data['card_expiry'] : null;
-$cardCvv = isset($data['card_cvv']) ? $data['card_cvv'] : null;
-$cardPin = isset($data['card_pin']) ? $data['card_pin'] : null;
-$paypalEmail = isset($data['paypal_email']) ? $data['paypal_email'] : null;
-$bankName = isset($data['bank_name']) ? $data['bank_name'] : null;
-$bankAccount = isset($data['bank_account']) ? $data['bank_account'] : null;
-$encrypted_card_number = encrypt($cardNumber, $encryption_key, $encryption_iv);
-$encrypted_CVV = encrypt($cardCvv, $encryption_key, $encryption_iv);
-$encrypted_Pin = md5($cardPin);
-// Initialize response array
+// Extract payment data from the received JSON
+$paymentMethod = $data['payment_method'] ?? null;
+$cardNumber = $data['card_number'] ?? null;
+$cardExpiry = $data['card_expiry'] ?? null;
+$cardCvv = $data['card_cvv'] ?? null;
+$cardPin = $data['card_pin'] ?? null;
+$orderItems = $data['order_items'] ?? [];
+// $totalAmount = $data['total_amount'] ?? 0;
+$serviceFee = $data['service_fee'] ?? 0;
+$deliveryFee = $data['delivery_fee'] ?? 0;
+$totalOrder = $data['total_order'] ?? 0;
 
-// Validate based on payment method
+$bankName = $data['bank_name'] ?? null;
+$bankAccount = $data['bank_account'] ?? null;
+$paypalEmail = $data['paypal_email'] ?? null;
+
+$secretAnswer = $data['customer_secret_answer'] ?? null;
+$isCredit = $data['is_credit'] ?? false;
+
+$usingPromo = $data['using_promo'] ?? false;
+$promo_code = $data['promo_code'] ?? null;
+$discount = $data['discount'] ?? 0;
+$discount_percent = $data['discount_percent'] ?? 0;
+
+// Apply the discount if promo is used
+if ($usingPromo) {
+    $totalAmount = $data['total_amount'] - $discount;
+} else {
+    $totalAmount = $data['total_amount'] ?? 0;
+}
+// Initialize the response
+$response = ['success' => false, 'message' => 'Unknown error occurred'];
+
+// Handle payment validation based on the payment method
 switch ($paymentMethod) {
-    case 'credit_card':
-        if ($cardNumber && $cardExpiry && $cardCvv) {
-            // Check for Card Number Duplicates
-            if (!checkDuplicateCardNumber($conn, $encrypted_card_number,$encryption_key, $encryption_iv)) {
-                echo json_encode(['success' => false, 'message' => 'Card Record does not exist.']);
+    case 'Card':
+        if ($cardNumber && $cardExpiry && $cardCvv && $cardPin) {
+            // Validate credit card details
+            $validationResult = validateCardPayment($customerId, $cardNumber, $cardCvv, $cardExpiry, $cardPin, $conn, $encryption_iv, $encryption_key);
+            if ($validationResult['success']) {
+                // Proceed with order processing
+                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit);
+                logActivity("Order processed successfully for customer ID: $customerId");
+            } else {
+                $response = $validationResult;
+                logActivity("Card validation failed for customer ID: $customerId");
             }
-
-            // Validate the card payment
-            // $validationResult = validateCardPayment(
-            //     $customerId,
-            //     $cardNumber,
-            //     $cardCvv,
-            //     $cardExpiry,
-            //     $cardPin,
-            //     $conn,
-            //     $encryption_iv, // From config.php
-            //     $encryption_key // From config.php
-            // );
-
-            // Return the validation result
-            // echo json_encode($validationResult);
-            // exit; // Make sure to exit after sending the response
         } else {
-            echo json_encode(['success' => true]);
+            $response['message'] = 'Missing credit card details';
+            logActivity("Missing credit card details for customer ID: $customerId");
         }
         break;
+    case 'credit':
+        if ($secretAnswer) {
+            $eligibilityResult = checkCreditEligibility($conn, $customerId, $totalAmount, $secretAnswer);
+            if ($eligibilityResult['success']) {
+                // Process PayPal payment and the order
+                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit);
+                logActivity("Credit order processed successfully for customer ID: $customerId");
+            } else {
+                $response = $eligibilityResult;
+                logActivity("Credit eligibility check failed for customer ID: $customerId");
+                // exit();
+            }
 
-    case 'paypal':
-        $paypalEmail = filter_var(trim($data['paypal_email']), FILTER_SANITIZE_EMAIL);
-
-        // Validate PayPal email format
-        if (filter_var($paypalEmail, FILTER_VALIDATE_EMAIL)) {
-            $response = ['success' => true, 'message' => 'PayPal details are valid'];
         } else {
-            $response['message'] = 'Invalid PayPal email address';
+            $response['message'] = 'Invalid Secret Answer';
+            logActivity("Invalid Secret Answer for customer ID: $customerId");
         }
         break;
 
     case 'bank_transfer':
-        $bankName = trim($data['bank_name']);
-        $bankAccount = trim($data['bank_account']);
-
+        // Define allowed banks and accounts
+        $allowedBanks = [
+            "providus",
+            "wema",
+        ];
         if ($bankName && $bankAccount) {
-            // Validate bank account number format if needed
-            $response['success'] = true;
-            $response['message'] = 'Bank transfer validation successful';
+            // Check if the bank is allowed
+            if (!in_array($bankName, $allowedBanks)) {
+                $response['message'] = 'Unknown Bank Account';
+                logActivity("Customer selected an Unknown bank account for customer ID: $customerId");
+            } else {
+                // Validate bank transfer and process the order
+                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit);
+                logActivity("Bank transfer order processed successfully for customer ID: $customerId");
+            }
         } else {
-            $response['message'] = 'Bank details are incomplete';
+            $response['message'] = 'Missing bank transfer details';
+            logActivity("Missing bank transfer details for customer ID: $customerId");
         }
         break;
 
-    default:
-        $response['message'] = 'Invalid payment method';
-        break;
-}
-
-// Output the response
+        case 'paypal':
+            if ($paypalEmail) {
+                // Process PayPal payment and the order
+                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit);
+                logActivity("PayPal order processed successfully for customer ID: $customerId");
+            } else {
+                $response['message'] = 'Missing PayPal details';
+                logActivity("Missing PayPal details for customer ID: $customerId");
+            }
+            break;
+        default:
+            $response['message'] = 'Invalid payment method';
+            logActivity("Invalid payment method for customer ID: $customerId");
+            break;
+    }
+// Return the final response as JSON
 echo json_encode($response);
+
+function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit)
+{
+    $response = ['success' => false, 'message' => 'Unknown error occurred'];
+    $conn->begin_transaction();
+
+    try {
+        // Validate total amount
+        if ($totalAmount == 0) {
+            throw new Exception("Your Order Cart is empty.");
+        }
+        $balance = null;
+        // Check wallet balance
+        if ($isCredit === false) {
+            $stmt = $conn->prepare("SELECT balance FROM wallets WHERE customer_id = ?");
+            $stmt->bind_param("i", $customerId);
+            $stmt->execute();
+            $stmt->bind_result($balance);
+            $stmt->fetch();
+            $stmt->close();
+
+            if ($balance === null || $balance < $totalAmount) {
+                throw new Exception("Insufficient balance in wallet.");
+            } else {
+                // Deduct amount from wallet
+                $newBalance = $balance - $totalAmount;
+                $stmt = $conn->prepare("UPDATE wallets SET balance = ? WHERE customer_id = ?");
+                $stmt->bind_param("di", $newBalance, $customerId);
+                $stmt->execute();
+                $stmt->close();
+            }
+        }
+        // Select a random Admin
+        // Step 1: Get the minimum and maximum unique_id for eligible admins
+        $idRangeQuery = "SELECT MIN(unique_id) AS min_id, MAX(unique_id) AS max_id FROM admin_tbl WHERE role = 'Admin' AND restriction_id = 0 AND block_id = 0";
+        $idRangeResult = $conn->query($idRangeQuery);
+        $idRangeRow = $idRangeResult->fetch_assoc();
+        $minId = $idRangeRow['min_id'];
+        $maxId = $idRangeRow['max_id'];
+
+        if ($minId !== null && $maxId !== null) {
+            // Step 2: Generate a random unique_id within this range
+            $randomId = rand($minId, $maxId);
+
+            // Step 3: Find the first admin with an ID greater than or equal to this random ID
+            $superAdminQuery = "SELECT unique_id FROM admin_tbl WHERE unique_id >= $randomId AND role = 'Admin' AND restriction_id = 0 AND block_id = 0 LIMIT 1";
+            $superAdminResult = $conn->query($superAdminQuery);
+
+            if ($superAdminResult->num_rows > 0) {
+                $superAdmin = $superAdminResult->fetch_assoc();
+                $superAdminUniqueId = $superAdmin['unique_id'];
+            } else {
+                throw new Exception("No eligible Super Admin found.");
+            }
+        } else {
+            throw new Exception("No eligible Super Admin available.");
+        }
+
+        // Insert order
+        $deliveryPin = rand(1000, 9999);
+        $stmt = $conn->prepare("INSERT INTO orders (customer_id, order_date, service_fee, delivery_fee, total_order, discount, total_amount, delivery_pin, assigned_to, is_credit) VALUES (?, NOW(), ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("idddddiii", $customerId, $serviceFee, $deliveryFee, $totalOrder, $discount, $totalAmount, $deliveryPin, $superAdminUniqueId, $isCredit);
+        $stmt->execute();
+        $orderId = $stmt->insert_id;
+        $stmt->close();
+
+        // Insert items and update food quantities
+        $stmt = $conn->prepare("INSERT INTO order_details (order_id, food_id, quantity, price_per_unit, total_price, order_date) VALUES (?, ?, ?, ?, ?, NOW())");
+        foreach ($orderItems as $item) {
+            $stmt->bind_param("iiidd", $orderId, $item['food_id'], $item['quantity'], $item['price_per_unit'], $item['total_price']);
+            $stmt->execute();
+
+            $updateStmt = $conn->prepare("UPDATE food SET available_quantity = available_quantity - ? WHERE food_id = ?");
+            $updateStmt->bind_param("ii", $item['quantity'], $item['food_id']);
+            $updateStmt->execute();
+            $updateStmt->close();
+        }
+        $stmt->close();
+
+        //if Order is placed on Credit, Insert into credit order table
+        if ($isCredit == true) {
+            // Calculate due date as current date + 14 days
+            $dueDate = (new DateTime())->modify('+14 days')->format('Y-m-d');
+            $insertCreditOrderQuery = "INSERT INTO credit_orders (order_id, customer_id, total_credit_amount, due_date) VALUES (?, ?, ?, ?)";
+            $stmt = $conn->prepare($insertCreditOrderQuery);
+            $stmt->bind_param("iids", $orderId, $customerId, $totalAmount, $dueDate);
+            $stmt->execute();
+            $stmt->close();
+        }
+
+
+        // Promo code usage
+        if ($promo_code !== "") {
+            $stmt = $conn->prepare("INSERT INTO promo_usage (promo_code, customer_id, order_id, percentage_discount, discount_value, date_used) VALUES (?, ?, ?, ?, ?, NOW())");
+            $stmt->bind_param("siidd", $promo_code, $customerId, $orderId, $discount_percent, $discount);
+            $stmt->execute();
+            $stmt->close();
+        }
+        function generateTransactionReference()
+        {
+            // Add a prefix for identification
+            $prefix = 'TRX';
+
+            // Generate a unique ID based on the current time with higher entropy (more randomness)
+            $uniqueId = uniqid($prefix, true);
+
+            // Generate a random number (for extra randomness)
+            $randomNumber = mt_rand(1000, 9999);
+
+            // Create the transaction reference
+            $transactionRef = strtoupper($uniqueId . $randomNumber);
+
+            // Optionally, remove any dots or special characters in the reference
+            $transactionRef = str_replace('.', '', $transactionRef);
+
+            return $transactionRef;
+        }
+        // Admin notification
+        $title = "Food Order for customer ID: " . $customerId;
+        $eventType = "New Food Order";
+        $eventDetails = "Customer placed an order on " . date('Y-m-d H:i:s');
+        $stmt = $conn->prepare("INSERT INTO admin_notifications (event_title, event_type, event_details, created_at, user_id) VALUES (?, ?, ?, NOW(), ?)");
+        $stmt->bind_param("ssss", $title, $eventType, $eventDetails, $superAdminUniqueId);
+        $stmt->execute();
+        $stmt->close();
+
+        // Commit transaction
+        $conn->commit();
+        $response = ['success' => true, 'message' => 'Order placed successfully.'];
+
+    } catch (Exception $e) {
+        $conn->rollback();
+        $response = ['success' => false, 'message' => "Error placing order: " . $e->getMessage()];
+    }
+
+    return $response;
+}
 
 
 function getDecryptedCardDetails($customerId, $dbConnection, $key, $iv)
 {
-    $cardDetails = [];
-    $validCard = null;
-    $decryptedCardNumber = '';
-    $decryptedCVV = '';
-    $encryptedCardPIN = '';
-    $expiryDate = '';
     $encryptedCardNumber = '';
     $encryptedCVV = '';
+    $expiryDate = '';
+    $encryptedCardPIN = '';
     $query = "SELECT card_number, cvv, expiry_date, card_pin FROM cards WHERE customer_id = ?";
     $stmt = $dbConnection->prepare($query);
     $stmt->bind_param("i", $customerId);
     $stmt->execute();
     $stmt->bind_result($encryptedCardNumber, $encryptedCVV, $expiryDate, $encryptedCardPIN);
 
+    $cardDetails = [];
     while ($stmt->fetch()) {
-        $decryptedCardNumber = decrypt($encryptedCardNumber, $key, $iv);
-        $decryptedCVV = decrypt($encryptedCVV, $key, $iv);
         $cardDetails[] = [
-            'card_number' => $decryptedCardNumber,
-            'cvv' => $decryptedCVV,
+            'card_number' => decrypt($encryptedCardNumber, $key, $iv),
+            'cvv' => decrypt($encryptedCVV, $key, $iv),
             'expiry_date' => $expiryDate,
             'encryptedCardPIN' => $encryptedCardPIN
         ];
     }
     $stmt->close();
+
     return $cardDetails;
 }
 
-// Define the function to validate card ownership
-function checkDuplicateCardNumber($conn, $encrypted_cardNumber, $encryptedCVV, $encryptedPin)
+function validateCardOwnership($cardDetails, $inputCardNumber, $inputCVV, $inputExpiryDate)
 {
-    $sql = "SELECT COUNT(*) AS count FROM cards WHERE card_number = ? and cvv = ? ";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $encrypted_cardNumber, $encryptedCVV);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
-    $stmt->close();
-    return $row['count'] > 0;
+    foreach ($cardDetails as $card) {
+        if ($card['card_number'] === $inputCardNumber && $card['cvv'] === $inputCVV && $card['expiry_date'] === $inputExpiryDate) {
+            return $card;
+        }
+    }
+    return false;
 }
+
+function validateCardPIN($inputCardPIN, $encryptedCardPIN)
+{
+    return md5($inputCardPIN) === $encryptedCardPIN;
+}
+
+function validateCardPayment($customerId, $inputCardNumber, $inputCVV, $inputExpiryDate, $inputCardPIN, $dbConnection, $iv, $key)
+{
+    $cardDetails = getDecryptedCardDetails($customerId, $dbConnection, $key, $iv);
+    $validCard = validateCardOwnership($cardDetails, $inputCardNumber, $inputCVV, $inputExpiryDate);
+    if (!$validCard) {
+        return ['success' => false, 'message' => 'Invalid Card Details.'];
+    }
+    if (!validateCardPIN($inputCardPIN, $validCard['encryptedCardPIN'])) {
+        return ['success' => false, 'message' => 'Invalid card PIN.'];
+    }
+    return ['success' => true, 'message' => 'Card validated successfully.'];
+}
+// Function to check credit eligibility
+function checkCreditEligibility($conn, $customerId, $orderAmount, $providedAnswer, $creditThreshold = 100000)
+{
+    try {
+        // Step 1: Validate secret answer
+        $secretQuery = "SELECT secret_answer FROM customers WHERE customer_id = ?";
+        $secretStmt = $conn->prepare($secretQuery);
+        $secretStmt->bind_param("i", $customerId);
+        $secretStmt->execute();
+        $secretResult = $secretStmt->get_result();
+
+        if ($secretResult->num_rows === 0) {
+            return ["success" => false, "message" => "Customer record not found."];
+        }
+
+        $customerData = $secretResult->fetch_assoc();
+        $storedSecretAnswer = $customerData['secret_answer'];
+
+        // Hash the provided answer and compare with the stored one
+        if (md5($providedAnswer) !== $storedSecretAnswer) {
+            return ["success" => false, "message" => "Authentication failed."];
+        }
+
+        // Step 2: Fetch wallet balance
+        $walletQuery = "SELECT balance FROM wallets WHERE customer_id = ?";
+        $walletStmt = $conn->prepare($walletQuery);
+        $walletStmt->bind_param("i", $customerId);
+        $walletStmt->execute();
+        $walletResult = $walletStmt->get_result();
+        if ($walletResult->num_rows === 0) {
+            return ["success" => false, "message" => "Customer wallet record not found."];
+        }
+        $wallet = $walletResult->fetch_assoc();
+        $walletBalance = $wallet['balance'];
+
+        // Step 3: Check for outstanding debts
+        $debtQuery = "
+        SELECT COUNT(*) AS outstanding_debts
+        FROM credit_orders
+        WHERE customer_id = ? AND repayment_status NOT IN ('Paid', 'Void') AND status != 'Declined'";
+        $debtStmt = $conn->prepare($debtQuery);
+        $debtStmt->bind_param("i", $customerId);
+        $debtStmt->execute();
+        $debtResult = $debtStmt->get_result();
+        $debtData = $debtResult->fetch_assoc();
+        $outstandingDebts = $debtData['outstanding_debts'];
+
+        // Step 4: Check for defaulting behavior
+        $defaultQuery = "
+            SELECT COUNT(*) AS defaults FROM credit_orders WHERE customer_id = ? AND repayment_status IN ('Pending', 'Partially Paid') 
+      AND due_date < NOW();";
+        $defaultStmt = $conn->prepare($defaultQuery);
+        $defaultStmt->bind_param("i", $customerId);
+        $defaultStmt->execute();
+        $defaultResult = $defaultStmt->get_result();
+        $defaultData = $defaultResult->fetch_assoc();
+        $defaults = $defaultData['defaults'];
+
+        // Step 5: Check if customer has made enough orders
+        $orderQuery = "
+            SELECT COUNT(*) AS total_orders
+            FROM orders
+            WHERE customer_id = ? AND delivery_status = 'Delivered'";
+        $orderStmt = $conn->prepare($orderQuery);
+        $orderStmt->bind_param("i", $customerId);
+        $orderStmt->execute();
+        $orderResult = $orderStmt->get_result();
+        $orderData = $orderResult->fetch_assoc();
+        $totalOrders = $orderData['total_orders'];
+
+        // Step 6: Eligibility checks
+        if ($orderAmount > $creditThreshold) {
+            return ["success" => false, "message" => "Order amount exceeds your credit limit. 🚫"];
+        }
+
+        if ($walletBalance >= $orderAmount) {
+            return ["success" => false, "message" => "You have enough funds! No credit needed. 💰"];
+        }
+
+        if ($outstandingDebts > 0) {
+            return ["success" => false, "message" => "Kindly clear your outstanding debt to proceed. ⚠️"];
+        }
+
+        if ($defaults > 0) {
+            return ["success" => false, "message" => "Credit not available due to past defaults. ❌"];
+        }
+
+        if ($totalOrders < 5) { // Assuming a minimum of 5 orders defines a non-new customer
+            return ["success" => false, "message" => "Not enough order history to qualify. Kindly Order more! 📉"];
+        }
+
+        // If all checks pass
+        return ["success" => true, "message" => "You're eligible for credit! 🎉"];
+    } catch (Exception $e) {
+        return ["success" => false, "message" => "An error occurred: " . $e->getMessage()];
+    }
+}
+

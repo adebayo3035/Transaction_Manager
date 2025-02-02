@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+                    * {
+                        margin: 0;
+                        padding: 0;
+                        box-sizing: border-box;
+                    }
+                    body {
+                        font-family: 'Poppins', sans-serif;
+                        background-color: #f9f9f9;
+                        color: #333;
+                        line-height: 1.6;
+                        padding: 20px;
+                    }
+                    .receipt-container {
+                        max-width: 600px;
+                        margin: 0 auto;
+                        background-color: #fff;
+                        border-radius: 10px;
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                        padding: 20px;
+                    }
+                    .receipt-header {
+                        text-align: center;
+                        margin-bottom: 20px;
+                    }
+                    .receipt-header h1 {
+                        font-size: 24px;
+                        font-weight: 700;
+                        color: #2c3e50;
+                        margin-bottom: 10px;
+                    }
+                    .receipt-header h2 {
+                        font-size: 20px;
+                        font-weight: 600;
+                        color: #34495e;
+                        margin-bottom: 10px;
+                    }
+                    .receipt-header p {
+                        font-size: 14px;
+                        color: #7f8c8d;
+                    }
+                    .order-summary {
+                        margin-bottom: 20px;
+                    }
+                    .order-item {
+                        display: flex;
+                        justify-content: space-between;
+                        padding: 4px 10px;
+                    }
+                    #orderSummaryTable {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-top: 20px;
+                    }
+                    #orderSummaryTable th,
+                    #orderSummaryTable td {
+                        border: 1px solid #ddd;
+                        padding: 12px;
+                        text-align: left;
+                        font-size: 14px;
+                    }
+                    #orderSummaryTable th {
+                        background-color: #f8f9fa;
+                        font-weight: 600;
+                        color: #2c3e50;
+                    }
+                    #orderSummaryTable tbody tr:nth-child(even) {
+                        background-color: #f9f9f9;
+                    }
+                    #orderSummaryTable tbody tr:hover {
+                        background-color: #f1f1f1;
+                    }
+                    .order-total {
+                        margin-top: 20px;
+                        padding: 15px;
+                        background-color: #f8f9fa;
+                        border-radius: 5px;
+                        text-align: right;
+                    }
+                    .order-total p {
+                        font-size: 16px;
+                        font-weight: 600;
+                        color: #2c3e50;
+                    }
+                    .receipt-footer {
+                        text-align: center;
+                        margin-top: 20px;
+                        padding-top: 20px;
+                        border-top: 1px solid #ddd;
+                    }
+                    .receipt-footer p {
+                        font-size: 14px;
+                        color: #7f8c8d;
+                    }
+                    @media (max-width: 600px) {
+                        .receipt-container {
+                            padding: 15px;
+                        }
+                        .receipt-header h1 {
+                            font-size: 20px;
+                        }
+                        .receipt-header h2 {
+                            font-size: 18px;
+                        }
+                        #orderSummaryTable th,
+                        #orderSummaryTable td {
+                            padding: 10px;
+                            font-size: 12px;
+                        }
+                        .order-total p {
+                            font-size: 14px;
+                        }
+                    }

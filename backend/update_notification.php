@@ -7,25 +7,34 @@ if (!isset($_SESSION['unique_id'])) {
     exit();
 }
 
-if(($_SESSION['role']) == 'Super Admin'){
-    echo json_encode(["success" => true, "message" => "You cannot mark notification as read."]);
-    exit();
-}
-
 $userId = $_SESSION['unique_id'];
+$role = $_SESSION['role'] ?? '';
 $input = json_decode(file_get_contents('php://input'), true);
 
-if (!isset($input['notification_id'])) {
+if (empty($input['notification_id'])) {
     echo json_encode(["success" => false, "message" => "Notification ID is required."]);
     exit();
 }
 
-$notificationId = $input['notification_id'];
+$notificationId = (int) $input['notification_id']; // Ensure it's an integer
 
-// Update the notification's is_read column to 'Yes'
-$query = "UPDATE admin_notifications SET is_read = 'Yes' WHERE id = ?";
+// Define update query based on role
+if ($role === 'Super Admin') {
+    $query = "UPDATE admin_notifications SET super_admin_read = ? WHERE is_read = 'No' AND id = ?";
+} elseif ($role === 'Admin') {
+    $query = "UPDATE admin_notifications SET is_read = 'Yes' WHERE id = ?";
+} else {
+    echo json_encode(["success" => false, "message" => "Invalid role."]);
+    exit();
+}
+
+// Prepare and execute the query
 $stmt = $conn->prepare($query);
-$stmt->bind_param('i', $notificationId);
+if ($role === 'Super Admin') {
+    $stmt->bind_param('ii', $userId, $notificationId);
+} else {
+    $stmt->bind_param('i', $notificationId);
+}
 
 if ($stmt->execute()) {
     echo json_encode(["success" => true, "message" => "Notification marked as read."]);
@@ -33,5 +42,7 @@ if ($stmt->execute()) {
     echo json_encode(["success" => false, "message" => "Failed to mark notification as read."]);
 }
 
+// Close resources
 $stmt->close();
 $conn->close();
+

@@ -1,0 +1,641 @@
+[2025-01-15 14:30:52] Fetching random customer names script started.
+[2025-01-15 14:30:52] Fetching promos script started.
+[2025-01-15 14:30:52] Customer customer_id found in session: 1260106158
+[2025-01-15 14:30:52] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-15 14:30:52] Total promos count: 4
+[2025-01-15 14:30:52] Fetched 4 paginated promos.
+[2025-01-15 14:30:52] Fetched 1 ongoing promos.
+[2025-01-15 14:30:52] Fetching promos script completed successfully.
+[2025-01-15 14:30:52] Successfully fetched 3 random customer names.
+[2025-01-15 14:30:52] Fetching random customer names script completed.
+[2025-01-15 15:17:50] Fetching promos script started.
+ript started.
+[2025-01-15 15:17:50] Successfully fetched 3 random customer names.
+[2025-01-15 15:17:50] Customer customer_id found in session: 1260106158
+[2025-01-15 15:17:50] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-15 15:17:50] Total promos count: 4
+[2025-01-15 15:17:50] Fetched 4 paginated promos.
+[2025-01-15 15:17:50] Fetched 1 ongoing promos.
+[2025-01-15 15:17:50] Fetching promos script completed successfully.
+[2025-01-15 15:21:09] Fetching promos script started.
+ript started.
+[2025-01-15 15:21:09] Customer customer_id found in session: 1260106158
+[2025-01-15 15:21:09] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-15 15:21:09] Fetching random customer names script completed.
+[2025-01-15 15:21:09] Total promos count: 4
+[2025-01-15 15:21:09] Fetched 4 paginated promos.
+[2025-01-15 15:21:09] Fetched 1 ongoing promos.
+[2025-01-15 15:21:09] Fetching promos script completed successfully.
+[2025-01-15 15:42:37] Fetching promos script started.
+ript started.
+[2025-01-15 15:42:37] Customer customer_id found in session: 1260106158
+[2025-01-15 15:42:37] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-15 15:42:37] Successfully fetched 3 random customer names.
+[2025-01-15 15:42:37] Fetching random customer names script completed.
+[2025-01-15 15:42:37] Total promos count: 4
+[2025-01-15 15:42:37] Fetched 4 paginated promos.
+[2025-01-15 15:42:37] Fetched 1 ongoing promos.
+[2025-01-15 15:42:37] Fetching promos script completed successfully.
+[2025-01-15 15:49:30] Fetching random customer names script started.
+[2025-01-15 15:49:30] Fetching promos script started.
+[2025-01-15 15:49:30] Customer customer_id found in session: 1260106158
+[2025-01-15 15:49:30] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-15 15:49:30] Successfully fetched 3 random customer names.
+[2025-01-15 15:49:30] Fetching random customer names script completed.
+[2025-01-15 15:49:30] Fetched 4 paginated promos.
+[2025-01-15 15:49:30] Fetched 1 ongoing promos.
+[2025-01-15 15:49:30] Fetching promos script completed successfully.
+[2025-01-15 15:56:18] Fetching random customer names script started.
+[2025-01-15 15:56:18] Successfully fetched 3 random customer names.
+[2025-01-15 15:56:18] Fetching random customer names script completed.
+[2025-01-15 15:56:18] Fetching promos script started.
+[2025-01-15 15:56:18] Customer customer_id found in session: 1260106158
+[2025-01-15 15:56:18] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-15 15:56:18] Total promos count: 4
+[2025-01-15 15:56:18] Fetched 4 paginated promos.
+[2025-01-15 15:56:18] Fetched 1 ongoing promos.
+[2025-01-15 15:56:18] Fetching promos script completed successfully.
+[2025-01-15 16:02:29] Fetching promos script started.
+[2025-01-15 16:02:29] Customer customer_id found in session: 1260106158
+[2025-01-15 16:02:29] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-15 16:02:29] Total promos count: 4
+[2025-01-15 16:02:29] Fetched 4 paginated promos.
+[2025-01-15 16:02:29] Fetched 1 ongoing promos.
+[2025-01-15 16:02:29] Fetching promos script completed successfully.
+[2025-01-15 16:02:29] Fetching random customer names script started.
+[2025-01-15 16:02:29] Successfully fetched 3 random customer names.
+[2025-01-15 16:02:29] Fetching random customer names script completed.
+[2025-01-15 16:34:42] Fetching random customer names script started.
+[2025-01-15 16:34:42] Customer customer_id found in session: 1260106158
+[2025-01-15 16:34:42] Successfully fetched 3 random customer names.
+[2025-01-15 16:34:42] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-15 16:34:42] Fetching random customer names script completed.
+[2025-01-15 16:34:43] Total promos count: 4
+[2025-01-15 16:34:43] Fetched 4 paginated promos.
+[2025-01-15 16:34:43] Fetched 1 ongoing promos.
+[2025-01-15 16:34:43] Fetching promos script completed successfully.
+[2025-01-15 18:58:56] Fetching promos script started.
+ript started.
+[2025-01-15 18:58:56] Customer customer_id found in session: 1260106158
+[2025-01-15 18:58:56] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-15 18:58:56] Total promos count: 4
+random customer names.
+[2025-01-15 18:58:56] Fetching random customer names script completed.
+[2025-01-15 18:58:56] Fetched 4 paginated promos.
+[2025-01-15 18:58:56] Fetched 1 ongoing promos.
+[2025-01-15 18:58:56] Fetching promos script completed successfully.
+[2025-01-16 14:48:59] Fetching promos script started.
+[2025-01-16 14:48:59] Customer customer_id found in session: 1260106158
+[2025-01-16 14:48:59] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-16 14:48:59] Total promos count: 4
+[2025-01-16 14:48:59] Fetched 4 paginated promos.
+[2025-01-16 14:48:59] Fetched 1 ongoing promos.
+[2025-01-16 14:48:59] Fetching promos script completed successfully.
+[2025-01-16 14:48:59] Fetching random customer names script started.
+[2025-01-16 14:48:59] Successfully fetched 3 random customer names.
+[2025-01-16 14:48:59] Fetching random customer names script completed.
+[2025-01-16 15:13:54] Fetching promos script started.
+ript started.
+[2025-01-16 15:13:54] Customer customer_id found in session: 1260106158
+[2025-01-16 15:13:54] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-16 15:13:54] Successfully fetched 3 random customer names.
+[2025-01-16 15:13:54] Fetching random customer names script completed.
+[2025-01-16 15:13:54] Total promos count: 4
+[2025-01-16 15:13:54] Fetched 4 paginated promos.
+[2025-01-16 15:13:54] Fetched 1 ongoing promos.
+[2025-01-16 15:13:54] Fetching promos script completed successfully.
+[2025-01-16 15:14:45] Fetching random customer names script started.
+[2025-01-16 15:14:45] Successfully fetched 3 random customer names.
+[2025-01-16 15:14:45] Fetching random customer names script completed.
+[2025-01-16 15:14:46] Fetching promos script started.
+[2025-01-16 15:14:46] Customer customer_id found in session: 1260106158
+[2025-01-16 15:14:46] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-16 15:14:46] Total promos count: 4
+[2025-01-16 15:14:46] Fetched 4 paginated promos.
+[2025-01-16 15:14:46] Fetched 1 ongoing promos.
+[2025-01-16 15:14:46] Fetching promos script completed successfully.
+[2025-01-16 15:15:30] Fetching random customer names script started.
+[2025-01-16 15:15:30] Successfully fetched 3 random customer names.
+[2025-01-16 15:15:30] Fetching random customer names script completed.
+[2025-01-16 15:15:30] Fetching promos script started.
+[2025-01-16 15:15:30] Admin unique_id found in session: 22675443
+[2025-01-16 15:15:30] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-16 15:15:30] Total promos count: 4
+[2025-01-16 15:15:30] Fetched 4 paginated promos.
+[2025-01-16 15:15:30] Fetched 1 ongoing promos.
+[2025-01-16 15:15:30] Fetching promos script completed successfully.
+[2025-01-16 15:16:43] Fetching random customer names script started.
+[2025-01-16 15:16:43] Successfully fetched 3 random customer names.
+[2025-01-16 15:16:43] Fetching random customer names script completed.
+[2025-01-16 15:16:43] Fetching promos script started.
+[2025-01-16 15:16:43] Customer customer_id found in session: 1260106158
+[2025-01-16 15:16:43] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-16 15:16:43] Total promos count: 4
+[2025-01-16 15:16:43] Fetched 4 paginated promos.
+[2025-01-16 15:16:43] Fetched 1 ongoing promos.
+[2025-01-16 15:16:43] Fetching promos script completed successfully.
+[2025-01-16 16:18:43] Fetching promos script started.
+[2025-01-16 16:18:43] Customer customer_id found in session: 1260106158
+[2025-01-16 16:18:43] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-16 16:18:43] Total promos count: 4
+[2025-01-16 16:18:43] Fetched 4 paginated promos.
+[2025-01-16 16:18:43] Fetched 1 ongoing promos.
+[2025-01-16 16:18:43] Fetching promos script completed successfully.
+[2025-01-16 16:18:43] Fetching random customer names script started.
+[2025-01-16 16:18:43] Successfully fetched 3 random customer names.
+[2025-01-16 16:18:43] Fetching random customer names script completed.
+[2025-01-16 16:33:22] Fetching random customer names script started.
+[2025-01-16 16:33:22] Successfully fetched 3 random customer names.
+[2025-01-16 16:33:22] Fetching promos script started.
+[2025-01-16 16:33:22] Fetching random customer names script completed.
+[2025-01-16 16:33:22] Customer customer_id found in session: 1260106158
+[2025-01-16 16:33:22] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-16 16:33:22] Total promos count: 4
+[2025-01-16 16:33:22] Fetched 4 paginated promos.
+[2025-01-16 16:33:22] Fetched 1 ongoing promos.
+[2025-01-16 16:33:22] Fetching promos script completed successfully.
+[2025-01-16 16:37:30] Fetching promos script started.
+[2025-01-16 16:37:30] Customer customer_id found in session: 1260106158
+[2025-01-16 16:37:30] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-16 16:37:30] Total promos count: 4
+[2025-01-16 16:37:30] Fetched 4 paginated promos.
+[2025-01-16 16:37:30] Fetched 1 ongoing promos.
+[2025-01-16 16:37:30] Fetching promos script completed successfully.
+[2025-01-16 16:37:31] Fetching random customer names script started.
+[2025-01-16 16:37:31] Successfully fetched 3 random customer names.
+[2025-01-16 16:37:31] Fetching random customer names script completed.
+[2025-01-16 19:22:02] Fetching promos script started.
+[2025-01-16 19:22:02] Customer customer_id found in session: 1260106158
+[2025-01-16 19:22:02] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-16 19:22:02] Fetching random customer names script started.
+[2025-01-16 19:22:03] Successfully fetched 3 random customer names.
+[2025-01-16 19:22:03] Fetching random customer names script completed.
+[2025-01-16 19:22:03] Total promos count: 4
+[2025-01-16 19:22:03] Fetched 4 paginated promos.
+[2025-01-16 19:22:03] Fetched 1 ongoing promos.
+[2025-01-16 19:22:03] Fetching promos script completed successfully.
+[2025-01-28 08:31:28] Fetching promos script started.
+ript started.
+[2025-01-28 08:31:28] Customer customer_id found in session: 1260106158
+[2025-01-28 08:31:28] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-28 08:31:28] Successfully fetched 3 random customer names.
+[2025-01-28 08:31:28] Fetching random customer names script completed.
+[2025-01-28 08:31:29] Total promos count: 4
+[2025-01-28 08:31:29] Fetched 4 paginated promos.
+[2025-01-28 08:31:29] Fetched 1 ongoing promos.
+[2025-01-28 08:31:29] Fetching promos script completed successfully.
+[2025-01-28 08:47:47] Fetching random customer names script started.
+[2025-01-28 08:47:47] Successfully fetched 3 random customer names.
+[2025-01-28 08:47:47] Fetching random customer names script completed.
+[2025-01-28 08:47:47] Fetching promos script started.
+[2025-01-28 08:47:47] Customer customer_id found in session: 1260106158
+[2025-01-28 08:47:47] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-28 08:47:47] Total promos count: 4
+[2025-01-28 08:47:47] Fetched 4 paginated promos.
+[2025-01-28 08:47:47] Fetched 1 ongoing promos.
+[2025-01-28 08:47:47] Fetching promos script completed successfully.
+[2025-01-28 08:48:08] Fetching random customer names script started.
+[2025-01-28 08:48:08] Successfully fetched 3 random customer names.
+[2025-01-28 08:48:08] Fetching random customer names script completed.
+[2025-01-28 08:48:08] Fetching promos script started.
+[2025-01-28 08:48:08] Customer customer_id found in session: 1260106158
+[2025-01-28 08:48:08] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-28 08:48:08] Total promos count: 4
+[2025-01-28 08:48:08] Fetched 4 paginated promos.
+[2025-01-28 08:48:08] Fetched 1 ongoing promos.
+[2025-01-28 08:48:08] Fetching promos script completed successfully.
+[2025-01-28 08:49:28] Fetching random customer names script started.
+[2025-01-28 08:49:28] Successfully fetched 3 random customer names.
+[2025-01-28 08:49:28] Customer customer_id found in session: 1260106158
+[2025-01-28 08:49:28] Fetching random customer names script completed.
+[2025-01-28 08:49:28] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-28 08:49:28] Total promos count: 4
+[2025-01-28 08:49:28] Fetched 4 paginated promos.
+[2025-01-28 08:49:28] Fetched 1 ongoing promos.
+[2025-01-28 08:49:28] Fetching promos script completed successfully.
+[2025-01-28 08:49:50] Fetching random customer names script started.
+[2025-01-28 08:49:50] Successfully fetched 3 random customer names.
+[2025-01-28 08:49:50] Fetching random customer names script completed.
+[2025-01-28 08:49:50] Fetching promos script started.
+[2025-01-28 08:49:50] Customer customer_id found in session: 1260106158
+[2025-01-28 08:49:50] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-28 08:49:50] Total promos count: 4
+[2025-01-28 08:49:50] Fetched 4 paginated promos.
+[2025-01-28 08:49:50] Fetched 1 ongoing promos.
+[2025-01-28 08:49:50] Fetching promos script completed successfully.
+[2025-01-28 08:52:33] Fetching random customer names script started.
+[2025-01-28 08:52:33] Successfully fetched 3 random customer names.
+[2025-01-28 08:52:33] Fetching random customer names script completed.
+[2025-01-28 08:52:33] Fetching promos script started.
+[2025-01-28 08:52:33] Customer customer_id found in session: 1260106158
+[2025-01-28 08:52:33] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-28 08:52:33] Total promos count: 4
+[2025-01-28 08:52:33] Fetched 4 paginated promos.
+[2025-01-28 08:52:33] Fetched 1 ongoing promos.
+[2025-01-28 08:52:33] Fetching promos script completed successfully.
+[2025-01-28 08:54:41] Fetching random customer names script started.
+[2025-01-28 08:54:41] Successfully fetched 3 random customer names.
+[2025-01-28 08:54:41] Fetching random customer names script completed.
+[2025-01-28 08:54:41] Fetching promos script started.
+[2025-01-28 08:54:41] Customer customer_id found in session: 1260106158
+[2025-01-28 08:54:41] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-28 08:54:41] Total promos count: 4
+[2025-01-28 08:54:41] Fetched 4 paginated promos.
+[2025-01-28 08:54:41] Fetched 1 ongoing promos.
+[2025-01-28 08:54:41] Fetching promos script completed successfully.
+[2025-01-28 15:44:59] Fetching random customer names script started.
+[2025-01-28 15:44:59] Successfully fetched 3 random customer names.
+[2025-01-28 15:44:59] Fetching random customer names script completed.
+[2025-01-28 15:44:59] Fetching promos script started.
+[2025-01-28 15:44:59] Customer customer_id found in session: 1260106158
+[2025-01-28 15:44:59] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-28 15:44:59] Total promos count: 4
+[2025-01-28 15:44:59] Fetched 4 paginated promos.
+[2025-01-28 15:44:59] Fetched 1 ongoing promos.
+[2025-01-28 15:44:59] Fetching promos script completed successfully.
+[2025-01-28 17:56:47] Fetching random customer names script started.
+[2025-01-28 17:56:47] Fetching promos script started.
+[2025-01-28 17:56:47] Customer customer_id found in session: 1260106158
+[2025-01-28 17:56:47] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-28 17:56:47] Successfully fetched 3 random customer names.
+[2025-01-28 17:56:47] Fetching random customer names script completed.
+[2025-01-28 17:56:47] Total promos count: 4
+[2025-01-28 17:56:47] Fetched 4 paginated promos.
+[2025-01-28 17:56:47] Fetched 1 ongoing promos.
+[2025-01-28 17:56:47] Fetching promos script completed successfully.
+[2025-01-28 17:57:33] Fetching random customer names script started.
+[2025-01-28 17:57:33] Successfully fetched 3 random customer names.
+[2025-01-28 17:57:33] Fetching random customer names script completed.
+[2025-01-28 17:57:33] Fetching promos script started.
+[2025-01-28 17:57:33] Admin unique_id found in session: 22675443
+[2025-01-28 17:57:33] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-28 17:57:33] Total promos count: 4
+[2025-01-28 17:57:33] Fetched 4 paginated promos.
+[2025-01-28 17:57:33] Fetched 1 ongoing promos.
+[2025-01-28 17:57:33] Fetching promos script completed successfully.
+[2025-01-28 18:40:52] Fetching random customer names script started.
+[2025-01-28 18:40:52] Successfully fetched 3 random customer names.
+[2025-01-28 18:40:52] Fetching random customer names script completed.
+[2025-01-28 18:40:52] Fetching promos script started.
+[2025-01-28 18:40:52] Customer customer_id found in session: 1260106158
+[2025-01-28 18:40:52] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-28 18:40:52] Total promos count: 4
+[2025-01-28 18:40:52] Fetched 4 paginated promos.
+[2025-01-28 18:40:52] Fetched 1 ongoing promos.
+[2025-01-28 18:40:52] Fetching promos script completed successfully.
+[2025-01-28 18:45:52] Fetching random customer names script started.
+[2025-01-28 18:45:52] Successfully fetched 3 random customer names.
+[2025-01-28 18:45:52] Fetching random customer names script completed.
+[2025-01-28 18:45:52] Fetching promos script started.
+[2025-01-28 18:45:52] Admin unique_id found in session: 22675443
+[2025-01-28 18:45:52] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-28 18:45:52] Total promos count: 4
+[2025-01-28 18:45:52] Fetched 4 paginated promos.
+[2025-01-28 18:45:52] Fetched 1 ongoing promos.
+[2025-01-28 18:45:52] Fetching promos script completed successfully.
+[2025-01-29 09:35:27] Fetching random customer names script started.
+[2025-01-29 09:35:27] Successfully fetched 3 random customer names.
+[2025-01-29 09:35:27] Fetching random customer names script completed.
+[2025-01-29 09:35:28] Fetching promos script started.
+[2025-01-29 09:35:28] Admin unique_id found in session: 22675443
+[2025-01-29 09:35:28] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-29 09:35:28] Total promos count: 4
+[2025-01-29 09:35:28] Fetched 4 paginated promos.
+[2025-01-29 09:35:28] Fetched 1 ongoing promos.
+[2025-01-29 09:35:28] Fetching promos script completed successfully.
+[2025-01-29 09:52:30] Fetching random customer names script started.
+[2025-01-29 09:52:30] Successfully fetched 3 random customer names.
+[2025-01-29 09:52:30] Fetching random customer names script completed.
+[2025-01-29 09:52:30] Fetching promos script started.
+[2025-01-29 09:52:30] Admin unique_id found in session: 22675443
+[2025-01-29 09:52:30] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-29 09:52:30] Total promos count: 4
+[2025-01-29 09:52:30] Fetched 4 paginated promos.
+[2025-01-29 09:52:30] Fetched 1 ongoing promos.
+[2025-01-29 09:52:30] Fetching promos script completed successfully.
+[2025-01-29 09:58:29] Fetching random customer names script started.
+[2025-01-29 09:58:29] Successfully fetched 3 random customer names.
+[2025-01-29 09:58:29] Fetching random customer names script completed.
+[2025-01-29 09:58:29] Fetching promos script started.
+[2025-01-29 09:58:29] Admin unique_id found in session: 22675443
+[2025-01-29 09:58:29] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-29 09:58:29] Total promos count: 4
+[2025-01-29 09:58:29] Fetched 4 paginated promos.
+[2025-01-29 09:58:29] Fetched 1 ongoing promos.
+[2025-01-29 09:58:29] Fetching promos script completed successfully.
+[2025-01-29 10:00:49] Fetching random customer names script started.
+[2025-01-29 10:00:49] Successfully fetched 3 random customer names.
+[2025-01-29 10:00:49] Fetching random customer names script completed.
+[2025-01-29 10:00:50] Fetching promos script started.
+[2025-01-29 10:00:50] Admin unique_id found in session: 22675443
+[2025-01-29 10:00:50] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-29 10:00:50] Total promos count: 4
+[2025-01-29 10:00:50] Fetched 4 paginated promos.
+[2025-01-29 10:00:50] Fetched 1 ongoing promos.
+[2025-01-29 10:00:50] Fetching promos script completed successfully.
+[2025-01-29 10:03:48] Fetching random customer names script started.
+[2025-01-29 10:03:48] Successfully fetched 3 random customer names.
+[2025-01-29 10:03:48] Fetching random customer names script completed.
+[2025-01-29 10:03:48] Fetching promos script started.
+[2025-01-29 10:03:48] Admin unique_id found in session: 860113631
+[2025-01-29 10:03:48] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-29 10:03:48] Total promos count: 4
+[2025-01-29 10:03:48] Fetched 4 paginated promos.
+[2025-01-29 10:03:48] Fetched 1 ongoing promos.
+[2025-01-29 10:03:48] Fetching promos script completed successfully.
+[2025-01-29 10:20:20] Fetching random customer names script started.
+[2025-01-29 10:20:20] Successfully fetched 3 random customer names.
+[2025-01-29 10:20:20] Fetching random customer names script completed.
+[2025-01-29 10:20:20] Fetching promos script started.
+[2025-01-29 10:20:20] Admin unique_id found in session: 860113631
+[2025-01-29 10:20:20] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-29 10:20:20] Total promos count: 4
+[2025-01-29 10:20:20] Fetched 4 paginated promos.
+[2025-01-29 10:20:20] Fetched 1 ongoing promos.
+[2025-01-29 10:20:20] Fetching promos script completed successfully.
+[2025-01-29 10:36:20] Fetching promos script started.
+[2025-01-29 10:36:20] Admin unique_id found in session: 22675443
+[2025-01-29 10:36:20] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-29 10:36:20] Total promos count: 4
+[2025-01-29 10:36:20] Fetched 4 paginated promos.
+[2025-01-29 10:36:20] Fetched 1 ongoing promos.
+[2025-01-29 10:36:20] Fetching promos script completed successfully.
+[2025-01-29 10:36:21] Fetching random customer names script started.
+[2025-01-29 10:36:21] Successfully fetched 3 random customer names.
+[2025-01-29 10:36:21] Fetching random customer names script completed.
+[2025-01-29 10:39:20] Fetching random customer names script started.
+[2025-01-29 10:39:20] Successfully fetched 3 random customer names.
+[2025-01-29 10:39:20] Fetching random customer names script completed.
+[2025-01-29 10:39:21] Fetching promos script started.
+[2025-01-29 10:39:21] Admin unique_id found in session: 22675443
+[2025-01-29 10:39:21] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-29 10:39:21] Total promos count: 4
+[2025-01-29 10:39:21] Fetched 4 paginated promos.
+[2025-01-29 10:39:21] Fetched 1 ongoing promos.
+[2025-01-29 10:39:21] Fetching promos script completed successfully.
+[2025-01-29 10:51:19] Fetching random customer names script started.
+[2025-01-29 10:51:19] Successfully fetched 3 random customer names.
+[2025-01-29 10:51:19] Fetching random customer names script completed.
+[2025-01-29 10:51:19] Fetching promos script started.
+[2025-01-29 10:51:19] Admin unique_id found in session: 22675443
+[2025-01-29 10:51:19] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-29 10:51:19] Total promos count: 4
+[2025-01-29 10:51:19] Fetched 4 paginated promos.
+[2025-01-29 10:51:19] Fetched 1 ongoing promos.
+[2025-01-29 10:51:19] Fetching promos script completed successfully.
+[2025-01-29 11:01:11] Fetching random customer names script started.
+[2025-01-29 11:01:12] Fetching promos script started.
+[2025-01-29 11:01:12] Admin unique_id found in session: 22675443
+[2025-01-29 11:01:12] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-29 11:01:12] Total promos count: 4
+[2025-01-29 11:01:12] Fetched 4 paginated promos.
+[2025-01-29 11:01:12] Fetched 1 ongoing promos.
+[2025-01-29 11:01:12] Fetching promos script completed successfully.
+[2025-01-29 11:01:12] Successfully fetched 3 random customer names.
+[2025-01-29 11:01:12] Fetching random customer names script completed.
+[2025-01-29 11:25:31] Fetching random customer names script started.
+[2025-01-29 11:25:31] Successfully fetched 3 random customer names.
+[2025-01-29 11:25:31] Fetching random customer names script completed.
+[2025-01-29 11:25:31] Fetching promos script started.
+[2025-01-29 11:25:31] Admin unique_id found in session: 22675443
+[2025-01-29 11:25:31] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-29 11:25:31] Total promos count: 4
+[2025-01-29 11:25:31] Fetched 4 paginated promos.
+[2025-01-29 11:25:31] Fetched 1 ongoing promos.
+[2025-01-29 11:25:31] Fetching promos script completed successfully.
+[2025-01-29 11:26:21] Fetching random customer names script started.
+[2025-01-29 11:26:21] Successfully fetched 3 random customer names.
+[2025-01-29 11:26:21] Fetching random customer names script completed.
+[2025-01-29 11:26:21] Fetching promos script started.
+[2025-01-29 11:26:21] Admin unique_id found in session: 860113631
+[2025-01-29 11:26:21] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-29 11:26:21] Total promos count: 4
+[2025-01-29 11:26:21] Fetched 4 paginated promos.
+[2025-01-29 11:26:21] Fetched 1 ongoing promos.
+[2025-01-29 11:26:21] Fetching promos script completed successfully.
+[2025-01-29 11:28:42] Fetching random customer names script started.
+[2025-01-29 11:28:42] Successfully fetched 3 random customer names.
+[2025-01-29 11:28:42] Fetching random customer names script completed.
+[2025-01-29 11:28:42] Fetching promos script started.
+[2025-01-29 11:28:42] Admin unique_id found in session: 1428985436
+[2025-01-29 11:28:42] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-29 11:28:42] Total promos count: 4
+[2025-01-29 11:28:42] Fetched 4 paginated promos.
+[2025-01-29 11:28:42] Fetched 1 ongoing promos.
+[2025-01-29 11:28:42] Fetching promos script completed successfully.
+[2025-01-29 11:32:33] Fetching random customer names script started.
+[2025-01-29 11:32:33] Successfully fetched 3 random customer names.
+[2025-01-29 11:32:33] Fetching random customer names script completed.
+[2025-01-29 11:32:33] Fetching promos script started.
+[2025-01-29 11:32:33] Admin unique_id found in session: 1428985436
+[2025-01-29 11:32:33] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-29 11:32:33] Total promos count: 4
+[2025-01-29 11:32:33] Fetched 4 paginated promos.
+[2025-01-29 11:32:33] Fetched 1 ongoing promos.
+[2025-01-29 11:32:33] Fetching promos script completed successfully.
+[2025-01-29 11:33:10] Fetching random customer names script started.
+[2025-01-29 11:33:10] Successfully fetched 3 random customer names.
+[2025-01-29 11:33:10] Fetching random customer names script completed.
+[2025-01-29 11:33:10] Fetching promos script started.
+[2025-01-29 11:33:10] Admin unique_id found in session: 1428985436
+[2025-01-29 11:33:10] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-29 11:33:10] Total promos count: 4
+[2025-01-29 11:33:10] Fetched 4 paginated promos.
+[2025-01-29 11:33:10] Fetched 1 ongoing promos.
+[2025-01-29 11:33:10] Fetching promos script completed successfully.
+[2025-01-29 11:33:53] Fetching random customer names script started.
+[2025-01-29 11:33:53] Successfully fetched 3 random customer names.
+[2025-01-29 11:33:53] Fetching random customer names script completed.
+[2025-01-29 11:33:53] Fetching promos script started.
+[2025-01-29 11:33:53] Admin unique_id found in session: 860113631
+[2025-01-29 11:33:53] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-29 11:33:53] Total promos count: 4
+[2025-01-29 11:33:53] Fetched 4 paginated promos.
+[2025-01-29 11:33:53] Fetched 1 ongoing promos.
+[2025-01-29 11:33:53] Fetching promos script completed successfully.
+[2025-01-29 11:38:33] Fetching random customer names script started.
+[2025-01-29 11:38:33] Successfully fetched 3 random customer names.
+[2025-01-29 11:38:33] Fetching random customer names script completed.
+[2025-01-29 11:38:33] Fetching promos script started.
+[2025-01-29 11:38:33] Admin unique_id found in session: 22675443
+[2025-01-29 11:38:33] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-29 11:38:33] Total promos count: 4
+[2025-01-29 11:38:33] Fetched 4 paginated promos.
+[2025-01-29 11:38:33] Fetched 1 ongoing promos.
+[2025-01-29 11:38:33] Fetching promos script completed successfully.
+[2025-01-29 11:45:48] Fetching random customer names script started.
+[2025-01-29 11:45:48] Successfully fetched 3 random customer names.
+[2025-01-29 11:45:48] Fetching random customer names script completed.
+[2025-01-29 11:45:48] Fetching promos script started.
+[2025-01-29 11:45:48] Admin unique_id found in session: 22675443
+[2025-01-29 11:45:48] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-29 11:45:48] Total promos count: 4
+[2025-01-29 11:45:48] Fetched 4 paginated promos.
+[2025-01-29 11:45:48] Fetched 1 ongoing promos.
+[2025-01-29 11:45:48] Fetching promos script completed successfully.
+[2025-01-29 11:56:23] Fetching random customer names script started.
+[2025-01-29 11:56:23] Successfully fetched 3 random customer names.
+[2025-01-29 11:56:23] Fetching promos script started.
+[2025-01-29 11:56:23] Fetching random customer names script completed.
+[2025-01-29 11:56:23] Not logged in. Session IDs not found.
+[2025-01-29 12:01:38] Fetching random customer names script started.
+[2025-01-29 12:01:38] Successfully fetched 3 random customer names.
+[2025-01-29 12:01:38] Fetching random customer names script completed.
+[2025-01-29 12:01:38] Fetching promos script started.
+[2025-01-29 12:01:38] Admin unique_id found in session: 22675443
+[2025-01-29 12:01:38] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-29 12:01:38] Total promos count: 4
+[2025-01-29 12:01:38] Fetched 4 paginated promos.
+[2025-01-29 12:01:38] Fetched 1 ongoing promos.
+[2025-01-29 12:01:38] Fetching promos script completed successfully.
+[2025-01-29 12:02:22] Fetching random customer names script started.
+[2025-01-29 12:02:22] Successfully fetched 3 random customer names.
+[2025-01-29 12:02:22] Fetching random customer names script completed.
+[2025-01-29 12:02:22] Fetching promos script started.
+[2025-01-29 12:02:22] Customer customer_id found in session: 1260106158
+[2025-01-29 12:02:22] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-29 12:02:22] Total promos count: 4
+[2025-01-29 12:02:22] Fetched 4 paginated promos.
+[2025-01-29 12:02:22] Fetched 1 ongoing promos.
+[2025-01-29 12:02:22] Fetching promos script completed successfully.
+[2025-01-29 12:04:04] Fetching random customer names script started.
+[2025-01-29 12:04:04] Successfully fetched 3 random customer names.
+[2025-01-29 12:04:04] Fetching random customer names script completed.
+[2025-01-29 12:04:04] Fetching promos script started.
+[2025-01-29 12:04:04] Admin unique_id found in session: 22675443
+[2025-01-29 12:04:04] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-29 12:04:04] Total promos count: 4
+[2025-01-29 12:04:04] Fetched 4 paginated promos.
+[2025-01-29 12:04:04] Fetched 1 ongoing promos.
+[2025-01-29 12:04:04] Fetching promos script completed successfully.
+[2025-01-30 16:35:19] Fetching random customer names script started.
+[2025-01-30 16:35:19] Successfully fetched 3 random customer names.
+[2025-01-30 16:35:19] Fetching promos script started.
+[2025-01-30 16:35:19] Admin unique_id found in session: 22675443
+[2025-01-30 16:35:19] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-30 16:35:19] Fetching random customer names script completed.
+[2025-01-30 16:35:20] Total promos count: 4
+[2025-01-30 16:35:20] Fetched 4 paginated promos.
+[2025-01-30 16:35:20] Fetched 1 ongoing promos.
+[2025-01-30 16:35:20] Fetching promos script completed successfully.
+[2025-01-31 09:47:18] Fetching promos script started.
+ript started.
+[2025-01-31 09:47:18] Customer customer_id found in session: 1260106158
+[2025-01-31 09:47:18] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-31 09:47:18] Successfully fetched 3 random customer names.
+[2025-01-31 09:47:18] Fetching random customer names script completed.
+[2025-01-31 09:47:18] Total promos count: 4
+[2025-01-31 09:47:18] Fetched 4 paginated promos.
+[2025-01-31 09:47:18] Fetched 1 ongoing promos.
+[2025-01-31 09:47:18] Fetching promos script completed successfully.
+[2025-01-31 15:51:32] Fetching random customer names script started.
+[2025-01-31 15:51:32] Successfully fetched 3 random customer names.
+[2025-01-31 15:51:32] Fetching random customer names script completed.
+[2025-01-31 15:51:33] Fetching promos script started.
+[2025-01-31 15:51:33] Admin unique_id found in session: 22675443
+[2025-01-31 15:51:33] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-31 15:51:33] Total promos count: 4
+[2025-01-31 15:51:33] Fetched 4 paginated promos.
+[2025-01-31 15:51:33] Fetched 1 ongoing promos.
+[2025-01-31 15:51:33] Fetching promos script completed successfully.
+[2025-01-31 15:58:33] Fetching random customer names script started.
+[2025-01-31 15:58:33] Successfully fetched 3 random customer names.
+[2025-01-31 15:58:33] Fetching random customer names script completed.
+[2025-01-31 15:58:33] Fetching promos script started.
+[2025-01-31 15:58:33] Admin unique_id found in session: 22675443
+[2025-01-31 15:58:33] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-31 15:58:33] Total promos count: 4
+[2025-01-31 15:58:33] Fetched 4 paginated promos.
+[2025-01-31 15:58:33] Fetched 1 ongoing promos.
+[2025-01-31 15:58:33] Fetching promos script completed successfully.
+[2025-01-31 16:06:10] Fetching random customer names script started.
+[2025-01-31 16:06:10] Successfully fetched 3 random customer names.
+[2025-01-31 16:06:10] Fetching random customer names script completed.
+[2025-01-31 16:06:11] Fetching promos script started.
+[2025-01-31 16:06:11] Admin unique_id found in session: 22675443
+[2025-01-31 16:06:11] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-31 16:06:11] Total promos count: 4
+[2025-01-31 16:06:11] Fetched 4 paginated promos.
+[2025-01-31 16:06:11] Fetched 1 ongoing promos.
+[2025-01-31 16:06:11] Fetching promos script completed successfully.
+[2025-01-31 16:54:38] Fetching random customer names script started.
+[2025-01-31 16:54:38] Successfully fetched 3 random customer names.
+[2025-01-31 16:54:39] Fetching promos script started.
+[2025-01-31 16:54:39] Admin unique_id found in session: 22675443
+[2025-01-31 16:54:39] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-31 16:54:39] Fetching random customer names script completed.
+ed 4 paginated promos.
+[2025-01-31 16:54:39] Fetched 1 ongoing promos.
+[2025-01-31 16:54:39] Fetching promos script completed successfully.
+[2025-01-31 22:38:38] Fetching random customer names script started.
+[2025-01-31 22:38:38] Successfully fetched 3 random customer names.
+[2025-01-31 22:38:38] Fetching random customer names script completed.
+[2025-01-31 22:38:39] Fetching promos script started.
+[2025-01-31 22:38:39] Admin unique_id found in session: 22675443
+[2025-01-31 22:38:39] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-31 22:38:39] Total promos count: 4
+[2025-01-31 22:38:39] Fetched 4 paginated promos.
+[2025-01-31 22:38:39] Fetched 1 ongoing promos.
+[2025-01-31 22:38:39] Fetching promos script completed successfully.
+[2025-01-31 22:43:55] Fetching random customer names script started.
+[2025-01-31 22:43:55] Successfully fetched 3 random customer names.
+[2025-01-31 22:43:55] Fetching random customer names script completed.
+[2025-01-31 22:43:55] Fetching promos script started.
+[2025-01-31 22:43:55] Admin unique_id found in session: 22675443
+[2025-01-31 22:43:55] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-31 22:43:55] Total promos count: 4
+[2025-01-31 22:43:55] Fetched 4 paginated promos.
+[2025-01-31 22:43:55] Fetched 1 ongoing promos.
+[2025-01-31 22:43:55] Fetching promos script completed successfully.
+[2025-01-31 22:48:53] Fetching random customer names script started.
+[2025-01-31 22:48:53] Successfully fetched 3 random customer names.
+[2025-01-31 22:48:53] Fetching random customer names script completed.
+[2025-01-31 22:48:53] Fetching promos script started.
+[2025-01-31 22:48:53] Admin unique_id found in session: 22675443
+[2025-01-31 22:48:53] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-31 22:48:53] Total promos count: 4
+[2025-01-31 22:48:53] Fetched 4 paginated promos.
+[2025-01-31 22:48:53] Fetched 1 ongoing promos.
+[2025-01-31 22:48:53] Fetching promos script completed successfully.
+[2025-01-31 22:52:14] Fetching promos script started.
+[2025-01-31 22:52:14] Not logged in. Session IDs not found.
+[2025-01-31 22:53:51] Fetching promos script started.
+[2025-01-31 22:53:51] Admin unique_id found in session: 22675443
+[2025-01-31 22:53:51] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-31 22:53:51] Total promos count: 4
+[2025-01-31 22:53:51] Fetched 4 paginated promos.
+[2025-01-31 22:53:51] Fetched 1 ongoing promos.
+[2025-01-31 22:53:51] Fetching random customer names script started.
+[2025-01-31 22:53:51] Fetching promos script completed successfully.
+[2025-01-31 22:53:51] Successfully fetched 3 random customer names.
+[2025-01-31 22:53:51] Fetching random customer names script completed.
+[2025-01-31 23:00:15] Fetching random customer names script started.
+[2025-01-31 23:00:15] Successfully fetched 3 random customer names.
+[2025-01-31 23:00:15] Fetching random customer names script completed.
+[2025-01-31 23:00:15] Fetching promos script started.
+[2025-01-31 23:00:15] Admin unique_id found in session: 22675443
+[2025-01-31 23:00:15] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-31 23:00:15] Total promos count: 4
+[2025-01-31 23:00:15] Fetched 4 paginated promos.
+[2025-01-31 23:00:15] Fetched 1 ongoing promos.
+[2025-01-31 23:00:15] Fetching promos script completed successfully.
+[2025-01-31 23:07:40] Fetching random customer names script started.
+[2025-01-31 23:07:40] Successfully fetched 3 random customer names.
+[2025-01-31 23:07:40] Fetching random customer names script completed.
+[2025-01-31 23:07:40] Fetching promos script started.
+[2025-01-31 23:07:40] Admin unique_id found in session: 22675443
+[2025-01-31 23:07:40] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-31 23:07:40] Total promos count: 4
+[2025-01-31 23:07:40] Fetched 4 paginated promos.
+[2025-01-31 23:07:40] Fetched 1 ongoing promos.
+[2025-01-31 23:07:40] Fetching promos script completed successfully.
+[2025-01-31 23:09:25] Fetching random customer names script started.
+[2025-01-31 23:09:25] Successfully fetched 3 random customer names.
+[2025-01-31 23:09:25] Fetching random customer names script completed.
+[2025-01-31 23:09:25] Fetching promos script started.
+[2025-01-31 23:09:25] Admin unique_id found in session: 22675443
+[2025-01-31 23:09:25] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-01-31 23:09:25] Total promos count: 4
+[2025-01-31 23:09:25] Fetched 4 paginated promos.
+[2025-01-31 23:09:25] Fetched 1 ongoing promos.
+[2025-01-31 23:09:25] Fetching promos script completed successfully.

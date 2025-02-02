@@ -118,12 +118,39 @@ document.addEventListener('DOMContentLoaded', () => {
         orderDetailsTableBody.appendChild(fragment);
     }
 
-    // Create a row for the details table
-    function createRow(label, value) {
-        const row = document.createElement('tr');
-        row.innerHTML = `<td colspan="4"><strong>${label}</strong></td><td>${value}</td>`;
-        return row;
+  // Create a row for the details table
+function createRow(label, value) {
+    const row = document.createElement('tr');
+    
+    // Add the label and value to the row
+    row.innerHTML = `<td colspan="4"><strong>${label}</strong></td><td>${value}</td>`;
+    
+    // Check if the label is "Promo Code"
+    if (label === "Promo Code") {
+        // Create a copy icon
+        const copyIcon = document.createElement('i');
+        copyIcon.className = 'fa-solid fa-copy'; // FontAwesome copy icon
+        copyIcon.style.cursor = 'pointer';
+        copyIcon.style.marginLeft = '10px';
+        copyIcon.title = 'Click to Copy to Clipboard';
+
+        // Add click event to copy promo code
+        copyIcon.addEventListener('click', () => {
+            navigator.clipboard.writeText(value).then(() => {
+                alert(`Promo code "${value}" copied to clipboard!`);
+            }).catch(err => {
+                alert('Failed to copy promo code. Please try again.');
+            });
+        });
+
+        // Append the copy icon to the value cell
+        const valueCell = row.querySelector('td:last-child');
+        valueCell.appendChild(copyIcon);
     }
+
+    return row;
+}
+
 
     // Close modal
     document.querySelector('.modal .close').addEventListener('click', () => {

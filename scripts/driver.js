@@ -183,6 +183,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td><input type="text" id="licenseNumber" value="${driver_details.license_number}" disabled></td>
             </tr>
             <tr>
+                <td>Availability Status</td>
+                <td>
+                    <select id="status">
+                        <option value="Not Available" ${driver_details.status === 'Not Available' ? 'selected' : ''}>Not Available</option>
+                        <option value="Available" ${driver_details.status === 'Available' ? 'selected' : ''}>Available</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
                 <td>Vehicle Type</td>
                 <td><input type="text" id="vehicleType" value="${driver_details.vehicle_type}"></td>
             </tr>
@@ -261,6 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
             gender: document.getElementById('gender').value,
             address: document.getElementById('address').value,
             vehicle_type: document.getElementById('vehicleType').value,
+            status: document.getElementById('status').value,
             restriction: document.getElementById('restriction').value
         };
 
@@ -280,7 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     console.error('Failed to Update driver:', data.message)
                     alert('Failed to update driver: ' + data.message);
-                    
+
                 }
             })
             .catch(error => {

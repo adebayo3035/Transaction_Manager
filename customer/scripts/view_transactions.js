@@ -102,11 +102,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelector('.modal .close').addEventListener('click', () => {
         document.getElementById('orderModal').style.display = 'none';
+        location.reload();
     });
 
     window.addEventListener('click', (event) => {
         if (event.target === document.getElementById('orderModal')) {
             document.getElementById('orderModal').style.display = 'none';
+            location.reload();
         }
     });
 

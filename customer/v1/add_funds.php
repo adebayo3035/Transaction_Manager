@@ -11,6 +11,7 @@ $cvv = isset($_POST['cvv']) ? htmlspecialchars($_POST['cvv']) : '';
     <meta charset="UTF-8">
     <title>Add Funds</title>
     <link rel="stylesheet" href="../css/add_funds.css">
+    
 </head>
 
 <body>

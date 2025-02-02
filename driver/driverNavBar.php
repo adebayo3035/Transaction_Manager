@@ -28,7 +28,7 @@ $stmt = $conn->prepare("SELECT status FROM driver WHERE id = ?");
     <h1><a href="homepage.php">KaraKata </a></h1>
     <div class="user-info">
         <span id="customerName">Welcome, <?php echo $_SESSION['driver_name'] . " ($driverId)"; ?></span>
-        <span id="walletBalance">Your Current Status is : <?php echo $status; ?></span>
+        <span id="walletBalance">Your Current Status : <?php echo $status; ?></span>
         <button id="logoutButton"><a
                 href="../v2/logout.php?logout_id=<?php echo $_SESSION['driver_id']; ?>">Logout</a>
             </button>
