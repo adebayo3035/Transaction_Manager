@@ -56,7 +56,7 @@ function getSessionData() {
         })
         .catch(error => {
             console.error('Error fetching session data:', error);
-            window.location.href = '../v1/index.php'; // Redirect on error
+            window.location.href = '../v1/profile.php'; // Redirect on error
         });
 }
 

@@ -1,21 +1,35 @@
 <?php
 session_start();
-include ("../v2/config.php");
+include ("config.php");
+// Logging function
+logActivity("Script execution started.");
 
-if (!isset($_SESSION['customer_id'])) {
-    http_response_code(401);  // Unauthorized
-    echo json_encode(['error' => 'Unauthorized access']);
-    exit();
-}
-
+// Validate session
 $customerId = $_SESSION["customer_id"];
+checkSession($customerId);
+logActivity("Session validated successfully for Customer ID: $customerId.");
+
 $stmt = $conn->prepare("SELECT balance FROM wallets WHERE customer_id = ?");
 $stmt->bind_param("i", $customerId);
-$stmt->execute();
+
+if (!$stmt->execute()) {
+    logActivity("Database error: Failed to fetch balance for Customer ID: $customerId.");
+    echo json_encode(['success' => false, 'message' => 'Failed to retrieve balance.']);
+    exit;
+}
+
 $stmt->bind_result($balance);
 $stmt->fetch();
 $stmt->close();
+logActivity("Balance retrieved successfully for Customer ID: $customerId. Balance: $balance");
 
-echo json_encode(['customer_name' => $_SESSION['customer_name'], 'balance' => $balance]);
+$response = [
+    'success' => true,
+    'customer_name' => $_SESSION['customer_name'],
+    'balance' => $balance
+];
+
+$conn->close();
+logActivity("Script execution completed for Customer ID for Wallet Balance: $customerId.");
+echo json_encode($response);
 exit();
-

@@ -5,6 +5,8 @@ include_once "config.php";
 // Set content type to JSON
 header('Content-Type: application/json');
 
+// Log function to log activity
+logActivity("Starting Password Reset for Customer ID: $CustomerId");
 // Get the POST data
 $data = json_decode(file_get_contents("php://input"), true);
 
@@ -18,6 +20,7 @@ function checkResetAttempts($conn, $email) {
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         if ($row['reset_attempts'] >= 3) {
+            logActivity("Exceeded reset attempts for email: $email.");
             return ['success' => false, 'message' => 'You have exceeded the reset attempts for today.'];
         }
     }
@@ -42,6 +45,7 @@ function checkLockStatus($conn, $customer_id) {
 
         if ($attempts >= $max_attempts && $current_time < $locked_until) {
             $time_remaining = $locked_until->diff($current_time)->format('%i minutes %s seconds');
+            logActivity("Account locked for customer_id: $customer_id. Lockout time: $time_remaining.");
             return ['success' => false, 'message' => "Your account is locked. Please try again in $time_remaining."];
         }
     }
@@ -61,6 +65,7 @@ function updateResetAttempts($conn, $email) {
         $stmtInsert->bind_param("si", $email, $attempt);
         $stmtInsert->execute();
         $stmtInsert->close();
+        logActivity("First reset attempt for email: $email.");
     } else {
         $row = $result->fetch_assoc();
         $new_attempt = $row['reset_attempts'] + 1;
@@ -69,6 +74,7 @@ function updateResetAttempts($conn, $email) {
         $stmtUpdate->bind_param("is", $new_attempt, $email);
         $stmtUpdate->execute();
         $stmtUpdate->close();
+        logActivity("Updated reset attempts for email: $email to $new_attempt.");
     }
 }
 
@@ -84,7 +90,7 @@ if (isset($data['email'], $data['secret_answer'])) {
         exit();
     }
 
-    // Check if the user is locked
+    // Check if the user exists
     $emailQuery = $conn->prepare("SELECT customer_id, secret_answer FROM customers WHERE email = ?");
     $emailQuery->bind_param("s", $email);
     $emailQuery->execute();
@@ -93,6 +99,8 @@ if (isset($data['email'], $data['secret_answer'])) {
     if ($emailQuery->num_rows > 0) {
         $emailQuery->bind_result($customer_id, $db_secret_answer);
         $emailQuery->fetch();
+
+        logActivity("Email found: $email. Validating secret answer...");
 
         $lockCheck = checkLockStatus($conn, $customer_id);
         if (!$lockCheck['success']) {
@@ -103,11 +111,12 @@ if (isset($data['email'], $data['secret_answer'])) {
         // Validate secret answer and confirm password
         if ((md5($secret_answer) !== $db_secret_answer)) {
             updateResetAttempts($conn, $email);
+            logActivity("Invalid secret answer for email: $email.");
             echo json_encode(['success' => false, 'message' => 'Account Validation Failed.']);
             exit();
         }
 
-        // Step 4: Successful validation - Generate token
+        // Successful validation - Generate token
         $token = bin2hex(random_bytes(16)); // Secure random token
         $expires_at = date('Y-m-d H:i:s', strtotime('+15 minutes')); // Token expiration
 
@@ -117,16 +126,21 @@ if (isset($data['email'], $data['secret_answer'])) {
         $stmtToken->execute();
         $stmtToken->close();
 
+        logActivity("Password reset token generated for email: $email.");
+        
         // Return success and token
         echo json_encode(['success' => true, 'token' => $token]);
     } else {
+        logActivity("No customer found with email: $email.");
         echo json_encode(['success' => false, 'message' => 'Your Record cannot be found.']);
         exit();
     }
 } else {
+    logActivity("Missing required fields: email or secret_answer.");
     echo json_encode(['success' => false, 'message' => 'Missing required fields.']);
     exit();
 }
 
 // Close the database connection
 $conn->close();
+

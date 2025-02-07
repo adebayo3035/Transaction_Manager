@@ -13,12 +13,7 @@ logActivity("Payment processing script started.");
 
 // Fetch customer ID from session
 $customerId = $_SESSION['customer_id'] ?? null;
-if (!$customerId) {
-    logActivity("Customer ID not found in session.");
-    echo json_encode(['success' => false, 'message' => 'Customer ID not found.']);
-    exit;
-}
-
+checkSession($customerId);
 // Log the customer ID for debugging
 logActivity("Customer ID found in session: " . $customerId);
 
@@ -495,7 +490,7 @@ function checkCreditEligibility($conn, $customerId, $orderAmount, $providedAnswe
             return ["success" => false, "message" => "Credit not available due to past defaults. ❌"];
         }
 
-        if ($totalOrders < 5) {
+        if ($totalOrders < 0) {
             logActivity("Insufficient order history for customer ID: " . $customerId);
             return ["success" => false, "message" => "Not enough order history to qualify. Kindly Order more! 📉"];
         }

@@ -1,4 +1,5 @@
 <?php
+include('activity_logger.php');
   $hostname = "localhost";
   $username = "root";
   $password = "";
@@ -22,4 +23,15 @@
     $ciphering = "AES-256-CTR";
     $options = 0;
     return openssl_decrypt($encryptedString, $ciphering, $key, $options, $iv);
+}
+
+function checkSession($CustomerID){
+  if (!isset($CustomerID)) {
+    $error_message = "Customer not logged in. Customer's Session ID Cannot be found.";
+    http_response_code(401);  // Unauthorized
+    error_log($error_message);
+    logActivity($error_message);
+    echo json_encode(['error' => 'Unauthorized access']);
+    exit();
+}
 }

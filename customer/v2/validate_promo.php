@@ -12,14 +12,8 @@ header('Content-Type: application/json');
 logActivity("Promo code validation script started.");
 
 // Fetch customer ID from session
-$customerId = $_SESSION['customer_id'] ?? null;
-if (!$customerId) {
-    $error_message = "Customer ID not found in session.";
-    error_log($error_message);
-    logActivity($error_message);
-    echo json_encode(['success' => false, 'message' => $error_message]);
-    exit;
-}
+$customerId = $_SESSION["customer_id"];
+checkSession($customerId);
 
 // Log the customer ID for debugging
 logActivity("Customer ID found in session: " . $customerId);

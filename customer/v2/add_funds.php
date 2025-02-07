@@ -1,17 +1,15 @@
 <?php
 session_start();
 include('config.php');
-include('activity_logger.php'); // Ensure this file contains the logActivity function
+ // Ensure this file contains the logActivity function
 header('Content-Type: application/json');
+
+$customerId = $_SESSION["customer_id"];
+checkSession($customerId);
 
 // Log the start of the script
 logActivity("Wallet funding script started.");
 
-if (!isset($_SESSION['customer_id'])) {
-    logActivity("Customer not logged in. Session customer_id not found.");
-    echo json_encode(["success" => false, "message" => "Not logged in."]);
-    exit();
-}
 
 // Log the customer ID for debugging
 logActivity("Customer ID found in session: " . $_SESSION['customer_id']);
@@ -29,7 +27,7 @@ function getStoredPinHash($customerId, $cardNumber, $conn)
     logActivity("Fetching stored PIN hash and expiry date for customer ID: " . $customerId);
 
     // Fetch card details including card_pin and expiry_date
-    $stmt = $conn->prepare("SELECT card_pin, expiry_date FROM cards WHERE customer_id = ? AND card_number = ?");
+    $stmt = $conn->prepare("SELECT card_pin, expiry_date, status FROM cards WHERE customer_id = ? AND card_number = ?");
     $stmt->bind_param("is", $customerId, $cardNumber);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -43,6 +41,7 @@ function getStoredPinHash($customerId, $cardNumber, $conn)
 
     $cardPin = $row['card_pin'];
     $expiryDate = $row['expiry_date']; // Format: month-year (e.g., 12-2025)
+    $card_status = $row['status'];
 
     // Parse expiry_date into month and year
     list($expiryMonth, $expiryYear) = explode('-', $expiryDate);
@@ -52,16 +51,17 @@ function getStoredPinHash($customerId, $cardNumber, $conn)
     $currentYear = date('Y');  // Current year (e.g., 2023)
 
     // Check if the card has expired
-    $isExpired = ($expiryYear < $currentYear) || 
-                 ($expiryYear == $currentYear && $expiryMonth < $currentMonth);
+    $isExpired = ($expiryYear < $currentYear) || ($expiryYear == $currentYear && $expiryMonth < $currentMonth);
 
-    logActivity("Card expiry date: $expiryDate, Is expired: " . ($isExpired ? 'Yes' : 'No'));
+    logActivity("Card expiry date: $expiryDate, Is expired?: " . ($isExpired ? 'Yes' : 'No'));
+    
 
     // Return card_pin, expiry_date, and is_expired status
     return [
         'card_pin' => $cardPin,
         'expiry_date' => $expiryDate,
-        'is_expired' => $isExpired
+        'is_expired' => $isExpired,
+        'card_status' => $card_status
     ];
 }
 
@@ -200,6 +200,23 @@ function insertLatePaymentFee($orderId, $customerId, $latePaymentFee, $conn)
         throw new Exception("Failed to insert into transactions table: " . $conn->error);
     }
     $insertTransactionStmt->close();
+
+
+    //Update late payment column on credit Order table
+    $update_stmt = $conn->prepare("
+    UPDATE credit_orders
+    SET late_payment_fee = ?, date_last_modified = ?
+    WHERE order_id = ?
+");
+
+    // Get the current timestamp for the update
+    $date_last_updated = date('Y-m-d H:i:s');
+
+    // Bind the parameters to the query
+    $update_stmt->bind_param("dsi", $latePaymentFee, $date_last_updated, $orderId);
+
+    // Execute the update statement
+    $update_stmt->execute();
 }
 
 function updateWalletBalance($customerId, $newBalance, $conn)
@@ -252,6 +269,12 @@ if (!$storedCardDetails) {
 if ($storedCardDetails['is_expired']) {
     logActivity("Card expired for customer ID: $customerId. Expiry date: " . $storedCardDetails['expiry_date']);
     echo json_encode(['success' => false, 'message' => 'Error occurred. Your card has expired.']);
+    exit;
+}
+// Check if Card is still active
+if ($storedCardDetails['card_status'] !== "Active") {
+    logActivity("Inactive Card for customer ID: $customerId. Card Status is: " . $storedCardDetails['card_status']);
+    echo json_encode(['success' => false, 'message' => 'Error occurred. Your card is Inactive. Kindly add another Card']);
     exit;
 }
 

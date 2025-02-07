@@ -2,6 +2,7 @@
 header('Content-Type: application/json');
 include 'config.php';
 
+
 // Function to validate password
 function validatePassword($password)
 {
@@ -21,8 +22,8 @@ function updatePassword($conn, $email, $hashedPassword)
 
     // Prepare the SQL for updating the password
     $stmt = $conn->prepare("UPDATE customers SET password = ? WHERE email = ?");
-
     if (!$stmt) {
+        logActivity("Failed to prepare the statement for updating password for email: $email");
         return ['success' => false, 'message' => 'Failed to prepare the statement for updating password.'];
     }
 
@@ -35,6 +36,7 @@ function updatePassword($conn, $email, $hashedPassword)
         $stmtReset = $conn->prepare("UPDATE customer_password_reset_attempts SET reset_attempts = 0, last_attempt_date = NOW() WHERE email = ? AND DATE(last_attempt_date) = CURDATE()");
         if (!$stmtReset) {
             $conn->rollback();
+            logActivity("Failed to prepare the statement for resetting attempts for email: $email");
             return ['success' => false, 'message' => 'Failed to prepare the statement for resetting attempts.'];
         }
 
@@ -46,6 +48,7 @@ function updatePassword($conn, $email, $hashedPassword)
         $stmtDeleteToken = $conn->prepare("DELETE FROM customer_password_reset_tokens WHERE email = ?");
         if (!$stmtDeleteToken) {
             $conn->rollback();
+            logActivity("Failed to prepare the statement for deleting token for email: $email");
             return ['success' => false, 'message' => 'Failed to prepare the statement for deleting token.'];
         }
 
@@ -55,9 +58,11 @@ function updatePassword($conn, $email, $hashedPassword)
 
         // Commit the transaction if everything is successful
         $conn->commit();
+        logActivity("Password reset successfully for email: $email");
         return ['success' => true, 'message' => 'Password reset successfully.'];
     } else {
         $conn->rollback();
+        logActivity("Failed to update the password for email: $email");
         return ['success' => false, 'message' => 'Failed to update the password.'];
     }
 }
@@ -67,12 +72,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $data = json_decode(file_get_contents('php://input'), true);
 
     if (json_last_error() !== JSON_ERROR_NONE) {
+        logActivity("Invalid JSON input received.");
         echo json_encode(['success' => false, 'message' => 'Invalid JSON']);
         exit();
     }
 
     // Check required fields
     if (empty($data['email']) || empty($data['new_password']) || empty($data['confirm_password']) || empty($data['token'])) {
+        logActivity("Missing required fields for password reset.");
         echo json_encode(['success' => false, 'message' => 'Missing required fields.']);
         exit();
     }
@@ -95,11 +102,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (strtotime($row['expires_at']) > time()) {
             // Token is valid, proceed with password reset
             if (!validatePassword($new_password)) {
+                logActivity("Invalid password format for email: $email");
                 echo json_encode(['success' => false, 'message' => 'Please input a valid password.']);
                 exit();
             }
 
             if ($new_password !== $confirm_password) {
+                logActivity("Password mismatch for email: $email");
                 echo json_encode(['success' => false, 'message' => 'Your Password does not match.']);
                 exit();
             }
@@ -111,9 +120,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo json_encode($updateResult);
             exit();
         } else {
+            logActivity("Password reset token expired for email: $email");
             echo json_encode(['success' => false, 'message' => 'Token has expired.']);
         }
     } else {
+        logActivity("Invalid token for email: $email");
         echo json_encode(['success' => false, 'message' => 'Invalid token.']);
     }
 

@@ -1,31 +1,26 @@
 <?php
 // Include database connection and logger files
 include 'config.php';
-include 'activity_logger.php'; // Include the logger file
+
 session_start();
-
-// Log the start of the script
-logActivity("Fetching food items script started.");
-
-// Check if the customer is logged in
-if (!isset($_SESSION['customer_id'])) {
-    $error_message = "Customer not logged in. Session customer_id not found.";
-    error_log($error_message);
-    logActivity($error_message);
-    echo json_encode(["success" => false, "message" => $error_message]);
-    exit();
-}
-
+$customerId = $_SESSION['customer_id'];
+logActivity("Srarting session Check for new User");
+checkSession($customerId);
 // Log the customer ID for debugging
 logActivity("Customer ID found in session: " . $_SESSION['customer_id']);
+// Log the start of the script with timestamp
+logActivity("Fetching food items script started at " . date("Y-m-d H:i:s"));
 
 try {
     // Fetch food items from the database
     $sql = "SELECT food_id, food_name, food_price FROM food WHERE availability_status != 0 AND available_quantity != 0;";
+    logActivity("Executing query: $sql");
+
     $result = mysqli_query($conn, $sql);
 
     if (!$result) {
-        throw new Exception("Database query failed: " . mysqli_error($conn));
+        logActivity("Database query failed: " . mysqli_error($conn));
+        throw new Exception("Database query failed: " . mysqli_error($conn)); 
     }
 
     $foodItems = [];
@@ -41,16 +36,17 @@ try {
     echo json_encode($foodItems);
 
     // Log the successful completion of the script
-    logActivity("Fetching food items script completed successfully.");
+    logActivity("Fetching food items script completed successfully at " . date("Y-m-d H:i:s"));
 } catch (Exception $e) {
-    // Log the exception
-    error_log("Exception: " . $e->getMessage());
-    logActivity("Exception: " . $e->getMessage());
-
+    // Log the exception with the message
+    error_log("ERROR: Exception occurred - " . $e->getMessage());
+    logActivity("ERROR: Exception occurred - " . $e->getMessage());
+    
     // Return an error response
     header('Content-Type: application/json');
     echo json_encode(["success" => false, "message" => $e->getMessage()]);
 } finally {
     // Close the database connection
     mysqli_close($conn);
+    logActivity("Database connection closed at " . date("Y-m-d H:i:s"));
 }

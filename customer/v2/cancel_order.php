@@ -8,17 +8,13 @@ error_reporting(E_ALL);
 
 // Include database connection file
 include('config.php');
-include 'activity_logger.php';
+// include 'activity_logger.php';
 session_start();
 
 // Check if customer_id is set in the session
-if (!isset($_SESSION['customer_id'])) {
-    logActivity('Unauthorized access. Customer ID not found.');
-    echo json_encode(['success' => false, 'message' => 'Unauthorized access. Customer ID not found.']);
-    exit;
-}
+$customer_id = $_SESSION["customer_id"];
+checkSession($customer_id);
 
-$customer_id = $_SESSION['customer_id'];
 logActivity("Customer ID retrieved from session: $customer_id");
 
 // Decode the incoming JSON request body

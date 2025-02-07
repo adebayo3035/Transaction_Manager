@@ -1,6 +1,7 @@
 <?php
 header('Content-Type: application/json');
 require 'config.php';
+// require 'activity_logger.php';
 session_start();
 
 // Enable error reporting for debugging
@@ -11,13 +12,9 @@ ini_set('display_errors', 1);
 logActivity("Repayment processing script started.");
 
 // Check if the customer is logged in
-if (!isset($_SESSION['customer_id'])) {
-    logActivity("Unauthorized access. Customer not logged in.");
-    echo json_encode(["success" => false, "message" => "Not logged in."]);
-    exit();
-}
+$customerId = $_SESSION["customer_id"];
+checkSession($customerId);
 
-$customerId = $_SESSION['customer_id'];
 logActivity("Customer ID retrieved from session: $customerId");
 
 $input = json_decode(file_get_contents('php://input'), true);
@@ -118,7 +115,7 @@ try {
     $wallet_balance = floatval($wallet['balance']);
     logActivity("Wallet balance fetched: $wallet_balance.");
 
-    $late_payment_fee = 0;
+    $late_payment_fee = 0.00;
 
     // Calculate late payment fee
     if (strtotime($due_date) < strtotime($current_date)) {
@@ -150,11 +147,11 @@ try {
 
     $update_credit_stmt = $conn->prepare("
         UPDATE credit_orders
-        SET remaining_balance = ?, repayment_status = ?, amount_paid = ?, date_last_modified = ?
+        SET remaining_balance = ?, late_payment_fee = ?, repayment_status = ?, amount_paid = ?, date_last_modified = ?
         WHERE credit_order_id = ?
     ");
     $date_last_updated = date('Y-m-d H:i:s');
-    $update_credit_stmt->bind_param("dsssi", $new_remaining_balance, $new_repayment_status, $amount_paid, $date_last_updated, $credit_order_id);
+    $update_credit_stmt->bind_param("ddsssi", $new_remaining_balance, $late_payment_fee, $new_repayment_status, $amount_paid, $date_last_updated, $credit_order_id);
     $update_credit_stmt->execute();
     logActivity("Credit order updated. Remaining balance: $new_remaining_balance, Repayment status: $new_repayment_status.");
 
@@ -261,3 +258,7 @@ try {
 
 $conn->close();
 logActivity("Database connection closed.");
+
+
+// amend other pages where credit repayment occurs
+// amend credit eligibility check for testing purpose

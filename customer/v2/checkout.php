@@ -3,6 +3,10 @@ session_start();
 include('config.php');
 header('Content-Type: application/json');
 
+//check if customer's logged in
+$customerId = $_SESSION["customer_id"];
+checkSession($customerId);
+
 // Log the start of the script
 logActivity("Order placement script started.");
 

@@ -1,7 +1,7 @@
 <?php
 include 'config.php';
-include 'activity_logger.php'; // Include the logger file
-
+$customerId = $_SESSION["customer_id"];
+checkSession($customerId);
 // Log the start of the script
 logActivity("Order quantity validation script started.");
 

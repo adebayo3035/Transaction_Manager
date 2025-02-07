@@ -83,7 +83,7 @@
             <input type="text" id="liveSearch" placeholder="Search for Transaction...">
             <button type="submit">Search <i class="fa fa-search" aria-hidden="true"></i></button>
         </div>
-        <h1>All Inflow and Outflow</h1>
+        <h1>All Inflows</h1>
     </div>
 
     <table id="revenueTable" class="transactionsTable">

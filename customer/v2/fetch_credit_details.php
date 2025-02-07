@@ -2,25 +2,39 @@
 header('Content-Type: application/json');
 require 'config.php';
 session_start();
-if (!isset($_SESSION['customer_id'])) {
-    echo json_encode(["success" => false, "message" => "Not logged in."]);
-    exit();
+
+// Function to log activity
+
+$customerId = $_SESSION["customer_id"] ?? null;
+checkSession(($customerId));
+
+logActivity("Customer ID: $customerId - Session validated.");
+
+// Decode JSON input
+$input = json_decode(file_get_contents('php://input'), true);
+if (json_last_error() !== JSON_ERROR_NONE) {
+    logActivity("Invalid JSON input received.");
+    echo json_encode(['success' => false, 'message' => 'Invalid JSON input']);
+    exit;
 }
 
-$customerId = $_SESSION['customer_id'];
-
-// Get input data
-$input = json_decode(file_get_contents('php://input'), true);
+// Validate `credit_id`
 $credit_id = $input['credit_id'] ?? null;
-
-if (!$credit_id) {
+if (empty($credit_id)) {
+    logActivity("Missing credit_id in request.");
     echo json_encode(['success' => false, 'message' => 'Credit ID is required']);
     exit;
 }
 
+logActivity("Fetching credit details for Credit ID: $credit_id.");
+
 try {
     // Fetch credit details
-    $stmt = $conn->prepare("SELECT * from credit_orders WHERE credit_order_id = ?");
+    $stmt = $conn->prepare("SELECT * FROM credit_orders WHERE credit_order_id = ?");
+    if (!$stmt) {
+        throw new Exception("Database error: " . $conn->error);
+    }
+
     $stmt->bind_param("s", $credit_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -33,20 +47,25 @@ try {
         $repaymentStatus = $row['repayment_status'];
         $isDue = false;
 
-        if ($currentDate > $dueDate && ($repaymentStatus === 'Pending' || $repaymentStatus === 'Partially Paid')) {
+        if ($currentDate > $dueDate && in_array($repaymentStatus, ['Pending', 'Partially Paid'])) {
             $isDue = true;
         }
 
-        // Add the "is_due" flag to the row
         $row['is_due'] = $isDue;
-
         $details[] = $row;
     }
+
+    logActivity("Credit details fetched successfully for Credit ID: $credit_id.");
 
     echo json_encode([
         'success' => true,
         'credit_details' => $details
     ]);
+
 } catch (Exception $e) {
+    logActivity("Error fetching credit details: " . $e->getMessage());
     echo json_encode(['success' => false, 'message' => $e->getMessage()]);
 }
+
+$stmt->close();
+$conn->close();

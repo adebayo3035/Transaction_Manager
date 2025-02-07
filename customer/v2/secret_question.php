@@ -2,10 +2,13 @@
 // Database connection
 include 'config.php'; // Replace with your actual database connection
 
+header('Content-Type: application/json');
+
 // Check if the request is POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve the JSON body from the request
     $input = json_decode(file_get_contents('php://input'), true);
+    logActivity("Received login attempt: " . json_encode($input));
 
     // Retrieve the inputs (email/phone and password)
     $email = $input['email'] ?? null;
@@ -13,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validate input fields
     if (!$email || !$password) {
+        logActivity("Login failed: Email and password are required");
         echo json_encode(['success' => false, 'message' => 'Email and password are required']);
         exit();
     }
@@ -33,6 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $hashedPassword = $row['password'];
         $secret_question = $row['secret_question'];
 
+        logActivity("User found: Customer ID $customer_id");
+
         // Check if the account is locked
         $stmtCheckLock = $conn->prepare("SELECT attempts, locked_until FROM customer_login_attempts WHERE customer_id = ? LIMIT 1");
         $stmtCheckLock->bind_param('s', $customer_id);
@@ -45,9 +51,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $locked_until = new DateTime($rowLock['locked_until']);
             $current_time = new DateTime();
 
-            // Check if the account is currently locked
             if ($attempts >= $max_attempts && $current_time < $locked_until) {
                 $time_remaining = $locked_until->diff($current_time)->format('%i minutes %s seconds');
+                logActivity("Account locked: Customer ID $customer_id - Time remaining: $time_remaining");
                 echo json_encode(['success' => false, 'message' => "Your account is locked. Please try again in $time_remaining."]);
                 exit();
             }
@@ -55,20 +61,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Verify the password
         if (md5($password) == $hashedPassword) { // Adjust hashing algorithm if needed
-            // Return the secret question since the account is not locked and the password is correct
+            logActivity("Secret Question retrieved successfully for: Customer ID $customer_id");
             echo json_encode([
                 'success' => true,
                 'secret_question' => $secret_question
             ]);
         } else {
-            // Password is incorrect
+            logActivity("Invalid password attempt: Customer ID $customer_id");
             echo json_encode(['success' => false, 'message' => 'Invalid password. Please try again.']);
         }
     } else {
-        // User not found
+        logActivity("Login failed: User not found - Email: $email");
         echo json_encode(['success' => false, 'message' => 'User not found']);
     }
 } else {
+    logActivity("Invalid request method attempted");
     echo json_encode(['success' => false, 'message' => 'Invalid request method']);
 }
 
