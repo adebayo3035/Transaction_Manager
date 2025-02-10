@@ -51,6 +51,8 @@ body {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
+    
+    
 }
 
 .detail {
@@ -107,6 +109,11 @@ input:checked + .slider:before {
     padding: 20px 10px;
     font-size: 15px;
     color: #000;
+}
+.editBtnContainer{
+    display: flex;
+    justify-content: center;
+    
 }
 
 @media only screen and (max-width: 500px) {

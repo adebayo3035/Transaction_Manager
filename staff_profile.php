@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="customer/css/cards.css">
     <link rel="stylesheet" href="customer/css/view_orders.css">
     <link rel="stylesheet" href="css/view_driver.css">
-    
+
     
 </head>
     <title>Staff Profile</title>
@@ -22,16 +22,17 @@
             <!-- <span><a href='update_picture.php'><span class='edit-icon'>&#9998;</span></a></span> -->
             <span><a href="#" id="edit-profile-picture"><span class="edit-icon">&#9998;</span></a></span>
 
-            <h1 id="customer-name">My Name</h1>
+            <h1 id="customer-name">Loading...</h1>
+            <h4 id="customer-status">Loading...</h4>
         </div>
         <div class="profile-details">
             <div class="detail">
                 <label>First Name:</label>
-                <p id="first-name">First Name</p>
+                <p id="first-name">Loading...</p>
             </div>
             <div class="detail">
                 <label>Last Name:</label>
-                <p id="last-name">Last Name</p>
+                <p id="last-name">Loading...</p>
             </div>
             <div class="detail">
                 <label>Email:</label>
@@ -59,8 +60,12 @@
                     <span class="toggle-indicator">OFF</span>
                 </p>
             </div>
-            <button id="modifyDriverDetails"> Edit Profile </button>
+            
+            
         </div>
+        <div class="editBtnContainer">
+            <button id="modifyDriverDetails"> Edit Profile </button>
+            </div>
     </div>
 
     <!-- Modal  to Update Driver Profile Picture Structure -->

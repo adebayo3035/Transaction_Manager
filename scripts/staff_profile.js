@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('customer-name').textContent = data.firstname + ' ' + data.lastname;
             document.getElementById('first-name').textContent = data.firstname;
             document.getElementById('last-name').textContent = data.lastname;
+            document.getElementById('customer-status').textContent = data.role;
 
             let email = data.email;
             let phone = data.phone;
