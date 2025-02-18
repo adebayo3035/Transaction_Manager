@@ -138,6 +138,9 @@ tr:nth-child(even) {
 }
 
 @media (max-width: 600px) {
+    .container h1{
+        font-size: 18px;
+    }
     table, th, td {
         /* width: 100%;
         display: flex;
@@ -181,6 +184,21 @@ tr:nth-child(even) {
         .ordersTable th{
             text-align: center;
         }
-    
-    
+}
+@media (max-width: 600px){
+    .ordersTable{
+        overflow-x: auto;
+    }
+    .livesearch{
+        flex-direction: column;
+    }
+    .container .livesearch input{
+        width: 100%;
+        margin-bottom: 6px;
+        padding: 4px;
+    }
+    .container .livesearch button{
+        font-size: 11px;
+        padding: 5px 0px
+    }
 }
