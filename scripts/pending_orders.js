@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 data.orders.forEach(order => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
+                            <td><input type="checkbox" name="order-select" value="${order.order_id}"></td>
                             <td>${order.order_id}</td>
                             <td>${order.order_date}</td>
                             <td>${order.total_amount}</td>

@@ -1,0 +1,302 @@
+/* General Styles */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+/* Container Styling */
+.dashboard-container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+/* Header */
+h1.header-text {
+  text-align: center;
+  color: #333;
+  padding-bottom: 10px;
+}
+
+/* Filter Section */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  padding: 10px;
+}
+
+.filters label {
+  font-weight: bold;
+  padding-top: 5px;
+}
+
+.filters input, 
+.filters select, 
+.filters button {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.filters button {
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  border: none;
+}
+
+.filters button:hover {
+  background-color: #0056b3;
+}
+/* Container Styling */
+/* Container Styling */
+.statementContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+/* Format Selection */
+.download-format {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px; /* Spacing between options */
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Radio Buttons */
+.download-format input[type="radio"] {
+  display: none;
+}
+
+.download-format label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 15px;
+  border: 2px solid #007bff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  min-width: 80px;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+  color: #007bff;
+}
+
+.download-format input[type="radio"]:checked + label {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* Download Button */
+#download-statement {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 10px 15px;
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  width: 100%;
+  max-width: fit-content;
+}
+
+#download-statement:hover {
+  background-color: #0056b3;
+}
+/* Responsive Filter Layout */
+@media (max-width: 768px) {
+  .filters {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .filters label {
+      width: 100%;
+      text-align: center;
+  }
+
+  .filters input, 
+  .filters select, 
+  .filters button {
+      width: 90%;
+      max-width: 400px;
+  }
+}
+
+/* Transaction Table */
+.transaction-table {
+  overflow-x: auto;
+}
+
+/* Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #333;
+  color: #fff;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Responsive Table */
+@media (max-width: 768px) {
+  table {
+      font-size: 12px;
+  }
+
+  th, td {
+      padding: 8px;
+  }
+}
+
+@media (max-width: 600px){
+  h1.header-text{
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  table {
+      font-size: 10px;
+  }
+
+  th, td {
+      padding: 6px;
+  }
+  h1.header-text{
+    font-size: 11px;
+  }
+  .filters {
+    gap: 3px;
+    justify-content: center;
+    padding: 5px;
+  }
+  
+  .filters label {
+    font-size: 10px;
+    padding-top: 2px;
+  }
+  
+  .filters input, 
+  .filters select, 
+  .filters button {
+    padding: 3px;
+    font-size: 10px;
+  }
+
+  .statementContainer {
+    gap: 5px;
+    padding: 5px;
+    border-radius: 4px;
+    max-width: 300px;
+    margin: 7px auto;
+  }
+  
+  /* Format Selection */
+  .download-format {
+    gap: 5px; /* Spacing between options */
+    font-size: 10px;
+    font-weight: 300;
+  }
+  .download-format label {
+    padding: 2px 4px;
+    font-size: 10px;
+    min-width: 30px;
+  }
+  /* Download Button */
+  #download-statement {
+    
+    padding: 4px 8px;
+    font-size: 10px;
+    font-weight: 300;
+    border-radius: 3px;
+    max-width: 100px;
+  }
+  
+}
+
+/* Table Scroll on Small Devices */
+@media (max-width: 600px) {
+  .transaction-table {
+      overflow-x: auto;
+      display: block;
+      width: 100%;
+  }
+  
+  table {
+      width: 100%;
+      min-width: 600px;
+  }
+}
+
+/* Pagination Styling */
+.pagination {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+
+.pagination-btn {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.pagination-btn.active {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+}
+
+/* Responsive Pagination */
+@media (max-width: 600px) {
+  .pagination-btn {
+      padding: 8px;
+      font-size: 12px;
+  }
+}
