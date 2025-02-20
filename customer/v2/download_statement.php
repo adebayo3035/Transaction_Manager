@@ -252,6 +252,8 @@ if ($format === 'csv') {
     }
 
     // Output the PDF as inline (view in browser) or as download
+    http_response_code(200);
+    (json_encode(["message" => "Your Account Statement has been successfully prepared'."]));
     $pdf->Output("account_statement.pdf", "I");  // Use "I" for inline view, "D" for download
     exit;
 } else {
