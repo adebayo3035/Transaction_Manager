@@ -4,20 +4,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const orderSummaryTable = document.getElementById('orderSummaryTable').querySelector('tbody');
     let orderItems = [];
 
-    function updateTotalAmount(orderItems) {
-        const totalAmountElement = document.getElementById('totalAmount');
-        const totalAmountInput = document.getElementById('total_amount_input');
-        let totalAmount = orderItems.reduce((sum, item) => sum + item.total_price, 0);
-        totalAmountElement.textContent = `N ${totalAmount.toFixed(2)}`;
-        totalAmountInput.value = totalAmount.toFixed(2);
-    }
-
     // Fetch available food items from the backend API
     fetch('../v2/get_food.php')
         .then(response => response.json())
         .then(data => {
             const foodSelect = document.getElementById('food-name');
-
+            
             data.forEach(item => {
                 let option = document.createElement('option');
                 option.value = item.food_id;
@@ -86,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     orderItem.quantity = newQuantity;
                     orderItem.total_price = newTotalPrice;
 
-                    updateTotalAmount(orderItems);
+                    updateTotalAmount();
                 }
             });
 
@@ -96,25 +88,21 @@ document.addEventListener('DOMContentLoaded', function () {
                     orderItems.splice(index, 1);
                 }
                 orderSummaryTable.removeChild(row);
-                updateTotalAmount(orderItems);
+                updateTotalAmount();
             });
 
-            updateTotalAmount(orderItems);
+            updateTotalAmount();
         } else {
             alert('Please select a food item and enter a valid quantity.');
         }
     });
 
-    submitOrderButton.addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent default form submission behavior
-    
+    submitOrderButton.addEventListener('click', function () {
         // Check if the cart (order items) is empty before proceeding
         if (orderItems.length === 0) {
             alert('Your cart is empty. Please add items to your cart before proceeding to checkout.');
             return; // Stop further execution
         }
-        console.log("Submitting order:", orderItems);
-    
         // Validate quantities before sending the request
         fetch('../v2/validate_quantities.php', {
             method: 'POST',
@@ -123,55 +111,29 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             body: JSON.stringify({ order_items: orderItems })
         })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
                 if (!data.success) {
                     alert('Failed to place order: ' + data.message);
                     return;
                 }
-    
-                // Calculate totals
+
+
+                // Save the order details in sessionStorage
+                sessionStorage.setItem('order_items', JSON.stringify(orderItems));
+
+                // Store total amount
                 const totalAmount = orderItems.reduce((sum, item) => sum + item.total_price, 0);
-                const serviceFee = 0.06 * totalAmount; // 6% service fee
-                const deliveryFee = 0.10 * totalAmount; // 10% delivery fee
-    
-                // Send order data to the server to store in session
-                fetch('../v2/save_order_session.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        order_items: orderItems,
-                        total_order: totalAmount.toFixed(2),
-                        service_fee: serviceFee.toFixed(2),
-                        delivery_fee: deliveryFee.toFixed(2)
-                    })
-                })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        if (data.success) {
-                            console.log("Order has been saved to temporary DB");
-                            // Redirect to checkout page
-                            window.location.href = '../v1/checkout.php';
-                        } else {
-                            alert('Failed to save order data: ' + data.message);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert('An error occurred. Please try again.');
-                    });
+                sessionStorage.setItem('total_amount', totalAmount.toFixed(2));
+
+                // adding service and delivery fees 
+                let serviceFee = 0.06 * totalAmount; // 6% service fee
+                let deliveryFee = 0.10 * totalAmount; // 10% delivery fee
+                sessionStorage.setItem('service_fee', serviceFee.toFixed(2));
+                sessionStorage.setItem('delivery_fee', deliveryFee.toFixed(2));
+
+                // Redirect to checkout page
+                window.location.href = '../v1/checkout.php';
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -179,5 +141,11 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     });
 
-
+    function updateTotalAmount() {
+        const totalAmountElement = document.getElementById('totalAmount');
+        const totalAmountInput = document.getElementById('total_amount_input');
+        let totalAmount = orderItems.reduce((sum, item) => sum + item.total_price, 0);
+        totalAmountElement.textContent = `N ${totalAmount.toFixed(2)}`;
+        totalAmountInput.value = totalAmount.toFixed(2);
+    }
 });

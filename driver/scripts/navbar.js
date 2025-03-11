@@ -1,5 +1,5 @@
 // Global variables
-const inactivityTimeout = 60 * 1000; // 1 minute for testing; adjust as needed
+const inactivityTimeout = 60 * 100000; // 1 minute for testing; adjust as needed
 let inactivityTimers = {};
 
 // Helper function to set error message
@@ -56,9 +56,26 @@ function getSessionData() {
             window.location.href = '../v1/index.php'; // Redirect on error
         });
 }
+function updateDateTime() {
+    const now = new Date();
+    const formattedDateTime = now.toLocaleString('en-GB', { 
+        year: 'numeric', 
+        month: '2-digit', 
+        day: '2-digit', 
+        hour: '2-digit', 
+        minute: '2-digit', 
+        second: '2-digit',
+        hour12: false // 24-hour format
+    }).replace(',', ''); // Removes unwanted comma
 
+    document.getElementById('dateTimeLabel').textContent = formattedDateTime;
+}
 // Load session data and driver info on page load
 window.onload = function() {
     getSessionData();
     loadDriverInfo();
+    // Update the date and time every second
+setInterval(updateDateTime, 1000);
+// Call the function immediately to avoid waiting 1 second
+updateDateTime();
 };

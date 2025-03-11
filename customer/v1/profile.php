@@ -21,6 +21,7 @@
             <h1 id="customer-name">My Name</h1>
         </div>
         <div class="profile-details">
+            <div class="name-details">
             <div class="detail">
                 <label>First Name:</label>
                 <p id="first-name">First Name</p>
@@ -29,6 +30,9 @@
                 <label>Last Name:</label>
                 <p id="last-name">Last Name</p>
             </div>
+            </div>
+            
+            <div class="contact-details">
             <div class="detail">
                 <label>Email:</label>
                 <p>
@@ -55,6 +59,8 @@
                     <span class="toggle-indicator">OFF</span>
                 </p>
             </div>
+            </div>
+            
         </div>
     </div>
 

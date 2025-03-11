@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.success) {
                     updateTable(data.revenueTypes);
                 } else {
-                    console.error('Failed to fetch Group Records:', data.message);
+                    console.error('Failed to fetch Revenue Types Records:', data.message);
                 }
             })
             .catch(error => console.error('Error fetching data:', error));
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
          // Attach event listeners to the delete icon buttons
          document.querySelectorAll('.delete-icon').forEach(span => {
-            span.style.display = "none";
+            // span.style.display = "none";
             span.addEventListener('click', (event) => {
                 const revenueId = event.target.getAttribute('data-revenue-id');
                 deleteRevenueType(revenueId);
@@ -128,27 +128,29 @@ document.addEventListener('DOMContentLoaded', () => {
             revenue_name: document.getElementById('revenue_name').value,
             revenue_description: document.getElementById('revenue_description').value
         };
-
-        fetch('backend/update_revenue_type.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(revenueData)
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Revenue Type Details has been updated successfully.');
-                    document.getElementById('orderModal').style.display = 'none';
-                   location.reload();
-                } else {
-                    alert('Failed to update Revenue Type Details: ' + data.message);
-                }
+        if (confirm('Are you sure you want to Update this Revenue Type?')){
+            fetch('backend/update_revenue_type.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(revenueData)
             })
-            .catch(error => {
-                console.error('Error updating Revenue Details:', error);
-            });
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Revenue Type Details has been updated successfully.');
+                        document.getElementById('orderModal').style.display = 'none';
+                       location.reload();
+                    } else {
+                        alert('Failed to update Revenue Type Details: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating Revenue Details:', error);
+                });
+        }
+        
     }
 
     function deleteRevenueType(revenueId) {

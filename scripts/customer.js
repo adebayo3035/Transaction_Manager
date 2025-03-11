@@ -19,10 +19,15 @@ document.addEventListener('DOMContentLoaded', () => {
         })
             .then(response => response.json())
             .then(data => {
-                if (data.success) {
+                if (data.success && data.customers.length > 0) {
                     updateTable(data.customers);
                     updatePagination(data.total, data.page, data.limit);
                 } else {
+                    const ordersTableBody = document.querySelector('#ordersTable tbody');
+                    ordersTableBody.innerHTML = '';
+                    const noOrderRow = document.createElement('tr');
+                    noOrderRow.innerHTML = `<td colspan="6" style="text-align:center;">No Customer Record Found</td>`;
+                    ordersTableBody.appendChild(noOrderRow);
                     console.error('Failed to fetch Customers:', data.message);
                 }
             })

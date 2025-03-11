@@ -6,8 +6,13 @@
         .transactionsTable th,
         .transactionsTable td {
             padding: 10px;
-            text-align: left;
             border-bottom: 1px solid #ddd;
+        }
+        .transactionsTable th{
+            text-align: center;
+        }
+        .transactionsTable td{
+            text-align: left;
         }
 
         .modal .details-form {

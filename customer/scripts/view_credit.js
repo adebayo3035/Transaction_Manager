@@ -22,10 +22,15 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.json())
             .then(data => {
                 // console.log(data);  // Check the returned data
-                if (data.success) {
+                if (data.success && data.credits.length > 0) {
                     updateTable(data.credits);
                     updatePagination(data.total, data.page, data.limit);
                 } else {
+                    const ordersTableBody = document.querySelector('#ordersTable tbody');
+                    ordersTableBody.innerHTML = '';
+                    const noOrderRow = document.createElement('tr');
+                    noOrderRow.innerHTML = `<td colspan="7" style="text-align:center;">No Credit History at the moment</td>`;
+                    ordersTableBody.appendChild(noOrderRow);
                     console.error('Failed to fetch orders:', data.message);
                 }
             })

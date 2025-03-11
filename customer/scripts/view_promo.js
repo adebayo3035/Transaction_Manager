@@ -10,11 +10,16 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const response = await fetch(`../v2/fetch_promo_summary.php?page=${page}&limit=${limit}`);
             const data = await response.json();
-            if (data.success) {
+            if (data.success && data.promos.length > 0) {
                 updateTable(data.promos);
                 updatePagination(data.total, data.page, data.limit);
             } else {
-                console.error('Failed to fetch Promos:', data.message);
+                const ordersTableBody = document.querySelector('#ordersTable tbody');
+                ordersTableBody.innerHTML = '';
+                const noOrderRow = document.createElement('tr');
+                noOrderRow.innerHTML = `<td colspan="7" style="text-align:center;">No Promo at the moment</td>`;
+                ordersTableBody.appendChild(noOrderRow);
+                // console.error('Failed to fetch Promos:', data.message);
             }
         } catch (error) {
             console.error('Error fetching data:', error);

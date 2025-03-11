@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             // Assuming the structure has `pending_orders` inside the response
             const pending_orders = data.pending_orders;
-
+            //Populate select input to select order for Update
             if (Array.isArray(pending_orders)) {
                 const orderSelect = document.getElementById('order-id');
 
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     let option = document.createElement('option');
                     option.value = item.order_id;
                     option.setAttribute('data-status', item.delivery_status);
-                    option.text = `${item.order_id} ${item.order_date} ${item.delivery_status}${item.customer_id}`;
+                    option.text = `Order: ${item.order_id} - ${item.order_date} - ${item.delivery_status} - ${item.customer_id}`;
                     orderSelect.appendChild(option);
                 });
             } else {
@@ -40,11 +40,16 @@ document.addEventListener('DOMContentLoaded', () => {
         fetch(`../v2/fetch_pending_order.php?page=${page}&limit=${limit}`)
             .then(response => response.json())
             .then(data => {
-                if (data.success) {
+                if (data.success && data.orders.length > 0) {
                     updateTable(data.orders);
                     updatePagination(data.total, data.page, data.limit);
                 } else {
-                    console.error('Failed to fetch orders:', data.message);
+                    const ordersTableBody = document.querySelector('#orderSummaryTable tbody');
+                    ordersTableBody.innerHTML = '';
+                    const noOrderRow = document.createElement('tr');
+                    noOrderRow.innerHTML = `<td colspan="7" style="text-align:center;">No Pending Orders at the moment</td>`;
+                    ordersTableBody.appendChild(noOrderRow);
+                    console.error('Failed to fetch orders here and there:', data.message);
                 }
             })
             .catch(error => console.error('Error fetching data:', error));

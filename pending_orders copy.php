@@ -25,10 +25,6 @@ include('navbar.php');
         </div>
         <!-- <h1>View Pending Orders</h1> -->
     </div>
-    <div class="select">
-        <label for ="select-all"> Select All</label>
-        <input type="checkbox" name="order-selectAll" id = "select-all">
-    </div>
     <table id="customer-table">
         <thead>
             <tr>
@@ -45,10 +41,6 @@ include('navbar.php');
             <!-- Orders will be dynamically inserted here -->
         </tbody>
     </table>
-    <div id="modalButtons">
-                <button id="bulk-approve-btn" class = "btn btn-approve">Approve Selected</button>
-                <button id="bulk-decline-btn" class = "btn btn-decline">Decline Selected</button>
-        </div>
 
     <!-- The Modal -->
     <div id="orderModal" class="modal">

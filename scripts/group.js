@@ -66,9 +66,14 @@ addNewGroup(addGroupForm);
         })
             .then(response => response.json())
             .then(data => {
-                if (data.success) {
+                if (data.success && data.groups.length > 0) {
                     updateTable(data.groups);
                 } else {
+                    const ordersTableBody = document.querySelector('#ordersTable tbody');
+                    ordersTableBody.innerHTML = '';
+                    const noOrderRow = document.createElement('tr');
+                    noOrderRow.innerHTML = `<td colspan="4" style="text-align:center;">No Group Records found at the moment</td>`;
+                    ordersTableBody.appendChild(noOrderRow);
                     console.error('Failed to fetch Group Records:', data.message);
                 }
             })

@@ -93,7 +93,8 @@ if (!$stmt) {
 }
 
 // Bind parameters (string for dates, integer for customer ID)
-$stmt->bind_param("ssi", $startDate, $endDate, $customerId);
+$end_date = date('Y-m-d 23:59:59', strtotime($endDate));
+$stmt->bind_param("ssi", $startDate, $end_date, $customerId);
 
 // Execute query
 $stmt->execute();
@@ -106,20 +107,25 @@ $customer = $result->fetch_assoc();
 
 
 // Fetch transactions
+// Fetch transactions
 $query = "SELECT * 
           FROM customer_transactions 
           WHERE date_created BETWEEN ? AND ? 
           ORDER BY date_created ASC";
 $stmt = $conn->prepare($query);
-$stmt->bind_param("ss", $startDate, $endDate);
+$stmt->bind_param("ss", $startDate, $end_date);
 $stmt->execute();
 $result = $stmt->get_result();
 
 $transactions = [];
 while ($row = $result->fetch_assoc()) {
+    $reference = $row['transaction_ref'];
+    // Truncate the reference and add "..." if it exceeds 10 characters
+    $truncatedReference = (strlen($reference) > 14) ? substr($reference, 0, 10) . "..." : $reference;
+
     $transactions[] = [
         "date" => date("d/m/Y", strtotime($row['date_created'])), // Format the date
-        "reference" => $row['transaction_ref'],
+        "reference" => $truncatedReference, // Truncated reference with "..." if applicable
         "method" => $row['payment_method'],
         "description" => $row['description'],
         "debit" => ($row['transaction_type'] == 'debit') ? $row['amount'] : "",
@@ -149,7 +155,7 @@ if ($format === 'csv') {
                 $transaction['method'],
                 $transaction['description'],
                ($transaction['debit']), // Format numbers
-                ($transaction['credit'])
+                ($transaction['credit']),
             ]);
         }
     
@@ -224,30 +230,33 @@ if ($format === 'csv') {
     $pdf->SetFont('Helvetica', '', 10);
     $pdf->Cell(50, 8, $customer['credit_count'], 1, 1, 'R');
 
+
     $pdf->Ln(10);
 
 
     // Add the transaction table here as you already have
 
 
-    $pdf->SetX(15); // Ensure it starts from the left margin
-    $pdf->SetFont('Helvetica', 'B', 10);
-    $pdf->Cell(30, 8, "Date", 1);
-    $pdf->Cell(70, 8, "Reference", 1);
-    $pdf->Cell(40, 8, "Method", 1);
-    $pdf->Cell(20, 8, "Debit (₦)", 1);
-    $pdf->Cell(20, 8, "Credit (₦)", 1);
+    $pdf->SetX(7); // Ensure it starts from the left margin
+    $pdf->SetFont('Helvetica', 'B', 9);
+    $pdf->Cell(20, 8, "Date", 1);
+    $pdf->Cell(24, 8, "Reference", 1);
+    $pdf->Cell(30, 8, "Method", 1);
+    $pdf->Cell(17, 8, "Debit (₦)", 1);
+    $pdf->Cell(17, 8, "Credit (₦)", 1);
+    $pdf->Cell(85, 8, "Description", 1);
     $pdf->Ln(); // Move to the next row
 
     // Table Data
-    $pdf->SetFont('Helvetica', '', 10);
+    $pdf->SetFont('Helvetica', '', 9);
     foreach ($transactions as $transaction) {
-        $pdf->SetX(15); // Ensures the row aligns with the left margin
-        $pdf->Cell(30, 8, $transaction['date'], 1);
-        $pdf->Cell(70, 8, $transaction['reference'], 1);
-        $pdf->Cell(40, 8, $transaction['method'], 1);
-        $pdf->Cell(20, 8, $transaction['debit'], 1);
-        $pdf->Cell(20, 8, $transaction['credit'], 1);
+        $pdf->SetX(7); // Ensures the row aligns with the left margin
+        $pdf->Cell(20, 8, $transaction['date'], 1);
+        $pdf->Cell(24, 8, $transaction['reference'], 1);
+        $pdf->Cell(30, 8, $transaction['method'], 1);
+        $pdf->Cell(17, 8, $transaction['debit'], 1);
+        $pdf->Cell(17, 8, $transaction['credit'], 1);
+        $pdf->Cell(85, 8, $transaction['description'], 1);
         $pdf->Ln();
     }
 

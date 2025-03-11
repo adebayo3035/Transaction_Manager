@@ -24,8 +24,6 @@ window.onclick = function (event) {
     }
 };
 
-
-
 document.addEventListener("DOMContentLoaded", () => {
     const resetQuestionAnswerBtn = document.getElementById("reset-link");
     const restrictAccountBtn = document.getElementById('block-account');
@@ -88,31 +86,31 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .catch(error => console.error('Error fetching data:', error));
     }
-    
+
     // Helper function to add the staff option to the select dropdown
     function addStaffOption(selectOption, staff) {
         const option = document.createElement('option');
         option.value = staff.unique_id;
-    
+
         let statusText = '';
         if (staff.restriction_id === 1 && staff.block_id === 1) {
             statusText = 'Restricted and Blocked';
-        } 
+        }
         else if (staff.block_id === 1 && staff.restriction_id === 0) {
             statusText = 'Blocked no restriction';
-        } 
+        }
         else if (staff.block_id === 0 && staff.restriction_id === 1) {
             statusText = 'Restricted no block';
         } else {
             statusText = 'No Restrictions or Block';
         }
-    
+
         option.textContent = `${staff.firstname} ${staff.lastname} - ${statusText}`;
         selectOption.appendChild(option);
     }
-    
+
     selectStaff = document.getElementById('staffName');
-    
+
     fetchStaffs(selectStaff, 'block');
 
     const restrictionForm = document.getElementById("restrictionForm");
@@ -127,7 +125,6 @@ document.addEventListener("DOMContentLoaded", () => {
         // Get values from the form
         staffID = document.getElementById("staffName").value;
         restrictionType = document.getElementById("restrictionType").value;
-
         // Show confirmation modal
         confirmationModal.style.display = "flex";
     };
@@ -164,42 +161,44 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // Reset Secret Question and Answer
-      // Reset Password Form Submission
-      const resetQuestionAnswerForm = document.getElementById("resetQuestionAnswerForm");
+    // Reset Password Form Submission
+    const resetQuestionAnswerForm = document.getElementById("resetQuestionAnswerForm");
 
-      resetQuestionAnswerForm.onsubmit = async (e) => {
-          e.preventDefault();
-  
-          const resetEmail = document.getElementById("resetEmail").value,
-          resetPassword= document.getElementById("resetPassword").value,
-          secretQuestion = document.getElementById("secretQuestion").value,
-              resetSecretAnswer = document.getElementById("resetSecretAnswer").value,
-              confirmAnswer = document.getElementById("confirmAnswer").value;
-  
-          try {
-              const response = await fetch('backend/secret_answer.php', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({ email: resetEmail, password: resetPassword, secret_question: secretQuestion, secret_answer: resetSecretAnswer, confirm_answer: confirmAnswer })
-              });
-  
-              const data = await response.json();
-              if (data.success) {
-                  alert("Secret Question and Answer has been successful updated!");
-                  toggleModal("resetQuestionAnswerModal", "none");
-              } else {
-                  alert(`Error resetting Secret Question and Answer: ${data.message}`);
-              }
-          } catch (error) {
-              console.error('Error:', error);
-              alert("An error occurred. Please try again.");
-          }
-      };
+    resetQuestionAnswerForm.onsubmit = async (e) => {
+        e.preventDefault();
+        if (confirm('Are you sure you want to Update Secret Question and Answer?')) {
+            const resetEmail = document.getElementById("resetEmail").value,
+                resetPassword = document.getElementById("resetPassword").value,
+                secretQuestion = document.getElementById("secretQuestion").value,
+                resetSecretAnswer = document.getElementById("resetSecretAnswer").value,
+                confirmAnswer = document.getElementById("confirmAnswer").value;
+
+            try {
+                const response = await fetch('backend/secret_answer.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: resetEmail, password: resetPassword, secret_question: secretQuestion, secret_answer: resetSecretAnswer, confirm_answer: confirmAnswer })
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    alert("Secret Question and Answer has been successful updated!");
+                    toggleModal("resetQuestionAnswerModal", "none");
+                } else {
+                    alert(`Error resetting Secret Question and Answer: ${data.message}`);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert("An error occurred. Please try again.");
+            }
+        }
+
+    };
 
 
     //   Unblock or Remove Restriction
     adminID = document.getElementById('staff');
-    
+
     fetchStaffs(adminID, 'unblock');
 
     const unblockForm = document.getElementById("removeRestrictionForm");
@@ -270,12 +269,11 @@ document.addEventListener("DOMContentLoaded", () => {
     confirmButton3.onclick = async () => {
         // Proceed with the request after confirmation
         confirmationModal3.style.display = "none";  // Close the modal
-
         try {
             const response = await fetch('backend/unlock_account.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userID: userID, accountType: accountType})
+                body: JSON.stringify({ userID: userID, accountType: accountType })
             });
 
             const data = await response.json();

@@ -137,7 +137,7 @@ tr:nth-child(even) {
     color: #fff;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 610px) {
     .container h1{
         font-size: 18px;
     }
@@ -176,16 +176,6 @@ tr:nth-child(even) {
         border: 1px solid #888;
         width: 95%;
     }
-    .ordersTable th,
-        .ordersTable td {
-            padding: 4px;
-            border-bottom: 1px solid #ddd;
-        }
-        .ordersTable th{
-            text-align: center;
-        }
-}
-@media (max-width: 600px){
     .ordersTable{
         overflow-x: auto;
     }
@@ -201,4 +191,15 @@ tr:nth-child(even) {
         font-size: 11px;
         padding: 5px 0px
     }
+    .ordersTable th,
+        .ordersTable td {
+            padding: 4px;
+            border-bottom: 1px solid #ddd;
+        }
+        .ordersTable th{
+            text-align: center;
+        }
+}
+@media (max-width: 600px){
+   
 }

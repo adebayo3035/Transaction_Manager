@@ -6,14 +6,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $input = json_decode(file_get_contents('php://input'), true);
     
     if (!isset($input['order_id'])) {
-        echo json_encode(["success" => false, "message" => "Order ID is missing."]);
+        logActivity("Order ID is missing in the request.");
+        echo json_encode(["success" => false, "message" => "Order ID is missing in the request Body."]);
         exit();
     }
 
     $orderId = $input['order_id'];
     $driverId = $_SESSION['driver_id'];
+    checkDriverSession($driverId);
+    logActivity("Session validated successfully for Driver ID: $driverId.");
 
-    // $stmt = $conn->prepare("SELECT * FROM order_details WHERE order_id = ?");
+    logActivity("About to retrieve Order Details for order ID: $orderId for driver ID: $driverId.");
     $query = "
     SELECT 
         order_details.food_id, 
@@ -37,18 +40,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     WHERE order_details.order_id = ? 
     AND orders.driver_id = ?";
 
- $stmt = $conn->prepare($query);
-    $stmt->bind_param("ii", $orderId , $driverId);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $stmt = $conn->prepare($query);
+    if ($stmt === false) {
+        logActivity("Failed to prepare the SQL statement when fetching Order Details for OrderID. $orderId and Driver ID $driverId ");
+        echo json_encode(["success" => false, "message" => "Database error."]);
+        exit();
+    }
 
+    $stmt->bind_param("ii", $orderId, $driverId);
+    if (!$stmt->execute()) {
+        logActivity("Failed to execute the SQL statement.");
+        echo json_encode(["success" => false, "message" => "Database error."]);
+        exit();
+    }
+
+    $result = $stmt->get_result();
     $orderDetails = [];
     while ($row = $result->fetch_assoc()) {
         $orderDetails[] = $row;
     }
     $stmt->close();
 
+    logActivity("Successfully retrieved order details for order ID: $orderId.");
+
     echo json_encode(["success" => true, "order_details" => $orderDetails]);
 } else {
+    logActivity("Invalid request method received.");
     echo json_encode(["success" => false, "message" => "Invalid request method."]);
 }

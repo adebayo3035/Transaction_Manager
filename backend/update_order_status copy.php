@@ -1,137 +1,61 @@
 <?php
 header('Content-Type: application/json');
+// Enable error reporting
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
 
 // Include database connection file
 include('config.php');
 include('restriction_checker.php');
 $approvalID = $_SESSION['unique_id'];
 
-// Retrieve JSON input
-$data = json_decode(file_get_contents("php://input"), true);
+if (isset($data['order_id']) && isset($data['status'])) {
+    $order_id = $data['order_id'];
+    $status = $data['status'];
 
-// Handle both single and bulk updates
-if (isset($data['orders']) && is_array($data['orders'])) {
-    $orders = $data['orders']; // Bulk update
-} elseif (isset($data['order_id'], $data['status'])) {
-    $orders = [[ 'order_id' => $data['order_id'], 'status' => $data['status'] ]]; // Convert single order to array
-} else {
-    echo json_encode(['success' => false, 'message' => 'Invalid request data.']);
-    exit;
-}
-
-// Validate order statuses
-$valid_statuses = ['Approved', 'Declined'];
-
-if (isset($data['orders']) && is_array($data['orders'])) {
-    // Bulk order validation
-    foreach ($data['orders'] as $order) {
-        if (!isset($order['order_id'], $order['status']) || !in_array($order['status'], $valid_statuses)) {
-            echo json_encode(['success' => false, 'message' => 'Invalid order data or status value.']);
-            exit;
-        }
-    }
-} else if (isset($data['order_id'], $data['status'])) {
-    // Single order validation
-    if (!in_array($data['status'], $valid_statuses)) {
+    // Validate the status value
+    $valid_statuses = ['Approved', 'Declined'];
+    if (!in_array($status, $valid_statuses)) {
         echo json_encode(['success' => false, 'message' => 'Invalid status value.']);
         exit;
     }
-} else {
-    echo json_encode(['success' => false, 'message' => 'Invalid request data.']);
-    exit;
-}
-
-// Function to generate transaction reference
-function generateTransactionReference() {
-    return strtoupper(uniqid('TRX', true) . mt_rand(1000, 9999));
-}
-
-// Check available drivers and food stock only for Approved orders
-$approvedOrders = array_filter($orders, function($order) {
-    return $order['status'] === 'Approved';
-});
-
-if (!empty($approvedOrders)) {
-    // Check available drivers
-    $driverCountQuery = "SELECT COUNT(*) as available_drivers FROM driver WHERE status = 'Available' AND restriction = 0";
-    $driverCountResult = $conn->query($driverCountQuery);
-    $availableDrivers = $driverCountResult->fetch_assoc()['available_drivers'];
-
-    // Check required drivers (same as number of approved orders)
-    $requiredDrivers = count($approvedOrders);
-
-    // Check total available food stock
-    $foodStockQuery = "SELECT food_id, available_quantity FROM food";
-    $foodStockResult = $conn->query($foodStockQuery);
-    $availableFoodStock = [];
-    while ($row = $foodStockResult->fetch_assoc()) {
-        $availableFoodStock[$row['food_id']] = $row['available_quantity'];
+    function generateTransactionReference()
+    {
+        // Add a prefix for identification
+        $prefix = 'TRX';
+        // Generate a unique ID based on the current time with higher entropy (more randomness)
+        $uniqueId = uniqid($prefix, true);
+        // Generate a random number (for extra randomness)
+        $randomNumber = mt_rand(1000, 9999);
+        // Create the transaction reference
+        $transactionRef = strtoupper($uniqueId . $randomNumber);
+        // Optionally, remove any dots or special characters in the reference
+        $transactionRef = str_replace('.', '', $transactionRef);
+        return $transactionRef;
     }
 
-    // Calculate total food required for approved orders
-    $requiredFoodStock = [];
-    foreach ($approvedOrders as $order) {
-        $stmt = $conn->prepare("SELECT food_id, quantity FROM order_details WHERE order_id = ?");
-        $stmt->bind_param("i", $order['order_id']);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        while ($row = $result->fetch_assoc()) {
-            if (!isset($requiredFoodStock[$row['food_id']])) {
-                $requiredFoodStock[$row['food_id']] = 0;
-            }
-            $requiredFoodStock[$row['food_id']] += $row['quantity'];
-        }
-        $stmt->close();
-    }
 
-    // Validate resources
-    $foodShortage = false;
-    foreach ($requiredFoodStock as $foodId => $neededQuantity) {
-        if (!isset($availableFoodStock[$foodId]) || $availableFoodStock[$foodId] < $neededQuantity) {
-            $foodShortage = true;
-            break;
-        }
-    }
+    // Start a transaction
+    $conn->begin_transaction();
 
-    if ($availableDrivers < $requiredDrivers) {
-        echo json_encode(['success' => false, 'message' => 'Insufficient available drivers to process all approved orders.']);
-        exit;
-    }
-
-    if ($foodShortage) {
-        echo json_encode(['success' => false, 'message' => 'Insufficient food stock to process all approved orders.']);
-        exit;
-    }
-}
-// If checks pass, proceed with transaction
-// Begin database transaction
-$conn->begin_transaction();
-
-try {
-    foreach ($orders as $order) {
-        $order_id = $order['order_id'];
-        $status = $order['status'];
-
+    try {
         if ($status === 'Approved') {
-            // Find an available driver
-            $findDriverQuery = "SELECT id FROM driver WHERE status = 'Available' AND restriction = 0 ORDER BY RAND() LIMIT 1";
+            // Find an available driver who is not restricted
+            $findDriverQuery = "SELECT id FROM driver WHERE status = 'Available' and restriction = 0 ORDER BY RAND() LIMIT 1";
             $result = $conn->query($findDriverQuery);
 
             if ($result->num_rows > 0) {
                 $driver = $result->fetch_assoc();
                 $driver_id = $driver['id'];
 
-                // Assign driver to order
+                // Assign the driver to the order and update the order and driver statuses
                 $assignDriverQuery = "UPDATE orders SET driver_id = ?, delivery_status = 'Assigned', status = ?, updated_at = NOW(), approved_by = ? WHERE order_id = ?";
                 $stmt = $conn->prepare($assignDriverQuery);
                 $stmt->bind_param('isii', $driver_id, $status, $approvalID, $order_id);
                 $stmt->execute();
-                $stmt->close();
 
-                // Update driver status
                 $updateDriverStatusQuery = "UPDATE driver SET status = 'Not Available' WHERE id = ?";
                 $stmt = $conn->prepare($updateDriverStatusQuery);
                 $stmt->bind_param('i', $driver_id);
@@ -156,34 +80,46 @@ try {
                 }
 
             } else {
-                throw new Exception("No available drivers for order ID: $order_id");
+                throw new Exception('No available drivers at the moment.');
             }
-        } elseif ($status === 'Declined') {
-            // Refund process
-            $stmt = $conn->prepare("SELECT total_amount, customer_id, is_credit FROM orders WHERE order_id = ?");
+        } else if ($status === 'Declined') {
+            // Refund the customer
+            $stmt = $conn->prepare("SELECT * FROM orders WHERE order_id = ?");
             $stmt->bind_param("i", $order_id);
             $stmt->execute();
-            $stmt->bind_result($totalAmount, $customerId, $isCredit);
-            $stmt->fetch();
+
+            // Fetch the result as an associative array
+            $result = $stmt->get_result();
+            $orderData = $result->fetch_assoc();
             $stmt->close();
 
-            $transactionReference = generateTransactionReference();
+            // Assign values to variables
+            $totalAmount = $orderData['total_amount'];
+            $customerId = $orderData['customer_id'];
+            $isCredit = $orderData['is_credit'];
+            $orderDate = $orderData['order_date']; // Example of additional columns
+            $deliveryStatus = $orderData['delivery_status']; // Example of additional columns
+            $isCredit = $orderData['is_credit'];
 
-            if (!$isCredit) {
-                // Refund to wallet
+            // Use the variables as needed
+            // if order is not a credit order then update the customer's wallet and refund
+            $transactionReference = generateTransactionReference();
+            if ($isCredit == false) {
+                // Update wallet balance
                 $stmt = $conn->prepare("UPDATE wallets SET balance = balance + ? WHERE customer_id = ?");
                 $stmt->bind_param("di", $totalAmount, $customerId);
                 $stmt->execute();
                 $stmt->close();
 
-                // Insert refund transaction
-                $description = "Declined Order Refund - Order ID: $order_id";
+                // Insert refund record into customer_transactions
+
+                $description = "Declined Food Order Transaction Refund for Order ID: " . $order_id;
                 $paymentMethod = "Transaction Refund";
                 $stmt = $conn->prepare("INSERT INTO customer_transactions (transaction_ref, customer_id, amount, date_created, transaction_type, payment_method, description) VALUES (?, ?, ?, NOW(), 'credit', ?, ?)");
                 $stmt->bind_param("sidss", $transactionReference, $customerId, $totalAmount, $paymentMethod, $description);
                 $stmt->execute();
                 $stmt->close();
-            } else {
+            } else if ($isCredit == true) {
                 $description = "Declined Food Order on Credit for Order ID: " . $order_id;
                 $paymentMethod = "Not Applicable";
                 $stmt = $conn->prepare("INSERT INTO customer_transactions (transaction_ref, customer_id, amount, date_created, transaction_type, payment_method, description) VALUES (?, ?, ?, NOW(), 'Others', ?, ?)");
@@ -191,9 +127,10 @@ try {
                 $stmt->execute();
                 $stmt->close();
 
-                // Handle declined credit orders
-                $stmt = $conn->prepare("UPDATE credit_orders SET status = 'Declined', repayment_status = 'Void' WHERE order_id = ?");
-                $stmt->bind_param("i", $order_id);
+                //Update Credit Orders Status and repayment_status to Cancelled when Admin Cancels an Order
+                $updateCreditOrderStatusQuery = "UPDATE credit_orders SET status = 'Declined', repayment_status = 'Void' WHERE order_id = ?";
+                $stmt = $conn->prepare($updateCreditOrderStatusQuery);
+                $stmt->bind_param('i', $order_id);
                 $stmt->execute();
                 $stmt->close();
             }
@@ -206,7 +143,7 @@ try {
             $stmt->execute();
             $stmt->close();
 
-            // Update food stock
+            // Update food stock quantities in the food table
             $stmt = $conn->prepare("SELECT food_id, quantity FROM order_details WHERE order_id = ?");
             $stmt->bind_param("i", $order_id);
             $stmt->execute();
@@ -220,9 +157,10 @@ try {
                 $updateFoodStmt->execute();
                 $updateFoodStmt->close();
             }
+
             $stmt->close();
 
-            // Update order status to Declined
+            // Update the delivery_status to 'Cancelled'
             $updateDeliveryStatusQuery = "UPDATE orders SET delivery_status = 'Declined', updated_at = NOW(), approved_by = ? WHERE order_id = ?";
             $stmt = $conn->prepare($updateDeliveryStatusQuery);
             $stmt->bind_param("ii", $approvalID, $order_id);
@@ -230,25 +168,31 @@ try {
             $stmt->close();
         }
 
-        // Update orders and order_details status
+        // Update the status in the orders, revenue, and order_details tables
         $updateStatusQueries = [
             "UPDATE orders SET status = ?, updated_at = NOW() WHERE order_id = ?",
             "UPDATE order_details SET status = ?, updated_at = NOW() WHERE order_id = ?"
         ];
+
         foreach ($updateStatusQueries as $query) {
             $stmt = $conn->prepare($query);
             $stmt->bind_param("si", $status, $order_id);
             $stmt->execute();
             $stmt->close();
         }
-    }
 
-    // Commit transaction if all operations succeed
-    $conn->commit();
-    echo json_encode(['success' => true, 'message' => 'Order update successful.']);
-} catch (Exception $e) {
-    $conn->rollback();
-    echo json_encode(['success' => false, 'message' => 'Transaction failed: ' . $e->getMessage()]);
+        // Commit the transaction
+        $conn->commit();
+        echo json_encode(['success' => true, 'message' => 'Order status updated successfully.']);
+
+    } catch (Exception $e) {
+        // Rollback the transaction if an error occurred
+        $conn->rollback();
+        echo json_encode(['success' => false, 'message' => 'Transaction failed: ' . $e->getMessage()]);
+    }
+} else {
+    echo json_encode(['success' => false, 'message' => 'Invalid request data.']);
 }
 
 $conn->close();
+

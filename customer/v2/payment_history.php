@@ -60,6 +60,9 @@ $types = "s"; // 's' for string (customer ID)
 
 // Apply date range filter
 if (!empty($start_date) && !empty($end_date)) {
+    // Adjust the end date to include the entire day (up to 23:59:59)
+    $end_date = date('Y-m-d 23:59:59', strtotime($end_date));
+    
     $sql .= " AND date_created BETWEEN ? AND ?";
     $params[] = $start_date;
     $params[] = $end_date;

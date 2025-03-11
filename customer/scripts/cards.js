@@ -144,33 +144,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 card_pin: card_pin,
                 card_cvv: card_cvv
             };
-
-            fetch('../v2/add_cards.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: JSON.stringify(cardDetails)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        console.log('Success:', data.message);
-                        addCardmessage.textContent = data.message;
-                        alert(data.message)
-                        form.reset();
-                        window.location.href = '../v1/cards.php'
-                    } else {
-                        console.log('Error:', data.message);
-                        addCardmessage.textContent = data.message;
-                        alert(data.message)
-                    }
+            if (confirm(`Are you sure you want to Add New Card`)){
+                fetch('../v2/add_cards.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: JSON.stringify(cardDetails)
                 })
-                .catch(error => {
-                    console.error('Error:', error);
-                    addCardmessage.textContent = 'Error: ' + error.message;
-                    alert('An error occurred. Please Try Again Later')
-                });
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            console.log('Success:', data.message);
+                            addCardmessage.textContent = data.message;
+                            alert(data.message)
+                            form.reset();
+                            window.location.href = '../v1/cards.php'
+                        } else {
+                            console.log('Error:', data.message);
+                            addCardmessage.textContent = data.message;
+                            alert(data.message)
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        addCardmessage.textContent = 'Error: ' + error.message;
+                        alert('An error occurred. Please Try Again Later')
+                    });
+            } 
+            
         });
     }
     handleCardInsertion(addCardsForm)

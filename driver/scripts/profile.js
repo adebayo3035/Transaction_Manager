@@ -1,12 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
-    function maskDetails(details) {
-        return details.slice(0, 2) + ' ** ** ' + details.slice(-3);
-    }
     // Modal toggle function
     function toggleModal(modalId, display) {
         const modal = document.getElementById(modalId);
-        if (modal) modal.style.display = display;
-    }
+        if (modal) {
+            modal.style.display = display;
+        }
+    } 
     // Get elements and bind events
     const modal = document.getElementById("profileModal");
     const editButton = document.querySelector('.edit-icon');
@@ -61,19 +60,29 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(error => console.error('Error fetching customer data:', error));
 
     // FUNCTION TO HANDLE IMAGE UPDATE
-    // Profile picture update
     document.getElementById('adminForm')?.addEventListener('submit', async function (event) {
         event.preventDefault();
+    
+        // Show confirmation dialog
+        const confirmUpdate = confirm("Are you sure you want to update the profile picture?");
+        if (!confirmUpdate) {
+            alert("Profile picture update cancelled");
+            console.log("Profile picture update cancelled.");
+            return; // Stop execution if the user clicks "No"
+        }
+    
         const form = event.currentTarget;
         const formData = new FormData(form);
-
+        const messageElement = document.getElementById('message');
+    
         try {
             const response = await fetch('../v2/update_picture.php', {
                 method: 'POST',
                 body: formData
             });
+    
             const data = await response.json();
-            const messageElement = document.getElementById('message');
+    
             if (data.success) {
                 document.getElementById('uploadedPhoto').src = '../../backend/driver_photos/' + data.file;
                 messageElement.textContent = 'Profile picture updated successfully!';
@@ -86,9 +95,11 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         } catch (error) {
             console.error('Error:', error);
-            document.getElementById('message').textContent = 'An error occurred while uploading the file.';
+            messageElement.textContent = 'An error occurred while uploading the file.';
+            messageElement.style.color = 'red';
         }
     });
+    
 
     // Fetch and display driver info for update
     fetch('../v2/profile.php')
@@ -190,8 +201,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Attach event listener after the button is created
             document.getElementById('updateDriverBtn').addEventListener('click', () => {
-                updateDriver(data.id);
+                if (confirm("Are you sure you want to update the driver status?")) {
+                    updateDriver(data.id);
+                } else {
+                    alert("Your Driver update request has been cancelled.");
+                }
             });
+            
         })
         .catch(error => console.error('Error fetching customer data:', error));
 
@@ -199,17 +215,26 @@ document.addEventListener('DOMContentLoaded', function () {
     const resetQuestionAnswerForm = document.getElementById("resetQuestionAnswerForm");
     resetQuestionAnswerForm?.addEventListener('submit', async (e) => {
         e.preventDefault();
+    
         const resetEmail = document.getElementById("resetEmail")?.value;
         const resetPassword = document.getElementById("resetPassword")?.value;
         const secretQuestion = document.getElementById("secretQuestion")?.value;
         const resetSecretAnswer = document.getElementById("resetSecretAnswer")?.value;
         const confirmAnswer = document.getElementById("confirmAnswer")?.value;
-
+    
         if (!resetEmail || !resetPassword || !secretQuestion || !resetSecretAnswer || !confirmAnswer) {
             alert("All fields are required!");
             return;
         }
-
+    
+        // Show confirmation dialog
+        const confirmUpdate = confirm("Are you sure you want to reset your secret question and answer?");
+        if (!confirmUpdate) {
+            alert("Secret question and answer reset cancelled.");
+            console.log("Secret question and answer reset cancelled.");
+            return; // Stop execution if the user clicks "No"
+        }
+    
         try {
             const response = await fetch('../v2/reset_answer.php', {
                 method: 'POST',
@@ -222,6 +247,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     confirm_answer: confirmAnswer
                 })
             });
+    
             const data = await response.json();
             if (data.success) {
                 alert("Secret Question and Answer successfully updated!");
@@ -234,55 +260,59 @@ document.addEventListener('DOMContentLoaded', function () {
             alert("An error occurred. Please try again.");
         }
     });
+    // Asynchronous function to update driver details
+async function updateDriver(driverId) {
+    const driverData = {
+        id: driverId,
+        email: document.getElementById('email')?.value,
+        phone_number: document.getElementById('phoneNumber')?.value,
+        gender: document.getElementById('gender')?.value,
+        address: document.getElementById('address')?.value,
+        vehicle_type: document.getElementById('vehicleType')?.value,
+        vehicle_type_others: document.getElementById('vehicleTypeOther')?.value,
+        secret_answer: document.getElementById('secretAnswer')?.value
+    };
 
-
-
-    function updateDriver(driverId) {
-        const driverData = {
-            id: driverId,
-            email: document.getElementById('email')?.value,
-            phone_number: document.getElementById('phoneNumber')?.value,
-            gender: document.getElementById('gender')?.value,
-            address: document.getElementById('address')?.value,
-            vehicle_type: document.getElementById('vehicleType')?.value,
-            vehicle_type_others: document.getElementById('vehicleTypeOther')?.value,
-            secret_answer: document.getElementById('secretAnswer')?.value
-        };
-
-        fetch('../v2/update_driver.php', {
+    try {
+        const response = await fetch('../v2/update_driver.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(driverData)
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Your record has been successfully updated.');
-                    location.reload();
-                } else {
-                    alert('Failed to update record.');
-                }
-            })
-            .catch(error => console.error('Error updating driver data:', error));
-    }
+        });
 
-    function displayPhoto(input) {
-        var file = input.files[0];
-        var time = Math.floor(Date.now() / 1000);
-        if (file) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                var uploadedPhoto = document.getElementById('uploadedPhoto');
-                uploadedPhoto.setAttribute('src', e.target.result);
-                document.getElementById('photoContainer').style.display = 'block'; // Show the photo container
+        const data = await response.json();
 
-                // Set the new file name to a hidden input field
-                // document.getElementById('photo_name').value = time + file.name;
-            };
-            reader.readAsDataURL(file);
+        if (data.success) {
+            alert('Your record has been successfully updated.');
+            location.reload();
+        } else {
+            alert('Failed to update record.');
         }
+    } catch (error) {
+        console.error('Error updating driver data:', error);
+        alert('An error occurred while updating the driver data.');
     }
+}
 
+// Asynchronous function to display photo
+async function displayPhoto(input) {
+    var file = input.files[0];
+    if (!file) return;
+
+    var time = Math.floor(Date.now() / 1000);
+    var reader = new FileReader();
+
+    reader.onload = async function (e) {
+        var uploadedPhoto = document.getElementById('uploadedPhoto');
+        uploadedPhoto.setAttribute('src', e.target.result);
+        document.getElementById('photoContainer').style.display = 'block'; // Show the photo container
+
+        // Set the new file name to a hidden input field if needed
+        // document.getElementById('photo_name').value = time + file.name;
+    };
+
+    reader.readAsDataURL(file);
+}
     //CALL UPLOAD PHOTO FUNCTION
     let uploadBtn = document.getElementById('photo');
     uploadBtn.addEventListener('change', (event) => {

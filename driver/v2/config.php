@@ -1,4 +1,5 @@
 <?php
+  include 'activity_logger.php';
   $hostname = "localhost";
   $username = "root";
   $password = "";
@@ -22,4 +23,32 @@
     $ciphering = "AES-256-CTR";
     $options = 0;
     return openssl_decrypt($encryptedString, $ciphering, $key, $options, $iv);
+}
+
+function checkDriverSession($driverID){
+  if (!isset($driverID)) {
+    $error_message = "Driver not logged in. Driver's Session ID Cannot be found.";
+    http_response_code(401);  // Unauthorized
+    error_log($error_message);
+    logActivity($error_message);
+    echo json_encode(['error' => 'Unauthorized access']);
+    exit();
+  }
+}
+// Function to log database operations
+function logDatabaseOperation($operation, $query, $params = []) {
+  $logMessage = "Database $operation: $query";
+  if (!empty($params)) {
+      $logMessage .= " | Params: " . json_encode($params);
+  }
+  logActivity($logMessage);
+}
+
+// Function to log retrieved records
+function logRetrievedRecords($records) {
+  if (!empty($records)) {
+      logActivity("Retrieved records: " . json_encode($records));
+  } else {
+      logActivity("No records retrieved.");
+  }
 }

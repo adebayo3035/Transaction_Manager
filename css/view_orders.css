@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
+
 body {
     margin: 0;
     padding: 0;
@@ -24,7 +26,8 @@ table {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-th, td {
+th,
+td {
     padding: 10px;
     text-align: center;
     border-bottom: 1px solid #ddd;
@@ -33,7 +36,7 @@ th, td {
 th {
     background-color: #333;
     color: #fff;
-    
+
 }
 
 tr:nth-child(even) {
@@ -70,10 +73,16 @@ tr:nth-child(even) {
     font-weight: bold;
 }
 
-.close:hover, .close:focus {
+.close:hover,
+.close:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+#modalButtons {
+    display: flex;
+    justify-content: center;
 }
 
 .btn {
@@ -83,7 +92,9 @@ tr:nth-child(even) {
     cursor: pointer;
     font-size: 16px;
     border-radius: 5px;
-    transition: background-color 0.3s ease;
+    /* transition: background-color 0.3s ease; */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .btn-approve {
@@ -122,25 +133,28 @@ tr:nth-child(even) {
     background-color: #292b2c;
 }
 
-.container{
+.container {
     width: 100%;
     display: flex;
     flex-direction: column;
     padding: 10px;
 }
-.container h1{
+
+.container h1 {
     text-align: center;
     padding-top: 6px;
 }
-.container .livesearch{
+
+.container .livesearch {
     /* border: 2px solid yellow; */
     display: flex;
     width: 80%;
     margin: auto;
     justify-content: center;
-    
+
 }
-.container .livesearch input{
+
+.container .livesearch input {
     width: 50%;
     border-radius: 5px;
     padding: 10px;
@@ -150,7 +164,8 @@ tr:nth-child(even) {
     background-color: transparent;
     margin-right: 20px;
 }
-.container .livesearch button{
+
+.container .livesearch button {
     padding: 11px 20px;
     font-size: 16px;
     background-color: blue;
@@ -161,17 +176,45 @@ tr:nth-child(even) {
     outline: none;
 }
 
+.select {
+    display: flex;
+    padding: 10px;
+    justify-content: center;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    width: 50%;
+    margin: 10px auto;
+    align-self: center;
+}
+
+.select:hover, .btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.select label {
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.select input[type="checkbox"] {
+    cursor: pointer;
+}
 
 
-@media (max-width: 600px) {
-    table, th, td {
-        /* width: 100%;
-        display: flex;
-        flex-direction: column; */
+@media (max-width: 768px) {
+
+    table,
+    th,
+    td {
         font-size: 11px;
     }
 
-    th, td {
+    th,
+    td {
         padding: 10px;
         text-align: left;
     }
@@ -181,6 +224,7 @@ tr:nth-child(even) {
         float: left;
         font-weight: bold;
     }
+
     .view-details-btn {
         padding: 1px 2px;
         margin: 2px;
@@ -193,5 +237,39 @@ tr:nth-child(even) {
         color: #fff;
         font-weight: 500;
     }
-    
+
+    #customer-table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 500px) {
+
+    .container .livesearch,
+    #modalButtons {
+        flex-direction: column;
+        width: 80%;
+        margin: auto;
+        justify-content: center;
+        align-items: center;
+
+    }
+
+    .container .livesearch input {
+        margin: 10px 0px;
+        padding: 5px;
+        width: 100%;
+    }
+
+    .container .livesearch button {
+        padding: 5px 10px;
+        font-size: 12px;
+
+    }
+
+    .btn {
+        font-size: 12px;
+        padding: 5px auto;
+    }
 }

@@ -27,9 +27,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         // Check if the hashed user-provided secret answer matches the stored hashed answer
         if ($hashed_user_provided_secret_answer !== $secret_answer) {
-            echo json_encode(['success' => false, 'message' => 'Secret Answer Validation Failed.']);
+            $response['message'] = 'Secret Answer Validation Failed.';
+            logActivity("Secret answer validation failed for driver ID: $driver_id");
+            http_response_code(401); // Unauthorized
+            echo json_encode($response);
             exit;
         }
+
         $img_name = $_FILES['photo']['name'];
         $img_type = $_FILES['photo']['type'];
         $tmp_name = $_FILES['photo']['tmp_name'];
@@ -42,7 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $types = ["image/jpeg", "image/jpg", "image/png"];
             if (in_array($img_type, $types) === true) {
                 if ($_FILES["photo"]["size"] > 500000) {
-                    echo json_encode(['success' => false, 'message' => 'Image size is too large.']);
+                    $response['message'] = 'Image size is too large.';
+                    logActivity("Image size too large for driver ID: $driver_id");
+                    http_response_code(413); // Payload Too Large
+                    echo json_encode($response);
                     exit;
                 }
 
@@ -56,7 +63,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 // Check if the file already exists in the directory
                 if (file_exists($upload_file)) {
-                    echo json_encode(['success' => false, 'message' => 'This image has already been uploaded by another user.']);
+                    $response['message'] = 'This image has already been uploaded by another user.';
+                    logActivity("Duplicate image upload attempt by driver ID: $driver_id");
+                    http_response_code(409); // Conflict
+                    echo json_encode($response);
                     exit;
                 }
 
@@ -75,26 +85,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         }
                         $response['success'] = true;
                         $response['file'] = $file_name;
+                        $response['message'] = "Profile picture updated successfully for driver ID: $driver_id";
+                        logActivity("Profile picture updated successfully for driver ID: $driver_id");
                     } else {
                         $response['message'] = 'Failed to update profile picture.';
+                        logActivity("Failed to update profile picture for driver ID: $driver_id");
+                        http_response_code(500); // Internal Server Error
                     }
 
                     $stmt->close();
                 } else {
                     $response['message'] = 'Failed to move uploaded file.';
+                    logActivity("Failed to move uploaded file for driver ID: $driver_id");
+                    http_response_code(500); // Internal Server Error
                 }
             } else {
                 $response['message'] = 'Uploaded file is not a valid image.';
+                logActivity("Invalid image type uploaded by driver ID: $driver_id");
+                http_response_code(400); // Bad Request
             }
         } else {
-            $response['message'] = 'File upload error: ' . $_FILES['photo']['error'];
+            $response['message'] = 'Invalid file extension.';
+            logActivity("Invalid file extension uploaded by driver ID: $driver_id");
+            http_response_code(400); // Bad Request
         }
     } else {
-        $response['message'] = 'Invalid secret answer.';
+        $response['message'] = 'Secret answer or file not provided.';
+        logActivity("Secret answer or file not provided by driver ID: $driver_id");
+        http_response_code(400); // Bad Request
     }
 } else {
-    $response['message'] = 'Secret answer or file not provided.';
+    $response['message'] = 'Invalid request method.';
+    logActivity("Invalid request method for driver ID: $driver_id");
+    http_response_code(405); // Method Not Allowed
 }
+
 $conn->close();
 echo json_encode($response);
 exit;

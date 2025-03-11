@@ -21,6 +21,7 @@
                 <li> <a onclick="toggleModal('resetQuestionModal')">Reset Secret Question and Answer</a></li>
                 <li><a href="generate_token.php" id="fundWallet">Generate Token</a></li>
                 <li><a href="promo.php" id="fundWallet">Promos</a></li>
+                <li><a href="payment_history.php" id="fundWallet">Statement</a></li>
                 
             </ul>
 

@@ -33,54 +33,10 @@ $cardNumber = $data['card_number'] ?? null;
 $cardExpiry = $data['card_expiry'] ?? null;
 $cardCvv = $data['card_cvv'] ?? null;
 $cardPin = $data['card_pin'] ?? null;
-
-// Retrieve order data from the session
-if (!isset($_SESSION['order_items']) || !isset($_SESSION['total_amount']) || !isset($_SESSION['service_fee']) || !isset($_SESSION['delivery_fee'])) {
-    logActivity("Order data not found in session.");
-    echo json_encode(['success' => false, 'message' => 'Order data not found in session.']);
-    exit;
-}
-$orderItems = $_SESSION['order_items'] ?? [];
-$totalOrder = $_SESSION['total_order'];
-$serviceFee = $_SESSION['service_fee'];
-$deliveryFee = $_SESSION['delivery_fee'];
-
-// Validate the order data (e.g., recalculate totals)
-$calculatedTotalAmount = array_reduce($orderItems, function ($sum, $item) {
-    return $sum + ($item['price_per_unit'] * $item['quantity']);
-}, 0);
-
-$calculatedServiceFee = 0.06 * $calculatedTotalAmount;
-$calculatedDeliveryFee = 0.10 * $calculatedTotalAmount;
-
-// Format calculated values to 2 decimal places
-$calculatedTotalAmountFormatted = number_format($calculatedTotalAmount, 2, '.', '');
-$calculatedServiceFeeFormatted = number_format($calculatedServiceFee, 2, '.', '');
-$calculatedDeliveryFeeFormatted = number_format($calculatedDeliveryFee, 2, '.', '');
-
-// Compare calculated values with stored values
-// Compare calculated values with stored values
-if ($calculatedTotalAmountFormatted != $totalOrder || $calculatedServiceFeeFormatted != $serviceFee || $calculatedDeliveryFeeFormatted != $deliveryFee) {
-    // Return detailed error response with calculated and stored values
-    echo json_encode([
-        'success' => false,
-        'message' => 'Order data has been tampered with.',
-        'data' => [
-            'calculated' => [
-                'total_amount' => $calculatedTotalAmountFormatted,
-                'service_fee' => $calculatedServiceFeeFormatted,
-                'delivery_fee' => $calculatedDeliveryFeeFormatted
-            ],
-            'stored' => [
-                'total_amount' => $totalOrder,
-                'service_fee' => $serviceFee,
-                'delivery_fee' => $deliveryFee
-            ],
-            'order_items' => $orderItems // Include order items for further inspection
-        ]
-    ]);
-    exit;
-}
+$orderItems = $data['order_items'] ?? [];
+$serviceFee = $data['service_fee'] ?? 0;
+$deliveryFee = $data['delivery_fee'] ?? 0;
+$totalOrder = $data['total_order'] ?? 0;
 
 $bankName = $data['bank_name'] ?? null;
 $bankAccount = $data['bank_account'] ?? null;
@@ -110,10 +66,6 @@ if ($usingPromo) {
 
 // Initialize the response
 $response = ['success' => false, 'message' => 'Unknown error occurred'];
-
-$conn->begin_transaction();
-
-try {
 
 // Handle payment validation based on the payment method
 switch ($paymentMethod) {
@@ -168,7 +120,6 @@ switch ($paymentMethod) {
             if (!in_array($bankName, $allowedBanks)) {
                 $response['message'] = 'Unknown Bank Account';
                 logActivity("Unknown bank account selected for customer ID: " . $customerId);
-                exit;
             } else {
                 // Validate bank transfer and process the order
                 logActivity("Processing bank transfer for customer ID: " . $customerId);
@@ -178,7 +129,6 @@ switch ($paymentMethod) {
         } else {
             $response['message'] = 'Missing bank transfer details';
             logActivity("Missing bank transfer details for customer ID: " . $customerId);
-            exit;
         }
         break;
 
@@ -191,8 +141,8 @@ switch ($paymentMethod) {
             if ($validatePaypal['success']) {
                 // Process credit payment and the order
                 logActivity("Paypal Details Validation passed for customer ID: " . $customerId);
-                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit);
-                logActivity("Credit order processed successfully for customer ID: " . $customerId);
+                // $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit);
+                // logActivity("Credit order processed successfully for customer ID: " . $customerId);
                 $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit);
                 logActivity("PayPal order processed successfully for customer ID: " . $customerId);
             } else {
@@ -209,11 +159,6 @@ switch ($paymentMethod) {
         $response['message'] = 'Invalid payment method';
         logActivity("Invalid payment method for customer ID: " . $customerId);
         break;
-}
-} catch (Exception $e) {
-    $conn->rollback();
-    $response = ['success' => false, 'message' => "Error placing order: " . $e->getMessage()];
-    logActivity("Error placing order for customer ID: " . $customerId . ". Error: " . $e->getMessage());
 }
 
 // Return the final response as JSON
@@ -260,28 +205,26 @@ function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deli
 
         // Select a random admin
         logActivity("Selecting a random admin for order assignment.");
-        $idRangeQuery = "SELECT MIN(unique_id) AS min_id, MAX(unique_id) AS max_id FROM admin_tbl WHERE role = 'Admin' AND restriction_id = 0 AND block_id = 0";
-        $idRangeResult = $conn->query($idRangeQuery);
-        $idRangeRow = $idRangeResult->fetch_assoc();
-        $minId = $idRangeRow['min_id'];
-        $maxId = $idRangeRow['max_id'];
 
-        if ($minId !== null && $maxId !== null) {
-            $randomId = rand($minId, $maxId);
-            $superAdminQuery = "SELECT unique_id FROM admin_tbl WHERE unique_id >= $randomId AND role = 'Admin' AND restriction_id = 0 AND block_id = 0 LIMIT 1";
-            $superAdminResult = $conn->query($superAdminQuery);
+        // Fetch all eligible admins
+        $adminQuery = "SELECT unique_id FROM admin_tbl WHERE role = 'Admin' AND restriction_id = 0 AND block_id = 0";
+        $adminResult = $conn->query($adminQuery);
 
-            if ($superAdminResult->num_rows > 0) {
-                $superAdmin = $superAdminResult->fetch_assoc();
-                $superAdminUniqueId = $superAdmin['unique_id'];
-                logActivity("Admin assigned for order: " . $superAdminUniqueId);
-            } else {
-                logActivity("No eligible Super Admin found.");
-                throw new Exception("No eligible Super Admin found.");
+        if ($adminResult->num_rows > 0) {
+            // Store all eligible admin IDs in an array
+            $adminIds = [];
+            while ($row = $adminResult->fetch_assoc()) {
+                $adminIds[] = $row['unique_id'];
             }
+
+            // Select a random admin ID from the array
+            $randomIndex = array_rand($adminIds);
+            $superAdminUniqueId = $adminIds[$randomIndex];
+
+            logActivity("Admin assigned for order: " . $superAdminUniqueId);
         } else {
             logActivity("No eligible Super Admin found.");
-            throw new Exception("No eligible Super Admin available.");
+            throw new Exception("No eligible Super Admin found.");
         }
 
         // Insert order
@@ -343,10 +286,6 @@ function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deli
 
         // Commit transaction
         $conn->commit();
-        unset($_SESSION['order_items']);
-        unset($_SESSION['total_order']);
-        unset($_SESSION['service_fee']);
-        unset($_SESSION['delivery_fee']);
         $response = ['success' => true, 'message' => 'Order placed successfully.'];
         logActivity("Order processing completed successfully for customer ID: " . $customerId);
     } catch (Exception $e) {

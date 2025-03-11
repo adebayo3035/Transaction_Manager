@@ -16,10 +16,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('totalOrders').textContent = data.totalOrders || 0;
     document.getElementById('totalCustomers').textContent = data.totalCustomers || 0;
-    document.getElementById('totalRevenue').textContent = data.totalInflow || 0;
+    document.getElementById('totalInflow').textContent = data.totalInflow || 0;
     document.getElementById('totalOutflow').textContent = data.totalOutflow || 0;
     document.getElementById('pendingOrders').textContent = data.pendingOrders || 0;
     document.getElementById('totalDrivers').textContent = data.totalDrivers || 0;
+  
+
 
     const ordersTableBody = document.querySelector('#customer-table tbody');
     ordersTableBody.innerHTML = '';
@@ -39,14 +41,22 @@ document.addEventListener('DOMContentLoaded', () => {
           statusColor = 'green';
         }
 
+        //check approvall name is null
+        if(order.approver_lastname == null && order.approver_firstname == null){
+          order.name = 'Pending Approval'
+        }
+        
+
         row.innerHTML = `
+        
                   <td>${order.order_id}</td>
                   <td>${order.order_date || 'N/A'}</td>
                   <td>${order.total_amount || 'N/A'}</td>
                   <td style="color: ${statusColor}; padding: ${statusPadding}; font-weight: 900;">${order.status || 'Unknown'}</td>
                   <td>${order.delivery_status || 'Unknown'}</td>
                   <td>${order.admin_firstname} ${order.admin_lastname} - ${order.assigned_to}</td>
-                  <td>${order.approver_firstname} ${order.approver_lastname} - ${order.approved_by}</td>
+                  
+                  <td>${order.approver_firstname && order.approver_lastname ? `${order.approver_firstname} ${order.approver_lastname}` : 'Awaiting Approval'}</td>
                   <td>${order.driver_firstname && order.driver_lastname ? `${order.driver_firstname} ${order.driver_lastname}` : 'No Driver Assigned'}</td>
               `;
 
@@ -98,16 +108,11 @@ document.addEventListener('DOMContentLoaded', () => {
 // Function to update the dashboard with fetched data
 function updateDashboard(data) {
   document.getElementById('totalOrders').textContent = data.totalOrders;
-  document.getElementById('totalRevenue').textContent = data.totalInflow;
+  document.getElementById('totalRev').textContent = data.totalInflow;
   document.getElementById('totalCustomers').textContent = data.totalCustomers;
   document.getElementById('pendingOrders').textContent = data.pendingOrders;
   document.getElementById('totalDrivers').textContent = data.totalDrivers;
-
-  // const orderList = document.getElementById('orderList');
-  // orderList.innerHTML = data.recentOrders.map(order => `<li>${order}</li>`).join('');
-
-  // const topMenuList = document.getElementById('topMenuList');
-  // topMenuList.innerHTML = data.topMenuItems.map(item => `<li>${item}</li>`).join('');
+  // document.getElementById('totalInflow').textContent = data.totalInflow;
 }
 
 // Fetch and update data when the page loads

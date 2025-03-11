@@ -30,11 +30,11 @@
           <p id="totalOrders">Loading...</p>
         </div>
         <div class="card">
-          <h3>Total Inflow for Today</h3>
-          <p id="totalRevenue">Loading...</p>
+          <h3>Inflow for Today</h3>
+          <p id="totalInflow">Loading...</p>
         </div>
         <div class="card">
-          <h3>Total Outflow for Today</h3>
+          <h3>Outflow for Today</h3>
           <p id="totalOutflow">Loading...</p>
         </div>
         <div class="card">

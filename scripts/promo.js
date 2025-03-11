@@ -41,10 +41,15 @@ document.addEventListener('DOMContentLoaded', () => {
         })
             .then(response => response.json())
             .then(data => {
-                if (data.success) {
+                if (data.success && data.promos.length > 0) {
                     updateTable(data.promos.all);
                     updatePagination(data.total, data.page, data.limit);
                 } else {
+                    const ordersTableBody = document.querySelector('#ordersTable tbody');
+                    ordersTableBody.innerHTML = '';
+                    const noOrderRow = document.createElement('tr');
+                    noOrderRow.innerHTML = `<td colspan="6" style="text-align:center;">No Promo Records found at the moment</td>`;
+                    ordersTableBody.appendChild(noOrderRow);
                     console.error('Failed to fetch Promo Details:', data.message);
                 }
             })

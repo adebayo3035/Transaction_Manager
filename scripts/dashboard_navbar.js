@@ -1,6 +1,17 @@
 document.addEventListener('DOMContentLoaded', function() {
     fetchMenu();
-});
+    // toggleNavNew()
+;});
+
+// function toggleNavNew() {
+//     const nav = document.getElementById("navLinks");
+//     nav.classList.toggle("responsive2");
+//     nav.className = nav.className === "nav-links" ? "nav-links responsive2" : "nav-links";
+// }
+function toggleNavNew() {
+    const navLinks = document.getElementById('navLinks');
+    navLinks.classList.toggle('active');
+}
 
 function fetchMenu() {
     fetch('backend/admin_menu.php')

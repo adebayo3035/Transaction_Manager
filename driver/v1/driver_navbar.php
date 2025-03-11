@@ -13,6 +13,7 @@
         <div class="user-info">
             <span id="customerName">Loading...</span>
             <span id="walletBalance">Loading Status...</span>
+            
             <button id="logoutButton"><a href="../v2/logout.php">Logout</a>
             </button>
         </div>
@@ -24,6 +25,7 @@
             <li><a href="profile.php" id="fundWallet">My Profile</a></li>
         </ul>
         <span id="wallet">Loading Balance...</span>
+        <span id="dateTimeLabel">Loading Time...</span>
     </nav>
     <script src="../scripts/navbar.js"></script>
 </body>

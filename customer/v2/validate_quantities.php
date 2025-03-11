@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'config.php';
 $customerId = $_SESSION["customer_id"];
 checkSession($customerId);

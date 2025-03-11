@@ -43,16 +43,27 @@ header h1 a {
 .user-info span {
   margin-right: 15px;
 }
+nav{
+  display: flex;
+  justify-content: space-between;
+  background-color: #333;
+  margin-top: 5px;
+}
+nav #wallet, nav #dateTimeLabel{
+  font-size: 13px;
+  text-align: center;
+  margin: 13px 5px;
+  color: #fff;
+}
 
 nav ul {
   list-style: none;
   padding: 0;
-  margin: 20px 0;
+  margin: 10px 0;
   background-color: #444;
   overflow: hidden;
 
 }
-
 nav ul li {
   float: left;
 
@@ -60,9 +71,10 @@ nav ul li {
 
 nav ul li a {
   display: block;
-  padding: 10px 20px;
+  padding: 5px 10px;
   color: #fff;
   text-decoration: none;
+  font-size: 11px;
 
 
 }
@@ -86,9 +98,10 @@ nav ul li a:hover {
   cursor: pointer;
 }
 
-#walletBalance {
+#walletBalance, #dateTimeLabel {
   font-size: 13px;
 }
+
 
 @media(max-width: 780px) {
   header h1 {
@@ -128,5 +141,23 @@ nav ul li a:hover {
   nav ul li a {
     font-size: 12px;
     ;
+  }
+}
+@media (max-width: 600px){
+  nav{
+    flex-direction: column;
+  }
+  nav ul{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+  }
+}
+
+@media (max-width: 400px){
+  nav ul{
+    display: flex;
+    flex-direction: column;
   }
 }

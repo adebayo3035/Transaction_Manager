@@ -17,8 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let discount_value = 0;
     let discount_percent = 0;
     let promoCode = '';
-    let orderData = {}; // Declare orderData at the top to make it accessible globally
-
 
     creditDetails.style.display = "none";
 
@@ -67,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     discount_value = data.discount;
                     discount_percent = data.discount_percent;
                     promoCode = data.promo_code;
-                    let totalAmountAfter = parseFloat(totalAmount) - discount_value;
+                    totalAmountAfter = totalAmount - discount_value;
 
                     // Update UI with discount information
                     discountItem.style.display = "flex";
@@ -95,48 +93,38 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     });
 
-    // Fetch order data from the server
-    fetch('../v2/get_order_session.php')
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                orderData = data.data;
-                console.log("Order data retrieved from session:", orderData);
+    // Get Order Items stored in the session
+    const orderItems = JSON.parse(sessionStorage.getItem('order_items') || '[]');
+    const totalOrder = parseFloat(sessionStorage.getItem('total_amount') || 0);
+    const serviceFee = parseFloat(sessionStorage.getItem('service_fee') || 0);
+    const deliveryFee = parseFloat(sessionStorage.getItem('delivery_fee') || 0);
+    let totalAmount = ((totalOrder - discount_value) + serviceFee + deliveryFee);
 
-                // Populate the checkout page order table
-                const orderTableBody = document.getElementById('orderSummaryTable').querySelector('tbody');
-                orderTableBody.innerHTML = ""; // Clear existing rows
+    if (!orderItems || orderItems.length === 0) {
+        console.log("Order Items cannot be fetched from session")
+        location.replace('../v1/dashboard.php');
+        return;
+    }
 
-                orderData.order_items.forEach((item, index) => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                            <td>${index + 1}</td>
-                            <td>${item.food_name}</td>
-                            <td>${item.quantity}</td>
-                            <td>N ${parseFloat(item.price_per_unit).toFixed(2)}</td>
-                            <td class="total-price">N ${parseFloat(item.total_price).toFixed(2)}</td>
-                        `;
-                    orderTableBody.appendChild(row);
-                });
+    // Populate the checkout page order table
+    const orderTableBody = document.getElementById('orderSummaryTable').querySelector('tbody');
+    orderItems.forEach((item, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+             <td>${index + 1}</td>
+             <td>${item.food_name}</td>
+             <td>${item.quantity}</td>
+             <td>N ${item.price_per_unit.toFixed(2)}</td>
+             <td class="total-price">N ${item.total_price.toFixed(2)}</td>
+         `;
+        orderTableBody.appendChild(row);
+    });
 
-                // Calculate total amount including discounts, service fee, and delivery fee
-                
-                let totalAmount = ((parseFloat(orderData.total_order) - discount_value) + parseFloat(orderData.service_fee) + parseFloat(orderData.delivery_fee));
-
-                // Populate the total amounts on the checkout page
-                document.getElementById('total-order').textContent = `N ${parseFloat(orderData.total_order).toFixed(2)}`;
-                document.getElementById('service-fee').textContent = `N ${parseFloat(orderData.service_fee).toFixed(2)}`;
-                document.getElementById('delivery-fee').textContent = `N ${parseFloat(orderData.delivery_fee).toFixed(2)}`;
-                document.getElementById('total-fee').textContent = `N ${totalAmount.toFixed(2)}`;
-            } else {
-                console.error("Failed to retrieve order data:", data.message);
-                alert("Failed to retrieve order data. Please try again.");
-            }
-        })
-        .catch(error => {
-            console.error("Error fetching order data:", error);
-            alert("An error occurred while fetching order data. Please try again.");
-        });
+    // Populate the total amounts on the checkout page
+    document.getElementById('total-order').textContent = `N ${totalOrder.toFixed(2)}`;
+    document.getElementById('service-fee').textContent = `N ${serviceFee.toFixed(2)}`;
+    document.getElementById('delivery-fee').textContent = `N ${deliveryFee.toFixed(2)}`;
+    document.getElementById('total-fee').textContent = `N ${totalAmount.toFixed(2)}`;
 
     const clearInputFields = (...fields) => {
         fields.forEach(fieldId => {
@@ -189,34 +177,31 @@ document.addEventListener('DOMContentLoaded', () => {
         return `${month.padStart(2, '0')}-${year}`;
     };
 
-    // Payment form submission handler
     checkoutForm.addEventListener('submit', (event) => {
         event.preventDefault();
-
+    
         // Show confirmation dialog
         const isConfirmed = confirm('Are you sure you want to proceed with the payment?');
         if (!isConfirmed) {
-            alert("Your Order Payment Process has been Cancelled!");
+            alert("Your Order Payment Process has been Cancelled!")
             return; // Stop execution if the user cancels
         }
-
+    
         const selectedPaymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
-
-        // Use the fetched order data to populate paymentDetails
+    
         let paymentDetails = {
             payment_method: selectedPaymentMethod,
-            order_items: orderData.order_items, // Use order items from session
-            total_amount: parseFloat(orderData.total_order), // Use total order from session
-            service_fee: parseFloat(orderData.service_fee), // Use service fee from session
-            delivery_fee: parseFloat(orderData.delivery_fee), // Use delivery fee from session
-            total_order: parseFloat(orderData.total_order), // Use total order from session
-            using_promo: usePromo, // Replace with actual value if available
-            discount: discount_value, // Replace with actual value if available
-            discount_percent: discount_percent, // Replace with actual value if available
-            promo_code: promoCode // Replace with actual value if available
+            order_items: orderItems,
+            total_amount: totalAmount,
+            service_fee: serviceFee,
+            delivery_fee: deliveryFee,
+            total_order: totalOrder,
+            using_promo: usePromo,
+            discount: discount_value,
+            discount_percent: discount_percent,
+            promo_code: promoCode
         };
-
-        // Add payment method-specific details
+    
         if (selectedPaymentMethod === 'Card') {
             paymentDetails = {
                 ...paymentDetails,
@@ -234,9 +219,8 @@ document.addEventListener('DOMContentLoaded', () => {
             paymentDetails.customer_secret_answer = document.getElementById('customer_secret_answer').value;
             paymentDetails.is_credit = true;
         }
-
-        // Send payment details to the server
-        fetch('../v2/process_paymentOld.php', {
+    
+        fetch('../v2/process_payment.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -249,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     alert('Your Order has been successfully received. Kindly wait for approval.');
                     printReceiptBtn.style.display = 'block';
                     placeOrderBtn.style.display = 'none';
-
+    
                     // Disable all input fields, radio buttons, and checkboxes
                     disableFormElements();
                 } else {

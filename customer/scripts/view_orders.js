@@ -15,11 +15,16 @@ document.addEventListener('DOMContentLoaded', () => {
         })
             .then(response => response.json())
             .then(data => {
-                if (data.success) {
+                if (data.success && data.orders.length > 0) {
                     updateTable(data.orders);
                     updatePagination(data.total, data.page, data.limit);
                 } else {
-                    console.error('Failed to fetch orders:', data.message);
+                    const ordersTableBody = document.querySelector('#ordersTable tbody');
+                    ordersTableBody.innerHTML = '';
+                    const noOrderRow = document.createElement('tr');
+                    noOrderRow.innerHTML = `<td colspan="7" style="text-align:center;">No Credit History at the moment</td>`;
+                    ordersTableBody.appendChild(noOrderRow);
+                    // console.error('Failed to fetch orders:', data.message);
                 }
             })
             .catch(error => console.error('Error fetching data:', error));
@@ -252,9 +257,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (firstDetail.delivery_status == 'Delivered' || firstDetail.delivery_status == 'Cancelled' || firstDetail.delivery_status == 'Declined') {
             document.querySelector('#receipt-btn').style.display = "block";
         }
-
-
-
     }
 
     // Function to update order status
