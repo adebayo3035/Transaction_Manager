@@ -1,5 +1,5 @@
 // Global variables
-const inactivityTimeout = 60 * 100000; // 1 minute for testing; adjust as needed
+const inactivityTimeout = 60 * 100; // 1 minute for testing; adjust as needed
 let inactivityTimers = {};
 
 // Helper function to set error message

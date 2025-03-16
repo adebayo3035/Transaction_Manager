@@ -201,6 +201,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const selectedPaymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
+        const customer_secret_answer = document.getElementById('customer_secret_answer').value;
+        const customer_token = document.getElementById('customer_token').value;
 
         // Use the fetched order data to populate paymentDetails
         let paymentDetails = {
@@ -213,7 +215,10 @@ document.addEventListener('DOMContentLoaded', () => {
             using_promo: usePromo, // Replace with actual value if available
             discount: discount_value, // Replace with actual value if available
             discount_percent: discount_percent, // Replace with actual value if available
-            promo_code: promoCode // Replace with actual value if available
+            promo_code: promoCode, // Replace with actual value if available
+            customer_secret_answer : customer_secret_answer,
+            customer_token: customer_token
+            
         };
 
         // Add payment method-specific details
@@ -231,7 +236,6 @@ document.addEventListener('DOMContentLoaded', () => {
             paymentDetails.bank_name = document.getElementById('bank_name').value;
             paymentDetails.bank_account = document.getElementById('bank_account').value;
         } else if (selectedPaymentMethod === 'credit') {
-            paymentDetails.customer_secret_answer = document.getElementById('customer_secret_answer').value;
             paymentDetails.is_credit = true;
         }
 

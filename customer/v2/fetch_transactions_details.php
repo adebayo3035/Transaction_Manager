@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $input = json_decode(file_get_contents('php://input'), true);
     logActivity("Received POST request with payload: " . json_encode($input));
     
-    if (!isset($input['transaction_id'])) {
+    if (empty($input['transaction_id'])) {
         logActivity("Transaction ID missing in request.");
         echo json_encode(["success" => false, "message" => "Transaction ID is missing."]);
         exit();

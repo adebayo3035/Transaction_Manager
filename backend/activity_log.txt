@@ -192,3 +192,169 @@ omer names script started.
 [2025-03-11 10:03:09] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 4 paginated promos.
 [2025-03-11 10:03:09] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 0 ongoing promos.
 [2025-03-11 10:03:09] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetching promos script completed successfully.
+[2025-03-12 14:12:57] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetching promos script started.
+omer names script started.
+[2025-03-12 14:12:57] [Page: http://localhost/transaction_manager/backend/get_promo.php] Customer customer_id found in session: 1260106158
+[2025-03-12 14:12:57] [Page: http://localhost/transaction_manager/backend/get_promo.php] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-03-12 14:12:57] [Page: http://localhost/transaction_manager/backend/get_promo.php] Total promos count: 4
+[2025-03-12 14:12:57] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 4 paginated promos.
+[2025-03-12 14:12:57] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 0 ongoing promos.
+[2025-03-12 14:12:57] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetching promos script completed successfully.
+[2025-03-12 14:12:57] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Successfully fetched 3 random customer names.
+[2025-03-12 14:12:57] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Fetching random customer names script completed.
+[2025-03-13 15:48:30] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Fetching random customer names script started.
+[2025-03-13 15:48:30] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Successfully fetched 3 random customer names.
+[2025-03-13 15:48:30] [Page: http://localhost/transaction_manager/backend/get_promo.php] Customer customer_id found in session: 1260106158
+[2025-03-13 15:48:30] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Fetching random customer names script completed.
+[2025-03-13 15:48:30] [Page: http://localhost/transaction_manager/backend/get_promo.php] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-03-13 15:48:30] [Page: http://localhost/transaction_manager/backend/get_promo.php] Total promos count: 4
+[2025-03-13 15:48:30] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 4 paginated promos.
+[2025-03-13 15:48:30] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 0 ongoing promos.
+[2025-03-13 15:48:30] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetching promos script completed successfully.
+[2025-03-13 16:23:23] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Fetching random customer names script started.
+[2025-03-13 16:23:23] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Successfully fetched 3 random customer names.
+[2025-03-13 16:23:23] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Fetching random customer names script completed.
+[2025-03-13 16:23:23] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetching promos script started.
+[2025-03-13 16:23:23] [Page: http://localhost/transaction_manager/backend/get_promo.php] Customer customer_id found in session: 1260106158
+[2025-03-13 16:23:23] [Page: http://localhost/transaction_manager/backend/get_promo.php] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-03-13 16:23:23] [Page: http://localhost/transaction_manager/backend/get_promo.php] Total promos count: 4
+[2025-03-13 16:23:23] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 4 paginated promos.
+[2025-03-13 16:23:23] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 0 ongoing promos.
+[2025-03-13 16:23:23] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetching promos script completed successfully.
+[2025-03-13 17:04:28] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Fetching random customer names script started.
+[2025-03-13 17:04:28] [Page: http://localhost/transaction_manager/backend/get_promo.php] Customer customer_id found in session: 1260106158
+[2025-03-13 17:04:28] [Page: http://localhost/transaction_manager/backend/get_promo.php] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-03-13 17:04:28] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Successfully fetched 3 random customer names.
+[2025-03-13 17:04:28] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Fetching random customer names script completed.
+[2025-03-13 17:04:28] [Page: http://localhost/transaction_manager/backend/get_promo.php] Total promos count: 4
+[2025-03-13 17:04:28] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 4 paginated promos.
+[2025-03-13 17:04:28] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 0 ongoing promos.
+[2025-03-13 17:04:28] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetching promos script completed successfully.
+[2025-03-13 18:25:30] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Fetching random customer names script started.
+[2025-03-13 18:25:30] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Successfully fetched 3 random customer names.
+[2025-03-13 18:25:30] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Fetching random customer names script completed.
+[2025-03-13 18:25:30] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetching promos script started.
+[2025-03-13 18:25:30] [Page: http://localhost/transaction_manager/backend/get_promo.php] Customer customer_id found in session: 1260106158
+[2025-03-13 18:25:30] [Page: http://localhost/transaction_manager/backend/get_promo.php] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-03-13 18:25:30] [Page: http://localhost/transaction_manager/backend/get_promo.php] Total promos count: 4
+[2025-03-13 18:25:30] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 4 paginated promos.
+[2025-03-13 18:25:30] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 0 ongoing promos.
+[2025-03-13 18:25:30] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetching promos script completed successfully.
+[2025-03-13 18:39:32] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetching promos script started.
+[2025-03-13 18:39:32] [Page: http://localhost/transaction_manager/backend/get_promo.php] Customer customer_id found in session: 1260106158
+[2025-03-13 18:39:32] [Page: http://localhost/transaction_manager/backend/get_promo.php] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-03-13 18:39:32] [Page: http://localhost/transaction_manager/backend/get_promo.php] Total promos count: 4
+[2025-03-13 18:39:32] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Fetching random customer names script started.
+[2025-03-13 18:39:32] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 4 paginated promos.
+[2025-03-13 18:39:32] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 0 ongoing promos.
+[2025-03-13 18:39:32] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetching promos script completed successfully.
+[2025-03-13 18:39:32] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Successfully fetched 3 random customer names.
+[2025-03-13 18:39:32] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Fetching random customer names script completed.
+[2025-03-13 18:40:25] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetching promos script started.
+[2025-03-13 18:40:25] [Page: http://localhost/transaction_manager/backend/get_promo.php] Customer customer_id found in session: 1260106158
+[2025-03-13 18:40:25] [Page: http://localhost/transaction_manager/backend/get_promo.php] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-03-13 18:40:25] [Page: http://localhost/transaction_manager/backend/get_promo.php] Total promos count: 4
+[2025-03-13 18:40:25] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 4 paginated promos.
+[2025-03-13 18:40:25] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 0 ongoing promos.
+[2025-03-13 18:40:25] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetching promos script completed successfully.
+[2025-03-13 18:40:25] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Fetching random customer names script started.
+[2025-03-13 18:40:25] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Successfully fetched 3 random customer names.
+[2025-03-13 18:40:25] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Fetching random customer names script completed.
+[2025-03-13 18:42:45] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Fetching random customer names script started.
+[2025-03-13 18:42:45] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Successfully fetched 3 random customer names.
+[2025-03-13 18:42:45] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Fetching random customer names script completed.
+[2025-03-13 18:42:46] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetching promos script started.
+[2025-03-13 18:42:46] [Page: http://localhost/transaction_manager/backend/get_promo.php] Customer customer_id found in session: 1438165027
+[2025-03-13 18:42:46] [Page: http://localhost/transaction_manager/backend/get_promo.php] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-03-13 18:42:46] [Page: http://localhost/transaction_manager/backend/get_promo.php] Total promos count: 4
+[2025-03-13 18:42:46] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 4 paginated promos.
+[2025-03-13 18:42:46] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 0 ongoing promos.
+[2025-03-13 18:42:46] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetching promos script completed successfully.
+[2025-03-14 10:29:46] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetching promos script started.
+omer names script started.
+[2025-03-14 10:29:46] [Page: http://localhost/transaction_manager/backend/get_promo.php] Customer customer_id found in session: 1260106158
+[2025-03-14 10:29:46] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Successfully fetched 3 random customer names.
+[2025-03-14 10:29:46] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Fetching random customer names script completed.
+[2025-03-14 10:29:46] [Page: http://localhost/transaction_manager/backend/get_promo.php] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-03-14 10:29:46] [Page: http://localhost/transaction_manager/backend/get_promo.php] Total promos count: 4
+[2025-03-14 10:29:46] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 4 paginated promos.
+[2025-03-14 10:29:46] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 0 ongoing promos.
+[2025-03-14 10:29:46] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetching promos script completed successfully.
+[2025-03-14 10:29:51] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Fetching random customer names script started.
+[2025-03-14 10:29:51] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetching promos script started.
+[2025-03-14 10:29:51] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Successfully fetched 3 random customer names.
+[2025-03-14 10:29:51] [Page: http://localhost/transaction_manager/backend/get_promo.php] Customer customer_id found in session: 1260106158
+[2025-03-14 10:29:51] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Fetching random customer names script completed.
+[2025-03-14 10:29:51] [Page: http://localhost/transaction_manager/backend/get_promo.php] Total promos count: 4
+[2025-03-14 10:29:51] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 4 paginated promos.
+[2025-03-14 10:29:51] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 0 ongoing promos.
+[2025-03-14 10:29:51] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetching promos script completed successfully.
+[2025-03-14 10:55:14] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Fetching random customer names script started.
+[2025-03-14 10:55:14] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Successfully fetched 3 random customer names.
+[2025-03-14 10:55:14] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Fetching random customer names script completed.
+[2025-03-14 10:55:15] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetching promos script started.
+[2025-03-14 10:55:15] [Page: http://localhost/transaction_manager/backend/get_promo.php] Customer customer_id found in session: 1260106158
+[2025-03-14 10:55:15] [Page: http://localhost/transaction_manager/backend/get_promo.php] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-03-14 10:55:15] [Page: http://localhost/transaction_manager/backend/get_promo.php] Total promos count: 4
+[2025-03-14 10:55:15] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 4 paginated promos.
+[2025-03-14 10:55:15] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 0 ongoing promos.
+[2025-03-14 10:55:15] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetching promos script completed successfully.
+[2025-03-14 10:55:25] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Fetching random customer names script started.
+[2025-03-14 10:55:25] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Successfully fetched 3 random customer names.
+[2025-03-14 10:55:25] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Fetching random customer names script completed.
+[2025-03-14 10:55:25] [Page: http://localhost/transaction_manager/backend/get_promo.php] Customer customer_id found in session: 1260106158
+[2025-03-14 10:55:25] [Page: http://localhost/transaction_manager/backend/get_promo.php] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-03-14 10:55:25] [Page: http://localhost/transaction_manager/backend/get_promo.php] Total promos count: 4
+[2025-03-14 10:55:25] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 4 paginated promos.
+[2025-03-14 10:55:25] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 0 ongoing promos.
+[2025-03-14 10:55:25] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetching promos script completed successfully.
+[2025-03-14 11:24:20] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Fetching random customer names script started.
+[2025-03-14 11:24:20] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Successfully fetched 3 random customer names.
+[2025-03-14 11:24:20] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Fetching random customer names script completed.
+[2025-03-14 11:24:20] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetching promos script started.
+[2025-03-14 11:24:20] [Page: http://localhost/transaction_manager/backend/get_promo.php] Customer customer_id found in session: 1260106158
+[2025-03-14 11:24:20] [Page: http://localhost/transaction_manager/backend/get_promo.php] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-03-14 11:24:20] [Page: http://localhost/transaction_manager/backend/get_promo.php] Total promos count: 4
+[2025-03-14 11:24:20] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 4 paginated promos.
+[2025-03-14 11:24:20] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 0 ongoing promos.
+[2025-03-14 11:24:20] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetching promos script completed successfully.
+[2025-03-14 11:24:30] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Fetching random customer names script started.
+[2025-03-14 11:24:30] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Successfully fetched 3 random customer names.
+[2025-03-14 11:24:30] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Fetching random customer names script completed.
+[2025-03-14 11:24:30] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetching promos script started.
+[2025-03-14 11:24:30] [Page: http://localhost/transaction_manager/backend/get_promo.php] Customer customer_id found in session: 1260106158
+[2025-03-14 11:24:30] [Page: http://localhost/transaction_manager/backend/get_promo.php] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-03-14 11:24:30] [Page: http://localhost/transaction_manager/backend/get_promo.php] Total promos count: 4
+[2025-03-14 11:24:30] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 4 paginated promos.
+[2025-03-14 11:24:30] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 0 ongoing promos.
+[2025-03-14 11:24:30] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetching promos script completed successfully.
+[2025-03-15 13:46:52] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetching promos script started.
+omer names script started.
+[2025-03-15 13:46:52] [Page: http://localhost/transaction_manager/backend/get_promo.php] Customer customer_id found in session: 1260106158
+[2025-03-15 13:46:52] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Successfully fetched 3 random customer names.
+[2025-03-15 13:46:52] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Fetching random customer names script completed.
+[2025-03-15 13:46:52] [Page: http://localhost/transaction_manager/backend/get_promo.php] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-03-15 13:46:52] [Page: http://localhost/transaction_manager/backend/get_promo.php] Total promos count: 4
+[2025-03-15 13:46:52] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 4 paginated promos.
+[2025-03-15 13:46:52] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 0 ongoing promos.
+[2025-03-15 13:46:52] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetching promos script completed successfully.
+[2025-03-16 09:45:57] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetching promos script started.
+omer names script started.
+[2025-03-16 09:45:57] [Page: http://localhost/transaction_manager/backend/get_promo.php] Customer customer_id found in session: 1260106158
+[2025-03-16 09:45:57] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Successfully fetched 3 random customer names.
+[2025-03-16 09:45:58] [Page: http://localhost/transaction_manager/backend/get_promo.php] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-03-16 09:45:58] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] Fetching random customer names script completed.
+[2025-03-16 09:45:58] [Page: http://localhost/transaction_manager/backend/get_promo.php] Total promos count: 4
+[2025-03-16 09:45:58] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 4 paginated promos.
+[2025-03-16 09:45:58] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetched 0 ongoing promos.
+[2025-03-16 09:45:58] [Page: http://localhost/transaction_manager/backend/get_promo.php] Fetching promos script completed successfully.
+[2025-03-16 10:42:22] [Page: http://localhost/Transaction_manager/backend/fetch_random_customers.php] Fetching random customer names script started.
+[2025-03-16 10:42:22] [Page: http://localhost/Transaction_manager/backend/fetch_random_customers.php] Successfully fetched 3 random customer names.
+[2025-03-16 10:42:22] [Page: http://localhost/Transaction_manager/backend/fetch_random_customers.php] Fetching random customer names script completed.
+[2025-03-16 10:42:22] [Page: http://localhost/Transaction_manager/backend/get_promo.php] Fetching promos script started.
+[2025-03-16 10:42:22] [Page: http://localhost/Transaction_manager/backend/get_promo.php] Admin unique_id found in session: 22675443
+[2025-03-16 10:42:22] [Page: http://localhost/Transaction_manager/backend/get_promo.php] Pagination parameters - Page: 1, Limit: 10, Offset: 0
+[2025-03-16 10:42:22] [Page: http://localhost/Transaction_manager/backend/get_promo.php] Total promos count: 4
+[2025-03-16 10:42:22] [Page: http://localhost/Transaction_manager/backend/get_promo.php] Fetched 4 paginated promos.
+[2025-03-16 10:42:22] [Page: http://localhost/Transaction_manager/backend/get_promo.php] Fetched 0 ongoing promos.
+[2025-03-16 10:42:22] [Page: http://localhost/Transaction_manager/backend/get_promo.php] Fetching promos script completed successfully.

@@ -3,11 +3,10 @@ include_once "config.php";
 session_start();
 
 // Log the start of the logout process
-logActivity("Logout process started for Customer ID: " . $_SESSION['customer_id']);
-checkSession($_SESSION['customer_id']);
-
 if (isset($_SESSION['customer_id'])) {
     $logout_id = $_SESSION['customer_id'];
+    logActivity("Logout process started for Customer ID: " . $logout_id);
+    checkSession($logout_id);
 
     // Log the session ID retrieval attempt
     logActivity("Attempting to retrieve session_id for Customer ID: " . $logout_id);

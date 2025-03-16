@@ -101,7 +101,7 @@ $total_pages = ceil($total_records / $limit);
 $stmt_count->close();
 
 // Add pagination limits
-$sql .= " LIMIT ? OFFSET ?";
+$sql .= " ORDER BY date_created DESC LIMIT ? OFFSET ? ";
 $params[] = $limit;
 $params[] = $offset;
 $types .= "ii"; // Two integers for limit and offset

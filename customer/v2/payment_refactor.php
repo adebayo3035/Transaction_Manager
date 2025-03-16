@@ -37,14 +37,12 @@ $orderItems = $data['order_items'] ?? [];
 $serviceFee = $data['service_fee'] ?? 0;
 $deliveryFee = $data['delivery_fee'] ?? 0;
 $totalOrder = $data['total_order'] ?? 0;
-$secretAnswer = $data['customer_secret_answer'] ?? null;
-$token = $data['customer_token'] ?? null;
 
 $bankName = $data['bank_name'] ?? null;
 $bankAccount = $data['bank_account'] ?? null;
 $paypalEmail = $data['paypal_email'] ?? null;
 
-
+$secretAnswer = $data['customer_secret_answer'] ?? null;
 $isCredit = $data['is_credit'] ?? false;
 
 $usingPromo = $data['using_promo'] ?? false;
@@ -79,33 +77,37 @@ switch ($paymentMethod) {
             if ($validationResult['success']) {
                 // Proceed with order processing
                 logActivity("Card validation successful for customer ID: " . $customerId);
-                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $secretAnswer, $token);
+                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit);
                 logActivity("Order processed successfully for customer ID: " . $customerId);
             } else {
                 $response = $validationResult;
                 logActivity("Card validation failed for customer ID: " . $customerId . ". Reason: " . $validationResult['message']);
-                deactivateToken($customerId);
             }
         } else {
             $response['message'] = 'Missing credit card details';
             logActivity("Missing credit card details for customer ID: " . $customerId);
-            deactivateToken($customerId);
         }
         break;
 
     case 'credit':
+        logActivity("Checking secret answer supplied by customer ID: " . $customerId);
+        if ($secretAnswer) {
+            logActivity("Secret Answer Validation was successful for Customer ID: " . $customerId);
             logActivity("Checking credit eligibility for customer ID: " . $customerId);
             $eligibilityResult = checkCreditEligibility($conn, $customerId, $totalAmount, $secretAnswer);
             if ($eligibilityResult['success']) {
                 // Process credit payment and the order
                 logActivity("Credit eligibility check passed for customer ID: " . $customerId);
-                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $secretAnswer, $token);
+                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit);
                 logActivity("Credit order processed successfully for customer ID: " . $customerId);
             } else {
                 $response = $eligibilityResult;
                 logActivity("Credit eligibility check failed for customer ID: " . $customerId . ". Reason: " . $eligibilityResult['message']);
-                deactivateToken($customerId);
             }
+        } else {
+            $response['message'] = 'Invalid Secret Answer';
+            logActivity("Invalid Secret Answer for customer ID: " . $customerId);
+        }
         break;
 
     case 'bank_transfer':
@@ -118,17 +120,15 @@ switch ($paymentMethod) {
             if (!in_array($bankName, $allowedBanks)) {
                 $response['message'] = 'Unknown Bank Account';
                 logActivity("Unknown bank account selected for customer ID: " . $customerId);
-                deactivateToken($customerId);
             } else {
                 // Validate bank transfer and process the order
                 logActivity("Processing bank transfer for customer ID: " . $customerId);
-                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $secretAnswer, $token);
+                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit);
                 logActivity("Bank transfer order processed successfully for customer ID: " . $customerId);
             }
         } else {
             $response['message'] = 'Missing bank transfer details';
             logActivity("Missing bank transfer details for customer ID: " . $customerId);
-            deactivateToken($customerId);
         }
         break;
 
@@ -143,24 +143,21 @@ switch ($paymentMethod) {
                 logActivity("Paypal Details Validation passed for customer ID: " . $customerId);
                 // $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit);
                 // logActivity("Credit order processed successfully for customer ID: " . $customerId);
-                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $secretAnswer, $token);
+                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit);
                 logActivity("PayPal order processed successfully for customer ID: " . $customerId);
             } else {
                 $response = $validatePaypal;
                 logActivity("Paypal Details Validation check failed for customer ID: " . $customerId . ". Reason: " . $validatePaypal['message']);
-                deactivateToken($customerId);
             }
         } else {
             $response['message'] = 'Missing PayPal details';
             logActivity("Missing PayPal details for customer ID: " . $customerId);
-            deactivateToken($customerId);
         }
         break;
 
     default:
         $response['message'] = 'Invalid payment method';
         logActivity("Invalid payment method for customer ID: " . $customerId);
-        deactivateToken($customerId);
         break;
 }
 
@@ -169,9 +166,8 @@ logActivity("Final response: " . json_encode($response));
 echo json_encode($response);
 
 // Function to process the order
-function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $providedSecretAnswer, $token)
+function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit)
 {
-    
     $response = ['success' => false, 'message' => 'Unknown error occurred'];
     $conn->begin_transaction();
 
@@ -184,15 +180,6 @@ function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deli
         // Log the start of order processing
         logActivity("Starting order processing for customer ID: " . $customerId);
 
-       // **Authenticate Customer**
-       $CustomerValidation = AuthValidations($providedSecretAnswer, $customerId, $conn, $token);
-       if (!$CustomerValidation['success']) {
-           throw new Exception($CustomerValidation['message']);
-       }else{
-        logActivity("Secret Answer and Token Validation successful for Customer ID: " . $customerId);
-       }
-       
-
         // Check wallet balance if not using credit
         if ($isCredit === false) {
             logActivity("Checking wallet balance for customer ID: " . $customerId);
@@ -202,23 +189,17 @@ function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deli
             $stmt->bind_result($balance);
             $stmt->fetch();
             $stmt->close();
-            logActivity("Customer's Wallet Balance is: $balance");
 
             if ($balance === null || $balance < $totalAmount) {
-                logActivity("Insufficient wallet balance to process Order");
                 throw new Exception("Insufficient balance in wallet.");
-                
             } else {
                 // Deduct amount from wallet
-                logActivity("Attempting to Debit customer's wallet to process Order");
                 $newBalance = $balance - $totalAmount;
-                
                 $stmt = $conn->prepare("UPDATE wallets SET balance = ? WHERE customer_id = ?");
                 $stmt->bind_param("di", $newBalance, $customerId);
                 $stmt->execute();
                 $stmt->close();
-                logActivity("Amount deducted from wallet for customer ID: $customerId is $totalAmount");
-                logActivity("New wallet balance for customer ID: " . $customerId . ". New balance: " . $newBalance);
+                logActivity("Amount deducted from wallet for customer ID: " . $customerId . ". New balance: " . $newBalance);
             }
         }
 
@@ -306,14 +287,6 @@ function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deli
         // Commit transaction
         $conn->commit();
         $response = ['success' => true, 'message' => 'Order placed successfully.'];
-        logActivity("Attempting to Invalidate Token from Session to prevent token reuse");
-    // Invalidate the token after successful operation
-    // $_SESSION['token'] = [
-    //     'value' => '',
-    //     'expires_at' => time() // Token expired immediately
-    // ];
-    deactivateToken($customerId);
-    logActivity("Token invalidated for customer ID: $customerId.");
         logActivity("Order processing completed successfully for customer ID: " . $customerId);
     } catch (Exception $e) {
         $conn->rollback();
@@ -369,7 +342,7 @@ function validateCardOwnership($cardDetails, $inputCardNumber, $inputCVV, $input
 {
     $currentDateTime = date('Y-m-d H:i:s');
     foreach ($cardDetails as $card) {
-        if (($card['card_number'] === $inputCardNumber) && ($card['cvv'] === $inputCVV) && ($card['expiry_date'] === $inputExpiryDate)) {
+        if ($card['card_number'] === $inputCardNumber && $card['cvv'] === $inputCVV && $card['expiry_date'] === $inputExpiryDate && $card['expiry_date'] >= $currentDateTime) {
             return $card;
         }
     }
@@ -383,61 +356,23 @@ function validateCardPIN($inputCardPIN, $encryptedCardPIN)
 
 function checkCardValidity($inputExpiryDate)
 {
-    // Ensure the expiry date format is correct
-    if (!preg_match('/^\d{2}-\d{4}$/', $inputExpiryDate)) {
-        logActivity("Invalid expiry date format: $inputExpiryDate");
-        return true; // Treat as expired if format is incorrect
-    }
 
-    // Parse expiry_date into month and year
-    list($expiryMonth, $expiryYear) = explode('-', $inputExpiryDate);
-
-    // Convert to integers to prevent string comparison issues
-    $expiryMonth = (int) $expiryMonth;
-    $expiryYear = (int) $expiryYear;
-
-    // Get current month and year
-    $currentMonth = (int) date('m'); // Current month (e.g., 09)
-    $currentYear = (int) date('Y');  // Current year (e.g., 2023)
-
-    // Check if the card has expired
-    $isExpired = ($expiryYear < $currentYear) || ($expiryYear == $currentYear && $expiryMonth < $currentMonth);
-
-    logActivity("Card expiry date: $inputExpiryDate, Is expired?: " . ($isExpired ? 'Yes' : 'No'));
-
-    return $isExpired; // Return true if expired, false otherwise
 }
-
-
 
 // Function to validate card payment
 function validateCardPayment($customerId, $inputCardNumber, $inputCVV, $inputExpiryDate, $inputCardPIN, $dbConnection, $iv, $key)
 {
     logActivity("Validating card payment for customer ID: " . $customerId);
     $cardDetails = getDecryptedCardDetails($customerId, $dbConnection, $key, $iv);
-    $cardDetails = getDecryptedCardDetails($customerId, $dbConnection, $key, $iv);
-    logActivity("Decrypted Card Details: " . print_r($cardDetails, true));
-    logActivity("Input Card Number: " . $inputCardNumber);
-    logActivity("Input CVV: " . $inputCVV);
-    logActivity("Input Expiry Date: " . $inputExpiryDate);
     $validCard = validateCardOwnership($cardDetails, $inputCardNumber, $inputCVV, $inputExpiryDate);
-
     if (!$validCard) {
         logActivity("Invalid card details for customer ID: " . $customerId);
         return ['success' => false, 'message' => 'Invalid Card Details.'];
     }
-
-      // Check if the card is expired
-      if (checkCardValidity($inputExpiryDate)) {
-        logActivity("Expired card for customer ID: " . $customerId);
-        return ['success' => false, 'message' => 'Card has expired.'];
-    }
-
     if (!validateCardPIN($inputCardPIN, $validCard['encryptedCardPIN'])) {
         logActivity("Invalid card PIN for customer ID: " . $customerId);
         return ['success' => false, 'message' => 'Invalid card PIN.'];
     }
-    
     logActivity("Card validation successful for customer ID: " . $customerId);
     return ['success' => true, 'message' => 'Card validated successfully.'];
 }
@@ -456,20 +391,46 @@ function validatePayPalPayment($customerId, $email)
 }
 
 // Function to check credit eligibility
-function checkCreditEligibility($conn, $customerId, $orderAmount, $creditThreshold = 100000)
+function checkCreditEligibility($conn, $customerId, $orderAmount, $providedAnswer, $creditThreshold = 100000)
 {
     logActivity("Checking credit eligibility for customer ID: " . $customerId);
     try {
-        
+        // Step 1: Validate secret answer
+        logActivity("Attempting secret Answer Validation for customer ID: " . $customerId);
+        $secretQuery = "SELECT secret_answer FROM customers WHERE customer_id = ?";
+        $secretStmt = $conn->prepare($secretQuery);
+        $secretStmt->bind_param("i", $customerId);
+        $secretStmt->execute();
+        $secretResult = $secretStmt->get_result();
+
+        if ($secretResult->num_rows === 0) {
+            logActivity("Customer record (secret answer) not found for customer ID: " . $customerId);
+            return ["success" => false, "message" => "Customer record not found."];
+        }
+
+        $customerData = $secretResult->fetch_assoc();
+        $storedSecretAnswer = $customerData['secret_answer'];
+
+        // Hash the provided answer and compare with the stored one
+        if (md5($providedAnswer) !== $storedSecretAnswer) {
+            logActivity("Secret Answer Validation failed for customer ID: " . $customerId);
+            return ["success" => false, "message" => "Authentication failed."];
+        }
+
         // Step 2: Fetch wallet balance
         logActivity("Attempting to check Wallet Balance for customer ID: " . $customerId);
-        $WalletBalanceresponse = getWalletBalance($conn, $customerId);
-        if ( $WalletBalanceresponse['success']) {
-            $walletBalance =  $WalletBalanceresponse['balance'];
-            // Proceed with wallet balance
-        } else {
-            echo  $WalletBalanceresponse['message'];
+        $walletQuery = "SELECT balance FROM wallets WHERE customer_id = ?";
+        $walletStmt = $conn->prepare($walletQuery);
+        $walletStmt->bind_param("i", $customerId);
+        $walletStmt->execute();
+        $walletResult = $walletStmt->get_result();
+        if ($walletResult->num_rows === 0) {
+            logActivity("Wallet record not found for customer ID: " . $customerId);
+            return ["success" => false, "message" => "Customer wallet record not found."];
         }
+        $wallet = $walletResult->fetch_assoc();
+        $walletBalance = $wallet['balance'];
+
         // Step 3: Check for outstanding debts
         $debtQuery = "
         SELECT COUNT(*) AS outstanding_debts
@@ -539,76 +500,13 @@ function checkCreditEligibility($conn, $customerId, $orderAmount, $creditThresho
     }
 }
 
-function validateSecretAnswer($providedSecretAnswer, $customerId, $conn)
-{
-    // Step 1: Validate secret answer
-    logActivity("Attempting secret Answer Validation for customer ID: " . $customerId);
-    $secretQuery = "SELECT secret_answer FROM customers WHERE customer_id = ?";
-    $secretStmt = $conn->prepare($secretQuery);
-    $secretStmt->bind_param("i", $customerId);
-    $secretStmt->execute();
-    $secretResult = $secretStmt->get_result();
-
-    if ($secretResult->num_rows === 0) {
-        logActivity("Customer record (secret answer) not found for customer ID: " . $customerId);
-        return ["success" => false, "message" => "Customer record not found."];
+function validateSecretAnswer($providedSecretAnswer, $storedSecretAnswer, $customerId) {
+    if ($providedSecretAnswer !== $storedSecretAnswer) {
+        logActivity("Error Validating Secret Answer for Customer ID: " . $customerId);
+        return ["success" => false, "message" => "Invalid Secret Answer. ⚠️"];
     }
+    logActivity("Secret Answer Validation is Successful for Customer ID ". $customerId);
+    return ["success" => true, "message" => "You're eligible for credit! 🎉"];
 
-    $customerData = $secretResult->fetch_assoc();
-    $storedSecretAnswer = $customerData['secret_answer'];
-
-    // Hash the provided answer and compare with the stored one
-    if (md5($providedSecretAnswer) !== $storedSecretAnswer) {
-        logActivity("Secret Answer Validation failed for customer ID: " . $customerId);
-        return ["success" => false, "message" => "Authentication failed."];
-    }
-    logActivity("Secret Answer Validation is Successful for Customer ID " . $customerId);
-    return ["success" => true, "message" => "Secret Answer Validation Successful! 🎉"];
 }
-
-function getWalletBalance($conn, $customerId)
-{
-    $walletQuery = "SELECT balance FROM wallets WHERE customer_id = ?";
-    $walletStmt = $conn->prepare($walletQuery);
-    $walletStmt->bind_param("i", $customerId);
-    $walletStmt->execute();
-    $walletResult = $walletStmt->get_result();
-
-    if ($walletResult->num_rows === 0) {
-        logActivity("Wallet record not found for customer ID: " . $customerId);
-        return ["success" => false, "message" => "Customer wallet record not found."];
-    }
-
-    $wallet = $walletResult->fetch_assoc();
-    return ["success" => true, "balance" => $wallet['balance']];
-}
-
-function AuthValidations($providedSecretAnswer, $customerId, $conn, $token) {
-    // Validate Secret Answer
-    $secretValidation = validateSecretAnswer($providedSecretAnswer, $customerId, $conn);
-    if (!$secretValidation['success']) {
-        return $secretValidation; // Return error response if validation fails
-    }
-
-    // Validate Token
-    if (!isset($_SESSION['token']) || 
-        $_SESSION['token']['value'] !== $token || 
-        time() > $_SESSION['token']['expires_at']) {
-
-        logActivity("Invalid or expired token for customer ID: $customerId.");
-        return ['success' => false, 'message' => 'Invalid or expired token'];
-    }
-
-    return ['success' => true, 'message' => 'Authentication successful'];
-}
-
-function deactivateToken($customerId){
-    $_SESSION['token'] = [
-        'value' => '',
-        'expires_at' => time() // Token expired immediately
-    ];
-    logActivity("Token invalidated for customer ID: $customerId.");
-}
-
-
 

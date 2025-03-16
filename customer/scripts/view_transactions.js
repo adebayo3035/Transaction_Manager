@@ -31,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ordersTableBody.innerHTML = '';
         transactions.forEach(transaction => {
             const row = document.createElement('tr');
-            row.setAttribute("row-transaction-id", transaction.id );
             row.add
             row.innerHTML = `
                 <td>${transaction.id}</td>
@@ -48,13 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.view-details-btn').forEach(button => {
             button.addEventListener('click', (event) => {
                 const transactionId = event.target.getAttribute('data-transaction-id');
-                fetchTransactionDetails(transactionId);
-            });
-        });
-
-        document.querySelectorAll('#ordersTable tbody tr').forEach(row => {
-            row.addEventListener('click', (event) => {
-                const transactionId = event.target.getAttribute('row-transaction-id');
                 fetchTransactionDetails(transactionId);
             });
         });
