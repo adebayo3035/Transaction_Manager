@@ -18,7 +18,7 @@ window.addEventListener('click', (event) => {
         }
     });
 });
-document.addEventListener('DOMContentLoaded', ()=>{
+document.addEventListener('DOMContentLoaded', () => {
     function fetchfoods() {
         fetch(`backend/fetch_foods.php`, {
             method: 'GET',
@@ -49,10 +49,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
             const row = document.createElement('tr');
             let status = "";
-            if(food.availability_status == 1){
+            if (food.availability_status == 1) {
                 status = "Available";
             }
-            else{
+            else {
                 status = "Not Available"
             }
             row.innerHTML = `
@@ -76,8 +76,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
             });
         });
 
-         // Attach event listeners to the delete icon buttons
-         document.querySelectorAll('.delete-icon').forEach(span => {
+        // Attach event listeners to the delete icon buttons
+        document.querySelectorAll('.delete-icon').forEach(span => {
             span.addEventListener('click', (event) => {
                 const foodId = event.target.getAttribute('data-food-id');
                 deletefood(foodId);
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
             });
     }
 
-    function populatefoodDetails(food_details){
+    function populatefoodDetails(food_details) {
         const orderDetailsTable = document.querySelector('#orderDetailsTable tbody');
         // const isSuperAdmin = logged_in_user_role === 'Super Admin';
         // const disableAttribute = isSuperAdmin ? '' : 'disabled';
@@ -156,8 +156,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
             
         `;
         // Event listeners for update and delete buttons
-        document.getElementById('updatefoodBtn').addEventListener('click', () => {
-            updatefood(food_details.food_id);
+        document.getElementById('updatefoodBtn').addEventListener('click', (event) => {
+            event.preventDefault();
+            if (confirm('Are you sure you want to Update food Details?')) {
+                updatefood(food_details.food_id);
+            }
+
         });
     }
 
@@ -181,9 +185,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('food Details has been updated successfully.');
+                    alert('Food Details has been successfully Updated.');
                     document.getElementById('orderModal').style.display = 'none';
-                   location.reload();
+                    location.reload();
                 } else {
                     alert('Failed to update food Data: ' + data.message);
                 }
@@ -195,7 +199,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     // function to delete food item
     function deletefood(foodId) {
-        if (confirm('Are you sure you want to delete this food?')) {
+        if (confirm('Are you sure you want to delete this food Item?')) {
             fetch('backend/delete_food.php', {
                 method: 'POST',
                 headers: {
@@ -207,8 +211,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 .then(data => {
                     if (data.success) {
                         alert('food has been successfully deleted!');
-                        
-                       location.reload();
+
+                        location.reload();
                     } else {
                         console.error('Failed to delete food:', data.message);
                         alert('Failed to delete food:' + data.message)
@@ -220,44 +224,47 @@ document.addEventListener('DOMContentLoaded', ()=>{
         }
     }
 
-     // function to add new food
-function addNewfood(form) {
-    form.addEventListener('submit', function (event){
-        event.preventDefault();
-        const foodData = {
-            food_name: document.getElementById('add_food_name').value,
-            food_price: document.getElementById('add_food_price').value,
-            food_description: document.getElementById('add_food_description').value,
-            food_quantity: document.getElementById('add_food_quantity').value,
-            available_status: document.getElementById('available').value
-        };
-        const messageDiv = document.getElementById('addFoodMessage');
-        fetch('backend/add_food.php', {
-            method: 'POST',
-            body: JSON.stringify(foodData),
-        })
-        .then(response => response.json())
-        .then(data =>{
-            if(data.success){
-                console.log('Success:', data.message);
-                        messageDiv.textContent = 'New food has been successfully added!';
-                        alert('New food has been successfully added!')
-                        location.reload();
+    // function to add new food
+    function addNewfood(form) {
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const foodData = {
+                food_name: document.getElementById('add_food_name').value,
+                food_price: document.getElementById('add_food_price').value,
+                food_description: document.getElementById('add_food_description').value,
+                food_quantity: document.getElementById('add_food_quantity').value,
+                available_status: document.getElementById('available').value
+            };
+            const messageDiv = document.getElementById('addFoodMessage');
+            if (confirm('Are you sure you want to add new Food Item?')) {
+                fetch('backend/add_food.php', {
+                    method: 'POST',
+                    body: JSON.stringify(foodData),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            console.log('Success:', data.message);
+                            messageDiv.textContent = 'New food has been successfully added!';
+                            alert('New food has been successfully added!')
+                            location.reload();
+                        }
+                        else {
+                            console.log('Error:', data.message);
+                            messageDiv.textContent = data.message;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        messageDiv.textContent = 'Error: ' + error.message;
+                        alert('An error occurred. Please Try Again Later')
+                    });
             }
-            else{
-                console.log('Error:', data.message);
-                        messageDiv.textContent = data.message;
-            }
+
         })
-        .catch(error => {
-            console.error('Error:', error);
-            messageDiv.textContent = 'Error: ' + error.message;
-            alert('An error occurred. Please Try Again Later')
-        });
-    })
-}
-const addFoodForm = document.getElementById('addFoodForm');
-addNewfood(addFoodForm);
+    }
+    const addFoodForm = document.getElementById('addFoodForm');
+    addNewfood(addFoodForm);
 
     // live search to filter table
     document.getElementById("liveSearch").addEventListener("input", filterTable);

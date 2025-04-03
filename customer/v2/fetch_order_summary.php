@@ -2,31 +2,40 @@
 include 'config.php';
 session_start();
 
-$customerId = $_SESSION["customer_id"];
-checkSession($customerId);
+$customerId = $_SESSION["customer_id"] ?? null;
 
 // Log script execution start
-logActivity("Script started for customer ID: $customerId");
+logActivity("SCRIPT START: Customer order history fetch initiated for customer ID: $customerId");
+
+// Validate session
+if (!$customerId) {
+    logActivity("ERROR: No valid session found. Customer ID missing.");
+    echo json_encode(["success" => false, "message" => "Session expired. Please log in again."]);
+    exit();
+}
 
 // Validate and sanitize inputs
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-logActivity("Getting the number of Pages set from the Front end");
+logActivity("PAGINATION: Page number set to $page");
+
 $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
-logActivity("Getting and setting the limit for the number of records per page");
+logActivity("PAGINATION: Limit set to $limit records per page");
 
 if ($page < 1 || $limit < 1) {
-    $errorMessage = "Invalid page or limit value. Page: $page, Limit: $limit";
-    logActivity("Error: $errorMessage for customer ID: $customerId");
+    $errorMessage = "Invalid page ($page) or limit ($limit). Must be positive integers.";
+    logActivity("VALIDATION FAILED: $errorMessage");
     echo json_encode(["success" => false, "message" => $errorMessage]);
     exit();
 }
 
 $offset = ($page - 1) * $limit;
+logActivity("PAGINATION: Calculated offset: $offset");
 
 try {
-    // Fetch total count of orders for the customer
+    // Fetch total count of orders
     $totalQuery = "SELECT COUNT(*) as total FROM orders WHERE customer_id = ?";
-    logActivity("Checking the total number of orders for customer ID $customerId");
+    logActivity("DATABASE: Executing total orders query: $totalQuery");
+    
     $stmt = $conn->prepare($totalQuery);
     $stmt->bind_param("i", $customerId);
     $stmt->execute();
@@ -34,18 +43,18 @@ try {
     $totalOrders = $totalResult->fetch_assoc()['total'];
     $stmt->close();
 
-    // Log total orders count
-    logActivity("Total orders found for customer ID: $customerId: $totalOrders");
+    logActivity("DATABASE RESULT: Customer $customerId has $totalOrders total orders");
 
     // Fetch paginated orders
-    logActivity("fetching Order records for customer ID $customerId");
     $query = "
         SELECT order_id, order_date, total_amount, discount, delivery_status 
         FROM orders 
         WHERE customer_id = ? 
         ORDER BY order_date DESC, delivery_status ASC 
         LIMIT ? OFFSET ?";
-
+    
+    logActivity("DATABASE: Fetching orders for customer $customerId (Page: $page, Limit: $limit)");
+    
     $stmt = $conn->prepare($query);
     $stmt->bind_param("iii", $customerId, $limit, $offset);
     $stmt->execute();
@@ -57,10 +66,11 @@ try {
     }
     $stmt->close();
 
-    // Log successful data fetch
-    logActivity("Successfully fetched orders for customer ID: $customerId. Page: $page, Limit: $limit");
+    $ordersCount = count($orders);
+    logActivity("DATABASE RESULT: Retrieved $ordersCount orders for customer $customerId");
 
     // Return the response
+    logActivity("SUCCESS: Returning order data to client");
     echo json_encode([
         "success" => true,
         "orders" => $orders,
@@ -68,16 +78,16 @@ try {
         "page" => $page,
         "limit" => $limit
     ]);
-} catch (Exception $e) {
-    // Log the error
-    $errorMessage = $e->getMessage();
-    logActivity("Error fetching orders for customer ID: $customerId. Error: $errorMessage");
 
-    // Return the error response
-    echo json_encode(["success" => false, "message" => $errorMessage]);
+} catch (Exception $e) {
+    $errorMessage = $e->getMessage();
+    logActivity("ERROR: Exception occurred - " . $errorMessage);
+    echo json_encode(["success" => false, "message" => "Server error. Please try again later."]);
+
 } finally {
-    // Close the database connection
     if (isset($conn)) {
         $conn->close();
+        logActivity("DATABASE: Connection closed");
     }
+    logActivity("SCRIPT END: Order fetch process completed");
 }

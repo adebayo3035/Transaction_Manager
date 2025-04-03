@@ -1,6 +1,5 @@
 <?php
 include 'config.php';
-include 'activity_logger.php'; // Include the logger file
 session_start();
 
 // Log the start of the script
@@ -21,6 +20,8 @@ if (isset($_SESSION['unique_id'])) {
 } elseif (isset($_SESSION['customer_id'])) {
     logActivity("Customer customer_id found in session: " . $_SESSION['customer_id']);
 }
+
+header('Content-Type: application/json');
 
 // Get pagination parameters
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
@@ -99,7 +100,8 @@ try {
         ],
         "total" => $totalPromos,
         "page" => $page,
-        "limit" => $limit
+        "limit" => $limit,
+        "message" => "Promo Record has been successfully retrieved"
     ]);
 
     // Log the successful completion of the script

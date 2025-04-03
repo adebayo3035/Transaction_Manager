@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const ordersTableBody = document.querySelector('#customer-table tbody');
             const bulkApproveBtn = document.getElementById('bulk-approve-btn');
             const bulkDeclineBtn = document.getElementById('bulk-decline-btn');
+            
+            const selectAllContainer = document.getElementById('selectAllContainer');
 
             ordersTableBody.innerHTML = ''; // Clear table content
 
@@ -33,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Show bulk action buttons
                 bulkApproveBtn.style.display = 'inline-block';
                 bulkDeclineBtn.style.display = 'inline-block';
+                selectAllContainer.style.display = 'flex';
 
                 // Event listeners for bulk action buttons
                 bulkApproveBtn.addEventListener('click', function () {
@@ -57,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Add event listener to the "Select All" checkbox
                 selectAllCheckbox.addEventListener('change', function () {
+                    
                     orderCheckboxes.forEach(checkbox => {
                         checkbox.checked = this.checked;
                         checkbox.disabled = this.checked; // Disable individual checkboxes if "Select All" is checked
@@ -97,6 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Hide bulk action buttons
                 bulkApproveBtn.style.display = 'none';
                 bulkDeclineBtn.style.display = 'none';
+                selectAllContainer.style.display = 'none';
             }
         })
         .catch(error => {

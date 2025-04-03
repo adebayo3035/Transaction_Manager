@@ -25,7 +25,7 @@ include('navbar.php');
         </div>
         <!-- <h1>View Pending Orders</h1> -->
     </div>
-    <div class="select">
+    <div class="select" id="selectAllContainer">
         <label for ="select-all"> Select All</label>
         <input type="checkbox" name="order-selectAll" id = "select-all">
     </div>

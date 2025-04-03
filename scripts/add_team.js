@@ -9,41 +9,53 @@ form.onsubmit = (e) => {
     e.preventDefault();
 };
 
-addUnitBtn.onclick = () => {
+addUnitBtn.onclick = async () => {
     if (group_name.value === "") {
         alert("Please select an option");
         return false; // Prevent form submission
-    } else if (unit_name.value === "") {
+    } 
+    
+    if (unit_name.value === "") {
         alert("Please Enter a valid Unit Name");
         return false; // Prevent form submission
-    } else {
+    }
 
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST", "backend/add_team.php", true);
-        xhr.onload = () => {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    let data = xhr.response;
-                    if (data === "success") {
-                        errorNotifier.style.display = "block";
-                        errorNotifier.textContent = "Team has been successfully Created";
-                        errorNotifier.style.color = "green";
-                        modal.style.display = none;
-                        unit_name.value = "";
-                        group_name.selectedIndex.value = " ";
-                        location.href = "groups.php";
-                    } else {
-                        errorNotifier.style.display = "block";
-                        errorNotifier.style.color = "red";
-                        errorNotifier.textContent = data;
-                        unit_name.value = "";
-                    }
-                }
-            }
-        };
+    if (!confirm("Are you sure you want to add a new Team?")) {
+        return false; // Prevent form submission if user cancels
+    }
 
+    try {
         let formData = new FormData(form);
-        xhr.send(formData);
-        return true;
+        let response = await fetch("backend/add_team.php", {
+            method: "POST",
+            body: formData,
+        });
+
+        let data = await response.text(); // Get response text
+
+        if (response.ok) {
+            if (data === "success") {
+                errorNotifier.style.display = "block";
+                errorNotifier.textContent = "Team has been successfully created";
+                errorNotifier.style.color = "green";
+
+                modal.style.display = "none";
+                unit_name.value = "";
+                group_name.selectedIndex = 0; // Reset dropdown
+                location.href = "groups.php"; // Redirect to groups page
+            } else {
+                errorNotifier.style.display = "block";
+                errorNotifier.style.color = "red";
+                errorNotifier.textContent = data;
+                unit_name.value = "";
+            }
+        } else {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+    } catch (error) {
+        console.error("Error submitting form:", error);
+        errorNotifier.style.display = "block";
+        errorNotifier.style.color = "red";
+        errorNotifier.textContent = "An error occurred while processing your request.";
     }
 };

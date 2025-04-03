@@ -238,8 +238,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateStaff(staff_details.unique_id);
             });
 
-            document.getElementById('deleteStaffBtn').addEventListener('click', () => {
-                deleteStaff(staff_details.unique_id);
+            // 1. Get the button reference (do this once at page load)
+            const deleteStaffBtn = document.getElementById('deleteStaffBtn');
+
+            // 2. Add event listener with proper error handling
+            deleteStaffBtn.addEventListener('click', async () => {
+                try {
+                    // Assuming staff_details is defined in your scope
+                    if (!staff_details?.unique_id) {
+                        throw new Error('No staff member selected');
+                    }
+                   
+                    await deleteStaff(staff_details.unique_id);
+
+                } catch (error) {
+                    console.error('Delete Staff Handler Error:', error);
+                    alert('Error', error.message || 'Failed to initiate staff deletion');
+                }
             });
         }
     }
@@ -300,32 +315,34 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    function deleteStaff(staffId) {
-        if (confirm('Are you sure you want to delete this Staff?')) {
-            fetch('backend/delete_staff.php', {
+    async function deleteStaff(staffId) {
+        const confirmation = confirm("Are you sure you want to delete this Staff?");
+        if (!confirmation) return;
+    
+        try {
+            const response = await fetch('backend/delete_staff.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ staff_id: staffId })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('Staff has been successfully deleted!');
-                        document.getElementById('orderModal').style.display = 'none';
-                        fetchStaffs(currentPage); // Refresh the driver list
-                    } else {
-                        console.error('Failed to delete Staff Records:', data.message);
-                        alert('Failed to delete Staff Records:', data.message)
-                    }
-                })
-                .catch(error => {
-                    console.error('Error deleting Staff Records:', error);
-                });
+            });
+    
+            const result = await response.json();
+    
+            if (response.ok) {
+                alert(result.success);
+                location.reload(); // Reload page after successful deletion
+            } else {
+                alert(result.error);
+                console.log(result.error);
+            }
+        } catch (error) {
+            console.error("Error deleting user:", error);
+            alert("An error occurred while trying to delete the user.");
         }
     }
-
+    
     // Close modal when the "close" button is clicked
     document.querySelectorAll('.modal .close').forEach(closeBtn => {
         closeBtn.addEventListener('click', (event) => {
@@ -374,7 +391,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const addStaffForm = document.getElementById('addStaffForm');
     const inputs = addStaffForm.querySelectorAll('input, select');
     const submitBtn = document.getElementById('submitBtn');
-    
+
     function checkFormCompletion() {
         let allFilled = true;
         inputs.forEach(input => {
@@ -388,7 +405,7 @@ document.addEventListener('DOMContentLoaded', () => {
         input.addEventListener('input', checkFormCompletion);
         input.addEventListener('change', checkFormCompletion);
     });
-    
+
     window.onload = checkFormCompletion;
     function handleFormSubmission(form) {
         form.addEventListener('submit', function (event) {
@@ -413,6 +430,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         // window.location.href = '../../Transaction_manager/dashboard.php';
                     } else {
                         console.log('Error:', data.message);
+                        alert('Error:', data.message);
                         messageDiv.textContent = data.message;
                         // alert(data.message)
                     }

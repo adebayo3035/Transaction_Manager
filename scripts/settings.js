@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const restrictAccountBtn = document.getElementById('block-account');
     const unblockBtn = document.getElementById('unblock-account');
     const unlockBtn = document.getElementById('unlock-account')
+    const reactivateBtn = document.getElementById('reactivate-account')
 
     resetQuestionAnswerBtn.onclick = (e) => {
         e.preventDefault();
@@ -48,6 +49,10 @@ document.addEventListener("DOMContentLoaded", () => {
     unlockBtn.onclick = (e) => {
         e.preventDefault();
         toggleModal("unlockModal", "flex");
+    };
+    reactivateBtn.onclick = (e) => {
+        e.preventDefault();
+        toggleModal("reactivateModal", "flex");
     };
 
     // fetch List of customers to Block or restrict
@@ -292,5 +297,102 @@ document.addEventListener("DOMContentLoaded", () => {
 
     cancelButton3.onclick = () => {
         confirmationModal3.style.display = "none";  // Close modal without submitting
+    };
+
+
+    // Function to retrieve deactivated accounts and  Re-activate an account
+    const typeSelect = document.getElementById('accountTypes');
+    const accountSelect = document.getElementById('deactivatedAccounts');
+
+    // When account type changes
+    typeSelect.addEventListener('change', async () => {
+        console.log(`Account type changed to: ${typeSelect.value}`);
+
+        if (!typeSelect.value) {
+            accountSelect.innerHTML = '<option value="">Select type first</option>';
+            console.log("Reset account dropdown - no type selected");
+            return;
+        }
+
+        accountSelect.innerHTML = '<option value="">Loading...</option>';
+        console.log("Initiated account loading");
+
+        const formData = new FormData();
+        formData.append('accountType', typeSelect.value);
+
+        try {
+            console.log("Sending request to backend");
+            const response = await fetch('backend/fetch_deactivated_account.php', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+            console.log(`Received response: ${JSON.stringify(data)}`);
+
+            if (data.success) {
+                accountSelect.innerHTML = data.accounts.map(a => 
+                    `<option value="${a.id}">${a.id} - (${a.name})</option>`
+                ).join('');
+                // accountSelect.innerHTML = '';
+                // data.accounts.forEach(a => {
+                //     accountSelect.innerHTML += `<option value="${a.email}">${a.id} - ${a.name}</option>`;
+                // });
+                console.log(`Loaded ${data.accounts.length} accounts`);
+            } else {
+                accountSelect.innerHTML = '<option value="">Error loading accounts</option>';
+                console.log("Failed to load accounts: " + (data.message || 'Unknown error'));
+            }
+
+        } catch (error) {
+            console.log("Network error: " + error.message);
+            accountSelect.innerHTML = '<option value="">Network error</option>';
+        }
+    });
+
+
+    const reactivateAccountForm = document.getElementById('reactivateAccountForm');
+    const confirmationModal4 = document.getElementById("confirmationModal4");
+    const confirmButton4 = document.getElementById("confirmButton4");
+    const cancelButton4 = document.getElementById("cancelButton4");
+    let userIDs;
+    reactivateAccountForm.onsubmit = (e) => {
+        e.preventDefault();
+
+        // Get values from the form
+        userIDs = document.getElementById("deactivatedAccounts").value;
+        accountTypes = document.getElementById('accountTypes').value;
+        secretAnswer = document.getElementById('secret_answer').value;
+
+        // Show confirmation modal
+        confirmationModal4.style.display = "flex";
+    };
+    // Confirmation modal buttons
+    confirmButton4.onclick = async () => {
+        // Proceed with the request after confirmation
+        confirmationModal4.style.display = "none";  // Close the modal
+        try {
+            const response = await fetch('backend/reactivate_account.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userID: userIDs, accountType: accountTypes, secretAnswer: secretAnswer })
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                alert(`Account has been successfully Re-activated'}!`);
+                toggleModal("reactivateModal");  // Assuming this closes the main form modal
+                location.reload();
+            } else {
+                alert(`Error Unlocking account: ${data.message}`);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert("An error occurred. Please try again.");
+        }
+    };
+
+    cancelButton4.onclick = () => {
+        confirmationModal4.style.display = "none";  // Close modal without submitting
     };
 });

@@ -30,55 +30,66 @@ document.addEventListener('DOMContentLoaded', () => {
     updateDateTimeInputs("start_date", "end_date");
 
     const limit = 10;
-    let currentPage = 1;
+let currentPage = 1;
 
-    function fetchPromos(page = 1) {
-        fetch(`backend/get_promo.php?page=${page}&limit=${limit}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
+function fetchPromos(page = 1) {
+    fetch(`backend/get_promo.php?page=${page}&limit=${limit}`)
+        .then(response => {
+            console.log("Raw Response:", response);
+            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+            return response.json();
+        })
+        .then(data => {
+            console.log("API Response:", data);
+
+            if (data.success && data.promos && Array.isArray(data.promos.all) && data.promos.all.length > 0) {
+                updateTable(data.promos.all);
+                updatePagination(data.total, data.page, data.limit);
+            } else {
+                displayNoPromosMessage();
+                console.error('Failed to fetch Promo Details:', data.message || "Invalid response");
             }
         })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success && data.promos.length > 0) {
-                    updateTable(data.promos.all);
-                    updatePagination(data.total, data.page, data.limit);
-                } else {
-                    const ordersTableBody = document.querySelector('#ordersTable tbody');
-                    ordersTableBody.innerHTML = '';
-                    const noOrderRow = document.createElement('tr');
-                    noOrderRow.innerHTML = `<td colspan="6" style="text-align:center;">No Promo Records found at the moment</td>`;
-                    ordersTableBody.appendChild(noOrderRow);
-                    console.error('Failed to fetch Promo Details:', data.message);
-                }
-            })
-            .catch(error => console.error('Error fetching data:', error));
-    }
-
-    function updateTable(promos) {
-        const ordersTableBody = document.querySelector('#ordersTable tbody');
-        ordersTableBody.innerHTML = '';
-        promos.forEach(promo => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${promo.promo_code}</td>
-                <td>${promo.promo_name}</td>
-                <td>${promo.start_date}</td>
-                <td>${promo.end_date}</td>
-                <td>${promo.status}</td>
-                <td><button class="view-details-btn" data-promo-id="${promo.promo_id}">View Details</button></td>
-            `;
-            ordersTableBody.appendChild(row);
+        .catch(error => {
+            console.error("Error fetching data:", error);
+            displayNoPromosMessage();
         });
+}
 
-        document.querySelectorAll('.view-details-btn').forEach(button => {
-            button.addEventListener('click', (event) => {
-                const promoId = event.target.getAttribute('data-promo-id');
-                fetchPromoDetails(promoId);
-            });
+function updateTable(promos) {
+    const ordersTableBody = document.querySelector('#ordersTable tbody');
+    ordersTableBody.innerHTML = '';
+
+    promos.forEach(promo => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${promo.promo_code}</td>
+            <td>${promo.promo_name}</td>
+            <td>${promo.start_date}</td>
+            <td>${promo.end_date}</td>
+            <td>${promo.status}</td>
+            <td><button class="view-details-btn" data-promo-id="${promo.promo_id}">View Details</button></td>
+        `;
+        ordersTableBody.appendChild(row);
+    });
+
+    document.querySelectorAll('.view-details-btn').forEach(button => {
+        button.addEventListener('click', (event) => {
+            const promoId = event.target.getAttribute('data-promo-id');
+            fetchPromoDetails(promoId);
         });
-    }
+    });
+}
+
+function displayNoPromosMessage() {
+    const ordersTableBody = document.querySelector('#ordersTable tbody');
+    ordersTableBody.innerHTML = `<tr><td colspan="6" style="text-align:center;">No Promo Records found at the moment</td></tr>`;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    fetchPromos(currentPage);
+});
+
 
     function updatePagination(totalItems, currentPage, itemsPerPage) {
         const paginationContainer = document.getElementById('pagination');
@@ -278,7 +289,9 @@ document.addEventListener('DOMContentLoaded', () => {
             max_discount: parseFloat(document.getElementById('max_discount').value),
             status: parseInt(document.getElementById('status').value)
         };
-
+        if(!confirm("Are you sure you want to Update Promo Details?")){
+            return;
+        }
         // Send the update request
         fetch('backend/update_promo.php', {
             method: 'POST',
@@ -403,7 +416,9 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault();
             const formData = new FormData(this);
             const messageDiv = document.getElementById('addPromoMessage');
-
+            if(!confirm("Are you sure you want to add new Promo?")){
+                return;
+            }
             fetch('backend/create_promo.php', {
                 method: 'POST',
                 body: formData,

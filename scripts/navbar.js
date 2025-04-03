@@ -36,6 +36,9 @@ function fetchUserData() {
 // Handle logout
 document.getElementById('logoutButton').addEventListener('click', function() {
     if (!userId) return;
+    if(!confirm("Are you sure you want to logout?")){
+        return;
+    }
     fetch('backend/logout.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

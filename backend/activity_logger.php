@@ -9,8 +9,14 @@ function logActivity($message) {
     $uri = $_SERVER['REQUEST_URI'];
     $currentUrl = $protocol . $host . $uri;
 
-    // Append the URL and message to the log
-    $logMessage = "[$timestamp] [Page: $currentUrl] $message" . PHP_EOL;
+    // Get the file and line number where logActivity was called
+    $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+    $caller = $backtrace[0]; // Get the first element of the backtrace
+    $file = $caller['file']; // File where logActivity was called
+    $line = $caller['line']; // Line number where logActivity was called
+
+    // Append the URL, file, line number, and message to the log
+    $logMessage = "[$timestamp] [Page: $currentUrl] [File: $file, Line: $line] $message" . PHP_EOL;
 
     // Append the log message to the log file
     file_put_contents($logFile, $logMessage, FILE_APPEND);

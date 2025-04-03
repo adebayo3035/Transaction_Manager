@@ -21,14 +21,12 @@ const toggleModal = (modalId, display = "none") => {
 document.addEventListener("DOMContentLoaded", () => {
     const resetPasswordBtn = document.getElementById("resetPasswordBtn"),
         getSecretQuestionBtn = document.getElementById('getSecretQuestionBtn'),
-        reactivateAccountBtn = document.getElementById('reactivateAccountBtn'),
         modal1 = document.getElementById("passwordResetModal"),
         modal2 = document.getElementById("getSecretQuestionModal"),
-        modal3 = document.getElementById("accountActivationModal"),
         closeModalBtns = document.querySelectorAll(".close");
 
     // Initialize modals as hidden
-    [modal1, modal2, modal3].forEach(modal => modal.style.display = "none");
+    [modal1, modal2].forEach(modal => modal.style.display = "none");
 
     // Toggle modals for reset password and secret question
     resetPasswordBtn.onclick = (e) => {
@@ -40,10 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         toggleModal("getSecretQuestionModal", "flex");
     };
-    reactivateAccountBtn.onclick = (e) => {
-        e.preventDefault();
-        toggleModal("accountActivationModal", "flex");
-    };
 
     // Close modals when 'x' is clicked
     closeModalBtns.forEach(closeBtn => {
@@ -54,8 +48,6 @@ document.addEventListener("DOMContentLoaded", () => {
     window.onclick = (e) => {
         if (e.target == modal1) toggleModal("passwordResetModal");
         if (e.target == modal2) toggleModal("getSecretQuestionModal");
-        if (e.target == modal3) toggleModal("accountActivationModal");
-
     };
 
     // Reset Password Form Submission
@@ -158,17 +150,13 @@ document.addEventListener("DOMContentLoaded", () => {
             if (response.ok && data.success) {
                 // Disable all form elements and indicate processing
                 disableForm(loginForm);
-                document.getElementById('resetPasswordBtn').style.cursor = "not-allowed";
-                document.getElementById('resetPasswordBtn').style.opacity = "0.6";
-                document.getElementById('getSecretQuestionBtn').style.cursor = "not-allowed";
-                document.getElementById('getSecretQuestionBtn').style.opacity = "0.6";
 
                 // Notify user of successful login
                 displayMessage("Login successful! Redirecting...");
 
                 // Wait for 3 seconds before redirecting
-                await new Promise(resolve => setTimeout(resolve, 0));
-                console.log("Login is now successful")
+                await new Promise(resolve => setTimeout(resolve, 3000));
+
                 // Redirect to splash screen
                 window.location.href = "splashscreen.php";
             } else {
@@ -228,40 +216,5 @@ document.addEventListener("DOMContentLoaded", () => {
         form.style.opacity = "0.6"; // Optional: Reduce opacity to indicate it's disabled
         form.style.pointerEvents = "none"; // Prevent interactions
     }
-
-    //Account Reactivation Request Method
-    document.getElementById("accountActivationForm").addEventListener("submit", async function (event) {
-        event.preventDefault();
-    
-        const emailOrPhone = document.getElementById("emailActivateAccount").value;
-        const reason = document.getElementById("reason").value;
-        const secretAnswer = document.getElementById("SecretAnswer").value;
-    
-        const requestData = {
-            emailOrPhone,
-            reason,
-            secretAnswer
-        };
-    
-        try {
-            const response = await fetch("backend/account_reactivation_request.php", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(requestData)
-            });
-    
-            const result = await response.json();
-            alert(result.message);
-            if (result.success) {
-                document.getElementById("accountActivationForm").reset();
-            }
-        } catch (error) {
-            console.error("Error submitting reactivation request:", error);
-            alert("An error occurred. Please try again.");
-        }
-    });
-    
 
 });

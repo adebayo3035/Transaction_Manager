@@ -252,8 +252,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Function to load groups and populate the select dropdown
-     // Function to load groups and populate the select dropdown
-     function loadGroups(selectedGroupId = null) {
+    // Function to load groups and populate the select dropdown
+    function loadGroups(selectedGroupId = null) {
         fetch('backend/fetch_groups.php', {
             method: 'GET',
             headers: {
@@ -357,27 +357,28 @@ document.addEventListener('DOMContentLoaded', () => {
             group: document.getElementById('selectGroup').value,
             unit: document.getElementById('selectUnit').value
         };
-
-        fetch('backend/update_customer.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(customerData)
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Customer Details has been updated successfully.');
-                    document.getElementById('orderModal').style.display = 'none';
-                    fetchCustomers(currentPage); // Refresh the table after update
-                } else {
-                    alert('Failed to update Customer Records: ' + data.message);
-                }
+        if (confirm('Are you sure you want to Update Customer Information?')) {
+            fetch('backend/update_customer.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(customerData)
             })
-            .catch(error => {
-                console.error('Error updating Customer Records:', error);
-            });
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Customer Details has been updated successfully.');
+                        document.getElementById('orderModal').style.display = 'none';
+                        fetchCustomers(currentPage); // Refresh the table after update
+                    } else {
+                        alert('Failed to update Customer Records: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating Customer Records:', error);
+                });
+        }
     }
 
 
@@ -528,41 +529,43 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault();
             const formData = new FormData(this);
             const messageDiv = document.getElementById('addCustomerMessage');
-
-            fetch('backend/add_customer.php', {
-                method: 'POST',
-                // headers: {
-                //     'Content-Type': 'application/x-www-form-urlencoded'
-                // },
-                body: formData,
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        console.log('Success:', data.message);
-                        messageDiv.textContent = 'Customer has been successfully Onboarded!';
-                        messageDiv.style.color = 'green';
-                        messageDiv.style.fontSize = '12';
-                        alert('Customer has been successfully Onboarded!')
-                        location.reload();
-                        // window.location.href = '../../Transaction_manager/dashboard.php';
-                    } else {
-                        console.log('Error:', data.message);
-                        alert('Error', data.message);
-                        messageDiv.textContent = data.message;
+            if (confirm('Are you sure you want to add new Customer?')) {
+                fetch('backend/add_customer.php', {
+                    method: 'POST',
+                    // headers: {
+                    //     'Content-Type': 'application/x-www-form-urlencoded'
+                    // },
+                    body: formData,
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            console.log('Success:', data.message);
+                            messageDiv.textContent = 'Customer has been successfully Onboarded!';
+                            messageDiv.style.color = 'green';
+                            messageDiv.style.fontSize = '12';
+                            alert('Customer has been successfully Onboarded!')
+                            location.reload();
+                            // window.location.href = '../../Transaction_manager/dashboard.php';
+                        } else {
+                            console.log('Error:', data.message);
+                            alert('Error', data.message);
+                            messageDiv.textContent = data.message;
+                            messageDiv.style.color = 'red';
+                            messageDiv.style.fontSize = '12';
+                            // alert(data.message)
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Error:', error);
+                        messageDiv.textContent = 'Error: ' + error.message;
                         messageDiv.style.color = 'red';
                         messageDiv.style.fontSize = '12';
-                        // alert(data.message)
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Error:', error);
-                    messageDiv.textContent = 'Error: ' + error.message;
-                    messageDiv.style.color = 'red';
-                    messageDiv.style.fontSize = '12';
-                    alert('An error occurred. Please Try Again Later')
-                });
+                        alert('An error occurred. Please Try Again Later')
+                    });
+            }
+
         });
     }
     loadGroupsOnboarding();

@@ -51,19 +51,20 @@ try {
             echo json_encode(['status' => 'error', 'message' => 'Start date must be before end date.']);
             exit;
         }
-        // Check for duplicate promo name, excluding the current Promo Offer
-        $checkQuery = "SELECT promo_name FROM promo WHERE promo_name = ? AND promo_code != ?";
-        $stmt = $conn->prepare($checkQuery);
-        $stmt->bind_param("si", $promoName, $promoCode);
-        $stmt->execute();
-        $stmt->store_result();
 
-        if ($stmt->num_rows > 0) {
-            echo json_encode(['status' => false, 'message' => 'Promo name already exists. Please try another name.']);
-            exit();
-        }
-        $stmt->close();
         try {
+            // Check for duplicate promo name, excluding the current Promo Offer
+            $checkQuery = "SELECT promo_name FROM promo WHERE promo_name = ?";
+            $stmt = $conn->prepare($checkQuery);
+            $stmt->bind_param("s", $promoName);
+            $stmt->execute();
+            $stmt->store_result();
+
+            if ($stmt->num_rows > 0) {
+                echo json_encode(['status' => false, 'message' => 'Promo name already exists. Please try another name.']);
+                exit();
+            }
+            $stmt->close();
             $conn->begin_transaction();
             $stmt = $conn->prepare("INSERT INTO promo (
                 promo_code, 

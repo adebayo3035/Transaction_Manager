@@ -7,9 +7,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(["error" => "Method not allowed"]);
     exit;
 }
-function destroyDriverSession($uniqueId)
+function destroyAdminSession($uniqueId)
 {
-    $logoutEndpoint = "http://localhost/transaction_manager/driver/v2/logout.php"; // 
+    $logoutEndpoint = "http://localhost/transaction_manager/backend/logout.php"; // Ensure this URL is correct
 
     $data = ['logout_id' => $uniqueId];
     $options = [

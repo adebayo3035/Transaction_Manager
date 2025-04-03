@@ -279,29 +279,31 @@ document.addEventListener('DOMContentLoaded', () => {
             status: document.getElementById('status').value,
             restriction: document.getElementById('restriction').value
         };
-
-        fetch('backend/update_driver.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(driverData)
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Driver updated successfully.');
-                    document.getElementById('orderModal').style.display = 'none';
-                    fetchDrivers(currentPage); // Refresh the table after update
-                } else {
-                    console.error('Failed to Update driver:', data.message)
-                    alert('Failed to update driver: ' + data.message);
-
-                }
+        if (confirm('Are you sure you want to Update Driver Information?')){
+            fetch('backend/update_driver.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(driverData)
             })
-            .catch(error => {
-                console.error('Error updating driver:', error);
-            });
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Driver Information Updated successfully.');
+                        document.getElementById('orderModal').style.display = 'none';
+                        fetchDrivers(currentPage); // Refresh the table after update
+                    } else {
+                        console.error('Failed to Update driver:', data.message)
+                        alert('Failed to update driver: ' + data.message);
+    
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating driver:', error);
+                });
+        }
+       
     }
 
 

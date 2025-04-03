@@ -3,7 +3,7 @@ header('Content-Type: application/json');
 
 // Include database connection file
 include('config.php');
-include('activity_logger.php'); // Include the logger file
+
 
 // Log the start of the script
 logActivity("Fetching random customer names script started.");

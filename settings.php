@@ -11,16 +11,17 @@
 
 <body>
     <?php include 'navbar.php'; ?> <!-- Include the navbar -->
-    
+
 
     <div class="container">
         <h1>Explore Quick Links</h1>
         <ul class="links-list">
-            <li><button id = "reset-link" style="background-color: #000;">Reset Secret Question and Answer</button></li>
+            <li><button id="reset-link" style="background-color: #000;">Reset Secret Question and Answer</button></li>
             <li><button id="block-account" style="background-color: #f44336;">Restrict/Block Account</button></li>
             <li><button id="unblock-account" style="background-color: orange;">Unblock/Remove Lien</button></li>
             <li><button id="unlock-account" style="background-color: #111827;">Unlock Account</button></li>
-            
+            <li><button id="reactivate-account" style="background-color: green">Re-activate Account</button></li>
+
         </ul>
     </div>
 
@@ -97,8 +98,8 @@
     </div>
 
 
-     <!-- Modal Structure to remove Restriction and Unblock Account -->
-     <div id="removeRestrictionModal" class="modal">
+    <!-- Modal Structure to remove Restriction and Unblock Account -->
+    <div id="removeRestrictionModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Remove Restrict or Unblock Account</h2>
@@ -133,16 +134,16 @@
         </div>
     </div>
 
-     <!-- Modal to Unlock Account -->
-     <div id="unlockModal" class="modal">
+    <!-- Modal to Unlock Account -->
+    <div id="unlockModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Unlock Account</h2>
             <form id="unlockAccountForm" autocomplete="off">
-            <div class="input-box">
+                <div class="input-box">
                     <label for="accountType">Select Account Type</label>
                     <select name="accountType" id="accountType" required>
-                    <option value="">-- Select Account Type -- </option>
+                        <option value="">-- Select Account Type -- </option>
                         <option value="Customer">Customer's Account</option>
                         <option value="Driver">Driver's Account</option>
                         <option value="Staff">Staff Account</option>
@@ -150,7 +151,8 @@
                 </div>
                 <div class="input-box">
                     <label for="userID">E-mail or Phone Number</label>
-                    <input type="text" id="userID" name="userID" placeholder ="Enter Phone Number or E-mail Address " required>
+                    <input type="text" id="userID" name="userID" placeholder="Enter Phone Number or E-mail Address "
+                        required>
                 </div>
 
                 <input type="submit" class="button" id="unlockBtn" value="Submit">
@@ -165,6 +167,49 @@
             <p id="confirmationMessage3">Are you sure you want to proceed?</p>
             <button id="confirmButton3" class="confirmButton">Yes</button>
             <button id="cancelButton3" class="cancelButton">No</button>
+        </div>
+    </div>
+
+    <!-- Modal to Reactivate Account -->
+    <div id="reactivateModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Re-activate Account</h2>
+            <form id="reactivateAccountForm" autocomplete="off">
+                <div class="input-box">
+                    <label for="accountType">Select Account Type</label>
+                    <select name="accountType" id="accountTypes" required>
+                        <option value="">-- Select Account Type -- </option>
+                        <option value="customers">Customer's Account</option>
+                        <option value="driver">Driver's Account</option>
+                        <option value="admin_tbl">Staff Account</option>
+                    </select>
+                </div>
+
+                <div class="input-box">
+                    <label for="deactivatedAccounts">Deactivated Accounts</label>
+                    <select id="deactivatedAccounts">
+                        <option value="">Select type first</option>
+                    </select>
+                </div>
+                <div class="input-box">
+                    <label for="secretAnswer">Enter Secret Answer</label>
+                    <input type="password" id="secret_answer" name="secretAnswer"
+                        placeholder="Enter the Deactivated Staff Secret Answer... " required>
+                </div>
+
+                <input type="submit" class="button" id="reactivateBtn" value="Re-activate Account">
+            </form>
+
+        </div>
+
+    </div>
+    <div id="confirmationModal4" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="confirmationMessage4">Are you sure you want to proceed?</p>
+            <button id="confirmButton4" class="confirmButton">Yes</button>
+            <button id="cancelButton4" class="cancelButton">No</button>
         </div>
     </div>
 

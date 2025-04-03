@@ -1,0 +1,17 @@
+[2025-03-31 18:39:50][C:\xampp\htdocs\Transaction_manager\backend\delete_staff.php:17] Invalid request method
+[2025-03-31 18:39:50][C:\xampp\htdocs\Transaction_manager\backend\delete_staff.php:144] ERROR 405: Invalid request method
+[2025-03-31 18:40:20][C:\xampp\htdocs\Transaction_manager\backend\delete_staff.php:32] No active session detected
+[2025-03-31 18:40:20][C:\xampp\htdocs\Transaction_manager\backend\delete_staff.php:144] ERROR 401: Unauthorized: No active session
+[2025-03-31 18:42:10][C:\xampp\htdocs\Transaction_manager\backend\delete_staff.php:52] User not found: 
+[2025-03-31 18:42:10][C:\xampp\htdocs\Transaction_manager\backend\delete_staff.php:144] ERROR 404: User not found
+[2025-03-31 18:42:54][C:\xampp\htdocs\Transaction_manager\backend\delete_staff.php:52] User not found: 
+[2025-03-31 18:42:54][C:\xampp\htdocs\Transaction_manager\backend\delete_staff.php:144] ERROR 404: User not found
+[2025-03-31 18:52:05][C:\xampp\htdocs\Transaction_manager\backend\delete_staff.php:32] No active session detected
+[2025-03-31 18:52:05][C:\xampp\htdocs\Transaction_manager\backend\delete_staff.php:144] ERROR 401: Unauthorized: No active session
+[2025-03-31 18:55:24][C:\xampp\htdocs\Transaction_manager\backend\delete_staff.php:32] No active session detected
+[2025-03-31 18:55:24][C:\xampp\htdocs\Transaction_manager\backend\delete_staff.php:144] ERROR 401: Unauthorized: No active session
+[2025-03-31 21:04:11][C:\xampp\htdocs\Transaction_manager\backend\delete_staff.php:35] Success: User 22675443 soft-deleted 424042300
+[2025-03-31 21:10:15][C:\xampp\htdocs\Transaction_manager\backend\delete_staff.php:51] User not found: 22675443
+[2025-03-31 21:10:15][C:\xampp\htdocs\Transaction_manager\backend\delete_staff.php:143] ERROR 404: User not found
+[2025-03-31 21:11:27][C:\xampp\htdocs\Transaction_manager\backend\delete_staff.php:51] User not found: 22675443
+[2025-03-31 21:11:27][C:\xampp\htdocs\Transaction_manager\backend\delete_staff.php:143] ERROR 404: User not found

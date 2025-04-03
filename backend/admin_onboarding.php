@@ -51,24 +51,27 @@ if (!empty($firstname) && !empty($lastname) && !empty($email) && !empty($phone) 
     if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
         // Check for duplicate email
-        $sql_email = $conn->prepare("SELECT * FROM admin_tbl WHERE email = ?");
-        $sql_email->bind_param('s', $email);
-        $sql_email->execute();
-        $sql_email->store_result();
-        if ($sql_email->num_rows > 0) {
-            echo json_encode(['success' => false, 'message' => "Email already exists. Please use a different email."]);
-            exit();
-        }
-
-        // Check for duplicate phone number
-        $sql_phone = $conn->prepare("SELECT * FROM admin_tbl WHERE phone = ?");
-        $sql_phone->bind_param('s', $phone);
-        $sql_phone->execute();
-        $sql_phone->store_result();
-        if ($sql_phone->num_rows > 0) {
-            echo json_encode(['success' => false, 'message' => "Phone Number already exists. Please use a different phone number."]);
-            exit();
-        }
+        $sql_check = $conn->prepare("SELECT 
+        SUM(email = ?) AS email_exists,
+        SUM(phone = ?) AS phone_exists
+    FROM admin_tbl");
+    $sql_check->bind_param('ss', $email, $phone);
+    $sql_check->execute();
+    $result = $sql_check->get_result();
+    $row = $result->fetch_assoc();
+    
+    $errors = [];
+    if ($row['email_exists'] > 0) {
+        $errors['email'] = "Email already exists";
+    }
+    if ($row['phone_exists'] > 0) {
+        $errors['phone'] = "Phone already exists";
+    }
+    
+    if (!empty($errors)) {
+        echo json_encode(['success' => false, 'message' => $errors]);
+        exit();
+    }
 
         // Handle file upload
         if (isset($_FILES['photo'])) {

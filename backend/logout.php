@@ -1,58 +1,106 @@
 <?php
 session_start();
-
-// Set the content type to application/json
 header('Content-Type: application/json');
+include_once "config.php";
 
-if (isset($_SESSION['unique_id'])) {
-    include_once "config.php";
+// Logging function with timestamp and context
+// function logActivity($message) {
+//     $logFile = __DIR__ . '/logout_activity.log';
+//     $timestamp = date('Y-m-d H:i:s');
+//     $sessionId = session_id();
+//     $remoteAddr = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+//     $userId = $_SESSION['unique_id'] ?? 'system';
+    
+//     $logMessage = "[$timestamp][Session:$sessionId][IP:$remoteAddr][User:$userId] $message\n";
+//     file_put_contents($logFile, $logMessage, FILE_APPEND);
+// }
 
-    // Check if the request method is POST
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Get the raw POST data
-        $data = json_decode(file_get_contents('php://input'), true);
+try {
+    logActivity("Logout process initiated");
 
-        // Use POST to get logout_id
-        if (isset($data['logout_id'])) {
-            $logout_id = mysqli_real_escape_string($conn, $data['logout_id']);
-
-            // Step 1: Retrieve the session_id using $logout_id
-            $stmt = $conn->prepare("SELECT session_id FROM admin_active_sessions WHERE unique_id = ?");
-            $stmt->bind_param("s", $logout_id);
-            $stmt->execute();
-            $stmt->bind_result($session_id);
-            $stmt->fetch();
-            $stmt->close();
-
-            if ($session_id) {
-                // Step 2: Update the status to 'Inactive'
-                $stmt = $conn->prepare("UPDATE admin_active_sessions SET status = 'Inactive' WHERE session_id = ?");
-                $stmt->bind_param("s", $session_id);
-                $stmt->execute();
-                $stmt->close();
-                
-                // Destroy the session
-                session_unset();
-                session_destroy();
-
-                // Return a success response
-                echo json_encode(['success' => true, "message" => "You have been successfully logged out"]);
-                exit();
-            } else {
-                echo json_encode(['success' => false, 'error' => 'Failed to retrieve session ID for the provided logout ID.']);
-                exit();
-            }
-        } else {
-            echo json_encode(['success' => false, 'error' => 'Logout ID missing.']);
-            exit();
-        }
-    } else {
-        // Handle invalid request method
-        echo json_encode(['success' => false, 'error' => 'Invalid request method.']);
-        exit();
+    // Validate request method
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        logActivity("Invalid request method attempted: " . $_SERVER['REQUEST_METHOD']);
+        throw new Exception('Invalid request method.', 405);
     }
-} else {
-    // User is not logged in
-    echo json_encode(['success' => false, 'error' => 'User not logged in.']);
-    exit();
+
+    // Get and validate input
+    $data = json_decode(file_get_contents('php://input'), true);
+    if (!isset($data['logout_id'])) {
+        logActivity("Missing logout_id in request payload");
+        throw new Exception('Logout ID missing.', 400);
+    }
+
+    $logout_id = mysqli_real_escape_string($conn, $data['logout_id']);
+    logActivity("Processing logout for user: $logout_id");
+
+    // Step 1: Retrieve session data
+    $stmt = $conn->prepare("SELECT session_id, status FROM admin_active_sessions WHERE unique_id = ?");
+    if (!$stmt) {
+        logActivity("DB Prepare failed: " . $conn->error);
+        throw new Exception('Database error', 500);
+    }
+    
+    $stmt->bind_param("s", $logout_id);
+    if (!$stmt->execute()) {
+        logActivity("DB Query failed: " . $stmt->error);
+        throw new Exception('Database error', 500);
+    }
+
+    $result = $stmt->get_result();
+    $userSession = $result->fetch_assoc();
+    $stmt->close();
+
+    if (!$userSession) {
+        logActivity("No active session found for user: $logout_id");
+        throw new Exception('No active session found for this user.', 404);
+    }
+
+    $session_id = $userSession['session_id'];
+    logActivity("Found active session: $session_id (Status: {$userSession['status']})");
+
+    // Step 2: Invalidate session in DB
+    $stmt = $conn->prepare("UPDATE admin_active_sessions SET status = 'Inactive' WHERE session_id = ?");
+    if (!$stmt) {
+        logActivity("DB Prepare failed: " . $conn->error);
+        throw new Exception('Database error', 500);
+    }
+    
+    $stmt->bind_param("s", $session_id);
+    if (!$stmt->execute()) {
+        logActivity("DB Update failed: " . $stmt->error);
+        throw new Exception('Database error', 500);
+    }
+    
+    $affectedRows = $stmt->affected_rows;
+    $stmt->close();
+    logActivity("Session invalidated in DB. Affected rows: $affectedRows");
+
+    // Step 3: Destroy session
+    session_write_close();
+    session_id($session_id);
+    session_start();
+    
+    $sessionDataBefore = $_SESSION ?? [];
+    session_destroy();
+    logActivity("Session destroyed. Previous session data: " . json_encode($sessionDataBefore));
+
+    // Success response
+    logActivity("Logout successful for user: $logout_id");
+    echo json_encode([
+        'success' => true,
+        'message' => "User successfully logged out",
+        'logout_time' => date('Y-m-d H:i:s')
+    ]);
+
+} catch (Exception $e) {
+    http_response_code($e->getCode() ?: 500);
+    logActivity("ERROR {$e->getCode()}: {$e->getMessage()}");
+    echo json_encode([
+        'success' => false,
+        'error' => $e->getMessage(),
+        'code' => $e->getCode()
+    ]);
+} finally {
+    if (isset($conn)) $conn->close();
 }

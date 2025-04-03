@@ -95,6 +95,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to mark notification as read
     function markNotificationAsRead(notificationId) {
+        if(!confirm("Continue to mark notifications as read?")){
+            return;
+        }
         fetch('backend/update_notification.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
