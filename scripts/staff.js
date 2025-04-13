@@ -20,8 +20,22 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    updateTable(data.staffs);
+                    updateTable(data.staffs, data.logged_in_user_role);
                     updatePagination(data.total, data.page, data.limit);
+                    const adminActionBtn = document.getElementById('customer-form');
+
+                    if (data.logged_in_user_role === "Super Admin") {
+                        // Check if the link already exists to prevent duplication
+                        const existingLink = adminActionBtn.querySelector('.delete-btn');
+                        if (!existingLink) {
+                            const viewDeletedLink = document.createElement('a');
+                            viewDeletedLink.href = "deleted_staff.php";
+                            viewDeletedLink.className = "delete-btn";
+                            viewDeletedLink.textContent = "View Deactivated Staffs";
+                            viewDeletedLink.style.backgroundColor = "#000";
+                            adminActionBtn.appendChild(viewDeletedLink);
+                        }
+                    }
                 } else {
                     console.error('Failed to fetch Staff Records:', data.message);
                 }
@@ -29,12 +43,21 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => console.error('Error fetching data:', error));
     }
 
-    function updateTable(staffs) {
+    function updateTable(staffs, loggedInUserRole) {
         const ordersTableBody = document.querySelector('#ordersTable tbody');
         ordersTableBody.innerHTML = '';
+
         staffs.forEach(staff => {
             const restrictionText = staff.restriction_id === 0 ? 'Not Restricted' : 'Restricted';
             const blockText = staff.block_id === 0 ? 'Not Blocked' : 'Blocked';
+
+            // Conditionally set the Edit/View button text
+            const buttonText = loggedInUserRole === 'Admin' ? 'View Details' : 'Edit Details';
+
+            const showDeactivateBtn = staff.role === 'Admin' && loggedInUserRole === 'Super Admin';
+            const deactivateBtnHtml = showDeactivateBtn
+                ? `<td><button class="deactivate-staff" data-staff-id="${staff.unique_id}">Deactivate</button></td>`
+                : '<td></td>';
 
             const row = document.createElement('tr');
             row.innerHTML = `
@@ -44,20 +67,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${maskDetails(staff.email)}</td>
                 <td>${restrictionText}</td>
                 <td>${blockText}</td>
-                 <td>${staff.admin_status}</td>
-                <td><button class="view-details-btn" data-staff-id="${staff.unique_id}">View Details</button></td>
+                <td>${staff.admin_status}</td>
+                <td><button class="view-details-btn" data-staff-id="${staff.unique_id}">${buttonText}</button></td>
+                ${deactivateBtnHtml}
             `;
             ordersTableBody.appendChild(row);
         });
 
-        // Attach event listeners to the view details buttons
+        // Attach event listeners to the view/edit buttons
         document.querySelectorAll('.view-details-btn').forEach(button => {
-            button.addEventListener('click', (event) => {
+            button.addEventListener('click', event => {
                 const staffId = event.target.getAttribute('data-staff-id');
                 fetchStaffDetails(staffId);
             });
         });
+
+        // Attach event listeners to deactivate buttons
+        document.querySelectorAll('.deactivate-staff').forEach(button => {
+            button.addEventListener('click', event => {
+                const staffId = event.target.getAttribute('data-staff-id');
+                fetchAdminDetails(staffId);
+            });
+        });
     }
+
 
 
     function updatePagination(totalItems, currentPage, itemsPerPage) {
@@ -104,6 +137,32 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
+    // function to fetch admin details for Deactivation
+    function fetchAdminDetails(staffId) {
+        fetch(`backend/fetch_staff_details.php`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ staff_id: staffId })
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data); // Log the entire response to the console
+                if (data.success) {
+                    populateAdminDetails(data.staff_details, data.logged_in_user_role);
+                    console.log(data.logged_in_user_role);
+                    document.getElementById('staffModal').style.display = 'block';
+                } else {
+                    console.error('Failed to fetch Staff details:', data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching Staff details:', error);
+            });
+    }
+
+
     function populateStaffDetails(staff_details, logged_in_user_role) {
         const orderDetailsTable = document.querySelector('#orderDetailsTable tbody');
         const photoCell = document.querySelector('#driverPhoto');
@@ -112,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const hiddenEmailInput = `<input type="hidden" id="originalEmail" value="${staff_details.email}">`;
         const hiddenPhoneNumberInput = `<input type="hidden" id="originalPhoneNumber" value="${staff_details.phone}">`;
 
-        // Disable input fields if the logged-in user is not a "Super Admin"
+        // Disable all input fields if the logged-in user is not a "Super Admin"
         const isSuperAdmin = logged_in_user_role === 'Super Admin';
         const disableAttribute = isSuperAdmin ? '' : 'disabled';
 
@@ -213,8 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const actionButtons = `
             <tr>
                 <td colspan="2" style="text-align: center;">
-                    <button id="updateStaffBtn">Update</button>
-                    <button id="deleteStaffBtn">Delete</button>
+                    <button id="updateStaffBtn">Update Record</button>
                 </td>
             </tr>
         `;
@@ -239,25 +297,92 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             // 1. Get the button reference (do this once at page load)
-            const deleteStaffBtn = document.getElementById('deleteStaffBtn');
+            // const deleteStaffBtn = document.getElementById('deleteStaffBtn');
 
-            // 2. Add event listener with proper error handling
-            deleteStaffBtn.addEventListener('click', async () => {
-                try {
-                    // Assuming staff_details is defined in your scope
-                    if (!staff_details?.unique_id) {
-                        throw new Error('No staff member selected');
-                    }
-                   
-                    await deleteStaff(staff_details.unique_id);
+            // // 2. Add event listener with proper error handling
+            // deleteStaffBtn.addEventListener('click', async () => {
+            //     try {
+            //         // Assuming staff_details is defined in your scope
+            //         if (!staff_details?.unique_id) {
+            //             throw new Error('No staff member selected');
+            //         }
 
-                } catch (error) {
-                    console.error('Delete Staff Handler Error:', error);
-                    alert('Error', error.message || 'Failed to initiate staff deletion');
-                }
-            });
+            //         await deleteStaff(staff_details.unique_id);
+
+            //     } catch (error) {
+            //         console.error('Delete Staff Handler Error:', error);
+            //         alert('Error', error.message || 'Failed to initiate staff deletion');
+            //     }
+            // });
         }
     }
+
+    function populateAdminDetails(staff_details) {
+        const staffDetailsTable = document.querySelector('#staffDetailsTable tbody');
+        const staffPhotoCell = document.querySelector('#staffPhoto');
+
+        // Clear existing content
+        staffDetailsTable.innerHTML = '';
+
+        // Create staff details rows
+        staffDetailsTable.innerHTML = `
+            <tr>
+                <td>Staff ID</td>
+                <td><input type="text" id="staffID" value="${staff_details.unique_id || ''}" disabled></td>
+            </tr>
+            <tr>
+                <td>First Name</td>
+                <td><input type="text" id="firstname" value="${staff_details.firstname || ''}" disabled></td>
+            </tr>
+            <tr>
+                <td>Last Name</td>
+                <td><input type="text" id="lastname" value="${staff_details.lastname || ''}" disabled></td>
+            </tr>
+            <tr>
+                <td>Deactivation Reason</td>
+                <td>
+                    <textarea id="deactivationReason" placeholder="Enter reason here..."></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center;">
+                    <button id="deActivateStaffBtn">Deactivate</button>
+                </td>
+            </tr>
+        `;
+
+        // Display photo if available
+        if (staff_details.photo) {
+            staffPhotoCell.innerHTML = `<img src="backend/admin_photos/${staff_details.photo}" alt="Staff Photo" class="driver-photo">`;
+        } else {
+            staffPhotoCell.innerHTML = `<p>No photo available</p>`;
+        }
+
+        // Deactivation button handler
+        const deActivateStaffBtn = document.getElementById('deActivateStaffBtn');
+        deActivateStaffBtn.addEventListener('click', async () => {
+            try {
+                const reason = document.getElementById('deactivationReason').value.trim();
+
+                if (!staff_details?.unique_id) {
+                    alert('No staff selected.');
+                    return;
+                }
+
+                if (!reason) {
+                    alert('Please provide a deactivation reason.');
+                    return;
+                }
+
+                await deleteStaff(staff_details.unique_id, reason);
+
+            } catch (error) {
+                console.error('Delete Staff Handler Error:', error);
+                alert(`Error: ${error.message || 'Failed to deactivate staff.'}`);
+            }
+        });
+    }
+
 
     function updateStaff(staffId) {
         const emailInput = document.getElementById('email').value;
@@ -315,21 +440,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    async function deleteStaff(staffId) {
-        const confirmation = confirm("Are you sure you want to delete this Staff?");
+    async function deleteStaff(staffId, reason) {
+        const confirmation = confirm("Proceed to Deactivate Staff Account?");
         if (!confirmation) return;
-    
+
         try {
             const response = await fetch('backend/delete_staff.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ staff_id: staffId })
+                body: JSON.stringify({ staff_id: staffId, reason: reason })
             });
-    
+
             const result = await response.json();
-    
+
             if (response.ok) {
                 alert(result.success);
                 location.reload(); // Reload page after successful deletion
@@ -342,7 +467,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("An error occurred while trying to delete the user.");
         }
     }
-    
+
     // Close modal when the "close" button is clicked
     document.querySelectorAll('.modal .close').forEach(closeBtn => {
         closeBtn.addEventListener('click', (event) => {

@@ -11,6 +11,7 @@ $adminId = $_SESSION['unique_id'];
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
 $offset = ($page - 1) * $limit;
+$loggedInUserRole = $_SESSION['role'];
 
 // Fetch total count of drivers
 $totalQuery = "SELECT COUNT(*) as total FROM admin_tbl";
@@ -56,6 +57,7 @@ echo json_encode([
     "staffs" => $staffs,
     "total" => $totalStaffs,
     "page" => $page,
-    "limit" => $limit
+    "limit" => $limit,
+    'logged_in_user_role' => $loggedInUserRole
 ]);
 

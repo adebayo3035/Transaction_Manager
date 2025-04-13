@@ -1,31 +1,33 @@
 <?php return array(
     'root' => array(
-        'name' => '__root__',
+        'name' => 'abdul/transaction_manager',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '0b0572e11b19a5cb99e90258dff2beb465f2b061',
-        'type' => 'library',
+        'reference' => '87cd99553e808e89372a2b5cf4fd7e72f54088df',
+        'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
-        '__root__' => array(
+        'abdul/transaction_manager' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '0b0572e11b19a5cb99e90258dff2beb465f2b061',
-            'type' => 'library',
+            'reference' => '87cd99553e808e89372a2b5cf4fd7e72f54088df',
+            'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'tecnickcom/tcpdf' => array(
-            'pretty_version' => '6.8.2',
-            'version' => '6.8.2.0',
-            'reference' => 'f7a781073e1645062f163e058139e2f89355d420',
+        'phpmailer/phpmailer' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => 'e7b1334cf21c4d0d36abcb34223efc4a4f65f86f',
             'type' => 'library',
-            'install_path' => __DIR__ . '/../tecnickcom/tcpdf',
-            'aliases' => array(),
+            'install_path' => __DIR__ . '/../phpmailer/phpmailer',
+            'aliases' => array(
+                0 => '9999999-dev',
+            ),
             'dev_requirement' => false,
         ),
     ),

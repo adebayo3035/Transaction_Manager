@@ -229,39 +229,177 @@ document.addEventListener("DOMContentLoaded", () => {
         form.style.pointerEvents = "none"; // Prevent interactions
     }
 
-    //Account Reactivation Request Method
-    document.getElementById("accountActivationForm").addEventListener("submit", async function (event) {
-        event.preventDefault();
-    
-        const emailOrPhone = document.getElementById("emailActivateAccount").value;
-        const reason = document.getElementById("reason").value;
-        const secretAnswer = document.getElementById("SecretAnswer").value;
-    
-        const requestData = {
-            emailOrPhone,
-            reason,
-            secretAnswer
-        };
-    
-        try {
-            const response = await fetch("backend/account_reactivation_request.php", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(requestData)
-            });
-    
-            const result = await response.json();
+    // Account Reactivation and OTP generation Request Method and processing
+
+// Generate and send OTP - Now tied to the otpGenerationForm
+document.getElementById('otpGenerationForm').addEventListener('submit', async function (event) {
+    event.preventDefault();
+
+    const email = document.getElementById("emailActivateAccount").value;
+    const sendOTPButton = document.getElementById("sendOTP");
+    const responseMessage = document.getElementById("OTPResponse");
+    const requestData = { email };
+
+    // Disable button immediately after clicking
+    sendOTPButton.disabled = true;
+    sendOTPButton.textContent = "Sending...";
+    sendOTPButton.style.opacity = "0.6";
+    // sendOTPButton.style.pointerEvents = "none"; 
+
+    // Reset message display
+    responseMessage.textContent = "";
+    responseMessage.style.color = "";
+
+    try {
+        const response = await fetch("backend/send_otp.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(requestData)
+        });
+
+        const result = await response.json();
+        
+        // Display response message
+        responseMessage.textContent = result.message;
+        responseMessage.style.color = result.success ? "green" : "red";
+
+        if (result.success) {
+            // Switch to the validation tab on success
             alert(result.message);
-            if (result.success) {
-                document.getElementById("accountActivationForm").reset();
-            }
-        } catch (error) {
-            console.error("Error submitting reactivation request:", error);
-            alert("An error occurred. Please try again.");
+            switchToValidateTab();
+            
+            // Pre-fill the email in the validation form if needed
+            document.getElementById("validateEmail").value = email;
+            
+            // Keep the button disabled for 2 minutes (OTP validity period)
+            sendOTPButton.textContent = "Wait 2 minutes...";
+            setTimeout(() => {
+                sendOTPButton.disabled = false;
+                sendOTPButton.textContent = "Send OTP4";
+                sendOTPButton.style.opacity = "1"; 
+                sendOTPButton.style.cursor = "pointer"; 
+                window.location.reload();
+            }, 120000);
+        } else {
+            // If request fails, re-enable button immediately
+            sendOTPButton.disabled = false;
+            sendOTPButton.textContent = "Send OTP3";
+            sendOTPButton.style.opacity = "1"; 
+            sendOTPButton.style.cursor = "pointer"; 
         }
-    });
+    } catch (error) {
+        console.error("Error submitting OTP request:", error);
+        responseMessage.textContent = "An error occurred. Please try again.";
+        responseMessage.style.color = "red";
+
+        // Re-enable button on failure
+        sendOTPButton.disabled = false;
+        sendOTPButton.textContent = "Send OTP2";
+        sendOTPButton.style.opacity = "1"; 
+        sendOTPButton.style.cursor = "pointer"; 
+    }
+});
+
+// Form submission for account reactivation - Now tied to accountActivationForm
+document.getElementById("accountActivationForm").addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    const email = document.getElementById("emailActivateAccount").value;
+    const reason = document.getElementById("reason").value;
+    const otp = document.getElementById('otp').value;
+
+    const requestData = {
+        email,
+        reason,
+        otp
+    };
+
+    const submitButton = event.target.querySelector('input[type="submit"]');
+    const originalButtonText = submitButton.value;
     
+    try {
+        // Show loading state
+        submitButton.disabled = true;
+        submitButton.value = "Processing...";
+
+        const response = await fetch("backend/account_reactivation_request.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(requestData)
+        });
+
+        const result = await response.json();
+        
+        // Show result in a more elegant way than alert()
+        const displayResponse = document.getElementById("displayResponse");
+        displayResponse.textContent = result.message;
+        displayResponse.style.color = result.success ? "green" : "red";
+        displayResponse.style.display = "block";
+
+        if (result.success) {
+            document.getElementById("accountActivationForm").reset();
+            // Optionally switch back to first tab
+            // document.querySelector('.tab-button').click();
+        }
+    } catch (error) {
+        console.error("Error submitting reactivation request:", error);
+        document.getElementById("displayResponse").textContent = "An error occurred. Please try again.";
+        document.getElementById("displayResponse").style.color = "red";
+        document.getElementById("displayResponse").style.display = "block";
+    } finally {
+        submitButton.disabled = false;
+        submitButton.value = originalButtonText;
+    }
+});
+
+// Tab switching function (add this if not already in your code)
+function switchToValidateTab() {
+    // Hide all tab contents
+    const tabContents = document.getElementsByClassName("tab-content");
+    for (let i = 0; i < tabContents.length; i++) {
+        tabContents[i].style.display = "none";
+    }
+    
+    // Remove active class from all tab buttons
+    const tabButtons = document.getElementsByClassName("tab-button");
+    for (let i = 0; i < tabButtons.length; i++) {
+        tabButtons[i].className = tabButtons[i].className.replace(" active", "");
+    }
+    
+    // Show the validate tab and activate its button
+    document.getElementById('validateOTPTab').style.display = "block";
+    tabButtons[1].className += " active";
+}
 
 });
+
+function openTab(evt, tabName) {
+    // Hide all tab contents
+    const tabContents = document.getElementsByClassName("tab-content");
+    for (let i = 0; i < tabContents.length; i++) {
+        tabContents[i].style.display = "none";
+    }
+    
+    // Remove active class from all tab buttons
+    const tabButtons = document.getElementsByClassName("tab-button");
+    for (let i = 0; i < tabButtons.length; i++) {
+        tabButtons[i].className = tabButtons[i].className.replace(" active", "");
+    }
+    
+    // Show the current tab and add active class to the button
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+// You might want to automatically switch to validate tab after OTP generation
+// function switchToValidateTab() {
+//     document.getElementById('validateOTPTab').style.display = "block";
+//     document.getElementById('generateOTPTab').style.display = "none";
+    
+//     // Update active button
+//     const tabButtons = document.getElementsByClassName("tab-button");
+//     tabButtons[0].className = tabButtons[0].className.replace(" active", "");
+//     tabButtons[1].className += " active";
+// }

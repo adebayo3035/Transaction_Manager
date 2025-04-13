@@ -19,6 +19,7 @@
         <div id="customer-form">
             <button onclick="toggleModal('addNewStaffModal')"><i class="fa fa-plus" aria-hidden="true"></i> Add New
                 Staff</button>
+                <!-- <a href="deleted_staff.php" class="delete-btn">View  Deactivated Accounts</a> -->
         </div>
         <div class="livesearch">
             <input type="text" id="liveSearch" placeholder="Search for Order...">
@@ -38,7 +39,7 @@
                 <th>Restriction Indicator</th>
                 <th>Block Indicator</th>
                 <th>Status</th>
-                <th>Actions</th>
+                <th style="text-align: center;" colspan="2">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -48,7 +49,7 @@
     </table>
     <div id="pagination" class="pagination"></div>
 
-
+<!-- Modal to Edit and Update Staff Details -->
     <div id="orderModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -64,6 +65,22 @@
         </div>
     </div>
 
+    <!-- Modal to Delete Staff Details -->
+    <div id="staffModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Staff Information</h2>
+            <div id="staffPhoto" class="photo-container">
+
+            </div>
+            <table id="staffDetailsTable" class="ordersTable">
+                <tbody>
+                    <!-- Staff details will be automatically populated here -->
+
+                </tbody>
+            </table>
+        </div>
+    </div>
 
     <!-- Modal to add new Staff -->
     <div id="addNewStaffModal" class="modal">
