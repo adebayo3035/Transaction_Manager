@@ -43,18 +43,23 @@ try {
     // Fetch records
     $query = "
         SELECT 
-            a.unique_id AS staff_id,
-            a.firstname,
-            a.lastname,
-            l.status AS reactivation_status,
-            d.date_created AS date_deactivated
-        FROM admin_tbl a
-        INNER JOIN admin_deactivation_logs d ON a.unique_id = d.admin_id
-        LEFT JOIN admin_reactivation_logs l ON d.id = l.deactivation_log_id
-        WHERE a.delete_status = 'Yes'
-        ORDER BY d.date_created DESC
-        LIMIT ? OFFSET ?
-    ";
+    a.unique_id AS staff_id,
+    a.firstname AS staff_firstname,
+    a.lastname AS staff_lastname,
+    l.status AS reactivation_status,
+    l.id AS reactivation_id,
+    d.date_created AS date_deactivated,
+    d.deactivated_by,
+    deactivator.firstname AS deactivated_by_firstname,
+    deactivator.lastname AS deactivated_by_lastname
+FROM admin_tbl a
+INNER JOIN admin_deactivation_logs d ON a.unique_id = d.admin_id
+LEFT JOIN admin_reactivation_logs l ON d.id = l.deactivation_log_id
+LEFT JOIN admin_tbl deactivator ON d.deactivated_by = deactivator.unique_id
+WHERE a.delete_status = 'Yes'
+ORDER BY d.date_created DESC
+LIMIT ? OFFSET ?
+";
 
     $stmt = $conn->prepare($query);
     $stmt->bind_param("ii", $limit, $offset);
@@ -65,10 +70,15 @@ try {
     while ($row = $result->fetch_assoc()) {
         $deletedStaff[] = [
             'staff_id' => $row['staff_id'],
-            'firstname' => $row['firstname'],
-            'lastname' => $row['lastname'],
+            'firstname' => $row['staff_firstname'],
+            'lastname' => $row['staff_lastname'],
             'reactivation_status' => $row['reactivation_status'] ?? 'No Request',
-            'date_deactivated' => $row['date_deactivated']
+            'reactivation_id' => $row['reactivation_id'],
+            'date_deactivated' => $row['date_deactivated'],
+            'deactivated_by' => [
+                'admin_id' => $row['deactivated_by'],
+                'name' => $row['deactivated_by_firstname'] . ' ' . $row['deactivated_by_lastname']
+            ]
         ];
     }
 

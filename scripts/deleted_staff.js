@@ -55,50 +55,50 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateTable(deleted_staffs) {
         const ordersTableBody = document.querySelector('#ordersTable tbody');
         ordersTableBody.innerHTML = '';
-    
+
         deleted_staffs.forEach(staff => {
             const row = document.createElement('tr');
-    
+
             let actionButton = '';
-            if (staff.reactivation_status === 'Pending' || staff.reactivation_status === 'No Request') {
-                actionButton = `<button class="view-request-btn" data-staff-id="${staff.staff_id}">View Request</button>`;
+            if (staff.reactivation_status === 'Pending' || staff.reactivation_status === 'No Request' || staff.reactivation_status === 'Declined' || staff.reactivation_status === 'Reactivated') {
+                actionButton = `<button class="view-request-btn" data-staff-id="${staff.staff_id}" data-reactivation-id="${staff.reactivation_id}">View Request</button>`;
             }
-    
+
+            // Format deactivator information
+            const deactivatorInfo = staff.deactivated_by
+                ? `${staff.deactivated_by.admin_id} - ${staff.deactivated_by.name}`
+                : 'Unknown'; // Fallback in case deactivated_by is null
+
             row.innerHTML = `
                 <td>${staff.staff_id}</td>
                 <td>${staff.firstname}</td>
                 <td>${staff.lastname}</td>
                 <td>${staff.reactivation_status}</td>
                 <td>${staff.date_deactivated}</td>
+                <td>${deactivatorInfo}</td> <!-- New column for deactivator info -->
                 <td>${actionButton}</td>
             `;
-    
+
             ordersTableBody.appendChild(row);
         });
-    
+
         // Add event listener to all "View Request" buttons
         document.querySelectorAll('.view-request-btn').forEach(button => {
             button.addEventListener('click', async (e) => {
                 const staffId = e.target.dataset.staffId;
-                await fetchReactivationRequest(staffId);
+                const reactivationId = e.target.dataset.reactivationId;
+            await fetchReactivationRequest(staffId, reactivationId);
             });
         });
     }
 
-    // function closeModal() {
-    //     document.getElementById('reactivationModal').style.display = 'none';
-    // }
-    
-    // function openModal() {
-    //     document.getElementById('reactivationModal').style.display = 'block';
-    // }
-
-     // Close modal when the "close" button is clicked
-     document.querySelectorAll('.modal .close').forEach(closeBtn => {
+    // Close modal when the "close" button is clicked
+    document.querySelectorAll('.modal .close').forEach(closeBtn => {
         closeBtn.addEventListener('click', (event) => {
             const modal = event.target.closest('.modal'); // Find the closest modal
             if (modal) {
                 modal.style.display = 'none';
+                location.reload();
             }
         });
     });
@@ -108,120 +108,141 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.modal').forEach(modal => {
             if (event.target === modal) {
                 modal.style.display = 'none';
+                location.reload();
             }
         });
     });
 
     // function to fetch admin details for Deactivation
-    async function fetchReactivationRequest(staffId) {
-        fetch(`backend/get_reactivation_request.php?staff_id=${staffId}`)
+    async function fetchReactivationRequest(staffId, reactivationId) {
+        fetch(`backend/get_reactivation_request.php?staff_id=${staffId}&reactivation_id=${reactivationId}`)
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
                     populateReactivationRequest(data.data);
                     document.getElementById('staffModal').style.display = 'block';
                 } else {
-                    console.error('Failed to fetch Staff details:', data.message);
+                    alert("No request found: " + data.message);
                 }
             })
-            .catch(error => {
-                console.error('Error fetching Staff details:', error);
-            });
+            .catch(error => console.error('Error:', error));
     }
 
-    function populateReactivationRequest(staff_details) {
+    function populateReactivationRequest(responseData) {
         const staffDetailsTable = document.querySelector('#staffDetailsTable tbody');
-
+        const { deactivation, staff, deactivator, reactivation } = responseData;
+    
         // Clear existing content
         staffDetailsTable.innerHTML = '';
-
+    
+        // Determine if comment field should be editable
+        const isPending = reactivation?.status === 'Pending';
+        const commentValue = reactivation?.comment || '';
+    
         // Create staff details rows
         staffDetailsTable.innerHTML = `
             <tr>
                 <td>Staff ID</td>
-                <td><input type="text" id="staffID" value="${staff_details.admin_id || ''}" disabled></td>
+                <td><input type="text" value="${staff?.id || ''}" disabled></td>
             </tr>
-           <tr>
-                <td>Reactivation Reason</td>
+            <tr>
+                <td>Staff Name</td>
+                <td><input type="text" value="${staff?.firstname || ''} ${staff?.lastname || ''}" disabled></td>
+            </tr>
+            <tr>
+                <td>Deactivated By</td>
                 <td>
-                    <div id="reactivationReason"> ${staff_details.reactivation_reason || ''}</div>
+                    <input type="text" value="${
+                        deactivator ? 
+                        `${deactivator.firstname} ${deactivator.lastname} (ID: ${deactivator.id})` : 
+                        'Unknown'
+                    }" disabled>
                 </td>
             </tr>
             <tr>
-                <td>Status</td>
-                <td><input type="text" id="lastname" value="${staff_details.status || ''}" disabled></td>
+                <td>Reason for Deactivation</td>
+                <td>${deactivation?.deactivation_reason}</td>
+            </tr>
+            <tr>
+                <td>Justification</td>
+                <td>${reactivation?.reactivation_reason}</td>
+            </tr>
+            <tr>
+                <td>Reactivation Status</td>
+                <td><input type="text" value="${reactivation?.status || ''}" disabled></td>
             </tr>
             <tr>
                 <td>Date Requested</td>
-                <td><input type="text" id="lastname" value="${staff_details.date_created || ''}" disabled></td>
+                <td><input type="text" value="${reactivation?.date || ''}" disabled></td>
             </tr>
-
-             <tr>
+            <tr>
                 <td>Comment</td>
-                <td><textarea id ="reactivationReason" placeholder="Enter Comment here..."></textarea></td>
+                <td>
+                    <textarea id="reactivationComment" 
+                        ${isPending ? '' : 'disabled'}
+                        placeholder="Enter comment here...">${commentValue}</textarea>
+                </td>
             </tr>
-            
+            ${isPending ? `
             <tr>
                 <td style="text-align: center;">
                     <button id="approveBtn">Approve</button>
                 </td>
                 <td style="text-align: center;">
-                    <button id="declineBtn" style = "background-color: black;">Decline</button>
+                    <button id="declineBtn" style="background-color: black;">Decline</button>
                 </td>
             </tr>
+            ` : ''}
         `;
-
-        // Deactivation button handler
-        const deActivateStaffBtn = document.getElementById('approveBtn');
-        deActivateStaffBtn.addEventListener('click', async () => {
-            try {
-                const reason = document.getElementById('deactivationReason').value.trim();
-
-                if (!staff_details?.unique_id) {
-                    alert('No staff selected.');
-                    return;
-                }
-
-                if (!reason) {
-                    alert('Please provide a deactivation reason.');
-                    return;
-                }
-
-                await deleteStaff(staff_details.unique_id, reason);
-
-            } catch (error) {
-                console.error('Delete Staff Handler Error:', error);
-                alert(`Error: ${error.message || 'Failed to deactivate staff.'}`);
-            }
+    
+        // Add event listeners for buttons (if they exist)
+        document.getElementById('approveBtn')?.addEventListener('click', () => {
+            ReactiveateAccount(staff.id, 'Reactivated');
+        });
+    
+        document.getElementById('declineBtn')?.addEventListener('click', () => {
+            ReactiveateAccount(staff.id, 'Declined');
         });
     }
 
-    
-    // async function fetchReactivationRequest(staffId) {
-    //     fetch(`backend/get_reactivation_request.php?staff_id=${staffId}`)
-    //         .then(res => res.json())
-    //         .then(data => {
-    //             if (data.success) {
-    //                 document.getElementById('modalReason').textContent = data.reason;
-    //                 document.getElementById('modalRequestedBy').textContent = data.admin_id;
-    //                 // document.getElementById('modalRequestedDate').textContent = data.date_created;
-    
-    //                 document.getElementById('approveBtn').onclick = () => approveRequest(staffId);
-    //                 document.getElementById('declineBtn').onclick = () => declineRequest(staffId);
-    
-    //                 openModal();
-    //             } else {
-    //                 alert(data.error || "Could not fetch request details.");
-    //             }
-    //         })
-    //         .catch(err => {
-    //             console.error("Error fetching reactivation details:", err);
-    //         });
-    // }
-    
-    
-    
-    
+    function ReactiveateAccount(staff_id, action) {
+        const comment = document.getElementById('reactivationComment').value;
+
+        // Now you can send this data to your backend or process accordingly
+        console.log('Staff ID:', staff_id);
+        console.log('Action:', action);
+        console.log('Comment:', comment);
+
+        // Example: Send to server via fetch
+        fetch('backend/reactivate_admin_account.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                staff_id: staff_id,
+                action: action,
+                comment: comment
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                alert(`Staff Reactivation Request has been ${action}`);
+                // You could also refresh the table or close the modal here
+                setTimeout(function() {
+                    location.reload();
+                  }, 2000); // 2000ms = 2 seconds
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Something went wrong. Please try again.');
+                setTimeout(function() {
+                    location.reload();
+                  }, 3000); // 2000ms = 2 seconds
+            });
+    }
+
+
     function updatePagination(totalItems, currentPage, itemsPerPage) {
         const paginationContainer = document.getElementById('pagination');
         paginationContainer.innerHTML = '';
@@ -266,38 +287,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initial load
     fetchDeletedStaffs(currentPage);
-
-    // Dummy placeholder for action handlers
-    // Example of calling the approve action from the frontend
-    function ReactivateStaff(staffId, action) {
-        const confirmText = action === 'approve' 
-            ? 'Are you sure you want to APPROVE this reactivation request?' 
-            : 'Are you sure you want to REJECT this reactivation request?';
-    
-        if (!confirm(confirmText)) {
-            return; // Exit if user cancels
-        }
-    
-        fetch('backend/reactivate_admin_account.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: `action=${action}&staff_id=${staffId}`
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert(data.message); // You can use toast or modal instead
-                fetchDeletedStaffs(currentPage); // Refresh the table
-            } else {
-                alert("Error: " + data.message);
-                console.error(data.message);
-            }
-        })
-        .catch(error => console.error('Error:', error));
-    }
-    
 
     function toggleLoader(show) {
         const loader = document.getElementById('spinner');

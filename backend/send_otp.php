@@ -102,13 +102,14 @@ try {
     if ($stmt->affected_rows <= 0) {
         throw new Exception("Database insert failed");
     }
-    // $subject = "OTP for Staff Account Re-activation";
-    // $body = "Your OTP for Account Re-activation is: $otp. It expires in 2 minutes.";  // OTP message
-    // $status = sendEmailWithGmailSMTP($email, $body, $subject);
-    // // ====== 2. SEND OTP VIA EMAIL ======
-    // if (!($status)) {
-    //     throw new Exception("Email send failed");
-    // }
+    $title = "Staff Reactivation";
+    $subject = "OTP for ". $title;
+    $body = "Your OTP for $title is: $otp. It expires in 2 minutes.";  // OTP message
+    $status = sendEmailWithGmailSMTP($email, $body, $subject);
+    // ====== 2. SEND OTP VIA EMAIL ======
+    if (!($status)) {
+        throw new Exception("Email send failed");
+    }
     // Commit if both succeed
     $conn->commit();
     echo json_encode(['success' => true, 'message' => $otp]);

@@ -127,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             exit;
         }
 
-        if ($delete_status !== NULL) {
+        if ($delete_status == 'Yes') {
             logActivity("Login blocked - Account $unique_id is deactivated. Attempt from IP: " . $_SERVER['REMOTE_ADDR']);
             echo json_encode(["success" => false, "message" => "This account has been deactivated. Please contact support"]);
             exit;

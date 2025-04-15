@@ -1,101 +1,186 @@
 <?php
-header('Content-Type: application/json');
-require_once 'config.php';
+// Start session at the very top
 session_start();
 
-$admin_id = $_SESSION['unique_id'];
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json");
+
+include 'config.php';
+require 'sendOTPGmail.php';
+
+$admin_id = $_SESSION['unique_id'] ?? null;
+$data = json_decode(file_get_contents("php://input"), true);
+
+// Set default response headers
+http_response_code(400); // Bad Request by default
+
+// Step 1: Initial validation
+if (!isset($data['staff_id']) || !isset($data['action']) || !isset($data['comment'])) {
+    logActivity("Reactivation attempt failed: Missing required fields.");
+    echo json_encode(['status' => 'error', 'message' => 'Missing required fields']);
+    exit;
+}
+
+$validActions = ['Reactivated', 'Declined'];
+if (!in_array($data['action'], $validActions)) {
+    logActivity("Reactivation attempt failed: Invalid action status passed from client. Value: " . $data['action']);
+    echo json_encode(['status' => 'error', 'message' => 'Invalid request']);
+    exit;
+}
+
+$staff_id = $data['staff_id'];
+$action = $data['action'];
+$comment = $data['comment'] ?? '';
+$date = date('Y-m-d H:i:s');
+
+// Step 2: Ensure admin session exists
+if (!$admin_id) {
+    http_response_code(401); // Unauthorized
+    logActivity("Reactivation attempt failed: No logged-in Super Admin.");
+    echo json_encode(['status' => 'error', 'message' => 'Unauthorized access']);
+    exit;
+}
+
+logActivity("Super Admin ID $admin_id initiated a reactivation action: $action for Staff ID $staff_id.");
 
 try {
-    logActivity("REACTIVATION_ACTION_START: Incoming request to process staff reactivation");
+    // Verify database connection
+    if (!$conn || $conn->connect_error) {
+        http_response_code(503); // Service Unavailable
+        throw new Exception('Database connection error');
+    }
 
-    if (!isset($_POST['action']) || !isset($_POST['staff_id'])) {
-        logActivity("REACTIVATION_ACTION_ERROR: Missing 'action' or 'staff_id' in request");
-        echo json_encode([
-            'success' => false,
-            'message' => 'Missing action or staff_id'
-        ]);
+    // Start transaction
+    $conn->begin_transaction();
+    logActivity("Transaction started for Staff ID $staff_id reactivation.");
+
+    // Step 3: Fetch pending, rejected, or declined reactivation request
+    $stmt = $conn->prepare("SELECT id, deactivation_log_id, status FROM admin_reactivation_logs WHERE admin_id = ? AND (status = 'Pending' OR status = 'Rejected' OR status = 'Declined') ORDER BY id DESC LIMIT 1");
+    $stmt->bind_param("s", $staff_id);
+    
+    if (!$stmt->execute()) {
+        throw new Exception('Database query error');
+    }
+    
+    $result = $stmt->get_result();
+
+    if ($result->num_rows == 0) {
+        http_response_code(404); // Not Found
+        logActivity("No reactivation request found for Staff ID $staff_id.");
+        echo json_encode(['status' => 'error', 'message' => 'No reactivation request found']);
         exit;
     }
 
-    $action = $_POST['action'];
-    $staff_id = $_POST['staff_id'];
+    $log = $result->fetch_assoc();
+    $reactivation_id = $log['id'];
+    $deactivation_id = $log['deactivation_log_id'];
+    $previous_status = $log['status'];
 
-    logActivity("REACTIVATION_ACTION_RECEIVED: Action => $action | Staff ID => $staff_id");
-
-    $conn->begin_transaction();
-
-    if ($action === 'approve') {
-        logActivity("REACTIVATION_APPROVE_INIT: Approving request for staff_id = $staff_id");
-
-        $updateRequestQuery = "
-            UPDATE account_reactivation_requests 
-            SET status = 'Approved', processed_by = ?, processed_at = NOW()
-            WHERE user_id = ? AND status = 'Pending'
-        ";
-        $stmt = $conn->prepare($updateRequestQuery);
-        $stmt->bind_param('ii', $admin_id, $staff_id);
-        $stmt->execute();
-        logActivity("REACTIVATION_APPROVE_UPDATE_REQUEST: Rows affected = " . $stmt->affected_rows);
-        $stmt->close();
-
-        $updateStaffQuery = "
-            UPDATE admin_tbl 
-            SET delete_status = NULL 
-            WHERE unique_id = ?
-        ";
-        $stmt = $conn->prepare($updateStaffQuery);
-        $stmt->bind_param('i', $staff_id);
-        $stmt->execute();
-        logActivity("REACTIVATION_APPROVE_UPDATE_STAFF: Rows affected = " . $stmt->affected_rows);
-        $stmt->close();
-
-        $conn->commit();
-        logActivity("REACTIVATION_APPROVE_SUCCESS: Staff $staff_id reactivated successfully");
-
-        echo json_encode([
-            'success' => true,
-            'message' => 'Staff reactivation approved successfully'
-        ]);
-
-    } elseif ($action === 'decline') {
-        logActivity("REACTIVATION_DECLINE_INIT: Declining request for staff_id = $staff_id");
-
-        $updateRequestQuery = "
-            UPDATE account_reactivation_requests 
-            SET status = 'Rejected', processed_by = ?, processed_at = NOW()
-            WHERE user_id = ? AND status = 'Pending'
-        ";
-        $stmt = $conn->prepare($updateRequestQuery);
-        $stmt->bind_param('ii', $admin_id, $staff_id);
-        $stmt->execute();
-        logActivity("REACTIVATION_DECLINE_UPDATE_REQUEST: Rows affected = " . $stmt->affected_rows);
-        $stmt->close();
-
-        $conn->commit();
-        logActivity("REACTIVATION_DECLINE_SUCCESS: Reactivation request declined for staff_id = $staff_id");
-
-        echo json_encode([
-            'success' => true,
-            'message' => 'Staff reactivation request declined'
-        ]);
-
-    } else {
-        logActivity("REACTIVATION_ACTION_ERROR: Invalid action value received: $action");
-        echo json_encode([
-            'success' => false,
-            'message' => 'Invalid action'
-        ]);
+    // Prevent reactivation if the previous request was declined
+    if ($previous_status == 'Declined') {
+        http_response_code(403); // Forbidden
+        logActivity("Reactivation request for Staff ID $staff_id was previously declined.");
+        echo json_encode(['status' => 'error', 'message' => 'Action not allowed']);
+        exit;
     }
 
-} catch (Exception $e) {
-    $conn->rollback();
-    logActivity("REACTIVATION_ACTION_EXCEPTION: " . $e->getMessage());
+    logActivity("Fetched reactivation log. Reactivation ID: $reactivation_id, Deactivation ID: $deactivation_id for Staff ID $staff_id.");
+    
+    // Step 4: Update reactivation log
+    $stmt = $conn->prepare("UPDATE admin_reactivation_logs SET reactivated_by = ?, comment = ?, status = ?, date_last_updated = ? WHERE id = ? AND deactivation_log_id = ?");
+    $stmt->bind_param("isssii", $admin_id, $comment, $action, $date, $reactivation_id, $deactivation_id);
 
+    if (!$stmt->execute()) {
+        throw new Exception('Database update error');
+    }
+
+    logActivity("Reactivation log updated with status '$action' for Staff ID $staff_id.");
+
+    // Step 5: If Approved, update admin_tbl
+    if ($action === 'Reactivated') {
+        $stmt = $conn->prepare("UPDATE admin_tbl SET delete_status = 'NULL' WHERE unique_id = ?");
+        $stmt->bind_param("s", $staff_id);
+
+        if (!$stmt->execute()) {
+            throw new Exception('Database update error');
+        }
+
+        logActivity("Account reactivated in admin_tbl for Staff ID $staff_id.");
+    }
+
+    // Send email notification after reactivation/decline
+    sendReactivationEmail($staff_id, $action, $comment, $conn);
+
+    // Step 6: Commit transaction
+    $conn->commit();
+    http_response_code(200); // OK
+    
+    logActivity("Transaction committed for Staff ID $staff_id reactivation.");
+    logActivity("Super Admin ID $admin_id successfully completed $action for Staff ID $staff_id.");
+
+    echo json_encode(['status' => 'success', 'message' => "Request processed successfully"]);
+
+} catch (Exception $e) {
+     // Handle transaction rollback safely
+     if (isset($conn)) {
+        try {
+            // This will work whether or not we're in a transaction
+            $conn->query('ROLLBACK');
+        } catch (Exception $rollbackEx) {
+            // Ignore rollback errors - we're already handling an exception
+        }
+    }
+    
     http_response_code(500);
-    echo json_encode([
-        'success' => false,
-        'message' => 'Failed to process reactivation request',
-        'error' => $e->getMessage()
-    ]);
+    logActivity("Exception occurred: " . $e->getMessage());
+    echo json_encode(['status' => 'error', 'message' => 'Operation failed']);
 }
 
+// Function to fetch staff email from the admin_tbl table
+function getStaffEmail($staff_id, $conn) {
+    $stmt = $conn->prepare("SELECT email FROM admin_tbl WHERE unique_id = ?");
+    $stmt->bind_param("s", $staff_id);
+    
+    if (!$stmt->execute()) {
+        logActivity("Failed to execute email query for Staff ID $staff_id.");
+        return null;
+    }
+    
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $staff = $result->fetch_assoc();
+        return $staff['email'];
+    }
+    
+    logActivity("No email found for Staff ID $staff_id.");
+    return null;
+}
+
+// function to send email notification after Reactivation or Decline
+function sendReactivationEmail($staff_id, $action, $comment, $conn) {
+    $staff_email = getStaffEmail($staff_id, $conn);
+    
+    if (!$staff_email) {
+        logActivity("Failed to retrieve email for Staff ID $staff_id.");
+        return false;
+    }
+
+    $subject = "Your Account Reactivation Request Status";
+    
+    if ($action === 'Reactivated') {
+        $body = "Dear Staff,\n\nWe are pleased to inform you that your account reactivation request has been successfully approved.";
+    } else {
+        $body = "Dear Staff,\n\nWe regret to inform you that your account reactivation request has been declined.";
+    }
+
+    $emailStatus = sendEmailWithGmailSMTP($staff_email, $body, $subject);
+
+    if ($emailStatus) {
+        logActivity("Reactivation email sent to Staff ID $staff_id with status: $action");
+    } else {
+        logActivity("Failed to send reactivation email to Staff ID $staff_id.");
+    }
+    
+    return $emailStatus;
+}
