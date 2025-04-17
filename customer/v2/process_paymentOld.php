@@ -1,9 +1,12 @@
 <?php
 session_start();
 include 'config.php';
+include 'sendOTPGmail.php';
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 header('Content-Type: application/json');
 
@@ -51,6 +54,8 @@ $usingPromo = $data['using_promo'] ?? false;
 $promo_code = $data['promo_code'] ?? null;
 $discount = $data['discount'] ?? 0;
 $discount_percent = $data['discount_percent'] ?? 0;
+$receiptHtml = $data['receipt_html'] ?? null;
+$customer_email = $_SESSION['email'];
 
 // Log payment method and other details
 logActivity("Payment method: " . $paymentMethod);
@@ -79,7 +84,7 @@ switch ($paymentMethod) {
             if ($validationResult['success']) {
                 // Proceed with order processing
                 logActivity("Card validation successful for customer ID: " . $customerId);
-                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $secretAnswer, $token);
+                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $secretAnswer, $token, $receiptHtml, $customer_email);
                 logActivity("Order processed successfully for customer ID: " . $customerId);
             } else {
                 $response = $validationResult;
@@ -94,18 +99,18 @@ switch ($paymentMethod) {
         break;
 
     case 'credit':
-            logActivity("Checking credit eligibility for customer ID: " . $customerId);
-            $eligibilityResult = checkCreditEligibility($conn, $customerId, $totalAmount, $secretAnswer);
-            if ($eligibilityResult['success']) {
-                // Process credit payment and the order
-                logActivity("Credit eligibility check passed for customer ID: " . $customerId);
-                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $secretAnswer, $token);
-                logActivity("Credit order processed successfully for customer ID: " . $customerId);
-            } else {
-                $response = $eligibilityResult;
-                logActivity("Credit eligibility check failed for customer ID: " . $customerId . ". Reason: " . $eligibilityResult['message']);
-                deactivateToken($customerId);
-            }
+        logActivity("Checking credit eligibility for customer ID: " . $customerId);
+        $eligibilityResult = checkCreditEligibility($conn, $customerId, $totalAmount, $secretAnswer);
+        if ($eligibilityResult['success']) {
+            // Process credit payment and the order
+            logActivity("Credit eligibility check passed for customer ID: " . $customerId);
+            $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $secretAnswer, $token, $receiptHtml, $customer_email);
+            logActivity("Credit order processed successfully for customer ID: " . $customerId);
+        } else {
+            $response = $eligibilityResult;
+            logActivity("Credit eligibility check failed for customer ID: " . $customerId . ". Reason: " . $eligibilityResult['message']);
+            deactivateToken($customerId);
+        }
         break;
 
     case 'bank_transfer':
@@ -122,7 +127,7 @@ switch ($paymentMethod) {
             } else {
                 // Validate bank transfer and process the order
                 logActivity("Processing bank transfer for customer ID: " . $customerId);
-                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $secretAnswer, $token);
+                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $secretAnswer, $token, $receiptHtml, $customer_email);
                 logActivity("Bank transfer order processed successfully for customer ID: " . $customerId);
             }
         } else {
@@ -143,7 +148,7 @@ switch ($paymentMethod) {
                 logActivity("Paypal Details Validation passed for customer ID: " . $customerId);
                 // $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit);
                 // logActivity("Credit order processed successfully for customer ID: " . $customerId);
-                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $secretAnswer, $token);
+                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $secretAnswer, $token, $receiptHtml, $customer_email);
                 logActivity("PayPal order processed successfully for customer ID: " . $customerId);
             } else {
                 $response = $validatePaypal;
@@ -169,9 +174,9 @@ logActivity("Final response: " . json_encode($response));
 echo json_encode($response);
 
 // Function to process the order
-function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $providedSecretAnswer, $token)
+function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $providedSecretAnswer, $token, $receiptHtml, $customer_email)
 {
-    
+
     $response = ['success' => false, 'message' => 'Unknown error occurred'];
     $conn->begin_transaction();
 
@@ -184,14 +189,14 @@ function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deli
         // Log the start of order processing
         logActivity("Starting order processing for customer ID: " . $customerId);
 
-       // **Authenticate Customer**
-       $CustomerValidation = AuthValidations($providedSecretAnswer, $customerId, $conn, $token);
-       if (!$CustomerValidation['success']) {
-           throw new Exception($CustomerValidation['message']);
-       }else{
-        logActivity("Secret Answer and Token Validation successful for Customer ID: " . $customerId);
-       }
-       
+        // **Authenticate Customer**
+        $CustomerValidation = AuthValidations($providedSecretAnswer, $customerId, $conn, $token);
+        if (!$CustomerValidation['success']) {
+            throw new Exception($CustomerValidation['message']);
+        } else {
+            logActivity("Secret Answer and Token Validation successful for Customer ID: " . $customerId);
+        }
+
 
         // Check wallet balance if not using credit
         if ($isCredit === false) {
@@ -207,12 +212,12 @@ function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deli
             if ($balance === null || $balance < $totalAmount) {
                 logActivity("Insufficient wallet balance to process Order");
                 throw new Exception("Insufficient balance in wallet.");
-                
+
             } else {
                 // Deduct amount from wallet
                 logActivity("Attempting to Debit customer's wallet to process Order");
                 $newBalance = $balance - $totalAmount;
-                
+
                 $stmt = $conn->prepare("UPDATE wallets SET balance = ? WHERE customer_id = ?");
                 $stmt->bind_param("di", $newBalance, $customerId);
                 $stmt->execute();
@@ -307,14 +312,47 @@ function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deli
         $conn->commit();
         $response = ['success' => true, 'message' => 'Order placed successfully.'];
         logActivity("Attempting to Invalidate Token from Session to prevent token reuse");
-    // Invalidate the token after successful operation
-    // $_SESSION['token'] = [
-    //     'value' => '',
-    //     'expires_at' => time() // Token expired immediately
-    // ];
-    deactivateToken($customerId);
-    logActivity("Token invalidated for customer ID: $customerId.");
+        // Invalidate the token after successful operation
+        // $_SESSION['token'] = [
+        //     'value' => '',
+        //     'expires_at' => time() // Token expired immediately
+        // ];
+        deactivateToken($customerId);
+        logActivity("Token invalidated for customer ID: $customerId.");
         logActivity("Order processing completed successfully for customer ID: " . $customerId);
+
+        // Send transaction receipt to customer's email address
+        try {
+            // Generate PDF - pass the actual order ID from your order processing
+            $pdfPath = generatePdfReceipt($receiptHtml, $orderId); // $orderId should come from your order processing
+
+            // Send email with PDF attachment
+            $subject = "Your KaraKata Order Receipt #" . $orderId;
+            $emailBody = "Thank you for your purchase! Your receipt is attached.";
+
+            $emailSent = sendEmailWithGmailSMTP(
+                $customer_email,
+                $emailBody,
+                $subject,
+                [$pdfPath] // Attach the PDF
+            );
+
+            // Handle email sending result
+            if (!$emailSent) {
+                logActivity("Failed to send receipt email for order #" . $orderId);
+                // You might want to still proceed with success since the order was processed
+            } else {
+                logActivity("Receipt email sent successfully for order #" . $orderId);
+            }
+
+            // Clean up temporary file
+            if (file_exists($pdfPath)) {
+                unlink($pdfPath);
+            }
+        } catch (Exception $e) {
+            logActivity("Error generating/sending receipt for order #" . $orderId . ": " . $e->getMessage());
+            // Continue with order processing despite email failure
+        }
     } catch (Exception $e) {
         $conn->rollback();
         $response = ['success' => false, 'message' => "Error placing order: " . $e->getMessage()];
@@ -427,8 +465,8 @@ function validateCardPayment($customerId, $inputCardNumber, $inputCVV, $inputExp
         return ['success' => false, 'message' => 'Invalid Card Details.'];
     }
 
-      // Check if the card is expired
-      if (checkCardValidity($inputExpiryDate)) {
+    // Check if the card is expired
+    if (checkCardValidity($inputExpiryDate)) {
         logActivity("Expired card for customer ID: " . $customerId);
         return ['success' => false, 'message' => 'Card has expired.'];
     }
@@ -437,7 +475,7 @@ function validateCardPayment($customerId, $inputCardNumber, $inputCVV, $inputExp
         logActivity("Invalid card PIN for customer ID: " . $customerId);
         return ['success' => false, 'message' => 'Invalid card PIN.'];
     }
-    
+
     logActivity("Card validation successful for customer ID: " . $customerId);
     return ['success' => true, 'message' => 'Card validated successfully.'];
 }
@@ -460,15 +498,15 @@ function checkCreditEligibility($conn, $customerId, $orderAmount, $creditThresho
 {
     logActivity("Checking credit eligibility for customer ID: " . $customerId);
     try {
-        
+
         // Step 2: Fetch wallet balance
         logActivity("Attempting to check Wallet Balance for customer ID: " . $customerId);
         $WalletBalanceresponse = getWalletBalance($conn, $customerId);
-        if ( $WalletBalanceresponse['success']) {
-            $walletBalance =  $WalletBalanceresponse['balance'];
+        if ($WalletBalanceresponse['success']) {
+            $walletBalance = $WalletBalanceresponse['balance'];
             // Proceed with wallet balance
         } else {
-            echo  $WalletBalanceresponse['message'];
+            echo $WalletBalanceresponse['message'];
         }
         // Step 3: Check for outstanding debts
         $debtQuery = "
@@ -583,7 +621,8 @@ function getWalletBalance($conn, $customerId)
     return ["success" => true, "balance" => $wallet['balance']];
 }
 
-function AuthValidations($providedSecretAnswer, $customerId, $conn, $token) {
+function AuthValidations($providedSecretAnswer, $customerId, $conn, $token)
+{
     // Validate Secret Answer
     $secretValidation = validateSecretAnswer($providedSecretAnswer, $customerId, $conn);
     if (!$secretValidation['success']) {
@@ -591,9 +630,11 @@ function AuthValidations($providedSecretAnswer, $customerId, $conn, $token) {
     }
 
     // Validate Token
-    if (!isset($_SESSION['token']) || 
-        $_SESSION['token']['value'] !== $token || 
-        time() > $_SESSION['token']['expires_at']) {
+    if (
+        !isset($_SESSION['token']) ||
+        $_SESSION['token']['value'] !== $token ||
+        time() > $_SESSION['token']['expires_at']
+    ) {
 
         logActivity("Invalid or expired token for customer ID: $customerId.");
         return ['success' => false, 'message' => 'Invalid or expired token'];
@@ -602,7 +643,8 @@ function AuthValidations($providedSecretAnswer, $customerId, $conn, $token) {
     return ['success' => true, 'message' => 'Authentication successful'];
 }
 
-function deactivateToken($customerId){
+function deactivateToken($customerId)
+{
     $_SESSION['token'] = [
         'value' => '',
         'expires_at' => time() // Token expired immediately
@@ -610,5 +652,162 @@ function deactivateToken($customerId){
     logActivity("Token invalidated for customer ID: $customerId.");
 }
 
+/**
+ * Generates a PDF file from HTML and returns the file path.
+ */
+// Modified PDF generation function
+function generatePdfReceipt($html, $orderId)
+{
+    $options = new Options();
+    $options->set('isHtml5ParserEnabled', true);
+    $options->set('isRemoteEnabled', true);
+    $options->set('defaultFont', 'Helvetica');
+
+    // Prepend CSS to the HTML
+    $styledHtml = '<!DOCTYPE html><html><head>' .
+        getReceiptCss() .
+        '</head><body>' .
+        $html .
+        '</body></html>';
+
+    $dompdf = new Dompdf($options);
+    $dompdf->loadHtml($styledHtml); // Use the styled HTML
+    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->render();
+
+    // Create temp directory if it doesn't exist
+    $tempDir = sys_get_temp_dir() . '/karakata_receipts';
+    if (!file_exists($tempDir)) {
+        mkdir($tempDir, 0755, true);
+    }
+
+    // Save PDF with order-specific filename
+    $pdfPath = $tempDir . "/receipt_{$orderId}.pdf";
+    file_put_contents($pdfPath, $dompdf->output());
+
+    return $pdfPath;
+}
+
+//styling for receipt to be sent to email
+function getReceiptCss()
+{
+    return '
+    <style>
+        /* Copy the contents of your receipt.css here */
+       
+                    * {
+                        margin: 0;
+                        padding: 0;
+                        box-sizing: border-box;
+                    }
+                    body {
+                        background-color: #f9f9f9;
+                        color: #333;
+                        line-height: 1.6;
+                        padding: 20px;
+                    }
+                    .receipt-container {
+                        max-width: 600px;
+                        margin: 0 auto;
+                        background-color: #fff;
+                        border-radius: 10px;
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                        padding: 20px;
+                    }
+                    .receipt-header {
+                        text-align: center;
+                        margin-bottom: 20px;
+                    }
+                    .receipt-header h1 {
+                        font-size: 24px;
+                        font-weight: 700;
+                        color: #2c3e50;
+                        margin-bottom: 10px;
+                    }
+                    .receipt-header h2 {
+                        font-size: 20px;
+                        font-weight: 600;
+                        color: #34495e;
+                        margin-bottom: 10px;
+                    }
+                    .receipt-header p {
+                        font-size: 14px;
+                        color: #7f8c8d;
+                    }
+                    .order-summary {
+                        margin-bottom: 20px;
+                    }
+                    .order-item {
+                        display: flex;
+                        justify-content: space-between;
+                        padding: 4px 10px;
+                    }
+                    #orderSummaryTable {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-top: 20px;
+                    }
+                    #orderSummaryTable th,
+                    #orderSummaryTable td {
+                        border: 1px solid #ddd;
+                        padding: 12px;
+                        text-align: left;
+                        font-size: 14px;
+                    }
+                    #orderSummaryTable th {
+                        background-color: #f8f9fa;
+                        font-weight: 600;
+                        color: #2c3e50;
+                    }
+                    #orderSummaryTable tbody tr:nth-child(even) {
+                        background-color: #f9f9f9;
+                    }
+                    #orderSummaryTable tbody tr:hover {
+                        background-color: #f1f1f1;
+                    }
+                    .order-total {
+                        margin-top: 20px;
+                        padding: 15px;
+                        background-color: #f8f9fa;
+                        border-radius: 5px;
+                        text-align: right;
+                    }
+                    .order-total p {
+                        font-size: 16px;
+                        font-weight: 600;
+                        color: #2c3e50;
+                    }
+                    .receipt-footer {
+                        text-align: center;
+                        margin-top: 20px;
+                        padding-top: 20px;
+                        border-top: 1px solid #ddd;
+                    }
+                    .receipt-footer p {
+                        font-size: 14px;
+                        color: #7f8c8d;
+                    }
+                    @media (max-width: 600px) {
+                        .receipt-container {
+                            padding: 15px;
+                        }
+                        .receipt-header h1 {
+                            font-size: 20px;
+                        }
+                        .receipt-header h2 {
+                            font-size: 18px;
+                        }
+                        #orderSummaryTable th,
+                        #orderSummaryTable td {
+                            padding: 10px;
+                            font-size: 12px;
+                        }
+                        .order-total p {
+                            font-size: 14px;
+                        }
+                    }
+    </style>
+    ';
+}
 
 

@@ -42,7 +42,7 @@
                     .order-summary {
                         margin-bottom: 20px;
                     }
-                    .order-item {
+                    .order-item, .payment-method{
                         display: flex;
                         justify-content: space-between;
                         padding: 4px 10px;

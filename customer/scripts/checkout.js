@@ -203,6 +203,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const selectedPaymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
         const customer_secret_answer = document.getElementById('customer_secret_answer').value;
         const customer_token = document.getElementById('customer_token').value;
+        // Generate receipt HTML
+        const receiptHtml = generateReceiptHtml();
 
         // Use the fetched order data to populate paymentDetails
         let paymentDetails = {
@@ -217,7 +219,8 @@ document.addEventListener('DOMContentLoaded', () => {
             discount_percent: discount_percent, // Replace with actual value if available
             promo_code: promoCode, // Replace with actual value if available
             customer_secret_answer : customer_secret_answer,
-            customer_token: customer_token
+            customer_token: customer_token,
+            receipt_html: receiptHtml
             
         };
 
@@ -303,30 +306,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Print Receipt function
     function printReceipt() {
         const printWindow = window.open('', '_blank', 'width=800,height=600');
-        const orderSummary = document.querySelector('.order-summary').innerHTML;
-        const now = new Date();
-        const dateTime = now.toLocaleString();
-
         printWindow.document.write(`
             <html>
             <head>
                 <title>Receipt</title>
-                <link rel ="stylesheet" href = "../css/receipt.css">
+                <link rel="stylesheet" href="../css/receipt.css">
             </head>
             <body>
-                <div class="receipt-container">
-                    <div class="receipt-header">
-                        <h1>KaraKata Receipts</h1>
-                        <h2>Your Receipt</h2>
-                        <p>Date & Time: ${dateTime}</p>
-                    </div>
-                    <div class="order-summary">
-                        ${orderSummary}
-                    </div>
-                    <div class="receipt-footer">
-                        <p>Thank you for your purchase!</p>
-                    </div>
-                </div>
+                ${generateReceiptHtml()}
                 <script>
                     window.print();
                     window.onafterprint = function() { window.close(); }
@@ -334,8 +321,30 @@ document.addEventListener('DOMContentLoaded', () => {
             </body>
             </html>
         `);
-
         printWindow.document.close();
+    }
+    function generateReceiptHtml() {
+        const orderSummary = document.querySelector('.order-summary').innerHTML;
+        const selectedPaymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
+        const now = new Date();
+        const dateTime = now.toLocaleString();
+    
+        return `
+            <div class="receipt-container">
+                <div class="receipt-header">
+                    <h1>KaraKata Receipts</h1>
+                    <h2>Your Receipt</h2>
+                    <p>Date & Time: ${dateTime}</p>
+                </div>
+                <div class="order-summary">
+                    ${orderSummary}
+                </div>
+                <div class = "payment-method"><span>Payment Method: </span>  <span>  ${selectedPaymentMethod} </span></div>
+                <div class="receipt-footer">
+                    <p>Thank you for your purchase!</p>
+                </div>
+            </div>
+        `;
     }
 
     // Assuming you have a button with ID 'printReceiptButton'
