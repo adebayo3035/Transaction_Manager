@@ -1,26 +1,75 @@
 <?php
-// header('Content-Type: application/json');
-include('config.php');
+header('Content-Type: application/json');
+require 'config.php';
+session_start();
 
-// Prepare the query
-    $query = "SELECT * FROM revenue_types";
-    $stmt = $conn->prepare($query);
-    // $stmt->bind_param("i", $revenue_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $revenueTypes = [];
+// Initialize logging
+logActivity("Revenue types fetch process started");
 
-    // Fetch the units
-    while ($row = $result->fetch_assoc()) {
-        $revenueTypes[] = $row;
+try {
+    // Check authentication (if needed)
+    if (!isset($_SESSION['unique_id'])) {
+        $errorMsg = "Unauthenticated access attempt to revenue types";
+        logActivity($errorMsg);
+        echo json_encode(["success" => false, "message" => "Not logged in."]);
+        exit();
     }
 
-    if (!empty($revenueTypes)) {
-        echo json_encode(['success' => true, 'revenueTypes' => $revenueTypes]);
-    } else {
-        echo json_encode(['success' => true, 'revenueTypes' => []]); // Return an empty array if no units
+    $adminId = $_SESSION['unique_id'];
+    logActivity("Revenue types request initiated by admin ID: " . $adminId);
+
+    try {
+        // Prepare and execute query
+        $query = "SELECT * FROM revenue_types ORDER BY revenue_type_name ASC";
+        $stmt = $conn->prepare($query);
+        
+        if (!$stmt) {
+            throw new Exception("Prepare failed for revenue types: " . $conn->error);
+        }
+
+        if (!$stmt->execute()) {
+            throw new Exception("Execute failed for revenue types: " . $stmt->error);
+        }
+
+        $result = $stmt->get_result();
+        $revenueTypes = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $revenueTypes[] = $row;
+        }
+
+        // $stmt->close();
+
+        logActivity("Retrieved " . count($revenueTypes) . " revenue types");
+
+        // Prepare response
+        $response = [
+            'success' => true,
+            'revenueTypes' => $revenueTypes,
+            'count' => count($revenueTypes),
+            'requested_by' => $adminId,
+            'timestamp' => date('c')
+        ];
+
+        echo json_encode($response);
+        logActivity("Revenue types fetch completed successfully");
+
+    } catch (Exception $e) {
+        throw $e; // Re-throw to outer catch block
     }
-
-    $stmt->close();
-
-$conn->close();
+} catch (Exception $e) {
+    $errorMsg = "Error fetching revenue types: " . $e->getMessage();
+    logActivity($errorMsg);
+    http_response_code(500);
+    echo json_encode([
+        'success' => false, 
+        'message' => 'Failed to fetch revenue types',
+        'error' => $e->getMessage()
+    ]);
+} finally {
+    if (isset($stmt) && $stmt instanceof mysqli_stmt) {
+        $stmt->close();
+    }
+    $conn->close();
+    logActivity("Revenue types fetch process completed");
+}

@@ -1,47 +1,68 @@
 <?php
 header('Content-Type: application/json');
+require 'config.php';
 
-// Include database connection file
-include('config.php');
-
-
-// Log the start of the script
-logActivity("Fetching random customer names script started.");
+// Initialize variables for cleanup
+$result = null;
 
 try {
+    // Initialize logging
+    logActivity("Random customer names fetch process started");
+
+    // Start transaction for consistent data view
+    $conn->begin_transaction();
+    logActivity("Database transaction started");
+
     // Fetch random customer names
-    $query = "SELECT firstname, lastname FROM customers ORDER BY RAND() LIMIT 3";
+    $query = "SELECT customer_id, firstname, lastname FROM customers ORDER BY RAND() LIMIT 3";
     $result = $conn->query($query);
-
+    
     if ($result === false) {
-        // Log database query error
-        $error_message = "Database query failed: " . $conn->error;
-        error_log($error_message);
-        logActivity($error_message);
-        throw new Exception("An error occurred while fetching customer names.");
+        throw new Exception("Database query failed: " . $conn->error);
     }
 
-    $customer_names = [];
+    $customerNames = [];
     while ($row = $result->fetch_assoc()) {
-        $customer_names[] = $row;
+        // Format names consistently
+        $row['fullname'] = ucwords(strtolower($row['firstname'] . ' ' . $row['lastname']));
+        $customerNames[] = $row;
     }
 
-    // Log the successful retrieval of customer names
-    logActivity("Successfully fetched " . count($customer_names) . " random customer names.");
+    $conn->commit();
+    logActivity("Successfully retrieved " . count($customerNames) . " random customer names");
 
-    // Return the result as JSON
-    echo json_encode(["success" => true, "customer_names" => $customer_names]);
+    // Prepare response
+    $response = [
+        'success' => true,
+        'customer_names' => $customerNames,
+        'count' => count($customerNames),
+        'timestamp' => date('c')
+    ];
+
+    echo json_encode($response);
+    logActivity("Random customer names fetch completed successfully");
+
 } catch (Exception $e) {
-    // Log the exception
-    error_log("Exception: " . $e->getMessage());
-    logActivity("Exception: " . $e->getMessage());
-
-    // Return an error response
-    echo json_encode(["success" => false, "message" => $e->getMessage()]);
+    // Rollback transaction if it was started
+    if (isset($conn)) {
+        $conn->rollback();
+    }
+    
+    $errorMsg = "Error fetching random customer names: " . $e->getMessage();
+    logActivity($errorMsg);
+    http_response_code(500);
+    echo json_encode([
+        'success' => false, 
+        'message' => 'Failed to fetch customer names',
+        'error' => $e->getMessage()
+    ]);
+} finally {
+    // Clean up resources
+    if (isset($result)) {
+        $result->free();
+    }
+    if (isset($conn)) {
+        $conn->close();
+    }
+    logActivity("Random customer names fetch process completed");
 }
-
-// Close the database connection
-$conn->close();
-
-// Log the end of the script
-logActivity("Fetching random customer names script completed.");

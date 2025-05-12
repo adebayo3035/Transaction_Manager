@@ -38,6 +38,7 @@
                 <th>LastName</th>
                 <th>Reactivation Request Status</th>
                 <th>Date Deactivated</th>
+                <th>Deactivated By</th>
                 <th style="text-align: center;" colspan="2">Actions</th>
             </tr>
         </thead>

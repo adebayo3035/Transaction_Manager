@@ -1,118 +1,174 @@
 <?php
-// Include database connection
-include('config.php'); // Replace with your actual database connection file
+header('Content-Type: application/json');
+include('config.php');
 session_start();
 
-// Get the JSON data from the request body
-$data = json_decode(file_get_contents("php://input"), true);
+try {
+    logActivity("Staff update process initiated");
 
-if (isset($data['admin_id'])) {
-    $adminId = $data['admin_id'];
-    $email = $data['email'];
-    $phone_number = $data['phone_number'];
-    $secret_answer = $data['secret_answer'];
-    $encrypted_answer = md5($secret_answer);
+    // Get the JSON data from the request body
+    $data = json_decode(file_get_contents("php://input"), true);
+    logActivity("Received request data: " . json_encode($data));
 
-    // Validate required fields
-    if (empty($email) || empty($phone_number) || empty($secret_answer)) {
-        echo json_encode(['success' => false, 'message' => 'Please fill in all required fields.']);
-        exit;
+    if (!isset($data['admin_id'])) {
+        logActivity("Validation failed - Admin ID missing in request");
+        echo json_encode(["success" => false, "message" => "Admin ID is missing."]);
+        exit();
     }
 
-    // Validate Driver Unique Identifier
+    $adminId = $data['admin_id'];
+    $email = trim($data['email']);
+    $phone_number = trim($data['phone_number']);
+    $secret_answer = trim($data['secret_answer']);
+    $encrypted_answer = md5($secret_answer);
+
+    logActivity("Processing update for Admin ID: $adminId");
+
+    // Validate required fields
+    $requiredFields = [
+        'email' => $email,
+        'phone_number' => $phone_number,
+        'secret_answer' => $secret_answer
+    ];
+
+    foreach ($requiredFields as $field => $value) {
+        if (empty($value)) {
+            logActivity("Validation failed - Missing required field: $field");
+            echo json_encode(['success' => false, 'message' => 'Please fill in all required fields.']);
+            exit;
+        }
+    }
+
+    // Validate session identity
     if ($adminId !== $_SESSION['unique_id']) {
+        logActivity("Security violation - Admin ID mismatch (Session: {$_SESSION['unique_id']}, Request: $adminId)");
         echo json_encode(['success' => false, 'message' => 'Error Validating Staff Identity.']);
         exit();
     }
 
     // Email validation
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        logActivity("Validation failed - Invalid email format: $email");
         echo json_encode(['success' => false, 'message' => 'Invalid E-mail address.']);
         exit();
     }
 
     // Phone number validation
     if (!preg_match('/^\d{11}$/', $phone_number)) {
+        logActivity("Validation failed - Invalid phone format: $phone_number");
         echo json_encode(['success' => false, 'message' => 'Please input a valid Phone Number.']);
         exit();
     }
 
-    // Check for duplicate phone number or email, excluding the current driver ID
+    // Check for duplicates
+    logActivity("Checking for duplicate phone/email for Admin ID: $adminId");
     $checkQuery = "SELECT unique_id, phone, email FROM admin_tbl WHERE (phone = ? OR email = ?) AND unique_id != ?";
     $stmt = $conn->prepare($checkQuery);
+
+    if (!$stmt) {
+        logActivity("Database error - Failed to prepare duplicate check query");
+        echo json_encode(["success" => false, "message" => "Database error occurred."]);
+        exit();
+    }
+
     $stmt->bind_param("ssi", $phone_number, $email, $adminId);
     $stmt->execute();
     $stmt->store_result();
 
     if ($stmt->num_rows > 0) {
-        // Fetch the result and check for duplicates
-        $stmt->bind_result($existingPhone, $existingEmail);
+        $stmt->bind_result($existingId, $existingPhone, $existingEmail);
         $stmt->fetch();
 
         if ($existingPhone === $phone_number) {
+            logActivity("Duplicate detected - Phone number exists for Admin ID: $existingId");
             echo json_encode(['success' => false, 'message' => 'Phone number already exists.']);
+            $stmt->close();
             exit();
         }
 
         if ($existingEmail === $email) {
+            logActivity("Duplicate detected - Email exists for Admin ID: $existingId");
             echo json_encode(['success' => false, 'message' => 'Email address already exists.']);
+            $stmt->close();
             exit();
         }
     }
-
-    // Close the duplicate check statement
     $stmt->close();
 
-    // Query to select only the secret_answer using unique_id for validation
+    // Validate secret answer
+    logActivity("Validating secret answer for Admin ID: $adminId");
     $secretAnswerQuery = "SELECT secret_answer FROM admin_tbl WHERE unique_id = ?";
     $stmt = $conn->prepare($secretAnswerQuery);
-    $stmt->bind_param("i", $adminId);  // Bind the unique_id (adminId)
-    $stmt->execute();
-    $stmt->store_result();
 
-    // Bind the result to a variable
-    $stmt->bind_result($stored_secret_answer);
-
-    // Fetch the secret_answer and perform validation
-    if ($stmt->num_rows > 0) {
-        $stmt->fetch();
-        // Compare the encrypted answers
-        if ($stored_secret_answer !== $encrypted_answer) {
-            echo json_encode(['success' => false, 'message' => 'Error Validating Secret Answer.']);
-            exit();
-        }
-    } else {
-        // No record found
-        echo json_encode([
-            'success' => false,
-            'message' => 'No secret answer found for the provided ID.'
-        ]);
+    if (!$stmt) {
+        logActivity("Database error - Failed to prepare secret answer validation query");
+        echo json_encode(["success" => false, "message" => "Database error occurred."]);
         exit();
     }
 
-    // Close the secret answer validation statement
-    $stmt->close();
+    $stmt->bind_param("i", $adminId);
+    $stmt->execute();
+    $stmt->store_result();
+    $stmt->bind_result($stored_secret_answer);
 
-    // Prepare SQL query to update the driver
-    $sql = "UPDATE admin_tbl SET email = ?, phone = ? WHERE unique_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssi", $email, $phone_number, $adminId);
-
-    // Execute the statement
-    if ($stmt->execute()) {
-        // Return success response
-        echo json_encode(["success" => true, "message" => "Your Record has been Successfully Updated."]);
-    } else {
-        // Return error response
-        echo json_encode(["success" => false, "message" => "Failed to update Staff record."]);
+    if ($stmt->num_rows === 0) {
+        logActivity("Validation failed - No admin record found for ID: $adminId");
+        echo json_encode(['success' => false, 'message' => 'No secret answer found for the provided ID.']);
+        $stmt->close();
+        exit();
     }
 
-    // Close the statement
+    $stmt->fetch();
+    if ($stored_secret_answer !== $encrypted_answer) {
+        logActivity("Validation failed - Incorrect secret answer for Admin ID: $adminId");
+        echo json_encode(['success' => false, 'message' => 'Error Validating Secret Answer.']);
+        $stmt->close();
+        exit();
+    }
     $stmt->close();
-} else {
-    // Return error response if the ID is not provided
-    echo json_encode(["success" => false, "message" => "Customer ID is missing."]);
-}
 
-// Close the database connection
-$conn->close();
+    // Prepare update
+    logActivity("Preparing update for Admin ID: $adminId");
+    $sql = "UPDATE admin_tbl SET email = ?, phone = ?, updated_at = NOW() WHERE unique_id = ?";
+    $stmt = $conn->prepare($sql);
+
+    if (!$stmt) {
+        logActivity("Database error - Failed to prepare update query");
+        echo json_encode(["success" => false, "message" => "Database error occurred."]);
+        exit();
+    }
+
+    $stmt->bind_param("ssi", $email, $phone_number, $adminId);
+    logActivity("Executing update for Admin ID: $adminId");
+
+    if ($stmt->execute()) {
+        $affectedRows = $stmt->affected_rows;
+        logActivity("Success - Updated Admin ID: $adminId. Affected rows: $affectedRows");
+        echo json_encode([
+            "success" => true,
+            "message" => "Your Record has been Successfully Updated.",
+            "affected_rows" => $affectedRows
+        ]);
+    } else {
+        logActivity("Update failed - Error: " . $stmt->error);
+        echo json_encode([
+            "success" => false,
+            "message" => "Failed to update Staff record.",
+            "error" => $stmt->error
+        ]);
+    }
+
+} catch (Exception $e) {
+    logActivity("Exception occurred: " . $e->getMessage());
+    http_response_code(500);
+    echo json_encode([
+        "success" => false,
+        "message" => "An unexpected error occurred."
+    ]);
+} finally {
+    if (isset($stmt)) {
+        $stmt->close();
+    }
+    $conn->close();
+    logActivity("Staff update process completed");
+}

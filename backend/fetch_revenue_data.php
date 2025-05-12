@@ -11,7 +11,7 @@ $totalRevenueQuery = "
 $totalRevenueResult = $conn->query($totalRevenueQuery);
 $totalRevenue = $totalRevenueResult->fetch_assoc()['totalRevenue'];
 
-$pendingOrdersQuery = "SELECT COUNT(*) as pendingOrders FROM revenue WHERE status = 'Pending'";
+$pendingOrdersQuery = "SELECT COUNT(*) as pendingOrders FROM orders WHERE status = 'Pending'";
 $pendingOrdersResult = $conn->query($pendingOrdersQuery);
 $pendingOrders = $pendingOrdersResult->fetch_assoc()['pendingOrders'];
 

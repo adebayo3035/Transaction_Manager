@@ -9,8 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentPage = 1;
     const limit = 5; // Number of notifications per page
-
-    // Function to fetch and display notifications and count with pagination
+    
     function fetchNotificationsAndCount(page = 1) {
         fetch(`backend/notification.php?page=${page}&limit=${limit}`)
             .then(response => response.json())
@@ -18,60 +17,65 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.success) {
                     // Clear existing notifications
                     notificationsContainer.innerHTML = '';
-
+    
+                    // Handle cases where totalPages is 0 or invalid
+                    const totalPages = Math.max(data.totalPages || 1, 1); // Ensure at least 1 page
+                    const currentPage = Math.min(Math.max(data.currentPage || 1, 1), totalPages); // Clamp current page
+    
                     // Update the current page display
-                    currentPageDisplay.textContent = `Page ${data.currentPage} of ${data.totalPages} `;
-
+                    currentPageDisplay.textContent = `Page ${currentPage} of ${totalPages}`;
+    
                     // Populate notifications
-                    if (Array.isArray(data.notifications) && data.notifications.length > 0) {
-                        data.notifications.forEach(notification => {
-                            const notificationElement = document.createElement('div');
-                            notificationElement.className = 'notification';
-                            notificationElement.style.cursor = 'pointer';
-
-                            // Create notification content
-                            notificationElement.innerHTML = `
-                                <div class="event-title">${notification.event_title}</div>
-                                <div class="event-details">${notification.event_details}</div>
-                            `;
-
-                            // Add "Mark as Read" button only for Admin users
-                            if (data.role === 'Admin') {
-                                const markAsReadButton = document.createElement('button');
-                                
-                                markAsReadButton.className = 'mark-as-read-btn';
-                                markAsReadButton.textContent = 'Mark as Read';
-                                markAsReadButton.dataset.id = notification.id;
-
-                                // Event listener for marking as read
-                                markAsReadButton.addEventListener('click', () => markNotificationAsRead(notification.id));
-                                // Append the button to the notification
-                                notificationElement.appendChild(markAsReadButton);
-                            }
-
-                            // Append the notification to the container
-                            notificationsContainer.appendChild(notificationElement);
-                        });
-
-                        // Handle pagination controls
-                        prevPageButton.disabled = (data.currentPage === 1);
-                        nextPageButton.disabled = (data.currentPage >= data.totalPages);
-                    } else {
-                        notificationsContainer.innerHTML = '<p>No notifications available.</p>';
+                    if (Array.isArray(data.notifications)) {
+                        if (data.notifications.length > 0) {
+                            data.notifications.forEach(notification => {
+                                const notificationElement = document.createElement('div');
+                                notificationElement.className = 'notification';
+                                notificationElement.style.cursor = 'pointer';
+    
+                                notificationElement.innerHTML = `
+                                    <div class="event-title">${notification.event_title}</div>
+                                    <div class="event-details">${notification.event_details}</div>
+                                `;
+    
+                                if (data.role === 'Admin') {
+                                    const markAsReadButton = document.createElement('button');
+                                    markAsReadButton.className = 'mark-as-read-btn';
+                                    markAsReadButton.textContent = 'Mark as Read';
+                                    markAsReadButton.dataset.id = notification.id;
+                                    markAsReadButton.addEventListener('click', () => markNotificationAsRead(notification.id));
+                                    notificationElement.appendChild(markAsReadButton);
+                                }
+    
+                                notificationsContainer.appendChild(notificationElement);
+                            });
+                        } else {
+                            notificationsContainer.innerHTML = '<p>No notifications available.</p>';
+                        }
                     }
+    
+                    // Handle pagination controls
+                    prevPageButton.disabled = (currentPage === 1);
+                    nextPageButton.disabled = (currentPage >= totalPages || totalPages <= 1);
+                    
                 } else {
                     notificationsContainer.innerHTML = '<p>Error fetching notifications. Please try again later.</p>';
+                    // Disable both buttons on error
+                    prevPageButton.disabled = true;
+                    nextPageButton.disabled = true;
                 }
             })
             .catch(error => {
                 console.error('Error fetching notifications:', error);
                 notificationsContainer.innerHTML = '<p>Error fetching notifications. Please try again later.</p>';
+                // Disable both buttons on error
+                prevPageButton.disabled = true;
+                nextPageButton.disabled = true;
             });
     }
-
-    // Initial fetch of notifications and count
+    
+    // Initial fetch
     fetchNotificationsAndCount(currentPage);
-
     // Event listener for refresh button
     refreshButton.addEventListener('click', () => fetchNotificationsAndCount(currentPage));
      // Event listener for mark all notifications as read

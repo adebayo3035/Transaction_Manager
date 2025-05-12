@@ -53,9 +53,9 @@ $admin_role = $_SESSION['role']; // Role of the person making the request
 
 // Validate if requester is Super Admin
 if ($admin_role !== 'Super Admin') {
-    logActivity("Unauthorized deletion attempt by Admin ID: $admin_id");
+    logActivity("Unauthorized Deactivation attempt by Admin ID: $admin_id");
     http_response_code(403);
-    echo json_encode(["error" => "Only Super Admins can delete accounts"]);
+    echo json_encode(["error" => "Only Super Admins can Deactivate Staff accounts"]);
     exit;
 }
 
@@ -63,7 +63,7 @@ if ($admin_role !== 'Super Admin') {
 if ($staff_id_to_delete == $admin_id) {
     logActivity("Super Admin (ID: $admin_id) attempted self-deletion.");
     http_response_code(403);
-    echo json_encode(["error" => "You cannot delete your own account"]);
+    echo json_encode(["error" => "You cannot Deactivate your own account"]);
     exit;
 }
 
@@ -80,7 +80,7 @@ try {
     $stmt->close();
 
     if (!$user) {
-        logActivity("Attempt to delete non-existent Staff ID: $staff_id_to_delete");
+        logActivity("Attempt to Deactivate non-existent Staff ID: $staff_id_to_delete");
         http_response_code(404);
         echo json_encode(["error" => "Staff record cannot be found"]);
         exit;
@@ -88,23 +88,23 @@ try {
 
     // Ensure the user to be deleted is not a Super Admin
     if ($user['role'] === 'Super Admin') {
-        logActivity("Attempt to delete another Super Admin (ID: $staff_id_to_delete) by Admin ID: $admin_id");
+        logActivity("Attempt to Deactivate another Super Admin (ID: $staff_id_to_delete) by Admin ID: $admin_id");
         http_response_code(403);
-        echo json_encode(["error" => "Cannot delete another Super Admin"]);
+        echo json_encode(["error" => "Cannot Deactivate another Super Admin Account"]);
         exit;
     }
 
     // Ensure the account is not restricted or blocked
     if ($user['restriction_id'] == 1 || $user['block_id'] == 1) {
-        logActivity("Attempt to delete a restricted/blocked user (ID: $staff_id_to_delete) by Admin ID: $admin_id");
+        logActivity("Attempt to Deactivate a restricted/blocked user (ID: $staff_id_to_delete) by Admin ID: $admin_id");
         http_response_code(403);
-        echo json_encode(["error" => "Cannot delete a restricted or blocked account"]);
+        echo json_encode(["error" => "Cannot Deactivate a restricted or blocked account"]);
         exit;
     }
 
     // Check if account has been deleted before
     if ($user['delete_status'] === 'Yes') {
-        logActivity("Attempt to delete an already deleted Account (ID: $staff_id_to_delete) by Admin ID: $admin_id");
+        logActivity("Attempt to Deactivate an already Deactivated Account (ID: $staff_id_to_delete) by Admin ID: $admin_id");
         http_response_code(403);
         echo json_encode(["error" => "Account is currently Inactive. Please Try Again"]);
         exit;
@@ -169,11 +169,11 @@ try {
     // Commit transaction
     $conn->commit();
 
-    logActivity("Staff ID: $staff_id_to_delete successfully soft deleted by Super Admin ID: $admin_id");
-    echo json_encode(["success" => "Staff record has been successfully deleted"]);
+    logActivity("Staff ID: $staff_id_to_delete Account has been successfully deactivated by Super Admin ID: $admin_id");
+    echo json_encode(["success" => "Staff Account has been successfully Deactivated"]);
 } catch (Exception $e) {
     $conn->rollback(); // Rollback if any step fails
-    logActivity("Failed to delete Staff ID: $staff_id_to_delete. Error: " . $e->getMessage());
+    logActivity("Failed to Deactivate Staff ID: $staff_id_to_delete. Error: " . $e->getMessage());
     http_response_code($e->getCode());
     echo json_encode(["error" => $e->getMessage()]);
 }

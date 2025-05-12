@@ -3,82 +3,70 @@ header('Content-Type: application/json');
 include 'config.php';
 function destroySession($uniqueId, $conn)
 {
+    // Validate input
+    if (!is_numeric($uniqueId)) {
+        logActivity("Invalid unique_id provided for session destruction: " . $uniqueId);
+        return false; // Invalid input is a real error
+    }
+
+    logActivity("Checking for existing sessions for user: " . $uniqueId);
+
+    $stmt = $conn->prepare("SELECT session_id FROM admin_active_sessions WHERE unique_id = ?");
+    if (!$stmt) {
+        logActivity("Prepare failed: " . $conn->error);
+        return false; // Database error is a real error
+    }
+    
+    $stmt->bind_param("i", $uniqueId);
+    
+    if (!$stmt->execute()) {
+        logActivity("Database error when fetching session: " . $stmt->error);
+        $stmt->close();
+        return false; // Database error is a real error
+    }
+
+    $result = $stmt->get_result();
+    
+    // No existing session is NOT an error condition
+    if ($result->num_rows === 0) {
+        logActivity("No active session found - safe to proceed");
+        $stmt->close();
+        return true; // Specifically allow login to continue
+    }
+
+    $sessionData = $result->fetch_assoc();
+    $sessionId = $sessionData['session_id'];
+    $stmt->close();
+
+    logActivity("Found active session (ID: $sessionId) - attempting destruction");
+
     try {
-        // Validate input
-        if (!is_numeric($uniqueId) || $uniqueId <= 0) {
-            logActivity("Invalid unique_id provided for session destruction: " . $uniqueId);
-            return false;
-        }
-
-        logActivity("Attempting to destroy session for user: " . $uniqueId);
-
-        // Fetch the session_id from admin_active_sessions table
-        $stmt = $conn->prepare("SELECT session_id, login_time, ip_address FROM admin_active_sessions WHERE unique_id = ?");
-        $stmt->bind_param("i", $uniqueId);
-        
-        if (!$stmt->execute()) {
-            logActivity("Database error when fetching session for user " . $uniqueId . ": " . $stmt->error);
-            return false;
-        }
-
-        $result = $stmt->get_result();
-        
-        if ($result->num_rows === 0) {
-            logActivity("No active session found for user: " . $uniqueId);
-            $stmt->close();
-            return false;
-        }
-
-        $sessionData = $result->fetch_assoc();
-        $sessionId = $sessionData['session_id'];
-        $loginTime = $sessionData['login_time'];
-        $ipAddress = $sessionData['ip_address'];
-
-        logActivity("Found active session for user " . $uniqueId . 
-                   " (Session ID: " . $sessionId . 
-                   ", Login Time: " . $loginTime . 
-                   ", IP: " . $ipAddress . ") - Preparing to destroy");
-
-        // Destroy the session
-        // session_id($sessionId);
-        // session_start([
-        //     'use_strict_mode' => true,
-        //     'use_cookies' => false,
-        //     'use_only_cookies' => true
-        // ]);
-        
-        // // Clear all session variables
-        // $_SESSION = array();
+        // Destroy PHP session
         session_id($sessionId);
         session_start();
-        // session_destroy();
-
-        // Destroy the session
-        if (session_destroy()) {
-            logActivity("Successfully destroyed session " . $sessionId . " for user " . $uniqueId);
-        } else {
-            logActivity("Failed to destroy session " . $sessionId . " for user " . $uniqueId);
-        }
-
-        // Remove the session record from the table
-        $stmt->close();
-        $stmt = $conn->prepare("DELETE FROM admin_active_sessions WHERE unique_id = ?");
-        $stmt->bind_param("i", $uniqueId);
+        $_SESSION = array();
         
-        if ($stmt->execute()) {
-            logActivity("Successfully removed session record from database for user " . $uniqueId);
-        } else {
-            logActivity("Failed to remove session record from database for user " . $uniqueId . ": " . $stmt->error);
+        if (!session_destroy()) {
+            logActivity("Failed to destroy PHP session");
+            return false;
         }
 
+        // Remove from database
+        $deleteStmt = $conn->prepare("DELETE FROM admin_active_sessions WHERE unique_id = ?");
+        if (!$deleteStmt || !$deleteStmt->bind_param("i", $uniqueId) || !$deleteStmt->execute()) {
+            logActivity("Failed to remove session record: " . ($deleteStmt->error ?? 'Unknown'));
+            return false;
+        }
+
+        logActivity("Session destroyed successfully");
         return true;
 
     } catch (Exception $e) {
-        logActivity("Error destroying session for user " . $uniqueId . ": " . $e->getMessage());
+        logActivity("Exception during session destruction: " . $e->getMessage());
         return false;
     } finally {
-        if (isset($stmt) && $stmt instanceof mysqli_stmt) {
-            $stmt->close();
+        if (isset($deleteStmt) && $deleteStmt instanceof mysqli_stmt) {
+            $deleteStmt->close();
         }
     }
 }

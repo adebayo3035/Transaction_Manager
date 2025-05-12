@@ -30,6 +30,15 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initialize modals as hidden
     [modal1, modal2, modal3].forEach(modal => modal.style.display = "none");
 
+    // Parse URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const action = urlParams.get('action');
+
+    // If the action is reset-password, open the modal
+    if (action === "reset-password") {
+        toggleModal("passwordResetModal", "flex");
+    }
+
     // Toggle modals for reset password and secret question
     resetPasswordBtn.onclick = (e) => {
         e.preventDefault();

@@ -1,20 +1,34 @@
 <?php
 include 'config.php';
 session_start();
-
 header('Content-Type: application/json');
 
-// Get the POST data
+// === Parse input ===
 $data = json_decode(file_get_contents("php://input"), true);
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $staffID = $data['staffID'] ?? null;
     $unblockType = $data['unblockType'] ?? null;
 
-    // Determine column to update based on unblockType
-    $columnToUpdate = ($unblockType === 'unrestrict') ? 'restriction_id' : 'block_id';
+    logActivity("POST request received to update admin_tbl for staffID: {$staffID}, unblockType: {$unblockType}");
 
-    // Check current restriction_id and block_id
+    // === Validate inputs ===
+    if (!is_numeric($staffID)) {
+        logActivity("Invalid staff ID provided: {$staffID}");
+        echo json_encode(["success" => false, "message" => "Invalid staff ID."]);
+        exit();
+    }
+
+    $allowedTypes = ['unrestrict', 'unblock'];
+    if (!in_array($unblockType, $allowedTypes)) {
+        logActivity("Invalid unblockType value: {$unblockType}");
+        echo json_encode(["success" => false, "message" => "Invalid unblock type."]);
+        exit();
+    }
+
+    $columnToUpdate = $unblockType === 'unrestrict' ? 'restriction_id' : 'block_id';
+
+    // === Fetch current block/restriction state ===
     $stmt = $conn->prepare("SELECT restriction_id, block_id FROM admin_tbl WHERE unique_id = ?");
     $stmt->bind_param("i", $staffID);
     $stmt->execute();
@@ -24,26 +38,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($stmt->num_rows > 0) {
         $stmt->fetch();
 
-        // Check if there's already no restriction/block
-        if ($columnToUpdate == 'restriction_id' && $currentRestrictionId == 0) {
+        if ($columnToUpdate === 'restriction_id' && $currentRestrictionId == 0) {
+            logActivity("No restriction found for staffID: {$staffID}");
             echo json_encode(["success" => false, "message" => "There is no restriction on this account."]);
             exit();
-        } else if ($columnToUpdate == 'block_id' && $currentBlockId == 0) {
+        } elseif ($columnToUpdate === 'block_id' && $currentBlockId == 0) {
+            logActivity("No block found for staffID: {$staffID}");
             echo json_encode(["success" => false, "message" => "There is no block on this account."]);
             exit();
         }
 
-        // Update the restriction_id or block_id column
-        $updateStmt = $conn->prepare("UPDATE admin_tbl SET $columnToUpdate = 0 WHERE unique_id = ?");
+        // === Update the status ===
+        $updateSql = "UPDATE admin_tbl SET {$columnToUpdate} = 0 WHERE unique_id = ?";
+        $updateStmt = $conn->prepare($updateSql);
         $updateStmt->bind_param("i", $staffID);
         if ($updateStmt->execute()) {
+            logActivity("Successfully updated {$columnToUpdate} for staffID: {$staffID}");
             echo json_encode(["success" => true, "message" => "Account successfully updated."]);
         } else {
+            logActivity("Failed to update {$columnToUpdate} for staffID: {$staffID}");
             echo json_encode(["success" => false, "message" => "Failed to update account. Please try again."]);
         }
         $updateStmt->close();
     } else {
+        logActivity("No matching account found for staffID: {$staffID}");
         echo json_encode(["success" => false, "message" => "No matching account found."]);
     }
+
     $stmt->close();
+    $conn->close();
+} else {
+    logActivity("Invalid request method attempted on unblock endpoint.");
+    echo json_encode(["success" => false, "message" => "Invalid request method."]);
+    exit();
 }

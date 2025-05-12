@@ -1,479 +1,546 @@
-[2025-04-13 13:29:30] [Page: http://localhost/transaction_manager/backend/send_otp.php] [File: C:\xampp\htdocs\Transaction_manager\backend\send_otp.php, Line: 115] OTP_SUCCESS: OTP has been generated and sent to ejemplo@ejemplo.mx
-[2025-04-13 13:30:16] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 51] OTP_VALIDATION_QUERY: 
-    SELECT id, otp, expires_at, status 
-    FROM admin_otp_request 
-    WHERE unique_id = ? 
-    AND status = 'pending'
-    ORDER BY created_at DESC 
-    LIMIT 1
+[2025-05-12 15:37:17]
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
 
-[2025-04-13 13:30:16] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 52] OTP_VALIDATION_PARAMS: unique_id=1444538531
-[2025-04-13 13:30:16] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 60] OTP_VALIDATION_RESULT: {"id":10,"otp":"$2y$10$v.Uvod1VD9CZAthGkwlWVOueJaWzeTPyZpRc2MvfdxHG8.5O3bXQK","expires_at":"2025-04-13 12:31:30","status":"pending"}
-[2025-04-13 13:30:16] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 74] OTP_TIME_COMPARISON: current=2025-04-13 12:30:16 | expiry=2025-04-13 12:31:30 | server_timezone=Europe/Berlin
-[2025-04-13 13:30:16] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 92] OTP_VALIDATION_SUCCESS: Valid OTP found for 1444538531 | OTP_ID=10
-[2025-04-13 13:30:16] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 117] USER_STATUS_RESULT: {"id":8,"delete_status":"Yes","block_id":0}
-[2025-04-13 13:30:16] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 148] TRANSACTION_START: Beginning OTP verification transaction
-[2025-04-13 13:30:16] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 152] TRANSACTION_STEP: Checking for existing reactivation requests
-[2025-04-13 13:30:16] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 276] OTP_STATUS_CHANGE: ID = 10 | FROM = pending | TO = failed
-[2025-04-13 13:30:16] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 226] REACTIVATION_FAILED: Unknown column 'requested_at' in 'where clause' for ejemplo@ejemplo.mx
-[2025-04-13 13:31:32] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 51] OTP_VALIDATION_QUERY: 
-    SELECT id, otp, expires_at, status 
-    FROM admin_otp_request 
-    WHERE unique_id = ? 
-    AND status = 'pending'
-    ORDER BY created_at DESC 
-    LIMIT 1
+[2025-05-12 15:37:17]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
 
-[2025-04-13 13:31:32] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 52] OTP_VALIDATION_PARAMS: unique_id=1444538531
-[2025-04-13 13:31:32] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 60] OTP_VALIDATION_RESULT: null
-[2025-04-13 13:31:32] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 66] OTP_VALIDATION_FAILED: No pending OTP for ejemplo@ejemplo.mx | {"success":false,"message":"No pending OTP found for this email"}
-[2025-04-13 13:31:47] [Page: http://localhost/transaction_manager/backend/send_otp.php] [File: C:\xampp\htdocs\Transaction_manager\backend\send_otp.php, Line: 115] OTP_SUCCESS: OTP has been generated and sent to ejemplo@ejemplo.mx
-[2025-04-13 13:32:22] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 51] OTP_VALIDATION_QUERY: 
-    SELECT id, otp, expires_at, status 
-    FROM admin_otp_request 
-    WHERE unique_id = ? 
-    AND status = 'pending'
-    ORDER BY created_at DESC 
-    LIMIT 1
+[2025-05-12 15:37:17]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
 
-[2025-04-13 13:32:22] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 52] OTP_VALIDATION_PARAMS: unique_id=1444538531
-[2025-04-13 13:32:22] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 60] OTP_VALIDATION_RESULT: {"id":11,"otp":"$2y$10$iaT5uGsk\/U3xh0D.2EJnxuaAp2MspX.KT.z7OntHxDInQkO3HJ6g2","expires_at":"2025-04-13 12:33:47","status":"pending"}
-[2025-04-13 13:32:22] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 74] OTP_TIME_COMPARISON: current=2025-04-13 12:32:22 | expiry=2025-04-13 12:33:47 | server_timezone=Europe/Berlin
-[2025-04-13 13:32:22] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 92] OTP_VALIDATION_SUCCESS: Valid OTP found for 1444538531 | OTP_ID=11
-[2025-04-13 13:32:22] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 117] USER_STATUS_RESULT: {"id":8,"delete_status":"Yes","block_id":0}
-[2025-04-13 13:32:22] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 148] TRANSACTION_START: Beginning OTP verification transaction
-[2025-04-13 13:32:22] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 152] TRANSACTION_STEP: Checking for existing reactivation requests
-[2025-04-13 13:32:22] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 276] OTP_STATUS_CHANGE: ID = 11 | FROM = pending | TO = failed
-[2025-04-13 13:32:22] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 226] REACTIVATION_FAILED: Unknown column 'created_at' in 'where clause' for ejemplo@ejemplo.mx
-[2025-04-13 13:33:27] [Page: http://localhost/transaction_manager/backend/send_otp.php] [File: C:\xampp\htdocs\Transaction_manager\backend\send_otp.php, Line: 115] OTP_SUCCESS: OTP has been generated and sent to ejemplo@ejemplo.mx
-[2025-04-13 13:33:53] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 51] OTP_VALIDATION_QUERY: 
-    SELECT id, otp, expires_at, status 
-    FROM admin_otp_request 
-    WHERE unique_id = ? 
-    AND status = 'pending'
-    ORDER BY created_at DESC 
-    LIMIT 1
+[2025-05-12 15:37:17]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
 
-[2025-04-13 13:33:53] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 52] OTP_VALIDATION_PARAMS: unique_id=1444538531
-[2025-04-13 13:33:53] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 60] OTP_VALIDATION_RESULT: {"id":12,"otp":"$2y$10$JbaxCVy6LJDC60oo0XqB.egmbQ2FpXvpwH1hJ4EhMG31JkQG\/9CHm","expires_at":"2025-04-13 12:35:27","status":"pending"}
-[2025-04-13 13:33:53] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 74] OTP_TIME_COMPARISON: current=2025-04-13 12:33:53 | expiry=2025-04-13 12:35:27 | server_timezone=Europe/Berlin
-[2025-04-13 13:33:53] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 92] OTP_VALIDATION_SUCCESS: Valid OTP found for 1444538531 | OTP_ID=12
-[2025-04-13 13:33:53] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 117] USER_STATUS_RESULT: {"id":8,"delete_status":"Yes","block_id":0}
-[2025-04-13 13:33:53] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 148] TRANSACTION_START: Beginning OTP verification transaction
-[2025-04-13 13:33:53] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 152] TRANSACTION_STEP: Checking for existing reactivation requests
-[2025-04-13 13:33:53] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 191] TRANSACTION_STEP: Creating new reactivation request
-[2025-04-13 13:33:53] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 202] REACTIVATION_CREATED: RequestID=1
-[2025-04-13 13:33:53] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 276] OTP_STATUS_CHANGE: ID = 12 | FROM = pending | TO = verified
-[2025-04-13 13:33:53] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 205] OTP_VERIFIED: OTP_ID=12
-[2025-04-13 13:33:53] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 208] TRANSACTION_COMPLETE: Successfully committed all changes
-[2025-04-13 13:34:58] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 22675443 is retrieving deleted staff records.
-[2025-04-13 13:34:58] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 75] Super Admin ID: 22675443 fetched deleted staff list.
-[2025-04-13 13:36:19] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 22675443 is retrieving deleted staff records.
-[2025-04-13 13:36:20] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 75] Super Admin ID: 22675443 fetched deleted staff list.
-[2025-04-13 13:36:34] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 22675443 is retrieving deleted staff records.
-[2025-04-13 13:36:34] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 75] Super Admin ID: 22675443 fetched deleted staff list.
-[2025-04-13 13:37:57] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 22675443 is retrieving deleted staff records.
-[2025-04-13 13:37:57] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 75] Super Admin ID: 22675443 fetched deleted staff list.
-[2025-04-13 13:39:48] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 22675443 is retrieving deleted staff records.
-[2025-04-13 13:39:48] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 75] Super Admin ID: 22675443 fetched deleted staff list.
-[2025-04-13 13:45:01] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 22675443 is retrieving deleted staff records.
-[2025-04-13 13:45:01] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 75] Super Admin ID: 22675443 fetched deleted staff list.
-[2025-04-13 14:06:32] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 22675443 is retrieving deleted staff records.
-[2025-04-13 14:06:32] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 75] Super Admin ID: 22675443 fetched deleted staff list.
-[2025-04-13 14:23:30] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 22675443 is retrieving deleted staff records.
-[2025-04-13 14:23:30] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 75] Super Admin ID: 22675443 fetched deleted staff list.
-[2025-04-13 14:24:27] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 22675443 is retrieving deleted staff records.
-[2025-04-13 14:24:27] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 75] Super Admin ID: 22675443 fetched deleted staff list.
-[2025-04-13 14:25:21] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 22675443 is retrieving deleted staff records.
-[2025-04-13 14:25:21] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 75] Super Admin ID: 22675443 fetched deleted staff list.
-[2025-04-13 14:27:01] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 22675443 is retrieving deleted staff records.
-[2025-04-13 14:27:01] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 75] Super Admin ID: 22675443 fetched deleted staff list.
-[2025-04-13 14:29:23] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 22675443 is retrieving deleted staff records.
-[2025-04-13 14:29:23] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 75] Super Admin ID: 22675443 fetched deleted staff list.
-[2025-04-13 14:30:51] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 22675443 is retrieving deleted staff records.
-[2025-04-13 14:30:51] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 75] Super Admin ID: 22675443 fetched deleted staff list.
-[2025-04-13 14:31:31] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 22675443 is retrieving deleted staff records.
-[2025-04-13 14:31:31] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 75] Super Admin ID: 22675443 fetched deleted staff list.
-[2025-04-14 09:26:06] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 22675443 is retrieving deleted staff records.
-[2025-04-14 09:26:07] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 75] Super Admin ID: 22675443 fetched deleted staff list.
-[2025-04-14 16:47:19] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 101] Login attempt initiated for username: adebayoabdulrahmon@gmail.com from IP: ::1
-[2025-04-14 16:47:19] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 121] User found - ID: 22675443, Block Status: 0, Delete Status: 
-[2025-04-14 16:47:19] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 208] Checking lockout status for user: 22675443 (Lockout Duration: 60 minutes)
-[2025-04-14 16:47:19] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 225] No lockout record found for user: 22675443
-[2025-04-14 16:47:19] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 13] Attempting to destroy session for user: 22675443
-[2025-04-14 16:47:19] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 37] Found active session for user 22675443 (Session ID: tvmurtnchs5r79csq15nqegmap, Login Time: 2025-04-13 00:56:26, IP: ::1) - Preparing to destroy
-[2025-04-14 16:47:19] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 58] Successfully destroyed session tvmurtnchs5r79csq15nqegmap for user 22675443
-[2025-04-14 16:47:19] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 69] Successfully removed session record from database for user 22675443
-[2025-04-14 16:47:19] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 191] Login successful for user 22675443 from IP: ::1
-[2025-04-14 16:47:34] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] [File: C:\xampp\htdocs\Transaction_manager\backend\fetch_random_customers.php, Line: 9] Fetching random customer names script started.
-[2025-04-14 16:47:34] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] [File: C:\xampp\htdocs\Transaction_manager\backend\fetch_random_customers.php, Line: 30] Successfully fetched 3 random customer names.
-[2025-04-14 16:47:34] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] [File: C:\xampp\htdocs\Transaction_manager\backend\fetch_random_customers.php, Line: 47] Fetching random customer names script completed.
-[2025-04-14 16:47:34] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 6] Fetching promos script started.
-[2025-04-14 16:47:34] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 19] Admin unique_id found in session: 22675443
-[2025-04-14 16:47:34] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 32] Pagination parameters - Page: 1, Limit: 10, Offset: 0
-[2025-04-14 16:47:34] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 48] Total promos count: 7
-[2025-04-14 16:47:34] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 69] Fetched 7 paginated promos.
-[2025-04-14 16:47:34] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 92] Fetched 2 ongoing promos.
-[2025-04-14 16:47:34] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 108] Fetching promos script completed successfully.
-[2025-04-14 16:47:41] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 22675443 is retrieving deleted staff records.
-[2025-04-14 16:47:42] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 75] Super Admin ID: 22675443 fetched deleted staff list.
-[2025-04-14 16:51:59] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 22675443 is retrieving deleted staff records.
-[2025-04-14 16:51:59] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 75] Super Admin ID: 22675443 fetched deleted staff list.
-[2025-04-14 16:54:04] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 22675443 is retrieving deleted staff records.
-[2025-04-14 16:54:04] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 75] Super Admin ID: 22675443 fetched deleted staff list.
-[2025-04-14 16:55:06] [Page: http://localhost/transaction_manager/backend/delete_staff.php] [File: C:\xampp\htdocs\Transaction_manager\backend\delete_staff.php, Line: 164] Deactivation email sent to user ID: 860113631
-[2025-04-14 16:55:06] [Page: http://localhost/transaction_manager/backend/delete_staff.php] [File: C:\xampp\htdocs\Transaction_manager\backend\delete_staff.php, Line: 172] Staff ID: 860113631 successfully soft deleted by Super Admin ID: 22675443
-[2025-04-14 16:55:15] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 22675443 is retrieving deleted staff records.
-[2025-04-14 16:55:15] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 75] Super Admin ID: 22675443 fetched deleted staff list.
-[2025-04-14 18:20:30] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 22675443 is retrieving deleted staff records.
-[2025-04-14 18:20:30] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 75] Super Admin ID: 22675443 fetched deleted staff list.
-[2025-04-14 18:21:25] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 22675443 is retrieving deleted staff records.
-[2025-04-14 18:21:25] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 75] Super Admin ID: 22675443 fetched deleted staff list.
-[2025-04-14 19:47:00] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 22675443 is retrieving deleted staff records.
-[2025-04-14 19:47:00] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 75] Super Admin ID: 22675443 fetched deleted staff list.
-[2025-04-14 20:23:21] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 22675443 is retrieving deleted staff records.
-[2025-04-14 20:23:21] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 75] Super Admin ID: 22675443 fetched deleted staff list.
-[2025-04-14 20:49:59] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 22675443 is retrieving deleted staff records.
-[2025-04-14 20:49:59] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 75] Super Admin ID: 22675443 fetched deleted staff list.
-[2025-04-14 20:50:30] [Page: http://localhost/transaction_manager/backend/reactivate_admin_account.php] [File: C:\xampp\htdocs\Transaction_manager\backend\reactivate_admin_account.php, Line: 44] Super Admin ID 22675443 initiated a reactivation action: Reactivated for Staff ID 1444538531.
-[2025-04-14 20:50:30] [Page: http://localhost/transaction_manager/backend/reactivate_admin_account.php] [File: C:\xampp\htdocs\Transaction_manager\backend\reactivate_admin_account.php, Line: 55] Transaction started for Staff ID 1444538531 reactivation.
-[2025-04-14 20:50:30] [Page: http://localhost/transaction_manager/backend/reactivate_admin_account.php] [File: C:\xampp\htdocs\Transaction_manager\backend\reactivate_admin_account.php, Line: 87] Fetched reactivation log. Reactivation ID: 1, Deactivation ID: 1 for Staff ID 1444538531.
-[2025-04-14 20:50:30] [Page: http://localhost/transaction_manager/backend/reactivate_admin_account.php] [File: C:\xampp\htdocs\Transaction_manager\backend\reactivate_admin_account.php, Line: 97] Reactivation log updated with status 'Reactivated' for Staff ID 1444538531.
-[2025-04-14 20:50:30] [Page: http://localhost/transaction_manager/backend/reactivate_admin_account.php] [File: C:\xampp\htdocs\Transaction_manager\backend\reactivate_admin_account.php, Line: 108] Account reactivated in admin_tbl for Staff ID 1444538531.
-[2025-04-14 20:50:34] [Page: http://localhost/transaction_manager/backend/reactivate_admin_account.php] [File: C:\xampp\htdocs\Transaction_manager\backend\reactivate_admin_account.php, Line: 180] Reactivation email sent to Staff ID 1444538531 with status: Reactivated
-[2025-04-14 20:50:34] [Page: http://localhost/transaction_manager/backend/reactivate_admin_account.php] [File: C:\xampp\htdocs\Transaction_manager\backend\reactivate_admin_account.php, Line: 118] Transaction committed for Staff ID 1444538531 reactivation.
-[2025-04-14 20:50:34] [Page: http://localhost/transaction_manager/backend/reactivate_admin_account.php] [File: C:\xampp\htdocs\Transaction_manager\backend\reactivate_admin_account.php, Line: 119] Super Admin ID 22675443 successfully completed Reactivated for Staff ID 1444538531.
-[2025-04-14 20:53:34] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 19] Logout process initiated
-[2025-04-14 20:53:34] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 35] Processing logout for user: 22675443
-[2025-04-14 20:53:34] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 60] Found active session: 5h63mgdj7gmb39v0dn56ntht16 (Status: Active)
-[2025-04-14 20:53:34] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 77] Session invalidated in DB. Affected rows: 1
-[2025-04-14 20:53:34] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 86] Session destroyed. Previous session data: {"unique_id":22675443,"firstname":"Abdul-Rahmon","lastname":"Adebayor","role":"Super Admin","restriction_id":0,"secret_answer":"d44f56edc1f5276827d3e5b5b63724ed","ip_address":"::1","user_agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/135.0.0.0 Safari\/537.36","created_at":1744642039,"last_activity":1744642040}
-[2025-04-14 20:53:34] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 89] Logout successful for user: 22675443
-[2025-04-14 20:53:54] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 101] Login attempt initiated for username: abdulrahmonadebayo@gmail.com from IP: ::1
-[2025-04-14 20:53:54] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 121] User found - ID: 1428985436, Block Status: 0, Delete Status: Yes
-[2025-04-14 20:53:54] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 131] Login blocked - Account 1428985436 is deactivated. Attempt from IP: ::1
-[2025-04-14 20:59:30] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] [File: C:\xampp\htdocs\Transaction_manager\backend\fetch_random_customers.php, Line: 9] Fetching random customer names script started.
-[2025-04-14 20:59:30] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] [File: C:\xampp\htdocs\Transaction_manager\backend\fetch_random_customers.php, Line: 30] Successfully fetched 3 random customer names.
-[2025-04-14 20:59:30] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 6] Fetching promos script started.
-[2025-04-14 20:59:30] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 21] Customer customer_id found in session: 1260106158
-names script completed.
-[2025-04-14 20:59:30] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 32] Pagination parameters - Page: 1, Limit: 10, Offset: 0
-[2025-04-14 20:59:30] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 48] Total promos count: 7
-[2025-04-14 20:59:30] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 69] Fetched 7 paginated promos.
-[2025-04-14 20:59:30] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 92] Fetched 2 ongoing promos.
-[2025-04-14 20:59:30] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 108] Fetching promos script completed successfully.
-[2025-04-14 20:59:38] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 101] Login attempt initiated for username: adebayoabdulrahmon@gmail.com from IP: ::1
-[2025-04-14 20:59:38] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 121] User found - ID: 22675443, Block Status: 0, Delete Status: 
-[2025-04-14 20:59:38] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 208] Checking lockout status for user: 22675443 (Lockout Duration: 60 minutes)
-[2025-04-14 20:59:38] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 225] No lockout record found for user: 22675443
-[2025-04-14 20:59:38] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 13] Attempting to destroy session for user: 22675443
-[2025-04-14 20:59:38] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 37] Found active session for user 22675443 (Session ID: 5h63mgdj7gmb39v0dn56ntht16, Login Time: 2025-04-14 16:47:19, IP: ::1) - Preparing to destroy
-[2025-04-14 20:59:38] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 58] Successfully destroyed session 5h63mgdj7gmb39v0dn56ntht16 for user 22675443
-[2025-04-14 20:59:39] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 69] Successfully removed session record from database for user 22675443
-[2025-04-14 20:59:39] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 191] Login successful for user 22675443 from IP: ::1
-[2025-04-14 20:59:50] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] [File: C:\xampp\htdocs\Transaction_manager\backend\fetch_random_customers.php, Line: 9] Fetching random customer names script started.
-[2025-04-14 20:59:50] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] [File: C:\xampp\htdocs\Transaction_manager\backend\fetch_random_customers.php, Line: 30] Successfully fetched 3 random customer names.
-[2025-04-14 20:59:50] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] [File: C:\xampp\htdocs\Transaction_manager\backend\fetch_random_customers.php, Line: 47] Fetching random customer names script completed.
-[2025-04-14 20:59:50] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 6] Fetching promos script started.
-[2025-04-14 20:59:50] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 19] Admin unique_id found in session: 22675443
-[2025-04-14 20:59:50] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 32] Pagination parameters - Page: 1, Limit: 10, Offset: 0
-[2025-04-14 20:59:50] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 48] Total promos count: 7
-[2025-04-14 20:59:50] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 69] Fetched 7 paginated promos.
-[2025-04-14 20:59:50] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 92] Fetched 2 ongoing promos.
-[2025-04-14 20:59:50] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 108] Fetching promos script completed successfully.
-[2025-04-15 09:10:40] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 22675443 is retrieving deleted staff records.
-[2025-04-15 09:10:40] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 75] Super Admin ID: 22675443 fetched deleted staff list.
-[2025-04-15 09:13:15] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 19] Logout process initiated
-[2025-04-15 09:13:15] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 35] Processing logout for user: 22675443
-[2025-04-15 09:13:15] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 60] Found active session: 3a08o8s1qv7dlse6kldpg77r74 (Status: Active)
-[2025-04-15 09:13:15] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 77] Session invalidated in DB. Affected rows: 1
-[2025-04-15 09:13:15] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 86] Session destroyed. Previous session data: {"unique_id":22675443,"firstname":"Abdul-Rahmon","lastname":"Adebayor","role":"Super Admin","restriction_id":0,"secret_answer":"d44f56edc1f5276827d3e5b5b63724ed","ip_address":"::1","user_agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/135.0.0.0 Safari\/537.36","created_at":1744657179,"last_activity":1744657179}
-[2025-04-15 09:13:15] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 89] Logout successful for user: 22675443
-[2025-04-15 09:13:21] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 101] Login attempt initiated for username: ejemplo@ejemplo.mx from IP: ::1
-[2025-04-15 09:13:21] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 121] User found - ID: 1444538531, Block Status: 0, Delete Status: 
-[2025-04-15 09:13:21] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 208] Checking lockout status for user: 1444538531 (Lockout Duration: 60 minutes)
-[2025-04-15 09:13:21] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 225] No lockout record found for user: 1444538531
-[2025-04-15 09:13:21] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 13] Attempting to destroy session for user: 1444538531
-[2025-04-15 09:13:21] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 37] Found active session for user 1444538531 (Session ID: jbvnvkvm7mbqhtir6sbbsrq9s4, Login Time: 2025-04-12 00:32:33, IP: ::1) - Preparing to destroy
-[2025-04-15 09:13:21] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 58] Successfully destroyed session jbvnvkvm7mbqhtir6sbbsrq9s4 for user 1444538531
-[2025-04-15 09:13:21] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 69] Successfully removed session record from database for user 1444538531
-[2025-04-15 09:13:21] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 191] Login successful for user 1444538531 from IP: ::1
-[2025-04-15 09:13:33] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] [File: C:\xampp\htdocs\Transaction_manager\backend\fetch_random_customers.php, Line: 9] Fetching random customer names script started.
-[2025-04-15 09:13:33] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] [File: C:\xampp\htdocs\Transaction_manager\backend\fetch_random_customers.php, Line: 30] Successfully fetched 3 random customer names.
-[2025-04-15 09:13:33] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] [File: C:\xampp\htdocs\Transaction_manager\backend\fetch_random_customers.php, Line: 47] Fetching random customer names script completed.
-[2025-04-15 09:13:33] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 6] Fetching promos script started.
-[2025-04-15 09:13:33] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 19] Admin unique_id found in session: 1444538531
-[2025-04-15 09:13:33] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 32] Pagination parameters - Page: 1, Limit: 10, Offset: 0
-[2025-04-15 09:13:33] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 48] Total promos count: 7
-[2025-04-15 09:13:33] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 69] Fetched 7 paginated promos.
-[2025-04-15 09:13:33] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 92] Fetched 2 ongoing promos.
-[2025-04-15 09:13:33] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 108] Fetching promos script completed successfully.
-[2025-04-15 09:14:06] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 19] Logout process initiated
-[2025-04-15 09:14:06] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 35] Processing logout for user: 1444538531
-[2025-04-15 09:14:06] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 60] Found active session: 7knrrg8vstqrr1j9936l2csd80 (Status: Active)
-[2025-04-15 09:14:06] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 77] Session invalidated in DB. Affected rows: 1
-[2025-04-15 09:14:06] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 86] Session destroyed. Previous session data: {"unique_id":1444538531,"firstname":"Juan Francisco","lastname":"Garc\u00eda Flores","role":"Admin","restriction_id":0,"secret_answer":"05c7371dd32da004811f817b7fd1ddfa","ip_address":"::1","user_agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/135.0.0.0 Safari\/537.36","created_at":1744701201,"last_activity":1744701202}
-[2025-04-15 09:14:06] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 89] Logout successful for user: 1444538531
-[2025-04-15 09:18:57] [Page: http://localhost/transaction_manager/backend/send_otp.php] [File: C:\xampp\htdocs\Transaction_manager\backend\send_otp.php, Line: 115] OTP_SUCCESS: OTP has been generated and sent to moshood.adebayo@gmail.com
-[2025-04-15 09:19:41] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 51] OTP_VALIDATION_QUERY: 
-    SELECT id, otp, expires_at, status 
-    FROM admin_otp_request 
-    WHERE unique_id = ? 
-    AND status = 'pending'
-    ORDER BY created_at DESC 
-    LIMIT 1
+[2025-05-12 15:37:17]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 0 notifications for page 1.
+----------------------------------------
 
-[2025-04-15 09:19:41] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 52] OTP_VALIDATION_PARAMS: unique_id=860113631
-[2025-04-15 09:19:41] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 60] OTP_VALIDATION_RESULT: {"id":13,"otp":"$2y$10$6OyBmaXbVMuoZYS\/Gni18Obsp8rdpKkNvYmdrfNKwqbQPQsOTHH8O","expires_at":"2025-04-15 08:20:57","status":"pending"}
-[2025-04-15 09:19:41] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 74] OTP_TIME_COMPARISON: current=2025-04-15 08:19:41 | expiry=2025-04-15 08:20:57 | server_timezone=Europe/Berlin
-[2025-04-15 09:19:41] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 92] OTP_VALIDATION_SUCCESS: Valid OTP found for 860113631 | OTP_ID=13
-[2025-04-15 09:19:41] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 117] USER_STATUS_RESULT: {"id":2,"delete_status":"Yes","block_id":0}
-[2025-04-15 09:19:41] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 148] TRANSACTION_START: Beginning OTP verification transaction
-[2025-04-15 09:19:41] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 152] TRANSACTION_STEP: Checking for existing reactivation requests
-[2025-04-15 09:19:41] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 191] TRANSACTION_STEP: Creating new reactivation request
-[2025-04-15 09:19:41] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 202] REACTIVATION_CREATED: RequestID=2
-[2025-04-15 09:19:42] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 276] OTP_STATUS_CHANGE: ID = 13 | FROM = pending | TO = verified
-[2025-04-15 09:19:42] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 205] OTP_VERIFIED: OTP_ID=13
-[2025-04-15 09:19:42] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 208] TRANSACTION_COMPLETE: Successfully committed all changes
-[2025-04-15 09:21:06] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 101] Login attempt initiated for username: adebayoabdulrahmon@gmail.com from IP: ::1
-[2025-04-15 09:21:06] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 121] User found - ID: 22675443, Block Status: 0, Delete Status: 
-[2025-04-15 09:21:06] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 208] Checking lockout status for user: 22675443 (Lockout Duration: 60 minutes)
-[2025-04-15 09:21:06] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 225] No lockout record found for user: 22675443
-[2025-04-15 09:21:06] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 13] Attempting to destroy session for user: 22675443
-[2025-04-15 09:21:06] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 37] Found active session for user 22675443 (Session ID: 3a08o8s1qv7dlse6kldpg77r74, Login Time: 2025-04-14 20:59:39, IP: ::1) - Preparing to destroy
-[2025-04-15 09:21:06] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 58] Successfully destroyed session 3a08o8s1qv7dlse6kldpg77r74 for user 22675443
-[2025-04-15 09:21:06] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 69] Successfully removed session record from database for user 22675443
-[2025-04-15 09:21:06] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 191] Login successful for user 22675443 from IP: ::1
-[2025-04-15 09:21:17] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] [File: C:\xampp\htdocs\Transaction_manager\backend\fetch_random_customers.php, Line: 9] Fetching random customer names script started.
-[2025-04-15 09:21:17] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] [File: C:\xampp\htdocs\Transaction_manager\backend\fetch_random_customers.php, Line: 30] Successfully fetched 3 random customer names.
-[2025-04-15 09:21:17] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] [File: C:\xampp\htdocs\Transaction_manager\backend\fetch_random_customers.php, Line: 47] Fetching random customer names script completed.
-[2025-04-15 09:21:17] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 6] Fetching promos script started.
-[2025-04-15 09:21:17] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 19] Admin unique_id found in session: 22675443
-[2025-04-15 09:21:17] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 32] Pagination parameters - Page: 1, Limit: 10, Offset: 0
-[2025-04-15 09:21:17] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 48] Total promos count: 7
-[2025-04-15 09:21:17] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 69] Fetched 7 paginated promos.
-[2025-04-15 09:21:17] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 92] Fetched 2 ongoing promos.
-[2025-04-15 09:21:17] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 108] Fetching promos script completed successfully.
-[2025-04-15 09:21:25] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 22675443 is retrieving deleted staff records.
-[2025-04-15 09:21:25] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 75] Super Admin ID: 22675443 fetched deleted staff list.
-[2025-04-15 09:23:24] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 19] Logout process initiated
-[2025-04-15 09:23:24] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 35] Processing logout for user: 22675443
-[2025-04-15 09:23:24] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 60] Found active session: 497l2vqm4du1782po3dkmlinfs (Status: Active)
-[2025-04-15 09:23:25] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 77] Session invalidated in DB. Affected rows: 1
-[2025-04-15 09:23:25] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 86] Session destroyed. Previous session data: {"unique_id":22675443,"firstname":"Abdul-Rahmon","lastname":"Adebayor","role":"Super Admin","restriction_id":0,"secret_answer":"d44f56edc1f5276827d3e5b5b63724ed","ip_address":"::1","user_agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/135.0.0.0 Safari\/537.36","created_at":1744701666,"last_activity":1744701666}
-[2025-04-15 09:23:25] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 89] Logout successful for user: 22675443
-[2025-04-15 09:23:31] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 101] Login attempt initiated for username: fausat.adebayo@yahoo.com from IP: ::1
-[2025-04-15 09:23:31] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 121] User found - ID: 1166009451, Block Status: 0, Delete Status: 
-[2025-04-15 09:23:31] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 208] Checking lockout status for user: 1166009451 (Lockout Duration: 60 minutes)
-[2025-04-15 09:23:31] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 225] No lockout record found for user: 1166009451
-[2025-04-15 09:23:31] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 13] Attempting to destroy session for user: 1166009451
-[2025-04-15 09:23:31] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 37] Found active session for user 1166009451 (Session ID: i5mdtvdfo9f1cfsabmalfhp80h, Login Time: 2025-04-12 00:31:18, IP: ::1) - Preparing to destroy
-[2025-04-15 09:23:31] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 58] Successfully destroyed session i5mdtvdfo9f1cfsabmalfhp80h for user 1166009451
-[2025-04-15 09:23:31] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 69] Successfully removed session record from database for user 1166009451
-[2025-04-15 09:23:31] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 191] Login successful for user 1166009451 from IP: ::1
-[2025-04-15 09:23:42] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] [File: C:\xampp\htdocs\Transaction_manager\backend\fetch_random_customers.php, Line: 9] Fetching random customer names script started.
-[2025-04-15 09:23:42] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] [File: C:\xampp\htdocs\Transaction_manager\backend\fetch_random_customers.php, Line: 30] Successfully fetched 3 random customer names.
-[2025-04-15 09:23:42] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] [File: C:\xampp\htdocs\Transaction_manager\backend\fetch_random_customers.php, Line: 47] Fetching random customer names script completed.
-[2025-04-15 09:23:42] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 6] Fetching promos script started.
-[2025-04-15 09:23:42] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 19] Admin unique_id found in session: 1166009451
-[2025-04-15 09:23:42] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 32] Pagination parameters - Page: 1, Limit: 10, Offset: 0
-[2025-04-15 09:23:42] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 48] Total promos count: 7
-[2025-04-15 09:23:42] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 69] Fetched 7 paginated promos.
-[2025-04-15 09:23:42] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 92] Fetched 2 ongoing promos.
-[2025-04-15 09:23:42] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 108] Fetching promos script completed successfully.
-[2025-04-15 09:23:47] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 09:23:47] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 75] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 09:36:28] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 09:36:28] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 83] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 09:41:27] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 09:41:27] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 83] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 09:42:29] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 09:42:29] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 83] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 09:54:25] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 09:54:25] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 83] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 10:06:01] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 10:06:01] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 83] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 10:07:11] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 10:07:11] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 83] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 10:13:21] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 10:13:21] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 83] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 10:20:00] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 10:20:00] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 83] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 10:26:47] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 10:26:47] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 83] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 10:32:41] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 10:32:41] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 83] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 12:02:24] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 12:02:24] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 83] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 14:19:25] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 14:19:25] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 83] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 14:20:14] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 14:20:14] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 83] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 14:22:10] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 14:22:10] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 83] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 16:30:54] [Page: http://localhost/transaction_manager/backend/reactivate_admin_account.php] [File: C:\xampp\htdocs\Transaction_manager\backend\reactivate_admin_account.php, Line: 44] Super Admin ID 1166009451 initiated a reactivation action: Declined for Staff ID 860113631.
-[2025-04-15 16:30:54] [Page: http://localhost/transaction_manager/backend/reactivate_admin_account.php] [File: C:\xampp\htdocs\Transaction_manager\backend\reactivate_admin_account.php, Line: 55] Transaction started for Staff ID 860113631 reactivation.
-[2025-04-15 16:30:54] [Page: http://localhost/transaction_manager/backend/reactivate_admin_account.php] [File: C:\xampp\htdocs\Transaction_manager\backend\reactivate_admin_account.php, Line: 87] Fetched reactivation log. Reactivation ID: 2, Deactivation ID: 2 for Staff ID 860113631.
-[2025-04-15 16:30:54] [Page: http://localhost/transaction_manager/backend/reactivate_admin_account.php] [File: C:\xampp\htdocs\Transaction_manager\backend\reactivate_admin_account.php, Line: 97] Reactivation log updated with status 'Declined' for Staff ID 860113631.
-[2025-04-15 16:30:58] [Page: http://localhost/transaction_manager/backend/reactivate_admin_account.php] [File: C:\xampp\htdocs\Transaction_manager\backend\reactivate_admin_account.php, Line: 180] Reactivation email sent to Staff ID 860113631 with status: Declined
-[2025-04-15 16:30:58] [Page: http://localhost/transaction_manager/backend/reactivate_admin_account.php] [File: C:\xampp\htdocs\Transaction_manager\backend\reactivate_admin_account.php, Line: 118] Transaction committed for Staff ID 860113631 reactivation.
-[2025-04-15 16:30:58] [Page: http://localhost/transaction_manager/backend/reactivate_admin_account.php] [File: C:\xampp\htdocs\Transaction_manager\backend\reactivate_admin_account.php, Line: 119] Super Admin ID 1166009451 successfully completed Declined for Staff ID 860113631.
-[2025-04-15 16:31:18] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 16:31:18] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 83] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 16:37:41] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] [File: C:\xampp\htdocs\Transaction_manager\backend\fetch_random_customers.php, Line: 9] Fetching random customer names script started.
-[2025-04-15 16:37:41] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] [File: C:\xampp\htdocs\Transaction_manager\backend\fetch_random_customers.php, Line: 30] Successfully fetched 3 random customer names.
-[2025-04-15 16:37:41] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] [File: C:\xampp\htdocs\Transaction_manager\backend\fetch_random_customers.php, Line: 47] Fetching random customer names script completed.
-[2025-04-15 16:37:41] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 6] Fetching promos script started.
-[2025-04-15 16:37:41] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 21] Customer customer_id found in session: 1260106158
-[2025-04-15 16:37:41] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 32] Pagination parameters - Page: 1, Limit: 10, Offset: 0
-[2025-04-15 16:37:41] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 48] Total promos count: 7
-[2025-04-15 16:37:41] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 69] Fetched 7 paginated promos.
-[2025-04-15 16:37:41] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 92] Fetched 2 ongoing promos.
-[2025-04-15 16:37:41] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 108] Fetching promos script completed successfully.
-[2025-04-15 16:38:06] [Page: http://localhost/transaction_manager/backend/send_otp.php] [File: C:\xampp\htdocs\Transaction_manager\backend\send_otp.php, Line: 115] OTP_SUCCESS: OTP has been generated and sent to moshood.adebayo@gmail.com
-[2025-04-15 16:38:43] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 51] OTP_VALIDATION_QUERY: 
-    SELECT id, otp, expires_at, status 
-    FROM admin_otp_request 
-    WHERE unique_id = ? 
-    AND status = 'pending'
-    ORDER BY created_at DESC 
-    LIMIT 1
+[2025-05-12 15:37:17]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 0. Total pages: 0.
+----------------------------------------
 
-[2025-04-15 16:38:43] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 52] OTP_VALIDATION_PARAMS: unique_id=860113631
-[2025-04-15 16:38:43] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 60] OTP_VALIDATION_RESULT: {"id":14,"otp":"$2y$10$ORxTgyJunGIlKLkifq5nme.2iJqfApvNsABA\/KZ81UAlxKDMTX.Xi","expires_at":"2025-04-15 15:40:06","status":"pending"}
-[2025-04-15 16:38:43] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 74] OTP_TIME_COMPARISON: current=2025-04-15 15:38:43 | expiry=2025-04-15 15:40:06 | server_timezone=Europe/Berlin
-[2025-04-15 16:38:43] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 92] OTP_VALIDATION_SUCCESS: Valid OTP found for 860113631 | OTP_ID=14
-[2025-04-15 16:38:43] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 117] USER_STATUS_RESULT: {"id":2,"delete_status":"Yes","block_id":0}
-[2025-04-15 16:38:43] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 148] TRANSACTION_START: Beginning OTP verification transaction
-[2025-04-15 16:38:43] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 152] TRANSACTION_STEP: Checking for existing reactivation requests
-[2025-04-15 16:38:43] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 191] TRANSACTION_STEP: Creating new reactivation request
-[2025-04-15 16:38:43] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 202] REACTIVATION_CREATED: RequestID=3
-[2025-04-15 16:38:43] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 276] OTP_STATUS_CHANGE: ID = 14 | FROM = pending | TO = verified
-[2025-04-15 16:38:43] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 205] OTP_VERIFIED: OTP_ID=14
-[2025-04-15 16:38:43] [Page: http://localhost/transaction_manager/backend/account_reactivation_request.php] [File: C:\xampp\htdocs\Transaction_manager\backend\account_reactivation_request.php, Line: 208] TRANSACTION_COMPLETE: Successfully committed all changes
-[2025-04-15 16:38:51] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 16:38:51] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 83] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 16:47:48] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 16:47:48] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 83] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 16:47:56] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 16:47:56] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 83] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 16:48:11] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 16:48:11] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 83] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 16:49:01] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 16:49:01] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 83] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 16:51:33] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 16:51:33] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 83] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 16:51:39] [Page: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=860113631] [File: C:\xampp\htdocs\Transaction_manager\backend\get_reactivation_request.php, Line: 105] Error fetching deactivation details: Unknown column 'r.id' in 'field list'
-[2025-04-15 16:52:21] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 16:52:21] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 83] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 17:01:26] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 17:01:26] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 84] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 17:01:49] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 17:01:49] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 84] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 17:04:06] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 17:04:06] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 85] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 17:16:14] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 17:16:14] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 85] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 17:21:43] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 17:21:43] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 85] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 17:22:11] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 17:22:11] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 85] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 17:24:22] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 17:24:22] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 85] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 17:24:44] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 17:24:44] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 85] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 17:24:57] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 17:24:57] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 85] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 17:27:28] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 17:27:28] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 85] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 17:28:21] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 17:28:21] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 85] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 17:32:07] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 17:32:07] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 85] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 17:32:21] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 17:32:21] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 85] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 17:34:07] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 17:34:07] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 85] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 17:34:36] [Page: http://localhost/transaction_manager/backend/reactivate_admin_account.php] [File: C:\xampp\htdocs\Transaction_manager\backend\reactivate_admin_account.php, Line: 44] Super Admin ID 1166009451 initiated a reactivation action: Reactivated for Staff ID 860113631.
-[2025-04-15 17:34:36] [Page: http://localhost/transaction_manager/backend/reactivate_admin_account.php] [File: C:\xampp\htdocs\Transaction_manager\backend\reactivate_admin_account.php, Line: 55] Transaction started for Staff ID 860113631 reactivation.
-[2025-04-15 17:34:36] [Page: http://localhost/transaction_manager/backend/reactivate_admin_account.php] [File: C:\xampp\htdocs\Transaction_manager\backend\reactivate_admin_account.php, Line: 87] Fetched reactivation log. Reactivation ID: 3, Deactivation ID: 2 for Staff ID 860113631.
-[2025-04-15 17:34:36] [Page: http://localhost/transaction_manager/backend/reactivate_admin_account.php] [File: C:\xampp\htdocs\Transaction_manager\backend\reactivate_admin_account.php, Line: 97] Reactivation log updated with status 'Reactivated' for Staff ID 860113631.
-[2025-04-15 17:34:36] [Page: http://localhost/transaction_manager/backend/reactivate_admin_account.php] [File: C:\xampp\htdocs\Transaction_manager\backend\reactivate_admin_account.php, Line: 108] Account reactivated in admin_tbl for Staff ID 860113631.
-[2025-04-15 17:34:42] [Page: http://localhost/transaction_manager/backend/reactivate_admin_account.php] [File: C:\xampp\htdocs\Transaction_manager\backend\reactivate_admin_account.php, Line: 180] Reactivation email sent to Staff ID 860113631 with status: Reactivated
-[2025-04-15 17:34:42] [Page: http://localhost/transaction_manager/backend/reactivate_admin_account.php] [File: C:\xampp\htdocs\Transaction_manager\backend\reactivate_admin_account.php, Line: 118] Transaction committed for Staff ID 860113631 reactivation.
-[2025-04-15 17:34:42] [Page: http://localhost/transaction_manager/backend/reactivate_admin_account.php] [File: C:\xampp\htdocs\Transaction_manager\backend\reactivate_admin_account.php, Line: 119] Super Admin ID 1166009451 successfully completed Reactivated for Staff ID 860113631.
-[2025-04-15 17:34:54] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 21] Super Admin ID 1166009451 is retrieving deleted staff records.
-[2025-04-15 17:34:54] [Page: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10] [File: C:\xampp\htdocs\Transaction_manager\backend\get_deleted_staff.php, Line: 85] Super Admin ID: 1166009451 fetched deleted staff list.
-[2025-04-15 17:35:17] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 101] Login attempt initiated for username: moshood.adebayo@gmail.com from IP: ::1
-[2025-04-15 17:35:17] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 121] User found - ID: 860113631, Block Status: 0, Delete Status: NULL
-[2025-04-15 17:35:17] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 131] Login blocked - Account 860113631 is deactivated. Attempt from IP: ::1
-[2025-04-15 17:35:37] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 101] Login attempt initiated for username: moshood.adebayo@gmail.com from IP: ::1
-[2025-04-15 17:35:37] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 121] User found - ID: 860113631, Block Status: 0, Delete Status: NULL
-[2025-04-15 17:35:37] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 131] Login blocked - Account 860113631 is deactivated. Attempt from IP: ::1
-[2025-04-15 17:37:12] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 101] Login attempt initiated for username: moshood.adebayo@gmail.com from IP: ::1
-[2025-04-15 17:37:12] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 121] User found - ID: 860113631, Block Status: 0, Delete Status: NULL
-[2025-04-15 17:37:12] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 131] Login blocked - Account 860113631 is deactivated. Attempt from IP: ::1
-[2025-04-15 17:37:22] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 101] Login attempt initiated for username: moshood.adebayo@gmail.com from IP: ::1
-[2025-04-15 17:37:22] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 121] User found - ID: 860113631, Block Status: 0, Delete Status: NULL
-[2025-04-15 17:37:22] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 131] Login blocked - Account 860113631 is deactivated. Attempt from IP: ::1
-[2025-04-15 17:40:10] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 101] Login attempt initiated for username: moshood.adebayo@gmail.com from IP: ::1
-[2025-04-15 17:40:10] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 121] User found - ID: 860113631, Block Status: 0, Delete Status: NULL
-[2025-04-15 17:40:10] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 208] Checking lockout status for user: 860113631 (Lockout Duration: 60 minutes)
-[2025-04-15 17:40:10] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 225] No lockout record found for user: 860113631
-[2025-04-15 17:40:10] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 13] Attempting to destroy session for user: 860113631
-[2025-04-15 17:40:10] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 37] Found active session for user 860113631 (Session ID: nklpe3ufdhfca3fmenlcj09nk6, Login Time: 2025-04-13 00:50:10, IP: ::1) - Preparing to destroy
-[2025-04-15 17:40:10] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 58] Successfully destroyed session nklpe3ufdhfca3fmenlcj09nk6 for user 860113631
-[2025-04-15 17:40:10] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 69] Successfully removed session record from database for user 860113631
-[2025-04-15 17:40:10] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 191] Login successful for user 860113631 from IP: ::1
-[2025-04-15 17:40:24] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] [File: C:\xampp\htdocs\Transaction_manager\backend\fetch_random_customers.php, Line: 9] Fetching random customer names script started.
-[2025-04-15 17:40:24] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] [File: C:\xampp\htdocs\Transaction_manager\backend\fetch_random_customers.php, Line: 30] Successfully fetched 3 random customer names.
-[2025-04-15 17:40:24] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 6] Fetching promos script started.
-[2025-04-15 17:40:24] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 19] Admin unique_id found in session: 860113631
-[2025-04-15 17:40:24] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 32] Pagination parameters - Page: 1, Limit: 10, Offset: 0
-[2025-04-15 17:40:24] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 48] Total promos count: 7
-[2025-04-15 17:40:24] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 69] Fetched 7 paginated promos.
-[2025-04-15 17:40:24] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 92] Fetched 2 ongoing promos.
-[2025-04-15 17:40:24] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 108] Fetching promos script completed successfully.
-[2025-04-15 17:40:24] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] [File: C:\xampp\htdocs\Transaction_manager\backend\fetch_random_customers.php, Line: 47] Fetching random customer names script completed.
-[2025-04-16 10:14:40] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 19] Logout process initiated
-[2025-04-16 10:14:40] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 35] Processing logout for user: 1166009451
-[2025-04-16 10:14:40] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 60] Found active session: rchlnouiovbpqrsi7dhdo7iq4d (Status: Active)
-[2025-04-16 10:14:40] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 77] Session invalidated in DB. Affected rows: 1
-[2025-04-16 10:14:40] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 86] Session destroyed. Previous session data: {"unique_id":1166009451,"firstname":"Adebayo","lastname":"Fawziyah","role":"Super Admin","restriction_id":0,"secret_answer":"015ec9f6f1ec5ed578f778cf4e15a6cc","ip_address":"::1","user_agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/135.0.0.0 Safari\/537.36","created_at":1744701811,"last_activity":1744701811}
-[2025-04-16 10:14:40] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 89] Logout successful for user: 1166009451
-[2025-04-16 10:48:00] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 19] Logout process initiated
-[2025-04-16 10:48:00] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 35] Processing logout for user: 860113631
-[2025-04-16 10:48:00] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 60] Found active session: 0uobotakrakkau1397l9rfp9ge (Status: Active)
-[2025-04-16 10:48:00] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 77] Session invalidated in DB. Affected rows: 1
-[2025-04-16 10:48:00] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 86] Session destroyed. Previous session data: {"unique_id":860113631,"firstname":"Moshood","lastname":"Adebayo","role":"Admin","restriction_id":0,"secret_answer":"a891632ddbd4f984bf89de0ad049f4ce","ip_address":"::1","user_agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/135.0.0.0 Safari\/537.36","created_at":1744731610,"last_activity":1744731611}
-[2025-04-16 10:48:00] [Page: http://localhost/transaction_manager/backend/logout.php] [File: C:\xampp\htdocs\Transaction_manager\backend\logout.php, Line: 89] Logout successful for user: 860113631
-[2025-04-16 10:55:39] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 6] Fetching promos script started.
-[2025-04-16 10:55:39] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 21] Customer customer_id found in session: 1260106158
-[2025-04-16 10:55:39] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 32] Pagination parameters - Page: 1, Limit: 10, Offset: 0
-[2025-04-16 10:55:39] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 48] Total promos count: 7
-[2025-04-16 10:55:39] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 69] Fetched 7 paginated promos.
-[2025-04-16 10:55:39] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 92] Fetched 2 ongoing promos.
-[2025-04-16 10:55:39] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 108] Fetching promos script completed successfully.
-[2025-04-16 10:55:39] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] [File: C:\xampp\htdocs\Transaction_manager\backend\fetch_random_customers.php, Line: 9] Fetching random customer names script started.
-[2025-04-16 10:55:39] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] [File: C:\xampp\htdocs\Transaction_manager\backend\fetch_random_customers.php, Line: 30] Successfully fetched 3 random customer names.
-[2025-04-16 10:55:39] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] [File: C:\xampp\htdocs\Transaction_manager\backend\fetch_random_customers.php, Line: 47] Fetching random customer names script completed.
-[2025-04-17 13:58:52] [Page: http://localhost/transaction_manager/backend/send_otp.php] [File: C:\xampp\htdocs\Transaction_manager\backend\send_otp.php, Line: 116] OTP_SUCCESS: OTP has been generated and sent to abdulrahmonadebayo@gmail.com
-[2025-04-17 19:27:08] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 101] Login attempt initiated for username: fausat.adebayo@yahoo.com from IP: ::1
-[2025-04-17 19:27:08] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 121] User found - ID: 1166009451, Block Status: 0, Delete Status: 
-[2025-04-17 19:27:08] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 208] Checking lockout status for user: 1166009451 (Lockout Duration: 60 minutes)
-[2025-04-17 19:27:08] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 225] No lockout record found for user: 1166009451
-[2025-04-17 19:27:08] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 13] Attempting to destroy session for user: 1166009451
-[2025-04-17 19:27:08] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 37] Found active session for user 1166009451 (Session ID: rchlnouiovbpqrsi7dhdo7iq4d, Login Time: 2025-04-15 09:23:31, IP: ::1) - Preparing to destroy
-[2025-04-17 19:27:08] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 58] Successfully destroyed session rchlnouiovbpqrsi7dhdo7iq4d for user 1166009451
-[2025-04-17 19:27:08] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 69] Successfully removed session record from database for user 1166009451
-[2025-04-17 19:27:08] [Page: http://localhost/transaction_manager/backend/admin_login3.php] [File: C:\xampp\htdocs\Transaction_manager\backend\admin_login3.php, Line: 191] Login successful for user 1166009451 from IP: ::1
-[2025-04-17 19:27:21] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] [File: C:\xampp\htdocs\Transaction_manager\backend\fetch_random_customers.php, Line: 9] Fetching random customer names script started.
-[2025-04-17 19:27:21] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] [File: C:\xampp\htdocs\Transaction_manager\backend\fetch_random_customers.php, Line: 30] Successfully fetched 3 random customer names.
-[2025-04-17 19:27:21] [Page: http://localhost/transaction_manager/backend/fetch_random_customers.php] [File: C:\xampp\htdocs\Transaction_manager\backend\fetch_random_customers.php, Line: 47] Fetching random customer names script completed.
-[2025-04-17 19:27:21] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 6] Fetching promos script started.
-[2025-04-17 19:27:21] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 19] Admin unique_id found in session: 1166009451
-[2025-04-17 19:27:21] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 32] Pagination parameters - Page: 1, Limit: 10, Offset: 0
-[2025-04-17 19:27:21] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 48] Total promos count: 7
-[2025-04-17 19:27:21] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 69] Fetched 7 paginated promos.
-[2025-04-17 19:27:21] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 92] Fetched 2 ongoing promos.
-[2025-04-17 19:27:21] [Page: http://localhost/transaction_manager/backend/get_promo.php] [File: C:\xampp\htdocs\Transaction_manager\backend\get_promo.php, Line: 108] Fetching promos script completed successfully.
+[2025-05-12 15:37:17]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-05-12 15:37:17]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-05-12 15:37:17]
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-05-12 15:37:17]
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 31)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-05-12 15:37:17]
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 38)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+
+[2025-05-12 15:37:23]
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 10)
+Message: Pending orders fetch process started
+----------------------------------------
+
+[2025-05-12 15:37:23]
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 23)
+Message: Request initiated by admin ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-05-12 15:37:23]
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 28)
+Message: Database transaction started
+----------------------------------------
+
+[2025-05-12 15:37:23]
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 77)
+Message: Successfully retrieved 0 pending orders
+----------------------------------------
+
+[2025-05-12 15:37:23]
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 90)
+Message: Pending orders fetch completed successfully
+----------------------------------------
+
+[2025-05-12 15:37:23]
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 115)
+Message: Pending orders fetch process completed
+----------------------------------------
+
+[2025-05-12 15:37:23]
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-05-12 15:37:23]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-05-12 15:37:23]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-05-12 15:37:23]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-05-12 15:37:23]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 0 notifications for page 1.
+----------------------------------------
+
+[2025-05-12 15:37:23]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 0. Total pages: 0.
+----------------------------------------
+
+[2025-05-12 15:37:23]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-05-12 15:37:23]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-05-12 15:37:23]
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-05-12 15:37:23]
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 31)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-05-12 15:37:23]
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 38)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+
+[2025-05-12 15:38:00]
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 10)
+Message: Random customer names fetch process started
+----------------------------------------
+
+[2025-05-12 15:38:00]
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 14)
+Message: Database transaction started
+----------------------------------------
+
+[2025-05-12 15:38:00]
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 32)
+Message: Successfully retrieved 3 random customer names
+----------------------------------------
+
+[2025-05-12 15:38:00]
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 43)
+Message: Random customer names fetch completed successfully
+----------------------------------------
+
+[2025-05-12 15:38:00]
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 67)
+Message: Random customer names fetch process completed
+----------------------------------------
+
+[2025-05-12 15:38:00]
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 6)
+Message: Fetching promos script started.
+----------------------------------------
+
+[2025-05-12 15:38:00]
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 21)
+Message: Customer customer_id found in session: 1260106158
+----------------------------------------
+
+[2025-05-12 15:38:00]
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 32)
+Message: Pagination parameters - Page: 1, Limit: 10, Offset: 0
+----------------------------------------
+
+[2025-05-12 15:38:00]
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 48)
+Message: Total promos count: 7
+----------------------------------------
+
+[2025-05-12 15:38:00]
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 69)
+Message: Fetched 7 paginated promos.
+----------------------------------------
+
+[2025-05-12 15:38:00]
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 92)
+Message: Fetched 1 ongoing promos.
+----------------------------------------
+
+[2025-05-12 15:38:00]
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 108)
+Message: Fetching promos script completed successfully.
+----------------------------------------
+
+[2025-05-12 15:44:02]
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 10)
+Message: Pending orders fetch process started
+----------------------------------------
+
+[2025-05-12 15:44:02]
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 23)
+Message: Request initiated by admin ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-05-12 15:44:02]
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 28)
+Message: Database transaction started
+----------------------------------------
+
+[2025-05-12 15:44:02]
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 77)
+Message: Successfully retrieved 1 pending orders
+----------------------------------------
+
+[2025-05-12 15:44:02]
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 90)
+Message: Pending orders fetch completed successfully
+----------------------------------------
+
+[2025-05-12 15:44:02]
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 115)
+Message: Pending orders fetch process completed
+----------------------------------------
+
+[2025-05-12 15:44:02]
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-05-12 15:44:02]
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 31)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-05-12 15:44:02]
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 38)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+
+[2025-05-12 15:44:02]
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-05-12 15:44:02]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-05-12 15:44:02]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-05-12 15:44:02]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-05-12 15:44:02]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 1 notifications for page 1.
+----------------------------------------
+
+[2025-05-12 15:44:02]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 1. Total pages: 1.
+----------------------------------------
+
+[2025-05-12 15:44:02]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-05-12 15:44:02]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-05-12 15:49:57]
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: restriction_checker.php (Line 36)
+Message: Restriction Check Passed: User ID 22675443 allowed access.
+----------------------------------------
+
+[2025-05-12 15:49:57]
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 11)
+Message: Approval process started by user with ID: 22675443
+----------------------------------------
+
+[2025-05-12 15:49:57]
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 15)
+Message: Raw input received: {"orders":[{"order_id":"72","status":"Approved"}]}
+----------------------------------------
+
+[2025-05-12 15:49:57]
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 27)
+Message: Bulk orders received: [{"order_id":"72","status":"Approved"}]
+----------------------------------------
+
+[2025-05-12 15:49:57]
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 48)
+Message: All bulk orders passed validation.
+----------------------------------------
+
+[2025-05-12 15:49:57]
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 71)
+Message: Filtered approved orders: [{"order_id":"72","status":"Approved"}]
+----------------------------------------
+
+[2025-05-12 15:49:57]
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 74)
+Message: Checking resource availability for approved orders.
+----------------------------------------
+
+[2025-05-12 15:49:57]
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 78)
+Message: Executing driver count query: SELECT COUNT(*) as available_drivers FROM driver WHERE status = 'Available' AND restriction = 0
+----------------------------------------
+
+[2025-05-12 15:49:57]
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 89)
+Message: Available drivers: 9, Required drivers: 1
+----------------------------------------
+
+[2025-05-12 15:49:57]
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 93)
+Message: Executing food stock query: SELECT food_id, available_quantity FROM food
+----------------------------------------
+
+[2025-05-12 15:49:57]
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 106)
+Message: Available food stock: {"1":"982","2":"213","3":"89","4":"186","5":"430","6":"399","7":"104","10":"68","11":"10","12":"50","13":"50"}
+----------------------------------------
+
+[2025-05-12 15:49:57]
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 128)
+Message: Total required food stock: {"1":1,"10":1}
+----------------------------------------
+
+[2025-05-12 15:49:57]
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 153)
+Message: Sufficient drivers and food stock available. Proceeding with order updates.
+----------------------------------------
+
+[2025-05-12 15:49:58]
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 179)
+Message: Driver assigned to order #72. Driver ID: 1 by approver 22675443
+----------------------------------------
+
+[2025-05-12 15:49:58]
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 188)
+Message: Driver status set to 'Not Available'. Driver ID: 1
+----------------------------------------
+
+[2025-05-12 15:49:58]
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 311)
+Message: Order and order details status updated for order ID 72 to 'Approved'
+----------------------------------------
+
+[2025-05-12 15:49:58]
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 316)
+Message: All order operations committed successfully by approver 22675443
+----------------------------------------
+
+[2025-05-12 15:50:03]
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 10)
+Message: Pending orders fetch process started
+----------------------------------------
+
+[2025-05-12 15:50:03]
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 23)
+Message: Request initiated by admin ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-05-12 15:50:03]
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 28)
+Message: Database transaction started
+----------------------------------------
+
+[2025-05-12 15:50:03]
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 77)
+Message: Successfully retrieved 0 pending orders
+----------------------------------------
+
+[2025-05-12 15:50:03]
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 90)
+Message: Pending orders fetch completed successfully
+----------------------------------------
+
+[2025-05-12 15:50:03]
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 115)
+Message: Pending orders fetch process completed
+----------------------------------------
+
+[2025-05-12 15:50:03]
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-05-12 15:50:03]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-05-12 15:50:03]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-05-12 15:50:03]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-05-12 15:50:03]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 1 notifications for page 1.
+----------------------------------------
+
+[2025-05-12 15:50:03]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 1. Total pages: 1.
+----------------------------------------
+
+[2025-05-12 15:50:03]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-05-12 15:50:03]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-05-12 15:50:03]
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-05-12 15:50:03]
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 31)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-05-12 15:50:03]
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 38)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+

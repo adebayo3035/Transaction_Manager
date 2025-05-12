@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </tr>
             <tr>
                 <td>Justification</td>
-                <td>${reactivation?.reactivation_reason}</td>
+                <td>${reactivation?.reactivation_reason || 'None'} </td>
             </tr>
             <tr>
                 <td>Reactivation Status</td>

@@ -1,93 +1,114 @@
 <?php
 session_start();
-include 'config.php'; 
+require 'config.php'; 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 header('Content-Type: application/json');
+// === Start Processing ===
+logActivity("Fetching admin notifications started.");
 
-$adminId = $_SESSION['unique_id'] ?? null;
-if (!$adminId) {
-    echo json_encode(['success' => false, 'message' => 'User Not Logged In.']);
-    exit;
-}
+try {
+    $adminId = $_SESSION['unique_id'] ?? null;
 
-// Pagination parameters
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Default page is 1
-$limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 5; // Default limit is 5 notifications per page
-$offset = ($page - 1) * $limit;
+    if (!$adminId) {
+        logActivity("Unauthorized access attempt. No admin ID found in session.");
+        echo json_encode(['success' => false, 'message' => 'User Not Logged In.']);
+        exit;
+    }
+    
+    logActivity("Request made by admin ID: $adminId");
 
-$sqlRole = "SELECT role FROM admin_tbl WHERE unique_id = ?";
-$stmtRole = $conn->prepare($sqlRole);
-$stmtRole->bind_param("i", $adminId);
-$stmtRole->execute();
-$resultRole = $stmtRole->get_result();
-$userRole = $resultRole->fetch_assoc()['role'] ?? null;
-$stmtRole->close();
+    // Validate and set pagination parameters
+    $page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
+    $limit = isset($_GET['limit']) ? max(1, min((int)$_GET['limit'], 100)) : 5; // Max 100 to prevent abuse
+    $offset = ($page - 1) * $limit;
 
-if ($adminId) {
+    // Fetch the role of the admin
+    $stmtRole = $conn->prepare("SELECT role FROM admin_tbl WHERE unique_id = ?");
+    if (!$stmtRole) {
+        throw new Exception("Prepare failed for role fetch: " . $conn->error);
+    }
+    $stmtRole->bind_param("i", $adminId);
+    $stmtRole->execute();
+    $resultRole = $stmtRole->get_result();
+    $userRole = $resultRole->fetch_assoc()['role'] ?? null;
+    $stmtRole->close();
+
+    if (!$userRole) {
+        logActivity("Role not found for admin ID: $adminId");
+        throw new Exception("User role not found.");
+    }
+    logActivity("User role detected: $userRole");
+
+    // Prepare notification query
     if ($userRole === 'Super Admin') {
-        // Fetch unread notifications for Super Admins with pagination
         $sql = "SELECT * FROM admin_notifications WHERE super_admin_read IS NULL AND is_read = 'No' ORDER BY created_at DESC LIMIT ?, ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ii", $offset, $limit); // Bind offset and limit
+        $stmt->bind_param("ii", $offset, $limit);
     } else {
-        // Fetch unread notifications for the specific Admin with pagination
         $sql = "SELECT * FROM admin_notifications WHERE is_read = 'No' AND user_id = ? ORDER BY created_at DESC LIMIT ?, ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("iii", $adminId, $offset, $limit); // Bind adminId, offset, and limit
+        $stmt->bind_param("iii", $adminId, $offset, $limit);
     }
-
+    
+    if (!$stmt) {
+        throw new Exception("Prepare failed for notification fetch: " . $conn->error);
+    }
 
     $stmt->execute();
     $result = $stmt->get_result();
-    
-    $notifications = [];
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $notifications[] = $row;
-        }
+    $notifications = $result->fetch_all(MYSQLI_ASSOC);
+    $stmt->close();
+
+    logActivity("Fetched " . count($notifications) . " notifications for page $page.");
+
+    // Prepare notification count query
+    if ($userRole === 'Super Admin') {
+        $sqlCount = "SELECT COUNT(*) AS total_notifications FROM admin_notifications WHERE is_read = 'No' AND super_admin_read IS NULL";
+        $stmtCount = $conn->prepare($sqlCount);
+    } else {
+        $sqlCount = "SELECT COUNT(*) AS total_notifications FROM admin_notifications WHERE is_read = 'No' AND user_id = ?";
+        $stmtCount = $conn->prepare($sqlCount);
+        $stmtCount->bind_param("i", $adminId);
     }
 
-    // Fetch total unread notification count (for pagination)
-    if ($userRole === 'Super Admin') {
-        $sqlCountNotification = "SELECT COUNT(*) AS total_notifications FROM admin_notifications WHERE is_read = 'No' and super_admin_read IS NULL";
-        $stmtCount = $conn->prepare($sqlCountNotification);
-    } else {
-        $sqlCountNotification = "SELECT COUNT(*) AS total_notifications FROM admin_notifications WHERE is_read = 'No' AND user_id = ?";
-        $stmtCount = $conn->prepare($sqlCountNotification);
-        $stmtCount->bind_param("i", $adminId); // Bind the user_id dynamically for regular admin
+    if (!$stmtCount) {
+        throw new Exception("Prepare failed for notification count: " . $conn->error);
     }
 
     $stmtCount->execute();
-    $resultCountNotification = $stmtCount->get_result();
-    $totalNotifications = $resultCountNotification->fetch_assoc()['total_notifications'];
+    $resultCount = $stmtCount->get_result();
+    $totalNotifications = $resultCount->fetch_assoc()['total_notifications'] ?? 0;
+    $stmtCount->close();
 
-    // Calculate total pages
     $totalPages = ceil($totalNotifications / $limit);
 
-    // Prepare final response
-    $response = [
+    logActivity("Total unread notifications: $totalNotifications. Total pages: $totalPages.");
+
+    // Respond with notifications and pagination info
+    echo json_encode([
         'success' => true,
         'notifications' => $notifications,
-        'totalNotifications' => $totalNotifications,
-        'totalPages' => $totalPages,
-        'currentPage' => $page,
+        'totalNotifications' => (int)$totalNotifications,
+        'totalPages' => (int)$totalPages,
+        'currentPage' => (int)$page,
         'role' => $userRole
-    ];
+    ]);
 
-    echo json_encode($response);
-
-    // Close the statement and connection
-    $stmt->close();
-    $stmtCount->close();
-    $conn->close();
-} else {
-    // Handle case where user_id is not available
-    $response = [
+} catch (Exception $e) {
+    logActivity("Error occurred: " . $e->getMessage());
+    http_response_code(500);
+    echo json_encode([
         'success' => false,
-        'message' => 'User ID not provided'
-    ];
-    echo json_encode($response);
+        'message' => 'An error occurred fetching notifications.',
+        'error' => $e->getMessage()
+    ]);
+} finally {
+    if (isset($conn) && $conn instanceof mysqli) {
+        $conn->close();
+        logActivity("Database connection closed.");
+    }
+    logActivity("Fetching admin notifications process ended.");
 }

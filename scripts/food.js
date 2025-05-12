@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <td><input type="number" id="food_price" value="${food_details.food_price}"></td>
         </tr>
         <tr>
-            <td>Price</td>
+            <td>Description</td>
             <td><input type="text" id="food_description" value="${food_details.food_description}"></td>
         </tr>
          

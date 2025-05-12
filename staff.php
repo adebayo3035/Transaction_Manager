@@ -148,7 +148,7 @@
                 </div>
                 <label for="selcetOption">Select Role</label>
                 <select name="add_role" id="selectOption" required>
-                    <option value="">--Select a Group--</option>
+                    <option value="">--Select a Role--</option>
                     <option value="Admin">Admin</option>
                     <option value="Super Admin">Super Admin</option>
                 </select>

@@ -3,18 +3,6 @@ session_start();
 header('Content-Type: application/json');
 include_once "config.php";
 
-// Logging function with timestamp and context
-// function logActivity($message) {
-//     $logFile = __DIR__ . '/logout_activity.log';
-//     $timestamp = date('Y-m-d H:i:s');
-//     $sessionId = session_id();
-//     $remoteAddr = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
-//     $userId = $_SESSION['unique_id'] ?? 'system';
-    
-//     $logMessage = "[$timestamp][Session:$sessionId][IP:$remoteAddr][User:$userId] $message\n";
-//     file_put_contents($logFile, $logMessage, FILE_APPEND);
-// }
-
 try {
     logActivity("Logout process initiated");
 
