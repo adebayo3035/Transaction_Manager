@@ -94,8 +94,9 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchNotificationsAndCount(currentPage);
     });
 
-    // Optionally, refresh the notifications and count periodically
-    setInterval(() => fetchNotificationsAndCount(currentPage), 60000); // Refresh every minute
+    // refresh the notifications and count periodically
+    const oneHour = 60 * 60 * 1000;
+    setInterval(() => fetchNotificationsAndCount(currentPage), oneHour); // refresh page automatically every one hour
 
     // Function to mark notification as read
     function markNotificationAsRead(notificationId) {

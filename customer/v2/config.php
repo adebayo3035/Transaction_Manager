@@ -36,3 +36,11 @@ function checkSession($CustomerID)
     exit();
   }
 }
+
+function sendAdminNotification($conn, $title, $eventType, $eventDetails, $userId, $logMessage = null) {
+  // Insert into admin_notifications
+  $stmt = $conn->prepare("INSERT INTO admin_notifications (event_title, event_type, event_details, created_at, user_id) VALUES (?, ?, ?, NOW(), ?)");
+  $stmt->bind_param("ssss", $title, $eventType, $eventDetails, $userId);
+  $stmt->execute();
+  $stmt->close();
+}

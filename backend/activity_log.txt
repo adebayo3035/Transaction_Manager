@@ -1,546 +1,2736 @@
-[2025-05-12 15:37:17]
-URL: http://localhost/transaction_manager/backend/navbar.php
-Source: navbar.php (Line 15)
-Message: Admin data fetched successfully for user ID: 22675443
+[2025-05-13 11:17:12]
+URL: http://localhost/transaction_manager/backend/send_otp.php
+Source: send_otp.php (Line 116)
+Message: OTP_SUCCESS: OTP has been generated and sent to rahmondebayo@gmail.com
 ----------------------------------------
 
-[2025-05-12 15:37:17]
+[2025-05-13 11:18:00]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 51)
+Message: OTP_VALIDATION_QUERY: 
+    SELECT id, otp, expires_at, status 
+    FROM admin_otp_request 
+    WHERE unique_id = ? 
+    AND status = 'pending'
+    ORDER BY created_at DESC 
+    LIMIT 1
+----------------------------------------
+
+[2025-05-13 11:18:00]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 52)
+Message: OTP_VALIDATION_PARAMS: unique_id=868322890
+----------------------------------------
+
+[2025-05-13 11:18:00]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 60)
+Message: OTP_VALIDATION_RESULT: {"id":17,"otp":"$2y$10$PmEwmvRni5bBtfYFwNYdNuts.BeEmbEnSk6GnoJtwy5aEy1Ya7BDW","expires_at":"2025-05-13 10:19:07","status":"pending"}
+----------------------------------------
+
+[2025-05-13 11:18:00]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 74)
+Message: OTP_TIME_COMPARISON: current=2025-05-13 10:18:00 | expiry=2025-05-13 10:19:07 | server_timezone=Europe/Berlin
+----------------------------------------
+
+[2025-05-13 11:18:00]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 92)
+Message: OTP_VALIDATION_SUCCESS: Valid OTP found for 868322890 | OTP_ID=17
+----------------------------------------
+
+[2025-05-13 11:18:01]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 117)
+Message: USER_STATUS_RESULT: {"id":17,"delete_status":"Yes","block_id":0}
+----------------------------------------
+
+[2025-05-13 11:18:01]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 148)
+Message: TRANSACTION_START: Beginning OTP verification transaction
+----------------------------------------
+
+[2025-05-13 11:18:01]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 152)
+Message: TRANSACTION_STEP: Checking for existing reactivation requests
+----------------------------------------
+
+[2025-05-13 11:18:01]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 192)
+Message: TRANSACTION_STEP: Creating new reactivation request
+----------------------------------------
+
+[2025-05-13 11:18:01]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 203)
+Message: REACTIVATION_CREATED: RequestID=1
+----------------------------------------
+
+[2025-05-13 11:18:01]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 285)
+Message: OTP_STATUS_CHANGE: ID = 17 | FROM = pending | TO = verified
+----------------------------------------
+
+[2025-05-13 11:18:01]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 206)
+Message: OTP_VERIFIED: OTP_ID=17
+----------------------------------------
+
+[2025-05-13 11:21:27]
+URL: http://localhost/transaction_manager/backend/send_otp.php
+Source: send_otp.php (Line 116)
+Message: OTP_SUCCESS: OTP has been generated and sent to rahmondebayo@gmail.com
+----------------------------------------
+
+[2025-05-13 11:21:56]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 51)
+Message: OTP_VALIDATION_QUERY: 
+    SELECT id, otp, expires_at, status 
+    FROM admin_otp_request 
+    WHERE unique_id = ? 
+    AND status = 'pending'
+    ORDER BY created_at DESC 
+    LIMIT 1
+----------------------------------------
+
+[2025-05-13 11:21:56]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 52)
+Message: OTP_VALIDATION_PARAMS: unique_id=868322890
+----------------------------------------
+
+[2025-05-13 11:21:56]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 60)
+Message: OTP_VALIDATION_RESULT: {"id":18,"otp":"$2y$10$S8KO0VMu3pRexhdXFszxOeFDwxopwLfSx6ePyzJCsoLxhFH976xve","expires_at":"2025-05-13 10:23:21","status":"pending"}
+----------------------------------------
+
+[2025-05-13 11:21:56]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 74)
+Message: OTP_TIME_COMPARISON: current=2025-05-13 10:21:56 | expiry=2025-05-13 10:23:21 | server_timezone=Europe/Berlin
+----------------------------------------
+
+[2025-05-13 11:21:56]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 92)
+Message: OTP_VALIDATION_SUCCESS: Valid OTP found for 868322890 | OTP_ID=18
+----------------------------------------
+
+[2025-05-13 11:21:56]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 117)
+Message: USER_STATUS_RESULT: {"id":17,"delete_status":"Yes","block_id":0}
+----------------------------------------
+
+[2025-05-13 11:21:56]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 148)
+Message: TRANSACTION_START: Beginning OTP verification transaction
+----------------------------------------
+
+[2025-05-13 11:21:56]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 152)
+Message: TRANSACTION_STEP: Checking for existing reactivation requests
+----------------------------------------
+
+[2025-05-13 11:21:56]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 167)
+Message: DUPLICATE_REQUEST_FOUND: {"id":1}
+----------------------------------------
+
+[2025-05-13 11:21:56]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 285)
+Message: OTP_STATUS_CHANGE: ID = 18 | FROM = pending | TO = failed
+----------------------------------------
+
+[2025-05-13 11:21:56]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 285)
+Message: OTP_STATUS_CHANGE: ID = 18 | FROM = failed | TO = failed
+----------------------------------------
+
+[2025-05-13 11:21:56]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 235)
+Message: REACTIVATION_FAILED: User already has a pending reactivation request (ID: 1) for rahmondebayo@gmail.com
+----------------------------------------
+
+[2025-05-13 11:22:23]
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 10)
 Message: Fetching admin notifications started.
 ----------------------------------------
 
-[2025-05-12 15:37:17]
+[2025-05-13 11:22:23]
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 21)
 Message: Request made by admin ID: 22675443
 ----------------------------------------
 
-[2025-05-12 15:37:17]
+[2025-05-13 11:22:23]
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 43)
 Message: User role detected: Super Admin
 ----------------------------------------
 
-[2025-05-12 15:37:17]
+[2025-05-13 11:22:23]
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 65)
-Message: Fetched 0 notifications for page 1.
+Message: Fetched 2 notifications for page 1.
 ----------------------------------------
 
-[2025-05-12 15:37:17]
+[2025-05-13 11:22:23]
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 88)
-Message: Total unread notifications: 0. Total pages: 0.
+Message: Total unread notifications: 2. Total pages: 1.
 ----------------------------------------
 
-[2025-05-12 15:37:17]
+[2025-05-13 11:22:23]
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 111)
 Message: Database connection closed.
 ----------------------------------------
 
-[2025-05-12 15:37:17]
+[2025-05-13 11:22:23]
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 113)
 Message: Fetching admin notifications process ended.
 ----------------------------------------
 
-[2025-05-12 15:37:17]
-URL: http://localhost/transaction_manager/backend/admin_menu.php
-Source: admin_menu.php (Line 16)
-Message: MENU_ACCESS_INITIATED: Role - Super Admin
+[2025-05-13 11:22:23]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
 ----------------------------------------
 
-[2025-05-12 15:37:17]
-URL: http://localhost/transaction_manager/backend/admin_menu.php
-Source: admin_menu.php (Line 31)
-Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+[2025-05-13 11:22:23]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
 ----------------------------------------
 
-[2025-05-12 15:37:17]
-URL: http://localhost/transaction_manager/backend/admin_menu.php
-Source: admin_menu.php (Line 38)
-Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+[2025-05-13 11:22:23]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
 ----------------------------------------
 
-[2025-05-12 15:37:23]
-URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
-Source: fetch_pending_order.php (Line 10)
-Message: Pending orders fetch process started
+[2025-05-13 11:22:23]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 65)
+Message: Fetched 2 notifications for page 1.
 ----------------------------------------
 
-[2025-05-12 15:37:23]
-URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
-Source: fetch_pending_order.php (Line 23)
-Message: Request initiated by admin ID: 22675443 (Role: Super Admin)
+[2025-05-13 11:22:23]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 88)
+Message: Total unread notifications: 2. Total pages: 1.
 ----------------------------------------
 
-[2025-05-12 15:37:23]
-URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
-Source: fetch_pending_order.php (Line 28)
-Message: Database transaction started
+[2025-05-13 11:22:23]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 111)
+Message: Database connection closed.
 ----------------------------------------
 
-[2025-05-12 15:37:23]
-URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
-Source: fetch_pending_order.php (Line 77)
-Message: Successfully retrieved 0 pending orders
+[2025-05-13 11:22:23]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
 ----------------------------------------
 
-[2025-05-12 15:37:23]
-URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
-Source: fetch_pending_order.php (Line 90)
-Message: Pending orders fetch completed successfully
-----------------------------------------
-
-[2025-05-12 15:37:23]
-URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
-Source: fetch_pending_order.php (Line 115)
-Message: Pending orders fetch process completed
-----------------------------------------
-
-[2025-05-12 15:37:23]
+[2025-05-13 11:22:23]
 URL: http://localhost/transaction_manager/backend/navbar.php
 Source: navbar.php (Line 15)
 Message: Admin data fetched successfully for user ID: 22675443
 ----------------------------------------
 
-[2025-05-12 15:37:23]
+[2025-05-13 11:22:36]
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-05-13 11:22:36]
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 10)
 Message: Fetching admin notifications started.
 ----------------------------------------
 
-[2025-05-12 15:37:23]
+[2025-05-13 11:22:36]
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 21)
 Message: Request made by admin ID: 22675443
 ----------------------------------------
 
-[2025-05-12 15:37:23]
+[2025-05-13 11:22:36]
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 43)
 Message: User role detected: Super Admin
 ----------------------------------------
 
-[2025-05-12 15:37:23]
+[2025-05-13 11:22:36]
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 65)
-Message: Fetched 0 notifications for page 1.
+Message: Fetched 2 notifications for page 1.
 ----------------------------------------
 
-[2025-05-12 15:37:23]
+[2025-05-13 11:22:36]
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 88)
-Message: Total unread notifications: 0. Total pages: 0.
+Message: Total unread notifications: 2. Total pages: 1.
 ----------------------------------------
 
-[2025-05-12 15:37:23]
+[2025-05-13 11:22:36]
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 111)
 Message: Database connection closed.
 ----------------------------------------
 
-[2025-05-12 15:37:23]
+[2025-05-13 11:22:36]
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 113)
 Message: Fetching admin notifications process ended.
 ----------------------------------------
 
-[2025-05-12 15:37:23]
-URL: http://localhost/transaction_manager/backend/admin_menu.php
-Source: admin_menu.php (Line 16)
-Message: MENU_ACCESS_INITIATED: Role - Super Admin
+[2025-05-13 11:22:37]
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 14.
 ----------------------------------------
 
-[2025-05-12 15:37:23]
-URL: http://localhost/transaction_manager/backend/admin_menu.php
-Source: admin_menu.php (Line 31)
-Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+[2025-05-13 11:22:37]
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
 ----------------------------------------
 
-[2025-05-12 15:37:23]
-URL: http://localhost/transaction_manager/backend/admin_menu.php
-Source: admin_menu.php (Line 38)
-Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+[2025-05-13 11:22:37]
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
 ----------------------------------------
 
-[2025-05-12 15:38:00]
-URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
-Source: fetch_random_customers.php (Line 10)
-Message: Random customer names fetch process started
+[2025-05-13 11:22:40]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
 ----------------------------------------
 
-[2025-05-12 15:38:00]
-URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
-Source: fetch_random_customers.php (Line 14)
+[2025-05-13 11:22:40]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 11:22:40]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-05-13 11:22:40]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 2 notifications for page 1.
+----------------------------------------
+
+[2025-05-13 11:22:40]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 2. Total pages: 1.
+----------------------------------------
+
+[2025-05-13 11:22:40]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-05-13 11:22:40]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-05-13 11:22:40]
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-05-13 11:22:40]
+URL: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10
+Source: get_deleted_staff.php (Line 21)
+Message: Super Admin ID 22675443 is retrieving deleted staff records.
+----------------------------------------
+
+[2025-05-13 11:22:40]
+URL: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10
+Source: get_deleted_staff.php (Line 85)
+Message: Super Admin ID: 22675443 fetched deleted staff list.
+----------------------------------------
+
+[2025-05-13 11:22:44]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=868322890&reactivation_id=1
+Source: get_reactivation_request.php (Line 7)
+Message: Staff deactivation/reactivation details fetch process started
+----------------------------------------
+
+[2025-05-13 11:22:44]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=868322890&reactivation_id=1
+Source: get_reactivation_request.php (Line 31)
+Message: Request initiated by Super Admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 11:22:44]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=868322890&reactivation_id=1
+Source: get_reactivation_request.php (Line 45)
+Message: Processing details for staff ID: 868322890 and reactivation ID: 1
+----------------------------------------
+
+[2025-05-13 11:22:44]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=868322890&reactivation_id=1
+Source: get_reactivation_request.php (Line 50)
 Message: Database transaction started
 ----------------------------------------
 
-[2025-05-12 15:38:00]
-URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
-Source: fetch_random_customers.php (Line 32)
-Message: Successfully retrieved 3 random customer names
+[2025-05-13 11:22:44]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=868322890&reactivation_id=1
+Source: get_reactivation_request.php (Line 112)
+Message: Successfully retrieved record for staff ID: 868322890
 ----------------------------------------
 
-[2025-05-12 15:38:00]
-URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
-Source: fetch_random_customers.php (Line 43)
-Message: Random customer names fetch completed successfully
+[2025-05-13 11:22:44]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=868322890&reactivation_id=1
+Source: get_reactivation_request.php (Line 148)
+Message: Details fetch completed successfully
 ----------------------------------------
 
-[2025-05-12 15:38:00]
-URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
-Source: fetch_random_customers.php (Line 67)
-Message: Random customer names fetch process completed
+[2025-05-13 11:22:44]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=868322890&reactivation_id=1
+Source: get_reactivation_request.php (Line 170)
+Message: Staff deactivation/reactivation details fetch process completed
 ----------------------------------------
 
-[2025-05-12 15:38:00]
+[2025-05-13 11:23:11]
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-05-13 11:23:11]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-05-13 11:23:11]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 11:23:11]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-05-13 11:23:11]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 2 notifications for page 1.
+----------------------------------------
+
+[2025-05-13 11:23:11]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 2. Total pages: 1.
+----------------------------------------
+
+[2025-05-13 11:23:11]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-05-13 11:23:11]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-05-13 11:23:11]
+URL: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10
+Source: get_deleted_staff.php (Line 21)
+Message: Super Admin ID 22675443 is retrieving deleted staff records.
+----------------------------------------
+
+[2025-05-13 11:23:11]
+URL: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10
+Source: get_deleted_staff.php (Line 85)
+Message: Super Admin ID: 22675443 fetched deleted staff list.
+----------------------------------------
+
+[2025-05-13 11:25:18]
+URL: http://localhost/transaction_manager/backend/send_otp.php
+Source: send_otp.php (Line 116)
+Message: OTP_SUCCESS: OTP has been generated and sent to abdulrahmonadebayo@gmail.com
+----------------------------------------
+
+[2025-05-13 11:25:43]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 51)
+Message: OTP_VALIDATION_QUERY: 
+    SELECT id, otp, expires_at, status 
+    FROM admin_otp_request 
+    WHERE unique_id = ? 
+    AND status = 'pending'
+    ORDER BY created_at DESC 
+    LIMIT 1
+----------------------------------------
+
+[2025-05-13 11:25:43]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 52)
+Message: OTP_VALIDATION_PARAMS: unique_id=1428985436
+----------------------------------------
+
+[2025-05-13 11:25:43]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 60)
+Message: OTP_VALIDATION_RESULT: {"id":19,"otp":"$2y$10$.Orcq3Cs\/nOAk\/fmaw4qEu.4ZX.ZvPWrA1JGT0JTBJQ4UuCtOJMOq","expires_at":"2025-05-13 10:27:11","status":"pending"}
+----------------------------------------
+
+[2025-05-13 11:25:43]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 74)
+Message: OTP_TIME_COMPARISON: current=2025-05-13 10:25:43 | expiry=2025-05-13 10:27:11 | server_timezone=Europe/Berlin
+----------------------------------------
+
+[2025-05-13 11:25:43]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 92)
+Message: OTP_VALIDATION_SUCCESS: Valid OTP found for 1428985436 | OTP_ID=19
+----------------------------------------
+
+[2025-05-13 11:25:43]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 117)
+Message: USER_STATUS_RESULT: {"id":3,"delete_status":"Yes","block_id":0}
+----------------------------------------
+
+[2025-05-13 11:25:43]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 148)
+Message: TRANSACTION_START: Beginning OTP verification transaction
+----------------------------------------
+
+[2025-05-13 11:25:43]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 152)
+Message: TRANSACTION_STEP: Checking for existing reactivation requests
+----------------------------------------
+
+[2025-05-13 11:25:43]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 192)
+Message: TRANSACTION_STEP: Creating new reactivation request
+----------------------------------------
+
+[2025-05-13 11:25:43]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 203)
+Message: REACTIVATION_CREATED: RequestID=2
+----------------------------------------
+
+[2025-05-13 11:25:43]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 285)
+Message: OTP_STATUS_CHANGE: ID = 19 | FROM = pending | TO = verified
+----------------------------------------
+
+[2025-05-13 11:25:43]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 206)
+Message: OTP_VERIFIED: OTP_ID=19
+----------------------------------------
+
+[2025-05-13 11:27:16]
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-05-13 11:27:16]
+URL: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10
+Source: get_deleted_staff.php (Line 21)
+Message: Super Admin ID 22675443 is retrieving deleted staff records.
+----------------------------------------
+
+[2025-05-13 11:27:16]
+URL: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10
+Source: get_deleted_staff.php (Line 85)
+Message: Super Admin ID: 22675443 fetched deleted staff list.
+----------------------------------------
+
+[2025-05-13 11:27:16]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-05-13 11:27:16]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 11:27:16]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-05-13 11:27:17]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 2 notifications for page 1.
+----------------------------------------
+
+[2025-05-13 11:27:17]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 2. Total pages: 1.
+----------------------------------------
+
+[2025-05-13 11:27:17]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-05-13 11:27:17]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-05-13 11:27:22]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=1428985436&reactivation_id=2
+Source: get_reactivation_request.php (Line 7)
+Message: Staff deactivation/reactivation details fetch process started
+----------------------------------------
+
+[2025-05-13 11:27:22]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=1428985436&reactivation_id=2
+Source: get_reactivation_request.php (Line 31)
+Message: Request initiated by Super Admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 11:27:22]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=1428985436&reactivation_id=2
+Source: get_reactivation_request.php (Line 45)
+Message: Processing details for staff ID: 1428985436 and reactivation ID: 2
+----------------------------------------
+
+[2025-05-13 11:27:22]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=1428985436&reactivation_id=2
+Source: get_reactivation_request.php (Line 50)
+Message: Database transaction started
+----------------------------------------
+
+[2025-05-13 11:27:22]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=1428985436&reactivation_id=2
+Source: get_reactivation_request.php (Line 112)
+Message: Successfully retrieved record for staff ID: 1428985436
+----------------------------------------
+
+[2025-05-13 11:27:22]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=1428985436&reactivation_id=2
+Source: get_reactivation_request.php (Line 148)
+Message: Details fetch completed successfully
+----------------------------------------
+
+[2025-05-13 11:27:22]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=1428985436&reactivation_id=2
+Source: get_reactivation_request.php (Line 170)
+Message: Staff deactivation/reactivation details fetch process completed
+----------------------------------------
+
+[2025-05-13 11:27:30]
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-05-13 11:27:30]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-05-13 11:27:30]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 11:27:30]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-05-13 11:27:30]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 2 notifications for page 1.
+----------------------------------------
+
+[2025-05-13 11:27:30]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 2. Total pages: 1.
+----------------------------------------
+
+[2025-05-13 11:27:30]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-05-13 11:27:30]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-05-13 11:27:30]
+URL: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10
+Source: get_deleted_staff.php (Line 21)
+Message: Super Admin ID 22675443 is retrieving deleted staff records.
+----------------------------------------
+
+[2025-05-13 11:27:30]
+URL: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10
+Source: get_deleted_staff.php (Line 85)
+Message: Super Admin ID: 22675443 fetched deleted staff list.
+----------------------------------------
+
+[2025-05-13 11:53:34]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=868322890&reactivation_id=1
+Source: get_reactivation_request.php (Line 7)
+Message: Staff deactivation/reactivation details fetch process started
+----------------------------------------
+
+[2025-05-13 11:53:34]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=868322890&reactivation_id=1
+Source: get_reactivation_request.php (Line 31)
+Message: Request initiated by Super Admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 11:53:34]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=868322890&reactivation_id=1
+Source: get_reactivation_request.php (Line 45)
+Message: Processing details for staff ID: 868322890 and reactivation ID: 1
+----------------------------------------
+
+[2025-05-13 11:53:34]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=868322890&reactivation_id=1
+Source: get_reactivation_request.php (Line 50)
+Message: Database transaction started
+----------------------------------------
+
+[2025-05-13 11:53:34]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=868322890&reactivation_id=1
+Source: get_reactivation_request.php (Line 112)
+Message: Successfully retrieved record for staff ID: 868322890
+----------------------------------------
+
+[2025-05-13 11:53:34]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=868322890&reactivation_id=1
+Source: get_reactivation_request.php (Line 148)
+Message: Details fetch completed successfully
+----------------------------------------
+
+[2025-05-13 11:53:34]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=868322890&reactivation_id=1
+Source: get_reactivation_request.php (Line 170)
+Message: Staff deactivation/reactivation details fetch process completed
+----------------------------------------
+
+[2025-05-13 11:53:38]
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 44)
+Message: Super Admin ID 22675443 initiated a reactivation action: Declined for Staff ID 868322890.
+----------------------------------------
+
+[2025-05-13 11:53:38]
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 55)
+Message: Transaction started for Staff ID 868322890 reactivation.
+----------------------------------------
+
+[2025-05-13 11:53:38]
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 87)
+Message: Fetched reactivation log. Reactivation ID: 1, Deactivation ID: 2 for Staff ID 868322890.
+----------------------------------------
+
+[2025-05-13 11:53:38]
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 97)
+Message: Reactivation log updated with status 'Declined' for Staff ID 868322890.
+----------------------------------------
+
+[2025-05-13 11:53:44]
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 180)
+Message: Reactivation email sent to Staff ID 868322890 with status: Declined
+----------------------------------------
+
+[2025-05-13 11:53:44]
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 118)
+Message: Transaction committed for Staff ID 868322890 reactivation.
+----------------------------------------
+
+[2025-05-13 11:53:44]
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 119)
+Message: Super Admin ID 22675443 successfully completed Declined for Staff ID 868322890.
+----------------------------------------
+
+[2025-05-13 11:53:55]
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-05-13 11:53:55]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-05-13 11:53:55]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 11:53:55]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-05-13 11:53:55]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 2 notifications for page 1.
+----------------------------------------
+
+[2025-05-13 11:53:55]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 2. Total pages: 1.
+----------------------------------------
+
+[2025-05-13 11:53:55]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-05-13 11:53:55]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-05-13 11:53:55]
+URL: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10
+Source: get_deleted_staff.php (Line 21)
+Message: Super Admin ID 22675443 is retrieving deleted staff records.
+----------------------------------------
+
+[2025-05-13 11:53:55]
+URL: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10
+Source: get_deleted_staff.php (Line 85)
+Message: Super Admin ID: 22675443 fetched deleted staff list.
+----------------------------------------
+
+[2025-05-13 12:02:16]
+URL: http://localhost/transaction_manager/backend/send_otp.php
+Source: send_otp.php (Line 116)
+Message: OTP_SUCCESS: OTP has been generated and sent to rahmondebayo@gmail.com
+----------------------------------------
+
+[2025-05-13 12:02:42]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 51)
+Message: OTP_VALIDATION_QUERY: 
+    SELECT id, otp, expires_at, status 
+    FROM admin_otp_request 
+    WHERE unique_id = ? 
+    AND status = 'pending'
+    ORDER BY created_at DESC 
+    LIMIT 1
+----------------------------------------
+
+[2025-05-13 12:02:42]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 52)
+Message: OTP_VALIDATION_PARAMS: unique_id=868322890
+----------------------------------------
+
+[2025-05-13 12:02:42]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 60)
+Message: OTP_VALIDATION_RESULT: {"id":20,"otp":"$2y$10$mrGf\/NgM6.YnlgH\/pRvLiuH6WCwwrBsvfobZCIV7HOvXs9\/FJb6eq","expires_at":"2025-05-13 11:04:12","status":"pending"}
+----------------------------------------
+
+[2025-05-13 12:02:42]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 74)
+Message: OTP_TIME_COMPARISON: current=2025-05-13 11:02:42 | expiry=2025-05-13 11:04:12 | server_timezone=Europe/Berlin
+----------------------------------------
+
+[2025-05-13 12:02:42]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 92)
+Message: OTP_VALIDATION_SUCCESS: Valid OTP found for 868322890 | OTP_ID=20
+----------------------------------------
+
+[2025-05-13 12:02:42]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 117)
+Message: USER_STATUS_RESULT: {"id":17,"delete_status":"Yes","block_id":0}
+----------------------------------------
+
+[2025-05-13 12:02:42]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 148)
+Message: TRANSACTION_START: Beginning OTP verification transaction
+----------------------------------------
+
+[2025-05-13 12:02:42]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 152)
+Message: TRANSACTION_STEP: Checking for existing reactivation requests
+----------------------------------------
+
+[2025-05-13 12:02:42]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 192)
+Message: TRANSACTION_STEP: Creating new reactivation request
+----------------------------------------
+
+[2025-05-13 12:02:42]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 203)
+Message: REACTIVATION_CREATED: RequestID=3
+----------------------------------------
+
+[2025-05-13 12:02:42]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 286)
+Message: OTP_STATUS_CHANGE: ID = 20 | FROM = pending | TO = verified
+----------------------------------------
+
+[2025-05-13 12:02:42]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 206)
+Message: OTP_VERIFIED: OTP_ID=20
+----------------------------------------
+
+[2025-05-13 12:03:03]
+URL: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10
+Source: get_deleted_staff.php (Line 21)
+Message: Super Admin ID 22675443 is retrieving deleted staff records.
+----------------------------------------
+
+[2025-05-13 12:03:03]
+URL: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10
+Source: get_deleted_staff.php (Line 85)
+Message: Super Admin ID: 22675443 fetched deleted staff list.
+----------------------------------------
+
+[2025-05-13 12:03:03]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-05-13 12:03:03]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 12:03:03]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-05-13 12:03:03]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 2 notifications for page 1.
+----------------------------------------
+
+[2025-05-13 12:03:03]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 2. Total pages: 1.
+----------------------------------------
+
+[2025-05-13 12:03:03]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-05-13 12:03:03]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-05-13 12:03:03]
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-05-13 13:11:37]
 URL: http://localhost/transaction_manager/backend/get_promo.php
 Source: get_promo.php (Line 6)
 Message: Fetching promos script started.
 ----------------------------------------
 
-[2025-05-12 15:38:00]
+[2025-05-13 13:11:37]
 URL: http://localhost/transaction_manager/backend/get_promo.php
-Source: get_promo.php (Line 21)
-Message: Customer customer_id found in session: 1260106158
+Source: get_promo.php (Line 19)
+Message: Admin unique_id found in session: 22675443
 ----------------------------------------
 
-[2025-05-12 15:38:00]
+[2025-05-13 13:11:37]
 URL: http://localhost/transaction_manager/backend/get_promo.php
 Source: get_promo.php (Line 32)
 Message: Pagination parameters - Page: 1, Limit: 10, Offset: 0
 ----------------------------------------
 
-[2025-05-12 15:38:00]
+[2025-05-13 13:11:37]
 URL: http://localhost/transaction_manager/backend/get_promo.php
 Source: get_promo.php (Line 48)
 Message: Total promos count: 7
 ----------------------------------------
 
-[2025-05-12 15:38:00]
+[2025-05-13 13:11:37]
 URL: http://localhost/transaction_manager/backend/get_promo.php
 Source: get_promo.php (Line 69)
 Message: Fetched 7 paginated promos.
 ----------------------------------------
 
-[2025-05-12 15:38:00]
+[2025-05-13 13:11:37]
 URL: http://localhost/transaction_manager/backend/get_promo.php
 Source: get_promo.php (Line 92)
 Message: Fetched 1 ongoing promos.
 ----------------------------------------
 
-[2025-05-12 15:38:00]
+[2025-05-13 13:11:37]
 URL: http://localhost/transaction_manager/backend/get_promo.php
 Source: get_promo.php (Line 108)
 Message: Fetching promos script completed successfully.
 ----------------------------------------
 
-[2025-05-12 15:44:02]
-URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
-Source: fetch_pending_order.php (Line 10)
-Message: Pending orders fetch process started
+[2025-05-13 13:11:37]
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 10)
+Message: Random customer names fetch process started
 ----------------------------------------
 
-[2025-05-12 15:44:02]
-URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
-Source: fetch_pending_order.php (Line 23)
-Message: Request initiated by admin ID: 22675443 (Role: Super Admin)
-----------------------------------------
-
-[2025-05-12 15:44:02]
-URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
-Source: fetch_pending_order.php (Line 28)
+[2025-05-13 13:11:37]
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 14)
 Message: Database transaction started
 ----------------------------------------
 
-[2025-05-12 15:44:02]
-URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
-Source: fetch_pending_order.php (Line 77)
-Message: Successfully retrieved 1 pending orders
+[2025-05-13 13:11:37]
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 32)
+Message: Successfully retrieved 3 random customer names
 ----------------------------------------
 
-[2025-05-12 15:44:02]
-URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
-Source: fetch_pending_order.php (Line 90)
-Message: Pending orders fetch completed successfully
+[2025-05-13 13:11:37]
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 43)
+Message: Random customer names fetch completed successfully
 ----------------------------------------
 
-[2025-05-12 15:44:02]
-URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
-Source: fetch_pending_order.php (Line 115)
-Message: Pending orders fetch process completed
+[2025-05-13 13:11:37]
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 67)
+Message: Random customer names fetch process completed
 ----------------------------------------
 
-[2025-05-12 15:44:02]
-URL: http://localhost/transaction_manager/backend/admin_menu.php
-Source: admin_menu.php (Line 16)
-Message: MENU_ACCESS_INITIATED: Role - Super Admin
-----------------------------------------
-
-[2025-05-12 15:44:02]
-URL: http://localhost/transaction_manager/backend/admin_menu.php
-Source: admin_menu.php (Line 31)
-Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
-----------------------------------------
-
-[2025-05-12 15:44:02]
-URL: http://localhost/transaction_manager/backend/admin_menu.php
-Source: admin_menu.php (Line 38)
-Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
-----------------------------------------
-
-[2025-05-12 15:44:02]
+[2025-05-13 13:16:26]
 URL: http://localhost/transaction_manager/backend/navbar.php
 Source: navbar.php (Line 15)
 Message: Admin data fetched successfully for user ID: 22675443
 ----------------------------------------
 
-[2025-05-12 15:44:02]
+[2025-05-13 13:16:26]
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 10)
 Message: Fetching admin notifications started.
 ----------------------------------------
 
-[2025-05-12 15:44:02]
+[2025-05-13 13:16:26]
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 21)
 Message: Request made by admin ID: 22675443
 ----------------------------------------
 
-[2025-05-12 15:44:02]
+[2025-05-13 13:16:26]
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 43)
 Message: User role detected: Super Admin
 ----------------------------------------
 
-[2025-05-12 15:44:02]
+[2025-05-13 13:16:26]
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 65)
-Message: Fetched 1 notifications for page 1.
+Message: Fetched 3 notifications for page 1.
 ----------------------------------------
 
-[2025-05-12 15:44:02]
+[2025-05-13 13:16:26]
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 88)
-Message: Total unread notifications: 1. Total pages: 1.
+Message: Total unread notifications: 3. Total pages: 1.
 ----------------------------------------
 
-[2025-05-12 15:44:02]
+[2025-05-13 13:16:26]
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 111)
 Message: Database connection closed.
 ----------------------------------------
 
-[2025-05-12 15:44:02]
+[2025-05-13 13:16:26]
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 113)
 Message: Fetching admin notifications process ended.
 ----------------------------------------
 
-[2025-05-12 15:49:57]
-URL: http://localhost/transaction_manager/backend/update_order_status.php
-Source: restriction_checker.php (Line 36)
-Message: Restriction Check Passed: User ID 22675443 allowed access.
+[2025-05-13 13:16:26]
+URL: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10
+Source: get_deleted_staff.php (Line 21)
+Message: Super Admin ID 22675443 is retrieving deleted staff records.
 ----------------------------------------
 
-[2025-05-12 15:49:57]
-URL: http://localhost/transaction_manager/backend/update_order_status.php
-Source: update_order_status.php (Line 11)
-Message: Approval process started by user with ID: 22675443
+[2025-05-13 13:16:26]
+URL: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10
+Source: get_deleted_staff.php (Line 85)
+Message: Super Admin ID: 22675443 fetched deleted staff list.
 ----------------------------------------
 
-[2025-05-12 15:49:57]
-URL: http://localhost/transaction_manager/backend/update_order_status.php
-Source: update_order_status.php (Line 15)
-Message: Raw input received: {"orders":[{"order_id":"72","status":"Approved"}]}
+[2025-05-13 13:17:00]
+URL: http://localhost/transaction_manager/backend/send_otp.php
+Source: send_otp.php (Line 116)
+Message: OTP_SUCCESS: OTP has been generated and sent to rahmondebayo@gmail.com
 ----------------------------------------
 
-[2025-05-12 15:49:57]
-URL: http://localhost/transaction_manager/backend/update_order_status.php
-Source: update_order_status.php (Line 27)
-Message: Bulk orders received: [{"order_id":"72","status":"Approved"}]
+[2025-05-13 13:17:26]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=868322890&reactivation_id=3
+Source: get_reactivation_request.php (Line 7)
+Message: Staff deactivation/reactivation details fetch process started
 ----------------------------------------
 
-[2025-05-12 15:49:57]
-URL: http://localhost/transaction_manager/backend/update_order_status.php
-Source: update_order_status.php (Line 48)
-Message: All bulk orders passed validation.
+[2025-05-13 13:17:26]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=868322890&reactivation_id=3
+Source: get_reactivation_request.php (Line 31)
+Message: Request initiated by Super Admin ID: 22675443
 ----------------------------------------
 
-[2025-05-12 15:49:57]
-URL: http://localhost/transaction_manager/backend/update_order_status.php
-Source: update_order_status.php (Line 71)
-Message: Filtered approved orders: [{"order_id":"72","status":"Approved"}]
+[2025-05-13 13:17:26]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=868322890&reactivation_id=3
+Source: get_reactivation_request.php (Line 45)
+Message: Processing details for staff ID: 868322890 and reactivation ID: 3
 ----------------------------------------
 
-[2025-05-12 15:49:57]
-URL: http://localhost/transaction_manager/backend/update_order_status.php
-Source: update_order_status.php (Line 74)
-Message: Checking resource availability for approved orders.
-----------------------------------------
-
-[2025-05-12 15:49:57]
-URL: http://localhost/transaction_manager/backend/update_order_status.php
-Source: update_order_status.php (Line 78)
-Message: Executing driver count query: SELECT COUNT(*) as available_drivers FROM driver WHERE status = 'Available' AND restriction = 0
-----------------------------------------
-
-[2025-05-12 15:49:57]
-URL: http://localhost/transaction_manager/backend/update_order_status.php
-Source: update_order_status.php (Line 89)
-Message: Available drivers: 9, Required drivers: 1
-----------------------------------------
-
-[2025-05-12 15:49:57]
-URL: http://localhost/transaction_manager/backend/update_order_status.php
-Source: update_order_status.php (Line 93)
-Message: Executing food stock query: SELECT food_id, available_quantity FROM food
-----------------------------------------
-
-[2025-05-12 15:49:57]
-URL: http://localhost/transaction_manager/backend/update_order_status.php
-Source: update_order_status.php (Line 106)
-Message: Available food stock: {"1":"982","2":"213","3":"89","4":"186","5":"430","6":"399","7":"104","10":"68","11":"10","12":"50","13":"50"}
-----------------------------------------
-
-[2025-05-12 15:49:57]
-URL: http://localhost/transaction_manager/backend/update_order_status.php
-Source: update_order_status.php (Line 128)
-Message: Total required food stock: {"1":1,"10":1}
-----------------------------------------
-
-[2025-05-12 15:49:57]
-URL: http://localhost/transaction_manager/backend/update_order_status.php
-Source: update_order_status.php (Line 153)
-Message: Sufficient drivers and food stock available. Proceeding with order updates.
-----------------------------------------
-
-[2025-05-12 15:49:58]
-URL: http://localhost/transaction_manager/backend/update_order_status.php
-Source: update_order_status.php (Line 179)
-Message: Driver assigned to order #72. Driver ID: 1 by approver 22675443
-----------------------------------------
-
-[2025-05-12 15:49:58]
-URL: http://localhost/transaction_manager/backend/update_order_status.php
-Source: update_order_status.php (Line 188)
-Message: Driver status set to 'Not Available'. Driver ID: 1
-----------------------------------------
-
-[2025-05-12 15:49:58]
-URL: http://localhost/transaction_manager/backend/update_order_status.php
-Source: update_order_status.php (Line 311)
-Message: Order and order details status updated for order ID 72 to 'Approved'
-----------------------------------------
-
-[2025-05-12 15:49:58]
-URL: http://localhost/transaction_manager/backend/update_order_status.php
-Source: update_order_status.php (Line 316)
-Message: All order operations committed successfully by approver 22675443
-----------------------------------------
-
-[2025-05-12 15:50:03]
-URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
-Source: fetch_pending_order.php (Line 10)
-Message: Pending orders fetch process started
-----------------------------------------
-
-[2025-05-12 15:50:03]
-URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
-Source: fetch_pending_order.php (Line 23)
-Message: Request initiated by admin ID: 22675443 (Role: Super Admin)
-----------------------------------------
-
-[2025-05-12 15:50:03]
-URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
-Source: fetch_pending_order.php (Line 28)
+[2025-05-13 13:17:26]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=868322890&reactivation_id=3
+Source: get_reactivation_request.php (Line 50)
 Message: Database transaction started
 ----------------------------------------
 
-[2025-05-12 15:50:03]
-URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
-Source: fetch_pending_order.php (Line 77)
-Message: Successfully retrieved 0 pending orders
+[2025-05-13 13:17:26]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=868322890&reactivation_id=3
+Source: get_reactivation_request.php (Line 112)
+Message: Successfully retrieved record for staff ID: 868322890
 ----------------------------------------
 
-[2025-05-12 15:50:03]
-URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
-Source: fetch_pending_order.php (Line 90)
-Message: Pending orders fetch completed successfully
+[2025-05-13 13:17:26]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=868322890&reactivation_id=3
+Source: get_reactivation_request.php (Line 148)
+Message: Details fetch completed successfully
 ----------------------------------------
 
-[2025-05-12 15:50:03]
-URL: http://localhost/transaction_manager/backend/fetch_pending_order.php
-Source: fetch_pending_order.php (Line 115)
-Message: Pending orders fetch process completed
+[2025-05-13 13:17:26]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=868322890&reactivation_id=3
+Source: get_reactivation_request.php (Line 170)
+Message: Staff deactivation/reactivation details fetch process completed
 ----------------------------------------
 
-[2025-05-12 15:50:03]
+[2025-05-13 13:17:54]
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 44)
+Message: Super Admin ID 22675443 initiated a reactivation action: Reactivated for Staff ID 868322890.
+----------------------------------------
+
+[2025-05-13 13:17:54]
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 55)
+Message: Transaction started for Staff ID 868322890 reactivation.
+----------------------------------------
+
+[2025-05-13 13:17:54]
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 87)
+Message: Fetched reactivation log. Reactivation ID: 3, Deactivation ID: 2 for Staff ID 868322890.
+----------------------------------------
+
+[2025-05-13 13:17:54]
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 97)
+Message: Reactivation log updated with status 'Reactivated' for Staff ID 868322890.
+----------------------------------------
+
+[2025-05-13 13:17:54]
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 108)
+Message: Account reactivated in admin_tbl for Staff ID 868322890.
+----------------------------------------
+
+[2025-05-13 13:17:58]
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 180)
+Message: Reactivation email sent to Staff ID 868322890 with status: Reactivated
+----------------------------------------
+
+[2025-05-13 13:17:58]
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 118)
+Message: Transaction committed for Staff ID 868322890 reactivation.
+----------------------------------------
+
+[2025-05-13 13:17:58]
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 119)
+Message: Super Admin ID 22675443 successfully completed Reactivated for Staff ID 868322890.
+----------------------------------------
+
+[2025-05-13 13:18:06]
 URL: http://localhost/transaction_manager/backend/navbar.php
 Source: navbar.php (Line 15)
 Message: Admin data fetched successfully for user ID: 22675443
 ----------------------------------------
 
-[2025-05-12 15:50:03]
+[2025-05-13 13:18:06]
+URL: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10
+Source: get_deleted_staff.php (Line 21)
+Message: Super Admin ID 22675443 is retrieving deleted staff records.
+----------------------------------------
+
+[2025-05-13 13:18:06]
+URL: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10
+Source: get_deleted_staff.php (Line 85)
+Message: Super Admin ID: 22675443 fetched deleted staff list.
+----------------------------------------
+
+[2025-05-13 13:18:06]
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 10)
 Message: Fetching admin notifications started.
 ----------------------------------------
 
-[2025-05-12 15:50:03]
+[2025-05-13 13:18:06]
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 21)
 Message: Request made by admin ID: 22675443
 ----------------------------------------
 
-[2025-05-12 15:50:03]
+[2025-05-13 13:18:06]
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 43)
 Message: User role detected: Super Admin
 ----------------------------------------
 
-[2025-05-12 15:50:03]
+[2025-05-13 13:18:06]
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 65)
-Message: Fetched 1 notifications for page 1.
+Message: Fetched 3 notifications for page 1.
 ----------------------------------------
 
-[2025-05-12 15:50:03]
+[2025-05-13 13:18:06]
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 88)
-Message: Total unread notifications: 1. Total pages: 1.
+Message: Total unread notifications: 3. Total pages: 1.
 ----------------------------------------
 
-[2025-05-12 15:50:03]
+[2025-05-13 13:18:06]
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 111)
 Message: Database connection closed.
 ----------------------------------------
 
-[2025-05-12 15:50:03]
+[2025-05-13 13:18:06]
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 113)
 Message: Fetching admin notifications process ended.
 ----------------------------------------
 
-[2025-05-12 15:50:03]
-URL: http://localhost/transaction_manager/backend/admin_menu.php
-Source: admin_menu.php (Line 16)
-Message: MENU_ACCESS_INITIATED: Role - Super Admin
+[2025-05-13 13:19:21]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=1428985436&reactivation_id=2
+Source: get_reactivation_request.php (Line 7)
+Message: Staff deactivation/reactivation details fetch process started
 ----------------------------------------
 
-[2025-05-12 15:50:03]
-URL: http://localhost/transaction_manager/backend/admin_menu.php
-Source: admin_menu.php (Line 31)
-Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+[2025-05-13 13:19:21]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=1428985436&reactivation_id=2
+Source: get_reactivation_request.php (Line 31)
+Message: Request initiated by Super Admin ID: 22675443
 ----------------------------------------
 
-[2025-05-12 15:50:03]
-URL: http://localhost/transaction_manager/backend/admin_menu.php
-Source: admin_menu.php (Line 38)
-Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+[2025-05-13 13:19:21]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=1428985436&reactivation_id=2
+Source: get_reactivation_request.php (Line 45)
+Message: Processing details for staff ID: 1428985436 and reactivation ID: 2
+----------------------------------------
+
+[2025-05-13 13:19:21]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=1428985436&reactivation_id=2
+Source: get_reactivation_request.php (Line 50)
+Message: Database transaction started
+----------------------------------------
+
+[2025-05-13 13:19:21]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=1428985436&reactivation_id=2
+Source: get_reactivation_request.php (Line 112)
+Message: Successfully retrieved record for staff ID: 1428985436
+----------------------------------------
+
+[2025-05-13 13:19:21]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=1428985436&reactivation_id=2
+Source: get_reactivation_request.php (Line 148)
+Message: Details fetch completed successfully
+----------------------------------------
+
+[2025-05-13 13:19:21]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=1428985436&reactivation_id=2
+Source: get_reactivation_request.php (Line 170)
+Message: Staff deactivation/reactivation details fetch process completed
+----------------------------------------
+
+[2025-05-13 13:19:42]
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 44)
+Message: Super Admin ID 22675443 initiated a reactivation action: Declined for Staff ID 1428985436.
+----------------------------------------
+
+[2025-05-13 13:19:42]
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 55)
+Message: Transaction started for Staff ID 1428985436 reactivation.
+----------------------------------------
+
+[2025-05-13 13:19:42]
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 87)
+Message: Fetched reactivation log. Reactivation ID: 2, Deactivation ID: 1 for Staff ID 1428985436.
+----------------------------------------
+
+[2025-05-13 13:19:42]
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 97)
+Message: Reactivation log updated with status 'Declined' for Staff ID 1428985436.
+----------------------------------------
+
+[2025-05-13 13:19:48]
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 180)
+Message: Reactivation email sent to Staff ID 1428985436 with status: Declined
+----------------------------------------
+
+[2025-05-13 13:19:48]
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 118)
+Message: Transaction committed for Staff ID 1428985436 reactivation.
+----------------------------------------
+
+[2025-05-13 13:19:48]
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 119)
+Message: Super Admin ID 22675443 successfully completed Declined for Staff ID 1428985436.
+----------------------------------------
+
+[2025-05-13 13:19:53]
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-05-13 13:19:53]
+URL: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10
+Source: get_deleted_staff.php (Line 21)
+Message: Super Admin ID 22675443 is retrieving deleted staff records.
+----------------------------------------
+
+[2025-05-13 13:19:53]
+URL: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10
+Source: get_deleted_staff.php (Line 85)
+Message: Super Admin ID: 22675443 fetched deleted staff list.
+----------------------------------------
+
+[2025-05-13 13:19:53]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-05-13 13:19:53]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 13:19:53]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-05-13 13:19:53]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 3 notifications for page 1.
+----------------------------------------
+
+[2025-05-13 13:19:53]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 3. Total pages: 1.
+----------------------------------------
+
+[2025-05-13 13:19:53]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-05-13 13:19:53]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-05-13 13:21:13]
+URL: http://localhost/transaction_manager/backend/send_otp.php
+Source: send_otp.php (Line 116)
+Message: OTP_SUCCESS: OTP has been generated and sent to abdulrahmonadebayo@gmail.com
+----------------------------------------
+
+[2025-05-13 13:21:52]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 51)
+Message: OTP_VALIDATION_QUERY: 
+    SELECT id, otp, expires_at, status 
+    FROM admin_otp_request 
+    WHERE unique_id = ? 
+    AND status = 'pending'
+    ORDER BY created_at DESC 
+    LIMIT 1
+----------------------------------------
+
+[2025-05-13 13:21:52]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 52)
+Message: OTP_VALIDATION_PARAMS: unique_id=1428985436
+----------------------------------------
+
+[2025-05-13 13:21:52]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 60)
+Message: OTP_VALIDATION_RESULT: {"id":22,"otp":"$2y$10$oYvDtsDToGviF.tTmT9kTO8KFGyjKpq7q3nMFHObVCdJCBX3iyk5u","expires_at":"2025-05-13 12:23:08","status":"pending"}
+----------------------------------------
+
+[2025-05-13 13:21:52]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 74)
+Message: OTP_TIME_COMPARISON: current=2025-05-13 12:21:52 | expiry=2025-05-13 12:23:08 | server_timezone=Europe/Berlin
+----------------------------------------
+
+[2025-05-13 13:21:52]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 92)
+Message: OTP_VALIDATION_SUCCESS: Valid OTP found for 1428985436 | OTP_ID=22
+----------------------------------------
+
+[2025-05-13 13:21:53]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 117)
+Message: USER_STATUS_RESULT: {"id":3,"delete_status":"Yes","block_id":0}
+----------------------------------------
+
+[2025-05-13 13:21:53]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 148)
+Message: TRANSACTION_START: Beginning OTP verification transaction
+----------------------------------------
+
+[2025-05-13 13:21:53]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 152)
+Message: TRANSACTION_STEP: Checking for existing reactivation requests
+----------------------------------------
+
+[2025-05-13 13:21:53]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 192)
+Message: TRANSACTION_STEP: Creating new reactivation request
+----------------------------------------
+
+[2025-05-13 13:21:53]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 203)
+Message: REACTIVATION_CREATED: RequestID=4
+----------------------------------------
+
+[2025-05-13 13:21:53]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 288)
+Message: OTP_STATUS_CHANGE: ID = 22 | FROM = pending | TO = verified
+----------------------------------------
+
+[2025-05-13 13:21:53]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 215)
+Message: OTP_VERIFIED: OTP_ID=22
+----------------------------------------
+
+[2025-05-13 13:21:53]
+URL: http://localhost/transaction_manager/backend/account_reactivation_request.php
+Source: account_reactivation_request.php (Line 219)
+Message: TRANSACTION_COMPLETE: Successfully committed all changes
+----------------------------------------
+
+[2025-05-13 13:22:13]
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-05-13 13:22:14]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-05-13 13:22:14]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 13:22:14]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-05-13 13:22:14]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 65)
+Message: Fetched 4 notifications for page 1.
+----------------------------------------
+
+[2025-05-13 13:22:14]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 88)
+Message: Total unread notifications: 4. Total pages: 1.
+----------------------------------------
+
+[2025-05-13 13:22:14]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-05-13 13:22:14]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-05-13 13:22:14]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-05-13 13:22:14]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 13:22:14]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-05-13 13:22:14]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 4 notifications for page 1.
+----------------------------------------
+
+[2025-05-13 13:22:14]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 4. Total pages: 1.
+----------------------------------------
+
+[2025-05-13 13:22:14]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-05-13 13:22:14]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-05-13 13:23:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-05-13 13:23:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 13:23:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-05-13 13:23:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 65)
+Message: Fetched 4 notifications for page 1.
+----------------------------------------
+
+[2025-05-13 13:23:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 88)
+Message: Total unread notifications: 4. Total pages: 1.
+----------------------------------------
+
+[2025-05-13 13:23:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-05-13 13:23:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-05-13 13:24:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-05-13 13:24:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 13:24:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-05-13 13:24:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 65)
+Message: Fetched 4 notifications for page 1.
+----------------------------------------
+
+[2025-05-13 13:24:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 88)
+Message: Total unread notifications: 4. Total pages: 1.
+----------------------------------------
+
+[2025-05-13 13:24:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-05-13 13:24:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-05-13 13:25:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-05-13 13:25:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 13:25:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-05-13 13:25:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 65)
+Message: Fetched 4 notifications for page 1.
+----------------------------------------
+
+[2025-05-13 13:25:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 88)
+Message: Total unread notifications: 4. Total pages: 1.
+----------------------------------------
+
+[2025-05-13 13:25:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-05-13 13:25:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-05-13 13:26:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-05-13 13:26:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 13:26:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-05-13 13:26:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 65)
+Message: Fetched 4 notifications for page 1.
+----------------------------------------
+
+[2025-05-13 13:26:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 88)
+Message: Total unread notifications: 4. Total pages: 1.
+----------------------------------------
+
+[2025-05-13 13:26:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-05-13 13:26:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-05-13 13:27:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-05-13 13:27:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 13:27:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-05-13 13:27:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 65)
+Message: Fetched 4 notifications for page 1.
+----------------------------------------
+
+[2025-05-13 13:27:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 88)
+Message: Total unread notifications: 4. Total pages: 1.
+----------------------------------------
+
+[2025-05-13 13:27:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-05-13 13:27:13]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-05-13 13:28:14]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-05-13 13:28:14]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 13:28:14]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-05-13 13:28:14]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 65)
+Message: Fetched 4 notifications for page 1.
+----------------------------------------
+
+[2025-05-13 13:28:14]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 88)
+Message: Total unread notifications: 4. Total pages: 1.
+----------------------------------------
+
+[2025-05-13 13:28:14]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-05-13 13:28:14]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-05-13 13:29:29]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-05-13 13:29:29]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 13:29:29]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-05-13 13:29:29]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 65)
+Message: Fetched 4 notifications for page 1.
+----------------------------------------
+
+[2025-05-13 13:29:29]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 88)
+Message: Total unread notifications: 4. Total pages: 1.
+----------------------------------------
+
+[2025-05-13 13:29:29]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-05-13 13:29:29]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-05-13 13:30:14]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-05-13 13:30:14]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 13:30:14]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-05-13 13:30:14]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 65)
+Message: Fetched 4 notifications for page 1.
+----------------------------------------
+
+[2025-05-13 13:30:14]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 88)
+Message: Total unread notifications: 4. Total pages: 1.
+----------------------------------------
+
+[2025-05-13 13:30:14]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-05-13 13:30:14]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-05-13 13:30:16]
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 89)
+Message: Login attempt initiated for username: abdulrahmonadebayo@gmail.com from IP: ::1
+----------------------------------------
+
+[2025-05-13 13:30:16]
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 109)
+Message: User found - ID: 1428985436, Block Status: 0, Delete Status: Yes
+----------------------------------------
+
+[2025-05-13 13:30:16]
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 119)
+Message: Login blocked - Account 1428985436 is deactivated. Attempt from IP: ::1
+----------------------------------------
+
+[2025-05-13 13:30:36]
+URL: http://localhost/transaction_manager/backend/update_all_notification.php
+Source: update_all_notification.php (Line 11)
+Message: Notification mark-as-read process initiated
+----------------------------------------
+
+[2025-05-13 13:30:36]
+URL: http://localhost/transaction_manager/backend/update_all_notification.php
+Source: update_all_notification.php (Line 21)
+Message: Processing request for user ID: 22675443 with role: Super Admin
+----------------------------------------
+
+[2025-05-13 13:30:36]
+URL: http://localhost/transaction_manager/backend/update_all_notification.php
+Source: update_all_notification.php (Line 26)
+Message: Super Admin workflow initiated
+----------------------------------------
+
+[2025-05-13 13:30:36]
+URL: http://localhost/transaction_manager/backend/update_all_notification.php
+Source: update_all_notification.php (Line 45)
+Message: Preparing query: UPDATE admin_notifications SET super_admin_read = ? WHERE is_read = ?
+----------------------------------------
+
+[2025-05-13 13:30:36]
+URL: http://localhost/transaction_manager/backend/update_all_notification.php
+Source: update_all_notification.php (Line 52)
+Message: Binding parameters: [22675443,"No"]
+----------------------------------------
+
+[2025-05-13 13:30:36]
+URL: http://localhost/transaction_manager/backend/update_all_notification.php
+Source: update_all_notification.php (Line 55)
+Message: Executing query
+----------------------------------------
+
+[2025-05-13 13:30:36]
+URL: http://localhost/transaction_manager/backend/update_all_notification.php
+Source: update_all_notification.php (Line 65)
+Message: Successfully marked 4 notifications as read
+----------------------------------------
+
+[2025-05-13 13:30:36]
+URL: http://localhost/transaction_manager/backend/update_all_notification.php
+Source: update_all_notification.php (Line 83)
+Message: Process completed with response: {"success":true,"message":"Notifications marked as read successfully.","affected_rows":4}
+----------------------------------------
+
+[2025-05-13 13:30:37]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-05-13 13:30:37]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 13:30:37]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-05-13 13:30:37]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 65)
+Message: Fetched 0 notifications for page 1.
+----------------------------------------
+
+[2025-05-13 13:30:37]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 88)
+Message: Total unread notifications: 0. Total pages: 0.
+----------------------------------------
+
+[2025-05-13 13:30:37]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-05-13 13:30:37]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-05-13 13:30:38]
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-05-13 13:30:38]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-05-13 13:30:38]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 13:30:38]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-05-13 13:30:38]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 0 notifications for page 1.
+----------------------------------------
+
+[2025-05-13 13:30:38]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 0. Total pages: 0.
+----------------------------------------
+
+[2025-05-13 13:30:38]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-05-13 13:30:38]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-05-13 13:30:38]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-05-13 13:30:38]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 13:30:38]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-05-13 13:30:38]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 65)
+Message: Fetched 0 notifications for page 1.
+----------------------------------------
+
+[2025-05-13 13:30:38]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 88)
+Message: Total unread notifications: 0. Total pages: 0.
+----------------------------------------
+
+[2025-05-13 13:30:38]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-05-13 13:30:38]
+URL: http://localhost/transaction_manager/backend/notification.php?page=1&limit=5
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-05-13 13:31:10]
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-05-13 13:31:10]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-05-13 13:31:10]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 13:31:10]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-05-13 13:31:10]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 0 notifications for page 1.
+----------------------------------------
+
+[2025-05-13 13:31:10]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 0. Total pages: 0.
+----------------------------------------
+
+[2025-05-13 13:31:10]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-05-13 13:31:10]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-05-13 13:31:10]
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-05-13 13:31:11]
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-05-13 13:31:11]
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-05-13 13:31:14]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-05-13 13:31:14]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 13:31:14]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-05-13 13:31:14]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 0 notifications for page 1.
+----------------------------------------
+
+[2025-05-13 13:31:14]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 0. Total pages: 0.
+----------------------------------------
+
+[2025-05-13 13:31:14]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-05-13 13:31:14]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-05-13 13:31:14]
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-05-13 13:31:14]
+URL: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10
+Source: get_deleted_staff.php (Line 21)
+Message: Super Admin ID 22675443 is retrieving deleted staff records.
+----------------------------------------
+
+[2025-05-13 13:31:14]
+URL: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10
+Source: get_deleted_staff.php (Line 85)
+Message: Super Admin ID: 22675443 fetched deleted staff list.
+----------------------------------------
+
+[2025-05-13 13:31:22]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=1428985436&reactivation_id=2
+Source: get_reactivation_request.php (Line 7)
+Message: Staff deactivation/reactivation details fetch process started
+----------------------------------------
+
+[2025-05-13 13:31:22]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=1428985436&reactivation_id=2
+Source: get_reactivation_request.php (Line 31)
+Message: Request initiated by Super Admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 13:31:22]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=1428985436&reactivation_id=2
+Source: get_reactivation_request.php (Line 45)
+Message: Processing details for staff ID: 1428985436 and reactivation ID: 2
+----------------------------------------
+
+[2025-05-13 13:31:22]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=1428985436&reactivation_id=2
+Source: get_reactivation_request.php (Line 50)
+Message: Database transaction started
+----------------------------------------
+
+[2025-05-13 13:31:22]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=1428985436&reactivation_id=2
+Source: get_reactivation_request.php (Line 112)
+Message: Successfully retrieved record for staff ID: 1428985436
+----------------------------------------
+
+[2025-05-13 13:31:22]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=1428985436&reactivation_id=2
+Source: get_reactivation_request.php (Line 148)
+Message: Details fetch completed successfully
+----------------------------------------
+
+[2025-05-13 13:31:22]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=1428985436&reactivation_id=2
+Source: get_reactivation_request.php (Line 170)
+Message: Staff deactivation/reactivation details fetch process completed
+----------------------------------------
+
+[2025-05-13 13:31:26]
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-05-13 13:31:26]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-05-13 13:31:26]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 13:31:26]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-05-13 13:31:26]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 0 notifications for page 1.
+----------------------------------------
+
+[2025-05-13 13:31:26]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 0. Total pages: 0.
+----------------------------------------
+
+[2025-05-13 13:31:26]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-05-13 13:31:26]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-05-13 13:31:26]
+URL: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10
+Source: get_deleted_staff.php (Line 21)
+Message: Super Admin ID 22675443 is retrieving deleted staff records.
+----------------------------------------
+
+[2025-05-13 13:31:26]
+URL: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10
+Source: get_deleted_staff.php (Line 85)
+Message: Super Admin ID: 22675443 fetched deleted staff list.
+----------------------------------------
+
+[2025-05-13 13:31:29]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=1428985436&reactivation_id=4
+Source: get_reactivation_request.php (Line 7)
+Message: Staff deactivation/reactivation details fetch process started
+----------------------------------------
+
+[2025-05-13 13:31:29]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=1428985436&reactivation_id=4
+Source: get_reactivation_request.php (Line 31)
+Message: Request initiated by Super Admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 13:31:29]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=1428985436&reactivation_id=4
+Source: get_reactivation_request.php (Line 45)
+Message: Processing details for staff ID: 1428985436 and reactivation ID: 4
+----------------------------------------
+
+[2025-05-13 13:31:29]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=1428985436&reactivation_id=4
+Source: get_reactivation_request.php (Line 50)
+Message: Database transaction started
+----------------------------------------
+
+[2025-05-13 13:31:29]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=1428985436&reactivation_id=4
+Source: get_reactivation_request.php (Line 112)
+Message: Successfully retrieved record for staff ID: 1428985436
+----------------------------------------
+
+[2025-05-13 13:31:29]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=1428985436&reactivation_id=4
+Source: get_reactivation_request.php (Line 148)
+Message: Details fetch completed successfully
+----------------------------------------
+
+[2025-05-13 13:31:29]
+URL: http://localhost/transaction_manager/backend/get_reactivation_request.php?staff_id=1428985436&reactivation_id=4
+Source: get_reactivation_request.php (Line 170)
+Message: Staff deactivation/reactivation details fetch process completed
+----------------------------------------
+
+[2025-05-13 13:34:09]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-05-13 13:34:09]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 13:34:09]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-05-13 13:34:09]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 0 notifications for page 1.
+----------------------------------------
+
+[2025-05-13 13:34:09]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 0. Total pages: 0.
+----------------------------------------
+
+[2025-05-13 13:34:09]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-05-13 13:34:09]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-05-13 13:34:09]
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-05-13 13:34:09]
+URL: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10
+Source: get_deleted_staff.php (Line 21)
+Message: Super Admin ID 22675443 is retrieving deleted staff records.
+----------------------------------------
+
+[2025-05-13 13:34:09]
+URL: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10
+Source: get_deleted_staff.php (Line 85)
+Message: Super Admin ID: 22675443 fetched deleted staff list.
+----------------------------------------
+
+[2025-05-13 13:34:20]
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-05-13 13:34:20]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-05-13 13:34:20]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 13:34:20]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-05-13 13:34:20]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 0 notifications for page 1.
+----------------------------------------
+
+[2025-05-13 13:34:20]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 0. Total pages: 0.
+----------------------------------------
+
+[2025-05-13 13:34:20]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-05-13 13:34:20]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-05-13 13:34:20]
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-05-13 13:34:20]
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-05-13 13:34:20]
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-05-13 13:34:20]
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-05-13 13:34:20]
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-05-13 13:34:20]
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-05-13 14:01:55]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-05-13 14:01:55]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 14:01:55]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-05-13 14:01:55]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 0 notifications for page 1.
+----------------------------------------
+
+[2025-05-13 14:01:55]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 0. Total pages: 0.
+----------------------------------------
+
+[2025-05-13 14:01:55]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-05-13 14:01:55]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-05-13 14:01:55]
+URL: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10
+Source: get_deleted_staff.php (Line 21)
+Message: Super Admin ID 22675443 is retrieving deleted staff records.
+----------------------------------------
+
+[2025-05-13 14:01:55]
+URL: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10
+Source: get_deleted_staff.php (Line 85)
+Message: Super Admin ID: 22675443 fetched deleted staff list.
+----------------------------------------
+
+[2025-05-13 14:01:55]
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-05-13 14:02:06]
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-05-13 14:02:06]
+URL: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10
+Source: get_deleted_staff.php (Line 21)
+Message: Super Admin ID 22675443 is retrieving deleted staff records.
+----------------------------------------
+
+[2025-05-13 14:02:06]
+URL: http://localhost/transaction_manager/backend/get_deleted_staff.php?page=1&limit=10
+Source: get_deleted_staff.php (Line 85)
+Message: Super Admin ID: 22675443 fetched deleted staff list.
+----------------------------------------
+
+[2025-05-13 14:02:06]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-05-13 14:02:06]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-05-13 14:02:06]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-05-13 14:02:06]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 0 notifications for page 1.
+----------------------------------------
+
+[2025-05-13 14:02:06]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 0. Total pages: 0.
+----------------------------------------
+
+[2025-05-13 14:02:06]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-05-13 14:02:06]
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-05-13 14:03:08]
+URL: http://localhost/transaction_manager/backend/logout.php
+Source: logout.php (Line 7)
+Message: Logout process initiated
+----------------------------------------
+
+[2025-05-13 14:03:08]
+URL: http://localhost/transaction_manager/backend/logout.php
+Source: logout.php (Line 23)
+Message: Processing logout for user: 22675443
+----------------------------------------
+
+[2025-05-13 14:03:08]
+URL: http://localhost/transaction_manager/backend/logout.php
+Source: logout.php (Line 48)
+Message: Found active session: i5vs5feutgdbn5ksamdde4mben (Status: Active)
+----------------------------------------
+
+[2025-05-13 14:03:08]
+URL: http://localhost/transaction_manager/backend/logout.php
+Source: logout.php (Line 65)
+Message: Session invalidated in DB. Affected rows: 1
+----------------------------------------
+
+[2025-05-13 14:03:08]
+URL: http://localhost/transaction_manager/backend/logout.php
+Source: logout.php (Line 74)
+Message: Session destroyed. Previous session data: []
+----------------------------------------
+
+[2025-05-13 14:03:08]
+URL: http://localhost/transaction_manager/backend/logout.php
+Source: logout.php (Line 77)
+Message: Logout successful for user: 22675443
 ----------------------------------------
 

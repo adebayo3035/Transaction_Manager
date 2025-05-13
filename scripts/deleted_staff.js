@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
             button.addEventListener('click', async (e) => {
                 const staffId = e.target.dataset.staffId;
                 const reactivationId = e.target.dataset.reactivationId;
-            await fetchReactivationRequest(staffId, reactivationId);
+                await fetchReactivationRequest(staffId, reactivationId);
             });
         });
     }
@@ -131,14 +131,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function populateReactivationRequest(responseData) {
         const staffDetailsTable = document.querySelector('#staffDetailsTable tbody');
         const { deactivation, staff, deactivator, reactivation } = responseData;
-    
+
         // Clear existing content
         staffDetailsTable.innerHTML = '';
-    
+
         // Determine if comment field should be editable
         const isPending = reactivation?.status === 'Pending';
         const commentValue = reactivation?.comment || '';
-    
+
         // Create staff details rows
         staffDetailsTable.innerHTML = `
             <tr>
@@ -152,11 +152,10 @@ document.addEventListener('DOMContentLoaded', () => {
             <tr>
                 <td>Deactivated By</td>
                 <td>
-                    <input type="text" value="${
-                        deactivator ? 
-                        `${deactivator.firstname} ${deactivator.lastname} (ID: ${deactivator.id})` : 
-                        'Unknown'
-                    }" disabled>
+                    <input type="text" value="${deactivator ?
+                `${deactivator.firstname} ${deactivator.lastname} (ID: ${deactivator.id})` :
+                'Unknown'
+            }" disabled>
                 </td>
             </tr>
             <tr>
@@ -194,14 +193,20 @@ document.addEventListener('DOMContentLoaded', () => {
             </tr>
             ` : ''}
         `;
-    
+
         // Add event listeners for buttons (if they exist)
         document.getElementById('approveBtn')?.addEventListener('click', () => {
-            ReactiveateAccount(staff.id, 'Reactivated');
+            const confirmed = confirm("Are you sure you want to approve this reactivation?");
+            if (confirmed) {
+                ReactiveateAccount(staff.id, 'Reactivated');
+            }
         });
-    
+
         document.getElementById('declineBtn')?.addEventListener('click', () => {
-            ReactiveateAccount(staff.id, 'Declined');
+            const confirmed = confirm("Are you sure you want to decline this reactivation?");
+            if (confirmed) {
+                ReactiveateAccount(staff.id, 'Declined');
+            }
         });
     }
 
@@ -229,16 +234,16 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 alert(`Staff Reactivation Request has been ${action}`);
                 // You could also refresh the table or close the modal here
-                setTimeout(function() {
+                setTimeout(function () {
                     location.reload();
-                  }, 2000); // 2000ms = 2 seconds
+                }, 2000); // 2000ms = 2 seconds
             })
             .catch(error => {
                 console.error('Error:', error);
                 alert('Something went wrong. Please try again.');
-                setTimeout(function() {
+                setTimeout(function () {
                     location.reload();
-                  }, 3000); // 2000ms = 2 seconds
+                }, 3000); // 2000ms = 2 seconds
             });
     }
 

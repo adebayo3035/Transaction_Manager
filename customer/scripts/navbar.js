@@ -1,5 +1,6 @@
 // Global variables
-const inactivityTimeout = 60 * 1000000; // 10 minute for testing; adjust as needed
+//const inactivityTimeout = 60 * 1000000; // 10 minute for testing; adjust as needed
+const inactivityTimeout = 60 * 1000; // 1 minute for testing
 const inactivityTimers = {}; // Stores individual timers for each user
 
 // Helper function to set text content and handle errors

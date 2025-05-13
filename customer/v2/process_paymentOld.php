@@ -298,15 +298,13 @@ function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deli
             logActivity("Promo code usage recorded for customer ID: " . $customerId);
         }
 
-        // Admin notification
         $title = "Food Order for customer ID: " . $customerId;
         $eventType = "New Food Order";
         $eventDetails = "Customer placed an order on " . date('Y-m-d H:i:s');
-        $stmt = $conn->prepare("INSERT INTO admin_notifications (event_title, event_type, event_details, created_at, user_id) VALUES (?, ?, ?, NOW(), ?)");
-        $stmt->bind_param("ssss", $title, $eventType, $eventDetails, $superAdminUniqueId);
-        $stmt->execute();
-        $stmt->close();
-        logActivity("Admin notification sent for order ID: " . $orderId);
+        $logMessage = "Admin notification sent for order ID: " . $orderId;
+        
+        sendAdminNotification($conn, $title, $eventType, $eventDetails, $superAdminUniqueId, $logMessage);
+        
 
         // Commit transaction
         $conn->commit();

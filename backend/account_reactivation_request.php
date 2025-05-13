@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-require_once 'config.php';
+require 'config.php';
 
 $data = json_decode(file_get_contents("php://input"), true);
 $email = trim($data['email'] ?? '');
@@ -17,7 +17,7 @@ if (empty($email) || empty($reason) || !filter_var($email, FILTER_VALIDATE_EMAIL
 
 if (empty($otp) || !preg_match('/^\d{6}$/', $otp)) {
     http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'OTP must be 6 digits']);
+    echo json_encode(['success' => false, 'message' => 'Invalid OTP!']);
     logActivity("OTP_VALIDATION_FAILED: Invalid OTP format for $email");
     exit;
 }
@@ -170,23 +170,24 @@ try {
     }
 
     // Step 2: Get the latest deactivation log ID for this admin
-$deactivationStmt = $conn->prepare("
-SELECT id 
+    $deactivationStmt = $conn->prepare("
+SELECT id, deactivated_by
 FROM admin_deactivation_logs 
 WHERE admin_id = ? 
 ORDER BY id DESC 
 LIMIT 1
 ");
-$deactivationStmt->bind_param("i", $unique_id);
-$deactivationStmt->execute();
-$deactivationResult = $deactivationStmt->get_result();
-$deactivationLog = $deactivationResult->fetch_assoc();
+    $deactivationStmt->bind_param("i", $unique_id);
+    $deactivationStmt->execute();
+    $deactivationResult = $deactivationStmt->get_result();
+    $deactivationLog = $deactivationResult->fetch_assoc();
 
-if (!$deactivationLog) {
-throw new Exception("Deactivation log not found for this admin.");
-}
+    if (!$deactivationLog) {
+        throw new Exception("Deactivation log not found for this admin.");
+    }
 
-$deactivation_log_id = $deactivationLog['id']; // Get the ID from the deactivation log
+    $deactivation_log_id = $deactivationLog['id']; // Get the ID from the deactivation log
+    $deactivated_by = $deactivationLog['deactivated_by'];
 
     logActivity("TRANSACTION_STEP: Creating new reactivation request");
     $accountType = 'Admin';
@@ -201,9 +202,19 @@ $deactivation_log_id = $deactivationLog['id']; // Get the ID from the deactivati
     $reactivationRequestId = $conn->insert_id;
     logActivity("REACTIVATION_CREATED: RequestID=$reactivationRequestId");
 
+    //send notification to admin
+    $title = "Account Reactivation Request for Admin ID: " . $unique_id;
+    $eventType = "Admin Account Reactivation Request";
+    $eventDetails = "Admin log a request to reactivate account on  " . date('Y-m-d H:i:s');
+    $logMessage = "Admin notification sent for Account Reactivation for Admin ID: " . $unique_id;
+
+    sendAdminNotification($conn, $title, $eventType, $eventDetails, $unique_id, $logMessage);
+
+
     updateOtpStatus($conn, $otpId, 'verified', "Successfully verified OTP for reactivation");
     logActivity("OTP_VERIFIED: OTP_ID=$otpId");
 
+    
     $conn->commit();
     logActivity("TRANSACTION_COMPLETE: Successfully committed all changes");
 
@@ -236,7 +247,8 @@ $deactivation_log_id = $deactivationLog['id']; // Get the ID from the deactivati
  * @param string $usage_description
  * @return bool
  */
-function updateOtpStatus($conn, $otpId, $newStatus, $usage_description) {
+function updateOtpStatus($conn, $otpId, $newStatus, $usage_description)
+{
     $allowedStatuses = ['pending', 'verified', 'expired', 'failed', 'used'];
     if (!in_array($newStatus, $allowedStatuses)) {
         logActivity("Invalid OTP status: $newStatus");
