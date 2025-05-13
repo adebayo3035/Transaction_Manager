@@ -1,46 +1,54 @@
-document.addEventListener('DOMContentLoaded', function() {
-    fetchMenu();
-    // toggleNavNew()
-;});
+document.addEventListener('DOMContentLoaded', function () {
+    fetchMenuWithCache();
+});
 
-// function toggleNavNew() {
-//     const nav = document.getElementById("navLinks");
-//     nav.classList.toggle("responsive2");
-//     nav.className = nav.className === "nav-links" ? "nav-links responsive2" : "nav-links";
-// }
 function toggleNavNew() {
     const navLinks = document.getElementById('navLinks');
     navLinks.classList.toggle('active');
 }
 
-function fetchMenu() {
+function fetchMenuWithCache() {
+    const cachedMenu = sessionStorage.getItem('admin_menu_items');
+    const cacheTime = sessionStorage.getItem('admin_menu_time');
+    const now = Date.now();
+
+    // Use cached menu if it's less than 5 minutes old
+    if (cachedMenu && cacheTime && (now - cacheTime < 5 * 60 * 1000)) {
+        renderMenu(JSON.parse(cachedMenu));
+        return;
+    }
+
+    // Fetch fresh menu from server
     fetch('backend/admin_menu.php')
         .then(response => response.json())
         .then(data => {
             if (data.error) {
-                // Redirect to login if not authenticated
                 window.location.href = '../index.php';
                 return;
             }
 
-            const navLinks = document.getElementById('navLinks');
-            data.menuItems.forEach(item => {
-                const li = document.createElement('li');
-                const a = document.createElement('a');
-                a.href = item.link;
-                a.id = item.id;
-                a.textContent = item.name;
-                li.appendChild(a);
-                navLinks.appendChild(li);
-            });
+            // Cache the result
+            sessionStorage.setItem('admin_menu_items', JSON.stringify(data.menuItems));
+            sessionStorage.setItem('admin_menu_time', now);
+
+            renderMenu(data.menuItems);
         })
         .catch(error => {
             console.error('Error fetching menu:', error);
-            // window.location.href = 'index.php';
         });
 }
 
-function toggleNav() {
-    const nav = document.getElementById("navLinks");
-    nav.classList.toggle("responsive");
+function renderMenu(menuItems) {
+    const navLinks = document.getElementById('navLinks');
+    navLinks.innerHTML = ''; // Clear existing links before re-rendering
+
+    menuItems.forEach(item => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = item.link;
+        a.id = item.id;
+        a.textContent = item.name;
+        li.appendChild(a);
+        navLinks.appendChild(li);
+    });
 }

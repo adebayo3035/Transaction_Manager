@@ -121,6 +121,14 @@ tbody tr td input[type="email"] {
     text-align: center;
     font-size: 10px;
   }
+  #reactivationComment{
+    font-size: 14px;
+    border: none;
+    outline: none;
+    padding: 10px;
+    background-color: #ccc;
+    border-radius: 4px;
+  }
   
   .spinner > div {
     background-color: #333;
