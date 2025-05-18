@@ -174,7 +174,7 @@ tbody tr td input[type="email"] {
       -webkit-transform: scaleY(1.0);
     }
   }
-@media screen and (max-width: 700px){
+@media screen and (max-width: 900px){
     #customer-form{
         display: flex;
         flex-direction: column;

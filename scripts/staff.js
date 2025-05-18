@@ -24,17 +24,61 @@ document.addEventListener('DOMContentLoaded', () => {
                     updatePagination(data.total, data.page, data.limit);
                     const adminActionBtn = document.getElementById('customer-form');
 
+                    // Check for Super Admin privileges and add action buttons
                     if (data.logged_in_user_role === "Super Admin") {
-                        // Check if the link already exists to prevent duplication
-                        const existingLink = adminActionBtn.querySelector('.delete-btn');
-                        if (!existingLink) {
-                            const viewDeletedLink = document.createElement('a');
-                            viewDeletedLink.href = "deleted_staff.php";
-                            viewDeletedLink.className = "delete-btn";
-                            viewDeletedLink.textContent = "View Deactivated Staffs";
-                            viewDeletedLink.style.backgroundColor = "#000";
-                            adminActionBtn.appendChild(viewDeletedLink);
-                        }
+                        const actionButtons = [
+                            {
+                                href: "staff_reactivation_request.php",
+                                className: "admin-action-btn btn-view-deactivated",
+                                text: "View Pending Reactivation Request",
+                                color: "#2c3e50" // Dark blue-gray
+                            },
+                            {
+                                href: "staff_deactivation_reactivation_history.php",
+                                className: "admin-action-btn btn-deactivation-records",
+                                text: "View Deactivation and Reactivation History",
+                                color: "#e67e22" // Orange
+                            }
+                        ];
+
+                        // Add buttons only if they don't already exist
+                        actionButtons.forEach(button => {
+                            if (!adminActionBtn.querySelector(`.${button.className}`)) {
+                                const btn = document.createElement('a');
+                                btn.href = button.href;
+                                btn.className = button.className;
+                                btn.textContent = button.text;
+
+                                // Apply consistent button styling
+                                btn.style.cssText = `
+                                    display: inline-block;
+                                    padding: 10px 15px;
+                                    margin: 0 10px 10px 0;
+                                    border-radius: 4px;
+                                    color: white;
+                                    background-color: ${button.color};
+                                    text-decoration: none;
+                                    font-weight: 500;
+                                    transition: all 0.3s ease;
+                                    border: none;
+                                    cursor: pointer;
+                                `;
+
+                                // Add hover effect
+                                btn.addEventListener('mouseenter', () => {
+                                    btn.style.opacity = '0.9';
+                                    btn.style.transform = 'translateY(-2px)';
+                                });
+                                btn.addEventListener('mouseleave', () => {
+                                    btn.style.opacity = '1';
+                                    btn.style.transform = 'translateY(0)';
+                                });
+
+                                adminActionBtn.appendChild(btn);
+                            }
+                        });
+                    } else if (data.message) {
+                        console.error('Failed to fetch Staff Records:', data.message);
                     }
                 } else {
                     console.error('Failed to fetch Staff Records:', data.message);

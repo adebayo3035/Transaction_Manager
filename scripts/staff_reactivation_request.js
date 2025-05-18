@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleLoader(true);
         toggleTable(false);
 
-        fetch(`backend/get_deleted_staff.php?page=${page}&limit=${limit}`, {
+        fetch(`backend/get_staff_reactivation_request.php?page=${page}&limit=${limit}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // function to fetch admin details for Deactivation
     async function fetchReactivationRequest(staffId, reactivationId) {
-        fetch(`backend/get_reactivation_request.php?staff_id=${staffId}&reactivation_id=${reactivationId}`)
+        fetch(`backend/get_reactivation_request_details.php?staff_id=${staffId}&reactivation_id=${reactivationId}`)
             .then(res => res.json())
             .then(data => {
                 if (data.success) {

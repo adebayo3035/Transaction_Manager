@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Global variables
 let userId;  // To store `unique_id`
-const inactivityTimeout = 60 * 1000; // 1 minute for testing
-//const inactivityTimeout = 60 * 1000000;
+//const inactivityTimeout = 60 * 1000; // 1 minute for testing
+const inactivityTimeout = 60 * 1000000;
 let inactivityTimers = {}; // Object to hold inactivity timers per user
 
 // Function to fetch user data

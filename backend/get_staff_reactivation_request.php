@@ -56,7 +56,7 @@ FROM admin_tbl a
 INNER JOIN admin_deactivation_logs d ON a.unique_id = d.admin_id
 LEFT JOIN admin_reactivation_logs l ON d.id = l.deactivation_log_id
 LEFT JOIN admin_tbl deactivator ON d.deactivated_by = deactivator.unique_id
-WHERE a.delete_status = 'Yes'
+WHERE a.delete_status = 'Yes' AND l.status = 'Pending'
 ORDER BY d.date_created DESC
 LIMIT ? OFFSET ?
 ";

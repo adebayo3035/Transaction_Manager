@@ -14,7 +14,7 @@
 <body>
     <?php include('navbar.php'); ?>
     <div class="container">
-        <h1>Deactivated Staff Records</h1>
+        <h1>Staff Account Reactivation Requests</h1>
         <div class="livesearch">
             <input type="text" id="liveSearch" placeholder="Search for Order...">
             <button type="submit">Search <i class="fa fa-search" aria-hidden="true"></i></button>
@@ -65,7 +65,7 @@
 
 
 
-    <script src="scripts/deleted_staff.js"></script>
+    <script src="scripts/staff_reactivation_request.js"></script>
 
 </body>
 
