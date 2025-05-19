@@ -26,12 +26,12 @@ try {
     // Validate and sanitize pagination parameters
     $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
     $limit = isset($_GET['limit']) ? (int) $_GET['limit'] : 10;
-    
+
     if ($page < 1 || $limit < 1 || $limit > 100) {
         $errorMsg = "Invalid pagination parameters - Page: $page, Limit: $limit";
         logActivity($errorMsg);
         echo json_encode([
-            'success' => false, 
+            'success' => false,
             'message' => 'Invalid pagination parameters. Page must be ≥ 1 and limit between 1-100.'
         ]);
         exit();
@@ -50,6 +50,7 @@ try {
         $countQuery = "SELECT COUNT(*) as total FROM orders";
         $condition = "";
         $params = [];
+        $orderBy = " ORDER BY order_id, delivery_status";
 
         if ($userRole == "Admin") {
             $condition = " WHERE assigned_to = ?";
@@ -58,10 +59,10 @@ try {
             throw new Exception("Unauthorized role: " . $userRole);
         }
 
-        // Execute count query
+        // Execute count query first
         $countQuery .= $condition;
         $countStmt = $conn->prepare($countQuery);
-        
+
         if (!$countStmt) {
             throw new Exception("Prepare failed for count query: " . $conn->error);
         }
@@ -74,15 +75,17 @@ try {
             throw new Exception("Execute failed for count query: " . $countStmt->error);
         }
 
-        $totalResult = $countStmt->get_result();
-        $totalOrders = $totalResult->fetch_assoc()['total'];
+        // Get and store count result immediately
+        $countResult = $countStmt->get_result();
+        $totalOrders = $countResult->fetch_assoc()['total'];
+        $countStmt->close(); // Explicitly close the count statement
         $totalPages = ceil($totalOrders / $limit);
         logActivity("Total orders found: $totalOrders, Total pages: $totalPages");
 
-        // Execute data query
-        $dataQuery = $baseQuery . $condition . " ORDER BY updated_at DESC LIMIT ? OFFSET ?";
+        // Now prepare and execute main data query
+        $dataQuery = $baseQuery . $condition . $orderBy . " LIMIT ? OFFSET ?";
         $stmt = $conn->prepare($dataQuery);
-        
+
         if (!$stmt) {
             throw new Exception("Prepare failed for data query: " . $conn->error);
         }
@@ -133,14 +136,21 @@ try {
         if (isset($conn)) {
             $conn->rollback();
         }
-        throw $e;
-    }
+        $errorMsg = "Error fetching order listing: " . $e->getMessage();
+        logActivity($errorMsg);
+        http_response_code(500);
+        echo json_encode([
+            'success' => false,
+            'message' => 'Failed to fetch orders',
+            'error' => $e->getMessage()
+        ]);
+    } 
 } catch (Exception $e) {
     $errorMsg = "Error fetching order listing: " . $e->getMessage();
     logActivity($errorMsg);
     http_response_code(500);
     echo json_encode([
-        'success' => false, 
+        'success' => false,
         'message' => 'Failed to fetch orders',
         'error' => $e->getMessage()
     ]);
@@ -149,9 +159,9 @@ try {
     if (isset($stmt) && $stmt instanceof mysqli_stmt) {
         $stmt->close();
     }
-    if (isset($countStmt) && $countStmt instanceof mysqli_stmt) {
-        $countStmt->close();
-    }
+    // if (isset($countStmt) && $countStmt instanceof mysqli_stmt) {
+    //     $countStmt->close();
+    // }
     if (isset($conn)) {
         $conn->close();
     }

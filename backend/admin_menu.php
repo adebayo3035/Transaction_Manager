@@ -18,11 +18,12 @@ logActivity("MENU_ACCESS_INITIATED: Role - $role");
 // Common links for all roles
 $menuItems[] = ['name' => 'Manage Orders', 'link' => 'dashboard.php', 'id' => 'orderFood'];
 $menuItems[] = ['name' => 'View Pending Orders', 'link' => 'pending_orders.php', 'id' => 'viewOrders'];
+$menuItems[] = ['name' => 'All Orders', 'link' => 'orders.php', 'id' => 'allOrder'];
 
 // Role-based links
 if ($role === 'Super Admin') {
     $menuItems[] = ['name' => 'Manage Revenue', 'link' => 'revenue_dashboard.php', 'id' => 'fundWallet'];
-    $menuItems[] = ['name' => 'All Orders', 'link' => 'orders.php', 'id' => 'allOrder'];
+    // $menuItems[] = ['name' => 'All Orders', 'link' => 'orders.php', 'id' => 'allOrder'];
     $menuItems[] = ['name' => 'Transactions', 'link' => 'transactions.php', 'id' => 'allTransactions'];
     $menuItems[] = ['name' => 'Inflow and Outflow', 'link' => 'revenue.php', 'id' => 'allRevenues'];
     $menuItems[] = ['name' => 'Promos', 'link' => 'promo.php', 'id' => 'promo'];

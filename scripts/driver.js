@@ -199,7 +199,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
             <tr>
                 <td>Vehicle Type</td>
-                <td><input type="text" id="vehicleType" value="${driver_details.vehicle_type}"></td>
+                
+                <td>
+                    <select id="vehicleType">
+                        <option value="Bicycle" ${driver_details.vehicle_type === 'Bicycle' ? 'selected' : ''}>Bicycle</option>
+                        <option value="Motorcycle" ${driver_details.vehicle_type === 'Motorcycle' ? 'selected' : ''}>Motorcycle</option>
+                        <option value="Bike" ${driver_details.vehicle_type === 'Bike' ? 'selected' : ''}>Bike</option>
+                        <option value="Tricycle" ${driver_details.vehicle_type === 'Tricycle' ? 'selected' : ''}>Tricycle</option>
+                        <option value="Bus" ${driver_details.vehicle_type === 'Bus' ? 'selected' : ''}>Bus</option>
+                        <option value="Car" ${driver_details.vehicle_type === 'Car' ? 'selected' : ''}>Car</option>
+                        <option value="Lorry" ${driver_details.vehicle_type === 'Lorry' ? 'selected' : ''}>Lorry</option>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <td>Restriction Status</td>
