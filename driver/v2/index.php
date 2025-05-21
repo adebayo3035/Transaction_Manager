@@ -1,7 +1,8 @@
 <?php
 include 'config.php';
 
-function destroySession($driverId, $conn) {
+function destroySession($driverId, $conn)
+{
     // Fetch the session_id from driver_active_sessions table
     $sessionId = null;
     $stmt = $conn->prepare("SELECT session_id FROM driver_active_sessions WHERE driver_id = ?");
@@ -12,7 +13,7 @@ function destroySession($driverId, $conn) {
     if ($stmt->fetch()) {
         // Log session ID being destroyed
         logActivity("Destroying session for session_id: " . $sessionId);
-        
+
         // Destroy the session
         session_id($sessionId);
         session_start();
@@ -80,13 +81,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 logActivity("Unlocking account for driver_id: " . $driver_id);
                 $stmtResetAttempts = $conn->prepare("DELETE FROM driver_login_attempts WHERE driver_id = ?");
                 $stmtResetAttempts->bind_param("i", $driver_id);
-                
+
 
                 // Update driver_lock_history table
                 $status = 'unlocked'; // New status to indicate the account is unlocked
                 $unlock_method = 'System unlock'; // Method used to unlock the account
                 $driverID = 0; // DEFAULT SYSTEM ID
-                
+
                 $stmtUnlockHistory = $conn->prepare("UPDATE driver_lock_history SET status = ?, unlocked_by = ?, unlock_method = ?, unlocked_at = NOW() WHERE driver_id = ? AND status = 'locked'");
                 $stmtUnlockHistory->bind_param("sisi", $status, $driverID, $unlock_method, $driver_id);
                 $stmtResetAttempts->execute();
@@ -106,9 +107,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $restriction_id = $driver_data['restriction'];
             $verifyPassword = password_verify($password, $driver_password);
 
-            if($restriction_id !== 0){
+            if ($restriction_id !== 0) {
                 logActivity("Account restricted for driver_id: " . $driver_id);
-                echo json_encode(["success" => false, "message" => "Your Account is restricted. Kindly contact Admin to remove Restriction."]);
+                echo json_encode([
+                    "success" => false,
+                    "message" => "Your Account is restricted. Kindly contact Admin to remove Restriction.",
+                ]);
                 exit();
             }
             if ($verifyPassword) {
@@ -119,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 // Set session variables
                 $_SESSION['driver_id'] = $driver_data['id'];
-                $_SESSION['driver_name'] = $row['firstname']." ". $row['lastname'];
+                $_SESSION['driver_name'] = $row['firstname'] . " " . $row['lastname'];
 
                 // Create a new session
                 $newSessionId = session_id();
@@ -147,13 +151,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         logActivity("No record found for username: " . $username);
         echo json_encode(["success" => false, "message" => "This Email or Phone Number does not exist!"]);
     }
-} 
+}
 
 $stmt->close();
 $conn->close();
 
 // Function to handle failed login attempts
-function handleFailedLogin($conn, $driver_id, $max_attempts, $lockout_duration) {
+function handleFailedLogin($conn, $driver_id, $max_attempts, $lockout_duration)
+{
     // Check if an entry exists for this driver_id
     $stmtCheckAttempts = $conn->prepare("SELECT * FROM driver_login_attempts WHERE driver_id = ?");
     if ($stmtCheckAttempts) {

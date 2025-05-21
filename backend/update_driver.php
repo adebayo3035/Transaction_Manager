@@ -14,11 +14,11 @@ if (isset($data['id'])) {
     $address = $data['address'];
     $vehicle_type = $data['vehicle_type'];
     $statusNew = $data['status'];
-    $restriction = $data['restriction'];
+    $restriction = $data['restriction'] ?? null; // Make restriction optional
 
     $adminId = $_SESSION['unique_id'] ?? 'Unknown';
 
-    // Validate required fields
+    // Validate required fields (excluding restriction which is now optional)
     if (empty($firstname) || empty($lastname) || empty($email) || empty($phone_number) || empty($gender) || empty($vehicle_type) || empty($address) || empty($statusNew)) {
         logActivity("Update Failed: Required fields missing for Driver ID $driverId by Admin ID $adminId.");
         echo json_encode(['success' => false, 'message' => 'Please fill in all required fields.']);
@@ -39,11 +39,38 @@ if (isset($data['id'])) {
         exit;
     }
 
-    // Restriction validation
-    if (!in_array($restriction, [0, 1])) {
-        logActivity("Update Failed: Invalid restriction value '$restriction' for Driver ID $driverId by Admin ID $adminId.");
-        echo json_encode(['success' => false, 'message' => 'Invalid restriction value. Must be 0 or 1.']);
+    // Get current restriction status before any updates
+    $currentRestrictionQuery = "SELECT restriction, status FROM driver WHERE id = ?";
+    $currentRestrictionStmt = $conn->prepare($currentRestrictionQuery);
+    $currentRestrictionStmt->bind_param("i", $driverId);
+    $currentRestrictionStmt->execute();
+    $currentRestrictionStmt->bind_result($currentRestriction, $currentStatus,);
+    $currentRestrictionStmt->fetch();
+    $currentRestrictionStmt->close();
+
+    // Prevent restriction removal for already restricted accounts
+    if ($currentRestriction == 1 && isset($data['restriction']) && $data['restriction'] == 0) {
+        logActivity("Update Blocked: Attempt to unrestrict Driver ID $driverId by Admin ID $adminId.");
+        echo json_encode(['success' => false, 'message' => 'Cannot remove restriction from restricted accounts on this page.']);
         exit;
+    }
+    //Prevent setting Unavailable driver to available
+    if ($currentStatus == 'Not Available' && isset($data['status']) && $data['status'] == 'Available') {
+        logActivity("Update Blocked: Attempt to change Availability Status for Driver ID $driverId by Admin ID $adminId.");
+        echo json_encode(['success' => false, 'message' => 'Cannot change Driver Availability Status.']);
+        exit;
+    }
+
+    // If restriction is being set (not null), validate it
+    if (isset($restriction)) {
+        if (!in_array($restriction, [0, 1])) {
+            logActivity("Update Failed: Invalid restriction value '$restriction' for Driver ID $driverId by Admin ID $adminId.");
+            echo json_encode(['success' => false, 'message' => 'Invalid restriction value. Must be 0 or 1.']);
+            exit;
+        }
+    } else {
+        // If restriction wasn't sent (because account is restricted), keep current restriction
+        $restriction = $currentRestriction;
     }
 
     // Gender validation
@@ -63,10 +90,10 @@ if (isset($data['id'])) {
     }
 
     // Vehicle type validation
-    $allowedVehicleTypes = ['Bicycle', 'Bike', 'Car'];
+    $allowedVehicleTypes = ['Bicycle', 'Motorcycle', 'Tricycle', 'Bus', 'Car', 'Lorry'];
     if (!in_array($vehicle_type, $allowedVehicleTypes)) {
         logActivity("Update Failed: Invalid vehicle type '$vehicle_type' for Driver ID $driverId by Admin ID $adminId.");
-        echo json_encode(['success' => false, 'message' => 'Invalid vehicle type. Must be Bicycle, Bike, or Car.']);
+        echo json_encode(['success' => false, 'message' => 'Invalid vehicle type selected.']);
         exit;
     }
 
@@ -95,43 +122,26 @@ if (isset($data['id'])) {
     }
 
     // Check driver status for restriction conflicts
-    $statusQuery = "SELECT status FROM driver WHERE id = ?";
-    $statusStmt = $conn->prepare($statusQuery);
-    $statusStmt->bind_param("i", $driverId);
-    $statusStmt->execute();
-    $statusStmt->store_result();
-
-    if ($statusStmt->num_rows > 0) {
-        $statusStmt->bind_result($status);
-        $statusStmt->fetch();
-
-        if ($status === 'Not Available' && $restriction == "1") {
-            logActivity("Update Failed: Driver ID $driverId is Not Available; cannot apply restriction simultaneously. Admin ID: $adminId.");
-            echo json_encode(['success' => false, 'message' => 'Driver is currently assigned to an Order and cannot be Restricted.']);
-            exit();
-        }
-
-        if ($statusNew === 'Not Available' && $restriction == "1") {
-            logActivity("Update Failed: Driver ID $driverId cannot be Not Available and Restricted at the same time. Admin ID: $adminId.");
-            echo json_encode(['success' => false, 'message' => 'Driver cannot be Unavailable and also Restricted.']);
-            exit();
-        }
+    if ($statusNew === 'Not Available' && $restriction == 1) {
+        logActivity("Update Failed: Driver ID $driverId cannot be Not Available and Restricted at the same time. Admin ID: $adminId.");
+        echo json_encode(['success' => false, 'message' => 'Driver cannot be Unavailable and also Restricted.']);
+        exit();
     }
 
-     // Check if the driver account  is locked
-     $lockQuery = "SELECT status FROM driver_lock_history WHERE driver_id = ? ORDER BY id DESC LIMIT 1";
-     $lockStmt = $conn->prepare($lockQuery);
-     $lockStmt->bind_param("i", $driverId);
-     $lockStmt->execute();
-     $lockStmt->bind_result($lockStatus);
-     $lockStmt->fetch();
-     $lockStmt->close();
- 
-     if ($lockStatus === 'locked') {
-         logActivity("Update Blocked: Driver ID $driverId is currently locked. Attempted by user ID {$_SESSION['unique_id']}.");
-         echo json_encode(['success' => false, 'message' => 'This account is currently locked and cannot be updated.']);
-         exit;
-     }
+    // Check if the driver account is locked
+    $lockQuery = "SELECT status FROM driver_lock_history WHERE driver_id = ? ORDER BY id DESC LIMIT 1";
+    $lockStmt = $conn->prepare($lockQuery);
+    $lockStmt->bind_param("i", $driverId);
+    $lockStmt->execute();
+    $lockStmt->bind_result($lockStatus);
+    $lockStmt->fetch();
+    $lockStmt->close();
+
+    if ($lockStatus === 'locked') {
+        logActivity("Update Blocked: Driver ID $driverId is currently locked. Attempted by user ID {$_SESSION['unique_id']}.");
+        echo json_encode(['success' => false, 'message' => 'This account is currently locked and cannot be updated.']);
+        exit;
+    }
 
     // Prepare update query
     $sql = "UPDATE driver SET 

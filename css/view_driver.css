@@ -174,6 +174,28 @@ tbody tr td input[type="email"] {
       -webkit-transform: scaleY(1.0);
     }
   }
+  .restricted-badge {
+    font-weight: bold;
+    color: #d32f2f;
+    background-color: #ffebee;
+    padding: 3px 8px;
+    border-radius: 12px;
+    display: inline-block;
+}
+
+.not-restricted-badge {
+    color: #388e3c;
+    padding: 3px 8px;
+    display: inline-block;
+}
+.restricted-badge::before {
+    content: "⚠ ";
+}
+
+.not-restricted-badge::before {
+    content: "✓ ";
+}
+
 @media screen and (max-width: 900px){
     #customer-form{
         display: flex;

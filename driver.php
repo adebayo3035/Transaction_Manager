@@ -33,10 +33,11 @@
             <tr>
                 <th>FirstName</th>
                 <th>LastName</th>
-                <th>License Number</th>
+                <!-- <th>License Number</th>
                 <th>Phone Number</th>
-                <th>E-mail Address</th>
-                <th>Status</th>
+                <th>E-mail Address</th> -->
+                <th>Driver Status</th>
+                <th>Account Status</th>
                 <th>Actions</th>
             </tr>
         </thead>

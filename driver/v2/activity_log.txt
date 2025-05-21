@@ -10336,3 +10336,23 @@
 [2025-05-18 15:57:55] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Retrieved session_id: npmmcdai3nmmn9m6kobv6f1edf for driver_id: 10.
 [2025-05-18 15:57:55] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Updated session status to 'Inactive' for session_id: npmmcdai3nmmn9m6kobv6f1edf.
 [2025-05-18 15:57:55] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Session destroyed for driver_id: 10.
+[2025-05-20 12:57:23] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login attempt for username: odetundekayode@gmail.com
+[2025-05-20 12:57:23] [Page: http://localhost/transaction_manager/driver/v2/index.php] No record found for username: odetundekayode@gmail.com
+[2025-05-20 12:57:56] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login attempt for username: kayodeodetunde@gmail.com
+[2025-05-20 12:57:56] [Page: http://localhost/transaction_manager/driver/v2/index.php] Driver ID for user: 7
+[2025-05-20 12:57:57] [Page: http://localhost/transaction_manager/driver/v2/index.php] Account restricted for driver_id: 7
+[2025-05-20 14:20:06] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login attempt for username: kayodeodetunde@gmail.com
+[2025-05-20 14:20:06] [Page: http://localhost/transaction_manager/driver/v2/index.php] Driver ID for user: 7
+[2025-05-20 14:20:06] [Page: http://localhost/transaction_manager/driver/v2/index.php] Account restricted for driver_id: 7
+[2025-05-20 14:21:48] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login attempt for username: kayodeodetunde@gmail.com
+[2025-05-20 14:21:48] [Page: http://localhost/transaction_manager/driver/v2/index.php] Driver ID for user: 7
+[2025-05-20 14:21:48] [Page: http://localhost/transaction_manager/driver/v2/index.php] Account restricted for driver_id: 7
+[2025-05-20 14:26:21] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login attempt for username: kayodeodetunde@gmail.com
+[2025-05-20 14:26:21] [Page: http://localhost/transaction_manager/driver/v2/index.php] Driver ID for user: 7
+[2025-05-20 14:26:21] [Page: http://localhost/transaction_manager/driver/v2/index.php] Account restricted for driver_id: 7
+[2025-05-20 14:26:38] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login attempt for username: kayodeodetunde@gmail.com
+[2025-05-20 14:26:38] [Page: http://localhost/transaction_manager/driver/v2/index.php] Driver ID for user: 7
+[2025-05-20 14:26:38] [Page: http://localhost/transaction_manager/driver/v2/index.php] Account restricted for driver_id: 7
+[2025-05-20 14:26:58] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login attempt for username: kayodeodetunde@gmail.com
+[2025-05-20 14:26:58] [Page: http://localhost/transaction_manager/driver/v2/index.php] Driver ID for user: 7
+[2025-05-20 14:26:58] [Page: http://localhost/transaction_manager/driver/v2/index.php] Account restricted for driver_id: 7

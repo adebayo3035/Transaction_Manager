@@ -401,14 +401,3 @@ function openTab(evt, tabName) {
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
 }
-
-// You might want to automatically switch to validate tab after OTP generation
-// function switchToValidateTab() {
-//     document.getElementById('validateOTPTab').style.display = "block";
-//     document.getElementById('generateOTPTab').style.display = "none";
-    
-//     // Update active button
-//     const tabButtons = document.getElementsByClassName("tab-button");
-//     tabButtons[0].className = tabButtons[0].className.replace(" active", "");
-//     tabButtons[1].className += " active";
-// }

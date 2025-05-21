@@ -71,9 +71,10 @@ try {
                     phone_number, 
                     license_number,
                     status,
+                    restriction,
                     date_updated 
                   FROM driver 
-                  ORDER BY status DESC, date_updated DESC 
+                  ORDER BY restriction DESC, status DESC, date_updated DESC 
                   LIMIT ? OFFSET ?";
         
         $stmt = $conn->prepare($query);

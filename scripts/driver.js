@@ -39,17 +39,19 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateTable(drivers) {
         const ordersTableBody = document.querySelector('#ordersTable tbody');
         ordersTableBody.innerHTML = '';
+
         drivers.forEach(driver => {
             const row = document.createElement('tr');
+            const restrictionStatus = driver.restriction === 1 ? 'Restricted' : 'Not Restricted';
+            const restrictionClass = driver.restriction === 1 ? 'restricted-badge' : 'not-restricted-badge';
+
             row.innerHTML = `
-                <td>${driver.firstname}</td>
-                <td>${driver.lastname}</td>
-                <td>${maskDetails(driver.license_number)}</td>
-                <td>${maskDetails(driver.phone_number)}</td>
-                <td>${maskDetails(driver.email)}</td>
-                <td>${driver.status}</td>
-                <td><button class="view-details-btn" data-driver-id="${driver.id}">View Details</button></td>
-            `;
+            <td>${driver.firstname}</td>
+            <td>${driver.lastname}</td>
+            <td>${driver.status}</td>
+            <td><span class="${restrictionClass}">${restrictionStatus}</span></td>
+            <td><button class="view-details-btn" data-driver-id="${driver.id}">View Details</button></td>
+        `;
             ordersTableBody.appendChild(row);
         });
 
@@ -204,7 +206,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     <select id="vehicleType">
                         <option value="Bicycle" ${driver_details.vehicle_type === 'Bicycle' ? 'selected' : ''}>Bicycle</option>
                         <option value="Motorcycle" ${driver_details.vehicle_type === 'Motorcycle' ? 'selected' : ''}>Motorcycle</option>
-                        <option value="Bike" ${driver_details.vehicle_type === 'Bike' ? 'selected' : ''}>Bike</option>
                         <option value="Tricycle" ${driver_details.vehicle_type === 'Tricycle' ? 'selected' : ''}>Tricycle</option>
                         <option value="Bus" ${driver_details.vehicle_type === 'Bus' ? 'selected' : ''}>Bus</option>
                         <option value="Car" ${driver_details.vehicle_type === 'Car' ? 'selected' : ''}>Car</option>
@@ -212,15 +213,28 @@ document.addEventListener('DOMContentLoaded', () => {
                     </select>
                 </td>
             </tr>
-            <tr>
-                <td>Restriction Status</td>
-                <td>
-                    <select id="restriction">
-                        <option value="0" ${driver_details.restriction === '0' ? 'selected' : ''}>Not Restricted</option>
-                        <option value="1" ${driver_details.restriction === '1' ? 'selected' : ''}>Restrict</option>
-                    </select>
-                </td>
-            </tr>
+           <tr>
+    <td>Restriction Status</td>
+    <td>
+        ${driver_details.restriction === 1 ?
+                `<input type="text" value="Restricted" readonly style="
+                background-color: #ffebee;
+                color: #d32f2f;
+                font-weight: bold;
+                border: 1px solid #ffcdd2;
+                padding: 5px;
+                border-radius: 4px;
+                width: 100%;
+                box-sizing: border-box;
+            ">`
+                :
+                `<select id="restriction">
+                <option value="0" ${driver_details.restriction === 0 ? 'selected' : ''}>Not Restricted</option>
+                <option value="1" ${driver_details.restriction === 1 ? 'selected' : ''}>Restricted</option>
+            </select>`
+            }
+    </td>
+</tr>
         `;
 
         // Display photo if available
@@ -252,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         document.getElementById('deleteDriverBtn').addEventListener('click', () => {
-            deleteDriver(driver_details.id);
+            // deleteDriver(driver_details.id);
         });
     }
 
@@ -278,6 +292,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const emailToSend = emailInput === maskDetails(originalEmail) ? originalEmail : emailInput;
         const phoneNumberToSend = phoneNumberInput === maskDetails(originalPhoneNumber) ? originalPhoneNumber : phoneNumberInput;
 
+        // Create base driver data
         const driverData = {
             id: driverId,
             firstname: document.getElementById('firstname').value,
@@ -287,10 +302,17 @@ document.addEventListener('DOMContentLoaded', () => {
             gender: document.getElementById('gender').value,
             address: document.getElementById('address').value,
             vehicle_type: document.getElementById('vehicleType').value,
-            status: document.getElementById('status').value,
-            restriction: document.getElementById('restriction').value
+            status: document.getElementById('status').value
         };
-        if (confirm('Are you sure you want to Update Driver Information?')){
+
+        // Only include restriction field if the account isn't currently restricted
+        const restrictionElement = document.getElementById('restriction');
+        if (restrictionElement && restrictionElement.tagName === 'SELECT') {
+            driverData.restriction = restrictionElement.value;
+        }
+        // If restrictionElement doesn't exist or isn't a select, we don't include restriction in the payload
+
+        if (confirm('Are you sure you want to Update Driver Information?')) {
             fetch('backend/update_driver.php', {
                 method: 'POST',
                 headers: {
@@ -307,14 +329,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else {
                         console.error('Failed to Update driver:', data.message)
                         alert('Failed to update driver: ' + data.message);
-    
                     }
                 })
                 .catch(error => {
                     console.error('Error updating driver:', error);
                 });
         }
-       
     }
 
 
