@@ -54,14 +54,22 @@ try {
     $conn->begin_transaction();
     logActivity("Transaction started for Staff ID $staff_id reactivation.");
 
-    // Step 3: Fetch pending, rejected, or declined reactivation request
-    $stmt = $conn->prepare("SELECT id, deactivation_log_id, status FROM admin_reactivation_logs WHERE admin_id = ? AND (status = 'Pending' OR status = 'Rejected' OR status = 'Declined') ORDER BY id DESC LIMIT 1");
+    // Step 3: Fetch pending or declined reactivation request
+    $stmt = $conn->prepare("
+    SELECT id, deactivation_log_id, status, date_last_updated 
+    FROM admin_reactivation_logs 
+    WHERE admin_id = ? 
+    AND (status = 'Pending' OR status = 'Declined') 
+    ORDER BY id DESC 
+    LIMIT 1
+");
+
     $stmt->bind_param("s", $staff_id);
-    
+
     if (!$stmt->execute()) {
         throw new Exception('Database query error');
     }
-    
+
     $result = $stmt->get_result();
 
     if ($result->num_rows == 0) {
@@ -75,17 +83,25 @@ try {
     $reactivation_id = $log['id'];
     $deactivation_id = $log['deactivation_log_id'];
     $previous_status = $log['status'];
+    $date_last_updated = strtotime($log['date_last_updated']);
 
-    // Prevent reactivation if the previous request was declined
-    if ($previous_status == 'Declined') {
-        http_response_code(403); // Forbidden
-        logActivity("Reactivation request for Staff ID $staff_id was previously declined.");
-        echo json_encode(['status' => 'error', 'message' => 'Action not allowed']);
-        exit;
+    if ($previous_status === 'Declined' && $action === 'Reactivated') {
+        $now = time();
+        //prevent reactivation if last request was declined within last 24 hours
+        if (($now - $date_last_updated) < 86400) {
+            http_response_code(403);
+            logActivity("Attempted reactivation within 24 hours of a decline for Staff ID $staff_id.");
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Reactivation not allowed within 24 hours of a decline'
+            ]);
+            exit;
+        }
     }
 
+
     logActivity("Fetched reactivation log. Reactivation ID: $reactivation_id, Deactivation ID: $deactivation_id for Staff ID $staff_id.");
-    
+
     // Step 4: Update reactivation log
     $stmt = $conn->prepare("UPDATE admin_reactivation_logs SET reactivated_by = ?, comment = ?, status = ?, date_last_updated = ? WHERE id = ? AND deactivation_log_id = ?");
     $stmt->bind_param("isssii", $admin_id, $comment, $action, $date, $reactivation_id, $deactivation_id);
@@ -114,15 +130,15 @@ try {
     // Step 6: Commit transaction
     $conn->commit();
     http_response_code(200); // OK
-    
+
     logActivity("Transaction committed for Staff ID $staff_id reactivation.");
     logActivity("Super Admin ID $admin_id successfully completed $action for Staff ID $staff_id.");
 
     echo json_encode(['status' => 'success', 'message' => "Request processed successfully"]);
 
 } catch (Exception $e) {
-     // Handle transaction rollback safely
-     if (isset($conn)) {
+    // Handle transaction rollback safely
+    if (isset($conn)) {
         try {
             // This will work whether or not we're in a transaction
             $conn->query('ROLLBACK');
@@ -130,44 +146,46 @@ try {
             // Ignore rollback errors - we're already handling an exception
         }
     }
-    
+
     http_response_code(500);
     logActivity("Exception occurred: " . $e->getMessage());
     echo json_encode(['status' => 'error', 'message' => 'Operation failed']);
 }
 
 // Function to fetch staff email from the admin_tbl table
-function getStaffEmail($staff_id, $conn) {
+function getStaffEmail($staff_id, $conn)
+{
     $stmt = $conn->prepare("SELECT email FROM admin_tbl WHERE unique_id = ?");
     $stmt->bind_param("s", $staff_id);
-    
+
     if (!$stmt->execute()) {
         logActivity("Failed to execute email query for Staff ID $staff_id.");
         return null;
     }
-    
+
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
         $staff = $result->fetch_assoc();
         return $staff['email'];
     }
-    
+
     logActivity("No email found for Staff ID $staff_id.");
     return null;
 }
 
 // function to send email notification after Reactivation or Decline
-function sendReactivationEmail($staff_id, $action, $comment, $conn) {
+function sendReactivationEmail($staff_id, $action, $comment, $conn)
+{
     $staff_email = getStaffEmail($staff_id, $conn);
-    
+
     if (!$staff_email) {
         logActivity("Failed to retrieve email for Staff ID $staff_id.");
         return false;
     }
 
     $subject = "Your Account Reactivation Request Status";
-    
+
     if ($action === 'Reactivated') {
         $body = "Dear Staff,\n\nWe are pleased to inform you that your account reactivation request has been successfully approved.";
     } else {
@@ -181,6 +199,6 @@ function sendReactivationEmail($staff_id, $action, $comment, $conn) {
     } else {
         logActivity("Failed to send reactivation email to Staff ID $staff_id.");
     }
-    
+
     return $emailStatus;
 }

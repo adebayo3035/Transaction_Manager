@@ -189,47 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
             displayMessage("An error occurred while processing your request. Please try again later.");
         }
     });
-    // Helper function to display messages with auto-close
-    function displayMessage(message) {
-        // Create modal elements
-        const modal = document.createElement('div');
-        modal.className = 'custom-alert-modal';
-
-        const modalContent = document.createElement('div');
-        modalContent.className = 'custom-alert-content';
-
-        const messageElement = document.createElement('p');
-        messageElement.className = 'custom-alert-message';
-        messageElement.textContent = message;
-
-        const okButton = document.createElement('button');
-        okButton.className = 'custom-alert-button';
-        okButton.textContent = 'OK';
-
-        // Assemble modal
-        modalContent.appendChild(messageElement);
-        modalContent.appendChild(okButton);
-        modal.appendChild(modalContent);
-        document.body.appendChild(modal);
-
-        // Auto-close after 3 seconds
-        const timeoutId = setTimeout(() => {
-            if (document.body.contains(modal)) {
-                modal.remove();
-            }
-        }, 3000);
-
-        // Close on button click
-        okButton.addEventListener('click', () => {
-            clearTimeout(timeoutId);
-            modal.remove();
-        });
-
-        // Update error container (your original functionality)
-        errorContainer.textContent = message;
-        errorContainer.style.display = "block";
-    }
-
+    
     function disableForm(form) {
         Array.from(form.elements).forEach(element => {
             element.disabled = true;
@@ -240,149 +200,166 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Account Reactivation and OTP generation Request Method and processing
 
-// Generate and send OTP - Now tied to the otpGenerationForm
-document.getElementById('otpGenerationForm').addEventListener('submit', async function (event) {
+    // Generate and send OTP - Now tied to the otpGenerationForm
+    document.getElementById('otpGenerationForm').addEventListener('submit', async function (event) {
     event.preventDefault();
 
     const email = document.getElementById("emailActivateAccount").value;
+    const user_type = 'admin';
+    const title = "Account Verification for Account Unrestriction";
     const sendOTPButton = document.getElementById("sendOTP");
+    const sendOTPEmail = document.getElementById("emailActivateAccount");
     const responseMessage = document.getElementById("OTPResponse");
-    const requestData = { email };
 
-    // Disable button immediately after clicking
+    const requestData = { email, user_type, title };
+
+    // Disable inputs
     sendOTPButton.disabled = true;
-    sendOTPButton.textContent = "Sending...";
-    sendOTPButton.style.opacity = "0.6";
-    // sendOTPButton.style.pointerEvents = "none"; 
+    sendOTPEmail.disabled = true;
+    sendOTPButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending...';
+    sendOTPButton.classList.add('disabled');
+    sendOTPEmail.classList.add('disabled');
 
-    // Reset message display
+    // Clear previous messages
     responseMessage.textContent = "";
-    responseMessage.style.color = "";
+    responseMessage.className = "";
+
+    // Implement timeout using AbortController
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 120000); // 2 minutes = 120000ms
 
     try {
         const response = await fetch("backend/send_otp.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(requestData)
+            body: JSON.stringify(requestData),
+            signal: controller.signal
         });
 
+        clearTimeout(timeoutId);
+
         const result = await response.json();
-        
-        // Display response message
+
         responseMessage.textContent = result.message;
-        responseMessage.style.color = result.success ? "green" : "red";
+        responseMessage.classList.add(result.success ? 'text-success' : 'text-danger');
 
         if (result.success) {
-            // Switch to the validation tab on success
-            alert(result.message);
-            switchToValidateTab();
-            
-            // Pre-fill the email in the validation form if needed
-            document.getElementById("validateEmail").value = email;
-            
-            // Keep the button disabled for 2 minutes (OTP validity period)
-            sendOTPButton.textContent = "Wait 2 minutes...";
+            displayMessage("OTP Generated Successfully...");
+
             setTimeout(() => {
-                sendOTPButton.disabled = false;
-                sendOTPButton.textContent = "Send OTP4";
-                sendOTPButton.style.opacity = "1"; 
-                sendOTPButton.style.cursor = "pointer"; 
-                window.location.reload();
-            }, 120000);
+                switchToValidateTab();
+                document.getElementById("validateEmail").value = email;
+            }, 3000);
+
+            startOTPResendTimer(120, sendOTPButton, sendOTPEmail, responseMessage);
         } else {
-            // If request fails, re-enable button immediately
-            sendOTPButton.disabled = false;
-            sendOTPButton.textContent = "Send OTP3";
-            sendOTPButton.style.opacity = "1"; 
-            sendOTPButton.style.cursor = "pointer"; 
+            responseMessage.textContent = result.message || "OTP Generation Failed.";
+            responseMessage.classList.add('text-danger');
+            resetOTPButton(sendOTPButton);
+            resetOTPButton(sendOTPEmail);
         }
     } catch (error) {
-        console.error("Error submitting OTP request:", error);
-        responseMessage.textContent = "An error occurred. Please try again.";
-        responseMessage.style.color = "red";
+        clearTimeout(timeoutId);
 
-        // Re-enable button on failure
-        sendOTPButton.disabled = false;
-        sendOTPButton.textContent = "Send OTP2";
-        sendOTPButton.style.opacity = "1"; 
-        sendOTPButton.style.cursor = "pointer"; 
+        if (error.name === "AbortError") {
+            displayMessage("Service timeout. Please try again.");
+            responseMessage.textContent = "Service timeout. Please try again.";
+        } else {
+            console.error("Error submitting OTP request:", error);
+            displayMessage("An error occurred. Please try again.");
+            responseMessage.textContent = "An error occurred. Please try again.";
+        }
+
+        responseMessage.classList.add('text-danger');
+        resetOTPButton(sendOTPButton);
+        resetOTPButton(sendOTPEmail);
     }
 });
 
-// Form submission for account reactivation - Now tied to accountActivationForm
-document.getElementById("accountActivationForm").addEventListener("submit", async function (event) {
-    event.preventDefault();
 
-    const email = document.getElementById("emailActivateAccount").value;
-    const reason = document.getElementById("reason").value;
-    const otp = document.getElementById('otp').value;
+    // Form submission for account reactivation - Now tied to accountActivationForm
+    document.getElementById("accountActivationForm").addEventListener("submit", async function (event) {
+        event.preventDefault();
 
-    const requestData = {
-        email,
-        reason,
-        otp
-    };
+        const email = document.getElementById("emailActivateAccount").value;
+        const reason = document.getElementById("reason").value;
+        const otp = document.getElementById('otp').value;
 
-    const submitButton = event.target.querySelector('input[type="submit"]');
-    const originalButtonText = submitButton.value;
-    
-    try {
-        // Show loading state
-        submitButton.disabled = true;
-        submitButton.value = "Processing...";
+        const requestData = {
+            email,
+            reason,
+            otp
+        };
 
-        const response = await fetch("backend/account_reactivation_request.php", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(requestData)
-        });
+        const submitButton = event.target.querySelector('input[type="submit"]');
+        const originalButtonText = submitButton.value;
+        const ReactivationResponse = document.getElementById('ReactivationResponse')
 
-        const result = await response.json();
-        
-        // Show result in a more elegant way than alert()
-        const displayResponse = document.getElementById("displayResponse");
-        displayResponse.textContent = result.message;
-        displayResponse.style.color = result.success ? "green" : "red";
-        displayResponse.style.display = "block";
+        try {
+            // Show loading state
+            submitButton.disabled = true;
+            submitButton.value = "Processing...";
 
-        if (result.success) {
-            document.getElementById("accountActivationForm").reset();
-            // Optionally switch back to first tab
-            // document.querySelector('.tab-button').click();
+            const response = await fetch("backend/account_reactivation_request.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(requestData)
+            });
+
+            const result = await response.json();
+
+            // Show result in a more elegant way than alert()
+            const displayResponse = document.getElementById("displayResponse");
+            ReactivationResponse.textContent = result.message;
+            ReactivationResponse.style.color = result.success ? "green" : "red";
+            ReactivationResponse.style.display = "block";
+
+            if (result.success) {
+                // Notify user of successful login
+                displayMessage(result.message);
+                // Wait for 3 seconds before redirecting
+                await new Promise(resolve => setTimeout(resolve, 0));
+                document.getElementById("accountActivationForm").reset();
+                // Optionally switch back to first tab
+                // document.querySelector('.tab-button').click();
+            }
+        } catch (error) {
+            console.error("Error submitting reactivation request:", error);
+            displayMessage("An Error occured, Please try again later..");
+            ReactivationResponse.textContent = "An error occurred. Please try again.";
+            ReactivationResponse.style.color = "red";
+            ReactivationResponse.style.display = "block";
+        } finally {
+            submitButton.disabled = false;
+            submitButton.value = originalButtonText;
         }
-    } catch (error) {
-        console.error("Error submitting reactivation request:", error);
-        document.getElementById("displayResponse").textContent = "An error occurred. Please try again.";
-        document.getElementById("displayResponse").style.color = "red";
-        document.getElementById("displayResponse").style.display = "block";
-    } finally {
-        submitButton.disabled = false;
-        submitButton.value = originalButtonText;
-    }
+    });
+
 });
 
-// Tab switching function (add this if not already in your code)
+// Tab switching function
 function switchToValidateTab() {
     // Hide all tab contents
     const tabContents = document.getElementsByClassName("tab-content");
     for (let i = 0; i < tabContents.length; i++) {
         tabContents[i].style.display = "none";
     }
-    
+
     // Remove active class from all tab buttons
     const tabButtons = document.getElementsByClassName("tab-button");
     for (let i = 0; i < tabButtons.length; i++) {
         tabButtons[i].className = tabButtons[i].className.replace(" active", "");
     }
-    
+
     // Show the validate tab and activate its button
     document.getElementById('validateOTPTab').style.display = "block";
     tabButtons[1].className += " active";
+    
+    // Focus on the OTP input field for better UX
+    document.getElementById('otp')?.focus();
 }
-
-});
 
 function openTab(evt, tabName) {
     // Hide all tab contents
@@ -390,14 +367,100 @@ function openTab(evt, tabName) {
     for (let i = 0; i < tabContents.length; i++) {
         tabContents[i].style.display = "none";
     }
-    
+
     // Remove active class from all tab buttons
     const tabButtons = document.getElementsByClassName("tab-button");
     for (let i = 0; i < tabButtons.length; i++) {
         tabButtons[i].className = tabButtons[i].className.replace(" active", "");
     }
-    
+
     // Show the current tab and add active class to the button
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
+}
+  // Timer function for OTP resend cooldown
+    function startOTPResendTimer(duration, button, inputElement, responseMessageContainer) {
+        let timer = duration;
+        const interval = setInterval(() => {
+            const minutes = Math.floor(timer / 60);
+            const seconds = timer % 60;
+
+            button.innerHTML = `Resend OTP in ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+            if (--timer < 0) {
+                clearInterval(interval);
+                resetOTPButton(button);
+                resetOTPButton(inputElement);
+                responseMessageContainer.textContent = '';
+            }
+        }, 1000);
+    }
+
+    // Reset OTP button to initial state
+   function resetOTPButton(element) {
+    element.disabled = false;
+    if (element.tagName.toLowerCase() === 'button') {
+        element.innerHTML = 'Send OTP';
+        element.classList.remove('disabled');
+    } else {
+        element.value = ''; // optional: clear input value
+        element.classList.remove('disabled');
+    }
+}
+
+    function displayMessage(message, type = 'info') {
+    // Create modal
+    const modal = document.createElement('div');
+    modal.className = 'custom-alert-modal';
+
+    const modalContent = document.createElement('div');
+    modalContent.className = 'custom-alert-content';
+
+    const messageElement = document.createElement('p');
+    messageElement.className = 'custom-alert-message';
+    messageElement.textContent = message;
+
+    const okButton = document.createElement('button');
+    okButton.className = 'custom-alert-button';
+    okButton.textContent = 'OK';
+
+    // Style based on message type
+    if (type === 'success') {
+        messageElement.style.color = 'green';
+    } else if (type === 'error') {
+        messageElement.style.color = 'red';
+    } else {
+        messageElement.style.color = '#333';
+    }
+
+    // Assemble modal
+    modalContent.appendChild(messageElement);
+    modalContent.appendChild(okButton);
+    modal.appendChild(modalContent);
+    document.body.appendChild(modal);
+
+    let timeoutId = null;
+
+    // Auto-close only for success/info
+    if (type === 'success' || type === 'info') {
+        timeoutId = setTimeout(() => {
+            if (document.body.contains(modal)) {
+                modal.remove();
+            }
+        }, 3000);
+    }
+
+    // Close manually
+    okButton.addEventListener('click', () => {
+        if (timeoutId) clearTimeout(timeoutId);
+        modal.remove();
+    });
+
+    // Optional: update global error container for errors
+    if (type === 'error') {
+        if (typeof errorContainer !== 'undefined') {
+            errorContainer.textContent = message;
+            errorContainer.style.display = "block";
+        }
+    }
 }
