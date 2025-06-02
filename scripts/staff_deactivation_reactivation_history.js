@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 if (data.success) {
                     setTimeout(() => {
-                        if (data.deletedStaff.length === 0) {  // Changed from staffData to deletedStaff
+                        if (data.deletedStaff.length === 0) {
                             const tableBody = document.querySelector('#ordersTable tbody');
                             tableBody.innerHTML = `
                         <tr>
@@ -30,60 +30,110 @@ document.addEventListener('DOMContentLoaded', () => {
                     `;
                             togglePagination(false);
                         } else {
-                            updateTable(data.deletedStaff);  // Updated parameter name
+                            updateTable(data.deletedStaff);
                             updatePagination(data.total, data.page, data.limit);
                         }
                         toggleLoader(false);
                         toggleTable(true);
                     }, 1000);
                 } else {
-                    console.error('Failed to fetch Staff Records:', data.message);
+                    toggleLoader(false);
+                    showErrorModal(`Failed to fetch Staff Records: ${data.error || 'Unknown error'}`);
+                    console.error('Failed to fetch Staff Records:', data.error);
                 }
             })
             .catch(error => {
                 toggleLoader(false);
+                showErrorModal('Error fetching data. Please try again later.');
                 console.error('Error fetching data:', error);
             });
     }
+    function showErrorModal(message) {
+        const errorModal = document.getElementById('errorModal');
+        const errorMessage = document.getElementById('errorMessage');
 
-   function updateTable(deletedStaffs) {
-    const ordersTableBody = document.querySelector('#ordersTable tbody');
-    
-    // Show loading state
-    ordersTableBody.innerHTML = '<tr class="loading-row"><td colspan="10">Loading data...</td></tr>';
-    
-    // Clear after a brief delay (simulates async operation)
-    setTimeout(() => {
-        ordersTableBody.innerHTML = '';
-        
-        if (deletedStaffs.length === 0) {
-            ordersTableBody.innerHTML = '<tr class="no-data-row"><td colspan="10">No deactivated staff found</td></tr>';
-            return;
+        errorMessage.textContent = message;
+
+        // If using Bootstrap
+        if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+            const modal = new bootstrap.Modal(errorModal);
+            modal.show();
         }
-        
-        deletedStaffs.forEach(record => {
-            const row = document.createElement('tr');
-            row.classList.add('data-row');
-            
-            // Format dates with null checks
-            const deactivationDate = record.deactivation_date 
-                ? new Date(record.deactivation_date).toLocaleString() 
-                : 'N/A';
-                
-            const lastUpdatedDate = record.date_last_updated 
-                ? new Date(record.date_last_updated).toLocaleString()
-                : 'N/A';
-            
-            // Handle reactivation status
-            const reactivationStatus = record.reactivation_status 
-                ? `<span class="status-badge ${record.reactivation_status.toLowerCase()}">${record.reactivation_status}</span>`
-                : 'N/A';
-            
-            // Handle null reactivated_by object or properties
-            const reactivatedByName = record.reactivated_by?.name || 'N/A';
-            const reactivatedById = record.reactivated_by?.admin_id || 'N/A';
-            
-            row.innerHTML = `
+        // Fallback for non-Bootstrap
+        else {
+            errorModal.style.display = 'block';
+
+            // Add click handler for close button
+            const closeButtons = errorModal.querySelectorAll('[data-dismiss="modal"], .close');
+            closeButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    errorModal.style.display = 'none';
+                });
+            });
+
+            // Close when clicking outside modal
+            errorModal.addEventListener('click', (e) => {
+                if (e.target === errorModal) {
+                    errorModal.style.display = 'none';
+                }
+            });
+        }
+        // Then in showErrorModal:
+        const retryButton = document.getElementById('retryButton');
+        if (retryButton) {
+            retryButton.onclick = function () {
+                fetchDeletedStaffs(currentPage);
+                errorModal.style.display = 'none';
+            };
+        }
+        // In showErrorModal:
+        setTimeout(() => {
+            if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+                bootstrap.Modal.getInstance(errorModal).hide();
+            } else {
+                errorModal.style.display = 'none';
+            }
+        }, 5000); // 5 seconds
+    }
+
+    function updateTable(deletedStaffs) {
+        const ordersTableBody = document.querySelector('#ordersTable tbody');
+
+        // Show loading state
+        ordersTableBody.innerHTML = '<tr class="loading-row"><td colspan="10">Loading data...</td></tr>';
+
+        // Clear after a brief delay (simulates async operation)
+        setTimeout(() => {
+            ordersTableBody.innerHTML = '';
+
+            if (deletedStaffs.length === 0) {
+                ordersTableBody.innerHTML = '<tr class="no-data-row"><td colspan="10">No deactivated staff found</td></tr>';
+                return;
+            }
+
+            deletedStaffs.forEach(record => {
+                const row = document.createElement('tr');
+                row.classList.add('data-row');
+
+                // Format dates with null checks
+                const deactivationDate = record.deactivation_date
+                    ? new Date(record.deactivation_date).toLocaleString()
+                    : 'N/A';
+
+                const lastUpdatedDate = record.date_last_updated
+                    ? new Date(record.date_last_updated).toLocaleString()
+                    : 'N/A';
+
+                // Handle reactivation status
+                const reactivationStatus = record.reactivation_status
+                    ? `<span class="status-badge ${record.reactivation_status.toLowerCase()}">${record.reactivation_status}</span>`
+                    : 'N/A';
+
+                // Handle null reactivated_by object or properties
+                const reactivatedByName = record.reactivated_by?.name || 'N/A';
+                const reactivatedById = record.reactivated_by?.admin_id || 'N/A';
+
+                row.innerHTML = `
                 <td>${record.deactivation_id}</td>
                 <td>${record.staff.staff_id}</td>
                 <td>${record.staff.firstname}</td>
@@ -95,11 +145,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${reactivatedByName} (${reactivatedById})</td>
                 <td data-sort="${record.date_last_updated || ''}">${lastUpdatedDate}</td>
             `;
-            
-            ordersTableBody.appendChild(row);
-        });
-    }, 500);
-}
+
+                ordersTableBody.appendChild(row);
+            });
+        }, 500);
+    }
     function togglePagination(show) {
         const paginationContainer = document.getElementById('pagination');
         paginationContainer.style.display = show ? 'block' : 'none';
