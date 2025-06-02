@@ -303,7 +303,7 @@ document.addEventListener("DOMContentLoaded", () => {
             submitButton.disabled = true;
             submitButton.value = "Processing...";
 
-            const response = await fetch("backend/account_reactivation_request.php", {
+            const response = await fetch("backend/account_reactivation.php", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

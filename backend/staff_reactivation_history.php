@@ -36,7 +36,8 @@ try {
     $query = "
         SELECT 
             r.id AS reactivation_id,
-            r.date_created AS reactivation_date,
+            r.deactivation_log_id AS deactivation_id,
+            r.date_last_updated AS reactivation_date,
             r.reactivation_reason,
             r.status,
             r.date_last_updated,
@@ -62,6 +63,7 @@ try {
     while ($row = $result->fetch_assoc()) {
         $history[] = [
             'reactivation_id' => $row['reactivation_id'],
+            'deactivation_id' => $row['deactivation_id'],
             'date' => $row['reactivation_date'],
             'status' => $row['status'],
             'last_updated' => $row['date_last_updated'],
