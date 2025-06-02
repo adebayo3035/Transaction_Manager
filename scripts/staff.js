@@ -406,7 +406,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const deActivateStaffBtn = document.getElementById('deActivateStaffBtn');
         deActivateStaffBtn.addEventListener('click', async () => {
             try {
-                const reason = document.getElementById('deactivationReason').value.trim();
+                const deactivationReason = document.getElementById('deactivationReason');
+                const reason = deactivationReason.value.trim();
 
                 if (!staff_details?.unique_id) {
                     alert('No staff selected.');
@@ -488,7 +489,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const confirmation = confirm("Proceed to Deactivate Staff Account?");
         if (!confirmation) return;
 
+        // Get references to the elements
+        const deActivateStaffBtn = document.getElementById('deActivateStaffBtn');
+        const deactivationReason = document.getElementById('deactivationReason');
+
         try {
+            // Disable elements and show loading state
+            deActivateStaffBtn.disabled = true;
+            deactivationReason.disabled = true;
+            deActivateStaffBtn.textContent = 'Processing...';
+
             const response = await fetch('backend/delete_staff.php', {
                 method: 'POST',
                 headers: {
@@ -509,8 +519,14 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error("Error deleting user:", error);
             alert("An error occurred while trying to delete the user.");
+        } finally {
+            // Re-enable elements regardless of success/failure
+            deActivateStaffBtn.disabled = false;
+            deactivationReason.disabled = false;
+            deActivateStaffBtn.textContent = 'Deactivate Staff';
         }
     }
+
 
     // Close modal when the "close" button is clicked
     document.querySelectorAll('.modal .close').forEach(closeBtn => {

@@ -2,6 +2,18 @@
 include 'config.php';
 session_start();
 header('Content-Type: application/json');
+if (!isset($_SESSION['unique_id'])) {
+    logActivity("Access Denied! No session found.");
+    echo json_encode(["success" => false, "message" => "Access Denied! Kindly login first."]);
+    exit();
+}
+
+$role = $_SESSION['role'];
+if ($role !== "Super Admin") {
+    logActivity("Access Denied! User with role '$role' tried to access restricted endpoint.");
+    echo json_encode(["success" => false, "message" => "Access Denied! Permission not granted."]);
+    exit();
+}
 
 // === Parse input ===
 $data = json_decode(file_get_contents("php://input"), true);

@@ -10,17 +10,36 @@ $otp = trim($data['otp'] ?? '');
 $reason = trim($data['reason'] ?? '');
 
 // ====== 1. INPUT VALIDATION ======
-if (empty($email) || empty($reason) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Invalid email address or empty reason field']);
-    logActivity("REACTIVATION_FAILED: Invalid input for $email");
+if (empty($email) || empty($reason)) {
+    // 422 Unprocessable Entity - missing required fields
+    http_response_code(422);
+    $message = empty($email) ? 'Email address is required' : 'Reason for reactivation is required';
+    echo json_encode(['success' => false, 'message' => $message]);
+    logActivity("REACTIVATION_FAILED: Missing required field - " . (empty($email) ? 'email' : 'reason') . " for $email");
     exit;
 }
 
-if (empty($otp) || !preg_match('/^\d{6}$/', $otp)) {
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    // 400 Bad Request - malformed email format
     http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Invalid OTP format (must be 6 digits)']);
-    logActivity("REACTIVATION_FAILED: Invalid OTP for $email");
+    echo json_encode(['success' => false, 'message' => 'Invalid email address format']);
+    logActivity("REACTIVATION_FAILED: Invalid email format for $email");
+    exit;
+}
+
+if (empty($otp)) {
+    // 422 Unprocessable Entity - missing required field
+    http_response_code(422);
+    echo json_encode(['success' => false, 'message' => 'OTP is required']);
+    logActivity("REACTIVATION_FAILED: Missing OTP for $email");
+    exit;
+}
+
+if (!preg_match('/^\d{6}$/', $otp)) {
+    // 400 Bad Request - invalid OTP format
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Invalid OTP format (must be exactly 6 digits)']);
+    logActivity("REACTIVATION_FAILED: Invalid OTP format for $email");
     exit;
 }
 
@@ -66,7 +85,7 @@ if ($admin['delete_status'] != 'Yes') {
     exit;
 }
 
-// ====== 4. PROCESS REACTIVATION REQUEST ======
+/// ====== 4. PROCESS REACTIVATION REQUEST ======
 $conn->begin_transaction();
 
 try {
@@ -84,6 +103,7 @@ try {
 
     if ($pendingResult->num_rows > 0) {
         logActivity("REACTIVATION_BLOCKED: Admin $admin_id already has a pending reactivation request");
+        http_response_code(409); // Conflict - resource already exists
         throw new Exception("You already have a pending reactivation request");
     }
     logActivity("REACTIVATION_VALIDATED: No existing pending request for admin $admin_id");
@@ -106,6 +126,7 @@ try {
         if ($declinedTime > ($now - 86400)) {
             $nextRequestTime = date('Y-m-d H:i:s', $declinedTime + 86400);
             logActivity("REACTIVATION_BLOCKED: Admin $admin_id's last request was declined at {$lastDeclined['date_created']}. Must wait until $nextRequestTime");
+            http_response_code(429); // Too Many Requests
             throw new Exception("Your last request was declined. You can submit a new request after $nextRequestTime");
         }
         logActivity("REACTIVATION_VALIDATED: Last declined request for admin $admin_id was more than 24 hours ago");
@@ -147,7 +168,7 @@ try {
 
     $conn->commit();
 
-    http_response_code(200);
+    http_response_code(201); // Created - resource successfully created
     echo json_encode([
         'success' => true,
         'message' => 'Reactivation request submitted successfully',
@@ -157,10 +178,14 @@ try {
 
 } catch (Exception $e) {
     $conn->rollback();
-    http_response_code(400);
+    $statusCode = http_response_code(); // Get the status code if it was set
+    if ($statusCode === 200) {
+        // If no specific status code was set, default to 500
+        http_response_code(500);
+    }
     echo json_encode([
         'success' => false,
         'message' => $e->getMessage()
     ]);
-    logActivity("REACTIVATION_FAILED: Transaction rolled back for admin $admin_id - " . $e->getMessage());
+    logActivity("REACTIVATION_FAILED: Transaction rolled back for admin $admin_id - " . $e->getMessage() . " (Status: $statusCode)");
 }

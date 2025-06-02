@@ -16,11 +16,11 @@
     <div class="container">
         <h1>Explore Quick Links</h1>
         <ul class="links-list">
-            <li><button id="reset-link" style="background-color: #000;">Reset Secret Question and Answer</button></li>
-            <li><button id="block-account" style="background-color: #f44336;">Restrict/Block Account</button></li>
-            <li><button id="unblock-account" style="background-color: orange;">Unblock/Remove Lien</button></li>
-            <li><button id="unlock-account" style="background-color: #111827;">Unlock Account</button></li>
-            <li><button id="reactivate-account" style="background-color: green">Re-activate Account</button></li>
+            <li><button id="reset-link" style="background-color: #000; display: none;">Reset Secret Question and Answer</button></li>
+            <li><button id="block-account" style="background-color: #f44336; display: none;">Restrict/Block Account</button></li>
+            <li><button id="unblock-account" style="background-color: orange; display: none;">Unblock/Remove Lien</button></li>
+            <li><button id="unlock-account" style="background-color: #111827; display: none;">Unlock Account</button></li>
+            <li><button id="reactivate-account" style="background-color: green; display: none;">Re-activate Account</button></li>
 
         </ul>
     </div>

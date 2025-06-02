@@ -27,6 +27,7 @@
         <a href="group.php">Groups</a>
         <a href="unit.php">Units</a>
         <a href="food.php">Foods</a>
+         <a href="admin_reactivation_history.php">Reactivation History</a>
 
         <div class="dropdown">
             <button class="dropbtn" id="welcomeMessage">Welcome!  <i class="fa fa-caret-down"></i></button>

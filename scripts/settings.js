@@ -31,6 +31,32 @@ document.addEventListener("DOMContentLoaded", () => {
     const unlockBtn = document.getElementById('unlock-account')
     const reactivateBtn = document.getElementById('reactivate-account')
 
+    //validate user and button to display
+    // Fetch logged-in user role
+    fetch('backend/staff_profile.php')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const userRole = data.admin.role;
+
+                if (userRole === 'Admin') {
+                    // Show only reset secret answer
+                    resetQuestionAnswerBtn.style.display = "inline-block";
+                    
+                } else if (userRole === 'Super Admin') {
+                    // Show all buttons
+                    resetQuestionAnswerBtn.style.display =
+                    restrictAccountBtn.style.display =
+                    unblockBtn.style.display =
+                    unlockBtn.style.display =
+                    reactivateBtn.style.display = "inline-block";
+                }
+            } else {
+                console.error("Could not determine user role");
+            }
+        })
+        .catch(error => console.error('Error fetching user role:', error));
+
     resetQuestionAnswerBtn.onclick = (e) => {
         e.preventDefault();
         toggleModal("resetQuestionAnswerModal", "flex");
