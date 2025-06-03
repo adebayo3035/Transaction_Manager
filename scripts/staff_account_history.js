@@ -107,7 +107,27 @@ function toggleLoader(show) {
         loader.style.display = show ? 'block' : 'none';
     }
 }
+document.getElementById("liveSearch").addEventListener("input", filterTable);
 
+    function filterTable() {
+        const searchTerm = document.getElementById("liveSearch").value.toLowerCase();
+        const rows = document.querySelectorAll(".history-table tbody tr");
+
+        rows.forEach(row => {
+            const cells = row.getElementsByTagName("td");
+            let matchFound = false;
+
+            for (let i = 0; i < cells.length; i++) {
+                const cellText = cells[i].textContent.toLowerCase();
+                if (cellText.includes(searchTerm)) {
+                    matchFound = true;
+                    break;
+                }
+            }
+
+            row.style.display = matchFound ? "" : "none";
+        });
+    }
 // Initial load
 loadHistory('deactivation');
 document.getElementById('deactivation-tab').addEventListener('click', () => loadHistory('deactivation'));
