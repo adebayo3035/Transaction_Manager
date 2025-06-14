@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="customer/css/checkout.css">
     <link rel="stylesheet" href="customer/css/cards.css">
     <link rel="stylesheet" href="css/view_driver.css">
+    <link rel="stylesheet" href="css/staff.css">
 </head>
 
 <body>
@@ -16,10 +17,13 @@
     <div class="container">
         <h1>KaraKata Staffs</h1>
         <!-- Separate row for "Add New Customer" button -->
+        <div id="admin-actions-container">
+            <!-- Buttons will be placed here once -->
+        </div>
         <div id="customer-form">
             <button onclick="toggleModal('addNewStaffModal')"><i class="fa fa-plus" aria-hidden="true"></i> Add New
                 Staff</button>
-                <!-- <a href="deleted_staff.php" class="delete-btn">View  Deactivated Accounts</a> -->
+            <!-- <a href="deleted_staff.php" class="delete-btn">View  Deactivated Accounts</a> -->
         </div>
         <div class="livesearch">
             <input type="text" id="liveSearch" placeholder="Search for Order...">
@@ -49,7 +53,7 @@
     </table>
     <div id="pagination" class="pagination"></div>
 
-<!-- Modal to Edit and Update Staff Details -->
+    <!-- Modal to Edit and Update Staff Details -->
     <div id="orderModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -111,7 +115,7 @@
                 <div class="form-input">
                     <label for="add_gender">Gender:</label>
                     <select id="add_gender" name="add_gender" required>
-                    <option value="">-- Select Gender --</option>
+                        <option value="">-- Select Gender --</option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                         <option value="Others">Others</option>
@@ -139,8 +143,7 @@
 
                 <div class="form-input">
                     <label for="add_photo">Photo:</label>
-                    <input type="file" id="photo" name="photo" accept="image/*" required
-                        onchange="previewPhoto(event)">
+                    <input type="file" id="photo" name="photo" accept="image/*" required onchange="previewPhoto(event)">
                 </div>
                 <div id="photo_container">
                     <img id="photo_preview" src="#" alt="Photo Preview"
@@ -152,7 +155,7 @@
                     <option value="Admin">Admin</option>
                     <option value="Super Admin">Super Admin</option>
                 </select>
-                
+
                 <button type="submit" id="submitBtn">Add Staff</button>
             </form>
 

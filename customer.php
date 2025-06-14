@@ -33,9 +33,8 @@
             <tr>
                 <th>FirstName</th>
                 <th>LastName</th>
-                <th>Mobile Number</th>
-                <th>E-mail Address</th>
                 <th>Gender</th>
+                <th>Account Status</th>
                 <th>Actions</th>
             </tr>
         </thead>

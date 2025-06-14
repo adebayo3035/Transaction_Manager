@@ -67,9 +67,8 @@ try {
                     customer_id, 
                     firstname, 
                     lastname, 
-                    email, 
                     gender,
-                    mobile_number, 
+                    restriction,
                     date_updated 
                   FROM customers 
                   ORDER BY date_updated DESC 

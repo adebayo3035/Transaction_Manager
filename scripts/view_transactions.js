@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 if (data.success) {
                     updateTable(data.transactions);
-                    updatePagination(data.total, data.page, data.limit);
+                    updatePagination(data.pagination.total, data.pagination.page, data.pagination.limit);
                 } else {
                     console.error('Failed to fetch transactions:', data.message);
                 }

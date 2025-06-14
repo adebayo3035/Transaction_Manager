@@ -50,7 +50,7 @@ try {
         $countQuery = "SELECT COUNT(*) as total FROM orders";
         $condition = "";
         $params = [];
-        $orderBy = " ORDER BY order_id, delivery_status";
+        $orderBy = " ORDER BY order_id DESC, delivery_status";
 
         if ($userRole == "Admin") {
             $condition = " WHERE assigned_to = ?";

@@ -39,12 +39,13 @@ document.addEventListener('DOMContentLoaded', () => {
         ordersTableBody.innerHTML = '';
         customers.forEach(customer => {
             const row = document.createElement('tr');
+            const restrictionStatus = customer.restriction === 1 ? 'Restricted' : 'Not Restricted';
+            const restrictionClass = customer.restriction === 1 ? 'restricted-badge' : 'not-restricted-badge';
             row.innerHTML = `
                 <td>${customer.firstname}</td>
                 <td>${customer.lastname}</td>
-                <td>${maskDetails(customer.mobile_number)}</td>
-                <td>${maskDetails(customer.email)}</td>
                 <td>${customer.gender}</td>
+                <td><span class="${restrictionClass}">${restrictionStatus}</span></td>
                 <td><button class="view-details-btn" data-customer-id="${customer.customer_id}">View Details</button></td>
             `;
             ordersTableBody.appendChild(row);
@@ -202,7 +203,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 </select>
             </td>
         </tr>
-            
+        <tr>
+    <td>Restriction Status</td>
+    <td>
+        ${customer_details.restriction === 1 ?
+                `<input type="text" value="Restricted" readonly style="
+                background-color: #ffebee;
+                color: #d32f2f;
+                font-weight: bold;
+                border: 1px solid #ffcdd2;
+                padding: 5px;
+                border-radius: 4px;
+                width: 100%;
+                box-sizing: border-box;
+            ">`
+                :
+                `<select id="restriction">
+                <option value="0" ${customer_details.restriction === 0 ? 'selected' : ''}>Not Restricted</option>
+                <option value="1" ${customer_details.restriction === 1 ? 'selected' : ''}>Restricted</option>
+            </select>`
+            }
+    </td>
+</tr>
         `;
 
         // Display photo if available
@@ -357,6 +379,12 @@ document.addEventListener('DOMContentLoaded', () => {
             group: document.getElementById('selectGroup').value,
             unit: document.getElementById('selectUnit').value
         };
+         // Only include restriction field if the account isn't currently restricted
+        const restrictionElement = document.getElementById('restriction');
+        if (restrictionElement && restrictionElement.tagName === 'SELECT') {
+            customerData.restriction = restrictionElement.value;
+        }
+        // If restrictionElement doesn't exist or isn't a select, we don't include restriction in the payload
         if (confirm('Are you sure you want to Update Customer Information?')) {
             fetch('backend/update_customer.php', {
                 method: 'POST',
@@ -571,3 +599,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadGroupsOnboarding();
     handleFormSubmission(addCustomerForm);
 });
+
+
+
+// TODO TOMORROW 13TH OF june 2025: on fetch customer details modal add new select input to insert restriction into customer's account only

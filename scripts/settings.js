@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const unblockBtn = document.getElementById('unblock-account');
     const unlockBtn = document.getElementById('unlock-account')
     const reactivateBtn = document.getElementById('reactivate-account')
+    const removeRestrctictionBtn = document.getElementById('remove-restriction')
 
     //validate user and button to display
     // Fetch logged-in user role
@@ -49,6 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     restrictAccountBtn.style.display =
                     unblockBtn.style.display =
                     unlockBtn.style.display =
+                    removeRestrctictionBtn.style.display =
                     reactivateBtn.style.display = "inline-block";
                 }
             } else {
@@ -80,6 +82,10 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         toggleModal("reactivateModal", "flex");
     };
+    removeRestrctictionBtn.onclick = (e) =>{
+        e.preventDefault();
+        toggleModal("removeRestrictionModal2", "flex");
+    }
 
     // fetch List of customers to Block or restrict
     function fetchStaffs(selectOption, filterType = 'all') {
@@ -421,4 +427,98 @@ document.addEventListener("DOMContentLoaded", () => {
     cancelButton4.onclick = () => {
         confirmationModal4.style.display = "none";  // Close modal without submitting
     };
+
+    // Function to retrieve Restricted accounts and remove Restriction on Acccoount
+    const RestrictedAccountType = document.getElementById('accounts');
+    const restrictedAccounts = document.getElementById('restrictedAccounts');
+
+    // When account type changes
+    RestrictedAccountType.addEventListener('change', async () => {
+        console.log(`Account type changed to: ${RestrictedAccountType.value}`);
+
+        if (!RestrictedAccountType.value) {
+            restrictedAccounts.innerHTML = '<option value="">Select type first</option>';
+            console.log("Reset account dropdown - no type selected");
+            return;
+        }
+
+        restrictedAccounts.innerHTML = '<option value="">Loading...</option>';
+        console.log("Initiated account loading");
+
+        const formData = new FormData();
+        formData.append('typeOfAccount', RestrictedAccountType.value);
+
+        try {
+            console.log("Sending request to backend");
+            const response = await fetch('backend/fetch_restricted_account.php', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+            console.log(`Received response: ${JSON.stringify(data)}`);
+
+            if (data.success) {
+                restrictedAccounts.innerHTML = data.accounts.map(a => 
+                    `<option value="${a.id}">${a.id} - (${a.name})</option>`
+                ).join('');
+                console.log(`Loaded ${data.accounts.length} accounts`);
+            } else {
+                restrictedAccounts.innerHTML = '<option value="">Error loading accounts</option>';
+                console.log("Failed to load accounts: " + (data.message || 'Unknown error'));
+            }
+
+        } catch (error) {
+            console.log("Network error: " + error.message);
+            restrictedAccounts.innerHTML = '<option value="">Network error</option>';
+        }
+    });
+
+
+    const removeRestrictionForm2 = document.getElementById('removeRestrictionForm2');
+    const confirmationModal5 = document.getElementById("confirmationModal5");
+    const confirmButton5 = document.getElementById("confirmButton5");
+    const cancelButton5 = document.getElementById("cancelButton5");
+    let restrctedAccountID;
+    removeRestrictionForm2.onsubmit = (e) => {
+        e.preventDefault();
+
+        // Get values from the form
+        restrctedAccountID = document.getElementById("restrictedAccounts").value;
+        accounts = document.getElementById('accounts').value;
+        secretAnswerRestriction = document.getElementById('secret_answer_restriction').value;
+
+        // Show confirmation modal
+        confirmationModal5.style.display = "flex";
+    };
+    // Confirmation modal buttons
+    confirmButton5.onclick = async () => {
+        // Proceed with the request after confirmation
+        confirmationModal5.style.display = "none";  // Close the modal
+        try {
+            const response = await fetch('backend/remove_restriction.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userID: restrctedAccountID, accountType: accounts, secretAnswer: secretAnswerRestriction })
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                alert(`Restriction has been successfully lifted'}!`);
+                toggleModal("removeRestrictionModal2");  // Assuming this closes the main form modal
+                location.reload();
+            } else {
+                alert(`Error Unlocking account: ${data.message}`);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert("An error occurred. Please try again.");
+        }
+    };
+
+    cancelButton5.onclick = () => {
+        confirmationModal5.style.display = "none";  // Close modal without submitting
+    };
 });
+
+

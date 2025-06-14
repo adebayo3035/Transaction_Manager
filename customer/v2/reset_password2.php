@@ -5,8 +5,6 @@ include_once "config.php";
 // Set content type to JSON
 header('Content-Type: application/json');
 
-// Log function to log activity
-logActivity("Starting Password Reset for Customer ID: $CustomerId");
 // Get the POST data
 $data = json_decode(file_get_contents("php://input"), true);
 
@@ -82,6 +80,9 @@ function updateResetAttempts($conn, $email) {
 if (isset($data['email'], $data['secret_answer'])) {
     $email = mysqli_real_escape_string($conn, $data['email']);
     $secret_answer = mysqli_real_escape_string($conn, $data['secret_answer']);
+
+    // Log function to log activity
+logActivity("Starting Password Reset for Customer ID: $email");
 
     // Check reset attempts for today
     $resetAttemptCheck = checkResetAttempts($conn, $email);

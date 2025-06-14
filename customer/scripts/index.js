@@ -14,6 +14,7 @@ document.getElementById('login-form').addEventListener('submit', function (event
         .then(response => response.json())
         .then(data => {
             const message = document.getElementById('message');
+           
             if (data.success) {
                 message.style.color = 'green';
                 message.textContent = 'Login successful!';

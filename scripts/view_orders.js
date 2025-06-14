@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // console.log(data);  // Check the returned data
                 if (data.success) {
                     updateTable(data.orders);
-                    updatePagination(data.total, data.page, data.limit);
+                    updatePagination(data.pagination.total, data.pagination.page, data.pagination.limit);
                 } else {
                     console.error('Failed to fetch orders:', data.message);
                 }

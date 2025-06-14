@@ -10,6 +10,53 @@ document.addEventListener('DOMContentLoaded', () => {
         return details.slice(0, 2) + ' ** ** ' + details.slice(-3);
     }
 
+    // Run this once when the page loads
+    function initializeAdminActions(userRole) {
+        const container = document.getElementById('admin-actions-container');
+        container.innerHTML = ''; // Clear existing
+
+        if (userRole === "Super Admin") {
+            const actionButtons = [
+                {
+                    href: "staff_reactivation_request.php",
+                    className: "admin-action-btn btn-view-deactivated",
+                    text: "View Pending Reactivation Request",
+                    color: "#2c3e50"
+                },
+                {
+                    href: "staff_deactivation_reactivation_history.php",
+                    className: "admin-action-btn btn-deactivation-records",
+                    text: "View Deactivation and Reactivation History",
+                    color: "#e67e22"
+                }
+            ];
+
+            actionButtons.forEach(button => {
+                const btn = document.createElement('a');
+                btn.href = button.href;
+                btn.className = button.className;
+                btn.textContent = button.text;
+                btn.style.cssText = `
+                
+                background-color: ${button.color};
+                
+            `;
+
+                btn.addEventListener('mouseenter', () => {
+                    btn.style.opacity = '0.9';
+                    btn.style.transform = 'translateY(-2px)';
+                });
+                btn.addEventListener('mouseleave', () => {
+                    btn.style.opacity = '1';
+                    btn.style.transform = 'translateY(0)';
+                });
+
+                container.appendChild(btn);
+            });
+        }
+    }
+
+    // Modified fetchStaffs function
     function fetchStaffs(page = 1) {
         fetch(`backend/get_staffs.php?page=${page}&limit=${limit}`, {
             method: 'GET',
@@ -22,63 +69,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.success) {
                     updateTable(data.staffs, data.logged_in_user_role);
                     updatePagination(data.total, data.page, data.limit);
-                    const adminActionBtn = document.getElementById('customer-form');
 
-                    // Check for Super Admin privileges and add action buttons
-                    if (data.logged_in_user_role === "Super Admin") {
-                        const actionButtons = [
-                            {
-                                href: "staff_reactivation_request.php",
-                                className: "admin-action-btn btn-view-deactivated",
-                                text: "View Pending Reactivation Request",
-                                color: "#2c3e50" // Dark blue-gray
-                            },
-                            {
-                                href: "staff_deactivation_reactivation_history.php",
-                                className: "admin-action-btn btn-deactivation-records",
-                                text: "View Deactivation and Reactivation History",
-                                color: "#e67e22" // Orange
-                            }
-                        ];
-
-                        // Add buttons only if they don't already exist
-                        actionButtons.forEach(button => {
-                            if (!adminActionBtn.querySelector(`.${button.className}`)) {
-                                const btn = document.createElement('a');
-                                btn.href = button.href;
-                                btn.className = button.className;
-                                btn.textContent = button.text;
-
-                                // Apply consistent button styling
-                                btn.style.cssText = `
-                                    display: inline-block;
-                                    padding: 10px 15px;
-                                    margin: 0 10px 10px 0;
-                                    border-radius: 4px;
-                                    color: white;
-                                    background-color: ${button.color};
-                                    text-decoration: none;
-                                    font-weight: 500;
-                                    transition: all 0.3s ease;
-                                    border: none;
-                                    cursor: pointer;
-                                `;
-
-                                // Add hover effect
-                                btn.addEventListener('mouseenter', () => {
-                                    btn.style.opacity = '0.9';
-                                    btn.style.transform = 'translateY(-2px)';
-                                });
-                                btn.addEventListener('mouseleave', () => {
-                                    btn.style.opacity = '1';
-                                    btn.style.transform = 'translateY(0)';
-                                });
-
-                                adminActionBtn.appendChild(btn);
-                            }
-                        });
-                    } else if (data.message) {
-                        console.error('Failed to fetch Staff Records:', data.message);
+                    // Initialize buttons once if not already done
+                    const actionsContainer = document.getElementById('admin-actions-container');
+                    if (actionsContainer.children.length === 0) {
+                        initializeAdminActions(data.logged_in_user_role);
                     }
                 } else {
                     console.error('Failed to fetch Staff Records:', data.message);
@@ -86,6 +81,12 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .catch(error => console.error('Error fetching data:', error));
     }
+
+    // On initial page load
+    document.addEventListener('DOMContentLoaded', () => {
+        // You might need to fetch the user role first or pass it from server
+        fetchStaffs(1);
+    });
 
     function updateTable(staffs, loggedInUserRole) {
         const ordersTableBody = document.querySelector('#ordersTable tbody');
@@ -339,25 +340,6 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('updateStaffBtn').addEventListener('click', () => {
                 updateStaff(staff_details.unique_id);
             });
-
-            // 1. Get the button reference (do this once at page load)
-            // const deleteStaffBtn = document.getElementById('deleteStaffBtn');
-
-            // // 2. Add event listener with proper error handling
-            // deleteStaffBtn.addEventListener('click', async () => {
-            //     try {
-            //         // Assuming staff_details is defined in your scope
-            //         if (!staff_details?.unique_id) {
-            //             throw new Error('No staff member selected');
-            //         }
-
-            //         await deleteStaff(staff_details.unique_id);
-
-            //     } catch (error) {
-            //         console.error('Delete Staff Handler Error:', error);
-            //         alert('Error', error.message || 'Failed to initiate staff deletion');
-            //     }
-            // });
         }
     }
 

@@ -124,8 +124,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($result->num_rows > 0) {
             $customer_data = $result->fetch_assoc();
             $customer_password = $customer_data['password'];
+            $restriction_id = $customer_data['restriction'];
 
-
+            if ($restriction_id !== 0) {
+                logActivity("Account restricted for customer_id: " . $customer_id);
+                echo json_encode([
+                    "success" => false,
+                    "message" => "Your Account is restricted. Kindly contact Admin to remove Restriction.",
+                ]);
+                exit();
+            }
             if ($encrypted_password === $customer_password) {
                 // Step 4: Successful login - Reset login attempts
                 destroySession($customer_id, $conn);

@@ -122,7 +122,7 @@ button#unblock{
     border-radius: 4px;
     width: 100%;
 }
-.modal .button {
+.modal .button, #accountCheck {
     height: 40px;
     border-radius: 5px;
     border: none;
