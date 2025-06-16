@@ -29,7 +29,7 @@ try {
 
         // Build query based on role
         if ($userRole == "Admin") {
-            $query = "SELECT o.order_id, o.order_date, o.total_amount, o.status, 
+            $query = "SELECT o.order_id, o.customer_id, o.order_date, o.total_amount, o.status, 
                      a.firstname AS assigned_admin_firstname, a.lastname AS assigned_admin_lastname
                      FROM orders o
                      INNER JOIN admin_tbl a ON o.assigned_to = a.unique_id
@@ -43,7 +43,7 @@ try {
             $stmt->bind_param("i", $adminId);
         } 
         elseif ($userRole == "Super Admin") {
-            $query = "SELECT o.order_id, o.order_date, o.total_amount, o.status, 
+            $query = "SELECT o.order_id, o.customer_id, o.order_date, o.total_amount, o.status, 
                      o.assigned_to, a.firstname AS assigned_admin_firstname, 
                      a.lastname AS assigned_admin_lastname
                      FROM orders o

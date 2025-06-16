@@ -32,8 +32,9 @@ include('navbar.php');
     <table id="customer-table">
         <thead>
             <tr>
-                <th> Select Order </th>
+                <th> Select</th>
                 <th>Order ID</th>
+                <th>Customer ID</th>
                 <th>Order Date</th>
                 <th>Total Amount (N)</th>
                 <th>Status</th>

@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 // Calculate total amount including discounts, service fee, and delivery fee
-                
+
                 let totalAmount = ((parseFloat(orderData.total_order) - discount_value) + parseFloat(orderData.service_fee) + parseFloat(orderData.delivery_fee));
 
                 // Populate the total amounts on the checkout page
@@ -190,85 +190,110 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Payment form submission handler
-    checkoutForm.addEventListener('submit', (event) => {
+    checkoutForm.addEventListener('submit', async (event) => {
         event.preventDefault();
 
         // Show confirmation dialog
         const isConfirmed = confirm('Are you sure you want to proceed with the payment?');
         if (!isConfirmed) {
             alert("Your Order Payment Process has been Cancelled!");
-            return; // Stop execution if the user cancels
+            return;
         }
 
-        const selectedPaymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
-        const customer_secret_answer = document.getElementById('customer_secret_answer').value;
-        const customer_token = document.getElementById('customer_token').value;
-        // Generate receipt HTML
-        const receiptHtml = generateReceiptHtml();
+        // Create and show loader
+        const loaderOverlay = document.createElement('div');
+        loaderOverlay.className = 'loader-overlay';
+        loaderOverlay.innerHTML = '<div class="roller-loader"></div>';
+        document.body.appendChild(loaderOverlay);
 
-        // Use the fetched order data to populate paymentDetails
-        let paymentDetails = {
-            payment_method: selectedPaymentMethod,
-            order_items: orderData.order_items, // Use order items from session
-            total_amount: parseFloat(orderData.total_order), // Use total order from session
-            service_fee: parseFloat(orderData.service_fee), // Use service fee from session
-            delivery_fee: parseFloat(orderData.delivery_fee), // Use delivery fee from session
-            total_order: parseFloat(orderData.total_order), // Use total order from session
-            using_promo: usePromo, // Replace with actual value if available
-            discount: discount_value, // Replace with actual value if available
-            discount_percent: discount_percent, // Replace with actual value if available
-            promo_code: promoCode, // Replace with actual value if available
-            customer_secret_answer : customer_secret_answer,
-            customer_token: customer_token,
-            receipt_html: receiptHtml
-            
-        };
+        // Disable form elements but keep print button enabled
+        const formElements = checkoutForm.elements;
+        for (let i = 0; i < formElements.length; i++) {
+            // Skip disabling if it's the print button
+            if (formElements[i].id !== 'receipt-btn') {
+                formElements[i].disabled = true;
+            }
+        }
 
-        // Add payment method-specific details
-        if (selectedPaymentMethod === 'Card') {
-            paymentDetails = {
-                ...paymentDetails,
-                card_number: document.getElementById('card_number').value,
-                card_expiry: formatExpiryDate(document.getElementById('card_expiry').value),
-                card_cvv: document.getElementById('card_cvv').value,
-                card_pin: document.getElementById('card_pin').value
+        try {
+            const selectedPaymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
+            const customer_secret_answer = document.getElementById('customer_secret_answer').value;
+            const customer_token = document.getElementById('customer_token').value;
+            const receiptHtml = generateReceiptHtml();
+
+            let paymentDetails = {
+                payment_method: selectedPaymentMethod,
+                order_items: orderData.order_items,
+                total_amount: parseFloat(orderData.total_order),
+                service_fee: parseFloat(orderData.service_fee),
+                delivery_fee: parseFloat(orderData.delivery_fee),
+                total_order: parseFloat(orderData.total_order),
+                using_promo: usePromo,
+                discount: discount_value,
+                discount_percent: discount_percent,
+                promo_code: promoCode,
+                customer_secret_answer: customer_secret_answer,
+                customer_token: customer_token,
+                receipt_html: receiptHtml
             };
-        } else if (selectedPaymentMethod === 'paypal') {
-            paymentDetails.paypal_email = document.getElementById('paypal_email').value;
-        } else if (selectedPaymentMethod === 'bank_transfer') {
-            paymentDetails.bank_name = document.getElementById('bank_name').value;
-            paymentDetails.bank_account = document.getElementById('bank_account').value;
-        } else if (selectedPaymentMethod === 'credit') {
-            paymentDetails.is_credit = true;
-        }
 
-        // Send payment details to the server
-        fetch('../v2/process_paymentOld.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(paymentDetails)
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Your Order has been successfully received. Kindly wait for approval.');
-                    printReceiptBtn.style.display = 'block';
-                    placeOrderBtn.style.display = 'none';
+            // Add payment method-specific details
+            if (selectedPaymentMethod === 'Card') {
+                paymentDetails = {
+                    ...paymentDetails,
+                    card_number: document.getElementById('card_number').value,
+                    card_expiry: formatExpiryDate(document.getElementById('card_expiry').value),
+                    card_cvv: document.getElementById('card_cvv').value,
+                    card_pin: document.getElementById('card_pin').value
+                };
+            } else if (selectedPaymentMethod === 'paypal') {
+                paymentDetails.paypal_email = document.getElementById('paypal_email').value;
+            } else if (selectedPaymentMethod === 'bank_transfer') {
+                paymentDetails.bank_name = document.getElementById('bank_name').value;
+                paymentDetails.bank_account = document.getElementById('bank_account').value;
+            } else if (selectedPaymentMethod === 'credit') {
+                paymentDetails.is_credit = true;
+            }
 
-                    // Disable all input fields, radio buttons, and checkboxes
-                    disableFormElements();
-                } else {
-                    alert('Error: ' + data.message);
-                    console.log(data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred. Please try again.');
+            // Send payment details to the server
+            const response = await fetch('../v2/process_paymentOld.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(paymentDetails)
             });
+
+            const data = await response.json();
+
+            if (data.success) {
+                alert('Your Order has been successfully received. Kindly wait for approval.');
+                printReceiptBtn.style.display = 'block';
+                placeOrderBtn.style.display = 'none';
+                disableFormElements();
+            } else {
+                alert('Error: ' + data.message);
+                console.log(data.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        } finally {
+            // Remove loader and re-enable form
+            loaderOverlay.remove();
+            // for (let i = 0; i < formElements.length; i++) {
+            //     formElements[i].disabled = false;
+            // }
+        }
     });
+
+    // Helper function to disable form elements (if not already defined)
+    // function disableFormElements() {
+    //     const formElements = checkoutForm.elements;
+    //     for (let i = 0; i < formElements.length; i++) {
+    //         formElements[i].disabled = true;
+    //     }
+    // }
     // Function to disable form elements
     function disableFormElements() {
         // Disable radio buttons
@@ -328,7 +353,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const selectedPaymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
         const now = new Date();
         const dateTime = now.toLocaleString();
-    
+
         return `
             <div class="receipt-container">
                 <div class="receipt-header">

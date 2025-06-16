@@ -3,7 +3,7 @@
 
 <head>
     <style>
-        
+
 
     </style>
     <meta charset="UTF-8">
@@ -58,32 +58,62 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Order details will be dynamically inserted here -->
+                    <!-- Credit details will be dynamically inserted here -->
                 </tbody>
 
             </table>
+            <div class="extraButtons">
+                <button type="button" id="repay-btn" style="display: none">Repay Loan</button>
+                <button type="button" id="repayment-history">Repayment History</button>
+            </div>
 
-            <button type="button" id="repay-btn" style="display: none">Repay Loan</button>
 
-            <!-- <button type="button" id="receipt-btn" style="display: none">Print Receipt</button> -->
-            <!-- Reassign Order Form -->
+
+            <!-- Modal to Repay Outstanding Debit -->
             <div class="reassign-form" id="reassignForm" style="display:none;">
                 <span class="close closeRepaymentForm">&times;</span>
                 <h3>Repay Outstanding Debt</h3>
                 <div class="form-input">
                     <label for="amount">Credit ID:</label>
                     <input type="text" id="creditID" disabled>
-                    <br/>
+                    <br />
                     <label for=" repayment_method"> Select Repayment Method</label>
                     <select name="repayment_method" id="repayment_method">
                         <option value="">--Select an Option--</option>
                         <option value="Full Repayment">Full Repayment</option>
                         <option value="Partial Repayment" id="partial">Partial Repayment</option>
                     </select>
-                    <label for="amount"  id="repayAmountLabel">Input Amount:</label>
+                    <label for="amount" id="repayAmountLabel">Input Amount:</label>
                     <input type="text" id="repayAmountInput" placeholder="0000">
                 </div>
                 <button type="button" id="submitRepayment">Submit</button>
+            </div>
+
+            <!-- Modal to Display Repayment History -->
+            <!-- Add this modal structure right after the repayment form in your HTML -->
+            <div id="repaymentHistoryModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Repayment History</h2>
+                    <table id="repaymentHistoryTable" class="ordersTable">
+                        <thead>
+                            <tr>
+                                <th>Repayment ID</th>
+                                <th>Date</th>
+                                <th>Amount Paid</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Repayment history will be dynamically inserted here -->
+                        </tbody>
+                    </table>
+                    <!-- Add pagination controls -->
+                    <div class="pagination-controls">
+                        <button id="prevPageBtn" disabled>Previous</button>
+                        <span id="pageInfo">Page 1 of 1</span>
+                        <button id="nextPageBtn" disabled>Next</button>
+                    </div>
+                </div>
             </div>
 
         </div>

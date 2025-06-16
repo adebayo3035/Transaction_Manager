@@ -16,6 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const repaymentMethodSelect = document.getElementById('repayment_method');
     const repayAmountLabel = document.getElementById('repayAmountLabel');
 
+    const repaymentHistoryBtn = document.getElementById('repayment-history');
+    const repaymentHistoryModal = document.getElementById('repaymentHistoryModal');
+    const repaymentHistoryTableBody = document.querySelector('#repaymentHistoryTable tbody');
+    let currentCreditId = null; // To store the current credit ID for repayment history
+
     // Fetch orders with pagination
     function fetchCredits(page = 1) {
         fetch(`../v2/fetch_credit_summary.php?page=${page}&limit=${limit}`)
@@ -80,8 +85,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Check if the order status is "Assigned"
                     const creditStatus = data.credit_details[0].repayment_status; // Assuming it's in the first detail
                     const repaymentButton = document.getElementById('repay-btn');
-            
-                    if (creditStatus === "Pending" || creditStatus === "Partially Paid" ) {
+
+                    if (creditStatus === "Pending" || creditStatus === "Partially Paid") {
                         // Enable the "Reassign Order" button if the status is "Assigned"
                         repaymentButton.style.display = 'block';
                         repaymentButton.disabled = false; // Ensure it's not disabled
@@ -103,9 +108,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function populateCreditDetails(details) {
         const orderDetailsTableBody = document.querySelector('#orderDetailsTable tbody');
         orderDetailsTableBody.innerHTML = '';
-       details.forEach(detail => {
-        currentOrderId = detail.order_id; // Store the order_id for later use
-        document.getElementById('creditID').value = detail.credit_order_id;
+        details.forEach(detail => {
+            currentOrderId = detail.order_id; // Store the order_id for later use
+            currentCreditId = detail.credit_order_id; // Store the credit_id for repayment history
+            document.getElementById('creditID').value = detail.credit_order_id;
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${detail.order_id}</td>
@@ -116,8 +122,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 
             `;
             orderDetailsTableBody.appendChild(row);
-       })
-            
+        })
+
         const fragment = document.createDocumentFragment();
 
         const firstDetail = details[0];
@@ -126,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
             { label: 'Order Date', value: firstDetail.created_at },
             { label: 'Due Date', value: firstDetail.due_date },
             { label: 'Credit Repayment Status', value: firstDetail.repayment_status },
-           { label: 'Credit Due for Payment', value: firstDetail.is_due }
+            { label: 'Credit Due for Payment', value: firstDetail.is_due }
         ];
 
         detailsArray.forEach(detail => {
@@ -163,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
             repayAmountLabel.style.display = 'block';
             submitRepayment.style.display = "flex";
         }
-        else{
+        else {
             repayAmountInput.style.display = 'none';
             repayAmountLabel.style.display = 'none';
             submitRepayment.style.display = "none";
@@ -174,9 +180,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const selectedMethod = repaymentMethodSelect.value;
         const repayAmount = document.getElementById('repayAmountInput').value;
         const creditId = document.getElementById('creditID').value;
-        
+
         // Show confirmation dialog
-        const confirmMessage = selectedMethod === "Full Repayment" ? 
+        const confirmMessage = selectedMethod === "Full Repayment" ?
             "Are you sure you want to make a full repayment?" :
             `Are you sure you want to make a partial repayment of ${repayAmount}?`;
 
@@ -203,6 +209,101 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // END OF REPAYMENT MODULE
+
+    // CREDIT REPAYMENT HISTORY MODULE
+    // Add this new function to fetch repayment history
+    // Add these variables at the top with your other declarations
+    let currentRepaymentPage = 1;
+    let totalRepaymentPages = 1;
+
+
+    // Modify your existing fetchRepaymentHistory function
+    function fetchRepaymentHistory(creditId, page = 1) {
+        currentCreditId = creditId;
+        currentRepaymentPage = page;
+
+        fetch('../v2/fetch_repayment_history.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                credit_id: creditId,
+                page: page
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    totalRepaymentPages = data.pagination.total_pages;
+                    populateRepaymentHistory(data.history);
+                    updatePaginationControls();
+                    repaymentHistoryModal.style.display = 'block';
+                } else {
+                    console.error('Failed to fetch repayment history:', data.message);
+                    alert('Failed to fetch repayment history: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching repayment history:', error);
+                alert('Error fetching repayment history');
+            });
+    }
+
+    // Update your populateRepaymentHistory function (minor adjustment)
+    function populateRepaymentHistory(history) {
+        repaymentHistoryTableBody.innerHTML = '';
+
+        if (history.length === 0) {
+            const row = document.createElement('tr');
+            row.innerHTML = `<td colspan="3" style="text-align:center;">No repayment history found</td>`;
+            repaymentHistoryTableBody.appendChild(row);
+            return;
+        }
+
+        history.forEach(payment => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+            <td>${payment.repayment_id || 'N/A'}</td>
+            <td>${payment.payment_date}</td>
+            <td>${payment.amount_paid}</td>
+        `;
+            repaymentHistoryTableBody.appendChild(row);
+        });
+    }
+
+    // Add these new functions for pagination control
+    function updatePaginationControls() {
+        document.getElementById('pageInfo').textContent = `Page ${currentRepaymentPage} of ${totalRepaymentPages}`;
+        document.getElementById('prevPageBtn').disabled = currentRepaymentPage <= 1;
+        document.getElementById('nextPageBtn').disabled = currentRepaymentPage >= totalRepaymentPages;
+    }
+
+    // Add event listeners for pagination buttons
+    document.getElementById('prevPageBtn').addEventListener('click', () => {
+        if (currentRepaymentPage > 1) {
+            fetchRepaymentHistory(currentCreditId, currentRepaymentPage - 1);
+        }
+    });
+
+    document.getElementById('nextPageBtn').addEventListener('click', () => {
+        if (currentRepaymentPage < totalRepaymentPages) {
+            fetchRepaymentHistory(currentCreditId, currentRepaymentPage + 1);
+        }
+    });
+    // Add event listener for repayment history button
+    repaymentHistoryBtn.addEventListener('click', () => {
+        if (currentCreditId) {
+            fetchRepaymentHistory(currentCreditId);
+        } else {
+            alert('No credit selected');
+        }
+    });
+
+    // Add event listener to close repayment history modal
+    repaymentHistoryModal.querySelector('.close').addEventListener('click', () => {
+        repaymentHistoryModal.style.display = 'none';
+    });
+
+    //END OF CREDIT REPAYMENT HISTORY MODULE
 
     // Update pagination
     function updatePagination(totalItems, currentPage, itemsPerPage) {
@@ -252,7 +353,7 @@ document.addEventListener('DOMContentLoaded', () => {
         repaymentForm.style.display = 'none';
         location.reload();
     });
-    document.querySelector('.closeRepaymentForm').addEventListener('click', ()=>{
+    document.querySelector('.closeRepaymentForm').addEventListener('click', () => {
         repaymentForm.style.display = 'none';
         location.reload();
     })

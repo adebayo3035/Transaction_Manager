@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     row.innerHTML = `
                         <td><input type="checkbox" class="order-select" name="order-select" value="${order.order_id}"></td>
                         <td>${order.order_id}</td>
+                        <td>${order.customer_id}</td>
                         <td>${order.order_date}</td>
                         <td>${order.total_amount}</td>
                         <td>${order.status}</td>
