@@ -47,9 +47,9 @@ try {
                 admin_active_sessions 
             ON 
                 admin_tbl.unique_id = admin_active_sessions.unique_id 
-            WHERE 
-                admin_tbl.delete_status != 'Yes' 
-                OR admin_tbl.delete_status IS NULL
+            -- WHERE 
+            --     admin_tbl.delete_status != 'Yes' 
+            --     OR admin_tbl.delete_status IS NULL
             ORDER BY 
                 admin_tbl.role ASC
             LIMIT ? OFFSET ?";

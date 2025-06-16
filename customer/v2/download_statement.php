@@ -9,9 +9,9 @@ $customerId = $_SESSION['customer_id'] ?? null;
 checkSession($customerId);
 logActivity("✅ Session validated for customer ID: $customerId | Starting statement generation");
 
-header('Content-Type: application/pdf');
-header('Content-Disposition: inline; filename="statement.pdf"');
-header('Content-Transfer-Encoding: binary');
+// header('Content-Type: application/pdf');
+// header('Content-Disposition: inline; filename="statement.pdf"');
+// header('Content-Transfer-Encoding: binary');
 
 // Handle only POST requests
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -219,6 +219,9 @@ if ($format === 'csv') {
 } elseif ($format === 'pdf') {
     logActivity("📄 Starting PDF generation");
     try {
+        header('Content-Type: application/pdf');
+        header('Content-Disposition: inline; filename="account_statement.pdf"');
+        header('Content-Transfer-Encoding: binary');
         $pdf = new CustomPDF();
         $pdf->SetMargins(15, 15, 15);
         $pdf->AddPage();
@@ -316,7 +319,7 @@ if ($format === 'csv') {
 
         // Output the PDF as inline (view in browser) or as download
         http_response_code(200);
-        (json_encode(["message" => "Your Account Statement has been successfully prepared'."]));
+        // (json_encode(["message" => "Your Account Statement has been successfully prepared'."]));
 
         $pdf->Output("account_statement.pdf", "I");
         logActivity("✅ PDF generated successfully");

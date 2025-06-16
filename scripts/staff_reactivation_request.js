@@ -212,13 +212,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function ReactiveateAccount(staff_id, action) {
         const comment = document.getElementById('reactivationComment').value;
+        const reactivateBtn = document.getElementById('reactivateBtn'); // Make sure your button has this ID
 
-        // Now you can send this data to your backend or process accordingly
-        console.log('Staff ID:', staff_id);
-        console.log('Action:', action);
-        console.log('Comment:', comment);
+        // Validate comment if required
+        if (!comment.trim()) {
+            alert('Please enter a reactivation comment');
+            return;
+        }
 
-        // Example: Send to server via fetch
+        // Create and show loader
+        const loaderOverlay = document.createElement('div');
+        loaderOverlay.className = 'loader-overlay';
+        loaderOverlay.innerHTML = '<div class="roller-loader"></div>';
+        document.body.appendChild(loaderOverlay);
+
+        // Disable button during processing
+        if (reactivateBtn) {
+            reactivateBtn.disabled = true;
+            reactivateBtn.textContent = 'Processing...';
+        }
+
         fetch('backend/reactivate_admin_account.php', {
             method: 'POST',
             headers: {
@@ -230,23 +243,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 comment: comment
             })
         })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
-                alert(`Staff Reactivation Request has been ${action}`);
-                // You could also refresh the table or close the modal here
-                setTimeout(function () {
-                    location.reload();
-                }, 2000); // 2000ms = 2 seconds
+                if (data.status === "success") {
+                    alert(`Staff Account Reactivation Request has been successfully ${action}`);
+                    setTimeout(() => location.reload(), 2000);
+                } else {
+                    throw new Error(data.message || 'Unknown error occurred');
+                }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Something went wrong. Please try again.');
-                setTimeout(function () {
-                    location.reload();
-                }, 3000); // 2000ms = 2 seconds
+                alert(`Error: ${error.message}`);
+                setTimeout(() => location.reload(), 3000);
+            })
+            .finally(() => {
+                // Remove loader and reset button
+                loaderOverlay.remove();
+                if (reactivateBtn) {
+                    reactivateBtn.disabled = false;
+                    reactivateBtn.textContent = 'Reactivate Account'; // Or your original button text
+                }
             });
     }
-
 
     function updatePagination(totalItems, currentPage, itemsPerPage) {
         const paginationContainer = document.getElementById('pagination');

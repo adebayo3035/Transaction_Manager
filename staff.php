@@ -38,8 +38,6 @@
             <tr>
                 <th>FirstName</th>
                 <th>LastName</th>
-                <th>Mobile Number</th>
-                <th>E-mail Address</th>
                 <th>Restriction Indicator</th>
                 <th>Block Indicator</th>
                 <th>Status</th>

@@ -89,52 +89,59 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function updateTable(staffs, loggedInUserRole) {
-        const ordersTableBody = document.querySelector('#ordersTable tbody');
-        ordersTableBody.innerHTML = '';
+    const ordersTableBody = document.querySelector('#ordersTable tbody');
+    ordersTableBody.innerHTML = '';
 
-        staffs.forEach(staff => {
-            const restrictionText = staff.restriction_id === 0 ? 'Not Restricted' : 'Restricted';
-            const blockText = staff.block_id === 0 ? 'Not Blocked' : 'Blocked';
+    staffs.forEach(staff => {
+        const restrictionText = staff.restriction_id === 0 ? 'Not Restricted' : 'Restricted';
+        const blockText = staff.block_id === 0 ? 'Not Blocked' : 'Blocked';
 
-            // Conditionally set the Edit/View button text
+        // Check if staff is deactivated
+        const isDeactivated = staff.delete_status == 'Yes';
+        // Conditionally set the Edit/View button
+        let actionButtonHtml = '';
+        if (!isDeactivated) {
             const buttonText = loggedInUserRole === 'Admin' ? 'View Details' : 'Edit Details';
+            actionButtonHtml = `<button class="view-details-btn" data-staff-id="${staff.unique_id}">${buttonText}</button>`;
+        }
 
-            const showDeactivateBtn = staff.role === 'Admin' && loggedInUserRole === 'Super Admin';
-            const deactivateBtnHtml = showDeactivateBtn
-                ? `<td><button class="deactivate-staff" data-staff-id="${staff.unique_id}">Deactivate</button></td>`
-                : '<td></td>';
+        // Conditionally set the Deactivate button or Deactivated label
+        let deactivateCellHtml = '<td></td>';
+        if (isDeactivated) {
+            deactivateCellHtml = `<td colspan = "2"><span class="deactivated-label"><i class="fas fa-ban"></i> Deactivated</span></td>`;
+        } else if (staff.role === 'Admin' && loggedInUserRole === 'Super Admin') {
+            deactivateCellHtml = `<td><button class="deactivate-staff" data-staff-id="${staff.unique_id}">Deactivate</button></td>`;
+        }
 
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${staff.firstname}</td>
-                <td>${staff.lastname}</td>
-                <td>${maskDetails(staff.phone)}</td>
-                <td>${maskDetails(staff.email)}</td>
-                <td>${restrictionText}</td>
-                <td>${blockText}</td>
-                <td>${staff.admin_status}</td>
-                <td><button class="view-details-btn" data-staff-id="${staff.unique_id}">${buttonText}</button></td>
-                ${deactivateBtnHtml}
-            `;
-            ordersTableBody.appendChild(row);
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${staff.firstname}</td>
+            <td>${staff.lastname}</td>
+            <td>${restrictionText}</td>
+            <td>${blockText}</td>
+            <td>${staff.admin_status}</td>
+            <td>${actionButtonHtml}</td>
+            ${deactivateCellHtml}
+        `;
+        ordersTableBody.appendChild(row);
+    });
+
+    // Attach event listeners to the view/edit buttons
+    document.querySelectorAll('.view-details-btn').forEach(button => {
+        button.addEventListener('click', event => {
+            const staffId = event.target.getAttribute('data-staff-id');
+            fetchStaffDetails(staffId);
         });
+    });
 
-        // Attach event listeners to the view/edit buttons
-        document.querySelectorAll('.view-details-btn').forEach(button => {
-            button.addEventListener('click', event => {
-                const staffId = event.target.getAttribute('data-staff-id');
-                fetchStaffDetails(staffId);
-            });
+    // Attach event listeners to deactivate buttons
+    document.querySelectorAll('.deactivate-staff').forEach(button => {
+        button.addEventListener('click', event => {
+            const staffId = event.target.getAttribute('data-staff-id');
+            fetchAdminDetails(staffId);
         });
-
-        // Attach event listeners to deactivate buttons
-        document.querySelectorAll('.deactivate-staff').forEach(button => {
-            button.addEventListener('click', event => {
-                const staffId = event.target.getAttribute('data-staff-id');
-                fetchAdminDetails(staffId);
-            });
-        });
-    }
+    });
+}
 
 
 
@@ -468,46 +475,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     async function deleteStaff(staffId, reason) {
-        const confirmation = confirm("Proceed to Deactivate Staff Account?");
-        if (!confirmation) return;
+    const confirmation = confirm("Proceed to Deactivate Staff Account?");
+    if (!confirmation) return;
 
-        // Get references to the elements
-        const deActivateStaffBtn = document.getElementById('deActivateStaffBtn');
-        const deactivationReason = document.getElementById('deactivationReason');
+    // Get references to the elements
+    const deActivateStaffBtn = document.getElementById('deActivateStaffBtn');
+    const deactivationReason = document.getElementById('deactivationReason');
+    
+    // Create loader overlay
+    const loaderOverlay = document.createElement('div');
+    loaderOverlay.className = 'loader-overlay';
+    loaderOverlay.innerHTML = '<div class="roller-loader"></div>';
+    document.body.appendChild(loaderOverlay);
 
-        try {
-            // Disable elements and show loading state
-            deActivateStaffBtn.disabled = true;
-            deactivationReason.disabled = true;
-            deActivateStaffBtn.textContent = 'Processing...';
+    try {
+        // Disable elements and show loading state
+        deActivateStaffBtn.disabled = true;
+        deactivationReason.disabled = true;
+        deActivateStaffBtn.textContent = 'Processing...';
 
-            const response = await fetch('backend/delete_staff.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ staff_id: staffId, reason: reason })
-            });
+        const response = await fetch('backend/delete_staff.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ staff_id: staffId, reason: reason })
+        });
 
-            const result = await response.json();
+        const result = await response.json();
 
-            if (response.ok) {
-                alert(result.success);
-                location.reload(); // Reload page after successful deletion
-            } else {
-                alert(result.error);
-                console.log(result.error);
-            }
-        } catch (error) {
-            console.error("Error deleting user:", error);
-            alert("An error occurred while trying to delete the user.");
-        } finally {
-            // Re-enable elements regardless of success/failure
-            deActivateStaffBtn.disabled = false;
-            deactivationReason.disabled = false;
-            deActivateStaffBtn.textContent = 'Deactivate Staff';
+        if (response.ok) {
+            alert(result.success);
+            location.reload(); // Reload page after successful deletion
+        } else {
+            alert(result.error);
+            console.log(result.error);
         }
+    } catch (error) {
+        console.error("Error deleting user:", error);
+        alert("An error occurred while trying to delete the user.");
+    } finally {
+        // Remove loader
+        loaderOverlay.remove();
+        
+        // Re-enable elements regardless of success/failure
+        deActivateStaffBtn.disabled = false;
+        deactivationReason.disabled = false;
+        deActivateStaffBtn.textContent = 'Deactivate Staff';
     }
+}
 
 
     // Close modal when the "close" button is clicked

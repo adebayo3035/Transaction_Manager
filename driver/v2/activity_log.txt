@@ -10983,3 +10983,26 @@
 [2025-06-15 23:10:10] [Page: http://localhost/transaction_manager/driver/v2/logout.php?logout_id=1] Retrieved session_id: j7s9jdva6mtn0r6c3k7j2p033f for driver_id: 1.
 [2025-06-15 23:10:10] [Page: http://localhost/transaction_manager/driver/v2/logout.php?logout_id=1] Updated session status to 'Inactive' for session_id: j7s9jdva6mtn0r6c3k7j2p033f.
 [2025-06-15 23:10:10] [Page: http://localhost/transaction_manager/driver/v2/logout.php?logout_id=1] Session destroyed for driver_id: 1.
+[2025-06-16 11:10:11] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login attempt for username: temiolaoluwa@gmail.com
+[2025-06-16 11:10:12] [Page: http://localhost/transaction_manager/driver/v2/index.php] Driver ID for user: 3
+[2025-06-16 11:10:12] [Page: http://localhost/transaction_manager/driver/v2/index.php] Destroying session for session_id: abg1a38ut6k2u1qf3p6687fo4d
+[2025-06-16 11:10:13] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login successful for driver_id: 3
+[2025-06-16 11:10:58] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Session validated successfully for Driver ID: 3.
+[2025-06-16 11:10:58] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Driver ID: 3 requested orders. Page: 1, Limit: 10.
+[2025-06-16 11:10:59] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Total orders found for driver ID: 3: 0.
+[2025-06-16 11:10:59] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 paginated orders for driver ID: 3.
+[2025-06-16 11:11:00] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 pending orders for driver ID: 3.
+[2025-06-16 11:11:00] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Session validated successfully for Driver ID: 3.
+[2025-06-16 11:11:00] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Driver ID: 3 requested orders. Page: 1, Limit: 10.
+[2025-06-16 11:11:00] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Total orders found for driver ID: 3: 0.
+[2025-06-16 11:11:01] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 paginated orders for driver ID: 3.
+[2025-06-16 11:11:01] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 pending orders for driver ID: 3.
+[2025-06-16 11:11:01] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 3
+[2025-06-16 11:11:01] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 3 requested their profile details.
+[2025-06-16 11:11:01] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 3.
+[2025-06-16 11:11:01] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 3.
+[2025-06-16 11:12:00] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Session validated successfully for Driver ID: 3.
+[2025-06-16 11:12:00] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Logout attempt for driver_id: 3
+[2025-06-16 11:12:00] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Retrieved session_id: h4177od8da37udvldp6q9tjb13 for driver_id: 3.
+[2025-06-16 11:12:02] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Updated session status to 'Inactive' for session_id: h4177od8da37udvldp6q9tjb13.
+[2025-06-16 11:12:02] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Session destroyed for driver_id: 3.

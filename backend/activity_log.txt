@@ -16110,3 +16110,5587 @@ Source: fetch_order_details.php (Line 186)
 Message: Order details fetch process completed
 ----------------------------------------
 
+[2025-06-16 10:11:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 10:11:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 10:11:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 10:11:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 10:11:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 10:11:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 17. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 10:11:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 10:11:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 10:11:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_drivers.php?page=1&limit=10
+Source: get_drivers.php (Line 11)
+Message: Driver listing fetch process started
+----------------------------------------
+
+[2025-06-16 10:11:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_drivers.php?page=1&limit=10
+Source: get_drivers.php (Line 24)
+Message: Request initiated by admin ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-06-16 10:11:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_drivers.php?page=1&limit=10
+Source: get_drivers.php (Line 41)
+Message: Fetching drivers - Page: 1, Limit: 10, Offset: 0
+----------------------------------------
+
+[2025-06-16 10:11:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_drivers.php?page=1&limit=10
+Source: get_drivers.php (Line 46)
+Message: Database transaction started
+----------------------------------------
+
+[2025-06-16 10:11:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_drivers.php?page=1&limit=10
+Source: get_drivers.php (Line 63)
+Message: Total drivers found: 9, Total pages: 1
+----------------------------------------
+
+[2025-06-16 10:11:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_drivers.php?page=1&limit=10
+Source: get_drivers.php (Line 102)
+Message: Successfully retrieved 9 drivers
+----------------------------------------
+
+[2025-06-16 10:11:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_drivers.php?page=1&limit=10
+Source: get_drivers.php (Line 122)
+Message: Driver listing fetch completed successfully
+----------------------------------------
+
+[2025-06-16 10:11:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_drivers.php?page=1&limit=10
+Source: get_drivers.php (Line 150)
+Message: Driver listing fetch process completed
+----------------------------------------
+
+[2025-06-16 14:47:19]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 10)
+Message: Random customer names fetch process started
+----------------------------------------
+
+[2025-06-16 14:47:19]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 14)
+Message: Database transaction started
+----------------------------------------
+
+[2025-06-16 14:47:19]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 6)
+Message: Fetching promos script started.
+----------------------------------------
+
+[2025-06-16 14:47:19]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 21)
+Message: Customer customer_id found in session: 1260106158
+----------------------------------------
+
+[2025-06-16 14:47:19]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 32)
+Message: Pagination parameters - Page: 1, Limit: 10, Offset: 0
+----------------------------------------
+
+[2025-06-16 14:47:19]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 48)
+Message: Total promos count: 7
+----------------------------------------
+
+[2025-06-16 14:47:19]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 69)
+Message: Fetched 7 paginated promos.
+----------------------------------------
+
+[2025-06-16 14:47:19]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 92)
+Message: Fetched 0 ongoing promos.
+----------------------------------------
+
+[2025-06-16 14:47:19]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 108)
+Message: Fetching promos script completed successfully.
+----------------------------------------
+
+[2025-06-16 14:47:19]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 32)
+Message: Successfully retrieved 3 random customer names
+----------------------------------------
+
+[2025-06-16 14:47:19]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 43)
+Message: Random customer names fetch completed successfully
+----------------------------------------
+
+[2025-06-16 14:47:19]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 67)
+Message: Random customer names fetch process completed
+----------------------------------------
+
+[2025-06-16 15:01:06]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 15:01:06]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:01:06]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 15:01:06]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 15:01:06]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 17. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 15:01:06]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 15:01:06]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 15:01:06]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 15:01:06]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 15:01:06]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 15:01:07]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:02:13]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 15:02:13]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 15:02:13]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 15:02:13]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 15:02:13]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:02:13]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 15:02:13]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 15:02:13]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 17. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 15:02:13]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 15:02:13]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 15:02:13]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:02:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:02:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 15:02:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:02:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 15:02:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 15:02:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 17. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 15:02:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 15:02:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 15:02:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 15:02:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 15:02:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 15:04:44]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 7)
+Message: Staff details fetch process started
+----------------------------------------
+
+[2025-06-16 15:04:44]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 21)
+Message: Staff details request initiated by admin ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-06-16 15:04:44]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 44)
+Message: Processing staff details for ID: 868322890
+----------------------------------------
+
+[2025-06-16 15:04:44]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 49)
+Message: Transaction started for staff details fetch
+----------------------------------------
+
+[2025-06-16 15:04:44]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 74)
+Message: Successfully retrieved staff details for ID: 868322890
+----------------------------------------
+
+[2025-06-16 15:04:44]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 86)
+Message: Staff details fetch completed successfully
+----------------------------------------
+
+[2025-06-16 15:04:44]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 106)
+Message: Staff details fetch process completed
+----------------------------------------
+
+[2025-06-16 15:05:06]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_staff.php
+Source: delete_staff.php (Line 164)
+Message: Deactivation email sent to user ID: 868322890
+----------------------------------------
+
+[2025-06-16 15:05:06]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_staff.php
+Source: delete_staff.php (Line 172)
+Message: Staff ID: 868322890 Account has been successfully deactivated by Super Admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:05:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:05:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 15:05:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:05:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 15:05:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 15:05:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 17. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 15:05:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 15:05:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 15:05:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 14.
+----------------------------------------
+
+[2025-06-16 15:05:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 15:05:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 15:09:01]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 7)
+Message: Staff details fetch process started
+----------------------------------------
+
+[2025-06-16 15:09:01]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 21)
+Message: Staff details request initiated by admin ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-06-16 15:09:01]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 44)
+Message: Processing staff details for ID: 1587609561
+----------------------------------------
+
+[2025-06-16 15:09:01]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 49)
+Message: Transaction started for staff details fetch
+----------------------------------------
+
+[2025-06-16 15:09:01]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 74)
+Message: Successfully retrieved staff details for ID: 1587609561
+----------------------------------------
+
+[2025-06-16 15:09:01]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 86)
+Message: Staff details fetch completed successfully
+----------------------------------------
+
+[2025-06-16 15:09:01]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 106)
+Message: Staff details fetch process completed
+----------------------------------------
+
+[2025-06-16 15:09:52]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 7)
+Message: Staff details fetch process started
+----------------------------------------
+
+[2025-06-16 15:09:52]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 21)
+Message: Staff details request initiated by admin ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-06-16 15:09:52]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 44)
+Message: Processing staff details for ID: 860113631
+----------------------------------------
+
+[2025-06-16 15:09:52]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 49)
+Message: Transaction started for staff details fetch
+----------------------------------------
+
+[2025-06-16 15:09:52]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 74)
+Message: Successfully retrieved staff details for ID: 860113631
+----------------------------------------
+
+[2025-06-16 15:09:52]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 86)
+Message: Staff details fetch completed successfully
+----------------------------------------
+
+[2025-06-16 15:09:52]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 106)
+Message: Staff details fetch process completed
+----------------------------------------
+
+[2025-06-16 15:10:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 15:10:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:10:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 15:10:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 15:10:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 17. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 15:10:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 15:10:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 15:10:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staff_deactivation_reactivation_history.php?page=1&limit=10
+Source: get_staff_deactivation_reactivation_history.php (Line 21)
+Message: Super Admin ID 22675443 is retrieving deleted staff records.
+----------------------------------------
+
+[2025-06-16 15:10:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staff_deactivation_reactivation_history.php?page=1&limit=10
+Source: get_staff_deactivation_reactivation_history.php (Line 114)
+Message: Super Admin ID: 22675443 fetched deleted staff list.
+----------------------------------------
+
+[2025-06-16 15:10:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:10:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:10:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 15:10:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:10:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 15:10:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 15:10:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 17. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 15:10:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 15:10:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 15:10:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staff_reactivation_request.php?page=1&limit=10
+Source: get_staff_reactivation_request.php (Line 21)
+Message: Super Admin ID 22675443 is retrieving deleted staff records.
+----------------------------------------
+
+[2025-06-16 15:10:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staff_reactivation_request.php?page=1&limit=10
+Source: get_staff_reactivation_request.php (Line 85)
+Message: Super Admin ID: 22675443 fetched deleted staff list.
+----------------------------------------
+
+[2025-06-16 15:11:34]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 89)
+Message: Login attempt initiated for username: abdulrahmonadebayo@gmail.com from IP: ::1
+----------------------------------------
+
+[2025-06-16 15:11:34]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 109)
+Message: User found - ID: 1428985436, Block Status: 0, Delete Status: Yes
+----------------------------------------
+
+[2025-06-16 15:11:34]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 119)
+Message: Login blocked - Account 1428985436 is deactivated. Attempt from IP: ::1
+----------------------------------------
+
+[2025-06-16 15:11:59]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/send_otp.php
+Source: send_otp.php (Line 60)
+Message: OTP_admin_SUCCESS: OTP generated for abdulrahmonadebayo@gmail.com from IP ::1
+----------------------------------------
+
+[2025-06-16 15:13:03]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/account_reactivation.php
+Source: verify_otp.php (Line 48)
+Message: OTP_VERIFY_admin_SUCCESS: OTP verified for 3 (abdulrahmonadebayo@gmail.com)
+----------------------------------------
+
+[2025-06-16 15:13:03]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/account_reactivation.php
+Source: account_reactivation.php (Line 92)
+Message: REACTIVATION_ATTEMPT: Starting reactivation process for admin 1428985436
+----------------------------------------
+
+[2025-06-16 15:13:03]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/account_reactivation.php
+Source: account_reactivation.php (Line 109)
+Message: REACTIVATION_VALIDATED: No existing pending request for admin 1428985436
+----------------------------------------
+
+[2025-06-16 15:13:03]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/account_reactivation.php
+Source: account_reactivation.php (Line 132)
+Message: REACTIVATION_VALIDATED: Last declined request for admin 1428985436 was more than 24 hours ago
+----------------------------------------
+
+[2025-06-16 15:13:03]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/account_reactivation.php
+Source: account_reactivation.php (Line 149)
+Message: REACTIVATION_LOG_FOUND: Latest deactivation log ID for admin 1428985436 is 3
+----------------------------------------
+
+[2025-06-16 15:13:03]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/account_reactivation.php
+Source: account_reactivation.php (Line 161)
+Message: REACTIVATION_CREATED: Reactivation request 5 submitted for admin 1428985436
+----------------------------------------
+
+[2025-06-16 15:13:03]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/account_reactivation.php
+Source: account_reactivation.php (Line 167)
+Message: REACTIVATION_NOTIFICATION_SENT: Notification sent to Super Admin for request 5
+----------------------------------------
+
+[2025-06-16 15:13:03]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/account_reactivation.php
+Source: account_reactivation.php (Line 177)
+Message: REACTIVATION_SUCCESS: Request 5 successfully committed for admin 1428985436
+----------------------------------------
+
+[2025-06-16 15:15:02]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 15:15:02]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:15:02]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 15:15:02]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 15:15:02]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 18. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 15:15:02]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 15:15:02]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 15:15:02]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staff_reactivation_request.php?page=1&limit=10
+Source: get_staff_reactivation_request.php (Line 21)
+Message: Super Admin ID 22675443 is retrieving deleted staff records.
+----------------------------------------
+
+[2025-06-16 15:15:02]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staff_reactivation_request.php?page=1&limit=10
+Source: get_staff_reactivation_request.php (Line 85)
+Message: Super Admin ID: 22675443 fetched deleted staff list.
+----------------------------------------
+
+[2025-06-16 15:15:02]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:15:07]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_reactivation_request_details.php?staff_id=1428985436&reactivation_id=5
+Source: get_reactivation_request_details.php (Line 7)
+Message: Staff deactivation/reactivation details fetch process started
+----------------------------------------
+
+[2025-06-16 15:15:07]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_reactivation_request_details.php?staff_id=1428985436&reactivation_id=5
+Source: get_reactivation_request_details.php (Line 31)
+Message: Request initiated by Super Admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:15:07]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_reactivation_request_details.php?staff_id=1428985436&reactivation_id=5
+Source: get_reactivation_request_details.php (Line 45)
+Message: Processing details for staff ID: 1428985436 and reactivation ID: 5
+----------------------------------------
+
+[2025-06-16 15:15:07]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_reactivation_request_details.php?staff_id=1428985436&reactivation_id=5
+Source: get_reactivation_request_details.php (Line 50)
+Message: Database transaction started
+----------------------------------------
+
+[2025-06-16 15:15:07]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_reactivation_request_details.php?staff_id=1428985436&reactivation_id=5
+Source: get_reactivation_request_details.php (Line 112)
+Message: Successfully retrieved record for staff ID: 1428985436
+----------------------------------------
+
+[2025-06-16 15:15:07]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_reactivation_request_details.php?staff_id=1428985436&reactivation_id=5
+Source: get_reactivation_request_details.php (Line 148)
+Message: Details fetch completed successfully
+----------------------------------------
+
+[2025-06-16 15:15:07]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_reactivation_request_details.php?staff_id=1428985436&reactivation_id=5
+Source: get_reactivation_request_details.php (Line 170)
+Message: Staff deactivation/reactivation details fetch process completed
+----------------------------------------
+
+[2025-06-16 15:15:23]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 44)
+Message: Super Admin ID 22675443 initiated a reactivation action: Reactivated for Staff ID 1428985436.
+----------------------------------------
+
+[2025-06-16 15:15:23]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 55)
+Message: Transaction started for Staff ID 1428985436 reactivation.
+----------------------------------------
+
+[2025-06-16 15:15:23]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 103)
+Message: Fetched reactivation log. Reactivation ID: 5, Deactivation ID: 3 for Staff ID 1428985436.
+----------------------------------------
+
+[2025-06-16 15:15:23]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 113)
+Message: Reactivation log updated with status 'Reactivated' for Staff ID 1428985436.
+----------------------------------------
+
+[2025-06-16 15:15:23]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 124)
+Message: Account reactivated in admin_tbl for Staff ID 1428985436.
+----------------------------------------
+
+[2025-06-16 15:15:28]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 198)
+Message: Reactivation email sent to Staff ID 1428985436 with status: Reactivated
+----------------------------------------
+
+[2025-06-16 15:15:28]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 134)
+Message: Transaction committed for Staff ID 1428985436 reactivation.
+----------------------------------------
+
+[2025-06-16 15:15:28]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 135)
+Message: Super Admin ID 22675443 successfully completed Reactivated for Staff ID 1428985436.
+----------------------------------------
+
+[2025-06-16 15:16:04]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:16:04]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staff_reactivation_request.php?page=1&limit=10
+Source: get_staff_reactivation_request.php (Line 21)
+Message: Super Admin ID 22675443 is retrieving deleted staff records.
+----------------------------------------
+
+[2025-06-16 15:16:04]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staff_reactivation_request.php?page=1&limit=10
+Source: get_staff_reactivation_request.php (Line 85)
+Message: Super Admin ID: 22675443 fetched deleted staff list.
+----------------------------------------
+
+[2025-06-16 15:16:05]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 15:16:05]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:16:05]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 15:16:05]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 15:16:05]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 18. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 15:16:05]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 15:16:05]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 15:21:16]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 15:21:16]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:21:16]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 15:21:16]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 15:21:16]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 18. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 15:21:16]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 15:21:16]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 15:21:16]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staff_reactivation_request.php?page=1&limit=10
+Source: get_staff_reactivation_request.php (Line 21)
+Message: Super Admin ID 22675443 is retrieving deleted staff records.
+----------------------------------------
+
+[2025-06-16 15:21:16]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staff_reactivation_request.php?page=1&limit=10
+Source: get_staff_reactivation_request.php (Line 85)
+Message: Super Admin ID: 22675443 fetched deleted staff list.
+----------------------------------------
+
+[2025-06-16 15:21:16]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:27:44]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/send_otp.php
+Source: send_otp.php (Line 60)
+Message: OTP_admin_SUCCESS: OTP generated for rahmondebayo@gmail.com from IP ::1
+----------------------------------------
+
+[2025-06-16 15:28:26]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/account_reactivation.php
+Source: verify_otp.php (Line 48)
+Message: OTP_VERIFY_admin_SUCCESS: OTP verified for 17 (rahmondebayo@gmail.com)
+----------------------------------------
+
+[2025-06-16 15:28:26]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/account_reactivation.php
+Source: account_reactivation.php (Line 92)
+Message: REACTIVATION_ATTEMPT: Starting reactivation process for admin 868322890
+----------------------------------------
+
+[2025-06-16 15:28:26]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/account_reactivation.php
+Source: account_reactivation.php (Line 109)
+Message: REACTIVATION_VALIDATED: No existing pending request for admin 868322890
+----------------------------------------
+
+[2025-06-16 15:28:26]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/account_reactivation.php
+Source: account_reactivation.php (Line 132)
+Message: REACTIVATION_VALIDATED: Last declined request for admin 868322890 was more than 24 hours ago
+----------------------------------------
+
+[2025-06-16 15:28:26]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/account_reactivation.php
+Source: account_reactivation.php (Line 149)
+Message: REACTIVATION_LOG_FOUND: Latest deactivation log ID for admin 868322890 is 4
+----------------------------------------
+
+[2025-06-16 15:28:26]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/account_reactivation.php
+Source: account_reactivation.php (Line 161)
+Message: REACTIVATION_CREATED: Reactivation request 6 submitted for admin 868322890
+----------------------------------------
+
+[2025-06-16 15:28:26]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/account_reactivation.php
+Source: account_reactivation.php (Line 167)
+Message: REACTIVATION_NOTIFICATION_SENT: Notification sent to Super Admin for request 6
+----------------------------------------
+
+[2025-06-16 15:28:26]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/account_reactivation.php
+Source: account_reactivation.php (Line 177)
+Message: REACTIVATION_SUCCESS: Request 6 successfully committed for admin 868322890
+----------------------------------------
+
+[2025-06-16 15:28:54]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:28:54]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staff_reactivation_request.php?page=1&limit=10
+Source: get_staff_reactivation_request.php (Line 21)
+Message: Super Admin ID 22675443 is retrieving deleted staff records.
+----------------------------------------
+
+[2025-06-16 15:28:54]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staff_reactivation_request.php?page=1&limit=10
+Source: get_staff_reactivation_request.php (Line 85)
+Message: Super Admin ID: 22675443 fetched deleted staff list.
+----------------------------------------
+
+[2025-06-16 15:28:54]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 15:28:54]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:28:54]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 15:28:54]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 15:28:54]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 19. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 15:28:54]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 15:28:54]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 15:29:01]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_reactivation_request_details.php?staff_id=868322890&reactivation_id=6
+Source: get_reactivation_request_details.php (Line 7)
+Message: Staff deactivation/reactivation details fetch process started
+----------------------------------------
+
+[2025-06-16 15:29:01]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_reactivation_request_details.php?staff_id=868322890&reactivation_id=6
+Source: get_reactivation_request_details.php (Line 31)
+Message: Request initiated by Super Admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:29:01]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_reactivation_request_details.php?staff_id=868322890&reactivation_id=6
+Source: get_reactivation_request_details.php (Line 45)
+Message: Processing details for staff ID: 868322890 and reactivation ID: 6
+----------------------------------------
+
+[2025-06-16 15:29:01]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_reactivation_request_details.php?staff_id=868322890&reactivation_id=6
+Source: get_reactivation_request_details.php (Line 50)
+Message: Database transaction started
+----------------------------------------
+
+[2025-06-16 15:29:02]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_reactivation_request_details.php?staff_id=868322890&reactivation_id=6
+Source: get_reactivation_request_details.php (Line 112)
+Message: Successfully retrieved record for staff ID: 868322890
+----------------------------------------
+
+[2025-06-16 15:29:02]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_reactivation_request_details.php?staff_id=868322890&reactivation_id=6
+Source: get_reactivation_request_details.php (Line 148)
+Message: Details fetch completed successfully
+----------------------------------------
+
+[2025-06-16 15:29:02]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_reactivation_request_details.php?staff_id=868322890&reactivation_id=6
+Source: get_reactivation_request_details.php (Line 170)
+Message: Staff deactivation/reactivation details fetch process completed
+----------------------------------------
+
+[2025-06-16 15:29:24]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 15:29:24]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:29:24]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 15:29:24]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 15:29:24]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 19. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 15:29:24]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 15:29:24]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 15:29:24]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:29:24]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staff_reactivation_request.php?page=1&limit=10
+Source: get_staff_reactivation_request.php (Line 21)
+Message: Super Admin ID 22675443 is retrieving deleted staff records.
+----------------------------------------
+
+[2025-06-16 15:29:24]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staff_reactivation_request.php?page=1&limit=10
+Source: get_staff_reactivation_request.php (Line 85)
+Message: Super Admin ID: 22675443 fetched deleted staff list.
+----------------------------------------
+
+[2025-06-16 15:29:27]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_reactivation_request_details.php?staff_id=868322890&reactivation_id=6
+Source: get_reactivation_request_details.php (Line 7)
+Message: Staff deactivation/reactivation details fetch process started
+----------------------------------------
+
+[2025-06-16 15:29:27]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_reactivation_request_details.php?staff_id=868322890&reactivation_id=6
+Source: get_reactivation_request_details.php (Line 31)
+Message: Request initiated by Super Admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:29:27]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_reactivation_request_details.php?staff_id=868322890&reactivation_id=6
+Source: get_reactivation_request_details.php (Line 45)
+Message: Processing details for staff ID: 868322890 and reactivation ID: 6
+----------------------------------------
+
+[2025-06-16 15:29:27]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_reactivation_request_details.php?staff_id=868322890&reactivation_id=6
+Source: get_reactivation_request_details.php (Line 50)
+Message: Database transaction started
+----------------------------------------
+
+[2025-06-16 15:29:27]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_reactivation_request_details.php?staff_id=868322890&reactivation_id=6
+Source: get_reactivation_request_details.php (Line 112)
+Message: Successfully retrieved record for staff ID: 868322890
+----------------------------------------
+
+[2025-06-16 15:29:27]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_reactivation_request_details.php?staff_id=868322890&reactivation_id=6
+Source: get_reactivation_request_details.php (Line 148)
+Message: Details fetch completed successfully
+----------------------------------------
+
+[2025-06-16 15:29:27]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_reactivation_request_details.php?staff_id=868322890&reactivation_id=6
+Source: get_reactivation_request_details.php (Line 170)
+Message: Staff deactivation/reactivation details fetch process completed
+----------------------------------------
+
+[2025-06-16 15:29:40]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 44)
+Message: Super Admin ID 22675443 initiated a reactivation action: Reactivated for Staff ID 868322890.
+----------------------------------------
+
+[2025-06-16 15:29:40]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 55)
+Message: Transaction started for Staff ID 868322890 reactivation.
+----------------------------------------
+
+[2025-06-16 15:29:40]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 103)
+Message: Fetched reactivation log. Reactivation ID: 6, Deactivation ID: 4 for Staff ID 868322890.
+----------------------------------------
+
+[2025-06-16 15:29:40]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 113)
+Message: Reactivation log updated with status 'Reactivated' for Staff ID 868322890.
+----------------------------------------
+
+[2025-06-16 15:29:40]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 124)
+Message: Account reactivated in admin_tbl for Staff ID 868322890.
+----------------------------------------
+
+[2025-06-16 15:29:44]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 198)
+Message: Reactivation email sent to Staff ID 868322890 with status: Reactivated
+----------------------------------------
+
+[2025-06-16 15:29:44]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 134)
+Message: Transaction committed for Staff ID 868322890 reactivation.
+----------------------------------------
+
+[2025-06-16 15:29:44]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 135)
+Message: Super Admin ID 22675443 successfully completed Reactivated for Staff ID 868322890.
+----------------------------------------
+
+[2025-06-16 15:30:01]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:30:01]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staff_reactivation_request.php?page=1&limit=10
+Source: get_staff_reactivation_request.php (Line 21)
+Message: Super Admin ID 22675443 is retrieving deleted staff records.
+----------------------------------------
+
+[2025-06-16 15:30:01]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staff_reactivation_request.php?page=1&limit=10
+Source: get_staff_reactivation_request.php (Line 85)
+Message: Super Admin ID: 22675443 fetched deleted staff list.
+----------------------------------------
+
+[2025-06-16 15:30:01]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 15:30:01]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:30:01]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 15:30:01]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 15:30:01]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 19. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 15:30:01]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 15:30:01]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 15:30:09]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 15:30:09]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:30:09]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 15:30:09]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 15:30:09]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 19. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 15:30:09]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 15:30:09]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 15:30:09]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 16.
+----------------------------------------
+
+[2025-06-16 15:30:09]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 15:30:09]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 15:30:09]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:30:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=2&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 16.
+----------------------------------------
+
+[2025-06-16 15:30:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=2&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 6 staff records for page 2.
+----------------------------------------
+
+[2025-06-16 15:30:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=2&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 15:30:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 16.
+----------------------------------------
+
+[2025-06-16 15:30:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 15:30:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 15:32:06]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:32:06]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 15:32:06]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:32:06]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 15:32:06]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 15:32:06]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 19. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 15:32:06]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 15:32:06]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 15:32:06]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staff_deactivation_reactivation_history.php?page=1&limit=10
+Source: get_staff_deactivation_reactivation_history.php (Line 21)
+Message: Super Admin ID 22675443 is retrieving deleted staff records.
+----------------------------------------
+
+[2025-06-16 15:32:06]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staff_deactivation_reactivation_history.php?page=1&limit=10
+Source: get_staff_deactivation_reactivation_history.php (Line 114)
+Message: Super Admin ID: 22675443 fetched deleted staff list.
+----------------------------------------
+
+[2025-06-16 15:37:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:37:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 15:37:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:37:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 15:37:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 15:37:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 19. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 15:37:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 15:37:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 15:37:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 16.
+----------------------------------------
+
+[2025-06-16 15:37:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 15:37:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 15:38:05]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 7)
+Message: Staff details fetch process started
+----------------------------------------
+
+[2025-06-16 15:38:05]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 21)
+Message: Staff details request initiated by admin ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-06-16 15:38:05]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 44)
+Message: Processing staff details for ID: 1428985436
+----------------------------------------
+
+[2025-06-16 15:38:05]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 49)
+Message: Transaction started for staff details fetch
+----------------------------------------
+
+[2025-06-16 15:38:05]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 74)
+Message: Successfully retrieved staff details for ID: 1428985436
+----------------------------------------
+
+[2025-06-16 15:38:05]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 86)
+Message: Staff details fetch completed successfully
+----------------------------------------
+
+[2025-06-16 15:38:05]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 106)
+Message: Staff details fetch process completed
+----------------------------------------
+
+[2025-06-16 15:38:20]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_staff.php
+Source: delete_staff.php (Line 164)
+Message: Deactivation email sent to user ID: 1428985436
+----------------------------------------
+
+[2025-06-16 15:38:20]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_staff.php
+Source: delete_staff.php (Line 172)
+Message: Staff ID: 1428985436 Account has been successfully deactivated by Super Admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:38:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:38:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 15:38:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:38:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 15:38:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 15:38:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 19. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 15:38:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 15:38:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 15:38:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 15:38:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 15:38:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 15:38:33]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 15:38:33]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:38:33]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 15:38:33]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 15:38:33]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 19. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 15:38:33]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 15:38:33]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 15:38:33]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 15:38:33]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 15:38:33]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 15:38:33]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:39:42]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=2&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 15:39:42]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=2&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 5 staff records for page 2.
+----------------------------------------
+
+[2025-06-16 15:39:42]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=2&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 15:39:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 15:39:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 15:39:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 15:42:42]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 15:42:42]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:42:42]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 15:42:42]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 15:42:42]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 19. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 15:42:42]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 15:42:42]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 15:42:42]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:42:42]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 15:42:42]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 15:42:42]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 15:43:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:43:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 15:43:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:43:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 15:43:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 15:43:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 19. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 15:43:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 15:43:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 15:43:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 15:43:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 15:43:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 15:43:26]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 7)
+Message: Staff details fetch process started
+----------------------------------------
+
+[2025-06-16 15:43:26]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 21)
+Message: Staff details request initiated by admin ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-06-16 15:43:26]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 44)
+Message: Processing staff details for ID: 1428985436
+----------------------------------------
+
+[2025-06-16 15:43:26]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 49)
+Message: Transaction started for staff details fetch
+----------------------------------------
+
+[2025-06-16 15:43:26]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 74)
+Message: Successfully retrieved staff details for ID: 1428985436
+----------------------------------------
+
+[2025-06-16 15:43:26]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 86)
+Message: Staff details fetch completed successfully
+----------------------------------------
+
+[2025-06-16 15:43:26]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 106)
+Message: Staff details fetch process completed
+----------------------------------------
+
+[2025-06-16 15:45:52]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 7)
+Message: Staff details fetch process started
+----------------------------------------
+
+[2025-06-16 15:45:52]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 21)
+Message: Staff details request initiated by admin ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-06-16 15:45:52]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 44)
+Message: Processing staff details for ID: 1428985436
+----------------------------------------
+
+[2025-06-16 15:45:52]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 49)
+Message: Transaction started for staff details fetch
+----------------------------------------
+
+[2025-06-16 15:45:52]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 74)
+Message: Successfully retrieved staff details for ID: 1428985436
+----------------------------------------
+
+[2025-06-16 15:45:52]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 86)
+Message: Staff details fetch completed successfully
+----------------------------------------
+
+[2025-06-16 15:45:52]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 106)
+Message: Staff details fetch process completed
+----------------------------------------
+
+[2025-06-16 15:49:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:49:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 15:49:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:49:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 15:49:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 15:49:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 19. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 15:49:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 15:49:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 15:49:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_drivers.php?page=1&limit=10
+Source: get_drivers.php (Line 11)
+Message: Driver listing fetch process started
+----------------------------------------
+
+[2025-06-16 15:49:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_drivers.php?page=1&limit=10
+Source: get_drivers.php (Line 24)
+Message: Request initiated by admin ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-06-16 15:49:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_drivers.php?page=1&limit=10
+Source: get_drivers.php (Line 41)
+Message: Fetching drivers - Page: 1, Limit: 10, Offset: 0
+----------------------------------------
+
+[2025-06-16 15:49:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_drivers.php?page=1&limit=10
+Source: get_drivers.php (Line 46)
+Message: Database transaction started
+----------------------------------------
+
+[2025-06-16 15:49:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_drivers.php?page=1&limit=10
+Source: get_drivers.php (Line 63)
+Message: Total drivers found: 9, Total pages: 1
+----------------------------------------
+
+[2025-06-16 15:49:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_drivers.php?page=1&limit=10
+Source: get_drivers.php (Line 102)
+Message: Successfully retrieved 9 drivers
+----------------------------------------
+
+[2025-06-16 15:49:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_drivers.php?page=1&limit=10
+Source: get_drivers.php (Line 122)
+Message: Driver listing fetch completed successfully
+----------------------------------------
+
+[2025-06-16 15:49:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_drivers.php?page=1&limit=10
+Source: get_drivers.php (Line 150)
+Message: Driver listing fetch process completed
+----------------------------------------
+
+[2025-06-16 15:51:35]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 15:51:35]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:51:35]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 15:51:35]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 15:51:35]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 19. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 15:51:35]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 15:51:35]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 15:51:35]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:51:35]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 15:51:35]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 15:51:35]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 15:52:10]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:52:10]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 15:52:10]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:52:10]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 15:52:10]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 15:52:10]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 19. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 15:52:10]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 15:52:10]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 15:52:10]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 15:52:10]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 15:52:10]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 15:53:00]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:53:00]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 15:53:00]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:53:00]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 15:53:00]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 15:53:00]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 19. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 15:53:00]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 15:53:00]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 15:53:00]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 15:53:00]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 15:53:00]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 15:53:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 15:53:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:53:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 15:53:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 15:53:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 19. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 15:53:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 15:53:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 15:53:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:53:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 15:53:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 15:53:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 15:54:06]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 89)
+Message: Login attempt initiated for username: rahmondebayo@gmail.com from IP: ::1
+----------------------------------------
+
+[2025-06-16 15:54:06]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 109)
+Message: User found - ID: 868322890, Block Status: 0, Delete Status: NULL
+----------------------------------------
+
+[2025-06-16 15:54:06]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 196)
+Message: Checking lockout status for user: 868322890 (Lockout Duration: 60 minutes)
+----------------------------------------
+
+[2025-06-16 15:54:06]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 213)
+Message: No lockout record found for user: 868322890
+----------------------------------------
+
+[2025-06-16 15:54:06]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 135)
+Message: Login failed - Invalid password for user 868322890 from IP: ::1
+----------------------------------------
+
+[2025-06-16 15:54:06]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 302)
+Message: Processing failed login for user: 868322890 from IP: ::1
+----------------------------------------
+
+[2025-06-16 15:54:06]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 336)
+Message: Login attempt for user: 868322890 - Current attempts: 1 of 3 - Locked: No
+----------------------------------------
+
+[2025-06-16 15:54:06]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 410)
+Message: Failed login recorded for 868322890 - Attempt 1 of 3
+----------------------------------------
+
+[2025-06-16 15:54:45]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 89)
+Message: Login attempt initiated for username: abdulrahmonadebayo@gmail.com from IP: ::1
+----------------------------------------
+
+[2025-06-16 15:54:45]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 109)
+Message: User found - ID: 1428985436, Block Status: 0, Delete Status: Yes
+----------------------------------------
+
+[2025-06-16 15:54:45]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 119)
+Message: Login blocked - Account 1428985436 is deactivated. Attempt from IP: ::1
+----------------------------------------
+
+[2025-06-16 15:55:53]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/reset_password.php
+Source: reset_password.php (Line 83)
+Message: Password Reset Success: Password reset completed rahmondebayo@gmail.com
+----------------------------------------
+
+[2025-06-16 15:56:07]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 89)
+Message: Login attempt initiated for username: rahmondebayo@gmail.com from IP: ::1
+----------------------------------------
+
+[2025-06-16 15:56:07]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 109)
+Message: User found - ID: 868322890, Block Status: 0, Delete Status: NULL
+----------------------------------------
+
+[2025-06-16 15:56:07]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 196)
+Message: Checking lockout status for user: 868322890 (Lockout Duration: 60 minutes)
+----------------------------------------
+
+[2025-06-16 15:56:07]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 12)
+Message: Checking for existing sessions for user: 868322890
+----------------------------------------
+
+[2025-06-16 15:56:07]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 41)
+Message: Found active session (ID: spgca57t546ti8o7tk7t5coee9) - attempting destruction
+----------------------------------------
+
+[2025-06-16 15:56:08]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 61)
+Message: Session destroyed successfully
+----------------------------------------
+
+[2025-06-16 15:56:08]
+UserID: 868322890
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 179)
+Message: Login successful for user 868322890 from IP: ::1
+----------------------------------------
+
+[2025-06-16 15:56:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:56:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 15:56:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 15:56:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 15:56:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 15:56:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 19. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 15:56:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 15:56:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 15:56:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 15:56:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 15:56:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 15:56:22]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 868322890
+----------------------------------------
+
+[2025-06-16 15:56:22]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 10)
+Message: Random customer names fetch process started
+----------------------------------------
+
+[2025-06-16 15:56:22]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 15:56:22]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 868322890
+----------------------------------------
+
+[2025-06-16 15:56:22]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Admin
+----------------------------------------
+
+[2025-06-16 15:56:22]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 15:56:22]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 7. Total pages: 2.
+----------------------------------------
+
+[2025-06-16 15:56:22]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 15:56:22]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 15:56:22]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 14)
+Message: Database transaction started
+----------------------------------------
+
+[2025-06-16 15:56:22]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 32)
+Message: Successfully retrieved 3 random customer names
+----------------------------------------
+
+[2025-06-16 15:56:22]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 43)
+Message: Random customer names fetch completed successfully
+----------------------------------------
+
+[2025-06-16 15:56:22]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 67)
+Message: Random customer names fetch process completed
+----------------------------------------
+
+[2025-06-16 15:56:22]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 6)
+Message: Fetching promos script started.
+----------------------------------------
+
+[2025-06-16 15:56:22]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 19)
+Message: Admin unique_id found in session: 868322890
+----------------------------------------
+
+[2025-06-16 15:56:22]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 32)
+Message: Pagination parameters - Page: 1, Limit: 10, Offset: 0
+----------------------------------------
+
+[2025-06-16 15:56:22]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 48)
+Message: Total promos count: 7
+----------------------------------------
+
+[2025-06-16 15:56:22]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 69)
+Message: Fetched 7 paginated promos.
+----------------------------------------
+
+[2025-06-16 15:56:22]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 92)
+Message: Fetched 0 ongoing promos.
+----------------------------------------
+
+[2025-06-16 15:56:22]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 108)
+Message: Fetching promos script completed successfully.
+----------------------------------------
+
+[2025-06-16 15:56:43]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 868322890
+----------------------------------------
+
+[2025-06-16 15:56:43]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 15:56:43]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 868322890
+----------------------------------------
+
+[2025-06-16 15:56:43]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Admin
+----------------------------------------
+
+[2025-06-16 15:56:43]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 15:56:43]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 7. Total pages: 2.
+----------------------------------------
+
+[2025-06-16 15:56:43]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 15:56:43]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 15:56:43]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/staff_profile.php
+Source: staff_profile.php (Line 25)
+Message: Admin profile fetched successfully for user ID: 868322890
+----------------------------------------
+
+[2025-06-16 15:56:43]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 15:56:43]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 15:56:43]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 15:56:43]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 15:56:43]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 15:56:43]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 15:56:48]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 868322890
+----------------------------------------
+
+[2025-06-16 15:56:49]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 15:56:49]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 868322890
+----------------------------------------
+
+[2025-06-16 15:56:49]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Admin
+----------------------------------------
+
+[2025-06-16 15:56:49]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 15:56:49]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 7. Total pages: 2.
+----------------------------------------
+
+[2025-06-16 15:56:49]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 15:56:49]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 15:56:49]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 15:56:49]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 15:56:49]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 15:57:03]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 868322890
+----------------------------------------
+
+[2025-06-16 15:57:03]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 15:57:03]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 868322890
+----------------------------------------
+
+[2025-06-16 15:57:03]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Admin
+----------------------------------------
+
+[2025-06-16 15:57:03]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 15:57:03]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 7. Total pages: 2.
+----------------------------------------
+
+[2025-06-16 15:57:03]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 15:57:03]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 15:57:03]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/staff_profile.php
+Source: staff_profile.php (Line 25)
+Message: Admin profile fetched successfully for user ID: 868322890
+----------------------------------------
+
+[2025-06-16 15:57:03]
+UserID: 868322890
+Method: GET
+URL: http://localhost/transaction_manager/backend/staff_profile.php
+Source: staff_profile.php (Line 25)
+Message: Admin profile fetched successfully for user ID: 868322890
+----------------------------------------
+
+[2025-06-16 16:00:52]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 16:00:52]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 16:00:52]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 16:00:52]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 16:00:52]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 19. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 16:00:52]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 16:00:52]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 16:00:52]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 16:00:52]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 16:00:52]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 16:00:52]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 16:01:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 16:01:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 16:01:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 16:01:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 16:01:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 16:01:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 19. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 16:01:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 16:01:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 16:01:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 16:01:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 16:01:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 16:02:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 16:02:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 16:02:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 16:02:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 16:02:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 16:02:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 19. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 16:02:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 16:02:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 16:02:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 16:02:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 16:02:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 16:03:08]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=2&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 16:03:08]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=2&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 6 staff records for page 2.
+----------------------------------------
+
+[2025-06-16 16:03:08]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=2&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 16:03:09]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 16:03:09]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 16:03:09]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 16:03:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 16:03:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 16:03:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 16:03:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 16:03:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 19. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 16:03:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 16:03:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 16:03:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 16:03:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 16:03:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 16:03:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 16:09:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 16:09:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 16:09:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 16:09:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 16:09:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 19. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 16:09:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 16:09:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 16:09:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 16:09:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 16:09:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 16:09:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 16:09:32]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=2&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 16:09:32]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=2&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 6 staff records for page 2.
+----------------------------------------
+
+[2025-06-16 16:09:32]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=2&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 16:10:03]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 16:10:03]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 16:10:03]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 16:10:03]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 16:10:03]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 16:10:03]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 19. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 16:10:03]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 16:10:03]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 16:10:04]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 16:10:04]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 16:10:04]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 16:10:12]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=2&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 16:10:12]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=2&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 6 staff records for page 2.
+----------------------------------------
+
+[2025-06-16 16:10:12]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=2&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 16:10:13]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 16:10:13]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 16:10:13]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 16:14:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 16:14:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 16:14:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 16:14:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 16:14:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 19. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 16:14:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 16:14:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 16:14:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 16:14:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 16:14:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 16:14:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 16:15:26]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=2&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 16:15:26]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=2&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 6 staff records for page 2.
+----------------------------------------
+
+[2025-06-16 16:15:26]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=2&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 16:15:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 16:15:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 16:15:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 16:15:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 16:15:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 19. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 16:15:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 16:15:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 16:15:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 16:15:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 16:15:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 16:15:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 16:15:52]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 7)
+Message: Staff details fetch process started
+----------------------------------------
+
+[2025-06-16 16:15:52]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 21)
+Message: Staff details request initiated by admin ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-06-16 16:15:52]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 44)
+Message: Processing staff details for ID: 860113631
+----------------------------------------
+
+[2025-06-16 16:15:52]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 49)
+Message: Transaction started for staff details fetch
+----------------------------------------
+
+[2025-06-16 16:15:52]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 74)
+Message: Successfully retrieved staff details for ID: 860113631
+----------------------------------------
+
+[2025-06-16 16:15:52]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 86)
+Message: Staff details fetch completed successfully
+----------------------------------------
+
+[2025-06-16 16:15:52]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 106)
+Message: Staff details fetch process completed
+----------------------------------------
+
+[2025-06-16 16:16:40]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 16:16:40]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 16:16:40]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 16:16:40]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 16:16:40]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 19. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 16:16:40]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 16:16:40]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 16:16:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 16:16:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 16:16:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 16:16:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 16:17:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 16:17:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 16:17:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 16:17:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 16:17:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 19. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 16:17:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 16:17:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 16:17:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 16:17:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 16:17:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 16:17:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 16:17:36]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 16:17:36]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 16:17:36]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 16:17:36]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 16:17:36]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 16:17:36]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 19. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 16:17:36]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 16:17:36]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 16:17:36]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 15.
+----------------------------------------
+
+[2025-06-16 16:17:36]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-06-16 16:17:36]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-06-16 16:18:09]
+UserID: 868322890
+Method: POST
+URL: http://localhost/transaction_manager/backend/logout.php
+Source: logout.php (Line 7)
+Message: Logout process initiated
+----------------------------------------
+
+[2025-06-16 16:18:09]
+UserID: 868322890
+Method: POST
+URL: http://localhost/transaction_manager/backend/logout.php
+Source: logout.php (Line 23)
+Message: Processing logout for user: 868322890
+----------------------------------------
+
+[2025-06-16 16:18:09]
+UserID: 868322890
+Method: POST
+URL: http://localhost/transaction_manager/backend/logout.php
+Source: logout.php (Line 48)
+Message: Found active session: b26jt1p118fl1jagebrf9t87h5 (Status: Active)
+----------------------------------------
+
+[2025-06-16 16:18:09]
+UserID: 868322890
+Method: POST
+URL: http://localhost/transaction_manager/backend/logout.php
+Source: logout.php (Line 65)
+Message: Session invalidated in DB. Affected rows: 1
+----------------------------------------
+
+[2025-06-16 16:18:09]
+UserID: 868322890
+Method: POST
+URL: http://localhost/transaction_manager/backend/logout.php
+Source: logout.php (Line 74)
+Message: Session destroyed. Previous session data: {"unique_id":868322890,"firstname":"Faiz","lastname":"fasasi","role":"Admin","restriction_id":0,"secret_answer":"4df7caa0cb9204ff329c082eba7ba0a2","ip_address":"::1","user_agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/137.0.0.0 Safari\/537.36 Edg\/137.0.0.0","created_at":1750085768,"last_activity":1750085768}
+----------------------------------------
+
+[2025-06-16 16:18:09]
+UserID: 868322890
+Method: POST
+URL: http://localhost/transaction_manager/backend/logout.php
+Source: logout.php (Line 77)
+Message: Logout successful for user: 868322890
+----------------------------------------
+
+[2025-06-16 16:18:28]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/send_otp.php
+Source: send_otp.php (Line 60)
+Message: OTP_admin_SUCCESS: OTP generated for abdulrahmonadebayo@gmail.com from IP ::1
+----------------------------------------
+
+[2025-06-16 16:19:41]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/account_reactivation.php
+Source: verify_otp.php (Line 48)
+Message: OTP_VERIFY_admin_SUCCESS: OTP verified for 3 (abdulrahmonadebayo@gmail.com)
+----------------------------------------
+
+[2025-06-16 16:19:41]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/account_reactivation.php
+Source: account_reactivation.php (Line 92)
+Message: REACTIVATION_ATTEMPT: Starting reactivation process for admin 1428985436
+----------------------------------------
+
+[2025-06-16 16:19:41]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/account_reactivation.php
+Source: account_reactivation.php (Line 109)
+Message: REACTIVATION_VALIDATED: No existing pending request for admin 1428985436
+----------------------------------------
+
+[2025-06-16 16:19:41]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/account_reactivation.php
+Source: account_reactivation.php (Line 132)
+Message: REACTIVATION_VALIDATED: Last declined request for admin 1428985436 was more than 24 hours ago
+----------------------------------------
+
+[2025-06-16 16:19:41]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/account_reactivation.php
+Source: account_reactivation.php (Line 149)
+Message: REACTIVATION_LOG_FOUND: Latest deactivation log ID for admin 1428985436 is 5
+----------------------------------------
+
+[2025-06-16 16:19:41]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/account_reactivation.php
+Source: account_reactivation.php (Line 161)
+Message: REACTIVATION_CREATED: Reactivation request 7 submitted for admin 1428985436
+----------------------------------------
+
+[2025-06-16 16:19:41]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/account_reactivation.php
+Source: account_reactivation.php (Line 167)
+Message: REACTIVATION_NOTIFICATION_SENT: Notification sent to Super Admin for request 7
+----------------------------------------
+
+[2025-06-16 16:19:41]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/account_reactivation.php
+Source: account_reactivation.php (Line 177)
+Message: REACTIVATION_SUCCESS: Request 7 successfully committed for admin 1428985436
+----------------------------------------
+
+[2025-06-16 16:20:07]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 16:20:07]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 16:20:07]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 16:20:07]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 16:20:07]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 16:20:07]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 20. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 16:20:07]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 16:20:07]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 16:20:07]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staff_reactivation_request.php?page=1&limit=10
+Source: get_staff_reactivation_request.php (Line 21)
+Message: Super Admin ID 22675443 is retrieving deleted staff records.
+----------------------------------------
+
+[2025-06-16 16:20:07]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staff_reactivation_request.php?page=1&limit=10
+Source: get_staff_reactivation_request.php (Line 85)
+Message: Super Admin ID: 22675443 fetched deleted staff list.
+----------------------------------------
+
+[2025-06-16 16:20:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_reactivation_request_details.php?staff_id=1428985436&reactivation_id=7
+Source: get_reactivation_request_details.php (Line 7)
+Message: Staff deactivation/reactivation details fetch process started
+----------------------------------------
+
+[2025-06-16 16:20:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_reactivation_request_details.php?staff_id=1428985436&reactivation_id=7
+Source: get_reactivation_request_details.php (Line 31)
+Message: Request initiated by Super Admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 16:20:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_reactivation_request_details.php?staff_id=1428985436&reactivation_id=7
+Source: get_reactivation_request_details.php (Line 45)
+Message: Processing details for staff ID: 1428985436 and reactivation ID: 7
+----------------------------------------
+
+[2025-06-16 16:20:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_reactivation_request_details.php?staff_id=1428985436&reactivation_id=7
+Source: get_reactivation_request_details.php (Line 50)
+Message: Database transaction started
+----------------------------------------
+
+[2025-06-16 16:20:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_reactivation_request_details.php?staff_id=1428985436&reactivation_id=7
+Source: get_reactivation_request_details.php (Line 112)
+Message: Successfully retrieved record for staff ID: 1428985436
+----------------------------------------
+
+[2025-06-16 16:20:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_reactivation_request_details.php?staff_id=1428985436&reactivation_id=7
+Source: get_reactivation_request_details.php (Line 148)
+Message: Details fetch completed successfully
+----------------------------------------
+
+[2025-06-16 16:20:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_reactivation_request_details.php?staff_id=1428985436&reactivation_id=7
+Source: get_reactivation_request_details.php (Line 170)
+Message: Staff deactivation/reactivation details fetch process completed
+----------------------------------------
+
+[2025-06-16 16:21:22]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 44)
+Message: Super Admin ID 22675443 initiated a reactivation action: Reactivated for Staff ID 1428985436.
+----------------------------------------
+
+[2025-06-16 16:21:22]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 55)
+Message: Transaction started for Staff ID 1428985436 reactivation.
+----------------------------------------
+
+[2025-06-16 16:21:22]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 103)
+Message: Fetched reactivation log. Reactivation ID: 7, Deactivation ID: 5 for Staff ID 1428985436.
+----------------------------------------
+
+[2025-06-16 16:21:22]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 113)
+Message: Reactivation log updated with status 'Reactivated' for Staff ID 1428985436.
+----------------------------------------
+
+[2025-06-16 16:21:22]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 124)
+Message: Account reactivated in admin_tbl for Staff ID 1428985436.
+----------------------------------------
+
+[2025-06-16 16:21:26]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 198)
+Message: Reactivation email sent to Staff ID 1428985436 with status: Reactivated
+----------------------------------------
+
+[2025-06-16 16:21:26]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 134)
+Message: Transaction committed for Staff ID 1428985436 reactivation.
+----------------------------------------
+
+[2025-06-16 16:21:26]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_admin_account.php
+Source: reactivate_admin_account.php (Line 135)
+Message: Super Admin ID 22675443 successfully completed Reactivated for Staff ID 1428985436.
+----------------------------------------
+
+[2025-06-16 16:21:52]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-06-16 16:21:52]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-16 16:21:52]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 22675443
+----------------------------------------
+
+[2025-06-16 16:21:52]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-16 16:21:52]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-06-16 16:21:52]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 20. Total pages: 4.
+----------------------------------------
+
+[2025-06-16 16:21:52]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-16 16:21:52]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-16 16:21:52]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staff_reactivation_request.php?page=1&limit=10
+Source: get_staff_reactivation_request.php (Line 21)
+Message: Super Admin ID 22675443 is retrieving deleted staff records.
+----------------------------------------
+
+[2025-06-16 16:21:52]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staff_reactivation_request.php?page=1&limit=10
+Source: get_staff_reactivation_request.php (Line 85)
+Message: Super Admin ID: 22675443 fetched deleted staff list.
+----------------------------------------
+
+[2025-06-16 21:57:05]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 6)
+Message: Fetching promos script started.
+----------------------------------------
+
+[2025-06-16 21:57:05]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 10)
+Message: Random customer names fetch process started
+----------------------------------------
+
+[2025-06-16 21:57:05]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 21)
+Message: Customer customer_id found in session: 1260106158
+----------------------------------------
+
+[2025-06-16 21:57:05]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 14)
+Message: Database transaction started
+----------------------------------------
+
+[2025-06-16 21:57:05]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 32)
+Message: Pagination parameters - Page: 1, Limit: 10, Offset: 0
+----------------------------------------
+
+[2025-06-16 21:57:05]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 32)
+Message: Successfully retrieved 3 random customer names
+----------------------------------------
+
+[2025-06-16 21:57:05]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 43)
+Message: Random customer names fetch completed successfully
+----------------------------------------
+
+[2025-06-16 21:57:05]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 67)
+Message: Random customer names fetch process completed
+----------------------------------------
+
+[2025-06-16 21:57:05]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 48)
+Message: Total promos count: 7
+----------------------------------------
+
+[2025-06-16 21:57:05]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 69)
+Message: Fetched 7 paginated promos.
+----------------------------------------
+
+[2025-06-16 21:57:05]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 92)
+Message: Fetched 0 ongoing promos.
+----------------------------------------
+
+[2025-06-16 21:57:05]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 108)
+Message: Fetching promos script completed successfully.
+----------------------------------------
+
