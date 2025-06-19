@@ -16,7 +16,7 @@ if (isset($data['customer_id'])) {
     $unit = $data['unit'];
     $restriction = $data['restriction'];
 
-    if (empty($firstname) || empty($lastname) || empty($email) || empty($phone_number) || empty($group) || empty($gender) || empty($unit) || empty($address) || empty($customerId) || empty($restriction)) {
+    if (empty($firstname) || empty($lastname) || empty($email) || empty($phone_number) || empty($group) || empty($gender) || empty($unit) || empty($address) || empty($customerId)) {
         logActivity("Update Failed: Required fields missing for customer ID $customerId.");
         echo json_encode(['success' => false, 'message' => 'Please fill in all required fields.']);
         exit;
@@ -27,11 +27,11 @@ if (isset($data['customer_id'])) {
         echo json_encode(['success' => false, 'message' => 'Invalid E-mail address.']);
         exit();
     }
-    if ($restriction !== "1") {
-        logActivity("Update Failed: Invalid Restriction Value selected:  '$restriction' for customer ID $customerId.");
-        echo json_encode(['success' => false, 'message' => 'Invalid Restriction Status Selected.']);
-        exit();
-    }
+    // if ($restriction !== "1") {
+    //     logActivity("Update Failed: Invalid Restriction Value selected:  '$restriction' for customer ID $customerId.");
+    //     echo json_encode(['success' => false, 'message' => 'Invalid Restriction Status Selected.']);
+    //     exit();
+    // }
     if (!preg_match('/^\d{11}$/', $phone_number)) {
         logActivity("Update Failed: Invalid phone number '$phone_number' for customer ID $customerId.");
         echo json_encode(['success' => false, 'message' => 'Please input a valid Phone Number.']);

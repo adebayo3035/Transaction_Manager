@@ -4,7 +4,8 @@
     "type": "project",
     "require": {
         "phpmailer/phpmailer": "*",
-        "dompdf/dompdf": "dev-master"
+        "dompdf/dompdf": "dev-master",
+        "tecnickcom/tcpdf": "dev-main"
     },
     "license": "MIT",
     "autoload": {

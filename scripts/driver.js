@@ -366,11 +366,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelector('.modal .close').addEventListener('click', () => {
         document.getElementById('orderModal').style.display = 'none';
-    });
 
+        // This preserves scroll position and doesn't flash
+        window.location.replace(window.location.href);
+    });
     window.addEventListener('click', (event) => {
         if (event.target === document.getElementById('orderModal')) {
             document.getElementById('orderModal').style.display = 'none';
+            location.reload();
         }
     });
 

@@ -43,15 +43,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (userRole === 'Admin') {
                     // Show only reset secret answer
                     resetQuestionAnswerBtn.style.display = "inline-block";
-                    
+
                 } else if (userRole === 'Super Admin') {
                     // Show all buttons
                     resetQuestionAnswerBtn.style.display =
-                    restrictAccountBtn.style.display =
-                    unblockBtn.style.display =
-                    unlockBtn.style.display =
-                    removeRestrctictionBtn.style.display =
-                    reactivateBtn.style.display = "inline-block";
+                        restrictAccountBtn.style.display =
+                        unblockBtn.style.display =
+                        unlockBtn.style.display =
+                        removeRestrctictionBtn.style.display =
+                        reactivateBtn.style.display = "inline-block";
                 }
             } else {
                 console.error("Could not determine user role");
@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         toggleModal("reactivateModal", "flex");
     };
-    removeRestrctictionBtn.onclick = (e) =>{
+    removeRestrctictionBtn.onclick = (e) => {
         e.preventDefault();
         toggleModal("removeRestrictionModal2", "flex");
     }
@@ -332,7 +332,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
 
-    // Function to retrieve deactivated accounts and  Re-activate an account
+    // Function to retrieve deactivated customer and drivers accounts and  Re-activate an account
     const typeSelect = document.getElementById('accountTypes');
     const accountSelect = document.getElementById('deactivatedAccounts');
 
@@ -363,7 +363,7 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log(`Received response: ${JSON.stringify(data)}`);
 
             if (data.success) {
-                accountSelect.innerHTML = data.accounts.map(a => 
+                accountSelect.innerHTML = data.accounts.map(a =>
                     `<option value="${a.id}">${a.id} - (${a.name})</option>`
                 ).join('');
                 // accountSelect.innerHTML = '';
@@ -428,7 +428,7 @@ document.addEventListener("DOMContentLoaded", () => {
         confirmationModal4.style.display = "none";  // Close modal without submitting
     };
 
-    // Function to retrieve Restricted accounts and remove Restriction on Acccoount
+    // Function to retrieve Restricted driver and customer's accounts and remove Restriction on Acccoount
     const RestrictedAccountType = document.getElementById('accounts');
     const restrictedAccounts = document.getElementById('restrictedAccounts');
 
@@ -459,9 +459,15 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log(`Received response: ${JSON.stringify(data)}`);
 
             if (data.success) {
-                restrictedAccounts.innerHTML = data.accounts.map(a => 
-                    `<option value="${a.id}">${a.id} - (${a.name})</option>`
-                ).join('');
+                // Put the empty option first, then append mapped accounts
+                restrictedAccounts.innerHTML = `
+        <option value="">-- Please Select an Option --</option>
+        ${data.accounts.map(a =>
+                    `<option value="${a.id}" data-reference-id="${a.reference_id}">
+                ${a.id} - (${a.name})
+            </option>`
+                ).join('')}
+    `;
                 console.log(`Loaded ${data.accounts.length} accounts`);
             } else {
                 restrictedAccounts.innerHTML = '<option value="">Error loading accounts</option>';
@@ -474,37 +480,62 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    restrictedAccounts.addEventListener('change', () => {
+        const selectedOption = restrictedAccounts.options[restrictedAccounts.selectedIndex];
+        const referenceId = selectedOption.dataset.referenceId || '';
+        console.log('Selected reference ID:', referenceId);
+        const refInput = document.getElementById('selected_reference_id');
+        if (refInput) {
+            refInput.value = referenceId;
+        } else {
+            console.warn('No element with id "selected_reference_id" found');
+        }
+    });
+
 
     const removeRestrictionForm2 = document.getElementById('removeRestrictionForm2');
     const confirmationModal5 = document.getElementById("confirmationModal5");
     const confirmButton5 = document.getElementById("confirmButton5");
     const cancelButton5 = document.getElementById("cancelButton5");
-    let restrctedAccountID;
+    let restrictedAccountID;
     removeRestrictionForm2.onsubmit = (e) => {
         e.preventDefault();
 
         // Get values from the form
-        restrctedAccountID = document.getElementById("restrictedAccounts").value;
+        restrictedAccountID = document.getElementById("restrictedAccounts").value;
         accounts = document.getElementById('accounts').value;
         secretAnswerRestriction = document.getElementById('secret_answer_restriction').value;
 
         // Show confirmation modal
         confirmationModal5.style.display = "flex";
     };
+
     // Confirmation modal buttons
     confirmButton5.onclick = async () => {
+
         // Proceed with the request after confirmation
         confirmationModal5.style.display = "none";  // Close the modal
         try {
+            const referenceId = document.getElementById("selected_reference_id").value;
+            if (!restrictedAccountID || !referenceId) {
+                alert("Please select a valid account.");
+                return;
+            }
+
             const response = await fetch('backend/remove_restriction.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userID: restrctedAccountID, accountType: accounts, secretAnswer: secretAnswerRestriction })
+                body: JSON.stringify({
+                    userID: restrictedAccountID,
+                    accountType: accounts,
+                    secretAnswer: secretAnswerRestriction,
+                    reference_id: referenceId  // ✅ pass it to the backend
+                })
             });
 
             const data = await response.json();
             if (data.success) {
-                alert(`Restriction has been successfully lifted'}!`);
+                alert(`Restriction has been successfully lifted!`);
                 toggleModal("removeRestrictionModal2");  // Assuming this closes the main form modal
                 location.reload();
             } else {

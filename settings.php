@@ -241,6 +241,7 @@
                     <input type="password" id="secret_answer_restriction" name="secretAnswerRestriction"
                         placeholder="Enter Your Secret Answer... " required>
                 </div>
+                <input type="hidden" id="selected_reference_id">
 
                 <input type="submit" class="button" id="removeRestrictionBtn" value="Remove Restriction">
             </form>

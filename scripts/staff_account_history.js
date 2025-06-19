@@ -19,6 +19,7 @@ function renderDeactivation(data) {
           <thead class="table-light">
             <tr>
               <th>Date</th>
+              <th>Deactivation ID</th>
               <th>Reason</th>
               <th>Status</th>
               <th>Deactivated By</th>
@@ -28,6 +29,7 @@ function renderDeactivation(data) {
             ${data.data.map(row => `
               <tr>
                 <td>${row.date}</td>
+                <td>${row.deactivation_id}</td>
                 <td>${row.reason}</td>
                  <td>${row.status}</td>
                 <td>${row.deactivated_by.name}</td>

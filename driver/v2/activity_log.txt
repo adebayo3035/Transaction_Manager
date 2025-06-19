@@ -11006,3 +11006,862 @@
 [2025-06-16 11:12:00] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Retrieved session_id: h4177od8da37udvldp6q9tjb13 for driver_id: 3.
 [2025-06-16 11:12:02] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Updated session status to 'Inactive' for session_id: h4177od8da37udvldp6q9tjb13.
 [2025-06-16 11:12:02] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Session destroyed for driver_id: 3.
+[2025-06-17 08:25:13] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login attempt for username: temiolaoluwa@gmail.com
+[2025-06-17 08:25:13] [Page: http://localhost/transaction_manager/driver/v2/index.php] Driver ID for user: 3
+[2025-06-17 08:25:13] [Page: http://localhost/transaction_manager/driver/v2/index.php] Destroying session for session_id: h4177od8da37udvldp6q9tjb13
+[2025-06-17 08:25:14] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login successful for driver_id: 3
+[2025-06-17 08:25:26] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Session validated successfully for Driver ID: 3.
+[2025-06-17 08:25:26] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Driver ID: 3 requested orders. Page: 1, Limit: 10.
+[2025-06-17 08:25:27] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Total orders found for driver ID: 3: 0.
+[2025-06-17 08:25:27] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 paginated orders for driver ID: 3.
+[2025-06-17 08:25:27] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 pending orders for driver ID: 3.
+[2025-06-17 08:25:27] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Session validated successfully for Driver ID: 3.
+[2025-06-17 08:25:27] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Driver ID: 3 requested orders. Page: 1, Limit: 10.
+[2025-06-17 08:25:27] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Total orders found for driver ID: 3: 0.
+[2025-06-17 08:25:27] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 paginated orders for driver ID: 3.
+[2025-06-17 08:25:27] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 pending orders for driver ID: 3.
+[2025-06-17 08:25:27] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 3 requested their profile details.
+[2025-06-17 08:25:27] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 3.
+[2025-06-17 08:25:27] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 3.
+[2025-06-17 08:25:27] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 3
+[2025-06-17 08:25:35] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Session validated successfully for Driver ID: 3.
+[2025-06-17 08:25:35] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Logout attempt for driver_id: 3
+[2025-06-17 08:25:35] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Retrieved session_id: 3i6m1g8rcef6vd83kntkpdvt7t for driver_id: 3.
+[2025-06-17 08:25:35] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Updated session status to 'Inactive' for session_id: 3i6m1g8rcef6vd83kntkpdvt7t.
+[2025-06-17 08:25:35] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Session destroyed for driver_id: 3.
+[2025-06-18 09:42:49] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login attempt for username: bellosanni@gmail.com
+[2025-06-18 09:42:49] [Page: http://localhost/transaction_manager/driver/v2/index.php] Driver ID for user: 4
+[2025-06-18 09:42:49] [Page: http://localhost/transaction_manager/driver/v2/index.php] Destroying session for session_id: ol0mkbau116iq90jf79cij6pj6
+[2025-06-18 09:42:49] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login successful for driver_id: 4
+[2025-06-18 09:43:00] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Session validated successfully for Driver ID: 4.
+[2025-06-18 09:43:00] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Driver ID: 4 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:43:01] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Total orders found for driver ID: 4: 1.
+[2025-06-18 09:43:01] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 1 paginated orders for driver ID: 4.
+[2025-06-18 09:43:01] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 1 pending orders for driver ID: 4.
+[2025-06-18 09:43:01] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Session validated successfully for Driver ID: 4.
+[2025-06-18 09:43:01] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Driver ID: 4 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:43:01] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Total orders found for driver ID: 4: 1.
+[2025-06-18 09:43:01] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 1 paginated orders for driver ID: 4.
+[2025-06-18 09:43:01] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 1 pending orders for driver ID: 4.
+[2025-06-18 09:43:01] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 4 requested their profile details.
+[2025-06-18 09:43:01] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 4.
+[2025-06-18 09:43:01] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 4.
+[2025-06-18 09:43:01] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 4
+[2025-06-18 09:43:09] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Session validated successfully for Driver ID: 4.
+[2025-06-18 09:43:09] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order update request received. Order ID: 79, Current Status: Assigned, New Status: In Transit, Driver ID: 4
+[2025-06-18 09:43:09] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Checking status transition validity. From: Assigned, To: In Transit
+[2025-06-18 09:43:09] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Status transition is valid. From: Assigned, To: In Transit
+[2025-06-18 09:43:09] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Generated transaction reference: TRX68526E0D821E35965564339650
+[2025-06-18 09:43:09] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering updateOrderStatus function for order ID: 79, driver ID: 4.
+[2025-06-18 09:43:09] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: UPDATE orders SET status = ?, delivery_status = ? WHERE order_id = ? AND driver_id = ? | Params: [Pending, In Transit, 79, 4]
+[2025-06-18 09:43:09] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order status updated successfully for order ID: 79.
+[2025-06-18 09:43:09] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting updateOrderStatus function successfully for order ID: 79.
+[2025-06-18 09:43:09] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Response Sent - Success: true, Message: Your Order has been successfully In Transit, Status Code: 200
+[2025-06-18 09:43:11] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Session validated successfully for Driver ID: 4.
+[2025-06-18 09:43:11] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Driver ID: 4 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:43:11] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Total orders found for driver ID: 4: 1.
+[2025-06-18 09:43:11] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 1 paginated orders for driver ID: 4.
+[2025-06-18 09:43:11] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 1 pending orders for driver ID: 4.
+[2025-06-18 09:43:11] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Session validated successfully for Driver ID: 4.
+[2025-06-18 09:43:11] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Driver ID: 4 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:43:11] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Total orders found for driver ID: 4: 1.
+[2025-06-18 09:43:11] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 1 paginated orders for driver ID: 4.
+[2025-06-18 09:43:11] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 1 pending orders for driver ID: 4.
+[2025-06-18 09:43:11] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 4 requested their profile details.
+[2025-06-18 09:43:11] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 4.
+[2025-06-18 09:43:11] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 4.
+[2025-06-18 09:43:11] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 4
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Session validated successfully for Driver ID: 4.
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order update request received. Order ID: 79, Current Status: In Transit, New Status: Delivered, Driver ID: 4
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Checking status transition validity. From: In Transit, To: Delivered
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Status transition is valid. From: In Transit, To: Delivered
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Fetching order details. Order ID: 79, Driver ID: 4
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order details retrieved successfully. Order ID: 79
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Generated transaction reference: TRX68526E6262E1F2962428886035
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering handleOrderDelivery function for order ID: 79, driver ID: 4.
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Fetching order details. Order ID: 79, Driver ID: 4
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order details retrieved successfully. Order ID: 79
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order details retrieved for order ID: 79. Is Credit: No
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Handling paid order delivery for order ID: 79.
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering handlePaidOrderDelivery function for order ID: 79, driver ID: 4.
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order details - Customer ID: 1260106158, Amount: 1000.00, Delivery Fee: 100.00, Status: Completed, Revenue Type ID: 2.
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction started for order ID: 79.
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: UPDATE order_details SET status = 'Delivered' WHERE order_id = ? | Params: [79]
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order status updated to 'Delivered' for order ID: 79.
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering updateOrderStatus function for order ID: 79, driver ID: 4.
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: UPDATE orders SET status = ?, delivery_status = ? WHERE order_id = ? AND driver_id = ? | Params: [Completed, Delivered, 79, 4]
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order status updated successfully for order ID: 79.
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting updateOrderStatus function successfully for order ID: 79.
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order status updated to 'Completed' for order ID: 79.
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Attempting to update driver status. Driver ID: 4, New Status: Available
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Driver status updated successfully. Driver ID: 4, New Status: Available
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Driver status updated to 'Available' for driver ID: 4.
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering insertCustomerTransaction function for customer ID: 1260106158.
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: INSERT INTO customer_transactions 
+              (transaction_ref, customer_id, amount, date_created, transaction_type, payment_method, description) 
+              VALUES (?, ?, ?, NOW(), ?, ?, ?) | Params: [TRX68526E6262E1F2962428886035, 1260106158, 1000.00, debit, Direct Debit, Food Order Payment for Order ID: 79]
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Customer transaction inserted successfully for customer ID: 1260106158.
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting insertCustomerTransaction function successfully for customer ID: 1260106158.
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Customer transaction inserted for order ID: 79.
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering insertTransaction function for order ID: 79, customer ID: 1260106158.
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: INSERT INTO transactions 
+              (transaction_ref, customer_id, order_id, transaction_type, amount, transaction_date, payment_method, status, created_at, updated_at, revenue_type_id) 
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?) | Params: [TRX68526E6262E1F2962428886035, 1260106158, 79, Credit, 1000.00, 2025-06-16 07:20:07, Food Order Payment for Order ID: 79, Completed, 2]
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction inserted successfully for order ID: 79.
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting insertTransaction function successfully for order ID: 79.
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction record inserted for order ID: 79.
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering insertRevenue function for order ID: 79, customer ID: 1260106158.
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: INSERT INTO revenue 
+              (order_id, customer_id, total_amount, refunded_amount, retained_amount, transaction_date, status, updated_at, revenue_type_id) 
+              VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), ?) | Params: [79, 1260106158, 1000.00, 0, 1000.00, 2025-06-16 07:20:07, Completed, 2]
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Revenue inserted successfully for order ID: 79.
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting insertRevenue function successfully for order ID: 79.
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Revenue record inserted for order ID: 79.
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering creditDeliveryFee function for order ID: 79, driver ID: 4.
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction started for crediting delivery fee for order ID: 79.
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: INSERT INTO delivery_fee (order_id, driver_id, delivery_fee, status, created_at) VALUES (?, ?, ?, 'Credited', NOW()) | Params: [79, 4, 100.00]
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Delivery fee inserted successfully for order ID: 79.
+[2025-06-18 09:44:34] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: UPDATE driver SET wallet_balance = wallet_balance + ? WHERE id = ? | Params: [100.00, 4]
+[2025-06-18 09:44:35] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Driver's wallet updated successfully for driver ID: 4.
+[2025-06-18 09:44:35] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering insertTransaction function for order ID: 79, customer ID: 1260106158.
+[2025-06-18 09:44:35] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: INSERT INTO transactions 
+              (transaction_ref, customer_id, order_id, transaction_type, amount, transaction_date, payment_method, status, created_at, updated_at, revenue_type_id) 
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?) | Params: [TRX68526E6262E1F2962428886035, 1260106158, 79, Debit, 100.00, 2025-06-16 07:20:07, Driver Delivery Fee., Completed, 8]
+[2025-06-18 09:44:35] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction inserted successfully for order ID: 79.
+[2025-06-18 09:44:35] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting insertTransaction function successfully for order ID: 79.
+[2025-06-18 09:44:35] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction inserted successfully for delivery fee of order ID: 79.
+[2025-06-18 09:44:35] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction committed successfully for crediting delivery fee for order ID: 79.
+[2025-06-18 09:44:35] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting creditDeliveryFee function successfully for order ID: 79.
+[2025-06-18 09:44:35] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Delivery fee credited for order ID: 79.
+[2025-06-18 09:44:35] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction committed successfully for order ID: 79.
+[2025-06-18 09:44:35] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting handlePaidOrderDelivery function successfully for order ID: 79.
+[2025-06-18 09:44:35] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Response Sent - Success: true, Message: Outright payment order successfully delivered., Status Code: 200
+[2025-06-18 09:44:37] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Session validated successfully for Driver ID: 4.
+[2025-06-18 09:44:37] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Driver ID: 4 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:44:37] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Total orders found for driver ID: 4: 0.
+[2025-06-18 09:44:37] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 paginated orders for driver ID: 4.
+[2025-06-18 09:44:37] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 pending orders for driver ID: 4.
+[2025-06-18 09:44:37] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Session validated successfully for Driver ID: 4.
+[2025-06-18 09:44:37] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Driver ID: 4 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:44:37] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Total orders found for driver ID: 4: 0.
+[2025-06-18 09:44:37] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 paginated orders for driver ID: 4.
+[2025-06-18 09:44:37] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 pending orders for driver ID: 4.
+[2025-06-18 09:44:37] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 4 requested their profile details.
+[2025-06-18 09:44:37] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 4.
+[2025-06-18 09:44:37] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 4.
+[2025-06-18 09:44:37] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 4
+[2025-06-18 09:44:49] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Session validated successfully for Driver ID: 4.
+[2025-06-18 09:44:49] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Logout attempt for driver_id: 4
+[2025-06-18 09:44:49] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Retrieved session_id: ktfhbd8868n8d5spn1gqkqmuqr for driver_id: 4.
+[2025-06-18 09:44:49] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Updated session status to 'Inactive' for session_id: ktfhbd8868n8d5spn1gqkqmuqr.
+[2025-06-18 09:44:49] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Session destroyed for driver_id: 4.
+[2025-06-18 09:45:11] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login attempt for username: bidemiolusegun@gmail.com
+[2025-06-18 09:45:11] [Page: http://localhost/transaction_manager/driver/v2/index.php] Driver ID for user: 6
+[2025-06-18 09:45:11] [Page: http://localhost/transaction_manager/driver/v2/index.php] Destroying session for session_id: cm3mul5c5e1pj8dfcl0r12pp7l
+[2025-06-18 09:45:11] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login successful for driver_id: 6
+[2025-06-18 09:45:23] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Session validated successfully for Driver ID: 6.
+[2025-06-18 09:45:23] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Driver ID: 6 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:45:23] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Total orders found for driver ID: 6: 0.
+[2025-06-18 09:45:23] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 paginated orders for driver ID: 6.
+[2025-06-18 09:45:23] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 pending orders for driver ID: 6.
+[2025-06-18 09:45:23] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Session validated successfully for Driver ID: 6.
+[2025-06-18 09:45:23] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Driver ID: 6 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:45:23] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Total orders found for driver ID: 6: 0.
+[2025-06-18 09:45:23] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 paginated orders for driver ID: 6.
+[2025-06-18 09:45:23] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 pending orders for driver ID: 6.
+[2025-06-18 09:45:23] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 6 requested their profile details.
+[2025-06-18 09:45:23] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 6.
+[2025-06-18 09:45:23] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 6.
+[2025-06-18 09:45:23] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 6
+[2025-06-18 09:46:23] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 6 requested their profile details.
+[2025-06-18 09:46:23] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 6.
+[2025-06-18 09:46:23] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 6.
+[2025-06-18 09:46:23] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 6 requested their profile details.
+[2025-06-18 09:46:23] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 6.
+[2025-06-18 09:46:23] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 6.
+[2025-06-18 09:46:23] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 6 requested their profile details.
+[2025-06-18 09:46:24] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 6.
+[2025-06-18 09:46:24] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 6.
+[2025-06-18 09:46:24] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 6
+[2025-06-18 09:47:34] [Page: http://localhost/transaction_manager/driver/v2/logout.php?logout_id=6] Session validated successfully for Driver ID: 6.
+[2025-06-18 09:47:34] [Page: http://localhost/transaction_manager/driver/v2/logout.php?logout_id=6] Logout attempt for driver_id: 6
+[2025-06-18 09:47:34] [Page: http://localhost/transaction_manager/driver/v2/logout.php?logout_id=6] Retrieved session_id: voc56tlv69itl34s2r1sn9eruu for driver_id: 6.
+[2025-06-18 09:47:34] [Page: http://localhost/transaction_manager/driver/v2/logout.php?logout_id=6] Updated session status to 'Inactive' for session_id: voc56tlv69itl34s2r1sn9eruu.
+[2025-06-18 09:47:34] [Page: http://localhost/transaction_manager/driver/v2/logout.php?logout_id=6] Session destroyed for driver_id: 6.
+[2025-06-18 09:48:52] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login attempt for username: bidemiolusegun@gmail.com
+[2025-06-18 09:48:52] [Page: http://localhost/transaction_manager/driver/v2/index.php] Driver ID for user: 6
+[2025-06-18 09:48:52] [Page: http://localhost/transaction_manager/driver/v2/index.php] Destroying session for session_id: voc56tlv69itl34s2r1sn9eruu
+[2025-06-18 09:48:53] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login successful for driver_id: 6
+[2025-06-18 09:49:04] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Session validated successfully for Driver ID: 6.
+[2025-06-18 09:49:04] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Driver ID: 6 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:49:04] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Total orders found for driver ID: 6: 0.
+[2025-06-18 09:49:05] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 paginated orders for driver ID: 6.
+[2025-06-18 09:49:05] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 pending orders for driver ID: 6.
+[2025-06-18 09:49:05] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Session validated successfully for Driver ID: 6.
+[2025-06-18 09:49:05] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Driver ID: 6 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:49:05] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Total orders found for driver ID: 6: 0.
+[2025-06-18 09:49:05] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 paginated orders for driver ID: 6.
+[2025-06-18 09:49:05] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 pending orders for driver ID: 6.
+[2025-06-18 09:49:05] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 6 requested their profile details.
+[2025-06-18 09:49:05] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 6.
+[2025-06-18 09:49:05] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 6.
+[2025-06-18 09:49:05] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 6
+[2025-06-18 09:49:43] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Session validated successfully for Driver ID: 6.
+[2025-06-18 09:49:43] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Logout attempt for driver_id: 6
+[2025-06-18 09:49:43] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Retrieved session_id: 7kbk042hu91rij3no19ojn3mbl for driver_id: 6.
+[2025-06-18 09:49:43] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Updated session status to 'Inactive' for session_id: 7kbk042hu91rij3no19ojn3mbl.
+[2025-06-18 09:49:43] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Session destroyed for driver_id: 6.
+[2025-06-18 09:49:54] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login attempt for username: bamolatunde@gmail.com
+[2025-06-18 09:49:54] [Page: http://localhost/transaction_manager/driver/v2/index.php] Driver ID for user: 9
+[2025-06-18 09:49:54] [Page: http://localhost/transaction_manager/driver/v2/index.php] Destroying session for session_id: 1oinqpai24c3jjmarpk58iirjj
+[2025-06-18 09:49:54] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login successful for driver_id: 9
+[2025-06-18 09:50:05] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Session validated successfully for Driver ID: 9.
+[2025-06-18 09:50:05] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Driver ID: 9 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:50:05] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Total orders found for driver ID: 9: 1.
+[2025-06-18 09:50:05] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 1 paginated orders for driver ID: 9.
+[2025-06-18 09:50:05] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 1 pending orders for driver ID: 9.
+[2025-06-18 09:50:05] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Session validated successfully for Driver ID: 9.
+[2025-06-18 09:50:05] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Driver ID: 9 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:50:05] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Total orders found for driver ID: 9: 1.
+[2025-06-18 09:50:05] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 1 paginated orders for driver ID: 9.
+[2025-06-18 09:50:05] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 1 pending orders for driver ID: 9.
+[2025-06-18 09:50:05] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 9 requested their profile details.
+[2025-06-18 09:50:05] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 9.
+[2025-06-18 09:50:05] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 9.
+[2025-06-18 09:50:05] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 9
+[2025-06-18 09:50:09] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Session validated successfully for Driver ID: 9.
+[2025-06-18 09:50:10] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order update request received. Order ID: 75, Current Status: Assigned, New Status: In Transit, Driver ID: 9
+[2025-06-18 09:50:10] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Checking status transition validity. From: Assigned, To: In Transit
+[2025-06-18 09:50:10] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Status transition is valid. From: Assigned, To: In Transit
+[2025-06-18 09:50:10] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Generated transaction reference: TRX68526FB201FAA4702946693579
+[2025-06-18 09:50:10] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering updateOrderStatus function for order ID: 75, driver ID: 9.
+[2025-06-18 09:50:10] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: UPDATE orders SET status = ?, delivery_status = ? WHERE order_id = ? AND driver_id = ? | Params: [Pending, In Transit, 75, 9]
+[2025-06-18 09:50:10] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order status updated successfully for order ID: 75.
+[2025-06-18 09:50:10] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting updateOrderStatus function successfully for order ID: 75.
+[2025-06-18 09:50:10] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Response Sent - Success: true, Message: Your Order has been successfully In Transit, Status Code: 200
+[2025-06-18 09:50:11] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Session validated successfully for Driver ID: 9.
+[2025-06-18 09:50:11] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Driver ID: 9 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:50:11] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Total orders found for driver ID: 9: 1.
+[2025-06-18 09:50:11] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 1 paginated orders for driver ID: 9.
+[2025-06-18 09:50:12] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 1 pending orders for driver ID: 9.
+[2025-06-18 09:50:12] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Session validated successfully for Driver ID: 9.
+[2025-06-18 09:50:12] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Driver ID: 9 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:50:12] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Total orders found for driver ID: 9: 1.
+[2025-06-18 09:50:12] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 1 paginated orders for driver ID: 9.
+[2025-06-18 09:50:12] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 1 pending orders for driver ID: 9.
+[2025-06-18 09:50:12] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 9 requested their profile details.
+[2025-06-18 09:50:12] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 9.
+[2025-06-18 09:50:12] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 9.
+[2025-06-18 09:50:12] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 9
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Session validated successfully for Driver ID: 9.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order update request received. Order ID: 75, Current Status: In Transit, New Status: Delivered, Driver ID: 9
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Checking status transition validity. From: In Transit, To: Delivered
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Status transition is valid. From: In Transit, To: Delivered
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Fetching order details. Order ID: 75, Driver ID: 9
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order details retrieved successfully. Order ID: 75
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Generated transaction reference: TRX68526FC84EB004216462612302
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering handleOrderDelivery function for order ID: 75, driver ID: 9.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Fetching order details. Order ID: 75, Driver ID: 9
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order details retrieved successfully. Order ID: 75
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order details retrieved for order ID: 75. Is Credit: No
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Handling paid order delivery for order ID: 75.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering handlePaidOrderDelivery function for order ID: 75, driver ID: 9.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order details - Customer ID: 1260106158, Amount: 4000.00, Delivery Fee: 400.00, Status: Completed, Revenue Type ID: 2.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction started for order ID: 75.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: UPDATE order_details SET status = 'Delivered' WHERE order_id = ? | Params: [75]
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order status updated to 'Delivered' for order ID: 75.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering updateOrderStatus function for order ID: 75, driver ID: 9.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: UPDATE orders SET status = ?, delivery_status = ? WHERE order_id = ? AND driver_id = ? | Params: [Completed, Delivered, 75, 9]
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order status updated successfully for order ID: 75.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting updateOrderStatus function successfully for order ID: 75.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order status updated to 'Completed' for order ID: 75.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Attempting to update driver status. Driver ID: 9, New Status: Available
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Driver status updated successfully. Driver ID: 9, New Status: Available
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Driver status updated to 'Available' for driver ID: 9.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering insertCustomerTransaction function for customer ID: 1260106158.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: INSERT INTO customer_transactions 
+              (transaction_ref, customer_id, amount, date_created, transaction_type, payment_method, description) 
+              VALUES (?, ?, ?, NOW(), ?, ?, ?) | Params: [TRX68526FC84EB004216462612302, 1260106158, 4000.00, debit, Direct Debit, Food Order Payment for Order ID: 75]
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Customer transaction inserted successfully for customer ID: 1260106158.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting insertCustomerTransaction function successfully for customer ID: 1260106158.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Customer transaction inserted for order ID: 75.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering insertTransaction function for order ID: 75, customer ID: 1260106158.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: INSERT INTO transactions 
+              (transaction_ref, customer_id, order_id, transaction_type, amount, transaction_date, payment_method, status, created_at, updated_at, revenue_type_id) 
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?) | Params: [TRX68526FC84EB004216462612302, 1260106158, 75, Credit, 4000.00, 2025-06-13 10:38:02, Food Order Payment for Order ID: 75, Completed, 2]
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction inserted successfully for order ID: 75.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting insertTransaction function successfully for order ID: 75.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction record inserted for order ID: 75.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering insertRevenue function for order ID: 75, customer ID: 1260106158.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: INSERT INTO revenue 
+              (order_id, customer_id, total_amount, refunded_amount, retained_amount, transaction_date, status, updated_at, revenue_type_id) 
+              VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), ?) | Params: [75, 1260106158, 4000.00, 0, 4000.00, 2025-06-13 10:38:02, Completed, 2]
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Revenue inserted successfully for order ID: 75.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting insertRevenue function successfully for order ID: 75.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Revenue record inserted for order ID: 75.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering creditDeliveryFee function for order ID: 75, driver ID: 9.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction started for crediting delivery fee for order ID: 75.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: INSERT INTO delivery_fee (order_id, driver_id, delivery_fee, status, created_at) VALUES (?, ?, ?, 'Credited', NOW()) | Params: [75, 9, 400.00]
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Delivery fee inserted successfully for order ID: 75.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: UPDATE driver SET wallet_balance = wallet_balance + ? WHERE id = ? | Params: [400.00, 9]
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Driver's wallet updated successfully for driver ID: 9.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering insertTransaction function for order ID: 75, customer ID: 1260106158.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: INSERT INTO transactions 
+              (transaction_ref, customer_id, order_id, transaction_type, amount, transaction_date, payment_method, status, created_at, updated_at, revenue_type_id) 
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?) | Params: [TRX68526FC84EB004216462612302, 1260106158, 75, Debit, 400.00, 2025-06-13 10:38:02, Driver Delivery Fee., Completed, 8]
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction inserted successfully for order ID: 75.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting insertTransaction function successfully for order ID: 75.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction inserted successfully for delivery fee of order ID: 75.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction committed successfully for crediting delivery fee for order ID: 75.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting creditDeliveryFee function successfully for order ID: 75.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Delivery fee credited for order ID: 75.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction committed successfully for order ID: 75.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting handlePaidOrderDelivery function successfully for order ID: 75.
+[2025-06-18 09:50:32] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Response Sent - Success: true, Message: Outright payment order successfully delivered., Status Code: 200
+[2025-06-18 09:50:34] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Session validated successfully for Driver ID: 9.
+[2025-06-18 09:50:34] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Driver ID: 9 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:50:34] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Total orders found for driver ID: 9: 0.
+[2025-06-18 09:50:34] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 paginated orders for driver ID: 9.
+[2025-06-18 09:50:34] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 pending orders for driver ID: 9.
+[2025-06-18 09:50:34] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Session validated successfully for Driver ID: 9.
+[2025-06-18 09:50:34] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Driver ID: 9 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:50:34] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Total orders found for driver ID: 9: 0.
+[2025-06-18 09:50:34] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 paginated orders for driver ID: 9.
+[2025-06-18 09:50:34] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 pending orders for driver ID: 9.
+[2025-06-18 09:50:34] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 9 requested their profile details.
+[2025-06-18 09:50:34] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 9.
+[2025-06-18 09:50:34] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 9.
+[2025-06-18 09:50:34] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 9
+[2025-06-18 09:50:58] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Session validated successfully for Driver ID: 9.
+[2025-06-18 09:50:58] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Logout attempt for driver_id: 9
+[2025-06-18 09:50:58] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Retrieved session_id: 46l91pnqjtdtm3ssri0t9uo0t8 for driver_id: 9.
+[2025-06-18 09:50:58] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Updated session status to 'Inactive' for session_id: 46l91pnqjtdtm3ssri0t9uo0t8.
+[2025-06-18 09:50:58] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Session destroyed for driver_id: 9.
+[2025-06-18 09:51:09] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login attempt for username: kolawoleodeku@gmail.com
+[2025-06-18 09:51:09] [Page: http://localhost/transaction_manager/driver/v2/index.php] Driver ID for user: 10
+[2025-06-18 09:51:10] [Page: http://localhost/transaction_manager/driver/v2/index.php] Destroying session for session_id: npmmcdai3nmmn9m6kobv6f1edf
+[2025-06-18 09:51:10] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login successful for driver_id: 10
+[2025-06-18 09:51:21] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Session validated successfully for Driver ID: 10.
+[2025-06-18 09:51:22] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Driver ID: 10 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:51:22] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Total orders found for driver ID: 10: 1.
+[2025-06-18 09:51:22] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 1 paginated orders for driver ID: 10.
+[2025-06-18 09:51:22] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 1 pending orders for driver ID: 10.
+[2025-06-18 09:51:22] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Session validated successfully for Driver ID: 10.
+[2025-06-18 09:51:22] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Driver ID: 10 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:51:22] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Total orders found for driver ID: 10: 1.
+[2025-06-18 09:51:22] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 1 paginated orders for driver ID: 10.
+[2025-06-18 09:51:22] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 1 pending orders for driver ID: 10.
+[2025-06-18 09:51:22] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 10 requested their profile details.
+[2025-06-18 09:51:22] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 10.
+[2025-06-18 09:51:22] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 10.
+[2025-06-18 09:51:22] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 10
+[2025-06-18 09:51:28] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Session validated successfully for Driver ID: 10.
+[2025-06-18 09:51:28] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order update request received. Order ID: 78, Current Status: Assigned, New Status: In Transit, Driver ID: 10
+[2025-06-18 09:51:28] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Checking status transition validity. From: Assigned, To: In Transit
+[2025-06-18 09:51:28] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Status transition is valid. From: Assigned, To: In Transit
+[2025-06-18 09:51:28] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Generated transaction reference: TRX68527000D18C58558881883453
+[2025-06-18 09:51:28] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering updateOrderStatus function for order ID: 78, driver ID: 10.
+[2025-06-18 09:51:28] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: UPDATE orders SET status = ?, delivery_status = ? WHERE order_id = ? AND driver_id = ? | Params: [Pending, In Transit, 78, 10]
+[2025-06-18 09:51:28] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order status updated successfully for order ID: 78.
+[2025-06-18 09:51:28] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting updateOrderStatus function successfully for order ID: 78.
+[2025-06-18 09:51:28] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Response Sent - Success: true, Message: Your Order has been successfully In Transit, Status Code: 200
+[2025-06-18 09:51:30] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Session validated successfully for Driver ID: 10.
+[2025-06-18 09:51:30] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Driver ID: 10 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:51:30] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Total orders found for driver ID: 10: 1.
+[2025-06-18 09:51:30] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 1 paginated orders for driver ID: 10.
+[2025-06-18 09:51:30] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 1 pending orders for driver ID: 10.
+[2025-06-18 09:51:30] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Session validated successfully for Driver ID: 10.
+[2025-06-18 09:51:30] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Driver ID: 10 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:51:30] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Total orders found for driver ID: 10: 1.
+[2025-06-18 09:51:30] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 1 paginated orders for driver ID: 10.
+[2025-06-18 09:51:30] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 1 pending orders for driver ID: 10.
+[2025-06-18 09:51:30] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 10 requested their profile details.
+[2025-06-18 09:51:30] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 10.
+[2025-06-18 09:51:30] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 10.
+[2025-06-18 09:51:30] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 10
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Session validated successfully for Driver ID: 10.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order update request received. Order ID: 78, Current Status: In Transit, New Status: Delivered, Driver ID: 10
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Checking status transition validity. From: In Transit, To: Delivered
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Status transition is valid. From: In Transit, To: Delivered
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Fetching order details. Order ID: 78, Driver ID: 10
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order details retrieved successfully. Order ID: 78
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Generated transaction reference: TRX6852701435A478165151502523
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering handleOrderDelivery function for order ID: 78, driver ID: 10.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Fetching order details. Order ID: 78, Driver ID: 10
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order details retrieved successfully. Order ID: 78
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order details retrieved for order ID: 78. Is Credit: No
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Handling paid order delivery for order ID: 78.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering handlePaidOrderDelivery function for order ID: 78, driver ID: 10.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order details - Customer ID: 1260106158, Amount: 1000.00, Delivery Fee: 100.00, Status: Completed, Revenue Type ID: 2.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction started for order ID: 78.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: UPDATE order_details SET status = 'Delivered' WHERE order_id = ? | Params: [78]
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order status updated to 'Delivered' for order ID: 78.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering updateOrderStatus function for order ID: 78, driver ID: 10.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: UPDATE orders SET status = ?, delivery_status = ? WHERE order_id = ? AND driver_id = ? | Params: [Completed, Delivered, 78, 10]
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order status updated successfully for order ID: 78.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting updateOrderStatus function successfully for order ID: 78.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order status updated to 'Completed' for order ID: 78.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Attempting to update driver status. Driver ID: 10, New Status: Available
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Driver status updated successfully. Driver ID: 10, New Status: Available
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Driver status updated to 'Available' for driver ID: 10.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering insertCustomerTransaction function for customer ID: 1260106158.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: INSERT INTO customer_transactions 
+              (transaction_ref, customer_id, amount, date_created, transaction_type, payment_method, description) 
+              VALUES (?, ?, ?, NOW(), ?, ?, ?) | Params: [TRX6852701435A478165151502523, 1260106158, 1000.00, debit, Direct Debit, Food Order Payment for Order ID: 78]
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Customer transaction inserted successfully for customer ID: 1260106158.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting insertCustomerTransaction function successfully for customer ID: 1260106158.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Customer transaction inserted for order ID: 78.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering insertTransaction function for order ID: 78, customer ID: 1260106158.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: INSERT INTO transactions 
+              (transaction_ref, customer_id, order_id, transaction_type, amount, transaction_date, payment_method, status, created_at, updated_at, revenue_type_id) 
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?) | Params: [TRX6852701435A478165151502523, 1260106158, 78, Credit, 1000.00, 2025-06-16 07:17:00, Food Order Payment for Order ID: 78, Completed, 2]
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction inserted successfully for order ID: 78.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting insertTransaction function successfully for order ID: 78.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction record inserted for order ID: 78.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering insertRevenue function for order ID: 78, customer ID: 1260106158.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: INSERT INTO revenue 
+              (order_id, customer_id, total_amount, refunded_amount, retained_amount, transaction_date, status, updated_at, revenue_type_id) 
+              VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), ?) | Params: [78, 1260106158, 1000.00, 0, 1000.00, 2025-06-16 07:17:00, Completed, 2]
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Revenue inserted successfully for order ID: 78.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting insertRevenue function successfully for order ID: 78.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Revenue record inserted for order ID: 78.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering creditDeliveryFee function for order ID: 78, driver ID: 10.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction started for crediting delivery fee for order ID: 78.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: INSERT INTO delivery_fee (order_id, driver_id, delivery_fee, status, created_at) VALUES (?, ?, ?, 'Credited', NOW()) | Params: [78, 10, 100.00]
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Delivery fee inserted successfully for order ID: 78.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: UPDATE driver SET wallet_balance = wallet_balance + ? WHERE id = ? | Params: [100.00, 10]
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Driver's wallet updated successfully for driver ID: 10.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering insertTransaction function for order ID: 78, customer ID: 1260106158.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: INSERT INTO transactions 
+              (transaction_ref, customer_id, order_id, transaction_type, amount, transaction_date, payment_method, status, created_at, updated_at, revenue_type_id) 
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?) | Params: [TRX6852701435A478165151502523, 1260106158, 78, Debit, 100.00, 2025-06-16 07:17:00, Driver Delivery Fee., Completed, 8]
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction inserted successfully for order ID: 78.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting insertTransaction function successfully for order ID: 78.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction inserted successfully for delivery fee of order ID: 78.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction committed successfully for crediting delivery fee for order ID: 78.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting creditDeliveryFee function successfully for order ID: 78.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Delivery fee credited for order ID: 78.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction committed successfully for order ID: 78.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting handlePaidOrderDelivery function successfully for order ID: 78.
+[2025-06-18 09:51:48] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Response Sent - Success: true, Message: Outright payment order successfully delivered., Status Code: 200
+[2025-06-18 09:51:50] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Session validated successfully for Driver ID: 10.
+[2025-06-18 09:51:50] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Driver ID: 10 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:51:50] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Total orders found for driver ID: 10: 0.
+[2025-06-18 09:51:50] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 paginated orders for driver ID: 10.
+[2025-06-18 09:51:50] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 pending orders for driver ID: 10.
+[2025-06-18 09:51:50] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Session validated successfully for Driver ID: 10.
+[2025-06-18 09:51:50] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Driver ID: 10 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:51:50] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Total orders found for driver ID: 10: 0.
+[2025-06-18 09:51:50] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 paginated orders for driver ID: 10.
+[2025-06-18 09:51:50] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 pending orders for driver ID: 10.
+[2025-06-18 09:51:50] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 10 requested their profile details.
+[2025-06-18 09:51:50] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 10.
+[2025-06-18 09:51:50] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 10.
+[2025-06-18 09:51:50] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 10
+[2025-06-18 09:52:55] [Page: http://localhost/transaction_manager/driver/v2/logout.php?logout_id=10] Session validated successfully for Driver ID: 10.
+[2025-06-18 09:52:55] [Page: http://localhost/transaction_manager/driver/v2/logout.php?logout_id=10] Logout attempt for driver_id: 10
+[2025-06-18 09:52:55] [Page: http://localhost/transaction_manager/driver/v2/logout.php?logout_id=10] Retrieved session_id: ql27jmdm51m10aspg3b4ucsu1b for driver_id: 10.
+[2025-06-18 09:52:55] [Page: http://localhost/transaction_manager/driver/v2/logout.php?logout_id=10] Updated session status to 'Inactive' for session_id: ql27jmdm51m10aspg3b4ucsu1b.
+[2025-06-18 09:52:55] [Page: http://localhost/transaction_manager/driver/v2/logout.php?logout_id=10] Session destroyed for driver_id: 10.
+[2025-06-18 09:56:04] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login attempt for username: oreoluwaishola@gmail.com
+[2025-06-18 09:56:04] [Page: http://localhost/transaction_manager/driver/v2/index.php] Driver ID for user: 8
+[2025-06-18 09:56:04] [Page: http://localhost/transaction_manager/driver/v2/index.php] Destroying session for session_id: iqftlada2prgiupk4qol83h1hq
+[2025-06-18 09:56:05] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login successful for driver_id: 8
+[2025-06-18 09:56:16] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Session validated successfully for Driver ID: 8.
+[2025-06-18 09:56:16] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Driver ID: 8 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:56:16] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Total orders found for driver ID: 8: 1.
+[2025-06-18 09:56:16] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 1 paginated orders for driver ID: 8.
+[2025-06-18 09:56:16] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 1 pending orders for driver ID: 8.
+[2025-06-18 09:56:16] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Session validated successfully for Driver ID: 8.
+[2025-06-18 09:56:16] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Driver ID: 8 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:56:16] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Total orders found for driver ID: 8: 1.
+[2025-06-18 09:56:16] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 1 paginated orders for driver ID: 8.
+[2025-06-18 09:56:16] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 1 pending orders for driver ID: 8.
+[2025-06-18 09:56:16] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 8
+[2025-06-18 09:56:16] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 8 requested their profile details.
+[2025-06-18 09:56:16] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 8.
+[2025-06-18 09:56:16] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 8.
+[2025-06-18 09:56:25] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Session validated successfully for Driver ID: 8.
+[2025-06-18 09:56:25] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order update request received. Order ID: 77, Current Status: Assigned, New Status: In Transit, Driver ID: 8
+[2025-06-18 09:56:25] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Checking status transition validity. From: Assigned, To: In Transit
+[2025-06-18 09:56:25] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Status transition is valid. From: Assigned, To: In Transit
+[2025-06-18 09:56:25] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Generated transaction reference: TRX6852712914A9D6993930691268
+[2025-06-18 09:56:25] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering updateOrderStatus function for order ID: 77, driver ID: 8.
+[2025-06-18 09:56:25] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: UPDATE orders SET status = ?, delivery_status = ? WHERE order_id = ? AND driver_id = ? | Params: [Pending, In Transit, 77, 8]
+[2025-06-18 09:56:25] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order status updated successfully for order ID: 77.
+[2025-06-18 09:56:25] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting updateOrderStatus function successfully for order ID: 77.
+[2025-06-18 09:56:25] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Response Sent - Success: true, Message: Your Order has been successfully In Transit, Status Code: 200
+[2025-06-18 09:56:27] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Session validated successfully for Driver ID: 8.
+[2025-06-18 09:56:27] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Driver ID: 8 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:56:27] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Total orders found for driver ID: 8: 1.
+[2025-06-18 09:56:27] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 1 paginated orders for driver ID: 8.
+[2025-06-18 09:56:27] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 1 pending orders for driver ID: 8.
+[2025-06-18 09:56:27] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Session validated successfully for Driver ID: 8.
+[2025-06-18 09:56:27] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Driver ID: 8 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:56:27] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Total orders found for driver ID: 8: 1.
+[2025-06-18 09:56:27] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 1 paginated orders for driver ID: 8.
+[2025-06-18 09:56:27] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 1 pending orders for driver ID: 8.
+[2025-06-18 09:56:27] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 8 requested their profile details.
+[2025-06-18 09:56:27] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 8.
+[2025-06-18 09:56:27] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 8.
+[2025-06-18 09:56:27] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 8
+[2025-06-18 09:56:51] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Session validated successfully for Driver ID: 8.
+[2025-06-18 09:56:51] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order update request received. Order ID: 77, Current Status: In Transit, New Status: Delivered, Driver ID: 8
+[2025-06-18 09:56:51] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Checking status transition validity. From: In Transit, To: Delivered
+[2025-06-18 09:56:51] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Status transition is valid. From: In Transit, To: Delivered
+[2025-06-18 09:56:51] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Fetching order details. Order ID: 77, Driver ID: 8
+[2025-06-18 09:56:51] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order details retrieved successfully. Order ID: 77
+[2025-06-18 09:56:51] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Generated transaction reference: TRX68527143EC4B27581712671219
+[2025-06-18 09:56:51] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering handleOrderDelivery function for order ID: 77, driver ID: 8.
+[2025-06-18 09:56:51] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Fetching order details. Order ID: 77, Driver ID: 8
+[2025-06-18 09:56:51] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order details retrieved successfully. Order ID: 77
+[2025-06-18 09:56:51] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order details retrieved for order ID: 77. Is Credit: Yes
+[2025-06-18 09:56:51] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Handling credit order delivery for order ID: 77.
+[2025-06-18 09:56:51] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering handleCreditOrderDelivery function for order ID: 77, driver ID: 8.
+[2025-06-18 09:56:51] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order details - Customer ID: 1260106158, Amount: 0, Delivery Fee: 3400.00, Status: Completed, Revenue Type ID: 2.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction started for order ID: 77.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: UPDATE order_details SET status = 'Delivered' WHERE order_id = ? | Params: [77]
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order status updated to 'Delivered' for order ID: 77.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering updateOrderStatus function for order ID: 77, driver ID: 8.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: UPDATE orders SET status = ?, delivery_status = ? WHERE order_id = ? AND driver_id = ? | Params: [Completed, Delivered, 77, 8]
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order status updated successfully for order ID: 77.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting updateOrderStatus function successfully for order ID: 77.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order status updated to 'Completed' for order ID: 77.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Attempting to update driver status. Driver ID: 8, New Status: Available
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Driver status updated successfully. Driver ID: 8, New Status: Available
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Driver status updated to 'Available' for driver ID: 8.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering insertCustomerTransaction function for customer ID: 1260106158.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: INSERT INTO customer_transactions 
+              (transaction_ref, customer_id, amount, date_created, transaction_type, payment_method, description) 
+              VALUES (?, ?, ?, NOW(), ?, ?, ?) | Params: [TRX68527143EC4B27581712671219, 1260106158, 0, debit, Direct Debit, Food Order Payment for Order ID: 77]
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Customer transaction inserted successfully for customer ID: 1260106158.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting insertCustomerTransaction function successfully for customer ID: 1260106158.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Customer transaction inserted for order ID: 77.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering insertTransaction function for order ID: 77, customer ID: 1260106158.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: INSERT INTO transactions 
+              (transaction_ref, customer_id, order_id, transaction_type, amount, transaction_date, payment_method, status, created_at, updated_at, revenue_type_id) 
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?) | Params: [TRX68527143EC4B27581712671219, 1260106158, 77, Credit, 0, 2025-06-16 06:58:46, Food Order Payment for Order ID: 77, Completed, 2]
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction inserted successfully for order ID: 77.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting insertTransaction function successfully for order ID: 77.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction record inserted for order ID: 77.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering insertRevenue function for order ID: 77, customer ID: 1260106158.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: INSERT INTO revenue 
+              (order_id, customer_id, total_amount, refunded_amount, retained_amount, transaction_date, status, updated_at, revenue_type_id) 
+              VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), ?) | Params: [77, 1260106158, 0, 0, 0, 2025-06-16 06:58:46, Completed, 2]
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Revenue inserted successfully for order ID: 77.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting insertRevenue function successfully for order ID: 77.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Revenue record inserted for order ID: 77.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering creditDeliveryFee function for order ID: 77, driver ID: 8.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction started for crediting delivery fee for order ID: 77.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: INSERT INTO delivery_fee (order_id, driver_id, delivery_fee, status, created_at) VALUES (?, ?, ?, 'Credited', NOW()) | Params: [77, 8, 3400.00]
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Delivery fee inserted successfully for order ID: 77.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: UPDATE driver SET wallet_balance = wallet_balance + ? WHERE id = ? | Params: [3400.00, 8]
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Driver's wallet updated successfully for driver ID: 8.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering insertTransaction function for order ID: 77, customer ID: 1260106158.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: INSERT INTO transactions 
+              (transaction_ref, customer_id, order_id, transaction_type, amount, transaction_date, payment_method, status, created_at, updated_at, revenue_type_id) 
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?) | Params: [TRX68527143EC4B27581712671219, 1260106158, 77, Debit, 3400.00, 2025-06-16 06:58:46, Driver Delivery Fee., Completed, 8]
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction inserted successfully for order ID: 77.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting insertTransaction function successfully for order ID: 77.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction inserted successfully for delivery fee of order ID: 77.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction committed successfully for crediting delivery fee for order ID: 77.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting creditDeliveryFee function successfully for order ID: 77.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Delivery fee credited for order ID: 77.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction committed successfully for order ID: 77.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting handleCreditOrderDelivery function successfully for order ID: 77.
+[2025-06-18 09:56:52] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Response Sent - Success: true, Message: Credit order successfully delivered., Status Code: 200
+[2025-06-18 09:56:54] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Session validated successfully for Driver ID: 8.
+[2025-06-18 09:56:54] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Driver ID: 8 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:56:54] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Total orders found for driver ID: 8: 0.
+[2025-06-18 09:56:55] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 paginated orders for driver ID: 8.
+[2025-06-18 09:56:55] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 pending orders for driver ID: 8.
+[2025-06-18 09:56:55] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Session validated successfully for Driver ID: 8.
+[2025-06-18 09:56:55] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Driver ID: 8 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:56:55] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Total orders found for driver ID: 8: 0.
+[2025-06-18 09:56:55] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 paginated orders for driver ID: 8.
+[2025-06-18 09:56:55] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 pending orders for driver ID: 8.
+[2025-06-18 09:56:55] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 8 requested their profile details.
+[2025-06-18 09:56:55] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 8.
+[2025-06-18 09:56:55] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 8.
+[2025-06-18 09:56:55] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 8
+[2025-06-18 09:57:16] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Session validated successfully for Driver ID: 8.
+[2025-06-18 09:57:16] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Logout attempt for driver_id: 8
+[2025-06-18 09:57:16] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Retrieved session_id: np1ido4m8o4ipe8a55le8eel7p for driver_id: 8.
+[2025-06-18 09:57:17] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Updated session status to 'Inactive' for session_id: np1ido4m8o4ipe8a55le8eel7p.
+[2025-06-18 09:57:17] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Session destroyed for driver_id: 8.
+[2025-06-18 09:57:27] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login attempt for username: adebayoabdulrahmon@gmail.com
+[2025-06-18 09:57:27] [Page: http://localhost/transaction_manager/driver/v2/index.php] Driver ID for user: 1
+[2025-06-18 09:57:27] [Page: http://localhost/transaction_manager/driver/v2/index.php] Destroying session for session_id: j7s9jdva6mtn0r6c3k7j2p033f
+[2025-06-18 09:57:28] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login successful for driver_id: 1
+[2025-06-18 09:57:38] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Session validated successfully for Driver ID: 1.
+[2025-06-18 09:57:38] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Driver ID: 1 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:57:39] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Total orders found for driver ID: 1: 1.
+[2025-06-18 09:57:39] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 1 paginated orders for driver ID: 1.
+[2025-06-18 09:57:39] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 1 pending orders for driver ID: 1.
+[2025-06-18 09:57:39] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Session validated successfully for Driver ID: 1.
+[2025-06-18 09:57:39] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Driver ID: 1 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:57:39] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Total orders found for driver ID: 1: 1.
+[2025-06-18 09:57:39] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 1 paginated orders for driver ID: 1.
+[2025-06-18 09:57:39] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 1 pending orders for driver ID: 1.
+[2025-06-18 09:57:39] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 1 requested their profile details.
+[2025-06-18 09:57:39] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 1.
+[2025-06-18 09:57:39] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 1.
+[2025-06-18 09:57:39] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 1
+[2025-06-18 09:57:46] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Session validated successfully for Driver ID: 1.
+[2025-06-18 09:57:46] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order update request received. Order ID: 80, Current Status: Assigned, New Status: In Transit, Driver ID: 1
+[2025-06-18 09:57:46] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Checking status transition validity. From: Assigned, To: In Transit
+[2025-06-18 09:57:46] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Status transition is valid. From: Assigned, To: In Transit
+[2025-06-18 09:57:47] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Generated transaction reference: TRX6852717B0095B1764848907324
+[2025-06-18 09:57:47] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering updateOrderStatus function for order ID: 80, driver ID: 1.
+[2025-06-18 09:57:47] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: UPDATE orders SET status = ?, delivery_status = ? WHERE order_id = ? AND driver_id = ? | Params: [Pending, In Transit, 80, 1]
+[2025-06-18 09:57:47] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order status updated successfully for order ID: 80.
+[2025-06-18 09:57:47] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting updateOrderStatus function successfully for order ID: 80.
+[2025-06-18 09:57:47] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Response Sent - Success: true, Message: Your Order has been successfully In Transit, Status Code: 200
+[2025-06-18 09:57:48] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Session validated successfully for Driver ID: 1.
+[2025-06-18 09:57:48] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Driver ID: 1 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:57:48] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Total orders found for driver ID: 1: 1.
+[2025-06-18 09:57:48] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 1 paginated orders for driver ID: 1.
+[2025-06-18 09:57:48] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 1 pending orders for driver ID: 1.
+[2025-06-18 09:57:48] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Session validated successfully for Driver ID: 1.
+[2025-06-18 09:57:48] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Driver ID: 1 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:57:49] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Total orders found for driver ID: 1: 1.
+[2025-06-18 09:57:49] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 1 paginated orders for driver ID: 1.
+[2025-06-18 09:57:49] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 1 pending orders for driver ID: 1.
+[2025-06-18 09:57:49] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 1 requested their profile details.
+[2025-06-18 09:57:49] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 1.
+[2025-06-18 09:57:49] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 1.
+[2025-06-18 09:57:49] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 1
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Session validated successfully for Driver ID: 1.
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order update request received. Order ID: 80, Current Status: In Transit, New Status: Delivered, Driver ID: 1
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Checking status transition validity. From: In Transit, To: Delivered
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Status transition is valid. From: In Transit, To: Delivered
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Fetching order details. Order ID: 80, Driver ID: 1
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order details retrieved successfully. Order ID: 80
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Generated transaction reference: TRX6852719EC05B73513258629668
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering handleOrderDelivery function for order ID: 80, driver ID: 1.
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Fetching order details. Order ID: 80, Driver ID: 1
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order details retrieved successfully. Order ID: 80
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order details retrieved for order ID: 80. Is Credit: No
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Handling paid order delivery for order ID: 80.
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering handlePaidOrderDelivery function for order ID: 80, driver ID: 1.
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order details - Customer ID: 1260106158, Amount: 1500.00, Delivery Fee: 150.00, Status: Completed, Revenue Type ID: 2.
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction started for order ID: 80.
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: UPDATE order_details SET status = 'Delivered' WHERE order_id = ? | Params: [80]
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order status updated to 'Delivered' for order ID: 80.
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering updateOrderStatus function for order ID: 80, driver ID: 1.
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: UPDATE orders SET status = ?, delivery_status = ? WHERE order_id = ? AND driver_id = ? | Params: [Completed, Delivered, 80, 1]
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order status updated successfully for order ID: 80.
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting updateOrderStatus function successfully for order ID: 80.
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Order status updated to 'Completed' for order ID: 80.
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Attempting to update driver status. Driver ID: 1, New Status: Available
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Driver status updated successfully. Driver ID: 1, New Status: Available
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Driver status updated to 'Available' for driver ID: 1.
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering insertCustomerTransaction function for customer ID: 1260106158.
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: INSERT INTO customer_transactions 
+              (transaction_ref, customer_id, amount, date_created, transaction_type, payment_method, description) 
+              VALUES (?, ?, ?, NOW(), ?, ?, ?) | Params: [TRX6852719EC05B73513258629668, 1260106158, 1500.00, debit, Direct Debit, Food Order Payment for Order ID: 80]
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Customer transaction inserted successfully for customer ID: 1260106158.
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting insertCustomerTransaction function successfully for customer ID: 1260106158.
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Customer transaction inserted for order ID: 80.
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering insertTransaction function for order ID: 80, customer ID: 1260106158.
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: INSERT INTO transactions 
+              (transaction_ref, customer_id, order_id, transaction_type, amount, transaction_date, payment_method, status, created_at, updated_at, revenue_type_id) 
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?) | Params: [TRX6852719EC05B73513258629668, 1260106158, 80, Credit, 1500.00, 2025-06-16 07:32:36, Food Order Payment for Order ID: 80, Completed, 2]
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction inserted successfully for order ID: 80.
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting insertTransaction function successfully for order ID: 80.
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction record inserted for order ID: 80.
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering insertRevenue function for order ID: 80, customer ID: 1260106158.
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: INSERT INTO revenue 
+              (order_id, customer_id, total_amount, refunded_amount, retained_amount, transaction_date, status, updated_at, revenue_type_id) 
+              VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), ?) | Params: [80, 1260106158, 1500.00, 0, 1500.00, 2025-06-16 07:32:36, Completed, 2]
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Revenue inserted successfully for order ID: 80.
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting insertRevenue function successfully for order ID: 80.
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Revenue record inserted for order ID: 80.
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering creditDeliveryFee function for order ID: 80, driver ID: 1.
+[2025-06-18 09:58:22] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction started for crediting delivery fee for order ID: 80.
+[2025-06-18 09:58:23] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: INSERT INTO delivery_fee (order_id, driver_id, delivery_fee, status, created_at) VALUES (?, ?, ?, 'Credited', NOW()) | Params: [80, 1, 150.00]
+[2025-06-18 09:58:23] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Delivery fee inserted successfully for order ID: 80.
+[2025-06-18 09:58:23] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: UPDATE driver SET wallet_balance = wallet_balance + ? WHERE id = ? | Params: [150.00, 1]
+[2025-06-18 09:58:23] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Driver's wallet updated successfully for driver ID: 1.
+[2025-06-18 09:58:23] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Entering insertTransaction function for order ID: 80, customer ID: 1260106158.
+[2025-06-18 09:58:23] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Executing SQL query: INSERT INTO transactions 
+              (transaction_ref, customer_id, order_id, transaction_type, amount, transaction_date, payment_method, status, created_at, updated_at, revenue_type_id) 
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?) | Params: [TRX6852719EC05B73513258629668, 1260106158, 80, Debit, 150.00, 2025-06-16 07:32:36, Driver Delivery Fee., Completed, 8]
+[2025-06-18 09:58:23] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction inserted successfully for order ID: 80.
+[2025-06-18 09:58:23] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting insertTransaction function successfully for order ID: 80.
+[2025-06-18 09:58:23] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction inserted successfully for delivery fee of order ID: 80.
+[2025-06-18 09:58:23] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction committed successfully for crediting delivery fee for order ID: 80.
+[2025-06-18 09:58:23] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting creditDeliveryFee function successfully for order ID: 80.
+[2025-06-18 09:58:23] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Delivery fee credited for order ID: 80.
+[2025-06-18 09:58:23] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Transaction committed successfully for order ID: 80.
+[2025-06-18 09:58:23] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Exiting handlePaidOrderDelivery function successfully for order ID: 80.
+[2025-06-18 09:58:23] [Page: http://localhost/transaction_manager/driver/v2/update_order.php] Response Sent - Success: true, Message: Outright payment order successfully delivered., Status Code: 200
+[2025-06-18 09:58:24] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Session validated successfully for Driver ID: 1.
+[2025-06-18 09:58:24] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Driver ID: 1 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:58:24] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Total orders found for driver ID: 1: 0.
+[2025-06-18 09:58:24] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 paginated orders for driver ID: 1.
+[2025-06-18 09:58:24] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 pending orders for driver ID: 1.
+[2025-06-18 09:58:24] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Session validated successfully for Driver ID: 1.
+[2025-06-18 09:58:24] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Driver ID: 1 requested orders. Page: 1, Limit: 10.
+[2025-06-18 09:58:24] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Total orders found for driver ID: 1: 0.
+[2025-06-18 09:58:25] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 paginated orders for driver ID: 1.
+[2025-06-18 09:58:25] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 pending orders for driver ID: 1.
+[2025-06-18 09:58:25] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 1 requested their profile details.
+[2025-06-18 09:58:25] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 1.
+[2025-06-18 09:58:25] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 1.
+[2025-06-18 09:58:25] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 1
+[2025-06-18 09:59:27] [Page: http://localhost/transaction_manager/driver/v2/logout.php?logout_id=1] Session validated successfully for Driver ID: 1.
+[2025-06-18 09:59:27] [Page: http://localhost/transaction_manager/driver/v2/logout.php?logout_id=1] Logout attempt for driver_id: 1
+[2025-06-18 09:59:27] [Page: http://localhost/transaction_manager/driver/v2/logout.php?logout_id=1] Retrieved session_id: d2sjthjlts0k5q04qsbi85vrt5 for driver_id: 1.
+[2025-06-18 09:59:27] [Page: http://localhost/transaction_manager/driver/v2/logout.php?logout_id=1] Updated session status to 'Inactive' for session_id: d2sjthjlts0k5q04qsbi85vrt5.
+[2025-06-18 09:59:27] [Page: http://localhost/transaction_manager/driver/v2/logout.php?logout_id=1] Session destroyed for driver_id: 1.
+[2025-06-18 10:00:42] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login attempt for username: kayodeodetunde@gmail.com
+[2025-06-18 10:00:42] [Page: http://localhost/transaction_manager/driver/v2/index.php] Driver ID for user: 7
+[2025-06-18 10:00:42] [Page: http://localhost/transaction_manager/driver/v2/index.php] Destroying session for session_id: lt1mfeuqacj4nvjb3kie7rrevd
+[2025-06-18 10:00:42] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login successful for driver_id: 7
+[2025-06-18 10:00:54] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Session validated successfully for Driver ID: 7.
+[2025-06-18 10:00:54] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Driver ID: 7 requested orders. Page: 1, Limit: 10.
+[2025-06-18 10:00:54] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Total orders found for driver ID: 7: 0.
+[2025-06-18 10:00:54] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 paginated orders for driver ID: 7.
+[2025-06-18 10:00:54] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 pending orders for driver ID: 7.
+[2025-06-18 10:00:54] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Session validated successfully for Driver ID: 7.
+[2025-06-18 10:00:54] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Driver ID: 7 requested orders. Page: 1, Limit: 10.
+[2025-06-18 10:00:54] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Total orders found for driver ID: 7: 0.
+[2025-06-18 10:00:54] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 paginated orders for driver ID: 7.
+[2025-06-18 10:00:54] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 pending orders for driver ID: 7.
+[2025-06-18 10:00:54] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 7
+[2025-06-18 10:00:54] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 7 requested their profile details.
+[2025-06-18 10:00:54] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 7.
+[2025-06-18 10:00:54] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 7.
+[2025-06-18 10:00:57] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 7 requested their profile details.
+[2025-06-18 10:00:57] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 7.
+[2025-06-18 10:00:57] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 7.
+[2025-06-18 10:00:57] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 7 requested their profile details.
+[2025-06-18 10:00:57] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 7.
+[2025-06-18 10:00:57] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 7.
+[2025-06-18 10:00:57] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 7 requested their profile details.
+[2025-06-18 10:00:57] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 7.
+[2025-06-18 10:00:58] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 7.
+[2025-06-18 10:00:58] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 7
+[2025-06-18 10:01:31] [Page: http://localhost/transaction_manager/driver/v2/update_picture.php] Secret answer validation failed for driver ID: 7
+[2025-06-18 10:01:46] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Session validated successfully for Driver ID: 7.
+[2025-06-18 10:01:46] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Logout attempt for driver_id: 7
+[2025-06-18 10:01:46] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Retrieved session_id: 8qds2vcmke9sttc4lt5j9eq7av for driver_id: 7.
+[2025-06-18 10:01:46] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Updated session status to 'Inactive' for session_id: 8qds2vcmke9sttc4lt5j9eq7av.
+[2025-06-18 10:01:46] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Session destroyed for driver_id: 7.
+[2025-06-18 10:02:09] [Page: http://localhost/transaction_manager/driver/v2/secret_question.php] Entering login request handler.
+[2025-06-18 10:02:09] [Page: http://localhost/transaction_manager/driver/v2/secret_question.php] JSON input received: {"email":"kayodeodetunde@gmail.com","password":"Nigerian_3035"}
+[2025-06-18 10:02:09] [Page: http://localhost/transaction_manager/driver/v2/secret_question.php] Input data - Email: kayodeodetunde@gmail.com, Password: [hidden]
+[2025-06-18 10:02:09] [Page: http://localhost/transaction_manager/driver/v2/secret_question.php] Executing SQL query: SELECT id, secret_question, password FROM driver WHERE email = ? LIMIT 1 | Params: [kayodeodetunde@gmail.com]
+[2025-06-18 10:02:09] [Page: http://localhost/transaction_manager/driver/v2/secret_question.php] Number of rows returned: 1
+[2025-06-18 10:02:09] [Page: http://localhost/transaction_manager/driver/v2/secret_question.php] Driver details fetched for driver ID: 7.
+[2025-06-18 10:02:09] [Page: http://localhost/transaction_manager/driver/v2/secret_question.php] Executing SQL query: SELECT attempts, locked_until FROM driver_login_attempts WHERE driver_id = ? LIMIT 1 | Params: [7]
+[2025-06-18 10:02:09] [Page: http://localhost/transaction_manager/driver/v2/secret_question.php] Number of rows returned for lock status check: 0
+[2025-06-18 10:02:09] [Page: http://localhost/transaction_manager/driver/v2/secret_question.php] Password verification successful for driver ID: 7.
+[2025-06-18 10:02:09] [Page: http://localhost/transaction_manager/driver/v2/secret_question.php] Exiting login request handler.
+[2025-06-18 10:02:37] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login attempt for username: kayodeodetunde@gmail.com
+[2025-06-18 10:02:37] [Page: http://localhost/transaction_manager/driver/v2/index.php] Driver ID for user: 7
+[2025-06-18 10:02:37] [Page: http://localhost/transaction_manager/driver/v2/index.php] Destroying session for session_id: 8qds2vcmke9sttc4lt5j9eq7av
+[2025-06-18 10:02:38] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login successful for driver_id: 7
+[2025-06-18 10:02:48] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Session validated successfully for Driver ID: 7.
+[2025-06-18 10:02:48] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Driver ID: 7 requested orders. Page: 1, Limit: 10.
+[2025-06-18 10:02:48] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Total orders found for driver ID: 7: 0.
+[2025-06-18 10:02:48] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 paginated orders for driver ID: 7.
+[2025-06-18 10:02:48] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 pending orders for driver ID: 7.
+[2025-06-18 10:02:48] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Session validated successfully for Driver ID: 7.
+[2025-06-18 10:02:48] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Driver ID: 7 requested orders. Page: 1, Limit: 10.
+[2025-06-18 10:02:48] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Total orders found for driver ID: 7: 0.
+[2025-06-18 10:02:48] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 paginated orders for driver ID: 7.
+[2025-06-18 10:02:48] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 pending orders for driver ID: 7.
+[2025-06-18 10:02:48] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 7
+[2025-06-18 10:02:48] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 7 requested their profile details.
+[2025-06-18 10:02:48] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 7.
+[2025-06-18 10:02:48] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 7.
+[2025-06-18 10:02:51] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 7 requested their profile details.
+[2025-06-18 10:02:51] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 7.
+[2025-06-18 10:02:51] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 7.
+[2025-06-18 10:02:51] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 7 requested their profile details.
+[2025-06-18 10:02:51] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 7.
+[2025-06-18 10:02:51] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 7.
+[2025-06-18 10:02:51] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 7
+[2025-06-18 10:02:51] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 7 requested their profile details.
+[2025-06-18 10:02:51] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 7.
+[2025-06-18 10:02:51] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 7.
+[2025-06-18 10:03:31] [Page: http://localhost/transaction_manager/driver/v2/reset_answer.php] Session validated successfully for Driver ID: 7.
+[2025-06-18 10:03:32] [Page: http://localhost/transaction_manager/driver/v2/reset_answer.php] Driver ID: 7 attempted to update secret question and answer.
+[2025-06-18 10:03:32] [Page: http://localhost/transaction_manager/driver/v2/reset_answer.php] Secret question and answer updated successfully for driver ID: 7.
+[2025-06-18 10:03:59] [Page: http://localhost/transaction_manager/driver/v2/update_picture.php] Profile picture updated successfully for driver ID: 7
+[2025-06-18 10:04:01] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 7 requested their profile details.
+[2025-06-18 10:04:02] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 7.
+[2025-06-18 10:04:02] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 7.
+[2025-06-18 10:04:02] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 7 requested their profile details.
+[2025-06-18 10:04:02] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 7.
+[2025-06-18 10:04:02] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 7.
+[2025-06-18 10:04:02] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 7
+[2025-06-18 10:04:02] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 7 requested their profile details.
+[2025-06-18 10:04:02] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 7.
+[2025-06-18 10:04:02] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 7.
+[2025-06-18 10:05:34] [Page: http://localhost/transaction_manager/driver/v2/logout.php?logout_id=7] Session validated successfully for Driver ID: 7.
+[2025-06-18 10:05:34] [Page: http://localhost/transaction_manager/driver/v2/logout.php?logout_id=7] Logout attempt for driver_id: 7
+[2025-06-18 10:05:34] [Page: http://localhost/transaction_manager/driver/v2/logout.php?logout_id=7] Retrieved session_id: ubps0as0t08b11l834t3g4v7f7 for driver_id: 7.
+[2025-06-18 10:05:34] [Page: http://localhost/transaction_manager/driver/v2/logout.php?logout_id=7] Updated session status to 'Inactive' for session_id: ubps0as0t08b11l834t3g4v7f7.
+[2025-06-18 10:05:34] [Page: http://localhost/transaction_manager/driver/v2/logout.php?logout_id=7] Session destroyed for driver_id: 7.
+[2025-06-18 10:13:17] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login attempt for username: kayodeodetunde@gmail.com
+[2025-06-18 10:13:17] [Page: http://localhost/transaction_manager/driver/v2/index.php] Driver ID for user: 7
+[2025-06-18 10:13:17] [Page: http://localhost/transaction_manager/driver/v2/index.php] Destroying session for session_id: ubps0as0t08b11l834t3g4v7f7
+[2025-06-18 10:13:18] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login successful for driver_id: 7
+[2025-06-18 10:13:29] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Session validated successfully for Driver ID: 7.
+[2025-06-18 10:13:29] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Driver ID: 7 requested orders. Page: 1, Limit: 10.
+[2025-06-18 10:13:29] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Total orders found for driver ID: 7: 0.
+[2025-06-18 10:13:29] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 paginated orders for driver ID: 7.
+[2025-06-18 10:13:30] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 pending orders for driver ID: 7.
+[2025-06-18 10:13:30] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Session validated successfully for Driver ID: 7.
+[2025-06-18 10:13:30] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Driver ID: 7 requested orders. Page: 1, Limit: 10.
+[2025-06-18 10:13:30] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Total orders found for driver ID: 7: 0.
+[2025-06-18 10:13:30] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 paginated orders for driver ID: 7.
+[2025-06-18 10:13:30] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 pending orders for driver ID: 7.
+[2025-06-18 10:13:30] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 7 requested their profile details.
+[2025-06-18 10:13:30] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 7.
+[2025-06-18 10:13:30] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 7.
+[2025-06-18 10:13:30] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 7
+[2025-06-18 10:13:33] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 7 requested their profile details.
+[2025-06-18 10:13:33] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 7.
+[2025-06-18 10:13:33] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 7.
+[2025-06-18 10:13:33] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 7
+[2025-06-18 10:13:33] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 7 requested their profile details.
+[2025-06-18 10:13:33] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 7.
+[2025-06-18 10:13:33] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 7.
+[2025-06-18 10:13:33] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 7 requested their profile details.
+[2025-06-18 10:13:34] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 7.
+[2025-06-18 10:13:34] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 7.
+[2025-06-18 10:14:38] [Page: http://localhost/transaction_manager/driver/v2/logout.php?logout_id=7] Session validated successfully for Driver ID: 7.
+[2025-06-18 10:14:38] [Page: http://localhost/transaction_manager/driver/v2/logout.php?logout_id=7] Logout attempt for driver_id: 7
+[2025-06-18 10:14:38] [Page: http://localhost/transaction_manager/driver/v2/logout.php?logout_id=7] Retrieved session_id: u2i92i546meheloj80te6o6l59 for driver_id: 7.
+[2025-06-18 10:14:38] [Page: http://localhost/transaction_manager/driver/v2/logout.php?logout_id=7] Updated session status to 'Inactive' for session_id: u2i92i546meheloj80te6o6l59.
+[2025-06-18 10:14:38] [Page: http://localhost/transaction_manager/driver/v2/logout.php?logout_id=7] Session destroyed for driver_id: 7.
+[2025-06-19 16:45:35] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login attempt for username: kayodeodetunde@gmail.com
+[2025-06-19 16:45:35] [Page: http://localhost/transaction_manager/driver/v2/index.php] Driver ID for user: 7
+[2025-06-19 16:45:35] [Page: http://localhost/transaction_manager/driver/v2/index.php] Account restricted for driver_id: 7
+[2025-06-19 16:45:48] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login attempt for username: bellosanni@gmail.com
+[2025-06-19 16:45:48] [Page: http://localhost/transaction_manager/driver/v2/index.php] Driver ID for user: 4
+[2025-06-19 16:45:49] [Page: http://localhost/transaction_manager/driver/v2/index.php] Destroying session for session_id: ktfhbd8868n8d5spn1gqkqmuqr
+[2025-06-19 16:45:49] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login successful for driver_id: 4
+[2025-06-19 16:46:02] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Session validated successfully for Driver ID: 4.
+[2025-06-19 16:46:02] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Driver ID: 4 requested orders. Page: 1, Limit: 10.
+[2025-06-19 16:46:02] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Total orders found for driver ID: 4: 0.
+[2025-06-19 16:46:02] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 paginated orders for driver ID: 4.
+[2025-06-19 16:46:02] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 pending orders for driver ID: 4.
+[2025-06-19 16:46:02] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Session validated successfully for Driver ID: 4.
+[2025-06-19 16:46:02] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Driver ID: 4 requested orders. Page: 1, Limit: 10.
+[2025-06-19 16:46:02] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Total orders found for driver ID: 4: 0.
+[2025-06-19 16:46:02] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 paginated orders for driver ID: 4.
+[2025-06-19 16:46:02] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 pending orders for driver ID: 4.
+[2025-06-19 16:46:02] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 4 requested their profile details.
+[2025-06-19 16:46:02] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 4.
+[2025-06-19 16:46:02] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 4.
+[2025-06-19 16:46:02] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 4
+[2025-06-19 16:46:05] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Session validated successfully for Driver ID: 4.
+[2025-06-19 16:46:05] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Logout attempt for driver_id: 4
+[2025-06-19 16:46:05] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Retrieved session_id: 2eevtsjiaokcbj88fmole22d49 for driver_id: 4.
+[2025-06-19 16:46:05] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Updated session status to 'Inactive' for session_id: 2eevtsjiaokcbj88fmole22d49.
+[2025-06-19 16:46:05] [Page: http://localhost/transaction_manager/driver/v2/logout.php] Session destroyed for driver_id: 4.
