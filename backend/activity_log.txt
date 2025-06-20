@@ -4094,3 +4094,171 @@ Source: get_drivers.php (Line 150)
 Message: Driver listing fetch process completed
 ----------------------------------------
 
+[2025-06-20 21:50:43]
+UserID: 427643785
+Method: GET
+URL: http://localhost/transaction_manager/backend/staff_deactivation_history.php?page=1&limit=10
+Source: staff_deactivation_history.php (Line 20)
+Message: Admin ID 427643785 accessing deactivation history
+----------------------------------------
+
+[2025-06-20 21:50:45]
+UserID: 427643785
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-06-20 21:50:45]
+UserID: 427643785
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 21)
+Message: Request made by admin ID: 427643785
+----------------------------------------
+
+[2025-06-20 21:50:45]
+UserID: 427643785
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 43)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-06-20 21:50:45]
+UserID: 427643785
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 65)
+Message: Fetched 0 notifications for page 1.
+----------------------------------------
+
+[2025-06-20 21:50:45]
+UserID: 427643785
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 88)
+Message: Total unread notifications: 0. Total pages: 0.
+----------------------------------------
+
+[2025-06-20 21:50:45]
+UserID: 427643785
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 111)
+Message: Database connection closed.
+----------------------------------------
+
+[2025-06-20 21:50:45]
+UserID: 427643785
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 113)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-06-20 21:50:45]
+UserID: 427643785
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 427643785
+----------------------------------------
+
+[2025-06-20 22:28:50]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 10)
+Message: Random customer names fetch process started
+----------------------------------------
+
+[2025-06-20 22:28:50]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 6)
+Message: Fetching promos script started.
+----------------------------------------
+
+[2025-06-20 22:28:50]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 14)
+Message: Database transaction started
+----------------------------------------
+
+[2025-06-20 22:28:50]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 21)
+Message: Customer customer_id found in session: 1260106158
+----------------------------------------
+
+[2025-06-20 22:28:50]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 32)
+Message: Successfully retrieved 3 random customer names
+----------------------------------------
+
+[2025-06-20 22:28:50]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 32)
+Message: Pagination parameters - Page: 1, Limit: 10, Offset: 0
+----------------------------------------
+
+[2025-06-20 22:28:50]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 43)
+Message: Random customer names fetch completed successfully
+----------------------------------------
+
+[2025-06-20 22:28:51]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 67)
+Message: Random customer names fetch process completed
+----------------------------------------
+
+[2025-06-20 22:28:51]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 48)
+Message: Total promos count: 7
+----------------------------------------
+
+[2025-06-20 22:28:51]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 69)
+Message: Fetched 7 paginated promos.
+----------------------------------------
+
+[2025-06-20 22:28:51]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 92)
+Message: Fetched 0 ongoing promos.
+----------------------------------------
+
+[2025-06-20 22:28:51]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 108)
+Message: Fetching promos script completed successfully.
+----------------------------------------
+

@@ -11912,3 +11912,107 @@
 [2025-06-20 22:45:46] [Page: http://localhost/transaction_manager/driver/v2/logout.php?logout_id=4] Retrieved session_id: q0biiafn0l3grk3s0ms6odl7fs for driver_id: 4.
 [2025-06-20 22:45:46] [Page: http://localhost/transaction_manager/driver/v2/logout.php?logout_id=4] Updated session status to 'Inactive' for session_id: q0biiafn0l3grk3s0ms6odl7fs.
 [2025-06-20 22:45:46] [Page: http://localhost/transaction_manager/driver/v2/logout.php?logout_id=4] Session destroyed for driver_id: 4.
+[2025-06-20 22:49:30] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login attempt for username: bellosanni@gmail.com
+[2025-06-20 22:49:30] [Page: http://localhost/transaction_manager/driver/v2/index.php] Driver ID for user: 4
+[2025-06-20 22:49:30] [Page: http://localhost/transaction_manager/driver/v2/index.php] Destroying session for session_id: q0biiafn0l3grk3s0ms6odl7fs
+[2025-06-20 22:49:30] [Page: http://localhost/transaction_manager/driver/v2/index.php] Login successful for driver_id: 4
+[2025-06-20 22:49:44] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Session validated successfully for Driver ID: 4.
+[2025-06-20 22:49:44] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Driver ID: 4 requested orders. Page: 1, Limit: 10.
+[2025-06-20 22:49:44] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Total orders found for driver ID: 4: 0.
+[2025-06-20 22:49:44] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 paginated orders for driver ID: 4.
+[2025-06-20 22:49:44] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 pending orders for driver ID: 4.
+[2025-06-20 22:49:44] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Session validated successfully for Driver ID: 4.
+[2025-06-20 22:49:45] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Driver ID: 4 requested orders. Page: 1, Limit: 10.
+[2025-06-20 22:49:45] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Total orders found for driver ID: 4: 0.
+[2025-06-20 22:49:45] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 paginated orders for driver ID: 4.
+[2025-06-20 22:49:45] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 pending orders for driver ID: 4.
+[2025-06-20 22:49:45] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 4
+[2025-06-20 22:49:45] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 4 requested their profile details.
+[2025-06-20 22:49:45] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 4.
+[2025-06-20 22:49:45] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 4.
+[2025-06-20 22:50:02] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Session validated successfully for Driver ID: 4.
+[2025-06-20 22:50:02] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Driver ID: 4 requested orders. Page: 1, Limit: 10.
+[2025-06-20 22:50:03] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Total orders found for driver ID: 4: 0.
+[2025-06-20 22:50:03] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 paginated orders for driver ID: 4.
+[2025-06-20 22:50:03] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 pending orders for driver ID: 4.
+[2025-06-20 22:50:03] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Session validated successfully for Driver ID: 4.
+[2025-06-20 22:50:03] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Driver ID: 4 requested orders. Page: 1, Limit: 10.
+[2025-06-20 22:50:03] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Total orders found for driver ID: 4: 0.
+[2025-06-20 22:50:03] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 paginated orders for driver ID: 4.
+[2025-06-20 22:50:03] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 pending orders for driver ID: 4.
+[2025-06-20 22:50:03] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 4 requested their profile details.
+[2025-06-20 22:50:03] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 4.
+[2025-06-20 22:50:03] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 4.
+[2025-06-20 22:50:03] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 4
+[2025-06-20 22:51:58] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Session validated successfully for Driver ID: 4.
+[2025-06-20 22:51:58] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Driver ID: 4 requested orders. Page: 1, Limit: 10.
+[2025-06-20 22:51:58] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Total orders found for driver ID: 4: 0.
+[2025-06-20 22:51:58] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 paginated orders for driver ID: 4.
+[2025-06-20 22:51:58] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php] Successfully fetched 0 pending orders for driver ID: 4.
+[2025-06-20 22:51:59] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Session validated successfully for Driver ID: 4.
+[2025-06-20 22:52:00] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Driver ID: 4 requested orders. Page: 1, Limit: 10.
+[2025-06-20 22:52:00] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Total orders found for driver ID: 4: 0.
+[2025-06-20 22:52:00] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 paginated orders for driver ID: 4.
+[2025-06-20 22:52:00] [Page: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10] Successfully fetched 0 pending orders for driver ID: 4.
+[2025-06-20 22:52:00] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 4
+[2025-06-20 22:52:01] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 4 requested their profile details.
+[2025-06-20 22:52:01] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 4.
+[2025-06-20 22:52:01] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 4.
+[2025-06-20 22:52:45] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 4
+[2025-06-20 22:52:45] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 4 requested their profile details.
+[2025-06-20 22:52:45] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 4.
+[2025-06-20 22:52:45] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 4.
+[2025-06-20 22:53:04] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 4
+[2025-06-20 22:53:06] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 4 requested their profile details.
+[2025-06-20 22:53:06] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 4.
+[2025-06-20 22:53:06] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 4.
+[2025-06-20 22:53:40] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 4 requested their profile details.
+[2025-06-20 22:53:40] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 4.
+[2025-06-20 22:53:40] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 4.
+[2025-06-20 22:53:41] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 4
+[2025-06-20 23:22:33] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 4 requested their profile details.
+[2025-06-20 23:22:33] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 4.
+[2025-06-20 23:22:33] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 4.
+[2025-06-20 23:22:34] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 4
+[2025-06-20 23:23:11] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 4
+[2025-06-20 23:23:11] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 4 requested their profile details.
+[2025-06-20 23:23:11] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 4.
+[2025-06-20 23:23:11] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 4.
+[2025-06-20 23:24:00] [Page: http://localhost/transaction_manager/driver/v2/fetch_driver_restrictions.php?page=1&limit=10] Fetching RESTRICT logs for Driver ID 4 | Page 1 | Limit 10
+[2025-06-20 23:24:00] [Page: http://localhost/transaction_manager/driver/v2/fetch_driver_restrictions.php?page=1&limit=10] Fetched 1 RESTRICT records out of 1 for Driver ID 4
+[2025-06-20 23:24:01] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 4 requested their profile details.
+[2025-06-20 23:24:01] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 4.
+[2025-06-20 23:24:01] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 4.
+[2025-06-20 23:24:01] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 4
+[2025-06-20 23:24:12] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 4 requested their profile details.
+[2025-06-20 23:24:12] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 4.
+[2025-06-20 23:24:12] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 4.
+[2025-06-20 23:24:12] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 4 requested their profile details.
+[2025-06-20 23:24:12] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 4.
+[2025-06-20 23:24:12] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 4.
+[2025-06-20 23:24:12] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 4 requested their profile details.
+[2025-06-20 23:24:13] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 4.
+[2025-06-20 23:24:13] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 4.
+[2025-06-20 23:24:13] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 4
+[2025-06-20 23:24:52] [Page: http://localhost/transaction_manager/driver/v2/fetch_driver_restrictions.php?page=1&limit=10] Fetching RESTRICT logs for Driver ID 4 | Page 1 | Limit 10
+[2025-06-20 23:24:52] [Page: http://localhost/transaction_manager/driver/v2/fetch_driver_restrictions.php?page=1&limit=10] Fetched 1 RESTRICT records out of 1 for Driver ID 4
+[2025-06-20 23:24:53] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 4 requested their profile details.
+[2025-06-20 23:24:53] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 4.
+[2025-06-20 23:24:53] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 4.
+[2025-06-20 23:24:53] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 4
+[2025-06-20 23:24:55] [Page: http://localhost/transaction_manager/driver/v2/fetch_driver_unrestrictions.php?page=1&limit=10] Fetching UNRESTRICT logs for Driver ID 4 | Page 1 | Limit 10
+[2025-06-20 23:24:55] [Page: http://localhost/transaction_manager/driver/v2/fetch_driver_unrestrictions.php?page=1&limit=10] Fetched 1 UNRESTRICTED records out of 1 for Driver ID 4
+[2025-06-20 23:25:01] [Page: http://localhost/transaction_manager/driver/v2/fetch_driver_restrictions.php?page=1&limit=10] Fetching RESTRICT logs for Driver ID 4 | Page 1 | Limit 10
+[2025-06-20 23:25:01] [Page: http://localhost/transaction_manager/driver/v2/fetch_driver_restrictions.php?page=1&limit=10] Fetched 1 RESTRICT records out of 1 for Driver ID 4
+[2025-06-20 23:25:02] [Page: http://localhost/transaction_manager/driver/v2/fetch_driver_unrestrictions.php?page=1&limit=10] Fetching UNRESTRICT logs for Driver ID 4 | Page 1 | Limit 10
+[2025-06-20 23:25:02] [Page: http://localhost/transaction_manager/driver/v2/fetch_driver_unrestrictions.php?page=1&limit=10] Fetched 1 UNRESTRICTED records out of 1 for Driver ID 4
+[2025-06-20 23:26:16] [Page: http://localhost/transaction_manager/driver/v2/fetch_driver_restrictions.php?page=1&limit=10] Fetching RESTRICT logs for Driver ID 4 | Page 1 | Limit 10
+[2025-06-20 23:26:16] [Page: http://localhost/transaction_manager/driver/v2/fetch_driver_restrictions.php?page=1&limit=10] Fetched 1 RESTRICT records out of 1 for Driver ID 4
+[2025-06-20 23:26:17] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID: 4 requested their profile details.
+[2025-06-20 23:26:17] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Session validated successfully for Driver ID: 4.
+[2025-06-20 23:26:17] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Successfully fetched driver details for driver ID: 4.
+[2025-06-20 23:26:18] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check successful for driver ID: 4
+[2025-06-20 23:26:20] [Page: http://localhost/transaction_manager/driver/v2/fetch_driver_unrestrictions.php?page=1&limit=10] Fetching UNRESTRICT logs for Driver ID 4 | Page 1 | Limit 10
+[2025-06-20 23:26:20] [Page: http://localhost/transaction_manager/driver/v2/fetch_driver_unrestrictions.php?page=1&limit=10] Fetched 1 UNRESTRICTED records out of 1 for Driver ID 4
+[2025-06-20 23:26:46] [Page: http://localhost/transaction_manager/driver/v2/fetch_driver_restrictions.php?page=1&limit=10] Fetching RESTRICT logs for Driver ID 4 | Page 1 | Limit 10
+[2025-06-20 23:26:47] [Page: http://localhost/transaction_manager/driver/v2/fetch_driver_restrictions.php?page=1&limit=10] Fetched 1 RESTRICT records out of 1 for Driver ID 4

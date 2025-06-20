@@ -21,8 +21,9 @@
     <nav>
         <ul>
             <li><a href="dashboard.php" id="orderFood">Update Order Status</a></li>
-            <li><a href="view_orders.php" id="viewOrders">View Order History</a></li>
+            <li><a href="view_orders.php" id="viewOrders">My Orders</a></li>
             <li><a href="profile.php" id="fundWallet">My Profile</a></li>
+            <li><a href="account_history.php" id="fundWallet">Account History</a></li>
         </ul>
         <span id="wallet">Loading Balance...</span>
         <span id="dateTimeLabel">Loading Time...</span>

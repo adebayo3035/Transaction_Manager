@@ -23,6 +23,7 @@
                 <li><a href="promo.php" id="fundWallet">Promos</a></li>
                 <li><a href="payment_history.php" id="fundWallet">Statement</a></li>
                 <li><a href="card_details.php" id="fundWallet">Get Card Details</a></li>
+                <li><a href="account_history.php" id="accountHistory">Restriction/UnRestriction History</a></li>
                 
             </ul>
 
