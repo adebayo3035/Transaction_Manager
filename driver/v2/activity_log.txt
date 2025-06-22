@@ -12016,3 +12016,9 @@
 [2025-06-20 23:26:20] [Page: http://localhost/transaction_manager/driver/v2/fetch_driver_unrestrictions.php?page=1&limit=10] Fetched 1 UNRESTRICTED records out of 1 for Driver ID 4
 [2025-06-20 23:26:46] [Page: http://localhost/transaction_manager/driver/v2/fetch_driver_restrictions.php?page=1&limit=10] Fetching RESTRICT logs for Driver ID 4 | Page 1 | Limit 10
 [2025-06-20 23:26:47] [Page: http://localhost/transaction_manager/driver/v2/fetch_driver_restrictions.php?page=1&limit=10] Fetched 1 RESTRICT records out of 1 for Driver ID 4
+[2025-06-21 21:00:05] [Page: http://localhost/transaction_manager/driver/v2/fetch_driver_unrestrictions.php?page=1&limit=10] Access Denied: No driver session found.
+[2025-06-21 21:00:19] [Page: http://localhost/transaction_manager/driver/v2/fetch_driver_unrestrictions.php?page=1&limit=10] Access Denied: No driver session found.
+[2025-06-21 21:00:23] [Page: http://localhost/transaction_manager/driver/v2/fetch_driver_restrictions.php?page=1&limit=10] Access Denied: No driver session found.
+[2025-06-21 21:00:25] [Page: http://localhost/transaction_manager/driver/v2/session_data.php] Session check failed: No active session or session expired.
+[2025-06-21 21:00:25] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver ID:  requested their profile details.
+[2025-06-21 21:00:25] [Page: http://localhost/transaction_manager/driver/v2/profile.php] Driver not logged in. Driver's Session ID Cannot be found.

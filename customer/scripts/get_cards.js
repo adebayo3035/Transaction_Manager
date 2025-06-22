@@ -1,14 +1,16 @@
 
 function maskCardNumber(cardNumber) {
-    const lengthToMask = 10; // Number of digits to mask
-    const visibleDigits = cardNumber.length - lengthToMask;
-    
-    if (visibleDigits <= 0) return cardNumber; // Return the original card number if it's too short to mask
-    
-    const maskedPart = '*'.repeat(lengthToMask);
-    const visiblePart = cardNumber.slice(0, visibleDigits);
+    const visibleDigits = 4;
+    const maskedSection = cardNumber.slice(0, -visibleDigits).replace(/\d/g, '*');
+    return maskedSection + cardNumber.slice(-visibleDigits);
+}
 
-    return `${visiblePart}${maskedPart}`;
+function getCardBrandImage(cardNumber) {
+    const visa = /^4/;
+    const mastercard = /^5[1-5]/;
+    if (visa.test(cardNumber)) return '../../images/visa.png';
+    if (mastercard.test(cardNumber)) return '../../images/mastercard.png';
+    return '../../images/chip2.png';
 }
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -27,66 +29,54 @@ document.addEventListener('DOMContentLoaded', () => {
     // Fetch and display orders summary
     fetch('../v2/get_cards.php', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        }
+        headers: { 'Content-Type': 'application/json' }
     })
-        .then(response => response.json())
+        .then(res => res.json())
         .then(data => {
-            if (data.success) {
-                const ordersTableBody = document.querySelector('#card-container');
+            if (!data.success) throw new Error(data.message);
+            const container = document.getElementById('card-container');
+            container.innerHTML = '';
 
-                ordersTableBody.innerHTML = '';
-                data.cards.forEach(cardss => {
-                    const cardElement = document.createElement('div');
-                    cardElement.className = 'card';
-                    // Mask the card number
-            const maskedCardNumber = maskCardNumber(cardss.card_number);
+            data.cards.forEach(card => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'card';
 
-                    // Set the card number as a data attribute
-                    cardElement.dataset.cardNumber = cardss.card_number;
-                    cardElement.dataset.cvv = cardss.cvv;
-                    cardElement.title = "Click to Add funds to your wallet";
-                    cardElement.style.cursor = "pointer";
+                const maskedCardNumber = maskCardNumber(card.card_number);
+                const brandImg = getCardBrandImage(card.card_number);
 
-                    cardElement.innerHTML = `
-                        <div class="card-content">
-                            <div class="card-front">
-                                <img src="../../images/chip2.png" alt="Micro Chip" class="chip">
-                                <div class="card-number">${maskedCardNumber}</div>
-                                <div class="card-holder">${cardss.card_holder}</div>
-                                <div class="expiry-date">${cardss.expiry_date}</div>
-                                <div class="logo">${cardss.bank_name}</div>
-                            </div>
-                            <div class="card-back">
-                                <div class="magnetic-stripe"></div>
-                                <div class="signature">${cardss.card_holder}</div>
-                                <div class="cvv">${cardss.cvv}</div>
-                            </div>
-                        </div>
-                    `;
+                cardElement.innerHTML = `
+        <div class="card-content">
+          <div class="card-front">
+            <div class="card-number">${maskedCardNumber}</div>
+            <div class="bank-name">${card.bank_name}</div>
+            <div class="expiry-date">${card.expiry_date}</div>
+            <img src="${brandImg}" alt="Card Brand" class="brand-icon">
+          </div>
+          <div class="card-back">
+            <div class="magnetic-stripe"></div>
+            <div class="card-holder">Name: ${card.card_holder}</div>
+            <div class="cvv" style="display: none;">CVV: ${card.cvv}</div>
+          </div>
+        </div>
+      `;
 
-                    // Add click event listener to the card element
-                    cardElement.addEventListener('click', () => {
-                        const cardNumber = cardElement.dataset.cardNumber;
-                        const cvv = cardElement.dataset.cvv;
-    
-                        // Set form values
-                        document.getElementById('cardNumberInput').value = cardNumber;
-                        document.getElementById('cvvInput').value = cvv;
-    
-                        // Submit the form
-                        document.getElementById('cardForm').submit();
-                    });
-
-                    ordersTableBody.appendChild(cardElement);
+                // Click toggles flip
+                cardElement.addEventListener('click', () => {
+                    cardElement.classList.toggle('flipped');
+                    const cvvEl = cardElement.querySelector('.cvv');
+                    if (cardElement.classList.contains('flipped')) {
+                        cvvEl.style.display = 'block';
+                    } else {
+                        cvvEl.style.display = 'none';
+                    }
                 });
-            } else {
-                console.error('Failed to fetch Cards:', data.message);
-            }
+
+                container.appendChild(cardElement);
+            });
         })
-        .catch(error => {
-            console.error('Error fetching Cards:', error);
+        .catch(err => {
+            console.error("Error loading cards:", err.message);
+            document.getElementById('card-container').innerHTML = `<p class="text-danger">Failed to load cards</p>`;
         });
 });
 

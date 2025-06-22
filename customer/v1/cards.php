@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Debit Card</title>
     <link rel="stylesheet" href="../css/cards.css">
-   
+
 </head>
 
 <body>
-<?php include ('customer_navbar.php'); ?>
+    <?php include('customer_navbar.php'); ?>
     <section class="container">
         <div class="card_menu">
             <ul class="card-menu">
@@ -24,7 +24,7 @@
                 <li><a href="payment_history.php" id="fundWallet">Statement</a></li>
                 <li><a href="card_details.php" id="fundWallet">Get Card Details</a></li>
                 <li><a href="account_history.php" id="accountHistory">Restriction/UnRestriction History</a></li>
-                
+
             </ul>
 
         </div>
@@ -32,8 +32,6 @@
         <!--  CARDS SECTION -->
         <div class="card-container" id="card-container">
             <!-- Customer Cards will be automatically populated here -->
-
-        </div>
 
         </div>
 
@@ -52,7 +50,8 @@
                 </div>
                 <div class="form-input">
                     <label for="card_number">Card Number:</label>
-                    <input type="number" id="card_number" name="card_number" maxlength="15" required>
+                    <input type="text" id="card_number" name="card_number" maxlength="16" pattern="\d*"
+                        inputmode="numeric" placeholder="Enter 16-digit card number" required>
                 </div>
                 <div class="form-input">
                     <label for="card_holder">Card Holder Name:</label>
