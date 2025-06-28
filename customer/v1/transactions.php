@@ -6,10 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Transactions</title>
     <link rel="stylesheet" href="../css/view_orders.css">
+    <link rel="stylesheet" href="../css/transactions.css">
 </head>
 
 <body>
-<?php include ('customer_navbar.php'); ?>
+    <?php include('customer_navbar.php'); ?>
     <div class="container">
         <div class="livesearch">
             <input type="text" id="liveSearch" placeholder="Search for Order...">
@@ -18,7 +19,7 @@
         <h1>My Transactions</h1>
     </div>
 
-    <table id="ordersTable">
+     <table id="ordersTable">
         <thead>
             <tr>
                 <th>Trans ID</th>
@@ -30,12 +31,12 @@
             </tr>
         </thead>
         <tbody>
-            <!-- Orders will be dynamically inserted here -->
+            <!-- Orders will be dynamically inserted here  -->
         </tbody>
-        
     </table>
+
     <div id="pagination" class="pagination"></div>
-   
+
 
     <div id="orderModal" class="modal">
         <div class="modal-content">
@@ -44,11 +45,11 @@
             <table id="orderDetailsTable">
                 <thead>
                     <tr>
-                    <th>Amount</th>
+                        <th>Amount</th>
                         <th>Transaction Date</th>
                         <th>Transaction Type</th>
                         <th> Payment Method</th>
-                        <th colspan ="2">Description</th>
+                        <th colspan="2">Description</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,6 +58,18 @@
             </table>
         </div>
     </div>
+
+    <div id="globalLoader" style="
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+">
+    <div class="spinner"></div>
+</div>
 
     <script src="../scripts/view_transactions.js"></script>
 </body>

@@ -163,7 +163,7 @@ $sql = "UPDATE admin_tbl SET
             gender = ?, 
             role = ?,
             updated_at = NOW(),
-            updated_by = ?
+            last_updated_by = ?
         WHERE unique_id = ?";
 
 $stmt = $conn->prepare($sql);

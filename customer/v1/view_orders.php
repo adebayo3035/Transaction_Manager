@@ -38,7 +38,7 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id = "ordersTableBody">
             <!-- Orders will be dynamically inserted here -->
         </tbody>
 

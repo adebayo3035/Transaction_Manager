@@ -11,6 +11,7 @@
     <title>View Credits History</title>
     <link rel="stylesheet" href="../css/view_orders.css">
     <link rel="stylesheet" href="../css/checkout.css">
+      <link rel="stylesheet" href="../css/checkout.css">
     <link rel="stylesheet" href="../../css/credit_history.css">
 </head>
 
@@ -35,10 +36,9 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody>
-            <!-- Orders will be dynamically inserted here -->
+        <tbody id="ordersTableBody">
+            <!-- Spinner or credit rows will go here -->
         </tbody>
-
     </table>
     <div id="pagination" class="pagination"></div>
 
@@ -103,8 +103,8 @@
                                 <th>Amount Paid</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <!-- Repayment history will be dynamically inserted here -->
+                        <tbody id="repaymentHistoryTableBody">
+                            <!-- Spinner or repayment rows will be injected here -->
                         </tbody>
                     </table>
                     <!-- Add pagination controls -->
@@ -113,6 +113,8 @@
                         <span id="pageInfo">Page 1 of 1</span>
                         <button id="nextPageBtn" disabled>Next</button>
                     </div>
+
+
                 </div>
             </div>
 

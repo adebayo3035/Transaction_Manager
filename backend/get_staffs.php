@@ -51,7 +51,7 @@ try {
             --     admin_tbl.delete_status != 'Yes' 
             --     OR admin_tbl.delete_status IS NULL
             ORDER BY 
-                admin_tbl.role ASC
+                admin_tbl.role ASC, admin_tbl.id DESC
             LIMIT ? OFFSET ?";
 
     $stmt = $conn->prepare($query);

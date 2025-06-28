@@ -36,6 +36,44 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => console.error('Error fetching data:', error));
     }
 
+    function fetchDrivers(page = 1) {
+        const ordersTableBody = document.getElementById('ordersTableBody');
+
+        // Inject spinner
+        ordersTableBody.innerHTML = `
+        <tr>
+            <td colspan="6" style="text-align:center; padding: 20px;">
+                <div class="spinner"
+                    style="border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: auto;">
+                </div>
+            </td>
+        </tr>
+        `;
+
+        const minDelay = new Promise(resolve => setTimeout(resolve, 1000)); // Spinner shows at least 500ms
+        const fetchData = fetch(`backend/get_drivers.php?page=${page}&limit=${limit}`)
+            .then(res => res.json());
+
+        Promise.all([fetchData, minDelay])
+            .then(([data]) => {
+                if (data.success && data.drivers.length > 0) {
+                    updateTable(data.drivers);
+                    updatePagination(data.total, data.page, data.limit);
+                } else {
+                    ordersTableBody.innerHTML = `
+                    <tr><td colspan="6" style="text-align:center;">No Order History at the moment</td></tr>
+                `;
+                    console.error('No credit data:', data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                ordersTableBody.innerHTML = `
+                <tr><td colspan="6" style="text-align:center; color:red;">Error loading Order data</td></tr>
+            `;
+            });
+    }
+
     function updateTable(drivers) {
         const ordersTableBody = document.querySelector('#ordersTable tbody');
         ordersTableBody.innerHTML = '';

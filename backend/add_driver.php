@@ -167,8 +167,8 @@ try {
         logActivity("Image successfully uploaded to: $upload_path");
 
         // Hash sensitive data
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $hashed_secret_answer = md5($secret_answer);
+        $hashed_password = password_hash($fields['password'], PASSWORD_DEFAULT);
+        $hashed_secret_answer = md5($fields['secret_answer']);
         $status = "Available";
         $restriction = 0;
 

@@ -12,23 +12,42 @@ document.addEventListener('DOMContentLoaded', () => {
     orderDetailsTableBodyHeader.style.color = "#000";
 
     // Fetch orders with pagination
-    function fetchOrders(page = 1) {
-        fetch(`../v2/fetch_order_summary.php?page=${page}&limit=${limit}`)
-            .then(response => response.json())
-            .then(data => {
+     function fetchOrders(page = 1) {
+        const ordersTableBody = document.getElementById('ordersTableBody');
+
+        // Inject spinner
+        ordersTableBody.innerHTML = `
+        <tr>
+            <td colspan="6" style="text-align:center; padding: 20px;">
+                <div class="spinner"
+                    style="border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: auto;">
+                </div>
+            </td>
+        </tr>
+        `;
+
+        const minDelay = new Promise(resolve => setTimeout(resolve, 1000)); // Spinner shows at least 500ms
+        const fetchData = fetch(`../v2/fetch_order_summary.php?page=${page}&limit=${limit}`)
+            .then(res => res.json());
+
+        Promise.all([fetchData, minDelay])
+            .then(([data]) => {
                 if (data.success && data.orders.length > 0) {
                     updateTable(data.orders);
                     updatePagination(data.total, data.page, data.limit);
                 } else {
-                    const ordersTableBody = document.querySelector('#ordersTable tbody');
-                    ordersTableBody.innerHTML = '';
-                    const noOrderRow = document.createElement('tr');
-                    noOrderRow.innerHTML = `<td colspan="7" style="text-align:center;">No Pending Orders at the moment</td>`;
-                    ordersTableBody.appendChild(noOrderRow);
-                    console.error('Failed to fetch orders:', data.message);
+                    ordersTableBody.innerHTML = `
+                    <tr><td colspan="6" style="text-align:center;">No Order History at the moment</td></tr>
+                `;
+                    console.error('No credit data:', data.message);
                 }
             })
-            .catch(error => console.error('Error fetching data:', error));
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                ordersTableBody.innerHTML = `
+                <tr><td colspan="6" style="text-align:center; color:red;">Error loading Order data</td></tr>
+            `;
+            });
     }
 
     // Update orders table
@@ -124,20 +143,43 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Update pagination
+    // Function to update pagination
     function updatePagination(totalItems, currentPage, itemsPerPage) {
+        const paginationContainer = document.getElementById('pagination');
         paginationContainer.innerHTML = '';
-        const totalPages = Math.ceil(totalItems / itemsPerPage);
-        const fragment = document.createDocumentFragment();
 
-        for (let page = 1; page <= totalPages; page++) {
-            const pageButton = document.createElement('button');
-            pageButton.textContent = page;
-            pageButton.classList.add('page-btn', page === currentPage ? 'active' : '');
-            pageButton.addEventListener('click', () => fetchOrders(page));
-            fragment.appendChild(pageButton);
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        paginationButtons = [];
+
+        const createButton = (label, page, disabled = false) => {
+            const btn = document.createElement('button');
+            btn.textContent = label;
+            if (disabled) btn.disabled = true;
+            btn.addEventListener('click', () => fetchOrders(page));
+            paginationContainer.appendChild(btn);
+        };
+
+        // Show: First, Prev
+        createButton('« First', 1, currentPage === 1);
+        createButton('‹ Prev', currentPage - 1, currentPage === 1);
+
+        // Show range around current page (e.g. ±2)
+        const maxVisible = 2;
+        const start = Math.max(1, currentPage - maxVisible);
+        const end = Math.min(totalPages, currentPage + maxVisible);
+
+        for (let i = start; i <= end; i++) {
+            const btn = document.createElement('button');
+            btn.textContent = i;
+            if (i === currentPage) btn.classList.add('active');
+            btn.addEventListener('click', () => fetchOrders(i));
+            paginationButtons.push(btn);
+            paginationContainer.appendChild(btn);
         }
 
-        paginationContainer.appendChild(fragment);
+        // Show: Next, Last
+        createButton('Next ›', currentPage + 1, currentPage === totalPages);
+        createButton('Last »', totalPages, currentPage === totalPages);
     }
 
     document.getElementById("liveSearch").addEventListener("input", filterTable);

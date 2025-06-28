@@ -58,29 +58,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Modified fetchStaffs function
     function fetchStaffs(page = 1) {
-        fetch(`backend/get_staffs.php?page=${page}&limit=${limit}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
+        const ordersTableBody = document.getElementById('ordersTableBody');
+
+        // Inject spinner
+        ordersTableBody.innerHTML = `
+        <tr>
+            <td colspan="6" style="text-align:center; padding: 20px;">
+                <div class="spinner"
+                    style="border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: auto;">
+                </div>
+            </td>
+        </tr>
+        `;
+
+        const minDelay = new Promise(resolve => setTimeout(resolve, 1000)); // Spinner shows at least 500ms
+        const fetchData = fetch(`backend/get_staffs.php?page=${page}&limit=${limit}`)
+            .then(res => res.json());
+
+        Promise.all([fetchData, minDelay])
+            .then(([data]) => {
+                if (data.success && data.staffs.length > 0) {
                     updateTable(data.staffs, data.logged_in_user_role);
                     updatePagination(data.total, data.page, data.limit);
-
-                    // Initialize buttons once if not already done
-                    const actionsContainer = document.getElementById('admin-actions-container');
-                    if (actionsContainer.children.length === 0) {
-                        initializeAdminActions(data.logged_in_user_role);
-                    }
                 } else {
-                    console.error('Failed to fetch Staff Records:', data.message);
+                    ordersTableBody.innerHTML = `
+                    <tr><td colspan="6" style="text-align:center;">No Staff Details at the moment</td></tr>
+                `;
+                    console.error('No Staff data:', data.message);
                 }
             })
-            .catch(error => console.error('Error fetching data:', error));
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                ordersTableBody.innerHTML = `
+                <tr><td colspan="6" style="text-align:center; color:red;">Error loading Staff data</td></tr>
+            `;
+            });
     }
+
+
 
     // On initial page load
     document.addEventListener('DOMContentLoaded', () => {
@@ -98,6 +113,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Check if staff is deactivated
         const isDeactivated = staff.delete_status == 'Yes';
+        let admin_status = ""
+       if(staff.admin_status === null){
+        admin_status = "Not Logged In";
+       }
+       else{
+        admin_status = staff.admin_status
+       }
         // Conditionally set the Edit/View button
         let actionButtonHtml = '';
         if (!isDeactivated) {
@@ -119,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <td>${staff.lastname}</td>
             <td>${restrictionText}</td>
             <td>${blockText}</td>
-            <td>${staff.admin_status}</td>
+            <td>${admin_status}</td>
             <td>${actionButtonHtml}</td>
             ${deactivateCellHtml}
         `;
@@ -145,26 +167,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+    // Function to update pagination
     function updatePagination(totalItems, currentPage, itemsPerPage) {
         const paginationContainer = document.getElementById('pagination');
         paginationContainer.innerHTML = '';
 
         const totalPages = Math.ceil(totalItems / itemsPerPage);
+        paginationButtons = [];
 
-        for (let page = 1; page <= totalPages; page++) {
-            const pageButton = document.createElement('button');
-            pageButton.textContent = page;
-            pageButton.classList.add('page-btn');
-            if (page === currentPage) {
-                pageButton.classList.add('active');
-            }
-            pageButton.addEventListener('click', () => {
-                fetchStaffs(page);
-            });
-            paginationContainer.appendChild(pageButton);
+        const createButton = (label, page, disabled = false) => {
+            const btn = document.createElement('button');
+            btn.textContent = label;
+            if (disabled) btn.disabled = true;
+            btn.addEventListener('click', () => fetchStaffs(page));
+            paginationContainer.appendChild(btn);
+        };
+
+        // Show: First, Prev
+        createButton('« First', 1, currentPage === 1);
+        createButton('‹ Prev', currentPage - 1, currentPage === 1);
+
+        // Show range around current page (e.g. ±2)
+        const maxVisible = 2;
+        const start = Math.max(1, currentPage - maxVisible);
+        const end = Math.min(totalPages, currentPage + maxVisible);
+
+        for (let i = start; i <= end; i++) {
+            const btn = document.createElement('button');
+            btn.textContent = i;
+            if (i === currentPage) btn.classList.add('active');
+            btn.addEventListener('click', () => fetchStaffs(i));
+            paginationButtons.push(btn);
+            paginationContainer.appendChild(btn);
         }
-    }
 
+        // Show: Next, Last
+        createButton('Next ›', currentPage + 1, currentPage === totalPages);
+        createButton('Last »', totalPages, currentPage === totalPages);
+    }
     function fetchStaffDetails(staffId) {
         fetch(`backend/fetch_staff_details.php`, {
             method: 'POST',

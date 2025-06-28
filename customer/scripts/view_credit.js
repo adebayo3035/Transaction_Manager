@@ -23,24 +23,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fetch orders with pagination
     function fetchCredits(page = 1) {
-        fetch(`../v2/fetch_credit_summary.php?page=${page}&limit=${limit}`)
-            .then(response => response.json())
-            .then(data => {
-                // console.log(data);  // Check the returned data
+        const ordersTableBody = document.getElementById('ordersTableBody');
+
+        // Inject spinner
+        ordersTableBody.innerHTML = `
+        <tr>
+            <td colspan="6" style="text-align:center; padding: 20px;">
+                <div class="spinner"
+                    style="border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: auto;">
+                </div>
+            </td>
+        </tr>
+        `;
+
+        const minDelay = new Promise(resolve => setTimeout(resolve, 1000)); // Spinner shows at least 500ms
+        const fetchData = fetch(`../v2/fetch_credit_summary.php?page=${page}&limit=${limit}`)
+            .then(res => res.json());
+
+        Promise.all([fetchData, minDelay])
+            .then(([data]) => {
                 if (data.success && data.credits.length > 0) {
                     updateTable(data.credits);
                     updatePagination(data.total, data.page, data.limit);
                 } else {
-                    const ordersTableBody = document.querySelector('#ordersTable tbody');
-                    ordersTableBody.innerHTML = '';
-                    const noOrderRow = document.createElement('tr');
-                    noOrderRow.innerHTML = `<td colspan="7" style="text-align:center;">No Credit History at the moment</td>`;
-                    ordersTableBody.appendChild(noOrderRow);
-                    console.error('Failed to fetch orders:', data.message);
+                    ordersTableBody.innerHTML = `
+                    <tr><td colspan="6" style="text-align:center;">No Credit History at the moment</td></tr>
+                `;
+                    console.error('No credit data:', data.message);
                 }
             })
-            .catch(error => console.error('Error fetching data:', error));
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                ordersTableBody.innerHTML = `
+                <tr><td colspan="6" style="text-align:center; color:red;">Error loading credit data</td></tr>
+            `;
+            });
     }
+
 
     // Update orders table
     function updateTable(credits) {
@@ -222,31 +241,41 @@ document.addEventListener('DOMContentLoaded', () => {
         currentCreditId = creditId;
         currentRepaymentPage = page;
 
-        fetch('../v2/fetch_repayment_history.php', {
+        const tbody = document.getElementById('repaymentHistoryTableBody');
+        tbody.innerHTML = `
+        <tr>
+            <td colspan="3" style="text-align:center; padding: 20px;">
+                <div class="spinner"
+                    style="border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: auto;">
+                </div>
+            </td>
+        </tr>
+    `;
+
+        const minDisplayTime = new Promise(resolve => setTimeout(resolve, 500)); // Ensures spinner shows at least 500ms
+        const fetchData = fetch('../v2/fetch_repayment_history.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                credit_id: creditId,
-                page: page
-            })
-        })
-            .then(response => response.json())
-            .then(data => {
+            body: JSON.stringify({ credit_id: creditId, page })
+        }).then(res => res.json());
+
+        Promise.all([fetchData, minDisplayTime])
+            .then(([data]) => {
                 if (data.success) {
                     totalRepaymentPages = data.pagination.total_pages;
                     populateRepaymentHistory(data.history);
                     updatePaginationControls();
                     repaymentHistoryModal.style.display = 'block';
                 } else {
-                    console.error('Failed to fetch repayment history:', data.message);
-                    alert('Failed to fetch repayment history: ' + data.message);
+                    tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;">${data.message}</td></tr>`;
                 }
             })
             .catch(error => {
                 console.error('Error fetching repayment history:', error);
-                alert('Error fetching repayment history');
+                tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;">Error loading repayment history</td></tr>`;
             });
     }
+
 
     // Update your populateRepaymentHistory function (minor adjustment)
     function populateRepaymentHistory(history) {
@@ -307,27 +336,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Update pagination
     function updatePagination(totalItems, currentPage, itemsPerPage) {
-        console.log("Total Items:", totalItems, "Current Page:", currentPage, "Items Per Page:", itemsPerPage);  // Debugging pagination data
-        paginationContainer.innerHTML = '';
-        const totalPages = Math.ceil(totalItems / itemsPerPage);
-        const fragment = document.createDocumentFragment();
+    const paginationContainer = document.getElementById('pagination');
+    paginationContainer.innerHTML = '';
 
-        for (let page = 1; page <= totalPages; page++) {
-            const pageButton = document.createElement('button');
-            pageButton.textContent = page;
-            pageButton.classList.add('page-btn');
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    paginationButtons = [];
 
-            // Only add 'active' class if the page is the current page
-            if (page === currentPage) {
-                pageButton.classList.add('active');
-            }
+    const createButton = (label, page, disabled = false) => {
+        const btn = document.createElement('button');
+        btn.textContent = label;
+        if (disabled) btn.disabled = true;
+        btn.addEventListener('click', () => fetchCredits(page));
+        paginationContainer.appendChild(btn);
+    };
 
-            pageButton.addEventListener('click', () => fetchOrders(page));
-            fragment.appendChild(pageButton);
-        }
+    // Show: First, Prev
+    createButton('« First', 1, currentPage === 1);
+    createButton('‹ Prev', currentPage - 1, currentPage === 1);
 
-        paginationContainer.appendChild(fragment);
+    // Show range around current page (e.g. ±2)
+    const maxVisible = 2;
+    const start = Math.max(1, currentPage - maxVisible);
+    const end = Math.min(totalPages, currentPage + maxVisible);
+
+    for (let i = start; i <= end; i++) {
+        const btn = document.createElement('button');
+        btn.textContent = i;
+        if (i === currentPage) btn.classList.add('active');
+        btn.addEventListener('click', () => fetchCredits(i));
+        paginationButtons.push(btn);
+        paginationContainer.appendChild(btn);
     }
+
+    // Show: Next, Last
+    createButton('Next ›', currentPage + 1, currentPage === totalPages);
+    createButton('Last »', totalPages, currentPage === totalPages);
+}
+
 
     // Debounced search filtering
     let searchTimeout;

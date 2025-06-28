@@ -162,8 +162,8 @@ $encrypt_pass = md5($inputs['password']);
 $encrypt_secret_answer = md5($inputs['secret_answer']);
 $status = "Active now";
 
-$insert_query = $conn->prepare("INSERT INTO admin_tbl (unique_id, firstname, lastname, email, phone, address, gender, password, secret_question, secret_answer, photo, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-$insert_query->bind_param('isssssssssss', $ran_id, $inputs['firstname'], $inputs['lastname'], $inputs['email'], $inputs['phone'], $inputs['address'], $inputs['gender'], $encrypt_pass, $inputs['secret_question'], $encrypt_secret_answer, $file_name, $inputs['role']);
+$insert_query = $conn->prepare("INSERT INTO admin_tbl (unique_id, firstname, lastname, email, phone, address, gender, password, secret_question, secret_answer, photo, role, onboarded_by, last_updated_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)");
+$insert_query->bind_param('isssssssssssii', $ran_id, $inputs['firstname'], $inputs['lastname'], $inputs['email'], $inputs['phone'], $inputs['address'], $inputs['gender'], $encrypt_pass, $inputs['secret_question'], $encrypt_secret_answer, $file_name, $inputs['role'], $logged_in_user, $logged_in_user);
 
 if ($insert_query->execute()) {
     logActivity("Success - New staff onboarded with ID: {$ran_id}");

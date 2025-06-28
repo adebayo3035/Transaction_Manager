@@ -91,7 +91,7 @@
         <h1>All Transactions</h1>
     </div>
 
-    <table id="transactionsTable" class="transactionsTable">
+    <table id="ordersTable" class="transactionsTable">
         <thead>
             <tr>
                 <th>Trans Ref</th>
