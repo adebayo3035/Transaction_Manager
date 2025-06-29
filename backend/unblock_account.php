@@ -7,6 +7,7 @@ if (!isset($_SESSION['unique_id'])) {
     echo json_encode(["success" => false, "message" => "Access Denied! Kindly login first."]);
     exit();
 }
+$unique_id = $_SESSION['unique_id'];
 
 $role = $_SESSION['role'];
 if ($role !== "Super Admin") {
@@ -61,14 +62,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // === Update the status ===
-        $updateSql = "UPDATE admin_tbl SET {$columnToUpdate} = 0 WHERE unique_id = ?";
+        $updateSql = "UPDATE admin_tbl SET {$columnToUpdate} = 0, last_updated_by = ? WHERE unique_id = ?";
         $updateStmt = $conn->prepare($updateSql);
-        $updateStmt->bind_param("i", $staffID);
+        $updateStmt->bind_param("ii", $unique_id,$staffID);
         if ($updateStmt->execute()) {
-            logActivity("Successfully updated {$columnToUpdate} for staffID: {$staffID}");
+            logActivity("Admin ID: {$unique_id} has Successfully updated {$columnToUpdate} for staffID: {$staffID}");
             echo json_encode(["success" => true, "message" => "Account successfully updated."]);
         } else {
-            logActivity("Failed to update {$columnToUpdate} for staffID: {$staffID}");
+            logActivity("Admin ID: {$unique_id} has Failed to update {$columnToUpdate} for staffID: {$staffID}");
             echo json_encode(["success" => false, "message" => "Failed to update account. Please try again."]);
         }
         $updateStmt->close();

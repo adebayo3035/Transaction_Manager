@@ -114,8 +114,8 @@ try {
 
     // Step 5: If Approved, update admin_tbl
     if ($action === 'Reactivated') {
-        $stmt = $conn->prepare("UPDATE admin_tbl SET delete_status = null WHERE unique_id = ?");
-        $stmt->bind_param("s", $staff_id);
+        $stmt = $conn->prepare("UPDATE admin_tbl SET delete_status = null, last_updated_by = ? WHERE unique_id = ?");
+        $stmt->bind_param("is", $admin_id, $staff_id);
 
         if (!$stmt->execute()) {
             throw new Exception('Database update error');

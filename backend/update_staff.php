@@ -129,7 +129,7 @@ try {
 
     // Prepare update
     logActivity("Preparing update for Admin ID: $adminId");
-    $sql = "UPDATE admin_tbl SET email = ?, phone = ?, updated_at = NOW() WHERE unique_id = ?";
+    $sql = "UPDATE admin_tbl SET email = ?, phone = ?, updated_at = NOW(), last_updated_by = ? WHERE unique_id = ?";
     $stmt = $conn->prepare($sql);
 
     if (!$stmt) {
@@ -138,7 +138,7 @@ try {
         exit();
     }
 
-    $stmt->bind_param("ssi", $email, $phone_number, $adminId);
+    $stmt->bind_param("ssii", $email, $phone_number, $adminId, $adminId);
     logActivity("Executing update for Admin ID: $adminId");
 
     if ($stmt->execute()) {

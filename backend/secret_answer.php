@@ -37,8 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($email === $admin_email && (md5($password) === $hashed_password) && $secret_answer === $confirm_answer) {
                     $encrypted_answer = md5($secret_answer);
 
-                    $updateAdminQuery = $conn->prepare("UPDATE admin_tbl SET secret_question = ?, secret_answer = ? WHERE unique_id = ?");
-                    $updateAdminQuery->bind_param('ssi', $question, $encrypted_answer, $id);
+                    $updateAdminQuery = $conn->prepare("UPDATE admin_tbl SET secret_question = ?, secret_answer = ?, last_updated_by = ? WHERE unique_id = ?");
+                    $updateAdminQuery->bind_param('ssii', $question, $encrypted_answer, $id, $id);
                     $updateAdminResult = $updateAdminQuery->execute();
 
                     if ($updateAdminResult) {

@@ -7,14 +7,16 @@ $data = json_decode(file_get_contents("php://input"), true);
 // Log function assumed to be available globally
 // logActivity($action, $status, $description, $email = null)
 
-function validatePassword($password) {
+function validatePassword($password)
+{
     return strlen($password) >= 8 &&
         preg_match('/[!@#$%^&*(),.?":{}|<>_]/', $password) &&
         preg_match('/[A-Z]/', $password) &&
         preg_match('/\d/', $password);
 }
 
-function checkResetAttempts($conn, $email) {
+function checkResetAttempts($conn, $email)
+{
     $stmt = $conn->prepare("SELECT reset_attempts FROM admin_password_reset_attempts WHERE email = ? AND DATE(last_attempt_date) = CURDATE()");
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -30,7 +32,8 @@ function checkResetAttempts($conn, $email) {
     return ['success' => true];
 }
 
-function checkLockStatus($conn, $unique_id) {
+function checkLockStatus($conn, $unique_id)
+{
     $stmt = $conn->prepare("SELECT attempts, locked_until FROM admin_login_attempts WHERE unique_id = ?");
     $stmt->bind_param("i", $unique_id);
     $stmt->execute();
@@ -51,7 +54,8 @@ function checkLockStatus($conn, $unique_id) {
     return ['success' => true];
 }
 
-function updateResetAttempts($conn, $email) {
+function updateResetAttempts($conn, $email)
+{
     $stmt = $conn->prepare("SELECT reset_attempts FROM admin_password_reset_attempts WHERE email = ? AND DATE(last_attempt_date) = CURDATE()");
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -71,19 +75,20 @@ function updateResetAttempts($conn, $email) {
     logActivity("Reset Attempt Count Update. Success: Reset attempts updated to $attempts for email $email");
 }
 
-function updatePassword($conn, $email, $hashedPassword) {
-    $stmt = $conn->prepare("UPDATE admin_tbl SET password = ? WHERE email = ?");
-    $stmt->bind_param("ss", $hashedPassword, $email);
+function updatePassword($conn, $email, $hashedPassword, $unique_id)
+{
+    $stmt = $conn->prepare("UPDATE admin_tbl SET password = ?, last_updated_by = ? WHERE email = ? AND $unique_id = ?");
+    $stmt->bind_param("sisi", $hashedPassword, $unique_id, $email, $unique_id);
 
     if ($stmt->execute()) {
         $stmtReset = $conn->prepare("UPDATE admin_password_reset_attempts SET reset_attempts = 0, last_attempt_date = NOW() WHERE email = ?");
         $stmtReset->bind_param("s", $email);
         $stmtReset->execute();
         $stmtReset->close();
-        logActivity("Password Reset Success: Password reset completed $email");
+        logActivity("$unique_id Password Reset Success: Password reset completed $email");
         return ['success' => true, 'message' => 'Password reset successfully.'];
     } else {
-        logActivity("Password Reset Failed: Database update failed for Email: $email");
+        logActivity("$unique_id Password Reset Failed: Database update failed for Email: $email");
         return ['success' => false, 'message' => 'Failed to update the password.'];
     }
 }
@@ -139,5 +144,5 @@ if ((md5($secret_answer) !== $db_secret_answer) || ($password !== $confirmPasswo
 }
 
 $hashedPassword = md5($password);
-echo json_encode(updatePassword($conn, $email, $hashedPassword));
+echo json_encode(updatePassword($conn, $email, $hashedPassword, $unique_id));
 $conn->close();

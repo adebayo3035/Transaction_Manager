@@ -2,86 +2,112 @@
 include 'config.php';
 header('Content-Type: application/json');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+function logAndRespond($message, $response, $exit = true) {
+    logActivity($message);
+    echo json_encode($response);
+    if ($exit) exit();
+}
+
+function getPostInput($key) {
     $input = json_decode(file_get_contents('php://input'), true);
-    $email = $input['email'] ?? null;
-    $password = $input['password'] ?? null;
+    return $input[$key] ?? null;
+}
 
-    if (!$email || !$password) {
-        echo json_encode(['success' => false, 'message' => 'Email and password are required']);
-        exit();
-    }
-
-    $max_attempts = 3;
-    $lockout_duration = 15; // minutes
-
+function getAdminByEmail($conn, $email) {
     $stmt = $conn->prepare("SELECT unique_id, secret_question, password FROM admin_tbl WHERE email = ? LIMIT 1");
     $stmt->bind_param("s", $email);
     $stmt->execute();
-    $result = $stmt->get_result();
+    return $stmt->get_result()->fetch_assoc();
+}
 
-    if ($result->num_rows > 0) {
-        $admin = $result->fetch_assoc();
-        $unique_id = $admin['unique_id'];
-        $hashedPassword = $admin['password'];
-        $secret_question = $admin['secret_question'];
+function getLoginAttempts($conn, $unique_id) {
+    $stmt = $conn->prepare("SELECT attempts, locked_until FROM admin_login_attempts WHERE unique_id = ? LIMIT 1");
+    $stmt->bind_param("s", $unique_id);
+    $stmt->execute();
+    return $stmt->get_result()->fetch_assoc();
+}
 
-        $stmtCheck = $conn->prepare("SELECT attempts, locked_until FROM admin_login_attempts WHERE unique_id = ? LIMIT 1");
-        $stmtCheck->bind_param("s", $unique_id);
-        $stmtCheck->execute();
-        $resultCheck = $stmtCheck->get_result();
+function updateLoginAttempts($conn, $unique_id, $attempts, $locked_until = null) {
+    $stmt = $conn->prepare("UPDATE admin_login_attempts SET attempts = ?, locked_until = ? WHERE unique_id = ?");
+    $stmt->bind_param("iss", $attempts, $locked_until, $unique_id);
+    $stmt->execute();
+}
 
-        $current_time = new DateTime();
+function insertLoginAttempt($conn, $unique_id) {
+    $attempts = 1;
+    $stmt = $conn->prepare("INSERT INTO admin_login_attempts (unique_id, attempts, locked_until) VALUES (?, ?, NULL)");
+    $stmt->bind_param("si", $unique_id, $attempts);
+    $stmt->execute();
+}
 
-        if ($resultCheck->num_rows > 0) {
-            $lockRow = $resultCheck->fetch_assoc();
-            $attempts = $lockRow['attempts'];
-            $locked_until = new DateTime($lockRow['locked_until']);
+function resetLoginAttempts($conn, $unique_id) {
+    $stmt = $conn->prepare("DELETE FROM admin_login_attempts WHERE unique_id = ?");
+    $stmt->bind_param("s", $unique_id);
+    $stmt->execute();
+}
 
-            if ($attempts >= $max_attempts && $current_time < $locked_until) {
-                $interval = $current_time->diff($locked_until);
-                $remaining = $interval->format('%i minutes %s seconds');
-                logActivity("Login attempt blocked: $email is locked.");
-                echo json_encode(['success' => false, 'message' => "Your account is locked. Try again in $remaining."]);
-                exit();
-            }
-        }
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    logAndRespond("Invalid request method used", ['success' => false, 'message' => 'Invalid request method']);
+}
 
-        if (md5($password) === $hashedPassword) {
-            // Reset login attempts on success
-            $stmtReset = $conn->prepare("DELETE FROM admin_login_attempts WHERE unique_id = ?");
-            $stmtReset->bind_param("s", $unique_id);
-            $stmtReset->execute();
+$email = getPostInput('email');
+$password = getPostInput('password');
 
-            logActivity("Login successful for $email.");
-            echo json_encode(['success' => true, 'secret_question' => $secret_question]);
-        } else {
-            // Update or insert login attempt
-            if ($resultCheck->num_rows > 0) {
-                $newAttempts = $attempts + 1;
-                $lockedUntilTime = ($newAttempts >= $max_attempts)
-                    ? $current_time->modify("+$lockout_duration minutes")->format('Y-m-d H:i:s')
-                    : null;
+if (!$email || !$password) {
+    logAndRespond("Missing Staff Credentials: email or password not provided", ['success' => false, 'message' => 'Email and password are required']);
+}
 
-                $stmtUpdate = $conn->prepare("UPDATE admin_login_attempts SET attempts = ?, locked_until = ? WHERE unique_id = ?");
-                $stmtUpdate->bind_param("iss", $newAttempts, $lockedUntilTime, $unique_id);
-                $stmtUpdate->execute();
-            } else {
-                $initialAttempts = 1;
-                $stmtInsert = $conn->prepare("INSERT INTO admin_login_attempts (unique_id, attempts, locked_until) VALUES (?, ?, NULL)");
-                $stmtInsert->bind_param("si", $unique_id, $initialAttempts);
-                $stmtInsert->execute();
-            }
+$admin = getAdminByEmail($conn, $email);
 
-            logActivity("Invalid password attempt for $email.");
-            echo json_encode(['success' => false, 'message' => 'Invalid password. Please try again.']);
-        }
-    } else {
-        logActivity("Login failed: User with email $email not found.");
-        echo json_encode(['success' => false, 'message' => 'User not found']);
+if (!$admin) {
+    logAndRespond("Action failed: No admin found with email $email", ['success' => false, 'message' => 'User not found']);
+}
+
+$unique_id = $admin['unique_id'];
+$hashedPassword = $admin['password'];
+$secret_question = $admin['secret_question'];
+
+$attemptData = getLoginAttempts($conn, $unique_id);
+$current_time = new DateTime();
+$max_attempts = 3;
+$lockout_duration = 15; // minutes
+
+if ($attemptData) {
+    $attempts = $attemptData['attempts'];
+    $locked_until = new DateTime($attemptData['locked_until']);
+
+    if ($attempts >= $max_attempts && $current_time < $locked_until) {
+        $remaining = $current_time->diff($locked_until)->format('%i minutes %s seconds');
+        logAndRespond("Secret Question Retrieval blocked: $email is currently locked out until {$locked_until->format('Y-m-d H:i:s')}", [
+            'success' => false,
+            'message' => "Your account is locked. Try again in $remaining."
+        ]);
     }
+}
+
+if (md5($password) === $hashedPassword) {
+    resetLoginAttempts($conn, $unique_id);
+    logAndRespond("Staff Credential Validation was successful for User: $email", [
+        'success' => true,
+        'secret_question' => $secret_question
+    ], false);
 } else {
-    echo json_encode(['success' => false, 'message' => 'Invalid request method']);
+    if ($attemptData) {
+        $newAttempts = $attempts + 1;
+        $lockedUntilTime = null;
+        if ($newAttempts >= $max_attempts) {
+            $lockedUntilTime = $current_time->modify("+$lockout_duration minutes")->format('Y-m-d H:i:s');
+            logActivity("Account locked: $email exceeded max login Credentials Validation attempts");
+        }
+        updateLoginAttempts($conn, $unique_id, $newAttempts, $lockedUntilTime);
+    } else {
+        insertLoginAttempt($conn, $unique_id);
+    }
+
+    logAndRespond("Invalid password entered for user: $email", [
+        'success' => false,
+        'message' => 'Invalid password. Please try again.'
+    ]);
 }
 
 $conn->close();

@@ -7,6 +7,7 @@ if (!isset($_SESSION['unique_id'])) {
     echo json_encode(["success" => false, "message" => "Access Denied! Kindly login first."]);
     exit();
 }
+$admin_id = $_SESSION['unique_id'];
 
 $role = $_SESSION['role'];
 if ($role !== "Super Admin") {
@@ -79,8 +80,8 @@ if ($columnToUpdate === 'restriction_id' && $restrictionId == 1) {
 }
 
 // Update the column
-$updateStmt = $conn->prepare("UPDATE admin_tbl SET $columnToUpdate = 1 WHERE unique_id = ?");
-$updateStmt->bind_param("i", $uniqueId);
+$updateStmt = $conn->prepare("UPDATE admin_tbl SET $columnToUpdate = 1, last_updated_by = ? WHERE unique_id = ?");
+$updateStmt->bind_param("ii", $admin_id, $uniqueId);
 
 if ($updateStmt->execute()) {
     logActivity("Successfully updated $columnToUpdate to 1 for account ID: $uniqueId");
