@@ -2,62 +2,10 @@
 <html lang="en">
 
 <head>
-    <style>
-        .ordersTable th,
-        .ordersTable td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .modal .reassign-form {
-            margin-top: 20px;
-            padding: 20px;
-            border: 1px solid #ccc;
-            background-color: #f9f9f9;
-            display: flex;
-
-        }
-
-        .reassign-form h3 {
-            margin-bottom: 10px;
-            text-align: center;
-        }
-
-        .reassign-form label,
-        .reassign-form select,
-        .reassign-form button {
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .reassign-form select {
-            width: 50%;
-            padding: 10px;
-            margin: 5px 0 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            outline: none;
-        }
-
-        .reassign-form button {
-            font-size: 14px;
-            padding: 10px;
-            background-color: #0275d8;
-            cursor: pointer;
-        }
-        .actionBtn{
-            display: flex;
-            justify-content: space-around;
-        }
-        .actionBtn button:hover{
-            background-color: #000; 
-        }
-    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Orders</title>
+    <link rel="stylesheet" href="css/orders.css">
     <link rel="stylesheet" href="customer/css/view_orders.css">
     <link rel="stylesheet" href="customer/css/checkout.css">
 </head>
@@ -84,8 +32,8 @@
                 <th>View Details</th>
             </tr>
         </thead>
-        <tbody>
-            <!-- Orders will be dynamically inserted here -->
+        <tbody id = "ordersTableBody">
+            <!-- Staffs Information will be dynamically inserted here -->
         </tbody>
 
     </table>

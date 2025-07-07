@@ -75,21 +75,22 @@
 }
 
 #repaymentHistoryTable {
-    width: 100%;
+    width: 80%;
     margin-top: 20px;
 }
 
 #repaymentHistoryTable th {
     background-color: #c82333;
     padding: 10px;
-    text-align: left;
+    text-align: center;
 }
 
 #repaymentHistoryTable td {
     padding: 8px 10px;
     border-bottom: 1px solid #ddd;
+    text-align: center;
 }
-.pagination-controls {
+/* .pagination-controls {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -113,7 +114,7 @@
 
 .pagination-controls span {
     font-weight: bold;
-}
+} */
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -149,6 +150,35 @@
     color: #999;
     cursor: not-allowed;
 }
+/* Pagination buttons */
+#repaymentPagination button {
+    padding: 6px 12px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    color: #333;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-size: 14px;
+}
+
+/* Hover effect */
+#repaymentPagination button:hover:not(.active):not(:disabled) {
+    background-color: #e0e0e0;
+}
+
+/* Active page */
+#repaymentPagination button.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+#repaymentPagination button.active {
+    font-weight: bold;
+    background-color: #3498db;
+    color: white;
+    border-radius: 4px;
+}
+
 
 @media screen and (max-width:700px) {
     .extraButtons button {

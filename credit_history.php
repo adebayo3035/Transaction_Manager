@@ -28,13 +28,13 @@
                 <th>Credit ID</th>
                 <th>Customer ID</th>
                 <th> Total Amount (N)</th>
-                <th>Remaining Balance (N)</th>
+                <th>Bal (N)</th>
                 <th>Status</th>
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody>
-            <!-- Orders will be dynamically inserted here -->
+         <tbody id = "ordersTableBody">
+            <!-- Staffs Information will be dynamically inserted here -->
         </tbody>
 
     </table>
@@ -75,6 +75,7 @@
                 <!-- Repayment history details will be dynamically inserted here -->
             </tbody>
         </table>
+        <div id="repaymentPagination" class="pagination"></div>
     </div>
 </div>
 

@@ -84,9 +84,10 @@
 
                 </tr>
             </thead>
-            <tbody>
-                <!-- Staff Information will be dynamically inserted here -->
+            <tbody id = "ordersTableBody">
+                <!-- Staffs Information will be dynamically inserted here -->
             </tbody>
+
         </table>
     </div>
     <!-- Custom Error Modal -->

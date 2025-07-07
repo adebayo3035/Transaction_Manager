@@ -55,13 +55,15 @@
         .actionBtn button:hover {
             background-color: #000;
         }
-        #receipt-header{
+
+        #receipt-header {
             text-align: center;
             font-weight: lighter;
             font-size: 15px;
         }
-        #receipt-header span{
-            color:#0275d8;
+
+        #receipt-header span {
+            color: #0275d8;
             font-weight: bold;
         }
     </style>
@@ -86,7 +88,7 @@
         <h1>All Inflows</h1>
     </div>
 
-    <table id="revenueTable" class="transactionsTable">
+    <table id="revenueTable" class="transactionsTable ordersTable">
         <thead>
             <tr>
                 <th>Revenue ID</th>
@@ -99,8 +101,8 @@
                 <th>View Details</th>
             </tr>
         </thead>
-        <tbody>
-            <!-- Transactions will be dynamically inserted here -->
+        <tbody id="ordersTableBody">
+                    <!-- Revenue Information will be dynamically inserted here -->
         </tbody>
     </table>
     <div id="pagination" class="pagination"></div>
@@ -109,7 +111,7 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2 id="receipt-header"> Details for Revenue: <span id="revenueID">Revenue</span></h2>
-            <table id="revenueDetailsTable" class="transactionsTable">
+            <table id="revenueDetailsTable" class="transactionsTable ">
                 <thead>
                     <tr>
                         <th>Field</th>
@@ -117,7 +119,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Transaction details will be dynamically inserted here via a modal -->
+                    <!-- Revenue Information will be dynamically inserted here -->
                 </tbody>
             </table>
             <div class="actionBtn">

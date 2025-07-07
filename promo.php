@@ -14,13 +14,16 @@
 
 <body>
     <?php include('navbar.php'); ?>
+     <?php include('dashboard_navbar.php'); ?>
     <div class="container">
         <h1>Promo Archives</h1>
+        
         <!-- Separate row for "Add New Customer" button -->
         <div id="customer-form">
             <button onclick="toggleModal('addNewPromoModal')"><i class="fa fa-plus" aria-hidden="true"></i> Add New
                 Promo</button>
         </div>
+        
         <div class="livesearch">
             <input type="text" id="liveSearch" placeholder="Search for Order...">
             <button type="submit">Search <i class="fa fa-search" aria-hidden="true"></i></button>
@@ -41,8 +44,8 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody>
-            <!-- Promo Informations Information will be dynamically inserted here -->
+        <tbody id = "ordersTableBody">
+            <!-- Promo Information will be dynamically inserted here -->
         </tbody>
 
     </table>

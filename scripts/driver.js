@@ -13,36 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function fetchDrivers(page = 1) {
-        fetch(`backend/get_drivers.php?page=${page}&limit=${limit}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success && data.drivers.length > 0) {
-                    updateTable(data.drivers);
-                    updatePagination(data.total, data.page, data.limit);
-                } else {
-                    const ordersTableBody = document.querySelector('#ordersTable tbody');
-                    ordersTableBody.innerHTML = '';
-                    const noOrderRow = document.createElement('tr');
-                    noOrderRow.innerHTML = `<td colspan="7" style="text-align:center;">Drivers Record Cannot be Found</td>`;
-                    ordersTableBody.appendChild(noOrderRow);
-                    console.error('Failed to fetch Drivers:', data.message);
-                }
-            })
-            .catch(error => console.error('Error fetching data:', error));
-    }
-
-    function fetchDrivers(page = 1) {
         const ordersTableBody = document.getElementById('ordersTableBody');
 
         // Inject spinner
         ordersTableBody.innerHTML = `
         <tr>
-            <td colspan="6" style="text-align:center; padding: 20px;">
+            <td colspan="5" style="text-align:center; padding: 20px;">
                 <div class="spinner"
                     style="border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: auto;">
                 </div>
@@ -58,18 +34,18 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(([data]) => {
                 if (data.success && data.drivers.length > 0) {
                     updateTable(data.drivers);
-                    updatePagination(data.total, data.page, data.limit);
+                    updatePagination(data.pagination.total, data.pagination.page, data.pagination.limit);
                 } else {
                     ordersTableBody.innerHTML = `
-                    <tr><td colspan="6" style="text-align:center;">No Order History at the moment</td></tr>
+                    <tr><td colspan="5" style="text-align:center;">No Order History at the moment</td></tr>
                 `;
-                    console.error('No credit data:', data.message);
+                    console.error('No Driver data:', data.message);
                 }
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
                 ordersTableBody.innerHTML = `
-                <tr><td colspan="6" style="text-align:center; color:red;">Error loading Order data</td></tr>
+                <tr><td colspan="5" style="text-align:center; color:red;">Error loading Order data</td></tr>
             `;
             });
     }
@@ -107,21 +83,38 @@ document.addEventListener('DOMContentLoaded', () => {
         paginationContainer.innerHTML = '';
 
         const totalPages = Math.ceil(totalItems / itemsPerPage);
+        paginationButtons = [];
 
-        for (let page = 1; page <= totalPages; page++) {
-            const pageButton = document.createElement('button');
-            pageButton.textContent = page;
-            pageButton.classList.add('page-btn');
-            if (page === currentPage) {
-                pageButton.classList.add('active');
-            }
-            pageButton.addEventListener('click', () => {
-                fetchDrivers(page);
-            });
-            paginationContainer.appendChild(pageButton);
+        const createButton = (label, page, disabled = false) => {
+            const btn = document.createElement('button');
+            btn.textContent = label;
+            if (disabled) btn.disabled = true;
+            btn.addEventListener('click', () => fetchDrivers(page));
+            paginationContainer.appendChild(btn);
+        };
+
+        // Show: First, Prev
+        createButton('« First', 1, currentPage === 1);
+        createButton('‹ Prev', currentPage - 1, currentPage === 1);
+
+        // Show range around current page (e.g. ±2)
+        const maxVisible = 2;
+        const start = Math.max(1, currentPage - maxVisible);
+        const end = Math.min(totalPages, currentPage + maxVisible);
+
+        for (let i = start; i <= end; i++) {
+            const btn = document.createElement('button');
+            btn.textContent = i;
+            if (i === currentPage) btn.classList.add('active');
+            btn.addEventListener('click', () => fetchDrivers(i));
+            paginationButtons.push(btn);
+            paginationContainer.appendChild(btn);
         }
-    }
 
+        // Show: Next, Last
+        createButton('Next ›', currentPage + 1, currentPage === totalPages);
+        createButton('Last »', totalPages, currentPage === totalPages);
+    }
     function fetchDriverDetails(driverId) {
         fetch(`backend/fetch_driver_details.php`, {
             method: 'POST',
@@ -134,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 console.log(data); // Log the entire response to the console
                 if (data.success) {
-                    populateDriverDetails(data.driver_details);
+                    populateDriverDetails(data.driver_details, data.user_role);
                     document.getElementById('orderModal').style.display = 'block';
                 } else {
                     console.error('Failed to fetch Driver details:', data.message);
@@ -145,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-    function populateDriverDetails(driver_details) {
+    function populateDriverDetails(driver_details, userRole) {
         const orderDetailsTable = document.querySelector('#orderDetailsTable tbody');
         const photoCell = document.querySelector('#driverPhoto');
 
@@ -284,15 +277,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Add "Update" and "Delete" buttons below the table for performing actions
-        const actionButtons = `
-            <tr>
-                <td colspan="2" style="text-align: center;">
-                    <button id="updateDriverBtn">Update</button>
-                    <button id="deleteDriverBtn">Delete</button>
-                </td>
-            </tr>
-        `;
+        let actionButtons = `
+    <tr>
+        <td colspan="2" style="text-align: center;">
+            <button id="updateDriverBtn">Update</button>
+`;
+
+        if (userRole === 'Super Admin') {
+            actionButtons += `
+            <button id="deleteDriverBtn">Delete</button>
+    `;
+        }
+
+        actionButtons += `
+        </td>
+    </tr>
+`;
+
         orderDetailsTable.innerHTML += actionButtons;
+
+       
 
         // Attach event listeners for checkbox toggle
         toggleMasking('toggleMaskingPhone', 'phoneNumber', 'originalPhoneNumber', 'phoneLabel');
@@ -303,9 +307,14 @@ document.addEventListener('DOMContentLoaded', () => {
             updateDriver(driver_details.id);
         });
 
-        document.getElementById('deleteDriverBtn').addEventListener('click', () => {
-            // deleteDriver(driver_details.id);
-        });
+        // Attach delete button event only if visible
+        if (userRole === 'Super Admin') {
+            document.getElementById('deleteDriverBtn').addEventListener('click', () => {
+                deleteDriver(driver_details.id);
+            });
+        }
+
+
     }
 
     function updateDriver(driverId) {
@@ -378,7 +387,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function deleteDriver(driverId) {
         if (confirm('Are you sure you want to delete this driver?')) {
-            fetch('backend/delete_driver.php', {
+            fetch('backend/delete_driverbk.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -445,7 +454,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to generate a random license number
     function generateLicenseNumber() {
         const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        const numbers = "0123456789";
+        const numbers = "0123455789";
 
         const randomLetter = () => letters.charAt(Math.floor(Math.random() * letters.length));
         const randomNumber = () => numbers.charAt(Math.floor(Math.random() * numbers.length));

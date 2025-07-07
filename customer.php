@@ -38,8 +38,8 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody>
-            <!-- Drivers will be dynamically inserted here -->
+        <tbody id = "ordersTableBody">
+            <!-- Customers Information will be dynamically inserted here -->
         </tbody>
 
     </table>

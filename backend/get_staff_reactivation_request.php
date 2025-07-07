@@ -28,17 +28,18 @@ try {
 
     // Total count
     $countQuery = "
-        SELECT COUNT(*) AS total 
-        FROM admin_tbl a
-        INNER JOIN admin_deactivation_logs d
-            ON a.unique_id = d.admin_id
-        WHERE a.delete_status = 'Yes'
-    ";
+    SELECT COUNT(*) AS total 
+    FROM admin_tbl a
+    INNER JOIN admin_deactivation_logs d ON a.unique_id = d.admin_id
+    LEFT JOIN admin_reactivation_logs l ON d.id = l.deactivation_log_id
+    WHERE a.delete_status = 'Yes' AND l.status = 'Pending'
+";
     $stmt = $conn->prepare($countQuery);
     $stmt->execute();
     $result = $stmt->get_result();
     $totalRow = $result->fetch_assoc();
     $total = $totalRow['total'];
+    $totalPages = ceil($total / $limit);
 
     // Fetch records
     $query = "
@@ -89,7 +90,8 @@ LIMIT ? OFFSET ?
         'staffData' => $deletedStaff,
         'total' => $total,
         'page' => $page,
-        'limit' => $limit
+        'limit' => $limit,
+        'totalPages' => $totalPages
     ]);
 } catch (Exception $e) {
     logActivity("Error fetching deleted staff by Admin ID: $admin_id - " . $e->getMessage());

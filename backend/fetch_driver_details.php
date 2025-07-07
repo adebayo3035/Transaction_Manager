@@ -81,7 +81,8 @@ try {
 
         // Mask sensitive information if needed
         if (isset($driverDetails['license_number'])) {
-            $driverDetails['license_masked'] = substr($driverDetails['license_number'], 0, 4) . '******';
+            $driverDetails['license_masked'] = maskString($driverDetails['license_number']);
+            $driverDetails['masked_question'] = maskString($driverDetails['secret_question']);
         }
 
         logActivity("Successfully retrieved driver details for ID: " . $driver_id);

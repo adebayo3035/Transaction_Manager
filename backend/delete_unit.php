@@ -6,6 +6,10 @@ session_start();
 // Initialize logging
 logActivity("Unit deletion process started");
 
+// Declare variables at the start
+$stmtCheck = null;
+$stmtDelete = null;
+
 try {
     // Check authentication
     $user_id = $_SESSION['unique_id'] ?? null;
@@ -34,89 +38,130 @@ try {
         exit();
     }
 
-    $unitId = (int)$data['unit_id'];
+    $unitId = (int) $data['unit_id'];
     logActivity("Attempting to delete unit ID: " . $unitId);
 
     // Start transaction
     $conn->begin_transaction();
     logActivity("Transaction started for unit deletion");
 
-    try {
-        // First check if unit exists and has no dependent records
-        $checkSql = "SELECT u.unit_id, 
-                    (SELECT COUNT(*) FROM team WHERE unit_id = u.unit_id) as team_count,
-                    (SELECT COUNT(*) FROM customers WHERE unit_id = u.unit_id) as customer_count
-                    FROM unit u WHERE u.unit_id = ? FOR UPDATE";
-        
-        $stmtCheck = $conn->prepare($checkSql);
-        if (!$stmtCheck) {
-            throw new Exception("Prepare failed for check: " . $conn->error);
-        }
+    // First check if unit exists and has no dependent records
+    $checkSql = "SELECT u.unit_id, 
+            (SELECT COUNT(*) FROM team WHERE unit_id = u.unit_id) as team_count,
+            (SELECT COUNT(*) FROM customers WHERE unit_id = u.unit_id) as customer_count
+            FROM unit u WHERE u.unit_id = ? FOR UPDATE";
 
-        $stmtCheck->bind_param("i", $unitId);
-        if (!$stmtCheck->execute()) {
-            throw new Exception("Execute failed for check: " . $stmtCheck->error);
-        }
-
-        $result = $stmtCheck->get_result();
-        if ($result->num_rows === 0) {
-            throw new Exception("Unit not found with ID: " . $unitId);
-        }
-
-        $unitData = $result->fetch_assoc();
-        $stmtCheck->close();
-
-        // Check for dependent records
-        if ($unitData['team_count'] > 0 || $unitData['customer_count'] > 0) {
-            throw new Exception("Cannot delete unit - it has associated teams or customers");
-        }
-
-        // Delete unit
-        $deleteSql = "DELETE FROM unit WHERE unit_id = ?";
-        $stmtDelete = $conn->prepare($deleteSql);
-        if (!$stmtDelete) {
-            throw new Exception("Prepare failed for delete: " . $conn->error);
-        }
-
-        $stmtDelete->bind_param("i", $unitId);
-        if (!$stmtDelete->execute()) {
-            throw new Exception("Execute failed for delete: " . $stmtDelete->error);
-        }
-
-        $conn->commit();
-        $successMsg = "Unit deleted successfully. ID: " . $unitId;
-        logActivity($successMsg);
-        echo json_encode([
-            "success" => true, 
-            "message" => "Unit has been successfully deleted.",
-            "unit_id" => $unitId,
-            "deleted_by" => $user_id
-        ]);
-
-    } catch (Exception $e) {
-        $conn->rollback();
-        $errorMsg = "Unit deletion failed: " . $e->getMessage();
+    logActivity("Preparing dependency check query: " . $checkSql);
+    $stmtCheck = $conn->prepare($checkSql);
+    if (!$stmtCheck) {
+        $errorMsg = "Prepare failed for check: " . $conn->error;
         logActivity($errorMsg);
-        echo json_encode([
-            "success" => false, 
-            "message" => $e->getMessage(),
-            "error" => $e->getMessage()
-        ]);
-    } finally {
-        if (isset($stmtCheck) && $stmtCheck instanceof mysqli_stmt) {
-            $stmtCheck->close();
-        }
-        if (isset($stmtDelete) && $stmtDelete instanceof mysqli_stmt) {
-            $stmtDelete->close();
+        throw new Exception($errorMsg);
+    }
+
+    logActivity("Binding unit ID parameter: " . $unitId);
+    $stmtCheck->bind_param("i", $unitId);
+    if (!$stmtCheck->execute()) {
+        $errorMsg = "Execute failed for check: " . $stmtCheck->error;
+        logActivity($errorMsg);
+        throw new Exception($errorMsg);
+    }
+
+    $result = $stmtCheck->get_result();
+    if ($result->num_rows === 0) {
+        $errorMsg = "Unit not found with ID: " . $unitId;
+        logActivity($errorMsg);
+        throw new Exception($errorMsg);
+    }
+
+    $unitData = $result->fetch_assoc();
+    logActivity("Dependency check results for unit $unitId - Teams: " .
+        $unitData['team_count'] . ", Customers: " . $unitData['customer_count']);
+
+    // Debug: Log actual team and customer records if counts > 0
+    if ($unitData['team_count'] > 0) {
+        $teamDebugSql = "SELECT team_id, team_name FROM team WHERE unit_id = ?";
+        $stmtTeamDebug = $conn->prepare($teamDebugSql);
+        if ($stmtTeamDebug) {
+            $stmtTeamDebug->bind_param("i", $unitId);
+            $stmtTeamDebug->execute();
+            $teams = $stmtTeamDebug->get_result()->fetch_all(MYSQLI_ASSOC);
+            logActivity("Associated Teams: " . print_r($teams, true));
+            $stmtTeamDebug->close();
         }
     }
-} catch (Exception $e) {
-    logActivity("System error: " . $e->getMessage());
+
+    if ($unitData['customer_count'] > 0) {
+        $customerDebugSql = "SELECT customer_id, CONCAT(firstname, ' ', lastname) AS customer_name FROM customers WHERE unit_id = ?";
+        $stmtCustomerDebug = $conn->prepare($customerDebugSql);
+        if ($stmtCustomerDebug) {
+            $stmtCustomerDebug->bind_param("i", $unitId);
+            $stmtCustomerDebug->execute();
+            $customers = $stmtCustomerDebug->get_result()->fetch_all(MYSQLI_ASSOC);
+            logActivity("Associated Customers: " . print_r($customers, true));
+            $stmtCustomerDebug->close();
+        }
+    }
+
+    $stmtCheck->close();
+    $stmtCheck = null;
+
+    // Check for dependent records
+    if ($unitData['team_count'] > 0 || $unitData['customer_count'] > 0) {
+        $errorMsg = sprintf(
+            "Cannot delete Unit %d - It has %d associated team(s) and %d associated customer(s)",
+            $unitId,
+            $unitData['team_count'],
+            $unitData['customer_count']
+        );
+        logActivity($errorMsg);
+        throw new Exception($errorMsg);
+    }
+
+    logActivity("No dependencies found for unit $unitId - proceeding with deletion");
+    // Delete unit
+    $deleteSql = "DELETE FROM unit WHERE unit_id = ?";
+    $stmtDelete = $conn->prepare($deleteSql);
+    if (!$stmtDelete) {
+        throw new Exception("Prepare failed for delete: " . $conn->error);
+    }
+
+    $stmtDelete->bind_param("i", $unitId);
+    if (!$stmtDelete->execute()) {
+        throw new Exception("Execute failed for delete: " . $stmtDelete->error);
+    }
+
+    $conn->commit();
+    $successMsg = "Unit deleted successfully. ID: " . $unitId;
+    logActivity($successMsg);
     echo json_encode([
-        "success" => false, 
-        "message" => "An unexpected error occurred."
+        "success" => true,
+        "message" => "Unit has been successfully deleted.",
+        "unit_id" => $unitId,
+        "deleted_by" => $user_id
+    ]);
+
+} catch (Exception $e) {
+    if (isset($conn) && method_exists($conn, 'rollback')) {
+        $conn->rollback();
+    }
+    $errorMsg = "Unit deletion failed: " . $e->getMessage();
+    logActivity($errorMsg);
+    echo json_encode([
+        "success" => false,
+        "message" => $e->getMessage(),
+        "error" => $e->getMessage()
     ]);
 } finally {
-    $conn->close();
+    // Close statements only if they exist and haven't been closed yet
+    if ($stmtCheck instanceof mysqli_stmt) {
+        $stmtCheck->close();
+    }
+    if ($stmtDelete instanceof mysqli_stmt) {
+        $stmtDelete->close();
+    }
+    if (isset($conn)) {
+        $conn->close();
+    }
     logActivity("Unit deletion process completed");
 }

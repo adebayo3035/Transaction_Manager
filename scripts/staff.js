@@ -79,6 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(([data]) => {
                 if (data.success && data.staffs.length > 0) {
                     updateTable(data.staffs, data.logged_in_user_role);
+                    initializeAdminActions(data.logged_in_user_role);
                     updatePagination(data.total, data.page, data.limit);
                 } else {
                     ordersTableBody.innerHTML = `
@@ -104,39 +105,39 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function updateTable(staffs, loggedInUserRole) {
-    const ordersTableBody = document.querySelector('#ordersTable tbody');
-    ordersTableBody.innerHTML = '';
+        const ordersTableBody = document.querySelector('#ordersTable tbody');
+        ordersTableBody.innerHTML = '';
 
-    staffs.forEach(staff => {
-        const restrictionText = staff.restriction_id === 0 ? 'Not Restricted' : 'Restricted';
-        const blockText = staff.block_id === 0 ? 'Not Blocked' : 'Blocked';
+        staffs.forEach(staff => {
+            const restrictionText = staff.restriction_id === 0 ? 'Not Restricted' : 'Restricted';
+            const blockText = staff.block_id === 0 ? 'Not Blocked' : 'Blocked';
 
-        // Check if staff is deactivated
-        const isDeactivated = staff.delete_status == 'Yes';
-        let admin_status = ""
-       if(staff.admin_status === null){
-        admin_status = "Not Logged In";
-       }
-       else{
-        admin_status = staff.admin_status
-       }
-        // Conditionally set the Edit/View button
-        let actionButtonHtml = '';
-        if (!isDeactivated) {
-            const buttonText = loggedInUserRole === 'Admin' ? 'View Details' : 'Edit Details';
-            actionButtonHtml = `<button class="view-details-btn" data-staff-id="${staff.unique_id}">${buttonText}</button>`;
-        }
+            // Check if staff is deactivated
+            const isDeactivated = staff.delete_status == 'Yes';
+            let admin_status = ""
+            if (staff.admin_status === null) {
+                admin_status = "Not Logged In";
+            }
+            else {
+                admin_status = staff.admin_status
+            }
+            // Conditionally set the Edit/View button
+            let actionButtonHtml = '';
+            if (!isDeactivated) {
+                const buttonText = loggedInUserRole === 'Admin' ? 'View Details' : 'Edit Details';
+                actionButtonHtml = `<button class="view-details-btn" data-staff-id="${staff.unique_id}">${buttonText}</button>`;
+            }
 
-        // Conditionally set the Deactivate button or Deactivated label
-        let deactivateCellHtml = '<td></td>';
-        if (isDeactivated) {
-            deactivateCellHtml = `<td colspan = "2"><span class="deactivated-label"><i class="fas fa-ban"></i> Deactivated</span></td>`;
-        } else if (staff.role === 'Admin' && loggedInUserRole === 'Super Admin') {
-            deactivateCellHtml = `<td><button class="deactivate-staff" data-staff-id="${staff.unique_id}">Deactivate</button></td>`;
-        }
+            // Conditionally set the Deactivate button or Deactivated label
+            let deactivateCellHtml = '<td></td>';
+            if (isDeactivated) {
+                deactivateCellHtml = `<td colspan = "2"><span class="deactivated-label"><i class="fas fa-ban"></i> Deactivated</span></td>`;
+            } else if (staff.role === 'Admin' && loggedInUserRole === 'Super Admin') {
+                deactivateCellHtml = `<td><button class="deactivate-staff" data-staff-id="${staff.unique_id}">Deactivate</button></td>`;
+            }
 
-        const row = document.createElement('tr');
-        row.innerHTML = `
+            const row = document.createElement('tr');
+            row.innerHTML = `
             <td>${staff.firstname}</td>
             <td>${staff.lastname}</td>
             <td>${restrictionText}</td>
@@ -145,25 +146,25 @@ document.addEventListener('DOMContentLoaded', () => {
             <td>${actionButtonHtml}</td>
             ${deactivateCellHtml}
         `;
-        ordersTableBody.appendChild(row);
-    });
-
-    // Attach event listeners to the view/edit buttons
-    document.querySelectorAll('.view-details-btn').forEach(button => {
-        button.addEventListener('click', event => {
-            const staffId = event.target.getAttribute('data-staff-id');
-            fetchStaffDetails(staffId);
+            ordersTableBody.appendChild(row);
         });
-    });
 
-    // Attach event listeners to deactivate buttons
-    document.querySelectorAll('.deactivate-staff').forEach(button => {
-        button.addEventListener('click', event => {
-            const staffId = event.target.getAttribute('data-staff-id');
-            fetchAdminDetails(staffId);
+        // Attach event listeners to the view/edit buttons
+        document.querySelectorAll('.view-details-btn').forEach(button => {
+            button.addEventListener('click', event => {
+                const staffId = event.target.getAttribute('data-staff-id');
+                fetchStaffDetails(staffId);
+            });
         });
-    });
-}
+
+        // Attach event listeners to deactivate buttons
+        document.querySelectorAll('.deactivate-staff').forEach(button => {
+            button.addEventListener('click', event => {
+                const staffId = event.target.getAttribute('data-staff-id');
+                fetchAdminDetails(staffId);
+            });
+        });
+    }
 
 
 
@@ -515,55 +516,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     async function deleteStaff(staffId, reason) {
-    const confirmation = confirm("Proceed to Deactivate Staff Account?");
-    if (!confirmation) return;
+        const confirmation = confirm("Proceed to Deactivate Staff Account?");
+        if (!confirmation) return;
 
-    // Get references to the elements
-    const deActivateStaffBtn = document.getElementById('deActivateStaffBtn');
-    const deactivationReason = document.getElementById('deactivationReason');
-    
-    // Create loader overlay
-    const loaderOverlay = document.createElement('div');
-    loaderOverlay.className = 'loader-overlay';
-    loaderOverlay.innerHTML = '<div class="roller-loader"></div>';
-    document.body.appendChild(loaderOverlay);
+        // Get references to the elements
+        const deActivateStaffBtn = document.getElementById('deActivateStaffBtn');
+        const deactivationReason = document.getElementById('deactivationReason');
 
-    try {
-        // Disable elements and show loading state
-        deActivateStaffBtn.disabled = true;
-        deactivationReason.disabled = true;
-        deActivateStaffBtn.textContent = 'Processing...';
+        // Create loader overlay
+        const loaderOverlay = document.createElement('div');
+        loaderOverlay.className = 'loader-overlay';
+        loaderOverlay.innerHTML = '<div class="roller-loader"></div>';
+        document.body.appendChild(loaderOverlay);
 
-        const response = await fetch('backend/delete_staff.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ staff_id: staffId, reason: reason })
-        });
+        try {
+            // Disable elements and show loading state
+            deActivateStaffBtn.disabled = true;
+            deactivationReason.disabled = true;
+            deActivateStaffBtn.textContent = 'Processing...';
 
-        const result = await response.json();
+            const response = await fetch('backend/delete_staff.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ staff_id: staffId, reason: reason })
+            });
 
-        if (response.ok) {
-            alert(result.success);
-            location.reload(); // Reload page after successful deletion
-        } else {
-            alert(result.error);
-            console.log(result.error);
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(result.success);
+                location.reload(); // Reload page after successful deletion
+            } else {
+                alert(result.error);
+                console.log(result.error);
+            }
+        } catch (error) {
+            console.error("Error deleting user:", error);
+            alert("An error occurred while trying to delete the user.");
+        } finally {
+            // Remove loader
+            loaderOverlay.remove();
+
+            // Re-enable elements regardless of success/failure
+            deActivateStaffBtn.disabled = false;
+            deactivationReason.disabled = false;
+            deActivateStaffBtn.textContent = 'Deactivate Staff';
         }
-    } catch (error) {
-        console.error("Error deleting user:", error);
-        alert("An error occurred while trying to delete the user.");
-    } finally {
-        // Remove loader
-        loaderOverlay.remove();
-        
-        // Re-enable elements regardless of success/failure
-        deActivateStaffBtn.disabled = false;
-        deactivationReason.disabled = false;
-        deActivateStaffBtn.textContent = 'Deactivate Staff';
     }
-}
 
 
     // Close modal when the "close" button is clicked

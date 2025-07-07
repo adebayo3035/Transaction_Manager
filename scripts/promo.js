@@ -33,26 +33,54 @@ document.addEventListener('DOMContentLoaded', () => {
 let currentPage = 1;
 
 function fetchPromos(page = 1) {
-    fetch(`backend/get_promo.php?page=${page}&limit=${limit}`)
-        .then(response => {
-            console.log("Raw Response:", response);
-            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-            return response.json();
-        })
-        .then(data => {
-            console.log("API Response:", data);
+    const ordersTableBody = document.getElementById('ordersTableBody');
+    const paginationContainer = document.getElementById('pagination'); // Adjust if your pagination container has a different ID
 
+    // Disable pagination buttons during fetch (optional)
+    // [...paginationContainer.querySelectorAll('button')].forEach(btn => btn.disabled = true);
+
+    // Inject spinner
+    ordersTableBody.innerHTML = `
+        <tr>
+            <td colspan="6" style="text-align:center; padding: 20px;">
+                <div class="spinner"
+                    style="border: 4px solid #f3f3f3;
+                           border-top: 4px solid #3498db;
+                           border-radius: 50%;
+                           width: 30px;
+                           height: 30px;
+                           animation: spin 1s linear infinite;
+                           margin: auto;">
+                </div>
+            </td>
+        </tr>
+    `;
+
+    const minDelay = new Promise(resolve => setTimeout(resolve, 1000)); // Ensures spinner is visible for 1s
+    const fetchData = fetch(`backend/get_promo.php?page=${page}&limit=${limit}`)
+        .then(res => res.json());
+
+    Promise.all([fetchData, minDelay])
+        .then(([data]) => {
             if (data.success && data.promos && Array.isArray(data.promos.all) && data.promos.all.length > 0) {
                 updateTable(data.promos.all);
                 updatePagination(data.total, data.page, data.limit);
             } else {
-                displayNoPromosMessage();
-                console.error('Failed to fetch Promo Details:', data.message || "Invalid response");
+                ordersTableBody.innerHTML = `
+                    <tr><td colspan="6" style="text-align:center;">No Promo Details at the moment</td></tr>
+                `;
+                console.warn('Empty or invalid promo data:', data.message || "No data returned");
             }
         })
         .catch(error => {
             console.error("Error fetching data:", error);
-            displayNoPromosMessage();
+            ordersTableBody.innerHTML = `
+                <tr><td colspan="6" style="text-align:center; color:red;">Error loading Promo data</td></tr>
+            `;
+        })
+        .finally(() => {
+            // Re-enable pagination buttons (optional)
+            // [...paginationContainer.querySelectorAll('button')].forEach(btn => btn.disabled = false);
         });
 }
 
@@ -81,33 +109,48 @@ function updateTable(promos) {
     });
 }
 
-function displayNoPromosMessage() {
-    const ordersTableBody = document.querySelector('#ordersTable tbody');
-    ordersTableBody.innerHTML = `<tr><td colspan="6" style="text-align:center;">No Promo Records found at the moment</td></tr>`;
-}
-
 document.addEventListener('DOMContentLoaded', () => {
     fetchPromos(currentPage);
 });
 
 
+    // Function to update pagination
     function updatePagination(totalItems, currentPage, itemsPerPage) {
         const paginationContainer = document.getElementById('pagination');
         paginationContainer.innerHTML = '';
-        const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-        for (let page = 1; page <= totalPages; page++) {
-            const pageButton = document.createElement('button');
-            pageButton.textContent = page;
-            pageButton.classList.add('page-btn');
-            if (page === currentPage) {
-                pageButton.classList.add('active');
-            }
-            pageButton.addEventListener('click', () => {
-                fetchPromos(page);
-            });
-            paginationContainer.appendChild(pageButton);
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        paginationButtons = [];
+
+        const createButton = (label, page, disabled = false) => {
+            const btn = document.createElement('button');
+            btn.textContent = label;
+            if (disabled) btn.disabled = true;
+            btn.addEventListener('click', () => fetchPromos(page));
+            paginationContainer.appendChild(btn);
+        };
+
+        // Show: First, Prev
+        createButton('« First', 1, currentPage === 1);
+        createButton('‹ Prev', currentPage - 1, currentPage === 1);
+
+        // Show range around current page (e.g. ±2)
+        const maxVisible = 2;
+        const start = Math.max(1, currentPage - maxVisible);
+        const end = Math.min(totalPages, currentPage + maxVisible);
+
+        for (let i = start; i <= end; i++) {
+            const btn = document.createElement('button');
+            btn.textContent = i;
+            if (i === currentPage) btn.classList.add('active');
+            btn.addEventListener('click', () => fetchPromos(i));
+            paginationButtons.push(btn);
+            paginationContainer.appendChild(btn);
         }
+
+        // Show: Next, Last
+        createButton('Next ›', currentPage + 1, currentPage === totalPages);
+        createButton('Last »', totalPages, currentPage === totalPages);
     }
 
     function fetchPromoDetails(promoId) {

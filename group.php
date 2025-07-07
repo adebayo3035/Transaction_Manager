@@ -36,11 +36,12 @@
                 <th colspan ="2">Actions</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id = "ordersTableBody">
             <!-- Staffs Information will be dynamically inserted here -->
         </tbody>
 
     </table>
+    <div id="pagination" class="pagination"></div>
 
     <div id="orderModal" class="modal">
         <div class="modal-content">

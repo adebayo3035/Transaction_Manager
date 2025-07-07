@@ -95,7 +95,7 @@ tbody tr td input[type="email"] {
   }
   #customer-form{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
   }
   .delete-btn {
     padding: 10px;

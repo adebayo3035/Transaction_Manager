@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-include_once('config.php');
+
 include('restriction_checker.php');
 
 // Initialize logging

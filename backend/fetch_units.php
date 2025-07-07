@@ -56,20 +56,33 @@ try {
         $groupCheck = $conn->prepare("SELECT group_id FROM groups WHERE group_id = ?");
         $groupCheck->bind_param("i", $group_id);
         $groupCheck->execute();
-        
+
         if ($groupCheck->get_result()->num_rows === 0) {
             throw new Exception("Group not found with ID: " . $group_id);
         }
 
-        // Fetch units for the group
-        $query = "SELECT unit_id, unit_name FROM unit WHERE group_id = ? ORDER BY unit_name ASC";
+        // Pagination: Get page & limit from input
+        $page = isset($input['page']) && (int) $input['page'] > 0 ? (int) $input['page'] : 1;
+        $limit = isset($input['limit']) && (int) $input['limit'] > 0 ? (int) $input['limit'] : 10;
+        $offset = ($page - 1) * $limit;
+
+        // Get total count
+        $countQuery = "SELECT COUNT(*) as total FROM unit WHERE group_id = ?";
+        $countStmt = $conn->prepare($countQuery);
+        $countStmt->bind_param("i", $group_id);
+        $countStmt->execute();
+        $countResult = $countStmt->get_result();
+        $totalUnits = (int) $countResult->fetch_assoc()['total'];
+        $countStmt->close();
+
+        // Fetch paginated units
+        $query = "SELECT unit_id, unit_name FROM unit WHERE group_id = ? AND delete_status IS NULL ORDER BY unit_name ASC LIMIT ? OFFSET ?";
         $stmt = $conn->prepare($query);
-        
         if (!$stmt) {
             throw new Exception("Prepare failed for units query: " . $conn->error);
         }
 
-        $stmt->bind_param("i", $group_id);
+        $stmt->bind_param("iii", $group_id, $limit, $offset);
         if (!$stmt->execute()) {
             throw new Exception("Execute failed for units query: " . $stmt->error);
         }
@@ -88,8 +101,13 @@ try {
         $response = [
             'success' => true,
             'units' => $units,
+            'pagination' => [
+                'page' => $page,
+                'limit' => $limit,
+                'total' => $totalUnits,
+                'total_pages' => ceil($totalUnits / $limit)
+            ],
             'group_id' => $group_id,
-            'count' => count($units),
             'requested_by' => $userId,
             'user_role' => $userRole,
             'timestamp' => date('c')
@@ -97,6 +115,7 @@ try {
 
         echo json_encode($response);
         logActivity("Units by group fetch completed successfully");
+
 
     } catch (Exception $e) {
         if (isset($conn)) {
@@ -109,7 +128,7 @@ try {
     logActivity($errorMsg);
     http_response_code(500);
     echo json_encode([
-        'success' => false, 
+        'success' => false,
         'message' => 'Failed to fetch units',
         'error' => $e->getMessage(),
         'group_id' => $group_id ?? null

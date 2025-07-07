@@ -181,21 +181,38 @@ document.addEventListener('DOMContentLoaded', () => {
         paginationContainer.innerHTML = '';
 
         const totalPages = Math.ceil(totalItems / itemsPerPage);
+        paginationButtons = [];
 
-        for (let page = 1; page <= totalPages; page++) {
-            const pageButton = document.createElement('button');
-            pageButton.textContent = page;
-            pageButton.classList.add('page-btn');
-            if (page === currentPage) {
-                pageButton.classList.add('active');
-            }
-            pageButton.addEventListener('click', () => {
-                fetchDeletedStaffs(page);
-            });
-            paginationContainer.appendChild(pageButton);
+        const createButton = (label, page, disabled = false) => {
+            const btn = document.createElement('button');
+            btn.textContent = label;
+            if (disabled) btn.disabled = true;
+            btn.addEventListener('click', () => fetchDeletedStaffs(page));
+            paginationContainer.appendChild(btn);
+        };
+
+        // Show: First, Prev
+        createButton('« First', 1, currentPage === 1);
+        createButton('‹ Prev', currentPage - 1, currentPage === 1);
+
+        // Show range around current page (e.g. ±2)
+        const maxVisible = 2;
+        const start = Math.max(1, currentPage - maxVisible);
+        const end = Math.min(totalPages, currentPage + maxVisible);
+
+        for (let i = start; i <= end; i++) {
+            const btn = document.createElement('button');
+            btn.textContent = i;
+            if (i === currentPage) btn.classList.add('active');
+            btn.addEventListener('click', () => fetchDeletedStaffs(i));
+            paginationButtons.push(btn);
+            paginationContainer.appendChild(btn);
         }
-    }
 
+        // Show: Next, Last
+        createButton('Next ›', currentPage + 1, currentPage === totalPages);
+        createButton('Last »', totalPages, currentPage === totalPages);
+    }
     document.getElementById("liveSearch").addEventListener("input", filterTable);
 
     function filterTable() {

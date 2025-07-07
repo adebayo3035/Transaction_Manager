@@ -1,0 +1,77 @@
+       .ordersTable th,
+        .ordersTable td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .modal .reassign-form {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            display: flex;
+
+        }
+
+        .reassign-form h3 {
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .reassign-form label,
+        .reassign-form select,
+        .reassign-form button {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .reassign-form select {
+            width: 50%;
+            padding: 10px;
+            margin: 5px 0 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            outline: none;
+        }
+
+        .reassign-form button {
+            font-size: 14px;
+            padding: 10px;
+            background-color: #0275d8;
+            cursor: pointer;
+        }
+        .actionBtn{
+            display: flex;
+            justify-content: space-around;
+        }
+        .actionBtn button:hover{
+            background-color: #000; 
+        }
+        .loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.roller-loader {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
