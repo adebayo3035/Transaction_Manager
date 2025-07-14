@@ -19,9 +19,9 @@ if ($_SESSION['role'] !== 'Super Admin') {
 
 
 logActivity("Script started. Request received from IP: " . $_SERVER['REMOTE_ADDR']);
-
+$data = json_decode(file_get_contents("php://input"), true);
 // 2. Get and validate account type
-$accountType = $_POST['accountType'] ?? '';
+$accountType = $_POST['selectAccountType'] ?? '';
 logActivity("Received account type: " . ($accountType ?: 'NULL'));
 
 $allowed = [
@@ -35,31 +35,56 @@ if (!array_key_exists($accountType, $allowed)) {
     die(json_encode(['success' => false, 'message' => 'Invalid type']));
 }
 
-// 3. Database connection
 try {
-    
-    // 4. Execute query
     $table = $allowed[$accountType];
-    $query = "SELECT id, email, CONCAT(firstname, ' ', lastname) AS name FROM $table WHERE delete_status = 'Yes'";
-    logActivity("Executing query: " . $query);
-    
-    $result = $conn->query($query);
-    if (!$result) {
-        throw new Exception("Query failed: " . $conn->error);
-    }
-    
+
+    $query = "
+    SELECT 
+        t.id, 
+        t.email, 
+        CONCAT(t.firstname, ' ', t.lastname) AS name,
+        (
+            SELECT reference_id 
+            FROM account_deactivation_audit_log ar 
+            WHERE ar.account_id = t.id 
+              AND UPPER(ar.account_type) = UPPER(?) 
+              AND UPPER(ar.action_type) = 'DEACTIVATE'
+            ORDER BY ar.id DESC 
+            LIMIT 1
+        ) AS reference_id,
+        (
+            SELECT initiated_by 
+            FROM account_deactivation_audit_log ar 
+            WHERE ar.account_id = t.id 
+              AND UPPER(ar.account_type) = UPPER(?) 
+              AND UPPER(ar.action_type) = 'DEACTIVATE'
+            ORDER BY ar.id DESC 
+            LIMIT 1
+        ) AS initiated_by
+    FROM $table t
+    WHERE t.delete_status = 'Yes'
+";
+
+
+    logActivity("Executing query for Deactivated $accountType accounts with reference_id");
+
+    $stmt = $conn->prepare($query);
+$stmt->bind_param("ss", $accountType, $accountType); // Bind for both subqueries
+
+    $stmt->execute();
+    $result = $stmt->get_result();
+
     $accounts = $result->fetch_all(MYSQLI_ASSOC);
     $count = count($accounts);
     logActivity("Fetched $count deactivated accounts for type: $accountType");
-    
-    // 5. Return response
+
     echo json_encode([
         'success' => true,
         'accounts' => $accounts
     ]);
-    
+
     logActivity("Script completed successfully");
-    
+
 } catch (Exception $e) {
     logActivity("ERROR: " . $e->getMessage());
     echo json_encode([
@@ -67,5 +92,6 @@ try {
         'message' => 'Database error occurred'
     ]);
 } finally {
-    if (isset($conn)) $conn->close();
+    if (isset($conn))
+        $conn->close();
 }

@@ -56,7 +56,7 @@ $approvedOrders = array_filter($orders, function($order) {
 
 if (!empty($approvedOrders)) {
     // Check available drivers
-    $driverCountQuery = "SELECT COUNT(*) as available_drivers FROM driver WHERE status = 'Available' AND restriction = 0";
+    $driverCountQuery = "SELECT COUNT(*) as available_drivers FROM driver WHERE status = 'Available' AND restriction = 0 AND delete_status != 'Yes'";
     $driverCountResult = $conn->query($driverCountQuery);
     $availableDrivers = $driverCountResult->fetch_assoc()['available_drivers'];
 
@@ -117,7 +117,7 @@ try {
 
         if ($status === 'Approved') {
             // Find an available driver
-            $findDriverQuery = "SELECT id FROM driver WHERE status = 'Available' AND restriction = 0 ORDER BY RAND() LIMIT 1";
+            $findDriverQuery = "SELECT id FROM driver WHERE status = 'Available' AND restriction = 0 AND delete_status != 'Yes' ORDER BY RAND() LIMIT 1";
             $result = $conn->query($findDriverQuery);
 
             if ($result->num_rows > 0) {

@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>
                     <textarea id="reactivationComment" 
                         ${isPending ? '' : 'disabled'}
-                        placeholder="Enter comment here...">${commentValue}</textarea>
+                        placeholder="Enter comment here..." maxlength="100" rows="5" cols="40">${commentValue}</textarea>
                 </td>
             </tr>
             ${isPending ? `

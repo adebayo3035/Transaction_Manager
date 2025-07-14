@@ -14,7 +14,7 @@ try {
     // Prepare and execute query with parameterized statement
     $query = "SELECT id, CONCAT(firstname, ' ', lastname) AS driver_name 
               FROM driver 
-              WHERE status = 'Available' AND restriction = 0";
+              WHERE status = 'Available' AND restriction = 0 AND delete_status IS NULL";
     
     $stmt = $conn->prepare($query);
     if (!$stmt) {

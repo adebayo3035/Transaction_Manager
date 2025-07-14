@@ -285,7 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (userRole === 'Super Admin') {
             actionButtons += `
-            <button id="deleteDriverBtn">Delete</button>
+            <button id="deleteDriverBtn">Deactivate</button>
     `;
         }
 
@@ -386,31 +386,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     function deleteDriver(driverId) {
-        if (confirm('Are you sure you want to delete this driver?')) {
-            fetch('backend/delete_driverbk.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ id: driverId })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('Driver deleted successfully!');
-                        document.getElementById('orderModal').style.display = 'none';
-                        fetchDrivers(currentPage); // Refresh the driver list
-                    } else {
-                        console.error('Failed to delete driver:', data.message);
-                        alert('Failed to delete driver:', data.message)
-                    }
-                })
-                .catch(error => {
-                    console.error('Error deleting driver:', error);
-                });
-        }
+    if (confirm('Are you sure you want to delete this driver?')) {
+        fetch('backend/delete_driver.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id: driverId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Driver account deactivated successfully!');
+                document.getElementById('orderModal').style.display = 'none';
+                fetchDrivers(currentPage); // Refresh the driver list
+            } else {
+                console.error('Failed to deactivate driver:', data.message);
+                alert(`Failed to deactivate driver account: ${data.message}`);
+            }
+        })
+        .catch(error => {
+            console.error('Error deactivating driver account:', error);
+            alert('An unexpected error occurred while deactivating the driver.');
+        });
     }
-
+}
     document.querySelector('.modal .close').addEventListener('click', () => {
         document.getElementById('orderModal').style.display = 'none';
 

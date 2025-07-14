@@ -15,13 +15,14 @@
 
     <div class="container">
     <h1>Explore Quick Links</h1>
-    <ul class="links-list">
-        <li><button id="reset-link" style="background-color: #6b7280; color: white; display: none;">Reset Q&A</button></li>
-        <li><button id="unlock-account" style="background-color: #2563eb; color: white; display: none;">Unlock Account</button></li>
-        <li><button id="block-account" style="background-color: #dc2626; color: white; display: none;">Block Staff</button></li>
-        <li><button id="unblock-account" style="background-color: #16a34a; color: white; display: none;">Unblock Staff</button></li>
-        <li><button id="reactivate-account" style="background-color: #f97316; color: white; display: none;">Block Driver/Customer</button></li>
-        <li><button id="remove-restriction" style="background-color: #16a34a; color: white; display: none;">Unblock Driver/Customer</button></li>
+    <ul class="links-list" id="links-list">
+        <li><button id="reset-link" style="background-color:rgb(126, 128, 107); color: white; display: none;">Reset Q&A</button></li>
+        <li><button id="unlock-account" style="background-color: #2563eb; color: white; display: none;">Unlock All Accounts</button></li>
+        <li><button id="block-account" style="background-color: #dc2626; color: white; display: none;">Restrict/Block Staff</button></li>
+        <li><button id="unblock-account" style="background-color: #16a34a; color: white; display: none;">Unrestrict/Unblock Staff</button></li>
+         <!-- <li><button id="restrict-account" style="background-color: #f97316; color: white; display: none;">Restrict/Block Driver and Customer</button></li> -->
+        <li><button id="reactivate-account" style="background-color: #000; color: white; display: none;">Re-Activate Driver and Customer</button></li> 
+        <li><button id="remove-restriction" style="background-color:rgb(163, 22, 121); color: white; display: none;">Unrestrict Driver and Customer</button></li>
     </ul>
 </div>
 
@@ -66,10 +67,10 @@
     <div id="restrictionModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Restrict or Block Account</h2>
+            <h2>Restrict or Block Staff Account</h2>
             <form id="restrictionForm" autocomplete="off">
                 <div class="input-box">
-                    <label for="staffName">Select an Account</label>
+                    <label for="staffName">Select A Staff Account</label>
                     <select id="staffName" name="staffName" required>
                         <option value="">--Select a Staff Name--</option>
                     </select>
@@ -99,15 +100,15 @@
     </div>
 
 
-    <!-- Modal Structure to remove Restriction and Unblock Account -->
+    <!-- Modal Structure to remove Restriction and Unblock Staff Account -->
     <div id="removeRestrictionModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Remove Restrict or Unblock Account</h2>
+            <h2>Restore Access on Staff Account</h2>
             <form id="removeRestrictionForm" autocomplete="off">
                 
                 <div class="input-box">
-                    <label for="staff">Select an Account</label>
+                    <label for="staff">Select A Staff Account</label>
                     <select id="staff" name="staff" required>
                         <option value="">--Select a Staff Name--</option>
                     </select>
@@ -172,35 +173,35 @@
         </div>
     </div>
 
-    <!-- Modal to Reactivate Account -->
-    <div id="reactivateModal" class="modal">
+     <!-- Modal to Re-activate Customer and Driver's Account -->
+    <div id="reactivateDriverCustomerModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Re-activate Account</h2>
-            <form id="reactivateAccountForm" autocomplete="off">
+            <h2>Re-Activate Driver and Customer's Account</h2>
+            <form id="reactivateDriverCustomerForm" autocomplete="off">
                 <div class="input-box">
-                    <label for="accountType">Select Account Type</label>
-                    <select name="accountType" id="accountTypes" required>
+                    <label for="selectAccountType">Select Account Type</label>
+                    <select name="selectAccountType" id="selectAccountType" required>
                         <option value="">-- Select Account Type -- </option>
                         <option value="customers">Customer's Account</option>
                         <option value="driver">Driver's Account</option>
-                        <option value="admin_tbl">Staff Account</option>
                     </select>
                 </div>
 
                 <div class="input-box">
-                    <label for="deactivatedAccounts">Deactivated Accounts</label>
-                    <select id="deactivatedAccounts">
+                    <label for="deactivatedDriverCustomer">Deactivated Accounts</label>
+                    <select id="deactivatedDriverCustomer" name = "deactivatedDriverCustomer">
                         <option value="">Select type first</option>
                     </select>
                 </div>
                 <div class="input-box">
-                    <label for="secretAnswer">Enter Secret Answer</label>
-                    <input type="password" id="secret_answer" name="secretAnswer"
-                        placeholder="Enter the Deactivated Staff Secret Answer... " required>
+                    <label for="secretAnswerReactivation">Enter Secret Answer</label>
+                    <input type="password" id="secretAnswerReactivation" name="secretAnswerReactivation"
+                        placeholder="Enter Your Secret Answer... " required>
                 </div>
+                <input type="hidden" id="deactivation_reference_id" name="deactivation_reference_id">
 
-                <input type="submit" class="button" id="reactivateBtn" value="Re-activate Account">
+                <input type="submit" class="button" id="reactivateAccountBtn" value="Re-Activate Account">
             </form>
 
         </div>
@@ -215,7 +216,8 @@
         </div>
     </div>
 
-      <!-- Modal to Remove Restriction on Customer and Driver's Account -->
+
+    <!-- Modal to Remove Restriction on Customer and Driver's Account -->
     <div id="removeRestrictionModal2" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -241,7 +243,7 @@
                     <input type="password" id="secret_answer_restriction" name="secretAnswerRestriction"
                         placeholder="Enter Your Secret Answer... " required>
                 </div>
-                <input type="hidden" id="selected_reference_id">
+                <input type="hidden" id="selected_reference_id" name="selected_reference_id">
 
                 <input type="submit" class="button" id="removeRestrictionBtn" value="Remove Restriction">
             </form>

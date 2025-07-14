@@ -39,7 +39,7 @@
      }
 
      #deactivation-tab,
-     #reactivation-tab {
+     #reactivation-tab,#restriction-tab, #unrestriction-tab {
          font-size: 14px;
      }
  }
