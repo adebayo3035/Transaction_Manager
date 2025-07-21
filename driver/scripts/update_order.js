@@ -49,22 +49,37 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to update order status
     function updateOrderStatus() {
-        const orderID = SELECT_ELEMENT.value;
-        const orderStatus = ORDER_STATUS.value;
-        const currentStatus = INPUT_ELEMENT.value;
-        const customerID = CUSTOMER_NUMBER.value;
-        const deliveryPin = document.getElementById('delivery_pin').value;
-        const cancelReason = document.getElementById('cancelReason').value;
+    const orderID = SELECT_ELEMENT.value;
+    const orderStatus = ORDER_STATUS.value;
+    const currentStatus = INPUT_ELEMENT.value;
+    const customerID = CUSTOMER_NUMBER.value;
+    const deliveryPin = document.getElementById('delivery_pin').value;
+    const cancelReason = document.getElementById('cancelReason').value;
 
-        const orderData = {
-            id: orderID,
-            orderStatus: orderStatus,
-            currentStatus: currentStatus,
-            customerID: customerID,
-            deliveryPin: deliveryPin,
-            cancelReason: cancelReason
-        };
+    const orderData = {
+        id: orderID,
+        orderStatus: orderStatus,
+        currentStatus: currentStatus,
+        customerID: customerID,
+        deliveryPin: deliveryPin,
+        cancelReason: cancelReason
+    };
 
+    // Show modal
+    const modal = document.getElementById('confirmationModal');
+    const message = document.getElementById('confirmationMessage');
+    message.textContent = `Are you sure you want to change the order status from "${currentStatus}" to "${orderStatus}"?`;
+    modal.style.display = 'block';
+
+    // Set up event listeners for buttons
+    document.getElementById('confirmCancel').onclick = function() {
+        modal.style.display = 'none';
+    };
+
+    document.getElementById('confirmOk').onclick = function() {
+        modal.style.display = 'none';
+        
+        // Proceed with the update
         fetch('../v2/update_order.php', {
             method: 'POST',
             headers: {
@@ -85,5 +100,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.error('Error updating Order Status:', error);
                 alert('An error occurred while updating the order status. Please try again.');
             });
-    }
+    };
+}
 });

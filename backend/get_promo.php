@@ -23,9 +23,11 @@ if (isset($_SESSION['unique_id'])) {
 
 header('Content-Type: application/json');
 
+
+
 // Get pagination parameters
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+$page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+$limit = isset($_GET['limit']) ? (int) $_GET['limit'] : 10;
 $offset = ($page - 1) * $limit;
 
 // Log pagination parameters
@@ -47,8 +49,25 @@ try {
     // Log total promos count
     logActivity("Total promos count: " . $totalPromos);
 
+    // Update expired promos: set status = 0 and delete_id = 1 where end_date has passed
+    $now = date('Y-m-d H:i:s');
+    $updateExpiredQuery = "UPDATE promo SET status = 0, delete_id = 1 WHERE end_date < ? AND delete_id = 0";
+    $stmt = $conn->prepare($updateExpiredQuery);
+    if (!$stmt) {
+        logActivity("Failed to prepare expired promos update query: " . $conn->error);
+        throw new Exception("Failed to prepare expired promos update query: " . $conn->error);
+    }
+    $stmt->bind_param("s", $now);
+    $stmt->execute();
+    $affectedRows = $stmt->affected_rows;
+    $stmt->close();
+
+    // Log number of expired promos updated
+    logActivity("Updated $affectedRows expired promos (status = 0, delete_id = 1).");
+
+
     // Fetch paginated promos
-    $query = "SELECT * FROM promo WHERE delete_id = 0 ORDER BY date_last_modified DESC, status DESC LIMIT ? OFFSET ?";
+    $query = "SELECT * FROM promo ORDER BY date_last_modified DESC, status DESC LIMIT ? OFFSET ?";
     $stmt = $conn->prepare($query);
     if (!$stmt) {
         logActivity("Failed to prepare paginated promos query: " . $conn->error);
@@ -70,7 +89,7 @@ try {
 
     // Fetch ongoing promos
     $now = date('Y-m-d H:i:s');
-    $ongoingQuery = "SELECT promo_id, promo_name, promo_code, promo_description, discount_type, discount_value, max_discount
+    $ongoingQuery = "SELECT promo_id, promo_name, promo_code, promo_description, discount_type, discount_value, max_discount,delete_id
                      FROM promo 
                      WHERE status = 1 AND delete_id = 0 AND start_date <= ? AND end_date >= ? 
                      ORDER BY date_last_modified DESC";
@@ -120,3 +139,4 @@ try {
     // Close the database connection
     $conn->close();
 }
+

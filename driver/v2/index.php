@@ -79,7 +79,7 @@ try {
         http_response_code(401);
         echo json_encode([
             'success' => false, 
-            'message' => "Invalid credentials. Attempts left: {$lockoutStatus['remaining_attempts']}"
+            'message' => "Invalid Login credentials. Attempts left: {$lockoutStatus['remaining_attempts']}"
         ]);
         exit;
     }

@@ -2,16 +2,12 @@
 <html lang="en">
 
 <head>
-    <style>
-
-
-    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Credits History</title>
     <link rel="stylesheet" href="../css/view_orders.css">
     <link rel="stylesheet" href="../css/checkout.css">
-      <link rel="stylesheet" href="../css/checkout.css">
+    <link rel="stylesheet" href="../css/view_credit.css">
     <link rel="stylesheet" href="../../css/credit_history.css">
 </head>
 
@@ -108,11 +104,14 @@
                         </tbody>
                     </table>
                     <!-- Add pagination controls -->
-                    <div class="pagination-controls">
-                        <button id="prevPageBtn" disabled>Previous</button>
-                        <span id="pageInfo">Page 1 of 1</span>
-                        <button id="nextPageBtn" disabled>Next</button>
-                    </div>
+                    <div id="paginationWrapper" class="pagination-controls" style="display: none; justify-content: center; margin-top: 15px;">
+    <button id="firstPageBtn" class="pagination-btn">« First</button>
+    <button id="prevPageBtn" class="pagination-btn">< Prev</button>
+    <span id="paginationNumbers"></span>
+    <button id="nextPageBtn" class="pagination-btn">Next ></button>
+    <button id="lastPageBtn" class="pagination-btn">Last »</button>
+</div>
+
 
 
                 </div>

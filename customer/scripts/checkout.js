@@ -42,23 +42,32 @@ document.addEventListener('DOMContentLoaded', () => {
         const discountValueElem = document.getElementById('discount-value');
         const totalFeeAfterElem = document.getElementById('total-fee-after');
 
-        // Show confirmation dialog
         if (!confirm("Are you sure you want to validate this promo code?")) {
-            promoInput.value = ''; // Clear input if user cancels
+            promoInput.value = '';
             return;
         }
 
-        // Proceed with validation if the user confirms
-        const promoDetails = {
-            promo_code: promoInput.value,
-            total_order: totalOrder
-        };
+        fetch('../v2/get_order_session.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const totalOrder = data.data.total_order;
 
-        fetch('../v2/validate_promo.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(promoDetails)
-        })
+                    const promoDetails = {
+                        promo_code: promoInput.value,
+                        total_order: totalOrder
+                    };
+
+                    return fetch('../v2/validate_promo.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(promoDetails)
+                    });
+                } else {
+                    alert("Failed to retrieve Total Order. Please try again.");
+                    throw new Error(data.message);
+                }
+            })
             .then(response => response.json())
             .then(data => {
                 if (data.eligible) {
@@ -67,16 +76,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     discount_value = data.discount;
                     discount_percent = data.discount_percent;
                     promoCode = data.promo_code;
-                    let totalAmountAfter = parseFloat(totalAmount) - discount_value;
+                    totalOrder = data.total_order;
 
-                    // Update UI with discount information
+                    const totalAmountAfter = parseFloat(totalOrder) - discount_value;
+
+                    // Update UI
                     discountItem.style.display = "flex";
                     totalAfterDiscount.style.display = "flex";
                     totalAmountLabel.textContent = 'Total Amount Before Discount';
                     discountValueElem.textContent = `N ${discount_value.toFixed(2)}`;
                     totalFeeAfterElem.textContent = `N ${totalAmountAfter.toFixed(2)}`;
 
-                    // Disable promo elements
+                    // Disable promo UI
                     promoCheckBox.disabled = true;
                     promoBtn.disabled = true;
                     promoBtn.style.cursor = 'not-allowed';
@@ -86,11 +97,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     checkoutForm.style.display = 'block';
                 } else {
                     alert('Error: ' + data.message);
-                    console.error(data.message);
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
+                console.error("Error during promo validation:", error);
                 alert('An error occurred. Please try again.');
             });
     });

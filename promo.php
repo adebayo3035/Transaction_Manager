@@ -41,6 +41,7 @@
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Status</th>
+                <th>Delete Status</th>
                 <th>Actions</th>
             </tr>
         </thead>

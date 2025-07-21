@@ -73,9 +73,11 @@ document.getElementById('otpGenerationForm').addEventListener('submit', async fu
     event.preventDefault();
 
     const email = document.getElementById("emailActivateAccount").value;
+    const user_type = 'driver';
+    const title = "Account Reactivation OTP";
     const sendOTPButton = document.getElementById("sendOTP");
     const responseMessage = document.getElementById("OTPResponse");
-    const requestData = { email };
+    const requestData = { email, user_type, title };
 
     // Disable button immediately after clicking
     sendOTPButton.disabled = true;

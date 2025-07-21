@@ -1,0 +1,30 @@
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.pagination-btn, .pagination-page {
+    padding: 3px 6px;
+    background-color: #e0e0e0;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    color: #333;
+    font-weight: 500;
+    font-size: 11px;
+}
+#paginationNumbers{
+    margin-bottom: 3px;
+}
+
+.pagination-btn:disabled, .pagination-page.disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.pagination-page.active {
+    background-color: #3498db;
+    color: white;
+}

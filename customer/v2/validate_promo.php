@@ -1,7 +1,7 @@
 <?php
 session_start();
 include 'config.php';
-include 'activity_logger.php'; // Include the logger file
+// include 'activity_logger.php'; // Include the logger file
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -148,7 +148,7 @@ if ($promo = $result->fetch_assoc()) {
             $discount = $max_discount;
         }
         logActivity("Customer is eligible for the promo. Discount applied: " . $discount);
-        echo json_encode(['eligible' => true, 'promo' => $promo, 'discount' => $discount, 'discount_percent' => $discount_value, 'promo_code' => $promo_code]);
+        echo json_encode(['eligible' => true, 'promo' => $promo, 'discount' => $discount, 'discount_percent' => $discount_value, 'promo_code' => $promo_code, 'total_order' => $total_order]);
     } else {
         // Handle any other eligibility criteria if needed
         $error_message = "Customer does not meet eligibility criteria.";

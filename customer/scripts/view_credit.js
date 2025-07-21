@@ -262,9 +262,13 @@ document.addEventListener('DOMContentLoaded', () => {
         Promise.all([fetchData, minDisplayTime])
             .then(([data]) => {
                 if (data.success) {
-                    totalRepaymentPages = data.pagination.total_pages;
+                    const pagination = data.pagination;
+
+                    currentRepaymentPage = pagination.current_page;
+                    totalRepaymentPages = pagination.total_pages;
+
                     populateRepaymentHistory(data.history);
-                    updatePaginationControls();
+                    updatePaginationControls(); // already uses currentRepaymentPage & totalRepaymentPages
                     repaymentHistoryModal.style.display = 'block';
                 } else {
                     tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;">${data.message}</td></tr>`;
@@ -301,10 +305,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add these new functions for pagination control
     function updatePaginationControls() {
-        document.getElementById('pageInfo').textContent = `Page ${currentRepaymentPage} of ${totalRepaymentPages}`;
-        document.getElementById('prevPageBtn').disabled = currentRepaymentPage <= 1;
-        document.getElementById('nextPageBtn').disabled = currentRepaymentPage >= totalRepaymentPages;
+    const paginationWrapper = document.getElementById('paginationWrapper');
+    const paginationNumbers = document.getElementById('paginationNumbers');
+    const firstBtn = document.getElementById('firstPageBtn');
+    const prevBtn = document.getElementById('prevPageBtn');
+    const nextBtn = document.getElementById('nextPageBtn');
+    const lastBtn = document.getElementById('lastPageBtn');
+
+    // Show pagination only if needed
+    if (totalRepaymentPages > 1) {
+        paginationWrapper.style.display = 'flex';
+
+        // Enable/disable buttons
+        firstBtn.disabled = currentRepaymentPage === 1;
+        prevBtn.disabled = currentRepaymentPage === 1;
+        nextBtn.disabled = currentRepaymentPage === totalRepaymentPages;
+        lastBtn.disabled = currentRepaymentPage === totalRepaymentPages;
+
+        // Generate number buttons
+        paginationNumbers.innerHTML = '';
+
+        for (let i = 1; i <= totalRepaymentPages; i++) {
+            const btn = document.createElement('button');
+            btn.classList.add('pagination-page');
+            btn.textContent = i;
+            if (i === currentRepaymentPage) {
+                btn.classList.add('active');
+            }
+
+            btn.addEventListener('click', () => {
+                if (i !== currentRepaymentPage) {
+                    fetchRepaymentHistory(currentCreditId, i);
+                }
+            });
+
+            paginationNumbers.appendChild(btn);
+        }
+
+    } else {
+        paginationWrapper.style.display = 'none';
     }
+}
+
+
 
     // Add event listeners for pagination buttons
     document.getElementById('prevPageBtn').addEventListener('click', () => {
@@ -318,6 +361,18 @@ document.addEventListener('DOMContentLoaded', () => {
             fetchRepaymentHistory(currentCreditId, currentRepaymentPage + 1);
         }
     });
+    document.getElementById('firstPageBtn').addEventListener('click', () => {
+    if (currentRepaymentPage > 1) {
+        fetchRepaymentHistory(currentCreditId, 1);
+    }
+});
+
+document.getElementById('lastPageBtn').addEventListener('click', () => {
+    if (currentRepaymentPage < totalRepaymentPages) {
+        fetchRepaymentHistory(currentCreditId, totalRepaymentPages);
+    }
+});
+
     // Add event listener for repayment history button
     repaymentHistoryBtn.addEventListener('click', () => {
         if (currentCreditId) {
@@ -336,42 +391,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Update pagination
     function updatePagination(totalItems, currentPage, itemsPerPage) {
-    const paginationContainer = document.getElementById('pagination');
-    paginationContainer.innerHTML = '';
+        const paginationContainer = document.getElementById('pagination');
+        paginationContainer.innerHTML = '';
 
-    const totalPages = Math.ceil(totalItems / itemsPerPage);
-    paginationButtons = [];
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        paginationButtons = [];
 
-    const createButton = (label, page, disabled = false) => {
-        const btn = document.createElement('button');
-        btn.textContent = label;
-        if (disabled) btn.disabled = true;
-        btn.addEventListener('click', () => fetchCredits(page));
-        paginationContainer.appendChild(btn);
-    };
+        const createButton = (label, page, disabled = false) => {
+            const btn = document.createElement('button');
+            btn.textContent = label;
+            if (disabled) btn.disabled = true;
+            btn.addEventListener('click', () => fetchCredits(page));
+            paginationContainer.appendChild(btn);
+        };
 
-    // Show: First, Prev
-    createButton('« First', 1, currentPage === 1);
-    createButton('‹ Prev', currentPage - 1, currentPage === 1);
+        // Show: First, Prev
+        createButton('« First', 1, currentPage === 1);
+        createButton('‹ Prev', currentPage - 1, currentPage === 1);
 
-    // Show range around current page (e.g. ±2)
-    const maxVisible = 2;
-    const start = Math.max(1, currentPage - maxVisible);
-    const end = Math.min(totalPages, currentPage + maxVisible);
+        // Show range around current page (e.g. ±2)
+        const maxVisible = 2;
+        const start = Math.max(1, currentPage - maxVisible);
+        const end = Math.min(totalPages, currentPage + maxVisible);
 
-    for (let i = start; i <= end; i++) {
-        const btn = document.createElement('button');
-        btn.textContent = i;
-        if (i === currentPage) btn.classList.add('active');
-        btn.addEventListener('click', () => fetchCredits(i));
-        paginationButtons.push(btn);
-        paginationContainer.appendChild(btn);
+        for (let i = start; i <= end; i++) {
+            const btn = document.createElement('button');
+            btn.textContent = i;
+            if (i === currentPage) btn.classList.add('active');
+            btn.addEventListener('click', () => fetchCredits(i));
+            paginationButtons.push(btn);
+            paginationContainer.appendChild(btn);
+        }
+
+        // Show: Next, Last
+        createButton('Next ›', currentPage + 1, currentPage === totalPages);
+        createButton('Last »', totalPages, currentPage === totalPages);
     }
-
-    // Show: Next, Last
-    createButton('Next ›', currentPage + 1, currentPage === totalPages);
-    createButton('Last »', totalPages, currentPage === totalPages);
-}
 
 
     // Debounced search filtering

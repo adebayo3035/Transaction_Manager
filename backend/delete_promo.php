@@ -61,13 +61,12 @@ try {
         if ($result->num_rows === 0) {
             throw new Exception("Promo not found with ID: " . $promoId);
         }
-        $stmtCheck->close();
+        //$stmtCheck->close();
 
         // Prepare the soft delete update
         $updateSql = "UPDATE promo SET 
                      delete_id = ?, 
-                     date_last_modified = NOW(),
-                     modified_by = ?
+                     date_last_modified = NOW()
                      WHERE promo_id = ?";
         
         $stmtUpdate = $conn->prepare($updateSql);
@@ -77,7 +76,7 @@ try {
         }
 
         $modifiedBy = $_SESSION['unique_id'];
-        $stmtUpdate->bind_param("iii", $deleteFlag, $modifiedBy, $promoId);
+        $stmtUpdate->bind_param("ii", $deleteFlag,  $promoId);
         
         if (!$stmtUpdate->execute()) {
             throw new Exception("Execute failed for update: " . $stmtUpdate->error);
@@ -89,8 +88,7 @@ try {
         echo json_encode([
             "success" => true, 
             "message" => "Promo has been successfully marked as deleted.",
-            "promo_id" => $promoId,
-            "deleted_by" => $modifiedBy
+            "promo_id" => $promoId
         ]);
 
     } catch (Exception $e) {

@@ -80,7 +80,7 @@ if ($admin['block_id'] != 0) {
 
 if ($admin['delete_status'] != 'Yes') {
     http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Your account is already active']);
+    echo json_encode(['success' => false, 'message' => 'Your account is active']);
     logActivity("REACTIVATION_FAILED: Admin $admin_id account already active");
     exit;
 }

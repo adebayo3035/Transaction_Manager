@@ -18,6 +18,8 @@ if (isset($_SESSION['unique_id'])) {
         logActivity("No admin data found for user ID: $userId");
         echo json_encode(null); // Return null if no user found
     }
+
+    
 } else {
     echo json_encode(null); // Return null if no user id set
 }

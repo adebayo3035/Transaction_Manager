@@ -2,24 +2,25 @@
 <html lang="en">
 
 <head>
-  
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Driver Dashboard</title>
     <link rel="stylesheet" href="../../css/customer.css">
     <link rel="stylesheet" href="../../customer/css/view_orders.css">
     <style>
-         <style>
-        .ordersTable th,
+        <style>.ordersTable th,
         .ordersTable td {
             padding: 10px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
-        #orderSummaryTable thead tr th{
+
+        #orderSummaryTable thead tr th {
             color: #000;
         }
-        th{
+
+        th {
             color: #000;
         }
     </style>
@@ -65,10 +66,18 @@
                     <textarea id="cancelReason" name="cancelReason" placeholder="Enter reason for cancellation"
                         maxlength="100"></textarea>
                 </div>
-
-
                 <button type="button" id="updateDeliveryStatus">Update Status</button>
             </form>
+            <div id="confirmationModal"
+                style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000;">
+                <div style="background:white; width:400px; margin:100px auto; padding:20px; border-radius:5px;">
+                    <p id="confirmationMessage"></p>
+                    <div style="text-align:right; margin-top:20px;">
+                        <button id="confirmCancel" style="margin-right:10px;">Cancel</button>
+                        <button id="confirmOk">OK</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="order-summary-container container">
@@ -101,7 +110,7 @@
                                 <th>Food Name</th>
                                 <th>Number of Portions</th>
                                 <th>Status</th>
-                                
+
                             </tr>
                         </thead>
                         <tbody>

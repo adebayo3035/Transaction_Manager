@@ -1,130 +1,447 @@
 <?php
 session_start();
 include('config.php');
- // Ensure this file contains the logActivity function
 header('Content-Type: application/json');
 
-$customerId = $_SESSION["customer_id"];
-checkSession($customerId);
+// Constants
+const MAX_DAILY_DEPOSIT = 300000;
+const MAX_SINGLE_DEPOSIT = 100000;
+const LATE_FEE_PERCENTAGE = 0.3;
 
-// Log the start of the script
-logActivity("Wallet funding script started.");
+// Initialize logging
+logActivity("Wallet funding script initialized for session: " . session_id());
 
+try {
+    // Validate session and input
+    validateSession();
+    $input = validateAndSanitizeInput();
+    
+    // Check daily deposit limits
+    checkDepositLimits($input['customerId'], $input['amount']);
+    
+    // Verify card details
+    $cardDetails = verifyCardDetails($input['customerId'], $input['cardNumber'], $input['pin'], $input['cvv'],);
+    
+    // Process wallet funding transaction
+    $transactionResult = processWalletFunding(
+        $input['customerId'], 
+        $input['amount'], 
+        $input['cardNumber'], 
+        $cardDetails
+    );
+    
+    // Handle any outstanding debts
+    handleOutstandingDebts($input['customerId'], $transactionResult['newBalance']);
+    
+    // Return success response
+    sendSuccessResponse($transactionResult);
+    
+} catch (InvalidTokenException $e) {
+    handleError("Invalid or expired token", 401);
+} catch (InvalidAmountException $e) {
+    handleError($e->getMessage(), 400);
+} catch (CardException $e) {
+    handleError($e->getMessage(), 400);
+} catch (DailyLimitException $e) {
+    handleError($e->getMessage(), 400);
+} catch (DatabaseException $e) {
+    handleError("Database operation failed: " . $e->getMessage(), 500);
+} catch (Exception $e) {
+    handleError("Unexpected error: " . $e->getMessage(), 500);
+}
 
-// Log the customer ID for debugging
-logActivity("Customer ID found in session: " . $_SESSION['customer_id']);
+// ==================== FUNCTIONS ====================
 
-function generateTransactionReference()
-{
+/**
+ * Validate session and CSRF token
+ */
+function validateSession() {
+    $customerId = $_SESSION["customer_id"] ?? null;
+    if (!$customerId) {
+        throw new Exception("No active session found");
+    }
+    
+    logActivity("Session validated for customer ID: $customerId");
+    
+    // Validate CSRF token
+    $token = $_POST['token'] ?? '';
+    if (!isset($_SESSION['token']) || $_SESSION['token']['value'] !== $token || time() > $_SESSION['token']['expires_at']) {
+        logActivity("Invalid or expired token detected");
+        throw new InvalidTokenException();
+    }
+}
+
+/**
+ * Validate and sanitize input parameters
+ */
+function validateAndSanitizeInput(): array {
+    $input = [
+        'token' => $_POST['token'] ?? '',
+        'pin' => $_POST['pin'] ?? '',
+        'amount' => $_POST['amount'] ?? '',
+        'cardNumber' => $_POST['card_number'] ?? '',
+        'cvv' => $_POST['card_cvv'] ?? '',
+        'customerId' => $_SESSION['customer_id'] ?? ''
+    ];
+    
+    // Validate amount
+    if (!is_numeric($input['amount'])) {
+        throw new InvalidAmountException("Invalid amount format");
+    }
+    if (!is_numeric($input['cvv'])) {
+        throw new InvalidAmountException("Invalid Card Details - CVV");
+    }
+    if (strlen($input['cvv']) != 3) {
+        throw new InvalidAmountException("Invalid Card Details - CVV");
+    }
+     if (strlen($input['cardNumber']) != 16) {
+        throw new InvalidAmountException("Invalid Card Details - Card Number");
+    }
+    
+    $input['amount'] = (float)$input['amount'];
+    
+    if ($input['amount'] <= 0) {
+        throw new InvalidAmountException("Amount must be greater than zero");
+    }
+    
+    if ($input['amount'] > MAX_SINGLE_DEPOSIT) {
+        throw new InvalidAmountException("Amount exceeds maximum single deposit limit");
+    }
+    
+    logActivity("Input validation passed for customer ID: " . $input['customerId']);
+    
+    return $input;
+}
+
+/**
+ * Check daily deposit limits
+ */
+function checkDepositLimits($customerId, $amount) {
+    global $conn;
+    
+    $cumulativeDeposit = getCumulativeDeposit($customerId, $conn);
+    $projectedTotal = $cumulativeDeposit + $amount;
+    
+    logActivity("Checking deposit limits - Current: $cumulativeDeposit, Projected: $projectedTotal");
+    
+    if ($projectedTotal > MAX_DAILY_DEPOSIT) {
+        throw new DailyLimitException("This transaction will exceed your daily deposit limit");
+    }
+}
+
+/**
+ * Verify card details including PIN and expiration
+ */
+function verifyCardDetails($customerId, $cardNumber, $pin, $cvv) {
+    global $conn, $encryption_key, $encryption_iv;
+    
+    logActivity("Verifying card details for customer ID: $customerId");
+    
+    $encryptedCardNumber = encrypt($cardNumber, $encryption_key, $encryption_iv);
+    $encryptedCVV = encrypt($cvv, $encryption_key, $encryption_iv);
+    $encryptedPin = md5($pin);
+    
+    $cardDetails = getStoredPinHash($customerId, $encryptedCardNumber, $conn);
+    
+    if (!$cardDetails) {
+        throw new CardException("Card not found");
+    }
+    
+    if ($cardDetails['is_expired']) {
+        throw new CardException("Your card has expired");
+    }
+    
+    if ($cardDetails['card_status'] !== "Active") {
+        throw new CardException("Your card is inactive. Please add another card");
+    }
+    
+    if ($encryptedPin !== $cardDetails['card_pin']) {
+        throw new CardException("Invalid card details");
+    }
+    if ($encryptedCVV !== $cardDetails['cvv']) {
+        throw new CardException("Invalid card details - CVV");
+    }
+    
+    logActivity("Card verification successful for customer ID: $customerId");
+    
+    return $cardDetails;
+}
+
+/**
+ * Process wallet funding transaction
+ */
+function processWalletFunding($customerId, $amount, $cardNumber, $cardDetails): array {
+    global $conn;
+    
+    logActivity("Starting wallet funding process for customer ID: $customerId, Amount: $amount");
+    
+    $conn->begin_transaction();
+    
+    try {
+        // Check or create wallet
+        $walletData = checkWalletExists($customerId, $conn);
+        $currentBalance = $walletData ? $walletData['balance'] : 0;
+        
+        if ($walletData) {
+            // Update existing wallet
+            $stmt = $conn->prepare("UPDATE wallets SET balance = balance + ?, date_last_updated = NOW() WHERE wallet_id = ?");
+            $stmt->bind_param("di", $amount, $walletData['wallet_id']);
+            $stmt->execute();
+            logActivity("Updated wallet balance for customer ID: $customerId");
+        } else {
+            // Create new wallet
+            $stmt = $conn->prepare("INSERT INTO wallets (customer_id, balance, date_last_updated) VALUES (?, ?, NOW())");
+            $stmt->bind_param("id", $customerId, $amount);
+            $stmt->execute();
+            $walletId = $stmt->insert_id;
+            logActivity("Created new wallet for customer ID: $customerId, Wallet ID: $walletId");
+        }
+        
+        // Record transaction
+        $transactionReference = generateTransactionReference();
+        $description = "Wallet Funding";
+        $paymentMethod = 'Card';
+        
+        $stmt = $conn->prepare("
+            INSERT INTO customer_transactions 
+            (transaction_ref, customer_id, amount, date_created, transaction_type, payment_method, description) 
+            VALUES (?, ?, ?, NOW(), 'credit', ?, ?)
+        ");
+        $stmt->bind_param("sidss", $transactionReference, $customerId, $amount, $paymentMethod, $description);
+        $stmt->execute();
+        
+        logActivity("Recorded transaction for customer ID: $customerId, Reference: $transactionReference");
+        
+        $conn->commit();
+        
+        return [
+            'newBalance' => $currentBalance + $amount,
+            'transactionReference' => $transactionReference,
+            'cardNumber' => $cardNumber
+        ];
+        
+    } catch (Exception $e) {
+        $conn->rollback();
+        logActivity("Wallet funding failed for customer ID: $customerId. Error: " . $e->getMessage());
+        throw new DatabaseException("Wallet funding transaction failed");
+    }
+}
+
+/**
+ * Handle any outstanding debts for the customer
+ */
+function handleOutstandingDebts($customerId, $currentWalletBalance) {
+    global $conn;
+    
+    logActivity("Checking for outstanding debts for customer ID: $customerId");
+    
+    $outstandingDebt = getOutstandingDebt($customerId, $conn);
+    if (!$outstandingDebt) {
+        logActivity("No outstanding debts found for customer ID: $customerId");
+        return;
+    }
+    
+    $creditOrderId = $outstandingDebt['credit_order_id'];
+    $orderId = $outstandingDebt['order_id'];
+    $totalCreditAmount = $outstandingDebt['total_credit_amount'];
+    $amountPaid = $outstandingDebt['amount_paid'];
+    $debtAmount = $outstandingDebt['remaining_balance'];
+    $dueDate = $outstandingDebt['due_date'];
+    
+    logActivity("Processing debt repayment for order ID: $orderId, Amount due: $debtAmount");
+    
+    // Check for late payment
+    $currentDate = date('Y-m-d H:i:s');
+    if ($dueDate < $currentDate) {
+        $latePaymentFee = calculateLatePaymentFee($totalCreditAmount);
+        logActivity("Late payment detected. Fee calculated: $latePaymentFee");
+        
+        if ($currentWalletBalance < ($debtAmount + $latePaymentFee)) {
+            $message = 'Insufficient funds. Your credit is overdue. Total amount due: ' . 
+                      number_format($debtAmount, 2) . ' and a late payment fee of: ' . 
+                      number_format($latePaymentFee, 2);
+            logActivity("Insufficient funds for late payment: $message");
+            throw new InsufficientFundsException($message);
+        }
+        
+        // Deduct late payment fee
+        insertLatePaymentFee($orderId, $customerId, $latePaymentFee, $conn);
+        $currentWalletBalance -= $latePaymentFee;
+        updateWalletBalance($customerId, $currentWalletBalance, $conn);
+    }
+    
+    // Process repayment
+    processRepayment(
+        $creditOrderId,
+        $orderId,
+        $customerId,
+        $debtAmount,
+        $amountPaid,
+        $currentWalletBalance,
+        $conn
+    );
+}
+
+/**
+ * Send success response
+ */
+function sendSuccessResponse(array $result) {
+    $_SESSION['token'] = [
+        'value' => '',
+        'expires_at' => time() // Invalidate token
+    ];
+    
+    logActivity("Transaction completed successfully for customer ID: " . $_SESSION['customer_id'] . 
+               ", Reference: " . $result['transactionReference']);
+    
+    echo json_encode([
+        'success' => true,
+        'message' => 'Transaction successful',
+        'transactionReference' => $result['transactionReference'],
+        'cardNumber' => $result['cardNumber']
+    ]);
+}
+
+/**
+ * Handle errors and send JSON response
+ */
+function handleError(string $message, int $statusCode = 400) {
+    http_response_code($statusCode);
+    logActivity("Error: $message");
+    echo json_encode([
+        'success' => false,
+        'message' => $message
+    ]);
+    exit;
+}
+
+// ==================== HELPER FUNCTIONS ====================
+
+function generateTransactionReference(): string {
     $prefix = 'TRX';
     $uniqueId = uniqid($prefix, true);
     $randomNumber = mt_rand(1000, 9999);
     return strtoupper(str_replace('.', '', $uniqueId . $randomNumber));
 }
 
-function getStoredPinHash($customerId, $cardNumber, $conn)
-{
-    logActivity("Fetching stored PIN hash and expiry date for customer ID: " . $customerId);
-
-    // Fetch card details including card_pin and expiry_date
-    $stmt = $conn->prepare("SELECT card_pin, expiry_date, status FROM cards WHERE customer_id = ? AND card_number = ?");
+function getStoredPinHash($customerId, $cardNumber, $conn): ?array {
+    logActivity("Fetching stored card details for customer ID: $customerId");
+    
+    $stmt = $conn->prepare("SELECT card_pin, cvv, expiry_date, status FROM cards WHERE customer_id = ? AND card_number = ?");
     $stmt->bind_param("is", $customerId, $cardNumber);
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
-    $stmt->close();
-
+    
     if (!$row) {
-        logActivity("No card found for customer ID: $customerId and card number: $cardNumber");
+        logActivity("No card found for customer ID: $customerId");
         return null;
     }
-
-    $cardPin = $row['card_pin'];
-    $expiryDate = $row['expiry_date']; // Format: month-year (e.g., 12-2025)
-    $card_status = $row['status'];
-
-    // Parse expiry_date into month and year
-    list($expiryMonth, $expiryYear) = explode('-', $expiryDate);
-
-    // Get current month and year
-    $currentMonth = date('m'); // Current month (e.g., 09)
-    $currentYear = date('Y');  // Current year (e.g., 2023)
-
-    // Check if the card has expired
-    $isExpired = ($expiryYear < $currentYear) || ($expiryYear == $currentYear && $expiryMonth < $currentMonth);
-
-    logActivity("Card expiry date: $expiryDate, Is expired?: " . ($isExpired ? 'Yes' : 'No'));
     
-
-    // Return card_pin, expiry_date, and is_expired status
+    // Parse expiry date
+    list($expiryMonth, $expiryYear) = explode('-', $row['expiry_date']);
+    $currentMonth = date('m');
+    $currentYear = date('Y');
+    
+    $isExpired = ($expiryYear < $currentYear) || 
+                 ($expiryYear == $currentYear && $expiryMonth < $currentMonth);
+    
+    logActivity("Card status - Expiry: {$row['expiry_date']}, Status: {$row['status']}, Expired: " . ($isExpired ? 'Yes' : 'No'));
+    
     return [
-        'card_pin' => $cardPin,
-        'expiry_date' => $expiryDate,
+        'card_pin' => $row['card_pin'],
+        'expiry_date' => $row['expiry_date'],
+        'cvv' => $row['cvv'],
         'is_expired' => $isExpired,
-        'card_status' => $card_status
+        'card_status' => $row['status']
     ];
 }
 
-function checkWalletExists($customerId, $conn)
-{
-    logActivity("Checking if wallet exists for customer ID: " . $customerId);
-    $walletId = '';
-    $balance = '';
+function checkWalletExists($customerId, $conn): ?array {
+    logActivity("Checking wallet existence for customer ID: $customerId");
+    
     $stmt = $conn->prepare("SELECT wallet_id, balance FROM wallets WHERE customer_id = ?");
     $stmt->bind_param("i", $customerId);
-    $stmt->execute();
-    $stmt->bind_result($walletId, $balance);
-    $walletExists = $stmt->fetch();
-    $stmt->close();
-    return $walletExists ? ['wallet_id' => $walletId, 'balance' => $balance] : null;
-}
-
-function getCumulativeDeposit($customerId, $conn)
-{
-    logActivity("Fetching cumulative deposit for customer ID: " . $customerId);
-    $today = date('Y-m-d');
-    $stmt = $conn->prepare("SELECT SUM(amount) AS total FROM customer_transactions WHERE customer_id = ? AND DATE(date_created) = ? AND transaction_type = 'credit'");
-    $stmt->bind_param("is", $customerId, $today);
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
     $stmt->close();
-    return $row ? $row['total'] : 0;
+    
+    if ($row) {
+        logActivity("Wallet found - ID: {$row['wallet_id']}, Balance: {$row['balance']}");
+        return $row;
+    }
+    
+    logActivity("No wallet found for customer ID: $customerId");
+    return null;
+}
+function getCumulativeDeposit($customerId, $conn): float {
+    logActivity("Calculating cumulative deposits for customer ID: $customerId");
+    
+    $today = date('Y-m-d');
+    $stmt = $conn->prepare("
+        SELECT SUM(amount) AS total 
+        FROM customer_transactions 
+        WHERE customer_id = ? 
+        AND DATE(date_created) = ? 
+        AND transaction_type = 'credit'
+    ");
+    $stmt->bind_param("is", $customerId, $today);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $total = $row ? (float)$row['total'] : 0;
+    
+    logActivity("Cumulative deposits today: $total");
+    return $total;
 }
 
-function getOutstandingDebt($customerId, $conn)
-{
-    logActivity("Fetching outstanding debt for customer ID: " . $customerId);
-    $stmt = $conn->prepare("SELECT * from credit_orders WHERE customer_id = ? AND (repayment_status = 'Pending' OR repayment_status = 'Partially Paid') AND (status = 'Approved')  ORDER BY created_at ASC LIMIT 1");
+function getOutstandingDebt($customerId, $conn): ?array {
+    logActivity("Checking for outstanding debts for customer ID: $customerId");
+    
+    $stmt = $conn->prepare("
+        SELECT * FROM credit_orders 
+        WHERE customer_id = ? 
+        AND (repayment_status = 'Pending' OR repayment_status = 'Partially Paid') 
+        AND status = 'Approved'
+        ORDER BY created_at ASC 
+        LIMIT 1
+    ");
     $stmt->bind_param("i", $customerId);
     $stmt->execute();
     $result = $stmt->get_result();
     $debt = $result->fetch_assoc();
-    $stmt->close();
-    return $debt;
+    
+    if ($debt) {
+        logActivity("Found outstanding debt - Order ID: {$debt['order_id']}, Amount: {$debt['remaining_balance']}");
+    } else {
+        logActivity("No outstanding debts found");
+    }
+    
+    return $debt ?: null;
 }
 
-function calculateLatePaymentFee($totalCreditAmount)
-{
-    logActivity("Calculating late payment fee for credit amount: " . $totalCreditAmount);
-    return 0.3 * $totalCreditAmount;
+function calculateLatePaymentFee($totalCreditAmount): float {
+    $fee = LATE_FEE_PERCENTAGE * $totalCreditAmount;
+    logActivity("Calculated late payment fee: $fee");
+    return $fee;
 }
 
-function processRepayment($creditOrderId, $orderId, $customerId, $debtAmount, $amountPaid, $currentWalletBalance, $conn)
-{
-    logActivity("Processing repayment for credit order ID: " . $creditOrderId);
+function processRepayment($creditOrderId, $orderId, $customerId, $debtAmount, $amountPaid, $currentWalletBalance, $conn) {
+    logActivity("Processing repayment for credit order ID: $creditOrderId");
+    
     if ($currentWalletBalance >= $debtAmount) {
-        // Fully pay the debt
         $repaymentStatus = 'Paid';
         $newRemainingBalance = 0.00;
         $newWalletBalance = $currentWalletBalance - $debtAmount;
         $amountToPay = $debtAmount;
+        logActivity("Full repayment possible - Amount: $amountToPay");
     } else {
-        // Partially pay the debt
         $repaymentStatus = 'Partially Paid';
         $newRemainingBalance = $debtAmount - $currentWalletBalance;
         $newWalletBalance = 0.00;
         $amountToPay = $currentWalletBalance;
+        logActivity("Partial repayment - Amount: $amountToPay, Remaining: $newRemainingBalance");
     }
 
     $newAmountPaid = $amountPaid + $amountToPay;
@@ -141,335 +458,161 @@ function processRepayment($creditOrderId, $orderId, $customerId, $debtAmount, $a
         $repaymentStatus,
         $conn
     );
+    
+    logActivity("Repayment processed successfully for order ID: $orderId");
 }
 
-function insertLatePaymentFee($orderId, $customerId, $latePaymentFee, $conn)
-{
-    logActivity("Inserting late payment fee for order ID: " . $orderId);
+function insertLatePaymentFee($orderId, $customerId, $latePaymentFee, $conn) {
+    logActivity("Recording late payment fee for order ID: $orderId, Amount: $latePaymentFee");
+    
     $currentDate = date('Y-m-d H:i:s');
-
-    // Insert into revenue table
-    $revenue_type_id = 9;
-    $refunded_amount = 0;
+    $revenueTypeId = 9;
     $status = 'Completed';
-    $insertRevenueStmt = $conn->prepare("
-        INSERT INTO revenue (order_id, customer_id, total_amount, refunded_amount, retained_amount, transaction_date, status, updated_at, revenue_type_id)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-    ");
-    if (!$insertRevenueStmt) {
-        throw new Exception("Failed to prepare revenue statement: " . $conn->error);
-    }
-    $insertRevenueStmt->bind_param("iidddsssi", $orderId, $customerId, $latePaymentFee, $refunded_amount, $latePaymentFee, $currentDate, $status, $currentDate, $revenue_type_id);
-    if (!$insertRevenueStmt->execute()) {
-        throw new Exception("Failed to insert into revenue table: " . $conn->error);
-    }
-    $insertRevenueStmt->close();
-
-    // Insert into customer_transactions table
     $transactionReference = generateTransactionReference();
-    $transactionType = "Debit";
-    $paymentMethod = "Wallet Funding";
-    $description = "Late payment fee for Credit Order with Order ID: #$orderId";
 
-    $insertTransactionStmt = $conn->prepare("
-        INSERT INTO customer_transactions (transaction_ref, customer_id, amount, date_created, transaction_type, payment_method, description)
-        VALUES (?, ?, ?, NOW(), ?, ?, ?)
-    ");
-    if (!$insertTransactionStmt) {
-        throw new Exception("Failed to prepare transaction statement: " . $conn->error);
+    try {
+        // Insert into revenue table
+        $stmt = $conn->prepare("
+            INSERT INTO revenue 
+            (order_id, customer_id, total_amount, refunded_amount, retained_amount, transaction_date, status, updated_at, revenue_type_id)
+            VALUES (?, ?, ?, 0, ?, ?, ?, ?, ?)
+        ");
+        $stmt->bind_param("iiddsssi", $orderId, $customerId, $latePaymentFee, $latePaymentFee, $currentDate, $status, $currentDate, $revenueTypeId);
+        $stmt->execute();
+        
+        // Insert into customer_transactions table
+        $description = "Late payment fee for Credit Order with Order ID: #$orderId";
+        $stmt = $conn->prepare("
+            INSERT INTO customer_transactions 
+            (transaction_ref, customer_id, amount, date_created, transaction_type, payment_method, description)
+            VALUES (?, ?, ?, NOW(), 'Debit', 'Wallet Funding', ?)
+        ");
+        $stmt->bind_param("sidss", $transactionReference, $customerId, $latePaymentFee, $description);
+        $stmt->execute();
+        
+        // Insert into transactions table
+        $stmt = $conn->prepare("
+            INSERT INTO transactions 
+            (transaction_ref, customer_id, order_id, transaction_type, amount, transaction_date, payment_method, status, created_at, updated_at, revenue_type_id)
+            VALUES (?, ?, ?, 'Credit', ?, NOW(), 'Direct Credit for Late Payment on Credit Order with Order ID: #$orderId', ?, NOW(), NOW(), ?)
+        ");
+        $stmt->bind_param("siisdssi", $transactionReference, $customerId, $orderId, $latePaymentFee, $status, $revenueTypeId);
+        $stmt->execute();
+        
+        // Update credit_orders table
+        $stmt = $conn->prepare("
+            UPDATE credit_orders
+            SET late_payment_fee = ?, date_last_modified = ?
+            WHERE order_id = ?
+        ");
+        $stmt->bind_param("dsi", $latePaymentFee, $currentDate, $orderId);
+        $stmt->execute();
+        
+        logActivity("Late payment fee recorded successfully for order ID: $orderId");
+        
+    } catch (Exception $e) {
+        logActivity("Failed to record late payment fee: " . $e->getMessage());
+        throw new DatabaseException("Failed to record late payment fee");
     }
-    $insertTransactionStmt->bind_param("sidsss", $transactionReference, $customerId, $latePaymentFee, $transactionType, $paymentMethod, $description);
-    if (!$insertTransactionStmt->execute()) {
-        throw new Exception("Failed to insert into customer_transactions table: " . $conn->error);
-    }
-    $insertTransactionStmt->close();
-
-    // Insert into transactions table
-    $transactionType2 = "Credit";
-    $paymentMethod2 = "Direct Credit for Late Payment on Credit Order with Order ID: #$orderId";
-
-    $insertTransactionStmt = $conn->prepare("
-        INSERT INTO transactions (transaction_ref, customer_id, order_id, transaction_type, amount, transaction_date, payment_method, status, created_at, updated_at, revenue_type_id)
-        VALUES (?, ?, ?, ?, ?, NOW(), ?, ?, NOW(), NOW(), ?)
-    ");
-    if (!$insertTransactionStmt) {
-        throw new Exception("Failed to prepare transaction statement: " . $conn->error);
-    }
-    $insertTransactionStmt->bind_param("siisdssi", $transactionReference, $customerId, $orderId, $transactionType2, $latePaymentFee, $paymentMethod2, $status, $revenue_type_id);
-    if (!$insertTransactionStmt->execute()) {
-        throw new Exception("Failed to insert into transactions table: " . $conn->error);
-    }
-    $insertTransactionStmt->close();
-
-
-    //Update late payment column on credit Order table
-    $update_stmt = $conn->prepare("
-    UPDATE credit_orders
-    SET late_payment_fee = ?, date_last_modified = ?
-    WHERE order_id = ?
-");
-
-    // Get the current timestamp for the update
-    $date_last_updated = date('Y-m-d H:i:s');
-
-    // Bind the parameters to the query
-    $update_stmt->bind_param("dsi", $latePaymentFee, $date_last_updated, $orderId);
-
-    // Execute the update statement
-    $update_stmt->execute();
 }
 
-function updateWalletBalance($customerId, $newBalance, $conn)
-{
-    logActivity("Updating wallet balance for customer ID: " . $customerId);
+function updateWalletBalance($customerId, $newBalance, $conn) {
+    logActivity("Updating wallet balance for customer ID: $customerId to $newBalance");
+    
     $stmt = $conn->prepare("UPDATE wallets SET balance = ? WHERE customer_id = ?");
     $stmt->bind_param("di", $newBalance, $customerId);
-    $stmt->execute();
-}
-
-$token = $_POST['token'] ?? '';
-$pin = $_POST['pin'] ?? '';
-$amount = $_POST['amount'] ?? '';
-$cardNumber = $_POST['card_number'] ?? '';
-$customerId = $_SESSION['customer_id'] ?? '';
-
-$encrypted_pin = md5($pin);
-$encrypted_cardNumber = encrypt($cardNumber, $encryption_key, $encryption_iv);
-
-if (!isset($_SESSION['token']) || $_SESSION['token']['value'] !== $token || time() > $_SESSION['token']['expires_at']) {
-    logActivity("Invalid or expired token.");
-    echo json_encode(['success' => false, 'message' => 'Invalid or expired token']);
-    exit;
-}
-
-if (!is_numeric($amount) || $amount <= 0 || $amount > 100000) {
-    logActivity("Invalid amount or exceeds maximum limit.");
-    echo json_encode(['success' => false, 'message' => 'Invalid amount or exceeds maximum limit']);
-    exit;
-}
-
-// Ensure Daily Cumulative Deposit does not exceed 300k
-$cumulativeDeposit = getCumulativeDeposit($customerId, $conn);
-if (($cumulativeDeposit + $amount) > 300000) {
-    logActivity("Cumulative deposit limit exceeded for customer ID: " . $customerId);
-    echo json_encode(['success' => false, 'message' => 'This transaction will make you exceed the cumulative deposit limit today']);
-    exit;
-}
-
-// Fetch stored PIN hash and expiry date
-$storedCardDetails = getStoredPinHash($customerId, $encrypted_cardNumber, $conn);
-
-if (!$storedCardDetails) {
-    logActivity("No card found for customer ID: $customerId");
-    echo json_encode(['success' => false, 'message' => 'Error occurred. Card not found.']);
-    exit;
-}
-
-// Check if the card has expired
-if ($storedCardDetails['is_expired']) {
-    logActivity("Card expired for customer ID: $customerId. Expiry date: " . $storedCardDetails['expiry_date']);
-    echo json_encode(['success' => false, 'message' => 'Error occurred. Your card has expired.']);
-    exit;
-}
-// Check if Card is still active
-if ($storedCardDetails['card_status'] !== "Active") {
-    logActivity("Inactive Card for customer ID: $customerId. Card Status is: " . $storedCardDetails['card_status']);
-    echo json_encode(['success' => false, 'message' => 'Error occurred. Your card is Inactive. Kindly add another Card']);
-    exit;
-}
-
-// Validate the PIN
-if ($encrypted_pin !== $storedCardDetails['card_pin']) {
-    logActivity("Invalid PIN for customer ID: $customerId");
-    echo json_encode(['success' => false, 'message' => 'Error occurred. Invalid Card Details.']);
-    exit;
-}
-// If all checks pass
-logActivity("Card details validated successfully for customer ID: $customerId");
-
-$description = "Wallet Funding";
-$paymentMethod = 'Card';
-
-$conn->begin_transaction();
-
-try {
-    $walletData = checkWalletExists($customerId, $conn);
-
-    if ($walletData) {
-        // Wallet exists, update the balance
-        logActivity("Updating wallet balance for customer ID: " . $customerId);
-        $stmt = $conn->prepare("UPDATE wallets SET balance = balance + ?, date_last_updated = NOW() WHERE wallet_id = ?");
-        $stmt->bind_param("di", $amount, $walletData['wallet_id']);
-        $stmt->execute();
-        $stmt->close();
-    } else {
-        // Wallet does not exist, create a new wallet
-        logActivity("Creating new wallet for customer ID: " . $customerId);
-        $stmt = $conn->prepare("INSERT INTO wallets (customer_id, balance, date_last_updated) VALUES (?, ?, NOW())");
-        $stmt->bind_param("id", $customerId, $amount);
-        $stmt->execute();
-        $walletId = $stmt->insert_id;
-        $stmt->close();
+    
+    if (!$stmt->execute()) {
+        logActivity("Failed to update wallet balance: " . $stmt->error);
+        throw new DatabaseException("Wallet balance update failed");
     }
+}
 
-    $transactionReference = generateTransactionReference();
-    logActivity("Inserting transaction for customer ID: " . $customerId);
-    $stmt = $conn->prepare("INSERT INTO customer_transactions (transaction_ref, customer_id, amount, date_created, transaction_type, payment_method, description) VALUES (?, ?, ?, NOW(), 'credit', ?, ?)");
-    $stmt->bind_param("sidss", $transactionReference, $customerId, $amount, $paymentMethod, $description);
-    $stmt->execute();
-    $stmt->close();
-
-    // Check if customer has an existing debt yet to be repaid
-    $outstandingDebt = getOutstandingDebt($customerId, $conn);
-    if ($outstandingDebt) {
-        $credit_order_id = $outstandingDebt['credit_order_id'];
-        $order_id = $outstandingDebt['order_id'];
-        $total_credit_amount = $outstandingDebt['total_credit_amount'];
-        $amount_paid = $outstandingDebt['amount_paid'];
-        $debtAmount = $outstandingDebt['remaining_balance'];
-        $due_date = $outstandingDebt['due_date'];
-        $current_date = date('Y-m-d H:i:s');
-        $balance = $walletData['balance'];
-        $currentWalletBalance = $amount + $balance;
-
-        // Apply late payment fee if overdue
-        if ($due_date < $current_date) {
-            $latePaymentFee = calculateLatePaymentFee($total_credit_amount);
-            // Validate if user has enough balance
-            if ($currentWalletBalance < ($debtAmount + $latePaymentFee)) {
-                logActivity("Insufficient funds for late payment fee for customer ID: " . $customerId);
-                echo json_encode([
-                    'success' => false,
-                    'message' => 'Insufficient funds. Your credit is overdue. Total amount due: ' . number_format($debtAmount, 2) .
-                        ' and a late payment fee of: ' . number_format($latePaymentFee, 2)
-                ]);
-                exit; // Stop further execution
-            }
-            // Insert late payment fee into revenue and transactions tables
-            insertLatePaymentFee($order_id, $customerId, $latePaymentFee, $conn);
-
-            // Deduct late payment fee from wallet balance
-            $currentWalletBalance -= $latePaymentFee;
-            updateWalletBalance($customerId, $currentWalletBalance, $conn);
-        }
-        // Process repayment
-        processRepayment(
-            $credit_order_id,
-            $order_id,
-            $customerId,
-            $debtAmount,
-            $amount_paid,
-            $currentWalletBalance,
-            $conn
-        );
+function updateDebtStatus($creditOrderId, $orderId, $customerId, $newWalletBalance, $amountPaid, $newRemainingBalance, $repaymentStatus, $conn) {
+    logActivity("Updating debt status for credit order ID: $creditOrderId");
+    
+    $dateLastUpdated = date('Y-m-d H:i:s');
+    $revenueTypeId = 7;
+    
+    try {
+        // Update wallet balance
+        $stmt = $conn->prepare("UPDATE wallets SET balance = ? WHERE customer_id = ?");
+        $stmt->bind_param("di", $newWalletBalance, $customerId);
+        $stmt->execute();
+        
+        // Update credit_orders table
+        $stmt = $conn->prepare("
+            UPDATE credit_orders
+            SET remaining_balance = ?, repayment_status = ?, amount_paid = ?, date_last_modified = ?
+            WHERE credit_order_id = ?
+        ");
+        $stmt->bind_param("dsssi", $newRemainingBalance, $repaymentStatus, $amountPaid, $dateLastUpdated, $creditOrderId);
+        $stmt->execute();
+        
+        // Update revenue table
+        $stmt = $conn->prepare("
+            UPDATE revenue
+            SET total_amount = ?, retained_amount = ?, updated_at = ?, revenue_type_id = ?
+            WHERE order_id = ? AND revenue_type_id IN (2, 7)
+        ");
+        $stmt->bind_param("ddsii", $amountPaid, $amountPaid, $dateLastUpdated, $revenueTypeId, $orderId);
+        $stmt->execute();
+        
+        // Update transactions table
+        $stmt = $conn->prepare("
+            UPDATE transactions
+            SET amount = ?, updated_at = ?, revenue_type_id = ?
+            WHERE order_id = ? AND revenue_type_id IN (2, 7)
+        ");
+        $stmt->bind_param("dsii", $amountPaid, $dateLastUpdated, $revenueTypeId, $orderId);
+        $stmt->execute();
+        
+        logActivity("Debt status updated successfully for credit order ID: $creditOrderId");
+        
+    } catch (Exception $e) {
+        logActivity("Failed to update debt status: " . $e->getMessage());
+        throw new DatabaseException("Debt status update failed");
     }
-    $conn->commit();
-    logActivity("Transaction successful for customer ID: " . $customerId);
-    echo json_encode(['success' => true, 'message' => 'Transaction successful', 'card_number' => $cardNumber]);
-    $_SESSION['token'] = [
-        'value' => '',
-        'expires_at' => time() // Token expires in 60 seconds
-    ];
-} catch (Exception $e) {
-    $conn->rollback();
-    logActivity("Transaction failed for customer ID: " . $customerId . ". Error: " . $e->getMessage());
-    echo json_encode(['success' => false, 'message' => 'Transaction failed. Please try again.', 'error' => $e->getMessage()]);
 }
 
-$conn->close();
-
-function updateDebtStatus($creditOrderId, $orderID, $customerID, $new_wallet_balance, $amountPaid, $newRemainingBalance, $repaymentStatus, $conn)
-{
-    logActivity("Updating debt status for credit order ID: " . $creditOrderId);
-    // Update the wallet balance in the database
-    $debit_wallet_stmt = $conn->prepare("UPDATE wallets SET balance = ? WHERE customer_id = ?");
-    $debit_wallet_stmt->bind_param("di", $new_wallet_balance, $customerID);
-    $debit_wallet_stmt->execute();
-
-    // Prepare the update query for the credit_orders table
-    $update_stmt = $conn->prepare("
-        UPDATE credit_orders
-        SET remaining_balance = ?, repayment_status = ?, amount_paid = ?, date_last_modified = ?
-        WHERE credit_order_id = ?
-    ");
-
-    // Get the current timestamp for the update
-    $date_last_updated = date('Y-m-d H:i:s');
-
-    // Bind the parameters to the query
-    $update_stmt->bind_param("dsssi", $newRemainingBalance, $repaymentStatus, $amountPaid, $date_last_updated, $creditOrderId);
-
-    // Execute the update statement
-    $update_stmt->execute();
-
-    // Update Revenue Table
-    $update_stmt = $conn->prepare("
-        UPDATE revenue
-        SET total_amount = ?, retained_amount = ?,  updated_at = ?, revenue_type_id = ?
-        WHERE order_id = ? AND revenue_type_id IN (2, 7)
-    ");
-
-    // Get the current timestamp
-    $updated_at = date('Y-m-d H:i:s');
-    $revenue_type_id = 7;
-
-    // Bind the parameters
-    $update_stmt->bind_param("ddsii", $amountPaid, $amountPaid, $updated_at, $revenue_type_id, $orderID);
-
-    // Execute the statement
-    $update_stmt->execute();
-
-    // Update transaction Table
-    $update_stmt = $conn->prepare("
-        UPDATE transactions
-        SET amount = ?, updated_at = ?, revenue_type_id = ?
-        WHERE order_id = ? AND revenue_type_id IN (2, 7)
-    ");
-
-    // Get the current timestamp
-    $updated_at = date('Y-m-d H:i:s');
-    $revenue_type_id = 7;
-
-    // Bind the parameters
-    $update_stmt->bind_param("dsii", $amountPaid, $updated_at, $revenue_type_id, $orderID);
-
-    // Execute the statement
-    $update_stmt->execute();
-
-    // Update the wallet balance in the database
-    $debit_wallet_stmt = $conn->prepare("UPDATE wallets SET balance = ? WHERE customer_id = ?");
-    $debit_wallet_stmt->bind_param("di", $new_wallet_balance, $customerID);
-    $debit_wallet_stmt->execute();
-
-    // Return success response
-    return json_encode([
-        'success' => true,
-        'message' => 'Repayment processed successfully.',
-        'remaining_balance' => $newRemainingBalance,
-        'repayment_status' => $repaymentStatus
-    ]);
-}
-
-function transRepayment($creditOrderId, $orderID, $customerID, $amount, $conn)
-{
-    logActivity("Recording repayment transaction for credit order ID: " . $creditOrderId);
-    // Insert transaction into customer_transactions table
+function transRepayment($creditOrderId, $orderId, $customerId, $amount, $conn) {
+    logActivity("Recording repayment transaction for credit order ID: $creditOrderId, Amount: $amount");
+    
     $transactionReference = generateTransactionReference();
-    $transaction_stmt = $conn->prepare("
-        INSERT INTO customer_transactions (transaction_ref, customer_id, amount, date_created, transaction_type, payment_method, description) VALUES (?, ?, ?, NOW(), ?, ?, ?)");
-    $transaction_type = "Debit";
-    $payment_method = 'Direct Debit';
-    $description = "Repayment of credit order #$creditOrderId for Order #$orderID";
-    $updated_at = date('Y-m-d H:i:s');
-
-    $transaction_stmt->bind_param("sidsss", $transactionReference, $customerID, $amount, $transaction_type, $payment_method, $description);
-    $transaction_stmt->execute();
-
-    // Insert into repayment_history table
-    $insert_stmt = $conn->prepare("
-        INSERT INTO repayment_history (order_id, credit_order_id, customer_id, amount_paid, payment_date)
-        VALUES (?, ?, ?, ?, ?)
-    ");
-    $insert_stmt->bind_param("iiids", $orderID, $creditOrderId, $customerID, $amount, $updated_at);
-    $insert_stmt->execute();
+    $description = "Repayment of credit order #$creditOrderId for Order #$orderId";
+    $paymentDate = date('Y-m-d H:i:s');
+    
+    try {
+        // Insert into customer_transactions
+        $stmt = $conn->prepare("
+            INSERT INTO customer_transactions 
+            (transaction_ref, customer_id, amount, date_created, transaction_type, payment_method, description) 
+            VALUES (?, ?, ?, NOW(), 'Debit', 'Direct Debit', ?)
+        ");
+        $stmt->bind_param("sidsss", $transactionReference, $customerId, $amount, $description);
+        $stmt->execute();
+        
+        // Insert into repayment_history
+        $stmt = $conn->prepare("
+            INSERT INTO repayment_history 
+            (order_id, credit_order_id, customer_id, amount_paid, payment_date)
+            VALUES (?, ?, ?, ?, ?)
+        ");
+        $stmt->bind_param("iiids", $orderId, $creditOrderId, $customerId, $amount, $paymentDate);
+        $stmt->execute();
+        
+        logActivity("Repayment transaction recorded successfully");
+        
+    } catch (Exception $e) {
+        logActivity("Failed to record repayment transaction: " . $e->getMessage());
+        throw new DatabaseException("Repayment transaction recording failed");
+    }
 }
+
+// Custom Exception Classes
+class InvalidTokenException extends Exception {}
+class InvalidAmountException extends Exception {}
+class CardException extends Exception {}
+class DailyLimitException extends Exception {}
+class InsufficientFundsException extends Exception {}
+class DatabaseException extends Exception {}

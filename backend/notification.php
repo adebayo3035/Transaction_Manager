@@ -17,8 +17,6 @@ try {
         echo json_encode(['success' => false, 'message' => 'User Not Logged In.']);
         exit;
     }
-    
-    logActivity("Request made by admin ID: $adminId");
 
     // Validate and set pagination parameters
     $page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
@@ -108,7 +106,6 @@ try {
 } finally {
     if (isset($conn) && $conn instanceof mysqli) {
         $conn->close();
-        logActivity("Database connection closed.");
     }
     logActivity("Fetching admin notifications process ended.");
 }

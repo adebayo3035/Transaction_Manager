@@ -30,19 +30,19 @@ document.addEventListener('DOMContentLoaded', () => {
     updateDateTimeInputs("start_date", "end_date");
 
     const limit = 10;
-let currentPage = 1;
+    let currentPage = 1;
 
-function fetchPromos(page = 1) {
-    const ordersTableBody = document.getElementById('ordersTableBody');
-    const paginationContainer = document.getElementById('pagination'); // Adjust if your pagination container has a different ID
+    function fetchPromos(page = 1) {
+        const ordersTableBody = document.getElementById('ordersTableBody');
+        const paginationContainer = document.getElementById('pagination'); // Adjust if your pagination container has a different ID
 
-    // Disable pagination buttons during fetch (optional)
-    // [...paginationContainer.querySelectorAll('button')].forEach(btn => btn.disabled = true);
+        // Disable pagination buttons during fetch (optional)
+        // [...paginationContainer.querySelectorAll('button')].forEach(btn => btn.disabled = true);
 
-    // Inject spinner
-    ordersTableBody.innerHTML = `
+        // Inject spinner
+        ordersTableBody.innerHTML = `
         <tr>
-            <td colspan="6" style="text-align:center; padding: 20px;">
+            <td colspan="7" style="text-align:center; padding: 20px;">
                 <div class="spinner"
                     style="border: 4px solid #f3f3f3;
                            border-top: 4px solid #3498db;
@@ -56,62 +56,67 @@ function fetchPromos(page = 1) {
         </tr>
     `;
 
-    const minDelay = new Promise(resolve => setTimeout(resolve, 1000)); // Ensures spinner is visible for 1s
-    const fetchData = fetch(`backend/get_promo.php?page=${page}&limit=${limit}`)
-        .then(res => res.json());
+        const minDelay = new Promise(resolve => setTimeout(resolve, 1000)); // Ensures spinner is visible for 1s
+        const fetchData = fetch(`backend/get_promo.php?page=${page}&limit=${limit}`)
+            .then(res => res.json());
 
-    Promise.all([fetchData, minDelay])
-        .then(([data]) => {
-            if (data.success && data.promos && Array.isArray(data.promos.all) && data.promos.all.length > 0) {
-                updateTable(data.promos.all);
-                updatePagination(data.total, data.page, data.limit);
-            } else {
-                ordersTableBody.innerHTML = `
-                    <tr><td colspan="6" style="text-align:center;">No Promo Details at the moment</td></tr>
+        Promise.all([fetchData, minDelay])
+            .then(([data]) => {
+                if (data.success && data.promos && Array.isArray(data.promos.all) && data.promos.all.length > 0) {
+                    updateTable(data.promos.all);
+                    updatePagination(data.total, data.page, data.limit);
+                } else {
+                    ordersTableBody.innerHTML = `
+                    <tr><td colspan="7" style="text-align:center;">No Promo Details at the moment</td></tr>
                 `;
-                console.warn('Empty or invalid promo data:', data.message || "No data returned");
-            }
-        })
-        .catch(error => {
-            console.error("Error fetching data:", error);
-            ordersTableBody.innerHTML = `
-                <tr><td colspan="6" style="text-align:center; color:red;">Error loading Promo data</td></tr>
+                    console.warn('Empty or invalid promo data:', data.message || "No data returned");
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching data:", error);
+                ordersTableBody.innerHTML = `
+                <tr><td colspan="7" style="text-align:center; color:red;">Error loading Promo data</td></tr>
             `;
-        })
-        .finally(() => {
-            // Re-enable pagination buttons (optional)
-            // [...paginationContainer.querySelectorAll('button')].forEach(btn => btn.disabled = false);
-        });
-}
+            })
+            .finally(() => {
+                // Re-enable pagination buttons (optional)
+                // [...paginationContainer.querySelectorAll('button')].forEach(btn => btn.disabled = false);
+            });
+    }
 
-function updateTable(promos) {
-    const ordersTableBody = document.querySelector('#ordersTable tbody');
-    ordersTableBody.innerHTML = '';
+    function updateTable(promos) {
+        const ordersTableBody = document.querySelector('#ordersTable tbody');
+        ordersTableBody.innerHTML = '';
 
-    promos.forEach(promo => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
+        promos.forEach(promo => {
+            // Convert numeric status and delete_id to text
+            const statusText = promo.status == 1 ? 'Active' : 'Inactive';
+            const deleteText = promo.delete_id == 1 ? 'Closed' : 'Open';
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
             <td>${promo.promo_code}</td>
             <td>${promo.promo_name}</td>
             <td>${promo.start_date}</td>
             <td>${promo.end_date}</td>
-            <td>${promo.status}</td>
+            <td>${statusText}</td>
+            <td>${deleteText}</td>
             <td><button class="view-details-btn" data-promo-id="${promo.promo_id}">View Details</button></td>
         `;
-        ordersTableBody.appendChild(row);
-    });
-
-    document.querySelectorAll('.view-details-btn').forEach(button => {
-        button.addEventListener('click', (event) => {
-            const promoId = event.target.getAttribute('data-promo-id');
-            fetchPromoDetails(promoId);
+            ordersTableBody.appendChild(row);
         });
-    });
-}
 
-document.addEventListener('DOMContentLoaded', () => {
-    fetchPromos(currentPage);
-});
+        document.querySelectorAll('.view-details-btn').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const promoId = event.target.getAttribute('data-promo-id');
+                fetchPromoDetails(promoId);
+            });
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        fetchPromos(currentPage);
+    });
 
 
     // Function to update pagination
@@ -254,42 +259,54 @@ document.addEventListener('DOMContentLoaded', () => {
     
     
     <tr>
-        <td>Status</td>
-        <td>
-            <select id="status" ${disableAttribute}>
-                <option value="1" ${promo_details.status === '1' ? 'selected' : ''}>Active</option>
-                <option value="0" ${promo_details.status === '0' ? 'selected' : ''}>Inactive</option>
-            </select>
-        </td>
-    </tr>
+            <td>Status</td>
+            <td>
+                <select id="status" ${disableAttribute}>
+                    <option value="1" ${promo_details.status == 1 ? 'selected' : ''}>Active</option>
+                    <option value="0" ${promo_details.status == 0 ? 'selected' : ''}>Inactive</option>
+                </select>
+            </td>
+        </tr>
         `;
 
         if (isSuperAdmin) {
-            const actionButtons = `
-                <tr>
-                    <td colspan="2" style="text-align: center;">
-                        <button id="updatePromoBtn">Update</button>
-                        <button id="deletePromoBtn">Delete</button>
-                    </td>
-                </tr>
-                <tr id="updateDateBtnRow" style="display: none;">
-                    <td colspan="2" style="text-align: center;">
-                        <button id="confirmDateUpdateBtn">Confirm Date Update</button>
-                    </td>
-                </tr>
-            `;
+            let actionButtons = `
+            <tr>
+                <td colspan="2" style="text-align: center;">
+                    <button id="updatePromoBtn">Update</button>
+        `;
+
+            // Only show Delete button if delete_id == 0
+            if (promo_details.delete_id == 0) {
+                actionButtons += `<button id="deletePromoBtn">Delete</button>`;
+            }
+
+            actionButtons += `</td></tr>`;
+
+            // Optional confirm update row
+            actionButtons += `
+            <tr id="updateDateBtnRow" style="display: none;">
+                <td colspan="2" style="text-align: center;">
+                    <button id="confirmDateUpdateBtn">Confirm Date Update</button>
+                </td>
+            </tr>
+        `;
+
             orderDetailsTable.innerHTML += actionButtons;
 
             document.getElementById('updatePromoBtn').addEventListener('click', () => {
                 updatePromo(promo_details.promo_id);
             });
-            document.getElementById('deletePromoBtn').addEventListener('click', () => {
-                deletePromo(promo_details.promo_id);
-            });
+
+            if (promo_details.delete_id == 0) {
+                document.getElementById('deletePromoBtn').addEventListener('click', () => {
+                    deletePromo(promo_details.promo_id);
+                });
+            }
+
             addCharacterCounter('promoDescriptions', 'charCounter');
         }
     }
-
     function updateDateTimeUpdate(startDateId, endDateId, dateCreated) {
         const startDateInput = document.getElementById(startDateId);
         const endDateInput = document.getElementById(endDateId);
@@ -332,7 +349,7 @@ document.addEventListener('DOMContentLoaded', () => {
             max_discount: parseFloat(document.getElementById('max_discount').value),
             status: parseInt(document.getElementById('status').value)
         };
-        if(!confirm("Are you sure you want to Update Promo Details?")){
+        if (!confirm("Are you sure you want to Update Promo Details?")) {
             return;
         }
         // Send the update request
@@ -459,7 +476,7 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault();
             const formData = new FormData(this);
             const messageDiv = document.getElementById('addPromoMessage');
-            if(!confirm("Are you sure you want to add new Promo?")){
+            if (!confirm("Are you sure you want to add new Promo?")) {
                 return;
             }
             fetch('backend/create_promo.php', {

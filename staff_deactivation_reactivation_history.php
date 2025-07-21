@@ -71,7 +71,7 @@
         <table id="ordersTable" class="orders-table">
             <thead>
                 <tr>
-                    <th>Deactivation ID</th>
+                    <th>Task-ID</th>
                     <th>Staff ID</th>
                     <th>First Name</th>
                     <th>Last Name</th>
