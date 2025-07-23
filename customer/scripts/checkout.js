@@ -51,7 +51,11 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    const totalOrder = data.data.total_order;
+                    const totalOrder =
+                        parseFloat(data.data.total_order) +
+                        parseFloat(data.data.service_fee) +
+                        parseFloat(data.data.delivery_fee);
+
 
                     const promoDetails = {
                         promo_code: promoInput.value,

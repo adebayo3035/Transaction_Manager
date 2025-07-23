@@ -2942,3 +2942,1571 @@ Source: get_promo.php (Line 127)
 Message: Fetching promos script completed successfully.
 ----------------------------------------
 
+[2025-07-21 19:38:15]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-21 19:38:15]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-07-21 19:38:15]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-07-21 19:38:15]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 6. Total pages: 2.
+----------------------------------------
+
+[2025-07-21 19:38:15]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-07-21 19:38:15]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-07-21 19:38:15]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 32)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-07-21 19:38:15]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 39)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+
+[2025-07-21 19:38:15]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-07-21 19:38:15]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_revenue.php?page=1&limit=10
+Source: fetch_revenue.php (Line 7)
+Message: Revenue listing fetch process started
+----------------------------------------
+
+[2025-07-21 19:38:15]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_revenue.php?page=1&limit=10
+Source: fetch_revenue.php (Line 19)
+Message: Revenue listing request initiated by admin ID: 22675443
+----------------------------------------
+
+[2025-07-21 19:38:15]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_revenue.php?page=1&limit=10
+Source: fetch_revenue.php (Line 33)
+Message: Fetching revenue listing - Page: 1, Limit: 10, Offset: 0
+----------------------------------------
+
+[2025-07-21 19:38:15]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_revenue.php?page=1&limit=10
+Source: fetch_revenue.php (Line 38)
+Message: Transaction started for revenue listing fetch
+----------------------------------------
+
+[2025-07-21 19:38:15]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_revenue.php?page=1&limit=10
+Source: fetch_revenue.php (Line 50)
+Message: Total revenue records found: 39
+----------------------------------------
+
+[2025-07-21 19:38:15]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_revenue.php?page=1&limit=10
+Source: fetch_revenue.php (Line 79)
+Message: Successfully retrieved 10 revenue records
+----------------------------------------
+
+[2025-07-21 19:38:15]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_revenue.php?page=1&limit=10
+Source: fetch_revenue.php (Line 94)
+Message: Revenue listing fetch completed successfully
+----------------------------------------
+
+[2025-07-21 19:38:15]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_revenue.php?page=1&limit=10
+Source: fetch_revenue.php (Line 117)
+Message: Revenue listing fetch process completed
+----------------------------------------
+
+[2025-07-21 19:38:30]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 7)
+Message: Revenue details fetch process started
+----------------------------------------
+
+[2025-07-21 19:38:30]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 19)
+Message: Request initiated by admin ID: 22675443
+----------------------------------------
+
+[2025-07-21 19:38:30]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 35)
+Message: Processing revenue details for ID: 82
+----------------------------------------
+
+[2025-07-21 19:38:30]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 39)
+Message: Transaction started for revenue details fetch
+----------------------------------------
+
+[2025-07-21 19:38:30]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 66)
+Message: Revenue details retrieved for ID: 82, Type: Credit Order Repayment, Amount: 6000.00
+----------------------------------------
+
+[2025-07-21 19:38:30]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 81)
+Message: Revenue details fetch completed successfully
+----------------------------------------
+
+[2025-07-21 19:38:30]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 101)
+Message: Revenue details fetch process completed
+----------------------------------------
+
+[2025-07-21 19:38:48]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 7)
+Message: Revenue details fetch process started
+----------------------------------------
+
+[2025-07-21 19:38:48]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 19)
+Message: Request initiated by admin ID: 22675443
+----------------------------------------
+
+[2025-07-21 19:38:48]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 35)
+Message: Processing revenue details for ID: 81
+----------------------------------------
+
+[2025-07-21 19:38:48]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 39)
+Message: Transaction started for revenue details fetch
+----------------------------------------
+
+[2025-07-21 19:38:48]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 66)
+Message: Revenue details retrieved for ID: 81, Type: Order Cancellation Fee on Delivery, Amount: 2800.00
+----------------------------------------
+
+[2025-07-21 19:38:48]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 81)
+Message: Revenue details fetch completed successfully
+----------------------------------------
+
+[2025-07-21 19:38:48]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 101)
+Message: Revenue details fetch process completed
+----------------------------------------
+
+[2025-07-21 19:40:08]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 7)
+Message: Revenue details fetch process started
+----------------------------------------
+
+[2025-07-21 19:40:08]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 19)
+Message: Request initiated by admin ID: 22675443
+----------------------------------------
+
+[2025-07-21 19:40:08]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 35)
+Message: Processing revenue details for ID: 82
+----------------------------------------
+
+[2025-07-21 19:40:08]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 39)
+Message: Transaction started for revenue details fetch
+----------------------------------------
+
+[2025-07-21 19:40:08]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 66)
+Message: Revenue details retrieved for ID: 82, Type: Credit Order Repayment, Amount: 6000.00
+----------------------------------------
+
+[2025-07-21 19:40:08]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 81)
+Message: Revenue details fetch completed successfully
+----------------------------------------
+
+[2025-07-21 19:40:08]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 101)
+Message: Revenue details fetch process completed
+----------------------------------------
+
+[2025-07-21 19:40:17]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 7)
+Message: Revenue details fetch process started
+----------------------------------------
+
+[2025-07-21 19:40:17]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 19)
+Message: Request initiated by admin ID: 22675443
+----------------------------------------
+
+[2025-07-21 19:40:17]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 35)
+Message: Processing revenue details for ID: 77
+----------------------------------------
+
+[2025-07-21 19:40:17]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 39)
+Message: Transaction started for revenue details fetch
+----------------------------------------
+
+[2025-07-21 19:40:17]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 66)
+Message: Revenue details retrieved for ID: 77, Type: Credit Order Repayment, Amount: 33999.98
+----------------------------------------
+
+[2025-07-21 19:40:17]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 81)
+Message: Revenue details fetch completed successfully
+----------------------------------------
+
+[2025-07-21 19:40:17]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 101)
+Message: Revenue details fetch process completed
+----------------------------------------
+
+[2025-07-21 19:40:40]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 7)
+Message: Revenue details fetch process started
+----------------------------------------
+
+[2025-07-21 19:40:40]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 19)
+Message: Request initiated by admin ID: 22675443
+----------------------------------------
+
+[2025-07-21 19:40:40]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 35)
+Message: Processing revenue details for ID: 75
+----------------------------------------
+
+[2025-07-21 19:40:40]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 39)
+Message: Transaction started for revenue details fetch
+----------------------------------------
+
+[2025-07-21 19:40:40]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 66)
+Message: Revenue details retrieved for ID: 75, Type: Food Order Inflow, Amount: 4000.00
+----------------------------------------
+
+[2025-07-21 19:40:40]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 81)
+Message: Revenue details fetch completed successfully
+----------------------------------------
+
+[2025-07-21 19:40:40]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 101)
+Message: Revenue details fetch process completed
+----------------------------------------
+
+[2025-07-21 19:40:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-21 19:40:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-07-21 19:40:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-07-21 19:40:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 6. Total pages: 2.
+----------------------------------------
+
+[2025-07-21 19:40:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-07-21 19:40:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-07-21 19:40:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_transactions.php?page=1&limit=10
+Source: fetch_transactions.php (Line 7)
+Message: Transaction listing fetch process started
+----------------------------------------
+
+[2025-07-21 19:40:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_transactions.php?page=1&limit=10
+Source: fetch_transactions.php (Line 20)
+Message: Request initiated by user ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-07-21 19:40:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_transactions.php?page=1&limit=10
+Source: fetch_transactions.php (Line 37)
+Message: Fetching transactions - Page: 1, Limit: 10, Offset: 0
+----------------------------------------
+
+[2025-07-21 19:40:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_transactions.php?page=1&limit=10
+Source: fetch_transactions.php (Line 42)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-21 19:40:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_transactions.php?page=1&limit=10
+Source: fetch_transactions.php (Line 55)
+Message: Total transactions found: 114, Total pages: 12
+----------------------------------------
+
+[2025-07-21 19:40:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_transactions.php?page=1&limit=10
+Source: fetch_transactions.php (Line 86)
+Message: Successfully retrieved 10 transactions
+----------------------------------------
+
+[2025-07-21 19:40:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_transactions.php?page=1&limit=10
+Source: fetch_transactions.php (Line 106)
+Message: Transaction listing fetch completed successfully
+----------------------------------------
+
+[2025-07-21 19:40:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_transactions.php?page=1&limit=10
+Source: fetch_transactions.php (Line 130)
+Message: Transaction listing fetch process completed
+----------------------------------------
+
+[2025-07-21 19:41:00]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_transaction_details.php
+Source: fetch_transaction_details.php (Line 7)
+Message: Transaction details fetch process started
+----------------------------------------
+
+[2025-07-21 19:41:00]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_transaction_details.php
+Source: fetch_transaction_details.php (Line 20)
+Message: Request initiated by user ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-07-21 19:41:00]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_transaction_details.php
+Source: fetch_transaction_details.php (Line 43)
+Message: Fetching details for transaction reference: TRX68777D6B583178503559448755
+----------------------------------------
+
+[2025-07-21 19:41:00]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_transaction_details.php
+Source: fetch_transaction_details.php (Line 48)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-21 19:41:00]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_transaction_details.php
+Source: fetch_transaction_details.php (Line 84)
+Message: Successfully retrieved transaction details for reference: TRX68777D6B583178503559448755
+----------------------------------------
+
+[2025-07-21 19:41:00]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_transaction_details.php
+Source: fetch_transaction_details.php (Line 96)
+Message: Transaction details fetch completed successfully
+----------------------------------------
+
+[2025-07-21 19:41:00]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_transaction_details.php
+Source: fetch_transaction_details.php (Line 117)
+Message: Transaction details fetch process completed
+----------------------------------------
+
+[2025-07-21 19:41:10]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_transaction_details.php
+Source: fetch_transaction_details.php (Line 7)
+Message: Transaction details fetch process started
+----------------------------------------
+
+[2025-07-21 19:41:10]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_transaction_details.php
+Source: fetch_transaction_details.php (Line 20)
+Message: Request initiated by user ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-07-21 19:41:10]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_transaction_details.php
+Source: fetch_transaction_details.php (Line 43)
+Message: Fetching details for transaction reference: TRX68777D6B583178503559448755
+----------------------------------------
+
+[2025-07-21 19:41:10]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_transaction_details.php
+Source: fetch_transaction_details.php (Line 48)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-21 19:41:10]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_transaction_details.php
+Source: fetch_transaction_details.php (Line 84)
+Message: Successfully retrieved transaction details for reference: TRX68777D6B583178503559448755
+----------------------------------------
+
+[2025-07-21 19:41:10]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_transaction_details.php
+Source: fetch_transaction_details.php (Line 96)
+Message: Transaction details fetch completed successfully
+----------------------------------------
+
+[2025-07-21 19:41:10]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_transaction_details.php
+Source: fetch_transaction_details.php (Line 117)
+Message: Transaction details fetch process completed
+----------------------------------------
+
+[2025-07-21 19:41:14]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_transaction_details.php
+Source: fetch_transaction_details.php (Line 7)
+Message: Transaction details fetch process started
+----------------------------------------
+
+[2025-07-21 19:41:14]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_transaction_details.php
+Source: fetch_transaction_details.php (Line 20)
+Message: Request initiated by user ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-07-21 19:41:14]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_transaction_details.php
+Source: fetch_transaction_details.php (Line 43)
+Message: Fetching details for transaction reference: TRX68777F89301768200920486160
+----------------------------------------
+
+[2025-07-21 19:41:14]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_transaction_details.php
+Source: fetch_transaction_details.php (Line 48)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-21 19:41:14]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_transaction_details.php
+Source: fetch_transaction_details.php (Line 84)
+Message: Successfully retrieved transaction details for reference: TRX68777F89301768200920486160
+----------------------------------------
+
+[2025-07-21 19:41:14]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_transaction_details.php
+Source: fetch_transaction_details.php (Line 96)
+Message: Transaction details fetch completed successfully
+----------------------------------------
+
+[2025-07-21 19:41:14]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_transaction_details.php
+Source: fetch_transaction_details.php (Line 117)
+Message: Transaction details fetch process completed
+----------------------------------------
+
+[2025-07-23 08:42:30]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/logout.php
+Source: logout.php (Line 7)
+Message: Logout process initiated
+----------------------------------------
+
+[2025-07-23 08:42:31]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/logout.php
+Source: logout.php (Line 23)
+Message: Processing logout for user: 22675443
+----------------------------------------
+
+[2025-07-23 08:42:32]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/logout.php
+Source: logout.php (Line 48)
+Message: Found active session: uvt0rje9dq838ul25f3noiruiq (Status: Active)
+----------------------------------------
+
+[2025-07-23 08:42:44]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/logout.php
+Source: logout.php (Line 65)
+Message: Session invalidated in DB. Affected rows: 1
+----------------------------------------
+
+[2025-07-23 08:42:55]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/logout.php
+Source: logout.php (Line 74)
+Message: Session destroyed. Previous session data: {"unique_id":22675443,"firstname":"Abdul-Rahmon","lastname":"Adebayor","role":"Super Admin","restriction_id":0,"secret_answer":"4df7caa0cb9204ff329c082eba7ba0a2","ip_address":"::1","user_agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/138.0.0.0 Safari\/537.36","created_at":1753107446,"last_activity":1753107446}
+----------------------------------------
+
+[2025-07-23 08:43:00]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/logout.php
+Source: logout.php (Line 77)
+Message: Logout successful for user: 22675443
+----------------------------------------
+
+[2025-07-23 08:47:56]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 89)
+Message: Login attempt initiated for username: adebayoabdulrahmon@gmail.com from IP: ::1
+----------------------------------------
+
+[2025-07-23 08:47:56]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 109)
+Message: User found - ID: 22675443, Block Status: 0, Delete Status:
+----------------------------------------
+
+[2025-07-23 08:47:56]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 196)
+Message: Checking lockout status for user: 22675443 (Lockout Duration: 60 minutes)
+----------------------------------------
+
+[2025-07-23 08:47:57]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 213)
+Message: No lockout record found for user: 22675443
+----------------------------------------
+
+[2025-07-23 08:47:57]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 12)
+Message: Checking for existing sessions for user: 22675443
+----------------------------------------
+
+[2025-07-23 08:47:57]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 41)
+Message: Found active session (ID: uvt0rje9dq838ul25f3noiruiq) - attempting destruction
+----------------------------------------
+
+[2025-07-23 08:47:57]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 61)
+Message: Session destroyed successfully
+----------------------------------------
+
+[2025-07-23 08:47:58]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 179)
+Message: Login successful for user 22675443 from IP: ::1
+----------------------------------------
+
+[2025-07-23 08:48:18]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 10)
+Message: Random customer names fetch process started
+----------------------------------------
+
+[2025-07-23 08:48:18]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 14)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-23 08:48:18]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 32)
+Message: Successfully retrieved 3 random customer names
+----------------------------------------
+
+[2025-07-23 08:48:18]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 43)
+Message: Random customer names fetch completed successfully
+----------------------------------------
+
+[2025-07-23 08:48:18]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 67)
+Message: Random customer names fetch process completed
+----------------------------------------
+
+[2025-07-23 08:48:18]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-23 08:48:18]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-07-23 08:48:19]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-07-23 08:48:19]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 6. Total pages: 2.
+----------------------------------------
+
+[2025-07-23 08:48:19]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-07-23 08:48:19]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-07-23 08:48:19]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 6)
+Message: Fetching promos script started.
+----------------------------------------
+
+[2025-07-23 08:48:19]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 19)
+Message: Admin unique_id found in session: 22675443
+----------------------------------------
+
+[2025-07-23 08:48:19]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 34)
+Message: Pagination parameters - Page: 1, Limit: 10, Offset: 0
+----------------------------------------
+
+[2025-07-23 08:48:19]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 50)
+Message: Total promos count: 2
+----------------------------------------
+
+[2025-07-23 08:48:19]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 66)
+Message: Updated 0 expired promos (status = 0, delete_id = 1).
+----------------------------------------
+
+[2025-07-23 08:48:19]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 88)
+Message: Fetched 9 paginated promos.
+----------------------------------------
+
+[2025-07-23 08:48:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 111)
+Message: Fetched 1 ongoing promos.
+----------------------------------------
+
+[2025-07-23 08:48:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 127)
+Message: Fetching promos script completed successfully.
+----------------------------------------
+
+[2025-07-23 14:05:14]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 10)
+Message: Random customer names fetch process started
+----------------------------------------
+
+[2025-07-23 14:05:14]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 6)
+Message: Fetching promos script started.
+----------------------------------------
+
+[2025-07-23 14:05:14]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 14)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-23 14:05:14]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 21)
+Message: Customer customer_id found in session: 1260106158
+----------------------------------------
+
+[2025-07-23 14:05:14]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 32)
+Message: Successfully retrieved 3 random customer names
+----------------------------------------
+
+[2025-07-23 14:05:14]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 43)
+Message: Random customer names fetch completed successfully
+----------------------------------------
+
+[2025-07-23 14:05:14]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 67)
+Message: Random customer names fetch process completed
+----------------------------------------
+
+[2025-07-23 14:05:14]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 34)
+Message: Pagination parameters - Page: 1, Limit: 10, Offset: 0
+----------------------------------------
+
+[2025-07-23 14:05:14]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 50)
+Message: Total promos count: 2
+----------------------------------------
+
+[2025-07-23 14:05:14]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 66)
+Message: Updated 0 expired promos (status = 0, delete_id = 1).
+----------------------------------------
+
+[2025-07-23 14:05:14]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 88)
+Message: Fetched 9 paginated promos.
+----------------------------------------
+
+[2025-07-23 14:05:14]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 111)
+Message: Fetched 1 ongoing promos.
+----------------------------------------
+
+[2025-07-23 14:05:14]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 127)
+Message: Fetching promos script completed successfully.
+----------------------------------------
+
+[2025-07-23 14:08:16]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-07-23 14:08:16]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-23 14:08:16]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-07-23 14:08:16]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-07-23 14:08:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 6. Total pages: 2.
+----------------------------------------
+
+[2025-07-23 14:08:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-07-23 14:08:18]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-07-23 14:08:18]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 32)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-07-23 14:08:18]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 39)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+
+[2025-07-23 14:08:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-23 14:08:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-07-23 14:08:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-07-23 14:08:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 6. Total pages: 2.
+----------------------------------------
+
+[2025-07-23 14:08:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-07-23 14:08:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-07-23 14:08:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 7)
+Message: Pending orders fetch process started
+----------------------------------------
+
+[2025-07-23 14:08:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 18)
+Message: Request initiated by Admin ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-07-23 14:08:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 26)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-23 14:08:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 84)
+Message: Retrieved 1 pending orders by Admin ID 22675443
+----------------------------------------
+
+[2025-07-23 14:08:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 97)
+Message: Pending orders fetch completed successfully
+----------------------------------------
+
+[2025-07-23 14:08:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 117)
+Message: Pending orders fetch process ended
+----------------------------------------
+
+[2025-07-23 14:08:40]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_pending_order_details.php
+Source: fetch_pending_order_details.php (Line 10)
+Message: Order details fetch process started
+----------------------------------------
+
+[2025-07-23 14:08:40]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_pending_order_details.php
+Source: fetch_pending_order_details.php (Line 23)
+Message: Request initiated by user ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-07-23 14:08:40]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_pending_order_details.php
+Source: fetch_pending_order_details.php (Line 46)
+Message: Processing order details for ID: 83
+----------------------------------------
+
+[2025-07-23 14:08:40]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_pending_order_details.php
+Source: fetch_pending_order_details.php (Line 51)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-23 14:08:40]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_pending_order_details.php
+Source: fetch_pending_order_details.php (Line 91)
+Message: Successfully retrieved 4 order items
+----------------------------------------
+
+[2025-07-23 14:08:40]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_pending_order_details.php
+Source: fetch_pending_order_details.php (Line 104)
+Message: Order details fetch completed successfully
+----------------------------------------
+
+[2025-07-23 14:08:40]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_pending_order_details.php
+Source: fetch_pending_order_details.php (Line 130)
+Message: Order details fetch process completed
+----------------------------------------
+
+[2025-07-23 14:08:46]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_pending_order_details.php
+Source: fetch_pending_order_details.php (Line 10)
+Message: Order details fetch process started
+----------------------------------------
+
+[2025-07-23 14:08:46]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_pending_order_details.php
+Source: fetch_pending_order_details.php (Line 23)
+Message: Request initiated by user ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-07-23 14:08:46]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_pending_order_details.php
+Source: fetch_pending_order_details.php (Line 46)
+Message: Processing order details for ID: 83
+----------------------------------------
+
+[2025-07-23 14:08:46]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_pending_order_details.php
+Source: fetch_pending_order_details.php (Line 51)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-23 14:08:46]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_pending_order_details.php
+Source: fetch_pending_order_details.php (Line 91)
+Message: Successfully retrieved 4 order items
+----------------------------------------
+
+[2025-07-23 14:08:46]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_pending_order_details.php
+Source: fetch_pending_order_details.php (Line 104)
+Message: Order details fetch completed successfully
+----------------------------------------
+
+[2025-07-23 14:08:46]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_pending_order_details.php
+Source: fetch_pending_order_details.php (Line 130)
+Message: Order details fetch process completed
+----------------------------------------
+
+[2025-07-23 14:09:07]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: restriction_checker.php (Line 36)
+Message: Restriction Check Passed: User ID 22675443 allowed access.
+----------------------------------------
+
+[2025-07-23 14:09:07]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 11)
+Message: Approval process started by user with ID: 22675443
+----------------------------------------
+
+[2025-07-23 14:09:07]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 15)
+Message: Raw input received: {"order_id":"83","status":"Declined"}
+----------------------------------------
+
+[2025-07-23 14:09:07]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 30)
+Message: Single order received: [{"order_id":"83","status":"Declined"}]
+----------------------------------------
+
+[2025-07-23 14:09:07]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 55)
+Message: Single order passed validation.
+----------------------------------------
+
+[2025-07-23 14:09:07]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 71)
+Message: Filtered approved orders: []
+----------------------------------------
+
+[2025-07-23 14:09:07]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 230)
+Message: Refunded ₦6596.00 to customer ID 1260106158 for declined order ID 83
+----------------------------------------
+
+[2025-07-23 14:09:07]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 240)
+Message: Customer transaction logged for refund. Ref: TRX6880DEF3A67FC2.035546288550
+----------------------------------------
+
+[2025-07-23 14:09:07]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 269)
+Message: Logged refund transaction in transactions table. Ref: TRX6880DEF3A67FC2.035546288550
+----------------------------------------
+
+[2025-07-23 14:09:07]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 285)
+Message: Restocked food item ID 1 by 1 units from order ID 83
+----------------------------------------
+
+[2025-07-23 14:09:07]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 285)
+Message: Restocked food item ID 5 by 1 units from order ID 83
+----------------------------------------
+
+[2025-07-23 14:09:07]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 285)
+Message: Restocked food item ID 13 by 1 units from order ID 83
+----------------------------------------
+
+[2025-07-23 14:09:07]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 285)
+Message: Restocked food item ID 6 by 1 units from order ID 83
+----------------------------------------
+
+[2025-07-23 14:09:07]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 296)
+Message: Delivery status updated to Declined for order ID 83
+----------------------------------------
+
+[2025-07-23 14:09:07]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 311)
+Message: Order and order details status updated for order ID 83 to 'Declined'
+----------------------------------------
+
+[2025-07-23 14:09:07]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 316)
+Message: All order operations committed successfully by approver 22675443
+----------------------------------------
+
+[2025-07-23 14:09:10]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-07-23 14:09:10]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 7)
+Message: Pending orders fetch process started
+----------------------------------------
+
+[2025-07-23 14:09:10]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 18)
+Message: Request initiated by Admin ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-07-23 14:09:10]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 26)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-23 14:09:10]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 84)
+Message: Retrieved 0 pending orders by Admin ID 22675443
+----------------------------------------
+
+[2025-07-23 14:09:10]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 97)
+Message: Pending orders fetch completed successfully
+----------------------------------------
+
+[2025-07-23 14:09:10]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 117)
+Message: Pending orders fetch process ended
+----------------------------------------
+
+[2025-07-23 14:09:10]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-23 14:09:10]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-07-23 14:09:10]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-07-23 14:09:10]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 6. Total pages: 2.
+----------------------------------------
+
+[2025-07-23 14:09:10]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
