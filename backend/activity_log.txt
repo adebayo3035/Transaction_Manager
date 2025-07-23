@@ -4510,3 +4510,1139 @@ Source: notification.php (Line 110)
 Message: Fetching admin notifications process ended.
 ----------------------------------------
 
+[2025-07-23 15:45:08]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 6)
+Message: Fetching promos script started.
+----------------------------------------
+
+[2025-07-23 15:45:08]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 21)
+Message: Customer customer_id found in session: 378579816
+----------------------------------------
+
+[2025-07-23 15:45:08]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 34)
+Message: Pagination parameters - Page: 1, Limit: 10, Offset: 0
+----------------------------------------
+
+[2025-07-23 15:45:08]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 50)
+Message: Total promos count: 2
+----------------------------------------
+
+[2025-07-23 15:45:08]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 10)
+Message: Random customer names fetch process started
+----------------------------------------
+
+[2025-07-23 15:45:08]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 14)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-23 15:45:08]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 66)
+Message: Updated 0 expired promos (status = 0, delete_id = 1).
+----------------------------------------
+
+[2025-07-23 15:45:08]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 32)
+Message: Successfully retrieved 3 random customer names
+----------------------------------------
+
+[2025-07-23 15:45:08]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 43)
+Message: Random customer names fetch completed successfully
+----------------------------------------
+
+[2025-07-23 15:45:08]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 88)
+Message: Fetched 9 paginated promos.
+----------------------------------------
+
+[2025-07-23 15:45:08]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 67)
+Message: Random customer names fetch process completed
+----------------------------------------
+
+[2025-07-23 15:45:08]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 111)
+Message: Fetched 1 ongoing promos.
+----------------------------------------
+
+[2025-07-23 15:45:08]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 127)
+Message: Fetching promos script completed successfully.
+----------------------------------------
+
+[2025-07-23 15:46:32]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 5)
+Message: Unauthorized access attempt to fetch admin data
+----------------------------------------
+
+[2025-07-23 15:46:32]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/staff_profile.php
+Source: staff_profile.php (Line 10)
+Message: Unauthorized access attempt to admin profile – no session found.
+----------------------------------------
+
+[2025-07-23 15:46:32]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-23 15:46:32]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 16)
+Message: Unauthorized access attempt. No admin ID found in session.
+----------------------------------------
+
+[2025-07-23 15:46:33]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 7)
+Message: Unauthorized access attempt: No session found.
+----------------------------------------
+
+[2025-07-23 15:46:33]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 7)
+Message: Unauthorized access attempt: No session found.
+----------------------------------------
+
+[2025-07-23 15:46:39]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 89)
+Message: Login attempt initiated for username: adebayoabdulrahmon@gmail.com from IP: ::1
+----------------------------------------
+
+[2025-07-23 15:46:39]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 109)
+Message: User found - ID: 22675443, Block Status: 0, Delete Status:
+----------------------------------------
+
+[2025-07-23 15:46:39]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 196)
+Message: Checking lockout status for user: 22675443 (Lockout Duration: 60 minutes)
+----------------------------------------
+
+[2025-07-23 15:46:39]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 213)
+Message: No lockout record found for user: 22675443
+----------------------------------------
+
+[2025-07-23 15:46:39]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 12)
+Message: Checking for existing sessions for user: 22675443
+----------------------------------------
+
+[2025-07-23 15:46:39]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 41)
+Message: Found active session (ID: gfik1e1utoj8um5g10i4vbp01f) - attempting destruction
+----------------------------------------
+
+[2025-07-23 15:46:39]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 61)
+Message: Session destroyed successfully
+----------------------------------------
+
+[2025-07-23 15:46:39]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/admin_login3.php
+Source: admin_login3.php (Line 179)
+Message: Login successful for user 22675443 from IP: ::1
+----------------------------------------
+
+[2025-07-23 15:46:50]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 10)
+Message: Random customer names fetch process started
+----------------------------------------
+
+[2025-07-23 15:46:50]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 14)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-23 15:46:50]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 32)
+Message: Successfully retrieved 3 random customer names
+----------------------------------------
+
+[2025-07-23 15:46:50]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 43)
+Message: Random customer names fetch completed successfully
+----------------------------------------
+
+[2025-07-23 15:46:50]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 67)
+Message: Random customer names fetch process completed
+----------------------------------------
+
+[2025-07-23 15:46:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-07-23 15:46:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-23 15:46:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-07-23 15:46:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-07-23 15:46:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 6. Total pages: 2.
+----------------------------------------
+
+[2025-07-23 15:46:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-07-23 15:46:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 6)
+Message: Fetching promos script started.
+----------------------------------------
+
+[2025-07-23 15:46:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 19)
+Message: Admin unique_id found in session: 22675443
+----------------------------------------
+
+[2025-07-23 15:46:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 34)
+Message: Pagination parameters - Page: 1, Limit: 10, Offset: 0
+----------------------------------------
+
+[2025-07-23 15:46:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 50)
+Message: Total promos count: 2
+----------------------------------------
+
+[2025-07-23 15:46:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 66)
+Message: Updated 0 expired promos (status = 0, delete_id = 1).
+----------------------------------------
+
+[2025-07-23 15:46:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 88)
+Message: Fetched 9 paginated promos.
+----------------------------------------
+
+[2025-07-23 15:46:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 111)
+Message: Fetched 1 ongoing promos.
+----------------------------------------
+
+[2025-07-23 15:46:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 127)
+Message: Fetching promos script completed successfully.
+----------------------------------------
+
+[2025-07-23 15:47:07]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-07-23 15:47:07]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/staff_profile.php
+Source: staff_profile.php (Line 25)
+Message: Admin profile fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-07-23 15:47:07]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-23 15:47:07]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-07-23 15:47:07]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-07-23 15:47:07]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 6. Total pages: 2.
+----------------------------------------
+
+[2025-07-23 15:47:07]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-07-23 15:47:08]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 12.
+----------------------------------------
+
+[2025-07-23 15:47:08]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-07-23 15:47:08]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-07-23 15:47:08]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 12.
+----------------------------------------
+
+[2025-07-23 15:47:08]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-07-23 15:47:08]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-07-23 15:47:15]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 21)
+Message: Script started. Request received from IP: ::1
+----------------------------------------
+
+[2025-07-23 15:47:15]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 25)
+Message: Received account type: customers
+----------------------------------------
+
+[2025-07-23 15:47:15]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 69)
+Message: Executing query for Deactivated customers accounts with reference_id
+----------------------------------------
+
+[2025-07-23 15:47:15]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 79)
+Message: Fetched 1 deactivated accounts for type: customers
+----------------------------------------
+
+[2025-07-23 15:47:15]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 86)
+Message: Script completed successfully
+----------------------------------------
+
+[2025-07-23 15:47:59]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_driver_customer.php
+Source: reactivate_driver_customer.php (Line 31)
+Message: SESSION_VALIDATION: User ID 22675443 with role Super Admin attempting Account Reactivation action
+----------------------------------------
+
+[2025-07-23 15:47:59]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_driver_customer.php
+Source: reactivate_driver_customer.php (Line 52)
+Message: INPUT_RECEIVED: User ID 22675443 attempting to Reactivate account. UserID: 22, Type: customers, RefID: null
+----------------------------------------
+
+[2025-07-23 15:47:59]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_driver_customer.php
+Source: reactivate_driver_customer.php (Line 11)
+Message: INVALID_REFERENCE_OR_ACCOUNT: RefID null not found for customers ID 22 by Admin ID 22675443
+----------------------------------------
+
+[2025-07-23 15:48:23]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 21)
+Message: Script started. Request received from IP: ::1
+----------------------------------------
+
+[2025-07-23 15:48:23]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 25)
+Message: Received account type: driver
+----------------------------------------
+
+[2025-07-23 15:48:23]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 69)
+Message: Executing query for Deactivated driver accounts with reference_id
+----------------------------------------
+
+[2025-07-23 15:48:23]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 79)
+Message: Fetched 2 deactivated accounts for type: driver
+----------------------------------------
+
+[2025-07-23 15:48:23]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 86)
+Message: Script completed successfully
+----------------------------------------
+
+[2025-07-23 15:50:04]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_driver_customer.php
+Source: reactivate_driver_customer.php (Line 31)
+Message: SESSION_VALIDATION: User ID 22675443 with role Super Admin attempting Account Reactivation action
+----------------------------------------
+
+[2025-07-23 15:50:04]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_driver_customer.php
+Source: reactivate_driver_customer.php (Line 52)
+Message: INPUT_RECEIVED: User ID 22675443 attempting to Reactivate account. UserID: 13, Type: driver, RefID: 7874cedf950d3c4c07ae0731e202a2c5
+----------------------------------------
+
+[2025-07-23 15:50:04]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_driver_customer.php
+Source: reactivate_driver_customer.php (Line 123)
+Message: TRANSACTION_START: Admin ID 22675443 starting reactivation for driver ID 13
+----------------------------------------
+
+[2025-07-23 15:50:04]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_driver_customer.php
+Source: reactivate_driver_customer.php (Line 135)
+Message: ACCOUNT_UPDATED: Admin ID: 22675443 REACTIVATED driver ID 13 DEACTIVATION
+----------------------------------------
+
+[2025-07-23 15:50:04]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_driver_customer.php
+Source: reactivate_driver_customer.php (Line 150)
+Message: AUDIT_LOG_CREATED: Admin ID 22675443 created log for driver ID 13 RefID 7874cedf950d3c4c07ae0731e202a2c5
+----------------------------------------
+
+[2025-07-23 15:50:04]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/reactivate_driver_customer.php
+Source: reactivate_driver_customer.php (Line 153)
+Message: TRANSACTION_SUCCESS: Admin ID 22675443 successfully reactivated driver ID 13
+----------------------------------------
+
+[2025-07-23 15:53:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-07-23 15:53:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/staff_profile.php
+Source: staff_profile.php (Line 25)
+Message: Admin profile fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-07-23 15:53:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-23 15:53:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-07-23 15:53:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-07-23 15:53:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 6. Total pages: 2.
+----------------------------------------
+
+[2025-07-23 15:53:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-07-23 15:53:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 12.
+----------------------------------------
+
+[2025-07-23 15:53:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-07-23 15:53:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-07-23 15:53:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 12.
+----------------------------------------
+
+[2025-07-23 15:53:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-07-23 15:53:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-07-23 15:53:55]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 21)
+Message: Script started. Request received from IP: ::1
+----------------------------------------
+
+[2025-07-23 15:53:55]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 25)
+Message: Received account type: driver
+----------------------------------------
+
+[2025-07-23 15:53:55]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 69)
+Message: Executing query for Deactivated driver accounts with reference_id
+----------------------------------------
+
+[2025-07-23 15:53:55]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 79)
+Message: Fetched 1 deactivated accounts for type: driver
+----------------------------------------
+
+[2025-07-23 15:53:55]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 86)
+Message: Script completed successfully
+----------------------------------------
+
+[2025-07-23 15:57:29]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 21)
+Message: Script started. Request received from IP: ::1
+----------------------------------------
+
+[2025-07-23 15:57:29]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 25)
+Message: Received account type: customers
+----------------------------------------
+
+[2025-07-23 15:57:29]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 69)
+Message: Executing query for Deactivated customers accounts with reference_id
+----------------------------------------
+
+[2025-07-23 15:57:29]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 79)
+Message: Fetched 1 deactivated accounts for type: customers
+----------------------------------------
+
+[2025-07-23 15:57:29]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 86)
+Message: Script completed successfully
+----------------------------------------
+
+[2025-07-23 15:57:49]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 21)
+Message: Script started. Request received from IP: ::1
+----------------------------------------
+
+[2025-07-23 15:57:49]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 25)
+Message: Received account type: driver
+----------------------------------------
+
+[2025-07-23 15:57:49]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 69)
+Message: Executing query for Deactivated driver accounts with reference_id
+----------------------------------------
+
+[2025-07-23 15:57:49]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 79)
+Message: Fetched 1 deactivated accounts for type: driver
+----------------------------------------
+
+[2025-07-23 15:57:49]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 86)
+Message: Script completed successfully
+----------------------------------------
+
+[2025-07-23 15:59:20]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 21)
+Message: Script started. Request received from IP: ::1
+----------------------------------------
+
+[2025-07-23 15:59:20]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 25)
+Message: Received account type: customers
+----------------------------------------
+
+[2025-07-23 15:59:20]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 69)
+Message: Executing query for Deactivated customers accounts with reference_id
+----------------------------------------
+
+[2025-07-23 15:59:20]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 79)
+Message: Fetched 1 deactivated accounts for type: customers
+----------------------------------------
+
+[2025-07-23 15:59:20]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 86)
+Message: Script completed successfully
+----------------------------------------
+
+[2025-07-23 16:01:01]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 10)
+Message: Random customer names fetch process started
+----------------------------------------
+
+[2025-07-23 16:01:01]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 14)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-23 16:01:01]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 32)
+Message: Successfully retrieved 3 random customer names
+----------------------------------------
+
+[2025-07-23 16:01:01]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 43)
+Message: Random customer names fetch completed successfully
+----------------------------------------
+
+[2025-07-23 16:01:01]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 67)
+Message: Random customer names fetch process completed
+----------------------------------------
+
+[2025-07-23 16:01:01]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 6)
+Message: Fetching promos script started.
+----------------------------------------
+
+[2025-07-23 16:01:01]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 21)
+Message: Customer customer_id found in session: 378579816
+----------------------------------------
+
+[2025-07-23 16:01:01]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 34)
+Message: Pagination parameters - Page: 1, Limit: 10, Offset: 0
+----------------------------------------
+
+[2025-07-23 16:01:01]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 50)
+Message: Total promos count: 2
+----------------------------------------
+
+[2025-07-23 16:01:01]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 66)
+Message: Updated 0 expired promos (status = 0, delete_id = 1).
+----------------------------------------
+
+[2025-07-23 16:01:01]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 88)
+Message: Fetched 9 paginated promos.
+----------------------------------------
+
+[2025-07-23 16:01:01]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 111)
+Message: Fetched 1 ongoing promos.
+----------------------------------------
+
+[2025-07-23 16:01:01]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 127)
+Message: Fetching promos script completed successfully.
+----------------------------------------
+
+[2025-07-23 16:01:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-23 16:01:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-07-23 16:01:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-07-23 16:01:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 6. Total pages: 2.
+----------------------------------------
+
+[2025-07-23 16:01:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-07-23 16:01:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/staff_profile.php
+Source: staff_profile.php (Line 25)
+Message: Admin profile fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-07-23 16:01:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-07-23 16:01:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 12.
+----------------------------------------
+
+[2025-07-23 16:01:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-07-23 16:01:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-07-23 16:01:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 12.
+----------------------------------------
+
+[2025-07-23 16:01:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-07-23 16:01:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-07-23 16:01:52]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 21)
+Message: Script started. Request received from IP: ::1
+----------------------------------------
+
+[2025-07-23 16:01:52]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 25)
+Message: Received account type: customers
+----------------------------------------
+
+[2025-07-23 16:01:52]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 69)
+Message: Executing query for Deactivated customers accounts with reference_id
+----------------------------------------
+
+[2025-07-23 16:01:52]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 79)
+Message: Fetched 1 deactivated accounts for type: customers
+----------------------------------------
+
+[2025-07-23 16:01:52]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_deactivated_account.php
+Source: fetch_deactivated_account.php (Line 86)
+Message: Script completed successfully
+----------------------------------------
+

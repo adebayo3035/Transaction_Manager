@@ -28726,3 +28726,563 @@ Source: session_data.php (Line 7)
 Message: Session check successful for driver ID: 11
 ----------------------------------------
 
+[2025-07-23 16:40:15]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/index.php
+Source: index.php (Line 21)
+Message: Login attempt initiated for username: bellosanni@gmail.com
+----------------------------------------
+
+[2025-07-23 16:40:15]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/index.php
+Source: index.php (Line 46)
+Message: Driver account found - ID: 4
+----------------------------------------
+
+[2025-07-23 16:40:16]
+UserID: 4
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/index.php
+Source: index.php (Line 111)
+Message: Login successful for driver ID: 4
+----------------------------------------
+
+[2025-07-23 16:40:32]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 6)
+Message: Session validated successfully for Driver ID: 4.
+----------------------------------------
+
+[2025-07-23 16:40:32]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 12)
+Message: Driver ID: 4 requested orders. Page: 1, Limit: 10.
+----------------------------------------
+
+[2025-07-23 16:40:32]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 32)
+Message: Total orders found for driver ID: 4: 0.
+----------------------------------------
+
+[2025-07-23 16:40:32]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 58)
+Message: Successfully fetched 0 paginated orders for driver ID: 4.
+----------------------------------------
+
+[2025-07-23 16:40:32]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 86)
+Message: Successfully fetched 0 pending orders for driver ID: 4.
+----------------------------------------
+
+[2025-07-23 16:40:33]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 6)
+Message: Session validated successfully for Driver ID: 4.
+----------------------------------------
+
+[2025-07-23 16:40:33]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 12)
+Message: Driver ID: 4 requested orders. Page: 1, Limit: 10.
+----------------------------------------
+
+[2025-07-23 16:40:33]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 32)
+Message: Total orders found for driver ID: 4: 0.
+----------------------------------------
+
+[2025-07-23 16:40:33]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 58)
+Message: Successfully fetched 0 paginated orders for driver ID: 4.
+----------------------------------------
+
+[2025-07-23 16:40:33]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 86)
+Message: Successfully fetched 0 pending orders for driver ID: 4.
+----------------------------------------
+
+[2025-07-23 16:40:33]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 11)
+Message: Driver ID: 4 requested their profile details.
+----------------------------------------
+
+[2025-07-23 16:40:33]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 13)
+Message: Session validated successfully for Driver ID: 4.
+----------------------------------------
+
+[2025-07-23 16:40:33]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 41)
+Message: Successfully fetched driver details for driver ID: 4.
+----------------------------------------
+
+[2025-07-23 16:40:33]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/session_data.php
+Source: session_data.php (Line 7)
+Message: Session check successful for driver ID: 4
+----------------------------------------
+
+[2025-07-23 16:40:59]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 6)
+Message: Session validated successfully for Driver ID: 4.
+----------------------------------------
+
+[2025-07-23 16:40:59]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 12)
+Message: Driver ID: 4 requested orders. Page: 1, Limit: 10.
+----------------------------------------
+
+[2025-07-23 16:40:59]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 32)
+Message: Total orders found for driver ID: 4: 0.
+----------------------------------------
+
+[2025-07-23 16:40:59]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 58)
+Message: Successfully fetched 0 paginated orders for driver ID: 4.
+----------------------------------------
+
+[2025-07-23 16:40:59]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 86)
+Message: Successfully fetched 0 pending orders for driver ID: 4.
+----------------------------------------
+
+[2025-07-23 16:40:59]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 6)
+Message: Session validated successfully for Driver ID: 4.
+----------------------------------------
+
+[2025-07-23 16:40:59]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 12)
+Message: Driver ID: 4 requested orders. Page: 1, Limit: 10.
+----------------------------------------
+
+[2025-07-23 16:40:59]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 32)
+Message: Total orders found for driver ID: 4: 0.
+----------------------------------------
+
+[2025-07-23 16:40:59]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 58)
+Message: Successfully fetched 0 paginated orders for driver ID: 4.
+----------------------------------------
+
+[2025-07-23 16:40:59]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 86)
+Message: Successfully fetched 0 pending orders for driver ID: 4.
+----------------------------------------
+
+[2025-07-23 16:40:59]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/session_data.php
+Source: session_data.php (Line 7)
+Message: Session check successful for driver ID: 4
+----------------------------------------
+
+[2025-07-23 16:40:59]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 11)
+Message: Driver ID: 4 requested their profile details.
+----------------------------------------
+
+[2025-07-23 16:40:59]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 13)
+Message: Session validated successfully for Driver ID: 4.
+----------------------------------------
+
+[2025-07-23 16:40:59]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 41)
+Message: Successfully fetched driver details for driver ID: 4.
+----------------------------------------
+
+[2025-07-23 16:41:03]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_order_summary.php?page=1&limit=10
+Source: fetch_order_summary.php (Line 7)
+Message: Session validated successfully for Driver ID: 4.
+----------------------------------------
+
+[2025-07-23 16:41:03]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_order_summary.php?page=1&limit=10
+Source: fetch_order_summary.php (Line 11)
+Message: Driver ID: 4 requested orders. Page: 1, Limit: 10.
+----------------------------------------
+
+[2025-07-23 16:41:03]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_order_summary.php?page=1&limit=10
+Source: fetch_order_summary.php (Line 30)
+Message: Total orders found for driver ID: 4: 5.
+----------------------------------------
+
+[2025-07-23 16:41:03]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_order_summary.php?page=1&limit=10
+Source: fetch_order_summary.php (Line 54)
+Message: Successfully fetched 5 orders for driver ID: 4.
+----------------------------------------
+
+[2025-07-23 16:41:04]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 11)
+Message: Driver ID: 4 requested their profile details.
+----------------------------------------
+
+[2025-07-23 16:41:04]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 13)
+Message: Session validated successfully for Driver ID: 4.
+----------------------------------------
+
+[2025-07-23 16:41:04]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 41)
+Message: Successfully fetched driver details for driver ID: 4.
+----------------------------------------
+
+[2025-07-23 16:41:04]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/session_data.php
+Source: session_data.php (Line 7)
+Message: Session check successful for driver ID: 4
+----------------------------------------
+
+[2025-07-23 16:41:13]
+UserID: 4
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/fetch_order_details.php
+Source: fetch_order_details.php (Line 17)
+Message: Session validated successfully for Driver ID: 4.
+----------------------------------------
+
+[2025-07-23 16:41:13]
+UserID: 4
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/fetch_order_details.php
+Source: fetch_order_details.php (Line 19)
+Message: About to retrieve Order Details for order ID: 81 for driver ID: 4.
+----------------------------------------
+
+[2025-07-23 16:41:13]
+UserID: 4
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/fetch_order_details.php
+Source: fetch_order_details.php (Line 64)
+Message: Successfully retrieved order details for order ID: 81.
+----------------------------------------
+
+[2025-07-23 16:41:27]
+UserID: 4
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/fetch_driver_history.php
+Source: fetch_driver_history.php (Line 35)
+Message: DRIVER_API_REQUEST: Driver 4 requesting RESTRICT logs (Page: 1, Limit: 10)
+----------------------------------------
+
+[2025-07-23 16:41:27]
+UserID: 4
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/fetch_driver_history.php
+Source: fetch_driver_history.php (Line 44)
+Message: DRIVER_API_TABLE_SELECTED: Using table 'account_restriction_audit_log' for action type 'RESTRICT'
+----------------------------------------
+
+[2025-07-23 16:41:27]
+UserID: 4
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/fetch_driver_history.php
+Source: fetch_driver_history.php (Line 52)
+Message: DRIVER_API_COUNT_QUERY: Preparing count query - SELECT COUNT(*) FROM `account_restriction_audit_log` WHERE account_id = ? AND account_type = 'DRIVER' AND action_type = ?
+----------------------------------------
+
+[2025-07-23 16:41:27]
+UserID: 4
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/fetch_driver_history.php
+Source: fetch_driver_history.php (Line 74)
+Message: DRIVER_API_COUNT_RESULT: Found 1 records for driver 4
+----------------------------------------
+
+[2025-07-23 16:41:27]
+UserID: 4
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/fetch_driver_history.php
+Source: fetch_driver_history.php (Line 94)
+Message: DRIVER_API_MAIN_QUERY: Preparing main query -      SELECT        ar.reference_id,        ar.account_id,       ar.account_type,       ar.action_type,       ar.created_at,       CONCAT(ad.firstname, ' ', ad.lastname) AS initiator     FROM `account_restriction_audit_log` ar     LEFT JOIN admin_tbl ad ON ar.initiated_by = ad.unique_id     WHERE ar.account_id = ?      AND ar.account_type = 'DRIVER'      AND ar.action_type = ?     ORDER BY ar.id DESC     LIMIT ?, ?
+----------------------------------------
+
+[2025-07-23 16:41:27]
+UserID: 4
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/fetch_driver_history.php
+Source: fetch_driver_history.php (Line 117)
+Message: DRIVER_API_RECORDS_FETCHED: Retrieved 1 records for driver 4
+----------------------------------------
+
+[2025-07-23 16:41:27]
+UserID: 4
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/fetch_driver_history.php
+Source: fetch_driver_history.php (Line 140)
+Message: DRIVER_API_REFERENCE_MASKED: Masked reference ID for driver 4 - Original: a06f9985b6f0d63fe12d9ab6f526eff0
+----------------------------------------
+
+[2025-07-23 16:41:27]
+UserID: 4
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/fetch_driver_history.php
+Source: fetch_driver_history.php (Line 145)
+Message: DRIVER_API_RESPONSE_PREPARED: Preparing response for driver 4 with 1 records
+----------------------------------------
+
+[2025-07-23 16:41:27]
+UserID: 4
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/fetch_driver_history.php
+Source: fetch_driver_history.php (Line 172)
+Message: DRIVER_API_RESOURCES_CLEANED: Database resources released for driver 4
+----------------------------------------
+
+[2025-07-23 16:41:28]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 11)
+Message: Driver ID: 4 requested their profile details.
+----------------------------------------
+
+[2025-07-23 16:41:28]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 13)
+Message: Session validated successfully for Driver ID: 4.
+----------------------------------------
+
+[2025-07-23 16:41:28]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 41)
+Message: Successfully fetched driver details for driver ID: 4.
+----------------------------------------
+
+[2025-07-23 16:41:28]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/session_data.php
+Source: session_data.php (Line 7)
+Message: Session check successful for driver ID: 4
+----------------------------------------
+
+[2025-07-23 16:41:29]
+UserID: 4
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/fetch_driver_history.php
+Source: fetch_driver_history.php (Line 35)
+Message: DRIVER_API_REQUEST: Driver 4 requesting DEACTIVATE logs (Page: 1, Limit: 10)
+----------------------------------------
+
+[2025-07-23 16:41:29]
+UserID: 4
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/fetch_driver_history.php
+Source: fetch_driver_history.php (Line 44)
+Message: DRIVER_API_TABLE_SELECTED: Using table 'account_deactivation_audit_log' for action type 'DEACTIVATE'
+----------------------------------------
+
+[2025-07-23 16:41:29]
+UserID: 4
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/fetch_driver_history.php
+Source: fetch_driver_history.php (Line 52)
+Message: DRIVER_API_COUNT_QUERY: Preparing count query - SELECT COUNT(*) FROM `account_deactivation_audit_log` WHERE account_id = ? AND account_type = 'DRIVER' AND action_type = ?
+----------------------------------------
+
+[2025-07-23 16:41:29]
+UserID: 4
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/fetch_driver_history.php
+Source: fetch_driver_history.php (Line 74)
+Message: DRIVER_API_COUNT_RESULT: Found 0 records for driver 4
+----------------------------------------
+
+[2025-07-23 16:41:29]
+UserID: 4
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/fetch_driver_history.php
+Source: fetch_driver_history.php (Line 94)
+Message: DRIVER_API_MAIN_QUERY: Preparing main query -      SELECT        ar.reference_id,        ar.account_id,       ar.account_type,       ar.action_type,       ar.created_at,       CONCAT(ad.firstname, ' ', ad.lastname) AS initiator     FROM `account_deactivation_audit_log` ar     LEFT JOIN admin_tbl ad ON ar.initiated_by = ad.unique_id     WHERE ar.account_id = ?      AND ar.account_type = 'DRIVER'      AND ar.action_type = ?     ORDER BY ar.id DESC     LIMIT ?, ?
+----------------------------------------
+
+[2025-07-23 16:41:29]
+UserID: 4
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/fetch_driver_history.php
+Source: fetch_driver_history.php (Line 117)
+Message: DRIVER_API_RECORDS_FETCHED: Retrieved 0 records for driver 4
+----------------------------------------
+
+[2025-07-23 16:41:29]
+UserID: 4
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/fetch_driver_history.php
+Source: fetch_driver_history.php (Line 120)
+Message: DRIVER_API_NO_RECORDS: No records found for driver 4, action DEACTIVATE
+----------------------------------------
+
+[2025-07-23 16:48:28]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/logout.php
+Source: logout.php (Line 9)
+Message: Session validated successfully for Driver ID: 4.
+----------------------------------------
+
+[2025-07-23 16:48:28]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/logout.php
+Source: logout.php (Line 15)
+Message: Logout attempt for driver_id: 4
+----------------------------------------
+
+[2025-07-23 16:48:28]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/logout.php
+Source: logout.php (Line 40)
+Message: Retrieved session_id: 3jhhiate922e8996ivep7sjsul for driver_id: 4.
+----------------------------------------
+
+[2025-07-23 16:48:28]
+UserID: 4
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/logout.php
+Source: logout.php (Line 58)
+Message: Updated session status to 'Inactive' for session_id: 3jhhiate922e8996ivep7sjsul.
+----------------------------------------
+
+[2025-07-23 16:48:28]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/logout.php
+Source: logout.php (Line 64)
+Message: Session destroyed for driver_id: 4.
+----------------------------------------
+
+[2025-07-23 16:49:42]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/index.php
+Source: index.php (Line 21)
+Message: Login attempt initiated for username: seun.fakorede@gmail.com
+----------------------------------------
+
+[2025-07-23 16:49:42]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/index.php
+Source: index.php (Line 46)
+Message: Driver account found - ID: 13
+----------------------------------------
+
+[2025-07-23 16:49:42]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/index.php
+Source: index.php (Line 57)
+Message: Login denied - Account deactivated for driver ID: 13
+----------------------------------------
+
