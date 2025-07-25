@@ -112,8 +112,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 echo json_encode(['success' => false, 'message' => 'Your Password does not match.']);
                 exit();
             }
-
-            $hashedPassword = md5($new_password);
+            //Hash password using Bcrypt
+            $hashedPassword = password_hash($inputPassword, PASSWORD_DEFAULT);
 
             // Call updatePassword function
             $updateResult = updatePassword($conn, $email, $hashedPassword);

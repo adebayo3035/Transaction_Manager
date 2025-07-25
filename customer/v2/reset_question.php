@@ -33,8 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     logActivity("Extracted request parameters: new_question=$new_question, token=$token");
     
-    // Fetch customer from the database
-    $hashedSecretAnswer = md5($new_answer);
+    // Hash Customer secret answer
+    $hashedSecretAnswer = password_hash($new_answer, PASSWORD_DEFAULT);
     
     // Function to validate token 
     if (!isset($_SESSION['token']) || $_SESSION['token']['value'] !== $token || time() > $_SESSION['token']['expires_at']) {

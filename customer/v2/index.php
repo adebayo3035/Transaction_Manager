@@ -1,6 +1,7 @@
 <?php
 header('Content-Type: application/json');
 include 'config.php';
+include 'auth_utils.php';
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -222,7 +223,12 @@ try {
     }
 
     // Verify password
-    if (!verifyPassword($password, $row['password'])) {
+    // if (!verifyPassword($password, $row['password'])) {
+    //     $response = handleFailedLogin($conn, $customer_id);
+    //     echo json_encode($response);
+    //     exit;
+    // }
+    if (!verifyAndUpgradePassword($conn, $customer_id, $password, $row['password'])){
         $response = handleFailedLogin($conn, $customer_id);
         echo json_encode($response);
         exit;

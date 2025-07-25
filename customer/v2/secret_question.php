@@ -1,7 +1,7 @@
 <?php
 // Database connection
 include 'config.php'; // Replace with your actual database connection
-
+include 'auth_utils.php';
 header('Content-Type: application/json');
 
 // Check if the request is POST
@@ -59,17 +59,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        // Verify the password
-        if (md5($password) == $hashedPassword) { // Adjust hashing algorithm if needed
+         if (!verifyAndUpgradePassword($conn, $customer_id, $password, $hashedPassword)) {
+            logActivity("Invalid password attempt: Customer ID $customer_id");
+            echo json_encode(['success' => false, 'message' => 'Invalid password. Please try again.']);
+            exit();
+        }
+        else{
             logActivity("Secret Question retrieved successfully for: Customer ID $customer_id");
             echo json_encode([
                 'success' => true,
                 'secret_question' => $secret_question
             ]);
-        } else {
-            logActivity("Invalid password attempt: Customer ID $customer_id");
-            echo json_encode(['success' => false, 'message' => 'Invalid password. Please try again.']);
         }
+
+        // Verify the password
+        // if (md5($password) == $hashedPassword) { // Adjust hashing algorithm if needed
+        //     logActivity("Secret Question retrieved successfully for: Customer ID $customer_id");
+        //     echo json_encode([
+        //         'success' => true,
+        //         'secret_question' => $secret_question
+        //     ]);
+        // } else {
+        //     logActivity("Invalid password attempt: Customer ID $customer_id");
+        //     echo json_encode(['success' => false, 'message' => 'Invalid password. Please try again.']);
+        // }
     } else {
         logActivity("Login failed: User not found - Email: $email");
         echo json_encode(['success' => false, 'message' => 'User not found']);

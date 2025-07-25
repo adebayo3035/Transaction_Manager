@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'config.php';
+include 'auth_utils.php';
 include 'sendOTPGmail.php';
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -36,6 +37,7 @@ $cardNumber = $data['card_number'] ?? null;
 $cardExpiry = $data['card_expiry'] ?? null;
 $cardCvv = $data['card_cvv'] ?? null;
 $cardPin = $data['card_pin'] ?? null;
+// $card_id = $data['card_id'] ?? null;
 $orderItems = $data['order_items'] ?? [];
 $serviceFee = $data['service_fee'] ?? 0;
 $deliveryFee = $data['delivery_fee'] ?? 0;
@@ -381,15 +383,17 @@ function getDecryptedCardDetails($customerId, $dbConnection, $key, $iv)
     $encryptedCVV = '';
     $expiryDate = '';
     $encryptedCardPIN = '';
-    $query = "SELECT card_number, cvv, expiry_date, card_pin FROM cards WHERE customer_id = ?";
+    $card_id = '';
+    $query = "SELECT id, card_number, cvv, expiry_date, card_pin FROM cards WHERE customer_id = ?";
     $stmt = $dbConnection->prepare($query);
     $stmt->bind_param("i", $customerId);
     $stmt->execute();
-    $stmt->bind_result($encryptedCardNumber, $encryptedCVV, $expiryDate, $encryptedCardPIN);
+    $stmt->bind_result($card_id, $encryptedCardNumber, $encryptedCVV, $expiryDate, $encryptedCardPIN);
 
     $cardDetails = [];
     while ($stmt->fetch()) {
         $cardDetails[] = [
+            'card_id' => $card_id,
             'card_number' => decrypt($encryptedCardNumber, $key, $iv),
             'cvv' => decrypt($encryptedCVV, $key, $iv),
             'expiry_date' => $expiryDate,
@@ -412,9 +416,14 @@ function validateCardOwnership($cardDetails, $inputCardNumber, $inputCVV, $input
     return false;
 }
 
-function validateCardPIN($inputCardPIN, $encryptedCardPIN)
+function validateCardPIN($conn, $customerId, $cardId, $pin, $storedHash)
 {
-    return md5($inputCardPIN) === $encryptedCardPIN;
+   $isPinValid = verifyAndUpgradePIN($conn, $customerId, $cardId, $pin, $storedHash);
+
+    if (!$isPinValid) {
+        throw new CardException("Invalid card PIN");
+    }
+    return $isPinValid;
 }
 
 function checkCardValidity($inputExpiryDate)
@@ -469,7 +478,7 @@ function validateCardPayment($customerId, $inputCardNumber, $inputCVV, $inputExp
         return ['success' => false, 'message' => 'Card has expired.'];
     }
 
-    if (!validateCardPIN($inputCardPIN, $validCard['encryptedCardPIN'])) {
+    if (!validateCardPIN($dbConnection, $customerId, $validCard['card_id'], $inputCardPIN, $validCard['encryptedCardPIN'])) {
         logActivity("Invalid card PIN for customer ID: " . $customerId);
         return ['success' => false, 'message' => 'Invalid card PIN.'];
     }
@@ -594,10 +603,11 @@ function validateSecretAnswer($providedSecretAnswer, $customerId, $conn)
     $storedSecretAnswer = $customerData['secret_answer'];
 
     // Hash the provided answer and compare with the stored one
-    if (md5($providedSecretAnswer) !== $storedSecretAnswer) {
-        logActivity("Secret Answer Validation failed for customer ID: " . $customerId);
-        return ["success" => false, "message" => "Authentication failed."];
-    }
+    if (!verifyAndUpgradeSecretAnswer($conn, $customerId, $providedSecretAnswer, $storedSecretAnswer)) {
+            logActivity("Invalid secret answer for Customer ID: $customerId.");
+            echo json_encode(['success' => false, 'message' => 'Account Validation Failed.']);
+            exit();
+        }
     logActivity("Secret Answer Validation is Successful for Customer ID " . $customerId);
     return ["success" => true, "message" => "Secret Answer Validation Successful! 🎉"];
 }

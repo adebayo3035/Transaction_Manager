@@ -52,7 +52,7 @@ try {
 
     // Process cancellation
     $cancellationDetails = calculateCancellationFees($order);
-    processCancellation($conn, $orderId, $customerId, $order, $cancellationDetails);
+    processCancellation($conn, $orderId, $customerId, $cancellationDetails);
 
     // Commit transaction
     $conn->commit();
@@ -86,10 +86,9 @@ function fetchOrderDetails($conn, $orderId) {
 }
 
 function validateOrderForCancellation($order) {
-    if ($order['status'] === 'Cancelled') {
-        throw new Exception("Order is already cancelled.");
+    if (($order['status'] !== 'Pending')) {
+        throw new Exception("Order is not in a Pending Status.");
     }
-    // Add any other validation rules here
 }
 
 function calculateCancellationFees($order) {
@@ -107,7 +106,7 @@ function calculateCancellationFees($order) {
     ];
 }
 
-function processCancellation($conn, $orderId, $customerId, $order, $details) {
+function processCancellation($conn, $orderId, $customerId, $details) {
     // Generate transaction reference
     $transactionRef = generateTransactionReference();
     
@@ -141,47 +140,72 @@ function updateWalletBalance($conn, $customerId, $amount) {
 }
 
 function recordCancellationTransactions($conn, $orderId, $customerId, $transactionRef, $details) {
-    // Record cancellation fee (debit)
-    $feeDescription = "Cancellation fee for Order ID: $orderId";
-    $stmt = $conn->prepare(
-        "INSERT INTO customer_transactions 
-        (transaction_ref, customer_id, amount, date_created, transaction_type, payment_method, description) 
-        VALUES (?, ?, ?, NOW(), 'debit', 'Order Cancellation Fee', ?)"
-    );
-    $stmt->bind_param("sids", $transactionRef, $customerId, $details['cancellation_fee'], $feeDescription);
-    $stmt->execute();
-    
-    // Record refund (credit)
-    $refundDescription = "Refund for Cancelled Order: $orderId";
-    $stmt = $conn->prepare(
-        "INSERT INTO customer_transactions 
-        (transaction_ref, customer_id, amount, date_created, transaction_type, payment_method, description) 
-        VALUES (?, ?, ?, NOW(), 'credit', 'Transaction Refund', ?)"
-    );
-    $stmt->bind_param("sids", $transactionRef, $customerId, $details['refund_amount'], $refundDescription);
-    $stmt->execute();
-    
-    // Record in transactions table
-    $stmt = $conn->prepare(
-        "INSERT INTO transactions 
-        (transaction_ref, customer_id, order_id, transaction_type, amount, transaction_date, payment_method, status, created_at, revenue_type_id) 
-        VALUES (?, ?, ?, 'Credit', ?, NOW(), 'Direct Debit Cancelled Order', 'Completed', NOW(), ?)"
-    );
-    $stmt->bind_param("siidi", $transactionRef, $customerId, $orderId, $details['cancellation_fee'], REVENUE_TYPE_CANCELLATION);
-    $stmt->execute();
-    
-    // Record in revenue table
-    $stmt = $conn->prepare(
-        "INSERT INTO revenue 
-        (order_id, customer_id, total_amount, refunded_amount, retained_amount, transaction_date, status, updated_at, revenue_type_id) 
-        VALUES (?, ?, ?, ?, ?, ?, 'Completed', NOW(), ?)"
-    );
-    $stmt->bind_param("iidddsi", $orderId, $customerId, $details['total_amount'], 
-        $details['refund_amount'], $details['cancellation_fee'], $details['order_date'], REVENUE_TYPE_CANCELLATION);
-    $stmt->execute();
-    
-    logActivity("ORDER_CANCELLATION_TRANSACTIONS: Recorded all financial transactions");
+    // Extract values from $details
+    $cancellationFee = (float) $details['cancellation_fee'];
+    $refundAmount     = (float) $details['refund_amount'];
+    $totalAmount      = (float) $details['total_amount'];
+    $orderDate        = $details['order_date'];
+    $revenueTypeId    = REVENUE_TYPE_CANCELLATION;
+
+    try {
+        // --- 1. Record Cancellation Fee (Debit) ---
+        $feeDescription = "Cancellation fee for Order ID: $orderId";
+        $stmt = $conn->prepare("
+            INSERT INTO customer_transactions 
+            (transaction_ref, customer_id, amount, date_created, transaction_type, payment_method, description) 
+            VALUES (?, ?, ?, NOW(), 'debit', 'Order Cancellation Fee', ?)
+        ");
+        if (!$stmt) {
+            throw new Exception("Prepare failed (debit record): " . $conn->error);
+        }
+        $stmt->bind_param("sids", $transactionRef, $customerId, $cancellationFee, $feeDescription);
+        $stmt->execute();
+
+        // --- 2. Record Refund (Credit) ---
+        $refundDescription = "Refund for Cancelled Order: $orderId";
+        $stmt = $conn->prepare("
+            INSERT INTO customer_transactions 
+            (transaction_ref, customer_id, amount, date_created, transaction_type, payment_method, description) 
+            VALUES (?, ?, ?, NOW(), 'credit', 'Transaction Refund', ?)
+        ");
+        if (!$stmt) {
+            throw new Exception("Prepare failed (credit record): " . $conn->error);
+        }
+        $stmt->bind_param("sids", $transactionRef, $customerId, $refundAmount, $refundDescription);
+        $stmt->execute();
+
+        // --- 3. Record in Transactions Table ---
+        $stmt = $conn->prepare("
+            INSERT INTO transactions 
+            (transaction_ref, customer_id, order_id, transaction_type, amount, transaction_date, payment_method, status, created_at, revenue_type_id) 
+            VALUES (?, ?, ?, 'Credit', ?, NOW(), 'Direct Debit Cancelled Order', 'Completed', NOW(), ?)
+        ");
+        if (!$stmt) {
+            throw new Exception("Prepare failed (transactions table): " . $conn->error);
+        }
+        $stmt->bind_param("siidi", $transactionRef, $customerId, $orderId, $cancellationFee, $revenueTypeId);
+        $stmt->execute();
+
+        // --- 4. Record in Revenue Table ---
+        $stmt = $conn->prepare("
+            INSERT INTO revenue 
+            (order_id, customer_id, total_amount, refunded_amount, retained_amount, transaction_date, status, updated_at, revenue_type_id) 
+            VALUES (?, ?, ?, ?, ?, ?, 'Completed', NOW(), ?)
+        ");
+        if (!$stmt) {
+            throw new Exception("Prepare failed (revenue table): " . $conn->error);
+        }
+        $stmt->bind_param("iidddsi", $orderId, $customerId, $totalAmount, $refundAmount, $cancellationFee, $orderDate, $revenueTypeId);
+        $stmt->execute();
+
+        logActivity("ORDER_CANCELLATION_TRANSACTIONS: Recorded all financial transactions for order $orderId");
+
+    } catch (Exception $e) {
+        logActivity("ORDER_CANCELLATION_TRANSACTIONS_ERROR: " . $e->getMessage());
+        throw $e; // Optionally re-throw if you want the outer try/catch to handle it
+    }
 }
+
 
 function restoreFoodStock($conn, $orderId) {
     $stmt = $conn->prepare("SELECT food_id, quantity FROM order_details WHERE order_id = ?");

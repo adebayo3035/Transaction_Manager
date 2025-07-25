@@ -4,6 +4,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 header('Content-Type: application/json');
 include_once "config.php";
+include 'auth_utils.php';
 session_start();
 
 logActivity("Script execution started.");
@@ -69,12 +70,18 @@ if (!$customer) {
 
 logActivity("Customer record found for ID: $customerId.");
 
+// // Validate secret answer
+// $hashedSecretAnswer = md5($secret_answer);
+// if ($customer['secret_answer'] !== $hashedSecretAnswer) {
+//     logActivity("Invalid secret answer for customer ID: $customerId.");
+//     echo json_encode(['success' => false, 'message' => 'Invalid Secret Answer.']);
+//     exit;
+// }
 // Validate secret answer
-$hashedSecretAnswer = md5($secret_answer);
-if ($customer['secret_answer'] !== $hashedSecretAnswer) {
-    logActivity("Invalid secret answer for customer ID: $customerId.");
-    echo json_encode(['success' => false, 'message' => 'Invalid Secret Answer.']);
-    exit;
+if (!verifyAndUpgradeSecretAnswer($conn, $customerId, $secret_answer, $customer['secret_answer'])) {
+    logActivity("Invalid secret answer for Customer ID: $customerId.");
+    echo json_encode(['success' => false, 'message' => 'Account Validation Failed.']);
+    exit();
 }
 
 logActivity("Secret answer validated successfully for customer ID: $customerId.");

@@ -1,6 +1,7 @@
 <?php
 session_start();
 include('config.php');
+include 'auth_utils.php';
 header('Content-Type: application/json');
 
 // Constants
@@ -134,39 +135,46 @@ function checkDepositLimits($customerId, $amount) {
  */
 function verifyCardDetails($customerId, $cardNumber, $pin, $cvv) {
     global $conn, $encryption_key, $encryption_iv;
-    
+
     logActivity("Verifying card details for customer ID: $customerId");
-    
+
     $encryptedCardNumber = encrypt($cardNumber, $encryption_key, $encryption_iv);
     $encryptedCVV = encrypt($cvv, $encryption_key, $encryption_iv);
-    $encryptedPin = md5($pin);
-    
+
+    // Get card details from DB
     $cardDetails = getStoredPinHash($customerId, $encryptedCardNumber, $conn);
-    
+
     if (!$cardDetails) {
         throw new CardException("Card not found");
     }
-    
+
     if ($cardDetails['is_expired']) {
         throw new CardException("Your card has expired");
     }
-    
+
     if ($cardDetails['card_status'] !== "Active") {
         throw new CardException("Your card is inactive. Please add another card");
     }
-    
-    if ($encryptedPin !== $cardDetails['card_pin']) {
-        throw new CardException("Invalid card details");
+
+    // Verify PIN and upgrade if needed
+    $cardId = $cardDetails['card_id'];  // assumes card_id is in the fetched record
+    $storedHash = $cardDetails['card_pin'];
+
+    $isPinValid = verifyAndUpgradePIN($conn, $customerId, $cardId, $pin, $storedHash);
+
+    if (!$isPinValid) {
+        throw new CardException("Invalid card PIN");
     }
+
+    // Check CVV match
     if ($encryptedCVV !== $cardDetails['cvv']) {
         throw new CardException("Invalid card details - CVV");
     }
-    
+
     logActivity("Card verification successful for customer ID: $customerId");
-    
+
     return $cardDetails;
 }
-
 /**
  * Process wallet funding transaction
  */
@@ -327,7 +335,7 @@ function generateTransactionReference(): string {
 function getStoredPinHash($customerId, $cardNumber, $conn): ?array {
     logActivity("Fetching stored card details for customer ID: $customerId");
     
-    $stmt = $conn->prepare("SELECT card_pin, cvv, expiry_date, status FROM cards WHERE customer_id = ? AND card_number = ?");
+    $stmt = $conn->prepare("SELECT id, card_pin, cvv, expiry_date, status FROM cards WHERE customer_id = ? AND card_number = ?");
     $stmt->bind_param("is", $customerId, $cardNumber);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -353,7 +361,8 @@ function getStoredPinHash($customerId, $cardNumber, $conn): ?array {
         'expiry_date' => $row['expiry_date'],
         'cvv' => $row['cvv'],
         'is_expired' => $isExpired,
-        'card_status' => $row['status']
+        'card_status' => $row['status'],
+        'card_id' => $row['id']
     ];
 }
 

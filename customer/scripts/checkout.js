@@ -234,11 +234,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const customer_secret_answer = document.getElementById('customer_secret_answer').value;
             const customer_token = document.getElementById('customer_token').value;
             const receiptHtml = generateReceiptHtml();
-
+            let totalAmount = ((parseFloat(orderData.total_order) - discount_value) + parseFloat(orderData.service_fee) + parseFloat(orderData.delivery_fee));
             let paymentDetails = {
                 payment_method: selectedPaymentMethod,
                 order_items: orderData.order_items,
-                total_amount: parseFloat(orderData.total_order),
+                total_amount: totalAmount,
                 service_fee: parseFloat(orderData.service_fee),
                 delivery_fee: parseFloat(orderData.delivery_fee),
                 total_order: parseFloat(orderData.total_order),

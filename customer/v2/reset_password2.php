@@ -1,7 +1,7 @@
 <?php
 // Include database connection
 include_once "config.php";
-
+include 'auth_utils.php';
 // Set content type to JSON
 header('Content-Type: application/json');
 
@@ -9,7 +9,8 @@ header('Content-Type: application/json');
 $data = json_decode(file_get_contents("php://input"), true);
 
 // Function to check reset attempts for today
-function checkResetAttempts($conn, $email) {
+function checkResetAttempts($conn, $email)
+{
     $stmt = $conn->prepare("SELECT reset_attempts, last_attempt_date FROM customer_password_reset_attempts WHERE email = ? AND DATE(last_attempt_date) = CURDATE()");
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -26,7 +27,8 @@ function checkResetAttempts($conn, $email) {
 }
 
 // Function to check if the user is locked
-function checkLockStatus($conn, $customer_id) {
+function checkLockStatus($conn, $customer_id)
+{
     $stmt = $conn->prepare("SELECT attempts, locked_until FROM customer_login_attempts WHERE customer_id = ?");
     $stmt->bind_param("i", $customer_id);
     $stmt->execute();
@@ -51,7 +53,8 @@ function checkLockStatus($conn, $customer_id) {
 }
 
 // Function to update or reset reset_attempts
-function updateResetAttempts($conn, $email) {
+function updateResetAttempts($conn, $email)
+{
     $stmt = $conn->prepare("SELECT * FROM customer_password_reset_attempts WHERE email = ? AND DATE(last_attempt_date) = CURDATE()");
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -82,7 +85,7 @@ if (isset($data['email'], $data['secret_answer'])) {
     $secret_answer = mysqli_real_escape_string($conn, $data['secret_answer']);
 
     // Log function to log activity
-logActivity("Starting Password Reset for Customer ID: $email");
+    logActivity("Starting Password Reset for Customer ID: $email");
 
     // Check reset attempts for today
     $resetAttemptCheck = checkResetAttempts($conn, $email);
@@ -110,7 +113,13 @@ logActivity("Starting Password Reset for Customer ID: $email");
         }
 
         // Validate secret answer and confirm password
-        if ((md5($secret_answer) !== $db_secret_answer)) {
+        // if ((md5($secret_answer) !== $db_secret_answer)) {
+        //     updateResetAttempts($conn, $email);
+        //     logActivity("Invalid secret answer for email: $email.");
+        //     echo json_encode(['success' => false, 'message' => 'Account Validation Failed.']);
+        //     exit();
+        // }
+        if (!verifyAndUpgradeSecretAnswer($conn, $customer_id, $secret_answer, $db_secret_answer)) {
             updateResetAttempts($conn, $email);
             logActivity("Invalid secret answer for email: $email.");
             echo json_encode(['success' => false, 'message' => 'Account Validation Failed.']);
@@ -128,7 +137,7 @@ logActivity("Starting Password Reset for Customer ID: $email");
         $stmtToken->close();
 
         logActivity("Password reset token generated for email: $email.");
-        
+
         // Return success and token
         echo json_encode(['success' => true, 'token' => $token]);
     } else {

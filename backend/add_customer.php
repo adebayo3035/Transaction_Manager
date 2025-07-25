@@ -187,8 +187,8 @@ try {
         logActivity("Image successfully uploaded to: $upload_path");
 
         // Encrypt sensitive data
-        $encrypted_password = md5($password);
-        $encrypted_answer = md5($secret_answer);
+        $encrypted_password = password_hash($password, PASSWORD_DEFAULT);
+        $encrypted_answer = password_hash($secret_answer, PASSWORD_DEFAULT);
 
         // Generate and validate unique customer ID
         $max_attempts = 5; // Prevent infinite loops

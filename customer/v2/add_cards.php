@@ -134,7 +134,7 @@ $date_created = date('Y-m-d H:i:s');
 $date_updated = date('Y-m-d H:i:s');
 $encrypted_card_number = encrypt($card_number, $encryption_key, $encryption_iv);
 $encrypted_CVV = encrypt($cvv, $encryption_key, $encryption_iv);
-$encrypted_Pin = md5($pin);
+$encrypted_Pin = password_hash($pin, PASSWORD_DEFAULT);
 
 logActivity("Validating input data");
 if (!empty($card_number) && !empty($card_holder) && !empty($expiry_date) && !empty($cvv) && !empty($customerId)) {
