@@ -168,7 +168,7 @@ try {
 
         // Hash sensitive data
         $hashed_password = password_hash($fields['password'], PASSWORD_DEFAULT);
-        $hashed_secret_answer = md5($fields['secret_answer']);
+        $hashed_secret_answer = password_hash($fields['secret_answer'], PASSWORD_DEFAULT);
         $status = "Available";
         $restriction = 0;
 

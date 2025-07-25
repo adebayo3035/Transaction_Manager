@@ -1,5 +1,6 @@
 <?php
 include 'config.php';
+include 'auth_utils.php';
 header('Content-Type: application/json');
 
 // Validate request method and input
@@ -73,8 +74,18 @@ try {
     }
 
     // STEP 4: Verify password
-    if (!password_verify($password, $driver['password'])) {
-        handleFailedLogin($conn, $driverId);
+    // if (!password_verify($password, $driver['password'])) {
+    //     handleFailedLogin($conn, $driverId);
+    //     logActivity("Login failed - Invalid password for driver ID: $driverId");
+    //     http_response_code(401);
+    //     echo json_encode([
+    //         'success' => false, 
+    //         'message' => "Invalid Login credentials. Attempts left: {$lockoutStatus['remaining_attempts']}"
+    //     ]);
+    //     exit;
+    // }
+     if (!verifyAndUpgradePassword($conn, $driverId, $password, $driver['password'])){
+        $response = handleFailedLogin($conn, $driverId);
         logActivity("Login failed - Invalid password for driver ID: $driverId");
         http_response_code(401);
         echo json_encode([

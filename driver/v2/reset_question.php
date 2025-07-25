@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Fetch customer from the database
     $customerId = $_SESSION['customer_id'];
-    $hashedSecretAnswer = md5($new_answer);
+    $hashedSecretAnswer =password_hash($new_answer, PASSWORD_DEFAULT);
     checkSession($customerId);
 
     // Log customer ID and hashed secret answer

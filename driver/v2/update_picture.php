@@ -5,6 +5,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 header('Content-Type: application/json');
 include 'config.php';
+include 'auth_utils.php';
 
 $driver_id = $_SESSION['driver_id'];
 $response = ['success' => false, 'message' => ''];
@@ -22,17 +23,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_FILES['photo']) && isset($_POST['secret_answer'])) {
         $user_provided_secret_answer = $_POST['secret_answer'];
         
-        // Hash the user-provided secret answer
-        $hashed_user_provided_secret_answer = md5($user_provided_secret_answer);
-        
-        // Check if the hashed user-provided secret answer matches the stored hashed answer
-        if ($hashed_user_provided_secret_answer !== $secret_answer) {
+        if (!verifyAndUpgradeSecretAnswer($conn, $driver_id, $user_provided_secret_answer, $secret_answer)) {
             $response['message'] = 'Secret Answer Validation Failed.';
             logActivity("Secret answer validation failed for driver ID: $driver_id");
             http_response_code(401); // Unauthorized
             echo json_encode($response);
             exit;
         }
+
+        logActivity("Secret answer verified for Driver ID: $driver_id");
 
         $img_name = $_FILES['photo']['name'];
         $img_type = $_FILES['photo']['type'];

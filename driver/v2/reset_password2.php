@@ -1,6 +1,7 @@
 <?php
 // Include database connection
 include_once "config.php";
+include 'auth_utils.php';
 
 // Set content type to JSON
 header('Content-Type: application/json');
@@ -9,7 +10,8 @@ header('Content-Type: application/json');
 $data = json_decode(file_get_contents("php://input"), true);
 
 // Function to check reset attempts for today
-function checkResetAttempts($conn, $email) {
+function checkResetAttempts($conn, $email)
+{
     // Log function entry
     logActivity("Entering checkResetAttempts function for email: $email.");
 
@@ -62,7 +64,8 @@ function checkResetAttempts($conn, $email) {
     return ['success' => true];
 }
 
-function checkLockStatus($conn, $driver_id) {
+function checkLockStatus($conn, $driver_id)
+{
     // Log function entry
     logActivity("Entering checkLockStatus function for driver_id: $driver_id.");
 
@@ -124,7 +127,8 @@ function checkLockStatus($conn, $driver_id) {
 }
 
 // Function to check if the user is locked
-function updateResetAttempts($conn, $email) {
+function updateResetAttempts($conn, $email)
+{
     // Log function entry
     logActivity("Entering updateResetAttempts function for email: $email.");
 
@@ -275,16 +279,15 @@ if (isset($data['email'], $data['secret_answer'])) {
         logActivity("Account not locked for driver ID: $driver_id.");
 
         // Validate secret answer and confirm password
-        if ((md5($secret_answer) !== $db_secret_answer)) {
-            // Log secret answer validation failure
-            logActivity("Secret answer validation failed for email: $email.");
+        if (!verifyAndUpgradeSecretAnswer($conn, $driver_id, $secret_answer, $db_secret_answer)) {
+            logActivity("Secret Answer Validation Failed for Driver ID: $driver_id. and E-mail : $email");
             updateResetAttempts($conn, $email);
             echo json_encode(['success' => false, 'message' => 'Account Validation Failed.']);
             exit();
         }
 
         // Log secret answer validation success
-        logActivity("Secret answer validation successful for email: $email.");
+        logActivity("Secret answer validation successful for Driver ID: $driver_id with email address: $email.");
 
         // Step 4: Successful validation - Generate token
         $token = bin2hex(random_bytes(16)); // Secure random token
