@@ -1,5 +1,6 @@
 <?php
 include 'config.php';
+include 'auth_utils.php';
 session_start();
 header('Content-Type: application/json');
 
@@ -66,7 +67,12 @@ if ($checkSecret->num_rows === 0) {
 $checkSecret->fetch();
 $checkSecret->close();
 
-if (md5($providedAnswer) !== $storedHash) {
+// if (md5($providedAnswer) !== $storedHash) {
+//     logActivity("SECRET_ANSWER_MISMATCH: Admin ID $adminID provided wrong answer for $accountType ID $userID");
+//     echo json_encode(["success" => false, "message" => "Invalid secret answer."]);
+//     exit();
+// }
+if (!verifyAndUpgradeSecretAnswer($conn, $adminID, $providedAnswer, $storedHash)) {
     logActivity("SECRET_ANSWER_MISMATCH: Admin ID $adminID provided wrong answer for $accountType ID $userID");
     echo json_encode(["success" => false, "message" => "Invalid secret answer."]);
     exit();

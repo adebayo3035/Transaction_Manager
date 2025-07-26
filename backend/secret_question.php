@@ -1,5 +1,6 @@
 <?php
 include 'config.php';
+include 'auth_utils.php';
 header('Content-Type: application/json');
 
 function logAndRespond($message, $response, $exit = true) {
@@ -85,13 +86,32 @@ if ($attemptData) {
     }
 }
 
-if (md5($password) === $hashedPassword) {
-    resetLoginAttempts($conn, $unique_id);
-    logAndRespond("Staff Credential Validation was successful for User: $email", [
-        'success' => true,
-        'secret_question' => $secret_question
-    ], false);
-} else {
+// if (md5($password) === $hashedPassword) {
+//     resetLoginAttempts($conn, $unique_id);
+//     logAndRespond("Staff Credential Validation was successful for User: $email", [
+//         'success' => true,
+//         'secret_question' => $secret_question
+//     ], false);
+// } else {
+//     if ($attemptData) {
+//         $newAttempts = $attempts + 1;
+//         $lockedUntilTime = null;
+//         if ($newAttempts >= $max_attempts) {
+//             $lockedUntilTime = $current_time->modify("+$lockout_duration minutes")->format('Y-m-d H:i:s');
+//             logActivity("Account locked: $email exceeded max login Credentials Validation attempts");
+//         }
+//         updateLoginAttempts($conn, $unique_id, $newAttempts, $lockedUntilTime);
+//     } else {
+//         insertLoginAttempt($conn, $unique_id);
+//     }
+
+//     logAndRespond("Invalid password entered for user: $email", [
+//         'success' => false,
+//         'message' => 'Invalid password. Please try again.'
+//     ]);
+// }
+
+if (!verifyAndUpgradePassword($conn, $unique_id, $password, $hashedPassword)) {
     if ($attemptData) {
         $newAttempts = $attempts + 1;
         $lockedUntilTime = null;
@@ -108,6 +128,13 @@ if (md5($password) === $hashedPassword) {
         'success' => false,
         'message' => 'Invalid password. Please try again.'
     ]);
+}
+else{
+    resetLoginAttempts($conn, $unique_id);
+    logAndRespond("Staff Credential Validation was successful for User: $email", [
+        'success' => true,
+        'secret_question' => $secret_question
+    ], false);
 }
 
 $conn->close();

@@ -1,6 +1,7 @@
 <?php
 // Include the database connection file
 include 'config.php';
+include 'auth_utils.php';
 session_start();
 require 'sendOTPGmail.php';
 $staffId = $_SESSION['unique_id'];

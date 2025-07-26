@@ -1,6 +1,7 @@
 <?php
 header('Content-Type: application/json');
 include 'config.php';
+include 'auth_utils.php';
 function destroySession($uniqueId, $conn)
 {
     // Validate input
@@ -16,9 +17,9 @@ function destroySession($uniqueId, $conn)
         logActivity("Prepare failed: " . $conn->error);
         return false; // Database error is a real error
     }
-    
+
     $stmt->bind_param("i", $uniqueId);
-    
+
     if (!$stmt->execute()) {
         logActivity("Database error when fetching session: " . $stmt->error);
         $stmt->close();
@@ -26,7 +27,7 @@ function destroySession($uniqueId, $conn)
     }
 
     $result = $stmt->get_result();
-    
+
     // No existing session is NOT an error condition
     if ($result->num_rows === 0) {
         logActivity("No active session found - safe to proceed");
@@ -45,7 +46,7 @@ function destroySession($uniqueId, $conn)
         session_id($sessionId);
         session_start();
         $_SESSION = array();
-        
+
         if (!session_destroy()) {
             logActivity("Failed to destroy PHP session");
             return false;
@@ -77,8 +78,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Retrieve username and password
         $username = $data['username'] ?? '';
         $password = $data['password'] ?? '';
-        $encrypted_password = md5($password);
-        
+        //$encrypted_password = md5($password);
+
         // Validate inputs
         if (empty($username) || empty($password)) {
             logActivity("Login attempt with empty credentials from IP: " . $_SERVER['REMOTE_ADDR']);
@@ -125,13 +126,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $max_attempts = 3;
         $lockout_duration = 60; // minutes
         $lockout_status = checkLockoutStatus($conn, $unique_id, $max_attempts, $lockout_duration);
-        
+
         if ($lockout_status['is_locked']) {
             logActivity("Login blocked - Account $unique_id is temporarily locked. Time remaining: " . $lockout_status['time_remaining'] . ". Attempt from IP: " . $_SERVER['REMOTE_ADDR']);
             echo json_encode(["success" => false, "message" => "Your account is locked. Please try again in " . $lockout_status['time_remaining']]);
             exit;
         }
-        if($encrypted_password != $admin_password){
+        // if ($encrypted_password != $admin_password) {
+        //     logActivity("Login failed - Invalid password for user $unique_id from IP: " . $_SERVER['REMOTE_ADDR']);
+        //     handleFailedLogin($conn, $unique_id, $max_attempts, $lockout_duration);
+        //     echo json_encode(["success" => false, "message" => "Invalid credentials"]);
+        //     exit;
+        // }
+        if (!verifyAndUpgradePassword($conn, $unique_id, $password, $admin_password)) {
             logActivity("Login failed - Invalid password for user $unique_id from IP: " . $_SERVER['REMOTE_ADDR']);
             handleFailedLogin($conn, $unique_id, $max_attempts, $lockout_duration);
             echo json_encode(["success" => false, "message" => "Invalid credentials"]);
@@ -140,11 +147,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // Process for Successful login
         destroySession($unique_id, $conn);
-        
+
         // Start secure session
         session_start();
         session_regenerate_id(true);
-        
+
         // Set session parameters
         $_SESSION = [
             'unique_id' => $row['unique_id'],
@@ -194,7 +201,7 @@ function checkLockoutStatus($conn, $unique_id, $max_attempts, $lockout_duration)
 {
     try {
         logActivity("Checking lockout status for user: $unique_id (Lockout Duration: $lockout_duration minutes)");
-        
+
         $stmt = $conn->prepare("SELECT attempts, locked_until FROM admin_login_attempts WHERE unique_id = ?");
         if (!$stmt) {
             logActivity("Database prepare error: " . $conn->error);
@@ -208,48 +215,48 @@ function checkLockoutStatus($conn, $unique_id, $max_attempts, $lockout_duration)
         }
 
         $result = $stmt->get_result();
-        
+
         if ($result->num_rows === 0) {
             logActivity("No lockout record found for user: " . $unique_id);
             return ['is_locked' => false];
         }
-        
+
         $data = $result->fetch_assoc();
         $attempts = $data['attempts'];
         $locked_until = $data['locked_until'];
         $current_time = new DateTime();
-        
+
         if ($locked_until) {
             $locked_until_time = new DateTime($locked_until);
-            
+
             // Check if account is currently locked
             if ($attempts >= $max_attempts && $current_time < $locked_until_time) {
                 $time_remaining = $locked_until_time->diff($current_time)->format('%i minutes %s seconds');
                 logActivity("Account " . $unique_id . " is locked. Time remaining: " . $time_remaining);
                 return ['is_locked' => true, 'time_remaining' => $time_remaining];
             }
-            
+
             // Check if lockout period has expired and needs to be cleared
             if ($attempts >= $max_attempts && $current_time >= $locked_until_time) {
                 logActivity("Lockout period expired for user: " . $unique_id . " - auto-unlocking account");
-                
+
                 // Start transaction for atomic operations
                 $conn->begin_transaction();
-                
+
                 try {
                     // Clear login attempts
                     $stmtReset = $conn->prepare("DELETE FROM admin_login_attempts WHERE unique_id = ?");
                     $stmtReset->bind_param("i", $unique_id);
-                    
+
                     if (!$stmtReset->execute()) {
                         throw new Exception("Failed to reset login attempts: " . $stmtReset->error);
                     }
-                    
+
                     // Update lock history
                     $status = 'unlocked';
                     $unlock_method = 'System auto-unlock';
                     $adminID = 0; // System ID
-                    
+
                     $stmtUnlockHistory = $conn->prepare("
                         UPDATE admin_lock_history 
                         SET status = ?, 
@@ -261,14 +268,14 @@ function checkLockoutStatus($conn, $unique_id, $max_attempts, $lockout_duration)
                         AND unlocked_at IS NULL
                     ");
                     $stmtUnlockHistory->bind_param("sisi", $status, $adminID, $unlock_method, $unique_id);
-                    
+
                     if (!$stmtUnlockHistory->execute()) {
                         throw new Exception("Failed to update lock history: " . $stmtUnlockHistory->error);
                     }
-                    
+
                     $conn->commit();
                     logActivity("Successfully unlocked account: " . $unique_id);
-                    
+
                 } catch (Exception $e) {
                     $conn->rollback();
                     logActivity("Error during auto-unlock for " . $unique_id . ": " . $e->getMessage());
@@ -276,16 +283,19 @@ function checkLockoutStatus($conn, $unique_id, $max_attempts, $lockout_duration)
                 }
             }
         }
-        
+
         return ['is_locked' => false];
-        
+
     } catch (Exception $e) {
         logActivity("Error in checkLockoutStatus for " . $unique_id . ": " . $e->getMessage());
         return ['is_locked' => false]; // Fail open to prevent locking out legitimate users
     } finally {
-        if (isset($stmt)) $stmt->close();
-        if (isset($stmtReset)) $stmtReset->close();
-        if (isset($stmtUnlockHistory)) $stmtUnlockHistory->close();
+        if (isset($stmt))
+            $stmt->close();
+        if (isset($stmtReset))
+            $stmtReset->close();
+        if (isset($stmtUnlockHistory))
+            $stmtUnlockHistory->close();
     }
 }
 
@@ -333,20 +343,20 @@ function handleFailedLogin($conn, $unique_id, $max_attempts, $lockout_duration)
         $new_attempts = $current_attempts + 1;
         $attempts_remaining = $max_attempts - $new_attempts;
 
-        logActivity("Login attempt for user: " . $unique_id . 
-                   " - Current attempts: " . $new_attempts . 
-                   " of " . $max_attempts . 
-                   " - Locked: " . ($is_locked ? "Yes" : "No"));
+        logActivity("Login attempt for user: " . $unique_id .
+            " - Current attempts: " . $new_attempts .
+            " of " . $max_attempts .
+            " - Locked: " . ($is_locked ? "Yes" : "No"));
 
         if ($is_locked) {
             // Account is already locked
             $lock_time = new DateTime($locked_until);
             $current_time = new DateTime();
             $remaining_time = $lock_time->diff($current_time);
-            
-            $message = "Account is locked. Please try again in " . 
-                      $remaining_time->format('%i minutes %s seconds');
-            
+
+            $message = "Account is locked. Please try again in " .
+                $remaining_time->format('%i minutes %s seconds');
+
             logActivity("Login blocked - Account " . $unique_id . " is already locked until " . $locked_until);
             echo json_encode(["success" => false, "message" => $message]);
             return;
@@ -361,7 +371,7 @@ function handleFailedLogin($conn, $unique_id, $max_attempts, $lockout_duration)
             // Update login attempts table
             $stmtLock = $conn->prepare("UPDATE admin_login_attempts SET attempts = ?, locked_until = ?, last_attempt = NOW() WHERE unique_id = ?");
             $stmtLock->bind_param("isi", $new_attempts, $lock_period, $unique_id);
-            
+
             if (!$stmtLock->execute()) {
                 logActivity("Failed to lock account " . $unique_id . ": " . $stmtLock->error);
                 throw new Exception("Database error");
@@ -371,24 +381,24 @@ function handleFailedLogin($conn, $unique_id, $max_attempts, $lockout_duration)
             $locked_by = 0; // System ID
             $lock_reason = "Account locked due to too many failed login attempts";
             $lock_method = "Automatic lock";
-            
+
             $stmtInsertLock = $conn->prepare("
                 INSERT INTO admin_lock_history 
                 (unique_id, status, locked_by, lock_reason, lock_method, locked_at) 
                 VALUES (?, 'locked', ?, ?, ?, NOW())
             ");
             $stmtInsertLock->bind_param("iiss", $unique_id, $locked_by, $lock_reason, $lock_method);
-            
+
             if (!$stmtInsertLock->execute()) {
                 logActivity("Failed to record lock history for " . $unique_id . ": " . $stmtInsertLock->error);
             }
 
-            logActivity("Account " . $unique_id . " locked until " . $lock_period . 
-                       " due to " . $new_attempts . " failed attempts");
-            
-            $message = "Too many failed login attempts. Your account is locked for " . 
-                       $lockout_duration . " minutes.";
-            
+            logActivity("Account " . $unique_id . " locked until " . $lock_period .
+                " due to " . $new_attempts . " failed attempts");
+
+            $message = "Too many failed login attempts. Your account is locked for " .
+                $lockout_duration . " minutes.";
+
             echo json_encode(["success" => false, "message" => $message]);
             return;
         }
@@ -407,9 +417,9 @@ function handleFailedLogin($conn, $unique_id, $max_attempts, $lockout_duration)
             throw new Exception("Database error");
         }
 
-        logActivity("Failed login recorded for " . $unique_id . 
-                   " - Attempt " . $new_attempts . " of " . $max_attempts);
-        
+        logActivity("Failed login recorded for " . $unique_id .
+            " - Attempt " . $new_attempts . " of " . $max_attempts);
+
         $message = "Invalid credentials. Attempts remaining: " . $attempts_remaining;
         echo json_encode(["success" => false, "message" => $message]);
 
@@ -418,10 +428,14 @@ function handleFailedLogin($conn, $unique_id, $max_attempts, $lockout_duration)
         echo json_encode(["success" => false, "message" => "An error occurred during login"]);
     } finally {
         // Clean up database connections
-        if (isset($stmtCheckAttempts)) $stmtCheckAttempts->close();
-        if (isset($stmtLock)) $stmtLock->close();
-        if (isset($stmtInsertLock)) $stmtInsertLock->close();
-        if (isset($stmtUpdate)) $stmtUpdate->close();
+        if (isset($stmtCheckAttempts))
+            $stmtCheckAttempts->close();
+        if (isset($stmtLock))
+            $stmtLock->close();
+        if (isset($stmtInsertLock))
+            $stmtInsertLock->close();
+        if (isset($stmtUpdate))
+            $stmtUpdate->close();
     }
 }
 

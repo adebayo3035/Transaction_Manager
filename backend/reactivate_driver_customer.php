@@ -17,6 +17,7 @@ function jsonResponse($success, $message, $logMessage = null) {
 try {
     // Initialize session and database
     include 'config.php';
+    include 'auth_utils.php';
     session_start();
     header('Content-Type: application/json');
 
@@ -78,8 +79,13 @@ try {
     $checkSecret->fetch();
     $checkSecret->close();
 
-    if (md5($providedAnswer) !== $storedHash) {
-        jsonResponse(false, "Invalid secret answer.",
+    // if (md5($providedAnswer) !== $storedHash) {
+    //     jsonResponse(false, "Invalid secret answer.",
+    //         "SECRET_ANSWER_MISMATCH: Admin ID $adminID provided wrong answer for $accountType ID $userID");
+    // }
+
+    if (!verifyAndUpgradeSecretAnswer($conn, $adminID, $providedAnswer, $storedHash)) {
+              jsonResponse(false, "Invalid secret answer.",
             "SECRET_ANSWER_MISMATCH: Admin ID $adminID provided wrong answer for $accountType ID $userID");
     }
 

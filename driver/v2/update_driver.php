@@ -114,7 +114,7 @@ if (isset($data['id'])) {
 
         $encrypted_answer = password_hash($secret_answer, PASSWORD_DEFAULT);
 
-        if (!verifyAndUpgradeSecretAnswer($conn, $driverId, $encrypted_answer, $stored_secret_answer)) {
+        if (!verifyAndUpgradeSecretAnswer($conn, $driverId, $secret_answer, $stored_secret_answer)) {
             logActivity("Secret answer mismatch for Driver ID: $driverId");
             http_response_code(403);
             echo json_encode(["success" => false, "message" => "Account Validation Failed."]);

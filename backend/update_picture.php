@@ -3,6 +3,7 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 header('Content-Type: application/json');
 include 'config.php';
+include 'auth_utils.php';
 session_start();
 $response = ['success' => false, 'message' => ''];
 
@@ -12,7 +13,7 @@ if (!isset($_SESSION['unique_id'])) {
     exit;
 }
 
-$admin_id = (int)$_SESSION['unique_id'];
+$admin_id = (int) $_SESSION['unique_id'];
 
 // Fetch current profile picture and secret answer
 $sql = "SELECT photo, secret_answer FROM admin_tbl WHERE unique_id = ?";
@@ -31,7 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $user_provided_secret_answer = $_POST['secret_answer'];
-    if (md5($user_provided_secret_answer) !== $secret_answer) {
+    // if (md5($user_provided_secret_answer) !== $secret_answer) {
+    //     logActivity("$admin_id, 'Profile Photo Update, Failed secret answer validation.");
+    //     echo json_encode(['success' => false, 'message' => 'Secret Answer Validation Failed.']);
+    //     exit;
+    // }
+    if (!verifyAndUpgradeSecretAnswer($conn, $admin_id, $user_provided_secret_answer, $secret_answer)) {
         logActivity("$admin_id, 'Profile Photo Update, Failed secret answer validation.");
         echo json_encode(['success' => false, 'message' => 'Secret Answer Validation Failed.']);
         exit;
@@ -82,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $sql = "UPDATE admin_tbl SET photo = ? WHERE unique_id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('si', $file_name, $admin_id);
-        
+
         if ($stmt->execute()) {
             if (!empty($current_photo) && $current_photo !== $file_name) {
                 $old_file = $upload_dir . $current_photo;

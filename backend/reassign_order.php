@@ -20,8 +20,8 @@ if ($driverId <= 0) {
     exit();
 }
 
-// Step 1: Check current delivery status of the order
-$stmt = $conn->prepare("SELECT delivery_status FROM orders WHERE order_id = ?");
+// Step 1: Fetch current order status and assigned driver
+$stmt = $conn->prepare("SELECT delivery_status, driver_id FROM orders WHERE order_id = ?");
 $stmt->bind_param("i", $orderId);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -35,7 +35,8 @@ if ($result->num_rows === 0) {
 
 $row = $result->fetch_assoc();
 $delivery_status = $row['delivery_status'];
-logActivity("Order ID $orderId found with delivery status: $delivery_status");
+$currentDriverId = $row['driver_id'];
+logActivity("Order ID $orderId found with delivery status: $delivery_status and current driver ID: $currentDriverId");
 
 if ($delivery_status !== 'Assigned') {
     logActivity("Order ID $orderId cannot be reassigned. Current status: $delivery_status");
@@ -70,30 +71,39 @@ if ($driver_status !== 'Available') {
 }
 $stmt->close();
 
-// Step 3: Perform the reassignment and update driver status
+// Step 3: Perform the reassignment and update driver statuses
 $conn->begin_transaction();
 
 try {
+    // Reassign order to new driver
     $stmt1 = $conn->prepare("UPDATE orders SET driver_id = ? WHERE order_id = ?");
     $stmt1->bind_param('ii', $driverId, $orderId);
     $stmt1->execute();
     logActivity("Updated Order ID $orderId with new Driver ID $driverId.");
 
+    // Set new driver's status to 'Not Available'
     $stmt2 = $conn->prepare("UPDATE driver SET status = 'Not Available' WHERE id = ?");
     $stmt2->bind_param('i', $driverId);
     $stmt2->execute();
     logActivity("Updated Driver ID $driverId status to 'Not Available'.");
 
+    // Set previous driver's status back to 'Available'
+    if ($currentDriverId !== $driverId) {
+        $stmt3 = $conn->prepare("UPDATE driver SET status = 'Available' WHERE id = ?");
+        $stmt3->bind_param('i', $currentDriverId);
+        $stmt3->execute();
+        logActivity("Set previous Driver ID $currentDriverId status back to 'Available'.");
+        $stmt3->close();
+    }
+
     $conn->commit();
     echo json_encode(['success' => true, 'message' => 'Order has been successfully reassigned to another Driver']);
 } catch (Exception $e) {
     $conn->rollback();
-    logActivity("Failed to reassign Order ID $orderId to Driver ID $driverId. Error: " . $e->getMessage());
+    logActivity("Failed to reassign Order ID $orderId. Error: " . $e->getMessage());
     echo json_encode(['success' => false, 'message' => 'Failed to reassign order']);
 } finally {
-    if (isset($stmt1))
-        $stmt1->close();
-    if (isset($stmt2))
-        $stmt2->close();
+    if (isset($stmt1)) $stmt1->close();
+    if (isset($stmt2)) $stmt2->close();
     $conn->close();
 }

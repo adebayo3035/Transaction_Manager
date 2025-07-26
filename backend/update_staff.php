@@ -1,6 +1,7 @@
 <?php
 header('Content-Type: application/json');
 include('config.php');
+include 'auth_utils.php';
 session_start();
 
 try {
@@ -20,7 +21,7 @@ try {
     $email = trim($data['email']);
     $phone_number = trim($data['phone_number']);
     $secret_answer = trim($data['secret_answer']);
-    $encrypted_answer = md5($secret_answer);
+    $encrypted_answer = password_hash($secret_answer, PASSWORD_DEFAULT);
 
     logActivity("Processing update for Admin ID: $adminId");
 
@@ -119,8 +120,14 @@ try {
     }
 
     $stmt->fetch();
-    if ($stored_secret_answer !== $encrypted_answer) {
-        logActivity("Validation failed - Incorrect secret answer for Admin ID: $adminId");
+    // if ($stored_secret_answer !== $encrypted_answer) {
+    //     logActivity("Validation failed - Incorrect secret answer for Admin ID: $adminId");
+    //     echo json_encode(['success' => false, 'message' => 'Error Validating Secret Answer.']);
+    //     $stmt->close();
+    //     exit();
+    // }
+    if (!verifyAndUpgradeSecretAnswer($conn, $adminId, $secret_answer, $stored_secret_answer)) {
+    logActivity("Validation failed - Incorrect secret answer for Admin ID: $adminId");
         echo json_encode(['success' => false, 'message' => 'Error Validating Secret Answer.']);
         $stmt->close();
         exit();

@@ -158,8 +158,8 @@ logActivity("File successfully uploaded: {$upload_file}");
 
 // Insert into the database
 $ran_id = rand(time(), 100000000);
-$encrypt_pass = md5($inputs['password']);
-$encrypt_secret_answer = md5($inputs['secret_answer']);
+$encrypt_pass = password_hash($inputs['password'], PASSWORD_DEFAULT);
+$encrypt_secret_answer = password_hash($inputs['secret_answer'], PASSWORD_DEFAULT);
 $status = "Active now";
 
 $insert_query = $conn->prepare("INSERT INTO admin_tbl (unique_id, firstname, lastname, email, phone, address, gender, password, secret_question, secret_answer, photo, role, onboarded_by, last_updated_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)");

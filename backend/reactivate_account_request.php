@@ -1,5 +1,6 @@
 <?php
 include 'config.php';
+include 'auth_utils.php';
 session_start();
 header('Content-Type: application/json');
 
@@ -42,9 +43,6 @@ if (!in_array($account_type, $allowedTables)) {
     exit();
 }
 
-// Securely hash secret answer before verification
-//$encrypted_answer = md5($secret_answer);
-
 // Call function to reactivate account
 $response = reactivateAccount($conn, $account_type, $user_id, $secret_answer, $adminID);
 
@@ -74,9 +72,14 @@ function reactivateAccount($conn, $accountType, $user_id, $providedSecretAnswer,
     }
 
     // Validate secret answer
-    if (md5($providedSecretAnswer) !== $user['secret_answer']) {
-        logActivity("Secret answer mismatch for ID: $user_id in table: $accountType");
-        return json_encode(['success' => false, 'message' => 'Invalid secret answer.']);
+    // if (md5($providedSecretAnswer) !== $user['secret_answer']) {
+    //     logActivity("Secret answer mismatch for ID: $user_id in table: $accountType");
+    //     return json_encode(['success' => false, 'message' => 'Invalid secret answer.']);
+    // }
+
+    if (!verifyAndUpgradeSecretAnswer($conn, $user_id, $providedSecretAnswer, $user['secret_answer'])) {
+             logActivity("Secret answer mismatch for ID: $user_id in table: $accountType");
+            return json_encode(['success' => false, 'message' => 'Invalid secret answer.']);
     }
 
     // Update account delete status
