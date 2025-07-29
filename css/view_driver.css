@@ -195,6 +195,34 @@ tbody tr td input[type="email"] {
 .not-restricted-badge::before {
     content: "✓ ";
 }
+.restore-icon {
+  display: inline-block;
+  font-size: 15px;              /* Larger size for visibility */
+  color: #4CAF50;               /* Fresh green color */
+  background-color: #e8f5e9;   /* Light green background */
+  padding: 3px 5px;
+  border-radius: 3px;           /* Rounded corners */
+  box-shadow: 0 2px 5px rgba(76, 175, 80, 0.3); /* subtle shadow */
+  cursor: pointer;
+  transition: 
+    background-color 0.3s ease, 
+    color 0.3s ease, 
+    transform 0.2s ease;
+  user-select: none;            /* prevent text selection */
+}
+
+.restore-icon:hover {
+  color: #2e7d32;               /* Darker green on hover */
+  background-color: #c8e6c9;   /* Slightly darker background */
+  transform: scale(1.1);        /* Slightly enlarge on hover */
+  box-shadow: 0 4px 10px rgba(46, 125, 50, 0.4);
+}
+
+.restore-icon:active {
+  transform: scale(0.95);       /* Press effect */
+  box-shadow: 0 1px 3px rgba(46, 125, 50, 0.6);
+}
+
 /* Pagination buttons */
 #pagination button {
     padding: 6px 12px;

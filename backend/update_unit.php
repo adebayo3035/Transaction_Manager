@@ -1,11 +1,11 @@
 <?php
 // Include database connection
-include('config.php'); // Replace with your actual database connection file
+include('config.php');
 session_start();
 
 logActivity("Update Unit request received.");
 
-// Session and Access Check
+// Check user session
 if (!isset($_SESSION['unique_id'])) {
     logActivity("Access denied: User not logged in.");
     echo json_encode(["success" => false, "message" => "Not logged in."]);
@@ -14,70 +14,85 @@ if (!isset($_SESSION['unique_id'])) {
 
 $loggedInUserRole = $_SESSION['role'];
 $logged_in_user = $_SESSION['unique_id'];
+logActivity("User $logged_in_user Role: $loggedInUserRole");
 
-logActivity("Logged-in User ID: $logged_in_user, Role: $loggedInUserRole");
-
-if ($loggedInUserRole !== "Super Admin") {
-    logActivity("Access denied for user $logged_in_user: Role is not Super Admin.");
+if ($loggedInUserRole !== "Super Admin" && $loggedInUserRole !== "Admin") {
+    logActivity("Access denied for $logged_in_user: Not a recognized Administrator or Super Administrator.");
     echo json_encode(["success" => false, "message" => "Access Denied."]);
     exit();
 }
 
-// Get the JSON data from the request body
+// Decode incoming JSON
 $data = json_decode(file_get_contents("php://input"), true);
-logActivity("Received request data: " . json_encode($data));
+logActivity("Request payload received.");
 
-if (isset($data['unit_id'])) {
-    $unitId = $data['unit_id'];
-    $unit_name = $data['unit_name'];
-    $group_id = $data['group_id'];
-
-    // Validate required fields
-    if (empty($unitId) || empty($group_id) || empty($unit_name)) {
-        logActivity("Validation failed: Missing required fields (unit_id, unit_name, group_id).");
-        echo json_encode(['success' => false, 'message' => 'Please fill in all required fields.']);
-        exit;
+// Validate presence of required keys
+$requiredFields = ['unit_id', 'unit_name', 'group_id'];
+foreach ($requiredFields as $field) {
+    if (!isset($data[$field]) || $data[$field] === '') {
+        logActivity("Validation failed: Missing field - $field");
+        echo json_encode(['success' => false, 'message' => "Missing required field: $field"]);
+        exit();
     }
-
-    logActivity("Validating uniqueness of unit name: '$unit_name' excluding unit_id: $unitId");
-
-    // Check for Name Duplicates
-    $selectRest = "SELECT COUNT(*) AS unit_count FROM unit WHERE unit_name = ? and unit_id != ?";
-    $stmt = $conn->prepare($selectRest);
-    $stmt->bind_param("si", $unit_name, $unitId);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
-
-    if ($row['unit_count'] > 0) {
-        logActivity("Duplicate unit name found for '$unit_name'. Update aborted.");
-        die(json_encode(["success" => false, "message" => "Unit with the same name already exists."]));
-    }
-    $stmt->close();
-
-    logActivity("No duplicate unit found. Proceeding to update unit ID $unitId with name '$unit_name' and group ID $group_id.");
-
-    // Prepare SQL query to update the unit
-    $sql = "UPDATE unit SET unit_name = ?, group_id = ? WHERE unit_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sii", $unit_name, $group_id, $unitId);
-
-    // Execute the statement
-    if ($stmt->execute()) {
-        logActivity("Unit ID $unitId successfully updated by user $logged_in_user.");
-        echo json_encode(["success" => true, "message" => "Unit Record has been Successfully Updated."]);
-    } else {
-        logActivity("Database error while updating unit ID $unitId: " . $stmt->error);
-        echo json_encode(["success" => false, "message" => "Failed to update Unit Details."]);
-    }
-
-    // Close the statement
-    $stmt->close();
-} else {
-    logActivity("Update failed: Unit ID not provided in the request.");
-    echo json_encode(["success" => false, "message" => "Unit ID is missing."]);
 }
 
-// Close the database connection
+
+$unitId    = intval($data['unit_id']);
+$unit_name = trim($data['unit_name']);
+$group_id  = intval($data['group_id']);
+
+// Check for soft-deleted unit
+$checkDelSql = "SELECT delete_status FROM unit WHERE unit_id = ?";
+$stmt = $conn->prepare($checkDelSql);
+$stmt->bind_param("i", $unitId);
+$stmt->execute();
+$res = $stmt->get_result();
+
+if ($res->num_rows === 0) {
+    logActivity("Unit ID $unitId not found.");
+    echo json_encode(["success" => false, "message" => "Unit not found."]);
+    exit();
+}
+
+$unitRow = $res->fetch_assoc();
+$currentDeleteStatus = $unitRow['delete_status'];
+
+// Check if the unit is currently deleted but the update does not attempt to reactivate
+if ($currentDeleteStatus == 1) {
+    logActivity("Blocked update attempt: Unit ID $unitId is Deactivated.");
+    echo json_encode(["success" => false, "message" => "Unit is deleted. Please reactivate it before updating."]);
+    exit();
+}
+$stmt->close();
+
+// Check uniqueness of new name
+$checkDupSql = "SELECT COUNT(*) as count FROM unit WHERE unit_name = ? AND unit_id != ?";
+$stmt = $conn->prepare($checkDupSql);
+$stmt->bind_param("si", $unit_name, $unitId);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+$stmt->close();
+
+if ($row['count'] > 0) {
+    logActivity("Duplicate unit name '$unit_name' detected.");
+    echo json_encode(["success" => false, "message" => "Another unit with the same name already exists."]);
+    exit();
+}
+
+// Proceed with update
+$updateSql = "UPDATE unit SET unit_name = ?, group_id = ? WHERE unit_id = ?";
+$stmt = $conn->prepare($updateSql);
+$stmt->bind_param("sii", $unit_name, $group_id, $unitId);
+
+if ($stmt->execute()) {
+    logActivity("Unit ID $unitId updated successfully by $logged_in_user.");
+    echo json_encode(["success" => true, "message" => "Unit record updated successfully."]);
+} else {
+    logActivity("Update failed for Unit ID $unitId: " . $stmt->error);
+    echo json_encode(["success" => false, "message" => "Failed to update unit."]);
+}
+
+$stmt->close();
 $conn->close();
-logActivity("Update Unit request ended.");
+logActivity("Update Unit request completed.");

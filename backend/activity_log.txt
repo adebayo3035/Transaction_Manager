@@ -1,160 +1,3944 @@
-[2025-07-26 22:59:05]
-UserID: 1359982417
+[2025-07-28 18:12:00]
+UserID: 22675443
 Method: POST
-URL: http://localhost/transaction_manager/backend/update_picture.php
-Source: auth_utils.php (Line 45)
-Message: Secret Answer verification started for Admin ID: 1359982417
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 18)
+Message: Process started
 ----------------------------------------
 
-[2025-07-26 22:59:05]
-UserID: 1359982417
+[2025-07-28 18:12:00]
+UserID: 22675443
 Method: POST
-URL: http://localhost/transaction_manager/backend/update_picture.php
-Source: auth_utils.php (Line 82)
-Message: Secret Answer verification failed for Admin ID: 1359982417
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 52)
+Message: Processing deletion for group ID: 6
 ----------------------------------------
 
-[2025-07-26 22:59:05]
-UserID: 1359982417
+[2025-07-28 18:12:00]
+UserID: 22675443
 Method: POST
-URL: http://localhost/transaction_manager/backend/update_picture.php
-Source: update_picture.php (Line 41)
-Message: 1359982417, 'Profile Photo Update, Failed secret answer validation.
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 56)
+Message: Transaction started
 ----------------------------------------
 
-[2025-07-26 23:00:36]
-UserID: 1359982417
+[2025-07-28 18:12:00]
+UserID: 22675443
 Method: POST
-URL: http://localhost/transaction_manager/backend/update_picture.php
-Source: auth_utils.php (Line 45)
-Message: Secret Answer verification started for Admin ID: 1359982417
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 85)
+Message: Group found - ID: 6, Name: Law and Legal Reforms
 ----------------------------------------
 
-[2025-07-26 23:00:36]
-UserID: 1359982417
+[2025-07-28 18:12:00]
+UserID: 22675443
 Method: POST
-URL: http://localhost/transaction_manager/backend/update_picture.php
-Source: auth_utils.php (Line 68)
-Message: Secret Answer matched using modern hashing for Admin ID: 1359982417
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 106)
+Message: Dependency check - Teams: 0, Units: 1, Customers: 3
 ----------------------------------------
 
-[2025-07-26 23:00:36]
-UserID: 1359982417
+[2025-07-28 18:12:00]
+UserID: 22675443
 Method: POST
-URL: http://localhost/transaction_manager/backend/update_picture.php
-Source: update_picture.php (Line 46)
-Message: 1359982417, 'Profile Photo Update, Secret answer validated.
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 187)
+Message: Group deletion process completed
 ----------------------------------------
 
-[2025-07-26 23:00:36]
-UserID: 1359982417
-Method: POST
-URL: http://localhost/transaction_manager/backend/update_picture.php
-Source: update_picture.php (Line 82)
-Message: 1359982417, 'Profile Photo Update, Duplicate image upload attempt: . 0b61bd6ea37ec3d028ecbbed470ad4d9.jpg
-----------------------------------------
-
-[2025-07-26 23:01:04]
-UserID: 1359982417
-Method: POST
-URL: http://localhost/transaction_manager/backend/update_picture.php
-Source: auth_utils.php (Line 45)
-Message: Secret Answer verification started for Admin ID: 1359982417
-----------------------------------------
-
-[2025-07-26 23:01:04]
-UserID: 1359982417
-Method: POST
-URL: http://localhost/transaction_manager/backend/update_picture.php
-Source: auth_utils.php (Line 68)
-Message: Secret Answer matched using modern hashing for Admin ID: 1359982417
-----------------------------------------
-
-[2025-07-26 23:01:04]
-UserID: 1359982417
-Method: POST
-URL: http://localhost/transaction_manager/backend/update_picture.php
-Source: update_picture.php (Line 46)
-Message: 1359982417, 'Profile Photo Update, Secret answer validated.
-----------------------------------------
-
-[2025-07-26 23:01:05]
-UserID: 1359982417
-Method: POST
-URL: http://localhost/transaction_manager/backend/update_picture.php
-Source: update_picture.php (Line 97)
-Message: 1359982417, 'Profile Photo Update, Old photo deleted: . fbf30be152240b89a9747ba3a4559d5e.jpeg
-----------------------------------------
-
-[2025-07-26 23:01:05]
-UserID: 1359982417
-Method: POST
-URL: http://localhost/transaction_manager/backend/update_picture.php
-Source: update_picture.php (Line 104)
-Message: 1359982417, 'Profile Photo Update, Profile photo updated successfully to: ' . 7e9dad3f11e421c9fe766bf21dedfef7.jpeg
-----------------------------------------
-
-[2025-07-26 23:01:08]
-UserID: 1359982417
+[2025-07-28 18:14:06]
+UserID: 22675443
 Method: GET
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 10)
 Message: Fetching admin notifications started.
 ----------------------------------------
 
-[2025-07-26 23:01:08]
-UserID: 1359982417
+[2025-07-28 18:14:06]
+UserID: 22675443
 Method: GET
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 41)
 Message: User role detected: Super Admin
 ----------------------------------------
 
-[2025-07-26 23:01:08]
-UserID: 1359982417
+[2025-07-28 18:14:06]
+UserID: 22675443
 Method: GET
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 63)
 Message: Fetched 5 notifications for page 1.
 ----------------------------------------
 
-[2025-07-26 23:01:08]
-UserID: 1359982417
+[2025-07-28 18:14:06]
+UserID: 22675443
 Method: GET
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 86)
 Message: Total unread notifications: 9. Total pages: 2.
 ----------------------------------------
 
-[2025-07-26 23:01:08]
-UserID: 1359982417
+[2025-07-28 18:14:06]
+UserID: 22675443
 Method: GET
 URL: http://localhost/transaction_manager/backend/notification.php
 Source: notification.php (Line 110)
 Message: Fetching admin notifications process ended.
 ----------------------------------------
 
-[2025-07-26 23:01:08]
-UserID: 1359982417
+[2025-07-28 18:14:06]
+UserID: 22675443
 Method: GET
 URL: http://localhost/transaction_manager/backend/navbar.php
 Source: navbar.php (Line 15)
-Message: Admin data fetched successfully for user ID: 1359982417
+Message: Admin data fetched successfully for user ID: 22675443
 ----------------------------------------
 
-[2025-07-26 23:01:09]
-UserID: 1359982417
+[2025-07-28 18:14:06]
+UserID: 22675443
 Method: GET
-URL: http://localhost/transaction_manager/backend/staff_profile.php
-Source: staff_profile.php (Line 25)
-Message: Admin profile fetched successfully for user ID: 1359982417
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 6)
+Message: Group listing fetch process started
 ----------------------------------------
 
-[2025-07-26 23:01:09]
-UserID: 1359982417
+[2025-07-28 18:14:06]
+UserID: 22675443
 Method: GET
-URL: http://localhost/transaction_manager/backend/staff_profile.php
-Source: staff_profile.php (Line 25)
-Message: Admin profile fetched successfully for user ID: 1359982417
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 17)
+Message: Request initiated by user ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-07-28 18:14:06]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 26)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-28 18:14:06]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 69)
+Message: Successfully retrieved 9 paginated groups
+----------------------------------------
+
+[2025-07-28 18:14:06]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 86)
+Message: Group listing fetch completed successfully
+----------------------------------------
+
+[2025-07-28 18:14:06]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 102)
+Message: Group listing fetch process completed
+----------------------------------------
+
+[2025-07-28 18:14:16]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 18)
+Message: Process started
+----------------------------------------
+
+[2025-07-28 18:14:16]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 52)
+Message: Processing deletion for group ID: 6
+----------------------------------------
+
+[2025-07-28 18:14:16]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 56)
+Message: Transaction started
+----------------------------------------
+
+[2025-07-28 18:14:16]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 85)
+Message: Group found - ID: 6, Name: Law and Legal Reforms
+----------------------------------------
+
+[2025-07-28 18:14:16]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 106)
+Message: Dependency check - Teams: 0, Units: 1, Customers: 3
+----------------------------------------
+
+[2025-07-28 18:14:16]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 163)
+Message: Deletion failed: Group has dependencies - Teams: 0, Units: 1, Customers: 3
+----------------------------------------
+
+[2025-07-28 18:14:16]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 187)
+Message: Group deletion process completed
+----------------------------------------
+
+[2025-07-28 18:14:43]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_unit_group.php
+Source: update_unit_group.php (Line 13)
+Message: Restore request received by user ID: 22675443, Role: Super Admin
+----------------------------------------
+
+[2025-07-28 18:14:43]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_unit_group.php
+Source: update_unit_group.php (Line 16)
+Message: Session snapshot: {"unique_id":22675443,"firstname":"Abdul-Rahmon","lastname":"Adebayor","role":"Super Admin","restriction_id":0,"secret_answer":"4df7caa0cb9204ff329c082eba7ba0a2","ip_address":"::1","user_agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/138.0.0.0 Safari\/537.36","created_at":1753705229,"last_activity":1753705230}
+----------------------------------------
+
+[2025-07-28 18:14:43]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_unit_group.php
+Source: update_unit_group.php (Line 59)
+Message: Record restored in groups by 22675443 (ID: 19).
+----------------------------------------
+
+[2025-07-28 18:14:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 6)
+Message: Group listing fetch process started
+----------------------------------------
+
+[2025-07-28 18:14:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 17)
+Message: Request initiated by user ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-07-28 18:14:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 26)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-28 18:14:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 69)
+Message: Successfully retrieved 9 paginated groups
+----------------------------------------
+
+[2025-07-28 18:14:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 86)
+Message: Group listing fetch completed successfully
+----------------------------------------
+
+[2025-07-28 18:14:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 102)
+Message: Group listing fetch process completed
+----------------------------------------
+
+[2025-07-28 18:14:50]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 18)
+Message: Process started
+----------------------------------------
+
+[2025-07-28 18:14:50]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 52)
+Message: Processing deletion for group ID: 19
+----------------------------------------
+
+[2025-07-28 18:14:50]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 56)
+Message: Transaction started
+----------------------------------------
+
+[2025-07-28 18:14:50]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 85)
+Message: Group found - ID: 19, Name: Admin Manager
+----------------------------------------
+
+[2025-07-28 18:14:50]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 106)
+Message: Dependency check - Teams: 0, Units: 0, Customers: 0
+----------------------------------------
+
+[2025-07-28 18:14:50]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 145)
+Message: Successfully deleted group ID: 19
+----------------------------------------
+
+[2025-07-28 18:14:50]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 187)
+Message: Group deletion process completed
+----------------------------------------
+
+[2025-07-28 18:14:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-07-28 18:14:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-28 18:14:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-07-28 18:14:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-07-28 18:14:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 9. Total pages: 2.
+----------------------------------------
+
+[2025-07-28 18:14:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-07-28 18:14:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 6)
+Message: Group listing fetch process started
+----------------------------------------
+
+[2025-07-28 18:14:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 17)
+Message: Request initiated by user ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-07-28 18:14:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 26)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-28 18:14:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 69)
+Message: Successfully retrieved 9 paginated groups
+----------------------------------------
+
+[2025-07-28 18:14:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 86)
+Message: Group listing fetch completed successfully
+----------------------------------------
+
+[2025-07-28 18:14:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 102)
+Message: Group listing fetch process completed
+----------------------------------------
+
+[2025-07-28 18:15:13]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_group_details.php
+Source: fetch_group_details.php (Line 11)
+Message: Group details fetch process started
+----------------------------------------
+
+[2025-07-28 18:15:13]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_group_details.php
+Source: fetch_group_details.php (Line 24)
+Message: Request initiated by user ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-07-28 18:15:13]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_group_details.php
+Source: fetch_group_details.php (Line 47)
+Message: Processing group details for ID: 3
+----------------------------------------
+
+[2025-07-28 18:15:13]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_group_details.php
+Source: fetch_group_details.php (Line 52)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-28 18:15:13]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_group_details.php
+Source: fetch_group_details.php (Line 82)
+Message: Successfully retrieved group details for ID: 3
+----------------------------------------
+
+[2025-07-28 18:15:13]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_group_details.php
+Source: fetch_group_details.php (Line 94)
+Message: Group details fetch completed successfully
+----------------------------------------
+
+[2025-07-28 18:15:13]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_group_details.php
+Source: fetch_group_details.php (Line 120)
+Message: Group details fetch process completed
+----------------------------------------
+
+[2025-07-28 18:15:17]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_group.php
+Source: update_group.php (Line 30)
+Message: Update group request received: {"group_id":3,"group_name":"Information Security and Management"}
+----------------------------------------
+
+[2025-07-28 18:15:17]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_group.php
+Source: update_group.php (Line 77)
+Message: Group ID 3 updated successfully by user 22675443. New name: Information Security and Management
+----------------------------------------
+
+[2025-07-28 18:15:17]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_group.php
+Source: update_group.php (Line 91)
+Message: Database connection closed after group update request.
+----------------------------------------
+
+[2025-07-28 18:15:19]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-28 18:15:19]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-07-28 18:15:19]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-07-28 18:15:19]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 9. Total pages: 2.
+----------------------------------------
+
+[2025-07-28 18:15:19]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-07-28 18:15:19]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-07-28 18:15:19]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 6)
+Message: Group listing fetch process started
+----------------------------------------
+
+[2025-07-28 18:15:19]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 17)
+Message: Request initiated by user ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-07-28 18:15:19]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 26)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-28 18:15:19]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 69)
+Message: Successfully retrieved 9 paginated groups
+----------------------------------------
+
+[2025-07-28 18:15:19]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 86)
+Message: Group listing fetch completed successfully
+----------------------------------------
+
+[2025-07-28 18:15:19]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 102)
+Message: Group listing fetch process completed
+----------------------------------------
+
+[2025-07-28 18:15:29]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 18)
+Message: Process started
+----------------------------------------
+
+[2025-07-28 18:15:29]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 52)
+Message: Processing deletion for group ID: 18
+----------------------------------------
+
+[2025-07-28 18:15:29]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 56)
+Message: Transaction started
+----------------------------------------
+
+[2025-07-28 18:15:29]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 85)
+Message: Group found - ID: 18, Name: System Control
+----------------------------------------
+
+[2025-07-28 18:15:29]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 106)
+Message: Dependency check - Teams: 0, Units: 1, Customers: 0
+----------------------------------------
+
+[2025-07-28 18:15:29]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 163)
+Message: Deletion failed: Group has dependencies - Teams: 0, Units: 1, Customers: 0
+----------------------------------------
+
+[2025-07-28 18:15:29]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 187)
+Message: Group deletion process completed
+----------------------------------------
+
+[2025-07-28 18:25:32]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 18)
+Message: Process started
+----------------------------------------
+
+[2025-07-28 18:25:32]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 52)
+Message: Processing deletion for group ID: 3
+----------------------------------------
+
+[2025-07-28 18:25:32]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 56)
+Message: Transaction started
+----------------------------------------
+
+[2025-07-28 18:25:32]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 85)
+Message: Group found - ID: 3, Name: Information Security and Management
+----------------------------------------
+
+[2025-07-28 18:25:32]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 106)
+Message: Dependency check - Teams: 0, Units: 0, Customers: 0
+----------------------------------------
+
+[2025-07-28 18:25:32]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 145)
+Message: Successfully deleted group ID: 3
+----------------------------------------
+
+[2025-07-28 18:25:32]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 187)
+Message: Group deletion process completed
+----------------------------------------
+
+[2025-07-28 18:25:34]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-07-28 18:25:34]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-28 18:25:34]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-07-28 18:25:34]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-07-28 18:25:34]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 9. Total pages: 2.
+----------------------------------------
+
+[2025-07-28 18:25:34]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-07-28 18:25:34]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 6)
+Message: Group listing fetch process started
+----------------------------------------
+
+[2025-07-28 18:25:34]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 17)
+Message: Request initiated by user ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-07-28 18:25:34]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 26)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-28 18:25:34]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 69)
+Message: Successfully retrieved 9 paginated groups
+----------------------------------------
+
+[2025-07-28 18:25:34]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 86)
+Message: Group listing fetch completed successfully
+----------------------------------------
+
+[2025-07-28 18:25:34]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 102)
+Message: Group listing fetch process completed
+----------------------------------------
+
+[2025-07-28 18:25:48]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 18)
+Message: Process started
+----------------------------------------
+
+[2025-07-28 18:25:48]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 52)
+Message: Processing deletion for group ID: 14
+----------------------------------------
+
+[2025-07-28 18:25:48]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 56)
+Message: Transaction started
+----------------------------------------
+
+[2025-07-28 18:25:48]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 85)
+Message: Group found - ID: 14, Name: iT Infrastructure
+----------------------------------------
+
+[2025-07-28 18:25:48]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 106)
+Message: Dependency check - Teams: 0, Units: 2, Customers: 0
+----------------------------------------
+
+[2025-07-28 18:25:48]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 163)
+Message: Deletion failed: Group has dependencies - Teams: 0, Units: 2, Customers: 0
+----------------------------------------
+
+[2025-07-28 18:25:48]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 187)
+Message: Group deletion process completed
+----------------------------------------
+
+[2025-07-28 18:26:03]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 18)
+Message: Process started
+----------------------------------------
+
+[2025-07-28 18:26:03]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 52)
+Message: Processing deletion for group ID: 2
+----------------------------------------
+
+[2025-07-28 18:26:03]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 56)
+Message: Transaction started
+----------------------------------------
+
+[2025-07-28 18:26:03]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 85)
+Message: Group found - ID: 2, Name: IT Innovation Operations
+----------------------------------------
+
+[2025-07-28 18:26:03]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 106)
+Message: Dependency check - Teams: 0, Units: 4, Customers: 8
+----------------------------------------
+
+[2025-07-28 18:26:03]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 163)
+Message: Deletion failed: Group has dependencies - Teams: 0, Units: 4, Customers: 8
+----------------------------------------
+
+[2025-07-28 18:26:03]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 187)
+Message: Group deletion process completed
+----------------------------------------
+
+[2025-07-28 18:26:07]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 18)
+Message: Process started
+----------------------------------------
+
+[2025-07-28 18:26:07]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 52)
+Message: Processing deletion for group ID: 13
+----------------------------------------
+
+[2025-07-28 18:26:07]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 56)
+Message: Transaction started
+----------------------------------------
+
+[2025-07-28 18:26:07]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 85)
+Message: Group found - ID: 13, Name: IT innovations and discovery
+----------------------------------------
+
+[2025-07-28 18:26:07]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 106)
+Message: Dependency check - Teams: 0, Units: 0, Customers: 1
+----------------------------------------
+
+[2025-07-28 18:26:07]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 163)
+Message: Deletion failed: Group has dependencies - Teams: 0, Units: 0, Customers: 1
+----------------------------------------
+
+[2025-07-28 18:26:07]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 187)
+Message: Group deletion process completed
+----------------------------------------
+
+[2025-07-28 18:26:13]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 18)
+Message: Process started
+----------------------------------------
+
+[2025-07-28 18:26:13]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 52)
+Message: Processing deletion for group ID: 17
+----------------------------------------
+
+[2025-07-28 18:26:13]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 56)
+Message: Transaction started
+----------------------------------------
+
+[2025-07-28 18:26:13]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 85)
+Message: Group found - ID: 17, Name: Security Analyst
+----------------------------------------
+
+[2025-07-28 18:26:13]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 106)
+Message: Dependency check - Teams: 0, Units: 0, Customers: 0
+----------------------------------------
+
+[2025-07-28 18:26:14]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 145)
+Message: Successfully deleted group ID: 17
+----------------------------------------
+
+[2025-07-28 18:26:14]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 187)
+Message: Group deletion process completed
+----------------------------------------
+
+[2025-07-28 18:26:15]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-28 18:26:15]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-07-28 18:26:15]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-07-28 18:26:15]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 9. Total pages: 2.
+----------------------------------------
+
+[2025-07-28 18:26:15]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-07-28 18:26:15]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-07-28 18:26:16]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 6)
+Message: Group listing fetch process started
+----------------------------------------
+
+[2025-07-28 18:26:16]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 17)
+Message: Request initiated by user ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-07-28 18:26:16]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 26)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-28 18:26:16]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 69)
+Message: Successfully retrieved 9 paginated groups
+----------------------------------------
+
+[2025-07-28 18:26:16]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 86)
+Message: Group listing fetch completed successfully
+----------------------------------------
+
+[2025-07-28 18:26:16]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 102)
+Message: Group listing fetch process completed
+----------------------------------------
+
+[2025-07-28 18:26:26]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 18)
+Message: Process started
+----------------------------------------
+
+[2025-07-28 18:26:26]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 52)
+Message: Processing deletion for group ID: 16
+----------------------------------------
+
+[2025-07-28 18:26:26]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 56)
+Message: Transaction started
+----------------------------------------
+
+[2025-07-28 18:26:26]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 85)
+Message: Group found - ID: 16, Name: Settlement and Reconciliation Analysts
+----------------------------------------
+
+[2025-07-28 18:26:26]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 106)
+Message: Dependency check - Teams: 0, Units: 0, Customers: 0
+----------------------------------------
+
+[2025-07-28 18:26:26]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 145)
+Message: Successfully deleted group ID: 16
+----------------------------------------
+
+[2025-07-28 18:26:26]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 187)
+Message: Group deletion process completed
+----------------------------------------
+
+[2025-07-28 18:26:27]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-07-28 18:26:27]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-28 18:26:27]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-07-28 18:26:27]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-07-28 18:26:27]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 9. Total pages: 2.
+----------------------------------------
+
+[2025-07-28 18:26:27]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-07-28 18:26:27]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 6)
+Message: Group listing fetch process started
+----------------------------------------
+
+[2025-07-28 18:26:27]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 17)
+Message: Request initiated by user ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-07-28 18:26:27]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 26)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-28 18:26:27]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 69)
+Message: Successfully retrieved 9 paginated groups
+----------------------------------------
+
+[2025-07-28 18:26:27]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 86)
+Message: Group listing fetch completed successfully
+----------------------------------------
+
+[2025-07-28 18:26:27]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 102)
+Message: Group listing fetch process completed
+----------------------------------------
+
+[2025-07-28 18:26:35]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 18)
+Message: Process started
+----------------------------------------
+
+[2025-07-28 18:26:35]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 52)
+Message: Processing deletion for group ID: 18
+----------------------------------------
+
+[2025-07-28 18:26:35]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 56)
+Message: Transaction started
+----------------------------------------
+
+[2025-07-28 18:26:35]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 85)
+Message: Group found - ID: 18, Name: System Control
+----------------------------------------
+
+[2025-07-28 18:26:35]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 106)
+Message: Dependency check - Teams: 0, Units: 1, Customers: 0
+----------------------------------------
+
+[2025-07-28 18:26:35]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 163)
+Message: Deletion failed: Group has dependencies - Teams: 0, Units: 1, Customers: 0
+----------------------------------------
+
+[2025-07-28 18:26:35]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 187)
+Message: Group deletion process completed
+----------------------------------------
+
+[2025-07-28 18:26:56]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 18)
+Message: Process started
+----------------------------------------
+
+[2025-07-28 18:26:56]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 52)
+Message: Processing deletion for group ID: 18
+----------------------------------------
+
+[2025-07-28 18:26:56]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 56)
+Message: Transaction started
+----------------------------------------
+
+[2025-07-28 18:26:56]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 85)
+Message: Group found - ID: 18, Name: System Control
+----------------------------------------
+
+[2025-07-28 18:26:56]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 106)
+Message: Dependency check - Teams: 0, Units: 1, Customers: 0
+----------------------------------------
+
+[2025-07-28 18:26:56]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 163)
+Message: Deletion failed: Group has dependencies - Teams: 0, Units: 1, Customers: 0
+----------------------------------------
+
+[2025-07-28 18:26:56]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 187)
+Message: Group deletion process completed
+----------------------------------------
+
+[2025-07-28 18:27:01]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 18)
+Message: Process started
+----------------------------------------
+
+[2025-07-28 18:27:01]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 52)
+Message: Processing deletion for group ID: 6
+----------------------------------------
+
+[2025-07-28 18:27:01]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 56)
+Message: Transaction started
+----------------------------------------
+
+[2025-07-28 18:27:01]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 85)
+Message: Group found - ID: 6, Name: Law and Legal Reforms
+----------------------------------------
+
+[2025-07-28 18:27:01]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 106)
+Message: Dependency check - Teams: 0, Units: 1, Customers: 3
+----------------------------------------
+
+[2025-07-28 18:27:01]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 163)
+Message: Deletion failed: Group has dependencies - Teams: 0, Units: 1, Customers: 3
+----------------------------------------
+
+[2025-07-28 18:27:01]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 187)
+Message: Group deletion process completed
+----------------------------------------
+
+[2025-07-28 18:27:04]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 18)
+Message: Process started
+----------------------------------------
+
+[2025-07-28 18:27:04]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 52)
+Message: Processing deletion for group ID: 13
+----------------------------------------
+
+[2025-07-28 18:27:04]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 56)
+Message: Transaction started
+----------------------------------------
+
+[2025-07-28 18:27:04]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 85)
+Message: Group found - ID: 13, Name: IT innovations and discovery
+----------------------------------------
+
+[2025-07-28 18:27:04]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 106)
+Message: Dependency check - Teams: 0, Units: 0, Customers: 1
+----------------------------------------
+
+[2025-07-28 18:27:04]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 163)
+Message: Deletion failed: Group has dependencies - Teams: 0, Units: 0, Customers: 1
+----------------------------------------
+
+[2025-07-28 18:27:04]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 187)
+Message: Group deletion process completed
+----------------------------------------
+
+[2025-07-28 18:27:08]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 18)
+Message: Process started
+----------------------------------------
+
+[2025-07-28 18:27:08]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 52)
+Message: Processing deletion for group ID: 2
+----------------------------------------
+
+[2025-07-28 18:27:08]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 56)
+Message: Transaction started
+----------------------------------------
+
+[2025-07-28 18:27:08]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 85)
+Message: Group found - ID: 2, Name: IT Innovation Operations
+----------------------------------------
+
+[2025-07-28 18:27:08]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 106)
+Message: Dependency check - Teams: 0, Units: 4, Customers: 8
+----------------------------------------
+
+[2025-07-28 18:27:08]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 163)
+Message: Deletion failed: Group has dependencies - Teams: 0, Units: 4, Customers: 8
+----------------------------------------
+
+[2025-07-28 18:27:08]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 187)
+Message: Group deletion process completed
+----------------------------------------
+
+[2025-07-28 18:27:12]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 18)
+Message: Process started
+----------------------------------------
+
+[2025-07-28 18:27:12]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 52)
+Message: Processing deletion for group ID: 14
+----------------------------------------
+
+[2025-07-28 18:27:12]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 56)
+Message: Transaction started
+----------------------------------------
+
+[2025-07-28 18:27:12]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 85)
+Message: Group found - ID: 14, Name: iT Infrastructure
+----------------------------------------
+
+[2025-07-28 18:27:12]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 106)
+Message: Dependency check - Teams: 0, Units: 2, Customers: 0
+----------------------------------------
+
+[2025-07-28 18:27:12]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 163)
+Message: Deletion failed: Group has dependencies - Teams: 0, Units: 2, Customers: 0
+----------------------------------------
+
+[2025-07-28 18:27:12]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 187)
+Message: Group deletion process completed
+----------------------------------------
+
+[2025-07-28 18:27:31]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 888271423
+----------------------------------------
+
+[2025-07-28 18:27:31]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-28 18:27:31]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Admin
+----------------------------------------
+
+[2025-07-28 18:27:31]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 0 notifications for page 1.
+----------------------------------------
+
+[2025-07-28 18:27:31]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 0. Total pages: 0.
+----------------------------------------
+
+[2025-07-28 18:27:31]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-07-28 18:27:31]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 6)
+Message: Group listing fetch process started
+----------------------------------------
+
+[2025-07-28 18:27:31]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 17)
+Message: Request initiated by user ID: 888271423 (Role: Admin)
+----------------------------------------
+
+[2025-07-28 18:27:31]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 26)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-28 18:27:31]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 69)
+Message: Successfully retrieved 5 paginated groups
+----------------------------------------
+
+[2025-07-28 18:27:31]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 86)
+Message: Group listing fetch completed successfully
+----------------------------------------
+
+[2025-07-28 18:27:31]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 102)
+Message: Group listing fetch process completed
+----------------------------------------
+
+[2025-07-28 18:36:20]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 18)
+Message: Process started
+----------------------------------------
+
+[2025-07-28 18:36:20]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 52)
+Message: Processing deletion for group ID: 6
+----------------------------------------
+
+[2025-07-28 18:36:20]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 56)
+Message: Transaction started
+----------------------------------------
+
+[2025-07-28 18:36:20]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 85)
+Message: Group found - ID: 6, Name: Law and Legal Reforms
+----------------------------------------
+
+[2025-07-28 18:36:20]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 106)
+Message: Dependency check - Teams: 0, Units: 1, Customers: 3
+----------------------------------------
+
+[2025-07-28 18:36:20]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 163)
+Message: Deletion failed: Group has dependencies - Teams: 0, Units: 1, Customers: 3
+----------------------------------------
+
+[2025-07-28 18:36:20]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 187)
+Message: Group deletion process completed
+----------------------------------------
+
+[2025-07-28 18:37:04]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-28 18:37:05]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-07-28 18:37:05]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-07-28 18:37:05]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 9. Total pages: 2.
+----------------------------------------
+
+[2025-07-28 18:37:05]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-07-28 18:37:05]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-07-28 18:37:05]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 6)
+Message: Group listing fetch process started
+----------------------------------------
+
+[2025-07-28 18:37:05]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 17)
+Message: Request initiated by user ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-07-28 18:37:05]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 26)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-28 18:37:05]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 69)
+Message: Successfully retrieved 9 paginated groups
+----------------------------------------
+
+[2025-07-28 18:37:05]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 86)
+Message: Group listing fetch completed successfully
+----------------------------------------
+
+[2025-07-28 18:37:05]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 102)
+Message: Group listing fetch process completed
+----------------------------------------
+
+[2025-07-28 18:37:15]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 18)
+Message: Process started
+----------------------------------------
+
+[2025-07-28 18:37:15]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 52)
+Message: Processing deletion for group ID: 14
+----------------------------------------
+
+[2025-07-28 18:37:15]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 56)
+Message: Transaction started
+----------------------------------------
+
+[2025-07-28 18:37:15]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 85)
+Message: Group found - ID: 14, Name: iT Infrastructure
+----------------------------------------
+
+[2025-07-28 18:37:15]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 106)
+Message: Dependency check - Teams: 0, Units: 2, Customers: 0
+----------------------------------------
+
+[2025-07-28 18:37:15]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 163)
+Message: Deletion failed: Group has dependencies - Teams: 0, Units: 2, Customers: 0
+----------------------------------------
+
+[2025-07-28 18:37:15]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 187)
+Message: Group deletion process completed
+----------------------------------------
+
+[2025-07-28 18:37:18]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-07-28 18:37:18]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-28 18:37:18]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-07-28 18:37:18]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-07-28 18:37:18]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 9. Total pages: 2.
+----------------------------------------
+
+[2025-07-28 18:37:18]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-07-28 18:37:18]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 6)
+Message: Group listing fetch process started
+----------------------------------------
+
+[2025-07-28 18:37:18]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 17)
+Message: Request initiated by user ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-07-28 18:37:18]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 26)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-28 18:37:18]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 69)
+Message: Successfully retrieved 9 paginated groups
+----------------------------------------
+
+[2025-07-28 18:37:18]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 86)
+Message: Group listing fetch completed successfully
+----------------------------------------
+
+[2025-07-28 18:37:18]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 102)
+Message: Group listing fetch process completed
+----------------------------------------
+
+[2025-07-28 18:37:45]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 18)
+Message: Process started
+----------------------------------------
+
+[2025-07-28 18:37:45]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 52)
+Message: Processing deletion for group ID: 14
+----------------------------------------
+
+[2025-07-28 18:37:45]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 56)
+Message: Transaction started
+----------------------------------------
+
+[2025-07-28 18:37:45]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 85)
+Message: Group found - ID: 14, Name: iT Infrastructure
+----------------------------------------
+
+[2025-07-28 18:37:45]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 106)
+Message: Dependency check - Teams: 0, Units: 2, Customers: 0
+----------------------------------------
+
+[2025-07-28 18:37:45]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 163)
+Message: Deletion failed: Group has dependencies - Teams: 0, Units: 2, Customers: 0
+----------------------------------------
+
+[2025-07-28 18:37:45]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 187)
+Message: Group deletion process completed
+----------------------------------------
+
+[2025-07-28 18:37:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-07-28 18:37:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 6)
+Message: Group listing fetch process started
+----------------------------------------
+
+[2025-07-28 18:37:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 17)
+Message: Request initiated by user ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-07-28 18:37:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 26)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-28 18:37:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 69)
+Message: Successfully retrieved 9 paginated groups
+----------------------------------------
+
+[2025-07-28 18:37:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 86)
+Message: Group listing fetch completed successfully
+----------------------------------------
+
+[2025-07-28 18:37:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 102)
+Message: Group listing fetch process completed
+----------------------------------------
+
+[2025-07-28 18:37:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-28 18:37:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-07-28 18:37:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-07-28 18:37:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 9. Total pages: 2.
+----------------------------------------
+
+[2025-07-28 18:37:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-07-28 18:38:15]
+UserID: 888271423
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_group_details.php
+Source: fetch_group_details.php (Line 11)
+Message: Group details fetch process started
+----------------------------------------
+
+[2025-07-28 18:38:15]
+UserID: 888271423
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_group_details.php
+Source: fetch_group_details.php (Line 24)
+Message: Request initiated by user ID: 888271423 (Role: Admin)
+----------------------------------------
+
+[2025-07-28 18:38:15]
+UserID: 888271423
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_group_details.php
+Source: fetch_group_details.php (Line 47)
+Message: Processing group details for ID: 13
+----------------------------------------
+
+[2025-07-28 18:38:15]
+UserID: 888271423
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_group_details.php
+Source: fetch_group_details.php (Line 52)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-28 18:38:15]
+UserID: 888271423
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_group_details.php
+Source: fetch_group_details.php (Line 82)
+Message: Successfully retrieved group details for ID: 13
+----------------------------------------
+
+[2025-07-28 18:38:15]
+UserID: 888271423
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_group_details.php
+Source: fetch_group_details.php (Line 94)
+Message: Group details fetch completed successfully
+----------------------------------------
+
+[2025-07-28 18:38:15]
+UserID: 888271423
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_group_details.php
+Source: fetch_group_details.php (Line 120)
+Message: Group details fetch process completed
+----------------------------------------
+
+[2025-07-28 18:38:26]
+UserID: 888271423
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_group.php
+Source: update_group.php (Line 17)
+Message: Access denied: User 888271423 does not have Super Admin privileges.
+----------------------------------------
+
+[2025-07-28 18:40:33]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 6)
+Message: Group listing fetch process started
+----------------------------------------
+
+[2025-07-28 18:40:33]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 17)
+Message: Request initiated by user ID: 888271423 (Role: Admin)
+----------------------------------------
+
+[2025-07-28 18:40:33]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 26)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-28 18:40:33]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 69)
+Message: Successfully retrieved 5 paginated groups
+----------------------------------------
+
+[2025-07-28 18:40:33]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 86)
+Message: Group listing fetch completed successfully
+----------------------------------------
+
+[2025-07-28 18:40:33]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 102)
+Message: Group listing fetch process completed
+----------------------------------------
+
+[2025-07-28 18:40:38]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 888271423
+----------------------------------------
+
+[2025-07-28 18:40:38]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-28 18:40:38]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Admin
+----------------------------------------
+
+[2025-07-28 18:40:38]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 0 notifications for page 1.
+----------------------------------------
+
+[2025-07-28 18:40:38]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 0. Total pages: 0.
+----------------------------------------
+
+[2025-07-28 18:40:38]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-07-28 18:40:38]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_customers.php?page=1&limit=10
+Source: get_customers.php (Line 11)
+Message: Customer listing fetch process started
+----------------------------------------
+
+[2025-07-28 18:40:38]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_customers.php?page=1&limit=10
+Source: get_customers.php (Line 24)
+Message: Request initiated by admin ID: 888271423 (Role: Admin)
+----------------------------------------
+
+[2025-07-28 18:40:38]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_customers.php?page=1&limit=10
+Source: get_customers.php (Line 41)
+Message: Fetching customers - Page: 1, Limit: 10, Offset: 0
+----------------------------------------
+
+[2025-07-28 18:40:38]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_customers.php?page=1&limit=10
+Source: get_customers.php (Line 46)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-28 18:40:38]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_customers.php?page=1&limit=10
+Source: get_customers.php (Line 63)
+Message: Total customers found: 12, Total pages: 2
+----------------------------------------
+
+[2025-07-28 18:40:38]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_customers.php?page=1&limit=10
+Source: get_customers.php (Line 100)
+Message: Successfully retrieved 10 customers
+----------------------------------------
+
+[2025-07-28 18:40:38]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_customers.php?page=1&limit=10
+Source: get_customers.php (Line 120)
+Message: Customer listing fetch completed successfully
+----------------------------------------
+
+[2025-07-28 18:40:38]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_customers.php?page=1&limit=10
+Source: get_customers.php (Line 148)
+Message: Customer listing fetch process completed
+----------------------------------------
+
+[2025-07-28 18:40:38]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_groups.php
+Source: fetch_groups.php (Line 10)
+Message: Group listing fetch process started
+----------------------------------------
+
+[2025-07-28 18:40:38]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_groups.php
+Source: fetch_groups.php (Line 23)
+Message: Request initiated by user ID: 888271423 (Role: Admin)
+----------------------------------------
+
+[2025-07-28 18:40:38]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_groups.php
+Source: fetch_groups.php (Line 28)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-28 18:40:38]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_groups.php
+Source: fetch_groups.php (Line 50)
+Message: Successfully retrieved 5 groups
+----------------------------------------
+
+[2025-07-28 18:40:38]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_groups.php
+Source: fetch_groups.php (Line 63)
+Message: Group listing fetch completed successfully
+----------------------------------------
+
+[2025-07-28 18:40:38]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_groups.php
+Source: fetch_groups.php (Line 88)
+Message: Group listing fetch process completed
+----------------------------------------
+
+[2025-07-28 18:42:01]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 888271423
+----------------------------------------
+
+[2025-07-28 18:42:01]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-28 18:42:01]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Admin
+----------------------------------------
+
+[2025-07-28 18:42:01]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 0 notifications for page 1.
+----------------------------------------
+
+[2025-07-28 18:42:01]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 0. Total pages: 0.
+----------------------------------------
+
+[2025-07-28 18:42:01]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-07-28 18:42:01]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_unittable.php?page=1&limit=10
+Source: fetch_unittable.php (Line 6)
+Message: Unit listing fetch process started
+----------------------------------------
+
+[2025-07-28 18:42:01]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_unittable.php?page=1&limit=10
+Source: fetch_unittable.php (Line 17)
+Message: Request initiated by user ID: 888271423 (Role: Admin)
+----------------------------------------
+
+[2025-07-28 18:42:01]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_unittable.php?page=1&limit=10
+Source: fetch_unittable.php (Line 26)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-28 18:42:01]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_unittable.php?page=1&limit=10
+Source: fetch_unittable.php (Line 69)
+Message: Successfully retrieved 5 paginated units
+----------------------------------------
+
+[2025-07-28 18:42:01]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_unittable.php?page=1&limit=10
+Source: fetch_unittable.php (Line 86)
+Message: Unit listing fetch completed successfully
+----------------------------------------
+
+[2025-07-28 18:42:01]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_unittable.php?page=1&limit=10
+Source: fetch_unittable.php (Line 102)
+Message: Unit listing fetch process completed
+----------------------------------------
+
+[2025-07-28 18:42:01]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_groups.php
+Source: fetch_groups.php (Line 10)
+Message: Group listing fetch process started
+----------------------------------------
+
+[2025-07-28 18:42:01]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_groups.php
+Source: fetch_groups.php (Line 23)
+Message: Request initiated by user ID: 888271423 (Role: Admin)
+----------------------------------------
+
+[2025-07-28 18:42:01]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_groups.php
+Source: fetch_groups.php (Line 28)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-28 18:42:01]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_groups.php
+Source: fetch_groups.php (Line 50)
+Message: Successfully retrieved 5 groups
+----------------------------------------
+
+[2025-07-28 18:42:01]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_groups.php
+Source: fetch_groups.php (Line 63)
+Message: Group listing fetch completed successfully
+----------------------------------------
+
+[2025-07-28 18:42:01]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_groups.php
+Source: fetch_groups.php (Line 88)
+Message: Group listing fetch process completed
+----------------------------------------
+
+[2025-07-28 18:42:43]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-28 18:42:43]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Admin
+----------------------------------------
+
+[2025-07-28 18:42:43]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 0 notifications for page 1.
+----------------------------------------
+
+[2025-07-28 18:42:43]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 0. Total pages: 0.
+----------------------------------------
+
+[2025-07-28 18:42:43]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-07-28 18:42:43]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 6)
+Message: Group listing fetch process started
+----------------------------------------
+
+[2025-07-28 18:42:43]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 17)
+Message: Request initiated by user ID: 888271423 (Role: Admin)
+----------------------------------------
+
+[2025-07-28 18:42:43]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 26)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-28 18:42:43]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 69)
+Message: Successfully retrieved 5 paginated groups
+----------------------------------------
+
+[2025-07-28 18:42:43]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 86)
+Message: Group listing fetch completed successfully
+----------------------------------------
+
+[2025-07-28 18:42:43]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 102)
+Message: Group listing fetch process completed
+----------------------------------------
+
+[2025-07-28 18:42:43]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 888271423
+----------------------------------------
+
+[2025-07-28 18:42:46]
+UserID: 888271423
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_group_details.php
+Source: fetch_group_details.php (Line 11)
+Message: Group details fetch process started
+----------------------------------------
+
+[2025-07-28 18:42:46]
+UserID: 888271423
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_group_details.php
+Source: fetch_group_details.php (Line 24)
+Message: Request initiated by user ID: 888271423 (Role: Admin)
+----------------------------------------
+
+[2025-07-28 18:42:46]
+UserID: 888271423
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_group_details.php
+Source: fetch_group_details.php (Line 47)
+Message: Processing group details for ID: 14
+----------------------------------------
+
+[2025-07-28 18:42:46]
+UserID: 888271423
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_group_details.php
+Source: fetch_group_details.php (Line 52)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-28 18:42:46]
+UserID: 888271423
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_group_details.php
+Source: fetch_group_details.php (Line 82)
+Message: Successfully retrieved group details for ID: 14
+----------------------------------------
+
+[2025-07-28 18:42:46]
+UserID: 888271423
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_group_details.php
+Source: fetch_group_details.php (Line 94)
+Message: Group details fetch completed successfully
+----------------------------------------
+
+[2025-07-28 18:42:46]
+UserID: 888271423
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_group_details.php
+Source: fetch_group_details.php (Line 120)
+Message: Group details fetch process completed
+----------------------------------------
+
+[2025-07-28 18:42:50]
+UserID: 888271423
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_group.php
+Source: update_group.php (Line 17)
+Message: Access denied: User 888271423 does not have Super Admin privileges.
+----------------------------------------
+
+[2025-07-28 18:42:57]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 6)
+Message: Group listing fetch process started
+----------------------------------------
+
+[2025-07-28 18:42:57]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 17)
+Message: Request initiated by user ID: 888271423 (Role: Admin)
+----------------------------------------
+
+[2025-07-28 18:42:57]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 26)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-28 18:42:57]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 69)
+Message: Successfully retrieved 5 paginated groups
+----------------------------------------
+
+[2025-07-28 18:42:57]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 86)
+Message: Group listing fetch completed successfully
+----------------------------------------
+
+[2025-07-28 18:42:57]
+UserID: 888271423
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 102)
+Message: Group listing fetch process completed
+----------------------------------------
+
+[2025-07-29 12:53:50]
+UserID: 888271423
+Method: POST
+URL: http://localhost/transaction_manager/backend/logout.php
+Source: logout.php (Line 7)
+Message: Logout process initiated
+----------------------------------------
+
+[2025-07-29 12:53:50]
+UserID: 888271423
+Method: POST
+URL: http://localhost/transaction_manager/backend/logout.php
+Source: logout.php (Line 23)
+Message: Processing logout for user: 888271423
+----------------------------------------
+
+[2025-07-29 12:53:51]
+UserID: 888271423
+Method: POST
+URL: http://localhost/transaction_manager/backend/logout.php
+Source: logout.php (Line 48)
+Message: Found active session: mj08lpbn0rqc55j811leipvd0f (Status: Active)
+----------------------------------------
+
+[2025-07-29 12:53:52]
+UserID: 888271423
+Method: POST
+URL: http://localhost/transaction_manager/backend/logout.php
+Source: logout.php (Line 65)
+Message: Session invalidated in DB. Affected rows: 1
+----------------------------------------
+
+[2025-07-29 12:53:52]
+UserID: 888271423
+Method: POST
+URL: http://localhost/transaction_manager/backend/logout.php
+Source: logout.php (Line 74)
+Message: Session destroyed. Previous session data: {"unique_id":888271423,"firstname":"Bayo","lastname":"adigun","role":"Admin","restriction_id":1,"secret_answer":"02fe8fcbf3194ebe17e762e72cdd1fb1","ip_address":"::1","user_agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/138.0.0.0 Safari\/537.36","created_at":1753720205,"last_activity":1753720205}
+----------------------------------------
+
+[2025-07-29 12:53:52]
+UserID: 888271423
+Method: POST
+URL: http://localhost/transaction_manager/backend/logout.php
+Source: logout.php (Line 77)
+Message: Logout successful for user: 888271423
+----------------------------------------
+
+[2025-07-29 12:56:57]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-29 12:56:57]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-07-29 12:56:57]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-07-29 12:56:58]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 9. Total pages: 2.
+----------------------------------------
+
+[2025-07-29 12:56:58]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-07-29 12:56:58]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-07-29 12:56:58]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 6)
+Message: Group listing fetch process started
+----------------------------------------
+
+[2025-07-29 12:56:58]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 17)
+Message: Request initiated by user ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-07-29 12:56:58]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 26)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-29 12:56:58]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 69)
+Message: Successfully retrieved 9 paginated groups
+----------------------------------------
+
+[2025-07-29 12:56:58]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 86)
+Message: Group listing fetch completed successfully
+----------------------------------------
+
+[2025-07-29 12:56:58]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 102)
+Message: Group listing fetch process completed
+----------------------------------------
+
+[2025-07-29 12:57:06]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 18)
+Message: Process started
+----------------------------------------
+
+[2025-07-29 12:57:06]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 52)
+Message: Processing deletion for group ID: 18
+----------------------------------------
+
+[2025-07-29 12:57:06]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 56)
+Message: Transaction started
+----------------------------------------
+
+[2025-07-29 12:57:06]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 85)
+Message: Group found - ID: 18, Name: System Control
+----------------------------------------
+
+[2025-07-29 12:57:06]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 106)
+Message: Dependency check - Teams: 0, Units: 1, Customers: 0
+----------------------------------------
+
+[2025-07-29 12:57:06]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 163)
+Message: Deletion failed: Group has dependencies - Teams: 0, Units: 1, Customers: 0
+----------------------------------------
+
+[2025-07-29 12:57:06]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 187)
+Message: Group deletion process completed
+----------------------------------------
+
+[2025-07-29 12:57:11]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-07-29 12:57:11]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-29 12:57:11]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-07-29 12:57:11]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-07-29 12:57:11]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 9. Total pages: 2.
+----------------------------------------
+
+[2025-07-29 12:57:11]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-07-29 12:57:11]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 6)
+Message: Group listing fetch process started
+----------------------------------------
+
+[2025-07-29 12:57:11]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 17)
+Message: Request initiated by user ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-07-29 12:57:11]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 26)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-29 12:57:11]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 69)
+Message: Successfully retrieved 9 paginated groups
+----------------------------------------
+
+[2025-07-29 12:57:11]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 86)
+Message: Group listing fetch completed successfully
+----------------------------------------
+
+[2025-07-29 12:57:11]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 102)
+Message: Group listing fetch process completed
+----------------------------------------
+
+[2025-07-29 14:37:28]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 18)
+Message: Process started
+----------------------------------------
+
+[2025-07-29 14:37:28]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 52)
+Message: Processing deletion for group ID: 18
+----------------------------------------
+
+[2025-07-29 14:37:28]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 56)
+Message: Transaction started
+----------------------------------------
+
+[2025-07-29 14:37:28]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 85)
+Message: Group found - ID: 18, Name: System Control
+----------------------------------------
+
+[2025-07-29 14:37:28]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 106)
+Message: Dependency check - Teams: 0, Units: 1, Customers: 0
+----------------------------------------
+
+[2025-07-29 14:37:28]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 163)
+Message: Deletion failed: Group has dependencies - Teams: 0, Units: 1, Customers: 0
+----------------------------------------
+
+[2025-07-29 14:37:28]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 187)
+Message: Group deletion process completed
+----------------------------------------
+
+[2025-07-29 14:37:30]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-07-29 14:37:31]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 6)
+Message: Group listing fetch process started
+----------------------------------------
+
+[2025-07-29 14:37:31]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 17)
+Message: Request initiated by user ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-07-29 14:37:31]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 26)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-29 14:37:31]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 69)
+Message: Successfully retrieved 9 paginated groups
+----------------------------------------
+
+[2025-07-29 14:37:31]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 86)
+Message: Group listing fetch completed successfully
+----------------------------------------
+
+[2025-07-29 14:37:31]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 102)
+Message: Group listing fetch process completed
+----------------------------------------
+
+[2025-07-29 14:37:31]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-29 14:37:31]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-07-29 14:37:31]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-07-29 14:37:31]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 9. Total pages: 2.
+----------------------------------------
+
+[2025-07-29 14:37:31]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-07-29 14:38:43]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 18)
+Message: Process started
+----------------------------------------
+
+[2025-07-29 14:38:43]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 52)
+Message: Processing deletion for group ID: 6
+----------------------------------------
+
+[2025-07-29 14:38:43]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 56)
+Message: Transaction started
+----------------------------------------
+
+[2025-07-29 14:38:43]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 85)
+Message: Group found - ID: 6, Name: Law and Legal Reforms
+----------------------------------------
+
+[2025-07-29 14:38:43]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 106)
+Message: Dependency check - Teams: 0, Units: 1, Customers: 3
+----------------------------------------
+
+[2025-07-29 14:38:43]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 163)
+Message: Deletion failed: Group has dependencies - Teams: 0, Units: 1, Customers: 3
+----------------------------------------
+
+[2025-07-29 14:38:43]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/delete_groups.php
+Source: delete_groups.php (Line 187)
+Message: Group deletion process completed
+----------------------------------------
+
+[2025-07-29 14:38:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-07-29 14:38:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-29 14:38:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-07-29 14:38:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-07-29 14:38:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 9. Total pages: 2.
+----------------------------------------
+
+[2025-07-29 14:38:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-07-29 14:38:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 6)
+Message: Group listing fetch process started
+----------------------------------------
+
+[2025-07-29 14:38:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 17)
+Message: Request initiated by user ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-07-29 14:38:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 26)
+Message: Database transaction started
+----------------------------------------
+
+[2025-07-29 14:38:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 69)
+Message: Successfully retrieved 9 paginated groups
+----------------------------------------
+
+[2025-07-29 14:38:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 86)
+Message: Group listing fetch completed successfully
+----------------------------------------
+
+[2025-07-29 14:38:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_grouptable.php?page=1&limit=10
+Source: fetch_grouptable.php (Line 102)
+Message: Group listing fetch process completed
+----------------------------------------
+
+[2025-07-29 17:06:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-07-29 17:06:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 14.
+----------------------------------------
+
+[2025-07-29 17:06:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-07-29 17:06:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-07-29 17:06:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-29 17:06:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-07-29 17:06:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-07-29 17:06:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 9. Total pages: 2.
+----------------------------------------
+
+[2025-07-29 17:06:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-07-29 17:06:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-07-29 17:06:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-29 17:06:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-07-29 17:06:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-07-29 17:06:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 9. Total pages: 2.
+----------------------------------------
+
+[2025-07-29 17:06:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-07-29 17:06:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staff_reactivation_request.php?page=1&limit=10
+Source: get_staff_reactivation_request.php (Line 21)
+Message: Super Admin ID 22675443 is retrieving deleted staff records.
+----------------------------------------
+
+[2025-07-29 17:06:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staff_reactivation_request.php?page=1&limit=10
+Source: get_staff_reactivation_request.php (Line 86)
+Message: Super Admin ID: 22675443 fetched deleted staff list.
+----------------------------------------
+
+[2025-07-29 17:06:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-07-29 17:06:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-29 17:06:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-07-29 17:06:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-07-29 17:06:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 9. Total pages: 2.
+----------------------------------------
+
+[2025-07-29 17:06:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-07-29 17:06:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 14.
+----------------------------------------
+
+[2025-07-29 17:06:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-07-29 17:06:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-07-29 17:07:01]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-07-29 17:07:01]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-29 17:07:01]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-07-29 17:07:01]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-07-29 17:07:01]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 9. Total pages: 2.
+----------------------------------------
+
+[2025-07-29 17:07:01]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-07-29 17:07:01]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staff_deactivation_reactivation_history.php?page=1&limit=10
+Source: get_staff_deactivation_reactivation_history.php (Line 21)
+Message: Super Admin ID 22675443 is retrieving deleted staff records.
+----------------------------------------
+
+[2025-07-29 17:07:02]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staff_deactivation_reactivation_history.php?page=1&limit=10
+Source: get_staff_deactivation_reactivation_history.php (Line 114)
+Message: Super Admin ID: 22675443 fetched deleted staff list.
+----------------------------------------
+
+[2025-07-29 17:07:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-07-29 17:07:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-07-29 17:07:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-07-29 17:07:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-07-29 17:07:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 9. Total pages: 2.
+----------------------------------------
+
+[2025-07-29 17:07:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-07-29 17:07:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 14.
+----------------------------------------
+
+[2025-07-29 17:07:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-07-29 17:07:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-07-29 17:07:23]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 7)
+Message: Staff details fetch process started
+----------------------------------------
+
+[2025-07-29 17:07:23]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 21)
+Message: Staff details request initiated by admin ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-07-29 17:07:23]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 44)
+Message: Processing staff details for ID: 1237308388
+----------------------------------------
+
+[2025-07-29 17:07:23]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 49)
+Message: Transaction started for staff details fetch
+----------------------------------------
+
+[2025-07-29 17:07:23]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 74)
+Message: Successfully retrieved staff details for ID: 1237308388
+----------------------------------------
+
+[2025-07-29 17:07:23]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 86)
+Message: Staff details fetch completed successfully
+----------------------------------------
+
+[2025-07-29 17:07:23]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 106)
+Message: Staff details fetch process completed
+----------------------------------------
+
+[2025-07-29 17:07:30]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_staff_profile.php
+Source: update_staff_profile.php (Line 15)
+Message: Staff update process initiated by User ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-07-29 17:07:30]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_staff_profile.php
+Source: update_staff_profile.php (Line 25)
+Message: Received update request data: {"staff_id":1237308388,"firstname":"Fatai","lastname":"azeez","email":"fataiazeez@gmail.com","phone_number":"09086517765","role":"Admin","gender":"Male","address":"56, Odeku, VI Lagos State"}
+----------------------------------------
+
+[2025-07-29 17:07:30]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_staff_profile.php
+Source: update_staff_profile.php (Line 43)
+Message: Processing update for Staff ID: 1237308388
+----------------------------------------
+
+[2025-07-29 17:07:30]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_staff_profile.php
+Source: update_staff_profile.php (Line 86)
+Message: Checking account restrictions for Staff ID: 1237308388
+----------------------------------------
+
+[2025-07-29 17:07:30]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_staff_profile.php
+Source: update_staff_profile.php (Line 121)
+Message: Checking for duplicate phone/email for Staff ID: 1237308388
+----------------------------------------
+
+[2025-07-29 17:07:30]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_staff_profile.php
+Source: update_staff_profile.php (Line 156)
+Message: Preparing update query for Staff ID: 1237308388
+----------------------------------------
+
+[2025-07-29 17:07:30]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_staff_profile.php
+Source: update_staff_profile.php (Line 177)
+Message: Executing update for Staff ID: 1237308388
+----------------------------------------
+
+[2025-07-29 17:07:30]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_staff_profile.php
+Source: update_staff_profile.php (Line 181)
+Message: Success - Updated Staff ID: 1237308388. Affected rows: 1
+----------------------------------------
+
+[2025-07-29 17:07:30]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_staff_profile.php
+Source: update_staff_profile.php (Line 199)
+Message: Staff update process completed for Staff ID: 1237308388
+----------------------------------------
+
+[2025-07-29 17:07:38]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 38)
+Message: Fetched total staff count: 14.
+----------------------------------------
+
+[2025-07-29 17:07:38]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 73)
+Message: Fetched 10 staff records for page 1.
+----------------------------------------
+
+[2025-07-29 17:07:38]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_staffs.php?page=1&limit=10
+Source: get_staffs.php (Line 86)
+Message: Staff listing successfully sent to client.
+----------------------------------------
+
+[2025-07-29 17:07:46]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 7)
+Message: Staff details fetch process started
+----------------------------------------
+
+[2025-07-29 17:07:46]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 21)
+Message: Staff details request initiated by admin ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-07-29 17:07:46]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 44)
+Message: Processing staff details for ID: 1237308388
+----------------------------------------
+
+[2025-07-29 17:07:46]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 49)
+Message: Transaction started for staff details fetch
+----------------------------------------
+
+[2025-07-29 17:07:46]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 74)
+Message: Successfully retrieved staff details for ID: 1237308388
+----------------------------------------
+
+[2025-07-29 17:07:46]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 86)
+Message: Staff details fetch completed successfully
+----------------------------------------
+
+[2025-07-29 17:07:46]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_staff_details.php
+Source: fetch_staff_details.php (Line 106)
+Message: Staff details fetch process completed
 ----------------------------------------
 

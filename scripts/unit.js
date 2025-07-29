@@ -83,27 +83,42 @@ class UnitManager {
     updateTable(units, userRole) {
         const tbody = document.querySelector('#ordersTable tbody');
         tbody.innerHTML = '';
-        
+
         units.forEach(unit => {
             const row = document.createElement('tr');
             let rowHTML = `
-                <td>${unit.unit_id}</td>
-                <td>${unit.unit_name}</td>
-                <td>${unit.group_name}</td>
-                <td><span class='edit-icon' data-unit-id="${unit.unit_id}">&#9998;</span></td>
-                
-            `;
-            if(userRole === "Super Admin"){
-                rowHTML+= `<td><span class='delete-icon' data-unit-id="${unit.unit_id}">&#128465;</span></td>`
+            <td>${unit.unit_id}</td>
+            <td>${unit.unit_name}</td>
+            <td>${unit.group_name}</td>
+        `;
+
+            if (unit.is_deleted === false) {
+                // Active record
+                rowHTML += `<td><span class='edit-icon' data-unit-id="${unit.unit_id}">&#9998;</span></td>`;
+                if (userRole === "Super Admin") {
+                    rowHTML += `<td><span class='delete-icon' data-unit-id="${unit.unit_id}">&#128465;</span></td>`;
+                } else {
+                    rowHTML += `<td></td>`;
+                }
+            } else {
+                // Soft-deleted record
+                if (userRole === "Super Admin") {
+                    rowHTML += `
+                    <td colspan="2" style="text-align:center;">
+                        <span class="restore-icon" data-class-type="unit" data-class-id="${unit.unit_id}" title="Restore">&#9851;</span>
+                    </td>`;
+                } else {
+                    // Non-super admins see nothing
+                    rowHTML += `<td></td><td></td>`;
+                }
             }
-            else{
-                rowHTML += `<td></td>`;
-            }
+
             row.innerHTML = rowHTML;
             tbody.appendChild(row);
         });
 
         this.setupEditDeleteListeners();
+        this.setupRestoreListeners(); // Make sure you have this implemented to handle restore actions
     }
 
     setupEditDeleteListeners() {
@@ -154,7 +169,7 @@ class UnitManager {
         try {
             const response = await fetch('backend/fetch_groups.php');
             const data = await response.json();
-            
+
             if (data.success) {
                 const select = document.getElementById('selectedGroup');
                 this.populateGroupDropdown(select, data.groups, '--Select a Group--');
@@ -168,7 +183,7 @@ class UnitManager {
         try {
             const response = await fetch('backend/fetch_groups.php');
             const data = await response.json();
-            
+
             if (data.success) {
                 const select = document.getElementById('selectGroup');
                 this.populateGroupDropdown(select, data.groups, '--Select a Group--', selectedGroupId);
@@ -180,7 +195,7 @@ class UnitManager {
 
     populateGroupDropdown(selectElement, groups, defaultText, selectedId = null) {
         selectElement.innerHTML = `<option value="">${defaultText}</option>`;
-        
+
         groups.forEach(group => {
             const option = document.createElement('option');
             option.value = group.group_id;
@@ -211,13 +226,15 @@ class UnitManager {
 
     populateUnitDetails(unit) {
         const tbody = document.querySelector('#orderDetailsTable tbody');
+
         tbody.innerHTML = `
-            <tr><td>Unit ID</td><td><input type="text" id="unit_id" value="${unit.unit_id}" disabled></td></tr>
-            <tr><td>Unit Name</td><td><input type="text" id="unit_name" value="${unit.unit_name}"></td></tr>
-            <tr><td>Select Group</td><td><select id="selectGroup"></select></td></tr>
-            <tr><td colspan="2" style="text-align:center;"><button id="updateUnitBtn">Update</button></td></tr>
-        `;
+        <tr><td>Unit ID</td><td><input type="text" id="unit_id" value="${unit.unit_id}" disabled></td></tr>
+        <tr><td>Unit Name</td><td><input type="text" id="unit_name" value="${unit.unit_name}"></td></tr>
+        <tr><td>Select Group</td><td><select id="selectGroup"></select></td></tr>
         
+        <tr><td colspan="2" style="text-align:center;"><button id="updateUnitBtn">Update</button></td></tr>
+    `;
+
         this.loadGroups(unit.group_id);
         document.getElementById('updateUnitBtn').addEventListener('click', () => this.updateUnit(unit.unit_id));
     }
@@ -226,7 +243,7 @@ class UnitManager {
         const data = {
             unit_id: unitId,
             unit_name: document.getElementById('unit_name').value,
-            group_id: document.getElementById('selectGroup').value
+            group_id: document.getElementById('selectGroup').value,
         };
 
         try {
@@ -281,7 +298,7 @@ class UnitManager {
         addUnitForm.addEventListener('submit', async (event) => {
             event.preventDefault();
             const messageDiv = document.getElementById('addUnitMessage');
-            
+
             if (!confirm('Are you sure you want to create this Unit?')) return;
 
             try {
@@ -304,6 +321,44 @@ class UnitManager {
             }
         });
     }
+
+    //setupRestoreListener
+    setupRestoreListeners() {
+    const restoreIcons = document.querySelectorAll('.restore-icon');
+
+    restoreIcons.forEach(icon => {
+        icon.addEventListener('click', () => {
+            const classType = icon.getAttribute('data-class-type'); // "unit" or "group"
+            const classId = icon.getAttribute('data-class-id');     // e.g., 5
+            const confirmRestore = confirm(`Are you sure you want to restore this ${classType}?`);
+
+            if (confirmRestore) {
+                fetch('backend/update_unit_group.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        [`${classType}_id`]: classId,
+                        class_type: classType,
+                        delete_status: null
+                    })
+                })
+                .then(res => res.json())
+                .then(response => {
+                    alert(response.message);
+                    if (response.success) {
+                        if (classType === 'unit') this.fetchUnits();
+                        else if (classType === 'group') this.fetchGroups();
+                    }
+                })
+                .catch(err => {
+                    console.error("Restore failed:", err);
+                    alert("An error occurred while restoring the record.");
+                });
+            }
+        });
+    });
+}
+
 
     // Search Functionality
     setupSearchListener() {

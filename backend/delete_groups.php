@@ -3,195 +3,210 @@ header('Content-Type: application/json');
 include_once('config.php');
 session_start();
 
-// Initialize logging
-logActivity("Group deletion process started");
+// Constants for logging
+const LOG_PREFIX = "GROUP_DELETION";
+const MAX_LOG_LENGTH = 1000; // Maximum length for log messages
+
+// Initialize logging with timestamp and prefix
+// function logActivity(string $message): void {
+//     $truncatedMessage = strlen($message) > MAX_LOG_LENGTH 
+//         ? substr($message, 0, MAX_LOG_LENGTH) . "...[TRUNCATED]" 
+//         : $message;
+//     logActivity(LOG_PREFIX . " - " . $truncatedMessage);
+// }
+
+logActivity("Process started");
 
 try {
-    // Check authentication
+    // Validate session and authentication
     $user_id = $_SESSION['unique_id'] ?? null;
     if (!$user_id) {
         $errorMsg = "Unauthenticated access attempt";
         logActivity($errorMsg);
-        echo json_encode(['success' => false, 'message' => 'User not authenticated.']);
+        http_response_code(401);
+        echo json_encode(['success' => false, 'message' => 'Authentication required']);
         exit();
     }
 
     // Check authorization
     $staff_role = $_SESSION['role'] ?? '';
     if ($staff_role !== "Super Admin") {
-        $errorMsg = "Unauthorized deletion attempt by user: " . $user_id;
+        $errorMsg = "Unauthorized attempt by user $user_id (Role: $staff_role)";
         logActivity($errorMsg);
-        echo json_encode(["success" => false, "message" => "You do not have permission to delete."]);
+        http_response_code(403);
+        echo json_encode(["success" => false, "message" => "Insufficient permissions"]);
         exit();
     }
 
-    // Get and validate input
+    // Validate input
     $data = json_decode(file_get_contents("php://input"), true);
-    if (!isset($data['group_id']) || empty($data['group_id'])) {
-        $errorMsg = "Missing group ID in request";
+    if (!isset($data['group_id']) || !is_numeric($data['group_id'])) {
+        $errorMsg = "Invalid group ID in request: " . json_encode($data);
         logActivity($errorMsg);
-        echo json_encode(["success" => false, "message" => "Group ID is required."]);
+        http_response_code(400);
+        echo json_encode(["success" => false, "message" => "Valid group ID is required"]);
         exit();
     }
 
     $groupId = (int) $data['group_id'];
-    logActivity("Attempting to delete group ID: " . $groupId);
+    logActivity("Processing deletion for group ID: $groupId");
 
     // Start transaction
     $conn->begin_transaction();
-    logActivity("Transaction started for group deletion");
+    logActivity("Transaction started");
 
-    try {
-        // Step 1: Check if group exists and has dependent records
-        $checkSql = "SELECT g.group_id, 
-                    (SELECT COUNT(*) FROM team WHERE group_id = g.group_id) as team_count,
-                    (SELECT COUNT(*) FROM unit WHERE group_id = g.group_id) as unit_count,
-                    (SELECT COUNT(*) FROM customers WHERE group_id = g.group_id) as customer_count
-                 FROM groups g WHERE g.group_id = ? FOR UPDATE";
-
-        logActivity("Preparing dependency check query: " . $checkSql);
-
-        $stmtCheck = $conn->prepare($checkSql);
-        if (!$stmtCheck) {
-            $errorMsg = "Prepare failed for check: " . $conn->error;
-            logActivity($errorMsg);
-            throw new Exception($errorMsg);
-        }
-
-        logActivity("Binding group ID parameter: " . $groupId);
-        $stmtCheck->bind_param("i", $groupId);
-        if (!$stmtCheck->execute()) {
-            $errorMsg = "Execute failed for check: " . $stmtCheck->error;
-            logActivity($errorMsg);
-            throw new Exception($errorMsg);
-        }
-
-        $result = $stmtCheck->get_result();
-        if ($result->num_rows === 0) {
-            $errorMsg = "Group not found with ID: " . $groupId;
-            logActivity($errorMsg);
-            throw new Exception($errorMsg);
-        }
-
-        $groupData = $result->fetch_assoc();
-        logActivity("Dependency check results for group $groupId - Teams: " .
-            $groupData['team_count'] . ", Units: " . $groupData['unit_count'] .
-            ", Customers: " . $groupData['customer_count']);
-        $stmtCheck->close();
-        $stmtCheck = null;
-
-        // Step 2: Log actual dependent records if any exist
-        if ($groupData['team_count'] > 0) {
-            $teamDebugSql = "SELECT team_id, team_name FROM team WHERE group_id = ?";
-            $stmtTeamDebug = $conn->prepare($teamDebugSql);
-            if ($stmtTeamDebug) {
-                $stmtTeamDebug->bind_param("i", $groupId);
-                $stmtTeamDebug->execute();
-                $teams = $stmtTeamDebug->get_result()->fetch_all(MYSQLI_ASSOC);
-                logActivity("Associated Teams: " . print_r($teams, true));
-                $stmtTeamDebug->close();
-            }
-        }
-
-        if ($groupData['unit_count'] > 0) {
-            $unitDebugSql = "SELECT unit_id, unit_name FROM unit WHERE group_id = ?";
-            $stmtUnitDebug = $conn->prepare($unitDebugSql);
-            if ($stmtUnitDebug) {
-                $stmtUnitDebug->bind_param("i", $groupId);
-                $stmtUnitDebug->execute();
-                $units = $stmtUnitDebug->get_result()->fetch_all(MYSQLI_ASSOC);
-                logActivity("Associated Units: " . print_r($units, true));
-                $stmtUnitDebug->close();
-            }
-        }
-
-        if ($groupData['customer_count'] > 0) {
-            $customerDebugSql = "SELECT customer_id, CONCAT(firstname, ' ', lastname) AS customer_name FROM customers WHERE group_id = ?";
-            $stmtCustomerDebug = $conn->prepare($customerDebugSql);
-            if ($stmtCustomerDebug) {
-                $stmtCustomerDebug->bind_param("i", $groupId);
-                $stmtCustomerDebug->execute();
-                $customers = $stmtCustomerDebug->get_result()->fetch_all(MYSQLI_ASSOC);
-                logActivity("Associated Customers: " . print_r($customers, true));
-                $stmtCustomerDebug->close();
-            }
-        }
-
-        // Step 3: Abort if any dependencies found
-        if ($groupData['team_count'] > 0 || $groupData['unit_count'] > 0 || $groupData['customer_count'] > 0) {
-            $errorMsg = sprintf(
-                "Cannot delete Group %d - It has %d associated team(s), %d unit(s), and %d customer(s)",
-                $groupId,
-                $groupData['team_count'],
-                $groupData['unit_count'],
-                $groupData['customer_count']
-            );
-            logActivity($errorMsg);
-            throw new Exception($errorMsg);
-        }
-
-        logActivity("No dependencies found for group $groupId - proceeding with deletion");
-
-        // Step 4: Proceed with deletion
-        $deleteSql = "DELETE FROM groups WHERE group_id = ?";
-        logActivity("Preparing DELETE query: " . $deleteSql);
-
-        $stmtDelete = $conn->prepare($deleteSql);
-        if (!$stmtDelete) {
-            $errorMsg = "Prepare failed for delete: " . $conn->error;
-            logActivity($errorMsg);
-            throw new Exception($errorMsg);
-        }
-
-        logActivity("Binding group ID parameter for deletion: " . $groupId);
-        $stmtDelete->bind_param("i", $groupId);
-        if (!$stmtDelete->execute()) {
-            $errorMsg = "Execute failed for delete: " . $stmtDelete->error;
-            logActivity($errorMsg);
-            throw new Exception($errorMsg);
-        }
-
-        $conn->commit();
-        $successMsg = "Group deleted successfully. ID: " . $groupId;
-        logActivity($successMsg);
-        echo json_encode([
-            "success" => true,
-            "message" => "Group has been successfully deleted.",
-            "group_id" => $groupId,
-            "deleted_by" => $user_id
-        ]);
-
-    } catch (Exception $e) {
-        if (isset($conn) && method_exists($conn, 'rollback')) {
-            $conn->rollback();
-        }
-        $errorMsg = "Group deletion failed: " . $e->getMessage();
-        logActivity($errorMsg);
-        echo json_encode([
-            "success" => false,
-            "message" => $e->getMessage(),
-            "error" => $e->getMessage()
-        ]);
-    } finally {
-        if (isset($stmtCheck) && $stmtCheck instanceof mysqli_stmt) {
-            $stmtCheck->close();
-        }
-        if (isset($stmtDelete) && $stmtDelete instanceof mysqli_stmt) {
-            $stmtDelete->close();
-        }
-        // if (isset($conn)) {
-        //     $conn->close();
-        // }
-        logActivity("Group deletion process completed");
+    // Check if group exists and is not already deleted
+    $checkDeleteSql = "SELECT group_id, group_name, delete_status FROM groups WHERE group_id = ? FOR UPDATE";
+    $stmtCheckDelete = $conn->prepare($checkDeleteSql);
+    if (!$stmtCheckDelete) {
+        throw new Exception("Prepare failed for existence check: " . $conn->error);
     }
 
+    $stmtCheckDelete->bind_param("i", $groupId);
+    if (!$stmtCheckDelete->execute()) {
+        throw new Exception("Execute failed for existence check: " . $stmtCheckDelete->error);
+    }
+
+    $resultDeleteCheck = $stmtCheckDelete->get_result();
+    if ($resultDeleteCheck->num_rows === 0) {
+        logActivity("Group not found with ID: $groupId");
+        http_response_code(404);
+        echo json_encode(['success' => false, 'message' => 'Group not found']);
+        exit();
+    }
+
+    $group = $resultDeleteCheck->fetch_assoc();
+    if ($group['delete_status'] == 1) {
+        logActivity("Group already deleted - ID: $groupId, Name: {$group['group_name']}");
+        echo json_encode(['success' => false, 'message' => 'Group already deleted']);
+        exit();
+    }
+
+    logActivity("Group found - ID: $groupId, Name: {$group['group_name']}");
+
+    // Check dependencies with a single query
+    $dependencySql = "SELECT 
+        (SELECT COUNT(*) FROM team WHERE group_id = ?) as team_count,
+        (SELECT COUNT(*) FROM unit WHERE group_id = ?) as unit_count,
+        (SELECT COUNT(*) FROM customers WHERE group_id = ?) as customer_count";
+
+    $stmtDependencies = $conn->prepare($dependencySql);
+    if (!$stmtDependencies) {
+        throw new Exception("Prepare failed for dependency check: " . $conn->error);
+    }
+
+    $stmtDependencies->bind_param("iii", $groupId, $groupId, $groupId);
+    if (!$stmtDependencies->execute()) {
+        throw new Exception("Execute failed for dependency check: " . $stmtDependencies->error);
+    }
+
+    $dependencies = $stmtDependencies->get_result()->fetch_assoc();
+    // $stmtDependencies->close();
+
+    logActivity(sprintf(
+        "Dependency check - Teams: %d, Units: %d, Customers: %d",
+        $dependencies['team_count'],
+        $dependencies['unit_count'],
+        $dependencies['customer_count']
+    ));
+
+    // Log detailed dependency information if any exist
+    if (array_sum($dependencies) > 0) {
+        // $this->logDependencyDetails($conn, $groupId, $dependencies);
+        $errorMsg = sprintf(
+            "Group has dependencies - Teams: %d, Units: %d, Customers: %d",
+            $dependencies['team_count'],
+            $dependencies['unit_count'],
+            $dependencies['customer_count']
+        );
+        throw new Exception($errorMsg);
+    }
+
+    // Perform soft delete
+    $deleteSql = "UPDATE groups SET delete_status = 1 WHERE group_id = ?";
+    $stmtDelete = $conn->prepare($deleteSql);
+    if (!$stmtDelete) {
+        throw new Exception("Prepare failed for deletion: " . $conn->error);
+    }
+
+    $stmtDelete->bind_param("i",$groupId);
+    if (!$stmtDelete->execute()) {
+        throw new Exception("Execute failed for deletion: " . $stmtDelete->error);
+    }
+
+    $affectedRows = $stmtDelete->affected_rows;
+    $stmtDelete->close();
+
+    if ($affectedRows === 0) {
+        throw new Exception("No rows affected - group may have been deleted by another process");
+    }
+
+    $conn->commit();
+    logActivity("Successfully deleted group ID: $groupId");
+
+    echo json_encode([
+        "success" => true,
+        "message" => "Group deleted successfully",
+        "data" => [
+            "group_id" => $groupId,
+            "deleted_by" => $user_id,
+            "timestamp" => date('c')
+        ]
+    ]);
+
 } catch (Exception $e) {
-    logActivity("System error: " . $e->getMessage());
+    if (isset($conn) && $conn instanceof mysqli && !$conn->connect_errno) {
+        $conn->rollback();
+    }
+    
+    $errorMsg = "Deletion failed: " . $e->getMessage();
+    logActivity($errorMsg);
+    
+    http_response_code(500);
     echo json_encode([
         "success" => false,
-        "message" => "An unexpected error occurred."
+        "message" => "Group deletion failed",
+        "error" => $e->getMessage(),
+        "error_code" => $e->getCode()
     ]);
 } finally {
-    $conn->close();
+    foreach (['stmtDependencies', 'stmtDelete'] as $stmtVar) {
+        if (isset($$stmtVar) && $$stmtVar instanceof mysqli_stmt) {
+            try {
+                $$stmtVar->close();
+            } catch (Throwable $e) {
+                // Silently catch to avoid fatal errors on double close
+            }
+        }
+    }
+
+    if (isset($conn) && $conn instanceof mysqli) {
+        $conn->close();
+    }
+
     logActivity("Group deletion process completed");
+}
+/**
+ * Log detailed information about dependencies
+ */
+function logDependencyDetails(mysqli $conn, int $groupId, array $dependencies): void {
+    $dependencyTypes = [
+        'team' => ['table' => 'team', 'fields' => 'team_id, team_name'],
+        'unit' => ['table' => 'unit', 'fields' => 'unit_id, unit_name'],
+        'customer' => ['table' => 'customers', 'fields' => 'customer_id, CONCAT(firstname, " ", lastname) AS name']
+    ];
+
+    foreach ($dependencyTypes as $type => $config) {
+        if ($dependencies["{$type}_count"] > 0) {
+            $sql = "SELECT {$config['fields']} FROM {$config['table']} WHERE group_id = ?";
+            $stmt = $conn->prepare($sql);
+            if ($stmt) {
+                $stmt->bind_param("i", $groupId);
+                $stmt->execute();
+                $results = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+                logActivity("$type dependencies: " . json_encode($results));
+                $stmt->close();
+            }
+        }
+    }
 }

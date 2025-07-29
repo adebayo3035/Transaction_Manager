@@ -45,6 +45,30 @@ try {
     $conn->begin_transaction();
     logActivity("Transaction started for unit deletion");
 
+    // Check if the unit has already been soft-deleted
+$checkDeleteSql = "SELECT delete_status FROM unit WHERE unit_id = ?";
+$stmtCheckDelete = $conn->prepare($checkDeleteSql);
+if (!$stmtCheckDelete) {
+    throw new Exception("Prepare failed for delete_status check: " . $conn->error);
+}
+$stmtCheckDelete->bind_param("i", $unitId);
+$stmtCheckDelete->execute();
+$resultDeleteCheck = $stmtCheckDelete->get_result();
+
+if ($resultDeleteCheck->num_rows === 0) {
+    echo json_encode(['success' => false, 'message' => 'Unit record not found.']);
+    exit;
+}
+
+$rowDeleteCheck = $resultDeleteCheck->fetch_assoc();
+if ((int)$rowDeleteCheck['delete_status'] === 1) {
+    echo json_encode(['success' => false, 'message' => 'Unit has already been deleted.']);
+    exit;
+}
+
+logActivity("Unit $unitId is active. Proceeding with dependency checks.");
+
+
     // First check if unit exists and has no dependent records
     $checkSql = "SELECT u.unit_id, 
             (SELECT COUNT(*) FROM team WHERE unit_id = u.unit_id) as team_count,
@@ -118,18 +142,19 @@ try {
         throw new Exception($errorMsg);
     }
 
-    logActivity("No dependencies found for unit $unitId - proceeding with deletion");
-    // Delete unit
-    $deleteSql = "DELETE FROM unit WHERE unit_id = ?";
+    logActivity("No dependencies found for unit $unitId - proceeding with soft delete (update delete_status)");
+
+    $deleteSql = "UPDATE unit SET delete_status = 1 WHERE unit_id = ?";
     $stmtDelete = $conn->prepare($deleteSql);
     if (!$stmtDelete) {
-        throw new Exception("Prepare failed for delete: " . $conn->error);
+        throw new Exception("Prepare failed for soft delete: " . $conn->error);
     }
 
     $stmtDelete->bind_param("i", $unitId);
     if (!$stmtDelete->execute()) {
-        throw new Exception("Execute failed for delete: " . $stmtDelete->error);
+        throw new Exception("Execute failed for soft delete: " . $stmtDelete->error);
     }
+
 
     $conn->commit();
     $successMsg = "Unit deleted successfully. ID: " . $unitId;

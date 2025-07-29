@@ -28,7 +28,7 @@ try {
         logActivity("Database transaction started");
 
         // Fetch all groups with basic information
-        $query = "SELECT group_id, group_name FROM groups ORDER BY group_id ASC";
+        $query = "SELECT group_id, group_name FROM groups WHERE delete_status IS NULL ORDER BY group_id ASC";
         $stmt = $conn->prepare($query);
         
         if (!$stmt) {

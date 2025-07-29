@@ -119,28 +119,45 @@ class GroupManager {
     }
 
     updateTable(groups, userRole) {
-        const ordersTableBody = document.querySelector('#ordersTable tbody');
-        ordersTableBody.innerHTML = '';
-        
+        const tbody = document.querySelector('#ordersTable tbody');
+        tbody.innerHTML = '';
+
         groups.forEach(group => {
             const row = document.createElement('tr');
             let rowHTML = `
-                <td>${group.group_id}</td>
-                <td>${group.group_name}</td>
-                <td><span class='edit-icon' data-group-id="${group.group_id}">&#9998;</span></td>
-            `;
-             if(userRole === "Super Admin"){
-                rowHTML+= `<td><span class='delete-icon' data-unit-id="${group.group_id}">&#128465;</span></td>`
+            <td>${group.group_id}</td>
+            <td>${group.group_name}</td>
+        `;
+
+            if (group.is_deleted === false) {
+                // Active record
+                rowHTML += `<td><span class='edit-icon' data-group-id="${group.group_id}">&#9998;</span></td>`;
+                if (userRole === "Super Admin") {
+                    rowHTML += `<td><span class='delete-icon' data-group-id="${group.group_id}">&#128465;</span></td>`;
+                } else {
+                    rowHTML += `<td></td>`;
+                }
+            } else {
+                // Soft-deleted record
+                if (userRole === "Super Admin") {
+                    rowHTML += `
+                    <td colspan="2" style="text-align:center;">
+                        <span class="restore-icon" data-class-type="group" data-class-id="${group.group_id}" title="Restore">&#9851;</span>
+                    </td>`;
+                } else {
+                    // Non-super admins see nothing
+                    rowHTML += `<td></td><td></td>`;
+                }
             }
-            else{
-                rowHTML += `<td></td>`;
-            }
+
             row.innerHTML = rowHTML;
-            ordersTableBody.appendChild(row);
+            tbody.appendChild(row);
         });
 
         this.setupEditDeleteListeners();
+        this.setupRestoreListeners(); // Make sure you have this implemented to handle restore actions
     }
+
 
     setupEditDeleteListeners() {
         document.querySelectorAll('.edit-icon').forEach(span => {
@@ -271,11 +288,48 @@ class GroupManager {
                 location.reload();
             } else {
                 alert('Failed to delete Group: ' + data.message);
+                location.reload();
             }
         } catch (error) {
             console.error('Error deleting Group:', error);
         }
     }
+
+    //setupRestoreListener
+    setupRestoreListeners() {
+    const restoreIcons = document.querySelectorAll('.restore-icon');
+
+    restoreIcons.forEach(icon => {
+        icon.addEventListener('click', () => {
+            const classType = icon.getAttribute('data-class-type'); // "unit" or "group"
+            const classId = icon.getAttribute('data-class-id');     // e.g., 5
+            const confirmRestore = confirm(`Are you sure you want to restore this ${classType}?`);
+
+            if (confirmRestore) {
+                fetch('backend/update_unit_group.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        [`${classType}_id`]: classId,
+                        class_type: classType,
+                        delete_status: null
+                    })
+                })
+                .then(res => res.json())
+                .then(response => {
+                    alert(response.message);
+                    if (response.success) {
+                        if (classType === 'group') this.fetchGroups();
+                    }
+                })
+                .catch(err => {
+                    console.error("Restore failed:", err);
+                    alert("An error occurred while restoring the record.");
+                });
+            }
+        });
+    });
+}
 
     /** ------------------------- Search Filter ------------------------- **/
     setupSearchListener() {
