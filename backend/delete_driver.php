@@ -24,14 +24,14 @@ if (empty($data['id']) || !is_numeric($data['id'])) {
 $driverId = (int)$data['id'];
 
 // === Get current driver status ===
-$currentStmt = $conn->prepare("SELECT restriction, status FROM driver WHERE id = ?");
+$currentStmt = $conn->prepare("SELECT restriction, status, delete_status FROM driver WHERE id = ?");
 if (!$currentStmt || !$currentStmt->bind_param("i", $driverId) || !$currentStmt->execute()) {
     logActivity("DB Error checking driver status: " . ($conn->error ?? 'Unknown'));
     http_response_code(500);
     exit(json_encode(['success' => false, 'message' => 'System error.']));
 }
 
-$currentStmt->bind_result($currentRestriction, $currentStatus);
+$currentStmt->bind_result($currentRestriction, $currentStatus, $currentDeleteStatus);
 if (!$currentStmt->fetch()) {
     $currentStmt->close();
     logActivity("Driver not found: ID $driverId");
@@ -52,6 +52,12 @@ if ($currentStatus === 'Not Available') {
     http_response_code(403);
     exit(json_encode(['success' => false, 'message' => 'Cannot deactivate unavailable accounts.']));
 }
+if ($currentDeleteStatus == 'Yes') {
+    logActivity("Attempt to deactivate an already Deactivated Account for Driver ID $driverId  by Admin $adminId");
+    http_response_code(403);
+    exit(json_encode(['success' => false, 'message' => 'Unable to Deactivate Account!.']));
+}
+
 
 // Check account lock
 $lockStmt = $conn->prepare("SELECT status FROM driver_lock_history WHERE driver_id = ? ORDER BY id DESC LIMIT 1");

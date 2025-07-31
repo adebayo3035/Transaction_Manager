@@ -31,14 +31,14 @@ if ($adminRole !== "Super Admin") {
     logActivity("Attempting to delete customer ID: " . $customerId);
 
 // === Get current Customer Restriction status ===
-$currentStmt = $conn->prepare("SELECT restriction FROM customers WHERE customer_id = ?");
+$currentStmt = $conn->prepare("SELECT restriction,delete_status FROM customers WHERE customer_id = ?");
 if (!$currentStmt || !$currentStmt->bind_param("i", $customerId) || !$currentStmt->execute()) {
     logActivity("DB Error checking Customer Restriction Status: " . ($conn->error ?? 'Unknown'));
     http_response_code(500);
     exit(json_encode(['success' => false, 'message' => 'System error.']));
 }
 
-$currentStmt->bind_result($currentRestriction);
+$currentStmt->bind_result($currentRestriction, $currentDeleteStatus);
 if (!$currentStmt->fetch()) {
     $currentStmt->close();
     logActivity("Customer Record Not found for Customer ID:  $customerId ");
@@ -52,6 +52,11 @@ if ($currentRestriction == 1) {
     logActivity("Attempt to deactivate restricted Customer ID $customerId  by Admin $adminId");
     http_response_code(403);
     exit(json_encode(['success' => false, 'message' => 'Cannot deactivate restricted accounts.']));
+}
+if ($currentDeleteStatus == 'Yes') {
+    logActivity("Attempt to deactivate an already Deactivated Account for Customer ID $customerId  by Admin $adminId");
+    http_response_code(403);
+    exit(json_encode(['success' => false, 'message' => 'Unable to Deactivate Account!.']));
 }
 
 // Check account lock
