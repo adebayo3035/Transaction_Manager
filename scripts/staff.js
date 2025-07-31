@@ -96,8 +96,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-
-
     // On initial page load
     document.addEventListener('DOMContentLoaded', () => {
         // You might need to fetch the user role first or pass it from server
@@ -125,6 +123,10 @@ document.addEventListener('DOMContentLoaded', () => {
             let actionButtonHtml = '';
             if (!isDeactivated) {
                 const buttonText = loggedInUserRole === 'Admin' ? 'View Details' : 'Edit Details';
+                actionButtonHtml = `<button class="view-details-btn" data-staff-id="${staff.unique_id}">${buttonText}</button>`;
+            }
+            else {
+                const buttonText = 'View Details';
                 actionButtonHtml = `<button class="view-details-btn" data-staff-id="${staff.unique_id}">${buttonText}</button>`;
             }
 
@@ -266,7 +268,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Disable all input fields if the logged-in user is not a "Super Admin"
         const isSuperAdmin = logged_in_user_role === 'Super Admin';
-        const disableAttribute = isSuperAdmin ? '' : 'disabled';
+        const isDeactivated = staff_details.delete_status === 'Yes';
+        const disableAttribute = (!isSuperAdmin || isDeactivated) ? 'disabled' : '';
+
 
 
         // Function to unmask or mask based on checkbox state
@@ -361,7 +365,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Conditionally add "Update" and "Delete" buttons if the logged-in user is a "Super Admin"
-        if (isSuperAdmin) {
+        if (isSuperAdmin && staff_details.delete_status !== 'Yes') {
             const actionButtons = `
             <tr>
                 <td colspan="2" style="text-align: center;">
@@ -386,8 +390,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Event listeners for update and delete buttons
             document.getElementById('updateStaffBtn').addEventListener('click', () => {
-                updateStaff(staff_details.unique_id);
+                const confirmUpdate = confirm("Are you sure you want to update this staff record?");
+                if (confirmUpdate) {
+                    updateStaff(staff_details.unique_id);
+                }
             });
+
         }
     }
 

@@ -6110,3 +6110,123 @@ Source: update_driver.php (Line 118)
 Message: Secret answer mismatch for Driver ID: 16
 ----------------------------------------
 
+[2025-07-30 15:36:01]
+UserID: 16
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 11)
+Message: Driver ID: 16 requested their profile details.
+----------------------------------------
+
+[2025-07-30 15:36:01]
+UserID: 16
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 13)
+Message: Session validated successfully for Driver ID: 16.
+----------------------------------------
+
+[2025-07-30 15:36:01]
+UserID: 16
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 41)
+Message: Successfully fetched driver details for driver ID: 16.
+----------------------------------------
+
+[2025-07-30 15:36:01]
+UserID: 16
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 11)
+Message: Driver ID: 16 requested their profile details.
+----------------------------------------
+
+[2025-07-30 15:36:01]
+UserID: 16
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 13)
+Message: Session validated successfully for Driver ID: 16.
+----------------------------------------
+
+[2025-07-30 15:36:01]
+UserID: 16
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 41)
+Message: Successfully fetched driver details for driver ID: 16.
+----------------------------------------
+
+[2025-07-30 15:36:03]
+UserID: 16
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 11)
+Message: Driver ID: 16 requested their profile details.
+----------------------------------------
+
+[2025-07-30 15:36:03]
+UserID: 16
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 13)
+Message: Session validated successfully for Driver ID: 16.
+----------------------------------------
+
+[2025-07-30 15:36:03]
+UserID: 16
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 41)
+Message: Successfully fetched driver details for driver ID: 16.
+----------------------------------------
+
+[2025-07-30 15:36:03]
+UserID: 16
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/session_data.php
+Source: session_data.php (Line 7)
+Message: Session check successful for driver ID: 16
+----------------------------------------
+
+[2025-07-31 18:00:46]
+UserID: 16
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/logout.php
+Source: logout.php (Line 9)
+Message: Session validated successfully for Driver ID: 16.
+----------------------------------------
+
+[2025-07-31 18:00:47]
+UserID: 16
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/logout.php
+Source: logout.php (Line 15)
+Message: Logout attempt for driver_id: 16
+----------------------------------------
+
+[2025-07-31 18:00:47]
+UserID: 16
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/logout.php
+Source: logout.php (Line 40)
+Message: Retrieved session_id: 3p1tihs3ir6113n6kdubc6icci for driver_id: 16.
+----------------------------------------
+
+[2025-07-31 18:00:48]
+UserID: 16
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/logout.php
+Source: logout.php (Line 58)
+Message: Updated session status to 'Inactive' for session_id: 3p1tihs3ir6113n6kdubc6icci.
+----------------------------------------
+
+[2025-07-31 18:00:48]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/logout.php
+Source: logout.php (Line 64)
+Message: Session destroyed for driver_id: 16.
+----------------------------------------
+

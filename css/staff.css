@@ -19,8 +19,9 @@
 }
 
 #admin-actions-container > a.admin-action-btn.btn-view-deactivated:hover{
-    color: #000;
+    color: #fff;
     background-color: #fff;
+    
 }
 .loader-overlay {
     position: fixed;
