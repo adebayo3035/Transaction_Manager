@@ -79,11 +79,6 @@ try {
     $checkSecret->fetch();
     $checkSecret->close();
 
-    // if (md5($providedAnswer) !== $storedHash) {
-    //     jsonResponse(false, "Invalid secret answer.",
-    //         "SECRET_ANSWER_MISMATCH: Admin ID $adminID provided wrong answer for $accountType ID $userID");
-    // }
-
     if (!verifyAndUpgradeSecretAnswer($conn, $adminID, $providedAnswer, $storedHash)) {
               jsonResponse(false, "Invalid secret answer.",
             "SECRET_ANSWER_MISMATCH: Admin ID $adminID provided wrong answer for $accountType ID $userID");

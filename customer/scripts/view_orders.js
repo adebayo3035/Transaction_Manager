@@ -1,434 +1,404 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const limit = 10; // Number of items per page
-    let currentPage = 1;
+    // Configuration
+    const CONFIG = {
+        itemsPerPage: 10,
+        minSpinnerTime: 1000,
+        apiEndpoints: {
+            fetchOrders: '../v2/fetch_order_summary.php',
+            fetchOrderDetails: '../v2/fetch_order_details.php',
+            cancelOrder: '../v2/cancel_order.php'
+        }
+    };
 
-    // Fetch orders on page load
-    fetchOrders(currentPage);
+    // State management
+    const state = {
+        currentPage: 1,
+        currentOrderId: null
+    };
 
-    // Function to fetch orders
-    // function fetchOrders(page = 1) {
-    //     fetch(`../v2/fetch_order_summary.php?page=${page}&limit=${limit}`, {
-    //         method: 'GET',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         }
-    //     })
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             if (data.success && data.orders.length > 0) {
-    //                 updateTable(data.orders);
-    //                 updatePagination(data.total, data.page, data.limit);
-    //             } else {
-    //                 const ordersTableBody = document.querySelector('#ordersTable tbody');
-    //                 ordersTableBody.innerHTML = '';
-    //                 const noOrderRow = document.createElement('tr');
-    //                 noOrderRow.innerHTML = `<td colspan="7" style="text-align:center;">No Credit History at the moment</td>`;
-    //                 ordersTableBody.appendChild(noOrderRow);
-    //                 // console.error('Failed to fetch orders:', data.message);
-    //             }
-    //         })
-    //         .catch(error => console.error('Error fetching data:', error));
-    // }
+    // DOM Elements
+    const elements = {
+        tables: {
+            orders: {
+                container: document.getElementById('ordersTableBody'),
+                body: document.querySelector('#ordersTable tbody')
+            },
+            orderDetails: {
+                body: document.querySelector('#orderDetailsTable tbody')
+            }
+        },
+        pagination: document.getElementById('pagination'),
+        search: document.getElementById('liveSearch'),
+        modal: document.getElementById('orderModal'),
+        buttons: {
+            closeModal: document.querySelector('.modal .close'),
+            decline: document.getElementById('decline-btn'),
+            receipt: document.querySelector('#receipt-btn'),
+            driverRating: document.querySelector('#driverRating-btn')
+        }
+    };
 
-    // Fetch orders with pagination
-    function fetchOrders(page = 1) {
-        const ordersTableBody = document.getElementById('ordersTableBody');
-
-        // Inject spinner
-        ordersTableBody.innerHTML = `
-        <tr>
-            <td colspan="6" style="text-align:center; padding: 20px;">
-                <div class="spinner"
-                    style="border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: auto;">
-                </div>
-            </td>
-        </tr>
-        `;
-
-        const minDelay = new Promise(resolve => setTimeout(resolve, 1000)); // Spinner shows at least 500ms
-        const fetchData = fetch(`../v2/fetch_order_summary.php?page=${page}&limit=${limit}`)
-            .then(res => res.json());
-
-        Promise.all([fetchData, minDelay])
-            .then(([data]) => {
-                if (data.success && data.orders.length > 0) {
-                    updateTable(data.orders);
-                    updatePagination(data.total, data.page, data.limit);
-                } else {
-                    ordersTableBody.innerHTML = `
-                    <tr><td colspan="6" style="text-align:center;">No Order History at the moment</td></tr>
-                `;
-                    console.error('No credit data:', data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-                ordersTableBody.innerHTML = `
-                <tr><td colspan="6" style="text-align:center; color:red;">Error loading Order data</td></tr>
+    // Utility functions
+    const utils = {
+        showSpinner: (container) => {
+            container.innerHTML = `
+                <tr>
+                    <td colspan="6" class="spinner-container">
+                        <div class="spinner"></div>
+                    </td>
+                </tr>
             `;
-            });
-    }
-
-
-    // Function to update orders table
-    function updateTable(orders) {
-        const ordersTableBody = document.querySelector('#ordersTable tbody');
-        ordersTableBody.innerHTML = '';
-        orders.forEach(order => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${order.order_id}</td>
-                <td>${order.order_date}</td>
-                <td>${order.total_amount}</td>
-                 <td>${order.discount}</td>
-                <td>${order.delivery_status}</td>
-                <td><button class="view-details-btn" data-order-id="${order.order_id}">View Details</button></td>
+        },
+        
+        showError: (container, message = 'Error loading data') => {
+            container.innerHTML = `
+                <tr>
+                    <td colspan="6" class="error-message">${message}</td>
+                </tr>
             `;
-            ordersTableBody.appendChild(row);
-        });
-
-        // Attach event listeners to the view details buttons
-        document.querySelectorAll('.view-details-btn').forEach(button => {
-            button.addEventListener('click', (event) => {
-                const orderId = event.target.getAttribute('data-order-id');
-                fetchOrderDetails(orderId);
-            });
-        });
-    }
-
-    // Function to update pagination
-    function updatePagination(totalItems, currentPage, itemsPerPage) {
-        const paginationContainer = document.getElementById('pagination');
-        paginationContainer.innerHTML = '';
-
-        const totalPages = Math.ceil(totalItems / itemsPerPage);
-        paginationButtons = [];
-
-        const createButton = (label, page, disabled = false) => {
+        },
+        
+        toggleModal: (show = true) => {
+            elements.modal.style.display = show ? 'block' : 'none';
+        },
+        
+        createButton: (label, page, disabled = false, active = false) => {
             const btn = document.createElement('button');
             btn.textContent = label;
-            if (disabled) btn.disabled = true;
-            btn.addEventListener('click', () => fetchOrders(page));
-            paginationContainer.appendChild(btn);
-        };
-
-        // Show: First, Prev
-        createButton('« First', 1, currentPage === 1);
-        createButton('‹ Prev', currentPage - 1, currentPage === 1);
-
-        // Show range around current page (e.g. ±2)
-        const maxVisible = 2;
-        const start = Math.max(1, currentPage - maxVisible);
-        const end = Math.min(totalPages, currentPage + maxVisible);
-
-        for (let i = start; i <= end; i++) {
-            const btn = document.createElement('button');
-            btn.textContent = i;
-            if (i === currentPage) btn.classList.add('active');
-            btn.addEventListener('click', () => fetchOrders(i));
-            paginationButtons.push(btn);
-            paginationContainer.appendChild(btn);
+            btn.disabled = disabled;
+            if (active) btn.classList.add('active');
+            return btn;
+        },
+        
+        formatDate: (dateString) => {
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString(undefined, options);
+        },
+        
+        formatCurrency: (amount) => {
+            return parseFloat(amount).toFixed(2);
         }
+    };
 
-        // Show: Next, Last
-        createButton('Next ›', currentPage + 1, currentPage === totalPages);
-        createButton('Last »', totalPages, currentPage === totalPages);
-    }
+    // API Functions
+    const api = {
+        fetchOrders: (page = 1) => {
+            utils.showSpinner(elements.tables.orders.container);
+            
+            const minDelay = new Promise(resolve => setTimeout(resolve, CONFIG.minSpinnerTime));
+            const fetchData = fetch(`${CONFIG.apiEndpoints.fetchOrders}?page=${page}&limit=${CONFIG.itemsPerPage}`)
+                .then(res => res.json());
 
-    // Function to fetch and display order details
-    function fetchOrderDetails(orderId) {
-        fetch('../v2/fetch_order_details.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ order_id: orderId })
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    displayOrderDetails(data.order_details);
-                } else {
-                    console.error('Failed to fetch order details:', data.message);
-                }
-            })
-            .catch(error => console.error('Error fetching order details:', error));
-    }
-
-    // Function to display order details
-    function displayOrderDetails(orderDetails) {
-        const orderDetailsTableBody = document.querySelector('#orderDetailsTable tbody');
-        orderDetailsTableBody.innerHTML = '';
-
-        orderDetails.forEach(detail => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${detail.order_date}</td>
-                 <td>${detail.order_id}</td>
-                <td>${detail.food_name}</td>
-                <td>${detail.quantity}</td>
-                <td>${detail.price_per_unit}</td>
-                <td>${detail.status}</td>
-                <td>${detail.total_price}</td>
-            `;
-            orderDetailsTableBody.appendChild(row);
-        });
-
-        const firstDetail = orderDetails[0];
-
-        // Append additional rows like Total, Service Fee, etc.
-        appendAdditionalOrderDetails(firstDetail);
-
-        // Display the modal
-        document.getElementById('orderModal').style.display = 'block';
-
-        // Update decline button with order ID
-        const declineButton = document.getElementById('decline-btn');
-        if (firstDetail.status === "Pending") {
-            declineButton.style.display = "block";
-            declineButton.dataset.orderId = firstDetail.order_id;
-        } else {
-            declineButton.style.display = "none";
-        }
-
-        // Ensure the Decline Order button is functional
-        if (declineButton) {
-            declineButton.addEventListener('click', () => {
-                const orderId = declineButton.dataset.orderId;
-                // Show JavaScript confirmation dialog
-                const userConfirmed = confirm("Are you sure you want to cancel this order? This action cannot be undone.");
-
-                if (userConfirmed) {
-                    // If the user clicked "OK", proceed with order cancellation
-                    updateOrderStatus(orderId, 'Cancelled');
-                } else {
-                    // If the user clicked "Cancel", do nothing
-                    console.log("Order cancellation aborted by the user.");
-                }
-            });
-        }
-    }
-
-    // Function to append additional details rows
-    function appendAdditionalOrderDetails(firstDetail) {
-        const orderDetailsTableBody = document.querySelector('#orderDetailsTable tbody');
-
-        // Add Total Order row
-        const totalOrderRow = document.createElement('tr');
-        totalOrderRow.innerHTML = `
-            <td colspan="6"><strong>Total Order</strong></td>
-            <td>${firstDetail.total_order}</td>
-        `;
-        orderDetailsTableBody.appendChild(totalOrderRow);
-
-        // Add Service Fee row
-        const serviceFeeRow = document.createElement('tr');
-        serviceFeeRow.innerHTML = `
-            <td colspan="6"><strong>Service Fee</strong></td>
-            <td>${firstDetail.service_fee}</td>
-        `;
-        orderDetailsTableBody.appendChild(serviceFeeRow);
-
-        // Add Delivery Fee row
-        const deliveryFeeRow = document.createElement('tr');
-        deliveryFeeRow.innerHTML = `
-            <td colspan="6"><strong>Delivery Fee</strong></td>
-            <td>${firstDetail.delivery_fee}</td>
-        `;
-        orderDetailsTableBody.appendChild(deliveryFeeRow);
-
-        // Add Discount Fee row
-        const discountFeeRow = document.createElement('tr');
-        discountFeeRow.innerHTML = `
-            <td colspan="6"><strong>Discount</strong></td>
-            <td>${firstDetail.discount}</td>
-        `;
-        orderDetailsTableBody.appendChild(discountFeeRow);
-
-        // Add Total Amount row
-        const totalAmountRow = document.createElement('tr');
-        totalAmountRow.innerHTML = `
-            <td colspan="6"><strong>Total Amount</strong></td>
-            <td>${firstDetail.total_amount}</td>
-        `;
-        orderDetailsTableBody.appendChild(totalAmountRow);
-
-        // Add Delivery Status row
-        const deliveryStatusRow = document.createElement('tr');
-        deliveryStatusRow.innerHTML = `
-            <td colspan="6"><strong>Delivery Status</strong></td>
-            <td>${firstDetail.delivery_status}</td>
-        `;
-        orderDetailsTableBody.appendChild(deliveryStatusRow);
-
-        // Add Delivery Pin row
-        const deliveryPinRow = document.createElement('tr');
-        deliveryPinRow.innerHTML = `
-            <td colspan="6"><strong>Delivery Pin</strong></td>
-            <td>${firstDetail.delivery_pin}</td>
-        `;
-        orderDetailsTableBody.appendChild(deliveryPinRow);
-
-        // Add Driver's Name row
-        const driverNameRow = document.createElement('tr');
-        if (firstDetail.driver_firstname == null || firstDetail.driver_lastname == null) {
-            driverNameRow.innerHTML = `
-                <td colspan="6"><strong>Driver's Name</strong></td>
-                <td> N/A </td>
-            `;
-        } else {
-            driverNameRow.innerHTML = `
-                <td colspan="6"><strong>Driver's Name</strong></td>
-                <td>${firstDetail.driver_firstname} ${firstDetail.driver_lastname}</td>
-            `;
-        }
-
-
-        orderDetailsTableBody.appendChild(driverNameRow);
-
-        // Add Driver's Name row
-        const driverPhoneRow = document.createElement('tr');
-        if (firstDetail.driver_phoneNumber == null) {
-            driverPhoneRow.innerHTML = `
-                <td colspan="6"><strong>Driver's Phone No.</strong></td>
-                <td> N/A </td>
-            `;
-        } else {
-            driverPhoneRow.innerHTML = `
-                <td colspan="6"><strong>Driver's Phone No.</strong></td>
-                <td>${firstDetail.driver_phoneNumber}</td>
-            `;
-        }
-
-        orderDetailsTableBody.appendChild(driverPhoneRow);
-        const isCredit = document.createElement('tr');
-        if (firstDetail.is_credit == 1) {
-            isCredit.innerHTML = `<td colspan="6"><strong>Is Credit</strong></td>
-                <td> Yes </td>`;
-        }
-        else {
-            isCredit.innerHTML = `<td colspan="6"><strong>Is Credit</strong></td>
-            <td> No </td>`;
-        }
-        orderDetailsTableBody.appendChild(isCredit);
-
-        if (firstDetail.delivery_status == 'Delivered' || firstDetail.delivery_status == 'Cancelled' || firstDetail.delivery_status == 'Declined') {
-            document.querySelector('#receipt-btn').style.display = "block";
-        }
-    }
-
-    // Function to update order status
-    function updateOrderStatus(orderId, status) {
-        fetch('../v2/cancel_order.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ order_id: orderId, status: status })
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Your Order has been Successfully ' + status);
-                    location.reload(); // Refresh the page to reflect changes
-                } else {
-                    console.error('Failed to update order status:', data.message);
-                    alert("Failed to Update Customer Order: " + data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error updating order status:', error);
-            });
-    }
-
-    // Handle modal close
-    document.querySelector('.modal .close').addEventListener('click', () => {
-        document.getElementById('orderModal').style.display = 'none';
-        location.reload();
-    });
-
-    window.addEventListener('click', (event) => {
-        if (event.target === document.getElementById('orderModal')) {
-            document.getElementById('orderModal').style.display = 'none';
-            location.reload();
-        }
-    });
-
-    // Function to print the receipt
-    function printReceipt() {
-        const orderDetails = document.querySelector('#orderDetailsTable').outerHTML;
-        const now = new Date();
-        const dateTime = now.toLocaleString();
-        const receiptWindow = window.open('', '', 'width=800,height=600');
-        receiptWindow.document.write('<html><head><title>Receipt</title>');
-        receiptWindow.document.write('<style>');
-        receiptWindow.document.write(`
-            body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 20px;
-                color: #333;
-            }
-            h2 {
-                text-align: center;
-                margin-bottom: 20px;
-            }
-            table {
-                width: 100%;
-                border-collapse: collapse;
-                margin-top: 20px;
-            }
-            th, td {
-                border: 1px solid #ddd;
-                padding: 8px;
-                text-align: left;
-            }
-            th {
-                background-color: #f2f2f2;
-            }
-            @media print {
-                body {
-                    padding: 10px;
-                }
-                table {
-                    font-size: 12px;
-                }
-            }
-        `);
-        receiptWindow.document.write('</style></head><body>');
-        receiptWindow.document.write('<h2>KaraKata Foods</h2>');
-        receiptWindow.document.write('<h3>Order Details</h3>');
-        receiptWindow.document.write(orderDetails);
-        receiptWindow.document.write('<br>Thank you for your Patronage <br/>');
-        receiptWindow.document.write('Date and Time: ' + dateTime);
-        receiptWindow.document.write('</body></html>');
-
-        receiptWindow.document.close();
-        receiptWindow.print();
-    }
-
-    // Attach print button event listener
-    document.querySelector('#receipt-btn').addEventListener('click', printReceipt);
-
-    document.getElementById("liveSearch").addEventListener("input", filterTable);
-
-    function filterTable() {
-        var input = document.getElementById("liveSearch").value.toLowerCase();
-        var rows = document.getElementById("ordersTable").getElementsByTagName("tr");
-
-        for (var i = 1; i < rows.length; i++) {
-            var cells = rows[i].getElementsByTagName("td");
-            var found = false;
-            for (var j = 0; j < cells.length; j++) {
-                if (cells[j]) {
-                    var cellText = cells[j].textContent.toLowerCase();
-                    if (cellText.indexOf(input) > -1) {
-                        found = true;
-                        break;
+            Promise.all([fetchData, minDelay])
+                .then(([data]) => {
+                    if (data.success && data.orders.length > 0) {
+                        ui.updateOrdersTable(data.orders);
+                        ui.updatePagination(data.total, data.page, data.limit);
+                    } else {
+                        utils.showError(elements.tables.orders.container, 'No Order History at the moment');
                     }
-                }
-            }
-            rows[i].style.display = found ? "" : "none";
+                })
+                .catch(() => {
+                    utils.showError(elements.tables.orders.container, 'Error loading Order data');
+                });
+        },
+        
+        fetchOrderDetails: (orderId) => {
+            return fetch(CONFIG.apiEndpoints.fetchOrderDetails, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ order_id: orderId })
+            })
+            .then(response => response.json());
+        },
+        
+        cancelOrder: (orderId) => {
+            return fetch(CONFIG.apiEndpoints.cancelOrder, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ order_id: orderId, status: 'Cancelled' })
+            })
+            .then(response => response.json());
         }
-    }
+    };
+
+    // UI Functions
+    const ui = {
+        updateOrdersTable: (orders) => {
+            elements.tables.orders.body.innerHTML = '';
+            
+            orders.forEach(order => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${order.order_id}</td>
+                    <td>${utils.formatDate(order.order_date)}</td>
+                    <td>${utils.formatCurrency(order.total_amount)}</td>
+                    <td>${utils.formatCurrency(order.discount)}</td>
+                    <td>${order.delivery_status}</td>
+                    <td>
+                        <button class="view-details-btn" data-order-id="${order.order_id}">
+                            View Details
+                        </button>
+                    </td>
+                `;
+                elements.tables.orders.body.appendChild(row);
+            });
+
+            // Attach event listeners to view details buttons
+            document.querySelectorAll('.view-details-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    state.currentOrderId = event.target.getAttribute('data-order-id');
+                    order.loadOrderDetails(state.currentOrderId);
+                });
+            });
+        },
+        
+        updatePagination: (totalItems, currentPage, itemsPerPage) => {
+            elements.pagination.innerHTML = '';
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+            
+            // First and Previous buttons
+            elements.pagination.appendChild(utils.createButton('« First', 1, currentPage === 1));
+            elements.pagination.appendChild(utils.createButton('‹ Prev', currentPage - 1, currentPage === 1));
+            
+            // Page numbers
+            const maxVisible = 2;
+            const start = Math.max(1, currentPage - maxVisible);
+            const end = Math.min(totalPages, currentPage + maxVisible);
+            
+            for (let i = start; i <= end; i++) {
+                const btn = utils.createButton(i, i, false, i === currentPage);
+                btn.addEventListener('click', () => {
+                    state.currentPage = i;
+                    api.fetchOrders(i);
+                });
+                elements.pagination.appendChild(btn);
+            }
+            
+            // Next and Last buttons
+            const nextBtn = utils.createButton('Next ›', currentPage + 1, currentPage === totalPages);
+            nextBtn.addEventListener('click', () => {
+                state.currentPage = currentPage + 1;
+                api.fetchOrders(currentPage + 1);
+            });
+            elements.pagination.appendChild(nextBtn);
+            
+            const lastBtn = utils.createButton('Last »', totalPages, currentPage === totalPages);
+            lastBtn.addEventListener('click', () => {
+                state.currentPage = totalPages;
+                api.fetchOrders(totalPages);
+            });
+            elements.pagination.appendChild(lastBtn);
+        },
+        
+        displayOrderDetails: (orderDetails) => {
+            const firstDetail = orderDetails[0];
+            const { body } = elements.tables.orderDetails;
+            body.innerHTML = '';
+            
+            // Order items
+            orderDetails.forEach(detail => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${utils.formatDate(detail.order_date)}</td>
+                    <td>${detail.order_id}</td>
+                    <td>${detail.food_name}</td>
+                    <td>${detail.quantity}</td>
+                    <td>${utils.formatCurrency(detail.price_per_unit)}</td>
+                    <td>${detail.status}</td>
+                    <td>${utils.formatCurrency(detail.total_price)}</td>
+                `;
+                body.appendChild(row);
+            });
+            
+            // Order summary
+            const summaryRows = [
+                { label: 'Total Order', value: utils.formatCurrency(firstDetail.total_order) },
+                { label: 'Service Fee', value: utils.formatCurrency(firstDetail.service_fee) },
+                { label: 'Delivery Fee', value: utils.formatCurrency(firstDetail.delivery_fee) },
+                { label: 'Discount', value: utils.formatCurrency(firstDetail.discount) },
+                { label: 'Total Amount', value: utils.formatCurrency(firstDetail.total_amount) },
+                { label: 'Delivery Status', value: firstDetail.delivery_status },
+                { label: 'Delivery Pin', value: firstDetail.delivery_pin || 'N/A' },
+                { 
+                    label: 'Driver\'s Name', 
+                    value: firstDetail.driver_firstname && firstDetail.driver_lastname 
+                        ? `${firstDetail.driver_firstname} ${firstDetail.driver_lastname}` 
+                        : 'N/A'
+                },
+                { 
+                    label: 'Driver\'s Phone No.', 
+                    value: firstDetail.driver_phoneNumber || 'N/A' 
+                },
+                { 
+                    label: 'Is Credit', 
+                    value: firstDetail.is_credit == 1 ? 'Yes' : 'No' 
+                }
+            ];
+            
+            summaryRows.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td colspan="6"><strong>${row.label}</strong></td>
+                    <td>${row.value}</td>
+                `;
+                body.appendChild(tr);
+            });
+            
+            // Show/hide action buttons based on status
+            const showReceiptBtn = ['Delivered', 'Cancelled', 'Declined'].includes(firstDetail.delivery_status);
+            const showRatingBtn = ['Delivered', 'Cancelled on Delivered'].includes(firstDetail.delivery_status);
+            
+            elements.buttons.receipt.style.display = showReceiptBtn ? 'block' : 'none';
+            elements.buttons.driverRating.style.display = showRatingBtn ? 'block' : 'none';
+            elements.buttons.decline.style.display = firstDetail.status === 'Pending' ? 'block' : 'none';
+            
+            if (elements.buttons.decline.style.display === 'block') {
+                elements.buttons.decline.dataset.orderId = firstDetail.order_id;
+            }
+            
+            utils.toggleModal();
+        },
+        
+        printReceipt: () => {
+            const orderDetails = document.querySelector('#orderDetailsTable').outerHTML;
+            const now = new Date();
+            const receiptWindow = window.open('', '', 'width=800,height=600');
+            
+            receiptWindow.document.write(`
+                <html>
+                    <head>
+                        <title>Receipt</title>
+                        <style>
+                            body {
+                                font-family: Arial, sans-serif;
+                                margin: 0;
+                                padding: 20px;
+                                color: #333;
+                            }
+                            h2, h3 {
+                                text-align: center;
+                                margin-bottom: 20px;
+                            }
+                            table {
+                                width: 100%;
+                                border-collapse: collapse;
+                                margin-top: 20px;
+                            }
+                            th, td {
+                                border: 1px solid #ddd;
+                                padding: 8px;
+                                text-align: left;
+                            }
+                            th {
+                                background-color: #f2f2f2;
+                            }
+                            @media print {
+                                body { padding: 10px; }
+                                table { font-size: 12px; }
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <h2>KaraKata Foods</h2>
+                        <h3>Order Details</h3>
+                        ${orderDetails}
+                        <br>Thank you for your Patronage <br/>
+                        <p>Date and Time: ${now.toLocaleString()}</p>
+                    </body>
+                </html>
+            `);
+            
+            receiptWindow.document.close();
+            receiptWindow.print();
+        },
+        
+        filterTable: () => {
+            const searchTerm = elements.search.value.toLowerCase();
+            const rows = document.querySelectorAll("#ordersTable tbody tr");
+            
+            rows.forEach(row => {
+                let matchFound = false;
+                const cells = row.querySelectorAll("td");
+                
+                cells.forEach(cell => {
+                    if (cell.textContent.toLowerCase().includes(searchTerm)) {
+                        matchFound = true;
+                    }
+                });
+                
+                row.style.display = matchFound ? "" : "none";
+            });
+        }
+    };
+
+    // Order Management Functions
+    const order = {
+        loadOrderDetails: (orderId) => {
+            api.fetchOrderDetails(orderId)
+                .then(data => {
+                    if (data.success) {
+                        ui.displayOrderDetails(data.order_details);
+                    } else {
+                        console.error('Failed to fetch order details:', data.message);
+                    }
+                })
+                .catch(error => console.error('Error fetching order details:', error));
+        },
+        
+        cancelOrder: (orderId) => {
+            const userConfirmed = confirm("Are you sure you want to cancel this order? This action cannot be undone.");
+            
+            if (userConfirmed) {
+                api.cancelOrder(orderId)
+                    .then(data => {
+                        if (data.success) {
+                            alert('Your Order has been Successfully Cancelled');
+                            location.reload();
+                        } else {
+                            alert("Failed to Cancel Order: " + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error cancelling order:', error);
+                    });
+            }
+        }
+    };
+
+    // Event Listeners
+    const setupEventListeners = () => {
+        // Modal close
+        elements.buttons.closeModal.addEventListener('click', () => {
+            utils.toggleModal(false);
+            location.reload();
+        });
+        
+        // Outside click to close modal
+        window.addEventListener('click', (event) => {
+            if (event.target === elements.modal) {
+                utils.toggleModal(false);
+                location.reload();
+            }
+        });
+        
+        // Decline order button
+        elements.buttons.decline.addEventListener('click', () => {
+            order.cancelOrder(elements.buttons.decline.dataset.orderId);
+        });
+        
+        // Print receipt button
+        elements.buttons.receipt.addEventListener('click', ui.printReceipt);
+        
+        // Live search
+        elements.search.addEventListener('input', ui.filterTable);
+    };
+
+    // Initialize
+    const init = () => {
+        setupEventListeners();
+        api.fetchOrders(state.currentPage);
+    };
+
+    init();
 });

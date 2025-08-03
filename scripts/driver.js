@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Inject spinner
         ordersTableBody.innerHTML = `
         <tr>
-            <td colspan="5" style="text-align:center; padding: 20px;">
+            <td colspan="6" style="text-align:center; padding: 20px;">
                 <div class="spinner"
                     style="border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: auto;">
                 </div>
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     updatePagination(data.pagination.total, data.pagination.page, data.pagination.limit);
                 } else {
                     ordersTableBody.innerHTML = `
-                    <tr><td colspan="5" style="text-align:center;">No Order History at the moment</td></tr>
+                    <tr><td colspan="6" style="text-align:center;">No Order History at the moment</td></tr>
                 `;
                     console.error('No Driver data:', data.message);
                 }
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => {
                 console.error('Error fetching data:', error);
                 ordersTableBody.innerHTML = `
-                <tr><td colspan="5" style="text-align:center; color:red;">Error loading Order data</td></tr>
+                <tr><td colspan="6" style="text-align:center; color:red;">Error loading Order data</td></tr>
             `;
             });
     }
@@ -57,15 +57,27 @@ document.addEventListener('DOMContentLoaded', () => {
         drivers.forEach(driver => {
             const row = document.createElement('tr');
             const restrictionStatus = driver.restriction === 1 ? 'Restricted' : 'Not Restricted';
+            const accountStatus = driver.delete_status === 'Yes' ? 'Deactivated' : 'Activated';
             const restrictionClass = driver.restriction === 1 ? 'restricted-badge' : 'not-restricted-badge';
+            const accountStatusClass = driver.delete_status === 'Yes' ? 'restricted-badge' : 'not-restricted-badge';
+            const isDeactivated = driver.delete_status == 'Yes';
+            const isRestricted = driver.restriction == 1;
+
+            const showViewOnly = isDeactivated || isRestricted;
 
             row.innerHTML = `
-            <td>${driver.firstname}</td>
-            <td>${driver.lastname}</td>
-            <td>${driver.status}</td>
-            <td><span class="${restrictionClass}">${restrictionStatus}</span></td>
-            <td><button class="view-details-btn" data-driver-id="${driver.id}">View Details</button></td>
-        `;
+    <td>${driver.firstname}</td>
+    <td>${driver.lastname}</td>
+    <td>${driver.status}</td>
+    <td><span class="${restrictionClass}">${restrictionStatus}</span></td>
+    <td><span class="${accountStatusClass}">${accountStatus}</span></td>
+    <td>
+        <button class="view-details-btn" data-driver-id="${driver.id}">
+            ${showViewOnly ? 'View Details' : 'Edit Details'}
+        </button>
+    </td>
+`;
+
             ordersTableBody.appendChild(row);
         });
 
@@ -167,6 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         orderDetailsTable.innerHTML = `
+        
             <tr>
                 <td>Date Onboarded</td>
                 <td><input type="text" id="dateCreated" value="${driver_details.date_created}" disabled></td>
@@ -267,6 +280,28 @@ document.addEventListener('DOMContentLoaded', () => {
     </td>
 </tr>
         `;
+        const isRestricted = driver_details.restriction === 1;
+const isDeactivated = driver_details.delete_status === 'Yes';
+
+if (isRestricted || isDeactivated) {
+    // Disable all input and select elements
+    orderDetailsTable.querySelectorAll('input, select, textarea').forEach(el => {
+        el.disabled = true;
+    });
+
+    // Optionally, also disable checkboxes
+    orderDetailsTable.querySelectorAll('input[type="checkbox"]').forEach(el => {
+        el.disabled = true;
+    });
+     // Display status note
+    const statusNote = document.createElement('tr');
+    statusNote.innerHTML = `
+        <td colspan="2" style="color: #d32f2f; text-align: center; font-weight: bold;">
+            This account is ${isRestricted ? 'restricted' : 'deactivated'}. Fields are locked.
+        </td>
+    `;
+    orderDetailsTable.appendChild(statusNote);
+}
 
         // Display photo if available
         if (driver_details.photo) {
@@ -277,42 +312,47 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Add "Update" and "Delete" buttons below the table for performing actions
-        let actionButtons = `
-    <tr>
-        <td colspan="2" style="text-align: center;">
-            <button id="updateDriverBtn">Update</button>
-`;
-
-        if (userRole === 'Super Admin') {
-            actionButtons += `
-            <button id="deleteDriverBtn">Deactivate</button>
+        if (driver_details.delete_status !== 'Yes' && driver_details.restriction !== 1) {
+            let actionButtons = `
+        <tr>
+            <td colspan="2" style="text-align: center;">
+                <button id="updateDriverBtn">Update</button>
     `;
+
+            if (userRole === 'Super Admin') {
+                actionButtons += `
+                <button id="deleteDriverBtn">Deactivate</button>
+        `;
+            }
+
+            actionButtons += `
+            </td>
+        </tr>
+    `;
+
+            orderDetailsTable.innerHTML += actionButtons;
         }
 
-        actionButtons += `
-        </td>
-    </tr>
-`;
 
-        orderDetailsTable.innerHTML += actionButtons;
-
-       
 
         // Attach event listeners for checkbox toggle
         toggleMasking('toggleMaskingPhone', 'phoneNumber', 'originalPhoneNumber', 'phoneLabel');
         toggleMasking('toggleMaskingEmail', 'email', 'originalEmail', 'emailLabel');
 
-        // Event listeners for update and delete buttons
-        document.getElementById('updateDriverBtn').addEventListener('click', () => {
-            updateDriver(driver_details.id);
-        });
+        const updateBtn = document.getElementById('updateDriverBtn');
+        if (updateBtn) {
+            updateBtn.addEventListener('click', () => {
+                updateDriver(driver_details.id);
+            });
+        }
 
-        // Attach delete button event only if visible
-        if (userRole === 'Super Admin') {
-            document.getElementById('deleteDriverBtn').addEventListener('click', () => {
+        const deleteBtn = document.getElementById('deleteDriverBtn');
+        if (deleteBtn) {
+            deleteBtn.addEventListener('click', () => {
                 deleteDriver(driver_details.id);
             });
         }
+
 
 
     }
@@ -386,31 +426,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     function deleteDriver(driverId) {
-    if (confirm('Are you sure you want to delete this driver?')) {
-        fetch('backend/delete_driver.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ id: driverId })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Driver account deactivated successfully!');
-                document.getElementById('orderModal').style.display = 'none';
-                fetchDrivers(currentPage); // Refresh the driver list
-            } else {
-                console.error('Failed to deactivate driver:', data.message);
-                alert(`Failed to deactivate driver account: ${data.message}`);
-            }
-        })
-        .catch(error => {
-            console.error('Error deactivating driver account:', error);
-            alert('An unexpected error occurred while deactivating the driver.');
-        });
+        if (confirm('Are you sure you want to delete this driver?')) {
+            fetch('backend/delete_driver.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id: driverId })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Driver account deactivated successfully!');
+                        document.getElementById('orderModal').style.display = 'none';
+                        fetchDrivers(currentPage); // Refresh the driver list
+                    } else {
+                        console.error('Failed to deactivate driver:', data.message);
+                        alert(`Failed to deactivate driver account: ${data.message}`);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error deactivating driver account:', error);
+                    alert('An unexpected error occurred while deactivating the driver.');
+                });
+        }
     }
-}
     document.querySelector('.modal .close').addEventListener('click', () => {
         document.getElementById('orderModal').style.display = 'none';
 

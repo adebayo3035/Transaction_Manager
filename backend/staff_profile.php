@@ -15,7 +15,7 @@ if (!isset($_SESSION['unique_id'])) {
 $admin_id = $_SESSION['unique_id'];
 
 // Fetch admin info
-$sql = "SELECT unique_id, firstname, lastname, email, photo, gender, phone, role, created_at FROM admin_tbl WHERE unique_id = ?";
+$sql = "SELECT unique_id, firstname, lastname, email, photo, gender, phone, role, restriction_id, delete_status, block_id, created_at FROM admin_tbl WHERE unique_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param('s', $admin_id);
 $stmt->execute();

@@ -25,6 +25,11 @@ tbody tr td select {
 tbody tr td input[type="email"] {
     text-transform: lowercase;
 }
+td.action-buttons {
+    text-align: center;
+}
+
+
 
 .photo-container {
     text-align: center;

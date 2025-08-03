@@ -24,6 +24,7 @@
 
             <h1 id="customer-name">Loading...</h1>
             <h4 id="customer-status">Loading...</h4>
+            <h4 id="restriction-status">Loading...</h4>
         </div>
         <div class="profile-details">
             <div class="detail">
@@ -68,7 +69,7 @@
             </div>
     </div>
 
-    <!-- Modal  to Update Driver Profile Picture Structure -->
+    <!-- Modal  to Update Staff Profile Picture Structure -->
 <div id="profileModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>

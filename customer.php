@@ -34,7 +34,8 @@
                 <th>FirstName</th>
                 <th>LastName</th>
                 <th>Gender</th>
-                <th>Account Status</th>
+                <th>Restriction Status</th>
+                <th> Account Status</th>
                 <th>Actions</th>
             </tr>
         </thead>

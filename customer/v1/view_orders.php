@@ -70,6 +70,7 @@
 
             <button type="button" id="receipt-btn" style="display: none">Print Receipt</button>
             <button type="button" id="decline-btn" style="display: none">Cancel Order</button>
+            <button type="button" id="driverRating-btn" style="display: none">Rate Order & Driver</button>
         </div>
     </div>
 

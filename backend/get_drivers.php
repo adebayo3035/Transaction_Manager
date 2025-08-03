@@ -46,10 +46,8 @@ try {
         logActivity("Database transaction started");
 
         // Fetch total count of drivers
-        $totalQuery = "SELECT COUNT(*) as total FROM driver WHERE delete_status IS NULL";
+        $totalQuery = "SELECT COUNT(*) as total FROM driver";
         $countStmt = $conn->prepare($totalQuery);
-
-        
         if (!$countStmt) {
             throw new Exception("Prepare failed for count query: " . $conn->error);
         }
@@ -73,8 +71,9 @@ try {
                     license_number,
                     status,
                     restriction,
+                    delete_status,
                     date_updated 
-                  FROM driver WHERE delete_status IS NULL
+                  FROM driver
                   ORDER BY restriction DESC, status DESC, date_updated DESC 
                   LIMIT ? OFFSET ?";
         

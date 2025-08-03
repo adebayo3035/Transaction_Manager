@@ -69,6 +69,7 @@ try {
                     lastname, 
                     gender,
                     restriction,
+                    delete_status,
                     date_updated 
                   FROM customers 
                   ORDER BY date_updated DESC 
