@@ -45054,3 +45054,5203 @@ Source: navbar.php (Line 15)
 Message: Admin data fetched successfully for user ID: 22675443
 ----------------------------------------
 
+[2025-08-03 17:22:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-03 17:22:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-03 17:22:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-03 17:22:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-03 17:22:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 10. Total pages: 2.
+----------------------------------------
+
+[2025-08-03 17:22:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-03 17:24:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-03 17:24:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-03 17:24:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-03 17:24:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-03 17:24:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 10. Total pages: 2.
+----------------------------------------
+
+[2025-08-03 17:24:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-03 17:24:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-08-03 17:24:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 32)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-08-03 17:24:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 39)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+
+[2025-08-03 17:26:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-03 17:26:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-03 17:26:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-03 17:26:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 10. Total pages: 2.
+----------------------------------------
+
+[2025-08-03 17:26:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-03 17:26:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-03 17:27:27]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-03 17:27:27]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-03 17:27:27]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-03 17:27:27]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-03 17:27:27]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 10. Total pages: 2.
+----------------------------------------
+
+[2025-08-03 17:27:27]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-03 17:29:28]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-03 17:29:28]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-03 17:29:28]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-03 17:29:28]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 10. Total pages: 2.
+----------------------------------------
+
+[2025-08-03 17:29:28]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-03 17:29:28]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-03 17:31:29]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-03 17:31:29]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-03 17:31:29]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-03 17:31:29]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 10. Total pages: 2.
+----------------------------------------
+
+[2025-08-03 17:31:29]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-03 17:31:29]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-03 17:31:30]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-08-03 17:31:30]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 32)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-08-03 17:31:30]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 39)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+
+[2025-08-03 17:31:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-03 17:31:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-03 17:31:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-03 17:31:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-03 17:31:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 10. Total pages: 2.
+----------------------------------------
+
+[2025-08-03 17:31:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-03 17:33:37]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-03 17:33:37]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-03 17:33:37]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-03 17:33:37]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-03 17:33:37]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-03 17:33:37]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-03 17:33:37]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-08-03 17:33:37]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 32)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-08-03 17:33:37]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 39)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+
+[2025-08-03 17:33:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-03 17:33:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-03 17:33:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-03 17:33:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-03 17:33:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-03 17:33:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-03 17:33:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 7)
+Message: Pending orders fetch process started
+----------------------------------------
+
+[2025-08-03 17:33:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 18)
+Message: Request initiated by Admin ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-08-03 17:33:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 26)
+Message: Database transaction started
+----------------------------------------
+
+[2025-08-03 17:33:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 84)
+Message: Retrieved 1 pending orders by Admin ID 22675443
+----------------------------------------
+
+[2025-08-03 17:33:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 97)
+Message: Pending orders fetch completed successfully
+----------------------------------------
+
+[2025-08-03 17:33:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 117)
+Message: Pending orders fetch process ended
+----------------------------------------
+
+[2025-08-03 17:33:47]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: restriction_checker.php (Line 36)
+Message: Restriction Check Passed: User ID 22675443 allowed access.
+----------------------------------------
+
+[2025-08-03 17:33:47]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 11)
+Message: Approval process started by user with ID: 22675443
+----------------------------------------
+
+[2025-08-03 17:33:47]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 15)
+Message: Raw input received: {"orders":[{"order_id":"87","status":"Approved"}]}
+----------------------------------------
+
+[2025-08-03 17:33:47]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 27)
+Message: Bulk orders received: [{"order_id":"87","status":"Approved"}]
+----------------------------------------
+
+[2025-08-03 17:33:47]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 48)
+Message: All bulk orders passed validation.
+----------------------------------------
+
+[2025-08-03 17:33:47]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 71)
+Message: Filtered approved orders: [{"order_id":"87","status":"Approved"}]
+----------------------------------------
+
+[2025-08-03 17:33:47]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 74)
+Message: Checking resource availability for approved orders.
+----------------------------------------
+
+[2025-08-03 17:33:47]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 78)
+Message: Executing driver count query: SELECT COUNT(*) as available_drivers FROM driver WHERE status = 'Available' AND restriction = 0
+----------------------------------------
+
+[2025-08-03 17:33:47]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 89)
+Message: Available drivers: 12, Required drivers: 1
+----------------------------------------
+
+[2025-08-03 17:33:47]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 93)
+Message: Executing food stock query: SELECT food_id, available_quantity FROM food
+----------------------------------------
+
+[2025-08-03 17:33:47]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 106)
+Message: Available food stock: {"1":"975","2":"208","3":"86","4":"186","5":"421","6":"394","7":"100","10":"63","11":"10","12":"63","13":"50","14":"99"}
+----------------------------------------
+
+[2025-08-03 17:33:47]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 128)
+Message: Total required food stock: {"1":1,"5":1,"7":1,"10":1}
+----------------------------------------
+
+[2025-08-03 17:33:47]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 153)
+Message: Sufficient drivers and food stock available. Proceeding with order updates.
+----------------------------------------
+
+[2025-08-03 17:33:47]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 179)
+Message: Driver assigned to order #87. Driver ID: 14 by approver 22675443
+----------------------------------------
+
+[2025-08-03 17:33:47]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 188)
+Message: Driver status set to 'Not Available'. Driver ID: 14
+----------------------------------------
+
+[2025-08-03 17:33:47]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 311)
+Message: Order and order details status updated for order ID 87 to 'Approved'
+----------------------------------------
+
+[2025-08-03 17:33:47]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/update_order_status.php
+Source: update_order_status.php (Line 316)
+Message: All order operations committed successfully by approver 22675443
+----------------------------------------
+
+[2025-08-03 17:33:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-03 17:33:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-03 17:33:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-03 17:33:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-03 17:33:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-03 17:33:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-03 17:33:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 7)
+Message: Pending orders fetch process started
+----------------------------------------
+
+[2025-08-03 17:33:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 18)
+Message: Request initiated by Admin ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-08-03 17:33:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 26)
+Message: Database transaction started
+----------------------------------------
+
+[2025-08-03 17:33:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 84)
+Message: Retrieved 0 pending orders by Admin ID 22675443
+----------------------------------------
+
+[2025-08-03 17:33:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 97)
+Message: Pending orders fetch completed successfully
+----------------------------------------
+
+[2025-08-03 17:33:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 117)
+Message: Pending orders fetch process ended
+----------------------------------------
+
+[2025-08-03 17:33:52]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-03 17:34:02]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-03 17:34:03]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-03 17:34:03]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-03 17:34:03]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-03 17:34:03]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-03 17:34:03]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-03 17:34:36]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-03 17:34:36]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-03 17:34:36]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-03 17:34:36]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-03 17:34:36]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-03 17:34:36]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-03 17:34:36]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_order_summary.php?page=1&limit=10
+Source: fetch_order_summary.php (Line 11)
+Message: Order listing fetch process started
+----------------------------------------
+
+[2025-08-03 17:34:36]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_order_summary.php?page=1&limit=10
+Source: fetch_order_summary.php (Line 24)
+Message: Request initiated by user ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-08-03 17:34:36]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_order_summary.php?page=1&limit=10
+Source: fetch_order_summary.php (Line 41)
+Message: Fetching orders - Page: 1, Limit: 10, Offset: 0
+----------------------------------------
+
+[2025-08-03 17:34:36]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_order_summary.php?page=1&limit=10
+Source: fetch_order_summary.php (Line 46)
+Message: Database transaction started
+----------------------------------------
+
+[2025-08-03 17:34:36]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_order_summary.php?page=1&limit=10
+Source: fetch_order_summary.php (Line 83)
+Message: Total orders found: 87, Total pages: 9
+----------------------------------------
+
+[2025-08-03 17:34:36]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_order_summary.php?page=1&limit=10
+Source: fetch_order_summary.php (Line 113)
+Message: Successfully retrieved 10 orders
+----------------------------------------
+
+[2025-08-03 17:34:36]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_order_summary.php?page=1&limit=10
+Source: fetch_order_summary.php (Line 133)
+Message: Order listing fetch completed successfully
+----------------------------------------
+
+[2025-08-03 17:34:36]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_order_summary.php?page=1&limit=10
+Source: fetch_order_summary.php (Line 168)
+Message: Order listing fetch process completed
+----------------------------------------
+
+[2025-08-03 17:34:39]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_order_details.php
+Source: fetch_order_details.php (Line 11)
+Message: Order details fetch process started
+----------------------------------------
+
+[2025-08-03 17:34:39]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_order_details.php
+Source: fetch_order_details.php (Line 24)
+Message: Request initiated by user ID: 22675443 (Role: Super Admin)
+----------------------------------------
+
+[2025-08-03 17:34:39]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_order_details.php
+Source: fetch_order_details.php (Line 55)
+Message: Processing order details for ID: 87
+----------------------------------------
+
+[2025-08-03 17:34:39]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_order_details.php
+Source: fetch_order_details.php (Line 60)
+Message: Database transaction started
+----------------------------------------
+
+[2025-08-03 17:34:39]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_order_details.php
+Source: fetch_order_details.php (Line 147)
+Message: Successfully retrieved order details for ID: 87
+----------------------------------------
+
+[2025-08-03 17:34:39]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_order_details.php
+Source: fetch_order_details.php (Line 160)
+Message: Order details fetch completed successfully
+----------------------------------------
+
+[2025-08-03 17:34:39]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_order_details.php
+Source: fetch_order_details.php (Line 186)
+Message: Order details fetch process completed
+----------------------------------------
+
+[2025-08-03 17:37:00]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-03 17:37:00]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-03 17:37:00]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-03 17:37:00]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-03 17:37:00]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-03 17:37:00]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 08:28:37]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 08:28:38]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 08:28:38]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 08:28:38]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 08:28:38]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 08:28:38]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-08-04 08:28:38]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 32)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-08-04 08:28:38]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 39)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+
+[2025-08-04 08:28:38]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 08:30:37]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 08:30:37]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 08:30:38]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 08:30:38]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 08:30:38]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 08:30:38]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 08:32:38]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 08:32:38]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 08:32:38]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 08:32:38]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 08:32:38]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 08:32:38]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 08:34:39]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-08-04 08:34:39]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 32)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-08-04 08:34:39]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 39)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+
+[2025-08-04 08:34:39]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 08:34:39]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 08:34:39]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 08:34:39]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 08:34:39]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 08:34:39]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 08:36:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 08:36:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 08:36:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 08:36:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 08:36:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 08:36:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 08:38:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 08:38:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 08:38:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 08:38:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 08:38:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 08:38:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 08:40:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-08-04 08:40:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 32)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-08-04 08:40:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 39)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+
+[2025-08-04 08:40:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 08:40:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 08:40:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 08:40:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 08:40:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 08:40:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 08:42:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 08:42:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 08:42:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 08:42:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 08:42:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 08:42:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 08:44:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 08:44:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 08:44:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 08:44:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 08:44:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 08:44:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 08:46:48]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 08:46:48]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 08:46:48]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 08:46:48]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 08:46:48]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 08:46:48]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 08:46:48]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-08-04 08:46:48]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 32)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-08-04 08:46:48]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 39)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+
+[2025-08-04 08:48:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 08:48:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 08:48:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 08:48:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 08:48:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 08:48:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 08:50:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 08:50:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 08:50:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 08:50:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 08:50:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 08:50:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 08:52:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 08:52:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 08:52:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 08:52:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 08:52:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 08:52:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 08:52:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-08-04 08:52:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 32)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-08-04 08:52:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 39)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+
+[2025-08-04 08:54:53]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 08:54:53]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 08:54:53]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 08:54:53]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 08:54:53]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 08:54:53]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 08:56:54]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 08:56:54]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 08:56:54]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 08:56:54]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 08:56:54]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 08:56:54]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 08:58:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 08:58:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 08:58:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 08:58:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 08:58:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 08:58:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-08-04 08:58:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 32)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-08-04 08:58:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 39)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+
+[2025-08-04 08:58:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 09:00:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 09:00:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 09:00:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 09:00:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 09:00:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 09:00:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 09:02:57]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 09:02:57]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 09:02:57]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 09:02:57]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 09:02:57]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 09:02:57]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 09:04:58]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 09:04:58]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-08-04 09:04:58]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 32)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-08-04 09:04:58]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 39)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+
+[2025-08-04 09:04:58]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 09:04:58]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 09:04:58]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 09:04:58]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 09:04:58]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 09:06:59]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 09:06:59]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 09:06:59]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 09:06:59]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 09:06:59]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 09:06:59]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 09:09:00]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 09:09:00]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 09:09:00]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 09:09:00]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 09:09:00]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 09:09:00]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 09:11:02]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 09:11:02]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 09:11:02]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 09:11:02]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 09:11:02]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 09:11:02]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 09:11:02]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-08-04 09:11:02]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 32)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-08-04 09:11:02]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 39)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+
+[2025-08-04 09:13:03]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 09:13:03]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 09:13:03]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 09:13:03]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 09:13:03]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 09:13:03]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 09:15:04]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 09:15:04]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 09:15:04]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 09:15:04]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 09:15:04]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 09:15:04]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 09:17:05]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 09:17:05]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 09:17:05]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 09:17:05]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 09:17:05]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 09:17:05]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 09:17:05]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-08-04 09:17:05]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 32)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-08-04 09:17:05]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 39)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+
+[2025-08-04 09:19:06]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 09:19:06]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 09:19:06]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 09:19:06]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 09:19:06]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 09:19:06]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 09:21:07]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 09:21:07]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 09:21:07]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 09:21:07]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 09:21:07]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 09:21:07]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 09:23:08]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 09:23:08]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 09:23:08]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 09:23:08]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 09:23:08]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 09:23:08]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 09:23:08]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-08-04 09:23:08]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 32)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-08-04 09:23:08]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 39)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+
+[2025-08-04 09:25:09]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 09:25:09]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 09:25:09]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 09:25:09]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 09:25:09]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 09:25:09]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 09:27:10]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 09:27:10]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 09:27:10]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 09:27:10]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 09:27:10]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 09:27:10]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 09:29:11]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 09:29:11]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 09:29:11]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 09:29:11]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 09:29:11]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 09:29:11]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 09:29:11]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-08-04 09:29:11]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 32)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-08-04 09:29:11]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 39)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+
+[2025-08-04 09:31:12]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 09:31:12]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 09:31:12]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 09:31:12]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 09:31:12]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 09:31:12]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 09:33:13]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 09:33:13]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 09:33:13]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 09:33:13]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 09:33:13]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 09:33:13]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 09:35:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 09:35:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 09:35:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 09:35:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 09:35:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 09:35:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 09:35:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-08-04 09:35:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 32)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-08-04 09:35:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 39)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+
+[2025-08-04 09:37:15]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 09:37:15]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 09:37:15]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 09:37:15]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 09:37:15]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 09:37:15]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 09:39:16]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 09:39:16]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 09:39:16]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 09:39:16]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 09:39:16]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 09:39:16]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 09:41:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 09:41:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 09:41:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 09:41:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 09:41:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 09:41:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 09:41:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-08-04 09:41:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 32)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-08-04 09:41:17]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 39)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+
+[2025-08-04 09:43:18]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 09:43:18]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 09:43:18]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 09:43:18]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 09:43:18]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 09:43:18]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 09:45:19]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 09:45:19]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 09:45:19]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 09:45:19]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 09:45:19]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 09:45:19]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 09:47:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 09:47:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 09:47:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 09:47:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 09:47:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 09:47:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 09:47:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-08-04 09:47:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 32)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-08-04 09:47:20]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 39)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+
+[2025-08-04 09:49:23]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 09:49:24]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 09:49:24]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 09:49:24]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 09:49:24]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 09:49:24]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 09:51:24]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 09:51:24]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 09:51:24]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 09:51:24]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 09:51:24]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 09:51:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 09:53:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 09:53:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 09:53:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 09:53:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 09:53:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 09:53:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 09:53:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-08-04 09:53:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 32)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-08-04 09:53:25]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 39)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+
+[2025-08-04 09:55:26]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 09:55:26]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 09:55:26]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 09:55:26]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 09:55:26]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 09:55:26]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 09:57:28]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 09:57:28]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 09:57:28]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 09:57:28]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 09:57:28]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 09:57:29]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 09:59:30]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-08-04 09:59:30]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 32)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-08-04 09:59:30]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 39)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+
+[2025-08-04 09:59:32]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 09:59:33]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 09:59:33]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 09:59:33]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 09:59:34]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 09:59:34]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 10:01:31]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 10:01:31]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 10:01:31]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 10:01:31]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 10:01:31]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 10:01:31]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 10:03:32]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 10:03:32]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 10:03:32]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 10:03:32]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 10:03:32]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 10:03:32]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 10:05:33]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 10:05:33]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 10:05:33]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 10:05:33]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 10:05:33]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 10:05:33]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 10:05:33]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-08-04 10:05:33]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 32)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-08-04 10:05:33]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 39)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+
+[2025-08-04 10:07:35]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 10:07:35]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 10:07:35]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 10:07:35]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 10:07:35]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 10:07:35]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 10:09:36]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 10:09:36]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 10:09:36]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 10:09:36]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 10:09:36]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 10:09:36]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 10:11:38]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 10:11:39]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 10:11:39]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 10:11:39]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 10:11:39]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 10:11:39]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 10:11:40]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-08-04 10:11:40]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 32)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-08-04 10:11:40]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 39)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+
+[2025-08-04 10:13:39]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 10:13:39]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 10:13:39]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 10:13:39]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 10:13:39]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 10:13:39]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 10:15:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 10:15:42]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 10:15:42]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 10:15:42]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 10:15:42]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 10:15:43]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 10:17:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 10:17:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 10:17:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 10:17:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 10:17:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 10:17:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 10:17:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-08-04 10:17:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 32)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-08-04 10:17:41]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 39)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+
+[2025-08-04 10:19:42]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 10:19:42]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 10:19:42]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 10:19:42]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 10:19:42]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 10:19:42]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 10:21:43]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 10:21:43]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 10:21:43]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 10:21:43]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 10:21:43]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 10:21:43]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 10:23:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 10:23:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 10:23:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 10:23:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 10:23:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 10:23:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 10:23:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-08-04 10:23:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 32)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-08-04 10:23:44]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 39)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+
+[2025-08-04 10:25:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 10:25:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 10:25:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 10:25:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 10:25:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 10:25:45]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 10:27:46]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 10:27:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 10:27:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 10:27:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 10:27:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 10:27:47]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 10:29:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 10:29:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-08-04 10:29:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 32)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-08-04 10:29:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 39)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+
+[2025-08-04 10:29:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 10:29:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 10:29:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 10:29:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 10:29:49]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 10:31:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 10:31:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 10:31:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 10:31:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 10:31:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 10:31:50]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 10:33:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 10:33:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 10:33:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 10:33:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 10:33:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 10:33:51]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 10:35:52]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 10:35:52]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-08-04 10:35:52]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 32)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-08-04 10:35:52]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 39)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+
+[2025-08-04 10:35:52]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 10:35:52]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 10:35:52]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 10:35:52]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 10:35:52]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 10:37:53]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 10:37:53]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 10:37:53]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 10:37:53]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 10:37:53]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 10:37:53]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 10:39:54]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 10:39:54]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 10:39:54]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 10:39:54]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 10:39:54]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 10:39:54]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 10:41:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 10:41:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 10:41:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 10:41:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 10:41:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 10:41:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 10:41:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 16)
+Message: MENU_ACCESS_INITIATED: Role - Super Admin
+----------------------------------------
+
+[2025-08-04 10:41:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 32)
+Message: MENU_ITEMS_LOADED: Super Admin menu items loaded.
+----------------------------------------
+
+[2025-08-04 10:41:55]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/admin_menu.php
+Source: admin_menu.php (Line 39)
+Message: MENU_RESPONSE_SENT: Menu items successfully sent for role - Super Admin
+----------------------------------------
+
+[2025-08-04 10:43:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 10:43:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 10:43:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 10:43:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 10:43:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 10:43:56]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 10:44:13]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 10)
+Message: Fetching admin notifications started.
+----------------------------------------
+
+[2025-08-04 10:44:13]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 41)
+Message: User role detected: Super Admin
+----------------------------------------
+
+[2025-08-04 10:44:13]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 63)
+Message: Fetched 5 notifications for page 1.
+----------------------------------------
+
+[2025-08-04 10:44:13]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 86)
+Message: Total unread notifications: 11. Total pages: 3.
+----------------------------------------
+
+[2025-08-04 10:44:13]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/notification.php
+Source: notification.php (Line 110)
+Message: Fetching admin notifications process ended.
+----------------------------------------
+
+[2025-08-04 10:44:13]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/navbar.php
+Source: navbar.php (Line 15)
+Message: Admin data fetched successfully for user ID: 22675443
+----------------------------------------
+
+[2025-08-04 10:44:13]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_revenue.php?page=1&limit=10
+Source: fetch_revenue.php (Line 7)
+Message: Revenue listing fetch process started
+----------------------------------------
+
+[2025-08-04 10:44:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_revenue.php?page=1&limit=10
+Source: fetch_revenue.php (Line 19)
+Message: Revenue listing request initiated by admin ID: 22675443
+----------------------------------------
+
+[2025-08-04 10:44:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_revenue.php?page=1&limit=10
+Source: fetch_revenue.php (Line 33)
+Message: Fetching revenue listing - Page: 1, Limit: 10, Offset: 0
+----------------------------------------
+
+[2025-08-04 10:44:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_revenue.php?page=1&limit=10
+Source: fetch_revenue.php (Line 38)
+Message: Transaction started for revenue listing fetch
+----------------------------------------
+
+[2025-08-04 10:44:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_revenue.php?page=1&limit=10
+Source: fetch_revenue.php (Line 50)
+Message: Total revenue records found: 43
+----------------------------------------
+
+[2025-08-04 10:44:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_revenue.php?page=1&limit=10
+Source: fetch_revenue.php (Line 79)
+Message: Successfully retrieved 10 revenue records
+----------------------------------------
+
+[2025-08-04 10:44:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_revenue.php?page=1&limit=10
+Source: fetch_revenue.php (Line 94)
+Message: Revenue listing fetch completed successfully
+----------------------------------------
+
+[2025-08-04 10:44:14]
+UserID: 22675443
+Method: GET
+URL: http://localhost/transaction_manager/backend/fetch_revenue.php?page=1&limit=10
+Source: fetch_revenue.php (Line 117)
+Message: Revenue listing fetch process completed
+----------------------------------------
+
+[2025-08-04 10:44:18]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 7)
+Message: Revenue details fetch process started
+----------------------------------------
+
+[2025-08-04 10:44:18]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 19)
+Message: Request initiated by admin ID: 22675443
+----------------------------------------
+
+[2025-08-04 10:44:18]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 35)
+Message: Processing revenue details for ID: 86
+----------------------------------------
+
+[2025-08-04 10:44:18]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 39)
+Message: Transaction started for revenue details fetch
+----------------------------------------
+
+[2025-08-04 10:44:18]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 66)
+Message: Revenue details retrieved for ID: 86, Type: Food Order Inflow, Amount: 1159.99
+----------------------------------------
+
+[2025-08-04 10:44:18]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 81)
+Message: Revenue details fetch completed successfully
+----------------------------------------
+
+[2025-08-04 10:44:18]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 101)
+Message: Revenue details fetch process completed
+----------------------------------------
+
+[2025-08-04 10:44:48]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 6)
+Message: Fetching promos script started.
+----------------------------------------
+
+[2025-08-04 10:44:48]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 10)
+Message: Random customer names fetch process started
+----------------------------------------
+
+[2025-08-04 10:44:48]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 21)
+Message: Customer customer_id found in session: 1260106158
+----------------------------------------
+
+[2025-08-04 10:44:48]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 34)
+Message: Pagination parameters - Page: 1, Limit: 10, Offset: 0
+----------------------------------------
+
+[2025-08-04 10:44:48]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 14)
+Message: Database transaction started
+----------------------------------------
+
+[2025-08-04 10:44:48]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 50)
+Message: Total promos count: 1
+----------------------------------------
+
+[2025-08-04 10:44:48]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 66)
+Message: Updated 0 expired promos (status = 0, delete_id = 1).
+----------------------------------------
+
+[2025-08-04 10:44:48]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 88)
+Message: Fetched 9 paginated promos.
+----------------------------------------
+
+[2025-08-04 10:44:48]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 111)
+Message: Fetched 1 ongoing promos.
+----------------------------------------
+
+[2025-08-04 10:44:48]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/backend/get_promo.php
+Source: get_promo.php (Line 127)
+Message: Fetching promos script completed successfully.
+----------------------------------------
+
+[2025-08-04 10:44:48]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 32)
+Message: Successfully retrieved 3 random customer names
+----------------------------------------
+
+[2025-08-04 10:44:48]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 43)
+Message: Random customer names fetch completed successfully
+----------------------------------------
+
+[2025-08-04 10:44:48]
+UserID: guest
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_random_customers.php
+Source: fetch_random_customers.php (Line 67)
+Message: Random customer names fetch process completed
+----------------------------------------
+
+[2025-08-04 11:06:53]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 7)
+Message: Revenue details fetch process started
+----------------------------------------
+
+[2025-08-04 11:06:53]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 19)
+Message: Request initiated by admin ID: 22675443
+----------------------------------------
+
+[2025-08-04 11:06:53]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 35)
+Message: Processing revenue details for ID: 87
+----------------------------------------
+
+[2025-08-04 11:06:53]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 39)
+Message: Transaction started for revenue details fetch
+----------------------------------------
+
+[2025-08-04 11:06:53]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 66)
+Message: Revenue details retrieved for ID: 87, Type: Food Order Inflow, Amount: 7656.00
+----------------------------------------
+
+[2025-08-04 11:06:53]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 81)
+Message: Revenue details fetch completed successfully
+----------------------------------------
+
+[2025-08-04 11:06:53]
+UserID: 22675443
+Method: POST
+URL: http://localhost/transaction_manager/backend/fetch_revenue_details.php
+Source: fetch_revenue_details.php (Line 101)
+Message: Revenue details fetch process completed
+----------------------------------------
+

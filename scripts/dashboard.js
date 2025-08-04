@@ -19,8 +19,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('totalInflow').textContent = data.totalInflow || 0;
     document.getElementById('totalOutflow').textContent = data.totalOutflow || 0;
     document.getElementById('pendingOrders').textContent = data.pendingOrders || 0;
-    document.getElementById('totalDrivers').textContent = data.totalDrivers || 0;
-  
+    const available = data.availableDrivers ?? 0;
+    const total = data.totalDrivers ?? 0;
+    document.getElementById('totalDrivers').textContent = `${available} Of ${total}`;
+
 
 
     const ordersTableBody = document.querySelector('#customer-table tbody');
@@ -42,10 +44,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         //check approvall name is null
-        if(order.approver_lastname == null && order.approver_firstname == null){
+        if (order.approver_lastname == null && order.approver_firstname == null) {
           order.name = 'Pending Approval'
         }
-        
+
 
         row.innerHTML = `
         

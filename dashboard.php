@@ -42,7 +42,7 @@
           <p id="totalCustomers">Loading...</p>
         </div>
         <div class="card">
-          <h3>Drivers</h3>
+          <h3>Available Drivers</h3>
           <p id="totalDrivers">Loading...</p>
         </div>
         <div class="card">

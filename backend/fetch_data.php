@@ -58,6 +58,10 @@ $sqlDrivers = "SELECT COUNT(*) AS total_drivers FROM driver";
 $resultDrivers = $conn->query($sqlDrivers);
 $totalDrivers = $resultDrivers->fetch_assoc()['total_drivers'];
 
+$sqlAvailableDrivers = "SELECT COUNT(*) AS available_drivers FROM driver WHERE status = 'Available'";
+$resultAvailableDrivers = $conn->query($sqlAvailableDrivers);
+$availableDrivers = $resultAvailableDrivers->fetch_assoc()['available_drivers'];
+
 // Fetch total customers
 $sqlCustomers = "SELECT COUNT(*) AS total_customers FROM customers";
 $resultCustomers = $conn->query($sqlCustomers);
@@ -179,7 +183,8 @@ $data = [
     "totalOutflow" => $totalOutflow,
     "pendingOrders" => $totalPendingOrders,
     "activeCustomers" => $activeCustomers,
-    "totalDrivers" => $totalDrivers 
+    "totalDrivers" => $totalDrivers,
+    "availableDrivers" => $availableDrivers
 ];
 
 echo json_encode($data);
