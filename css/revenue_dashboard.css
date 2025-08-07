@@ -58,21 +58,49 @@ main h1, h2{
     margin: 0 10px;
     
 }
+.stat-card h2 {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 10px;
+}
 
-#revenueTable {
+.stat-card p {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+
+.summary-card {
+    border-top: 4px solid #3498db;
+}
+
+.average-card {
+    border-top: 4px solid #f39c12; /* orange */
+}
+
+.top-card {
+    border-top: 4px solid #2ecc71; /* green */
+}
+
+.low-card {
+    border-top: 4px solid #e74c3c; /* red */
+}
+
+#revenueTable, #ratingTable {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
 #revenueTable th,
-#revenueTable td {
+#revenueTable td, #ratingTable th, #ratingTable td {
     padding: 12px;
     border: 1px solid #ccc;
     text-align: left;
 }
 
-#revenueTable th {
+#revenueTable th, #ratingTable th {
     background-color: #3457D5;
     color: #fff;
 }
@@ -185,11 +213,11 @@ main h1, h2{
         display: flex;
         justify-content: center;
     }
-    #revenurTable{
+    #revenueTable, #ratingTable{
         overflow-x: scroll;
     }
     #revenueTable th, 
-    #revenueTable td {
+    #revenueTable td, #ratingTable th, #ratingTable td {
         font-size: 12px;
         padding: 8px;
     }
@@ -198,10 +226,10 @@ main h1, h2{
         margin: 0 5px;
     }
     .stat-card h2 {
-       font-size: 15px;
+       font-size: 10px;
     }
     .stat-card p{
-        font-size: 12px;
+        font-size: 15px;
      }
 }
 @media (max-width: 660px) {
@@ -221,14 +249,14 @@ main h1, h2{
         color: blue;
     }
     #revenueTable th,
-#revenueTable td{
+#revenueTable td, #ratingTable th, #ratingTable td{
     padding: 4px;
     font-size: 11px;
 }
 }
 @media (max-width: 480px) {
     #revenueTable th, 
-    #revenueTable td {
+    #revenueTable td, #ratingTable th, #ratingTable td {
         font-size: 12px;
         padding: 6px;
     }

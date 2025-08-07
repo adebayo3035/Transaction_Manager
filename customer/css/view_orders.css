@@ -136,6 +136,48 @@ tr:nth-child(even) {
     background-color: #007bff;
     color: #fff;
 }
+.modalActionButtons{
+    display: flex;
+    justify-content: space-around;
+}
+/* Hide elements by default */
+.hidden {
+    display: none !important;
+}
+
+/* For the already rated message */
+.already-rated-message {
+    margin: 3px;
+    padding: 2px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 8px;
+    border-left: 4px solid #4e73df;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.already-rated-message p {
+    margin: 0;
+    color: #2d3748;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.already-rated-message .thank-you {
+    font-weight: 600;
+    color: #4e73df;
+}
+.icon {
+    flex-shrink: 0;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -172,7 +214,7 @@ tr:nth-child(even) {
     cursor: not-allowed;
 }
 
-@media (max-width: 610px) {
+@media (max-width: 700px) {
     .container h1{
         font-size: 18px;
     }
@@ -194,14 +236,14 @@ tr:nth-child(even) {
         font-weight: bold;
     }
     .view-details-btn {
-        padding: 1px 2px;
-        margin: 2px;
+        padding: 4px 7px;
+        margin: 3px;
         border: none;
         cursor: pointer;
-        border-radius: 2px;
+        border-radius: 4px;
         transition: background-color 0.3s ease;
         background-color: #0275d8;
-        font-size: 10px;
+        font-size: 12px;
         color: #fff;
         font-weight: 500;
     }
@@ -220,11 +262,14 @@ tr:nth-child(even) {
     .container .livesearch input{
         width: 100%;
         margin-bottom: 6px;
-        padding: 4px;
+        padding: 9px;
     }
     .container .livesearch button{
-        font-size: 11px;
-        padding: 5px 10px
+        font-size: 14px;
+        padding: 5px 6px;
+        width: 100px;
+        height: 50px;
+        align-self: center;
     }
     .ordersTable th,
         .ordersTable td {

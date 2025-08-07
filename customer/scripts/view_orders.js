@@ -35,6 +35,9 @@ document.addEventListener('DOMContentLoaded', () => {
             decline: document.getElementById('decline-btn'),
             receipt: document.querySelector('#receipt-btn'),
             driverRating: document.querySelector('#driverRating-btn')
+        },
+        messages: {
+            alreadyRated: document.getElementById('alreadyRatedMessage')
         }
     };
 
@@ -49,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </tr>
             `;
         },
-        
+
         showError: (container, message = 'Error loading data') => {
             container.innerHTML = `
                 <tr>
@@ -57,11 +60,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 </tr>
             `;
         },
-        
+
         toggleModal: (show = true) => {
             elements.modal.style.display = show ? 'block' : 'none';
         },
-        
+
         createButton: (label, page, disabled = false, active = false) => {
             const btn = document.createElement('button');
             btn.textContent = label;
@@ -69,12 +72,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (active) btn.classList.add('active');
             return btn;
         },
-        
+
         formatDate: (dateString) => {
             const options = { year: 'numeric', month: 'short', day: 'numeric' };
             return new Date(dateString).toLocaleDateString(undefined, options);
         },
-        
+
         formatCurrency: (amount) => {
             return parseFloat(amount).toFixed(2);
         }
@@ -84,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const api = {
         fetchOrders: (page = 1) => {
             utils.showSpinner(elements.tables.orders.container);
-            
+
             const minDelay = new Promise(resolve => setTimeout(resolve, CONFIG.minSpinnerTime));
             const fetchData = fetch(`${CONFIG.apiEndpoints.fetchOrders}?page=${page}&limit=${CONFIG.itemsPerPage}`)
                 .then(res => res.json());
@@ -102,23 +105,23 @@ document.addEventListener('DOMContentLoaded', () => {
                     utils.showError(elements.tables.orders.container, 'Error loading Order data');
                 });
         },
-        
+
         fetchOrderDetails: (orderId) => {
             return fetch(CONFIG.apiEndpoints.fetchOrderDetails, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ order_id: orderId })
             })
-            .then(response => response.json());
+                .then(response => response.json());
         },
-        
+
         cancelOrder: (orderId) => {
             return fetch(CONFIG.apiEndpoints.cancelOrder, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ order_id: orderId, status: 'Cancelled' })
             })
-            .then(response => response.json());
+                .then(response => response.json());
         }
     };
 
@@ -126,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const ui = {
         updateOrdersTable: (orders) => {
             elements.tables.orders.body.innerHTML = '';
-            
+
             orders.forEach(order => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
@@ -152,20 +155,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
         },
-        
+
         updatePagination: (totalItems, currentPage, itemsPerPage) => {
             elements.pagination.innerHTML = '';
             const totalPages = Math.ceil(totalItems / itemsPerPage);
-            
+
             // First and Previous buttons
             elements.pagination.appendChild(utils.createButton('« First', 1, currentPage === 1));
             elements.pagination.appendChild(utils.createButton('‹ Prev', currentPage - 1, currentPage === 1));
-            
+
             // Page numbers
             const maxVisible = 2;
             const start = Math.max(1, currentPage - maxVisible);
             const end = Math.min(totalPages, currentPage + maxVisible);
-            
+
             for (let i = start; i <= end; i++) {
                 const btn = utils.createButton(i, i, false, i === currentPage);
                 btn.addEventListener('click', () => {
@@ -174,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 elements.pagination.appendChild(btn);
             }
-            
+
             // Next and Last buttons
             const nextBtn = utils.createButton('Next ›', currentPage + 1, currentPage === totalPages);
             nextBtn.addEventListener('click', () => {
@@ -182,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 api.fetchOrders(currentPage + 1);
             });
             elements.pagination.appendChild(nextBtn);
-            
+
             const lastBtn = utils.createButton('Last »', totalPages, currentPage === totalPages);
             lastBtn.addEventListener('click', () => {
                 state.currentPage = totalPages;
@@ -190,81 +193,89 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             elements.pagination.appendChild(lastBtn);
         },
-        
-        displayOrderDetails: (orderDetails) => {
-            const firstDetail = orderDetails[0];
+
+        displayOrderDetails: (order) => {
             const { body } = elements.tables.orderDetails;
             body.innerHTML = '';
-            
             // Order items
-            orderDetails.forEach(detail => {
+            order.order_details.forEach(detail => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${utils.formatDate(detail.order_date)}</td>
-                    <td>${detail.order_id}</td>
-                    <td>${detail.food_name}</td>
-                    <td>${detail.quantity}</td>
-                    <td>${utils.formatCurrency(detail.price_per_unit)}</td>
-                    <td>${detail.status}</td>
-                    <td>${utils.formatCurrency(detail.total_price)}</td>
-                `;
+            <td>${utils.formatDate(order.order_date)}</td>
+            <td>${order.order_id}</td>
+            <td>${detail.food_name}</td>
+            <td>${detail.quantity}</td>
+            <td>${utils.formatCurrency(detail.price_per_unit)}</td>
+            <td>${order.status}</td>
+            <td>${utils.formatCurrency(detail.total_price)}</td>
+        `;
                 body.appendChild(row);
             });
-            
-            // Order summary
+
+            // Assume these values exist at the top level in the response (you can adjust if nested):
             const summaryRows = [
-                { label: 'Total Order', value: utils.formatCurrency(firstDetail.total_order) },
-                { label: 'Service Fee', value: utils.formatCurrency(firstDetail.service_fee) },
-                { label: 'Delivery Fee', value: utils.formatCurrency(firstDetail.delivery_fee) },
-                { label: 'Discount', value: utils.formatCurrency(firstDetail.discount) },
-                { label: 'Total Amount', value: utils.formatCurrency(firstDetail.total_amount) },
-                { label: 'Delivery Status', value: firstDetail.delivery_status },
-                { label: 'Delivery Pin', value: firstDetail.delivery_pin || 'N/A' },
-                { 
-                    label: 'Driver\'s Name', 
-                    value: firstDetail.driver_firstname && firstDetail.driver_lastname 
-                        ? `${firstDetail.driver_firstname} ${firstDetail.driver_lastname}` 
+                { label: 'Total Order', value: utils.formatCurrency(order.total_order || 0) },
+                { label: 'Service Fee', value: utils.formatCurrency(order.service_fee || 0) },
+                { label: 'Delivery Fee', value: utils.formatCurrency(order.delivery_fee || 0) },
+                { label: 'Discount', value: utils.formatCurrency(order.discount || 0) },
+                { label: 'Total Amount', value: utils.formatCurrency(order.total_amount || 0) },
+                { label: 'Delivery Status', value: order.delivery_status || 'N/A' },
+                { label: 'Delivery Pin', value: order.delivery_pin || 'N/A' },
+                {
+                    label: 'Driver\'s Name',
+                    value: order.driver_firstname && order.driver_lastname
+                        ? `${order.driver_firstname} ${order.driver_lastname}`
                         : 'N/A'
                 },
-                { 
-                    label: 'Driver\'s Phone No.', 
-                    value: firstDetail.driver_phoneNumber || 'N/A' 
+                {
+                    label: 'Driver\'s Phone No.',
+                    value: order.driver_phoneNumber || 'N/A'
                 },
-                { 
-                    label: 'Is Credit', 
-                    value: firstDetail.is_credit == 1 ? 'Yes' : 'No' 
+                {
+                    label: 'Is Credit',
+                    value: order.is_credit == 1 ? 'Yes' : 'No'
                 }
             ];
-            
+
             summaryRows.forEach(row => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td colspan="6"><strong>${row.label}</strong></td>
-                    <td>${row.value}</td>
-                `;
+            <td colspan="6"><strong>${row.label}</strong></td>
+            <td>${row.value}</td>
+        `;
                 body.appendChild(tr);
             });
-            
-            // Show/hide action buttons based on status
-            const showReceiptBtn = ['Delivered', 'Cancelled', 'Declined'].includes(firstDetail.delivery_status);
-            const showRatingBtn = ['Delivered', 'Cancelled on Delivered'].includes(firstDetail.delivery_status);
-            
+
+            // Show/hide buttons and messages
+            const showReceiptBtn = ['Delivered', 'Cancelled', 'Declined'].includes(order.delivery_status);
+            const showRatingBtn = ['Delivered', 'Cancelled on Delivery'].includes(order.delivery_status) && !order.is_rated;
+            const showAlreadyRated = ['Delivered', 'Cancelled on Delivery'].includes(order.delivery_status) && order.is_rated;
+
             elements.buttons.receipt.style.display = showReceiptBtn ? 'block' : 'none';
             elements.buttons.driverRating.style.display = showRatingBtn ? 'block' : 'none';
-            elements.buttons.decline.style.display = firstDetail.status === 'Pending' ? 'block' : 'none';
-            
-            if (elements.buttons.decline.style.display === 'block') {
-                elements.buttons.decline.dataset.orderId = firstDetail.order_id;
+            elements.buttons.decline.style.display = order.status === 'Pending' ? 'block' : 'none';
+
+            // Add this if you have an element to show "already rated" message
+            if (elements.messages.alreadyRated) {
+                elements.messages.alreadyRated.style.display = showAlreadyRated ? 'flex' : 'none';
             }
-            
+
+            if (elements.buttons.decline.style.display === 'block') {
+                elements.buttons.decline.dataset.orderId = order.order_id;
+            }
+            if (elements.buttons.driverRating.style.display === 'block') {
+                elements.buttons.driverRating.dataset.orderId = order.order_id;
+            }
+
             utils.toggleModal();
         },
-        
+
+
         printReceipt: () => {
             const orderDetails = document.querySelector('#orderDetailsTable').outerHTML;
             const now = new Date();
             const receiptWindow = window.open('', '', 'width=800,height=600');
-            
+
             receiptWindow.document.write(`
                 <html>
                     <head>
@@ -308,25 +319,25 @@ document.addEventListener('DOMContentLoaded', () => {
                     </body>
                 </html>
             `);
-            
+
             receiptWindow.document.close();
             receiptWindow.print();
         },
-        
+
         filterTable: () => {
             const searchTerm = elements.search.value.toLowerCase();
             const rows = document.querySelectorAll("#ordersTable tbody tr");
-            
+
             rows.forEach(row => {
                 let matchFound = false;
                 const cells = row.querySelectorAll("td");
-                
+
                 cells.forEach(cell => {
                     if (cell.textContent.toLowerCase().includes(searchTerm)) {
                         matchFound = true;
                     }
                 });
-                
+
                 row.style.display = matchFound ? "" : "none";
             });
         }
@@ -337,18 +348,55 @@ document.addEventListener('DOMContentLoaded', () => {
         loadOrderDetails: (orderId) => {
             api.fetchOrderDetails(orderId)
                 .then(data => {
-                    if (data.success) {
-                        ui.displayOrderDetails(data.order_details);
-                    } else {
-                        console.error('Failed to fetch order details:', data.message);
+                    if (data.error) {
+                        console.error('Failed to fetch order details:', data.error);
+                        // Show error to user
+                        ui.showError(data.error);
+                        return;
                     }
+
+                    // Transform backend response to match frontend expectations
+                    const transformedData = {
+                        order_id: data.order_id,
+                        order_date: data.order_date,
+                        status: data.status,
+                        delivery_status: data.delivery_status,
+                        service_fee: data.service_fee,
+                        discount: data.discount,
+                        total_order: data.total_order,
+                        total_amount: data.total_amount,
+                        delivery_pin: data.delivery_pin,
+                        is_credit: data.is_credit,
+                        driver_firstname: data.driver_firstname,
+                        driver_lastname: data.driver_lastname,
+                        driver_phoneNumber: data.driver_phoneNumber,
+                        driverID: data.driverID,
+                        driver_photo: data.driver_photo,
+                        // Map all order info properties
+                        ...data,
+                        // Transform items array to match old structure
+                        order_details: data.items.map(item => ({
+                            food_name: item.food_name,
+                            quantity: item.quantity,
+                            price_per_unit: item.price_per_unit,
+                            total_price: item.total_price,
+                            food_id: item.food_id,
+                            // Include other item properties if needed
+                            ...item
+                        }))
+                    };
+
+                    ui.displayOrderDetails(transformedData);
                 })
-                .catch(error => console.error('Error fetching order details:', error));
+                .catch(error => {
+                    console.error('Error fetching order details:', error);
+                    ui.showError('Failed to load order details. Please try again.');
+                });
         },
-        
+
         cancelOrder: (orderId) => {
             const userConfirmed = confirm("Are you sure you want to cancel this order? This action cannot be undone.");
-            
+
             if (userConfirmed) {
                 api.cancelOrder(orderId)
                     .then(data => {
@@ -373,7 +421,7 @@ document.addEventListener('DOMContentLoaded', () => {
             utils.toggleModal(false);
             location.reload();
         });
-        
+
         // Outside click to close modal
         window.addEventListener('click', (event) => {
             if (event.target === elements.modal) {
@@ -381,15 +429,60 @@ document.addEventListener('DOMContentLoaded', () => {
                 location.reload();
             }
         });
-        
+
         // Decline order button
         elements.buttons.decline.addEventListener('click', () => {
             order.cancelOrder(elements.buttons.decline.dataset.orderId);
         });
-        
+
         // Print receipt button
         elements.buttons.receipt.addEventListener('click', ui.printReceipt);
-        
+
+        // Order Ratings Button
+        elements.buttons.driverRating.addEventListener('click', async () => {
+            const orderId = elements.buttons.driverRating.dataset.orderId;
+
+            try {
+                // Fetch order details using the POST endpoint
+                const response = await fetch(CONFIG.apiEndpoints.fetchOrderDetails, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // 'Authorization': `Bearer ${getAuthToken()}` // If using authentication
+                    },
+                    body: JSON.stringify({
+                        order_id: orderId
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Transform the data to match what your rating page expects
+                    const orderData = {
+                        order_id: data.order_id,
+                        driverID: data.driverID,
+                        driver_firstname: data.driver_firstname,
+                        driver_lastname: data.driver_lastname,
+                        driver_photo: data.driver_photo,
+                        // Include any other fields needed by the rating page
+                        ...data
+                    };
+
+                    // Store in sessionStorage
+                    sessionStorage.setItem('orderDetails', JSON.stringify(orderData));
+                    window.location.href = '../v1/order_rating.php';
+                } else {
+                    console.error('Failed to fetch order details:', data.error);
+                    alert(data.error || 'Failed to fetch order details');
+                }
+            } catch (err) {
+                console.error('Fetch error:', err);
+                alert('Failed to connect to server. Please try again.');
+            }
+        });
+
+
         // Live search
         elements.search.addEventListener('input', ui.filterTable);
     };

@@ -27,7 +27,8 @@
         <a href="group.php">Groups</a>
         <a href="unit.php">Units</a>
         <a href="food.php">Foods</a>
-         <a href="staff_account_history.php">My Account History</a>
+        <a href="staff_account_history.php">My Account History</a>
+        <a href="ratings_dashboard.php">Order Ratings</a>
 
         <div class="dropdown">
             <button class="dropbtn" id="welcomeMessage">Welcome!  <i class="fa fa-caret-down"></i></button>

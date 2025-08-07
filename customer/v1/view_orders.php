@@ -18,7 +18,7 @@
 </head>
 
 <body>
-<?php include ('customer_navbar.php'); ?>
+    <?php include('customer_navbar.php'); ?>
     <div class="container">
         <div class="livesearch">
             <input type="text" id="liveSearch" placeholder="Search for Order...">
@@ -38,7 +38,7 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody id = "ordersTableBody">
+        <tbody id="ordersTableBody">
             <!-- Orders will be dynamically inserted here -->
         </tbody>
 
@@ -67,10 +67,22 @@
                 </tbody>
 
             </table>
+            <div class="modalActionButtons">
+                <button type="button" id="receipt-btn" style="display: none">Print Receipt</button>
+                <button type="button" id="decline-btn" style="display: none">Cancel Order</button>
+                <button type="button" id="driverRating-btn" style="display: none">Rate Order & Driver</button>
 
-            <button type="button" id="receipt-btn" style="display: none">Print Receipt</button>
-            <button type="button" id="decline-btn" style="display: none">Cancel Order</button>
-            <button type="button" id="driverRating-btn" style="display: none">Rate Order & Driver</button>
+            </div>
+            <div id="alreadyRatedMessage" class="alert alert-info already-rated-message" style="display: none;">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    fill="#28a745">
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                </svg>
+                <p><span class="thank-you">Thank you!</span> You've already rated this order. We appreciate your
+                    feedback!</p>
+            </div>
+
+
         </div>
     </div>
 
