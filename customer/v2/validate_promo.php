@@ -1,172 +1,178 @@
 <?php
 session_start();
 include 'config.php';
-// include 'activity_logger.php'; // Include the logger file
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 header('Content-Type: application/json');
 
-// Log the start of the script
-logActivity("Promo code validation script started.");
+// Start logging
+logActivity("=== PROMO VALIDATION REQUEST STARTED ===");
 
-// Fetch customer ID from session
-$customerId = $_SESSION["customer_id"];
-checkSession($customerId);
-
-// Log the customer ID for debugging
-logActivity("Customer ID found in session: " . $customerId);
-
-// Decode the JSON input from request body
-$input = file_get_contents('php://input');
-$data = json_decode($input, true);
-
-// Check if JSON decoding was successful
-if (json_last_error() !== JSON_ERROR_NONE) {
-    $error_message = "Invalid JSON input.";
-    error_log($error_message);
-    logActivity($error_message);
-    echo json_encode(['success' => false, 'message' => $error_message]);
+// Validate session exists
+if (!isset($_SESSION["customer_id"])) {
+    $errorMsg = "Unauthorized access attempt - no customer_id in session";
+    logActivity($errorMsg);
+    echo json_encode(['success' => false, 'message' => 'Unauthorized']);
     exit;
 }
 
-// Extract promo code and total order from the received JSON
-$promo_code = $data['promo_code'] ?? null;
-$total_order = $data['total_order'] ?? null;
+$customerId = $_SESSION["customer_id"];
+logActivity("Validating promo for customer ID: $customerId");
 
-// Log the promo code and total order for debugging
-logActivity("Promo code received: " . $promo_code);
-logActivity("Total order received: " . $total_order);
+// Validate input
+$input = json_decode(file_get_contents('php://input'), true);
+if (json_last_error() !== JSON_ERROR_NONE) {
+    $errorMsg = "Invalid JSON input: " . json_last_error_msg();
+    logActivity($errorMsg);
+    echo json_encode(['success' => false, 'message' => 'Invalid request']);
+    exit;
+}
 
-// Fetch promo details from the database
+if (!isset($input['promo_code']) || !isset($input['total_order'])) {
+    $errorMsg = "Missing required fields in request";
+    logActivity($errorMsg);
+    echo json_encode(['success' => false, 'message' => 'Promo code and total order required']);
+    exit;
+}
+
+$promoCode = trim($input['promo_code']);
+$totalOrder = (float)$input['total_order'];
+logActivity("Validating promo code: $promoCode for order amount: $totalOrder");
+
+// Fetch active promo
 $stmt = $conn->prepare("SELECT * FROM promo WHERE promo_code = ? AND status = 1 AND NOW() BETWEEN start_date AND end_date");
 if (!$stmt) {
-    $error_message = "Failed to prepare promo query: " . $conn->error;
-    error_log($error_message);
-    logActivity($error_message);
-    echo json_encode(['success' => false, 'message' => $error_message]);
+    $errorMsg = "Prepare failed: " . $conn->error;
+    logActivity($errorMsg);
+    echo json_encode(['success' => false, 'message' => 'System error']);
     exit;
 }
-$stmt->bind_param("s", $promo_code);
-$stmt->execute();
-$result = $stmt->get_result();
 
-if ($promo = $result->fetch_assoc()) {
-    // Log the promo details for debugging
-    logActivity("Promo details fetched: " . json_encode($promo));
-
-    // Extract eligibility criteria from the promo
-    $eligibility_criteria = $promo['eligibility_criteria'];
-    $min_order_value = $promo['min_order_value'];
-    $discount_value = $promo['discount_value'];
-    $max_discount = $promo['max_discount'];
-
-    // Check if the total order meets the minimum order value
-    if ($min_order_value > $total_order) {
-        $error_message = "Your Total Order does not qualify for this promo.";
-        error_log($error_message);
-        logActivity($error_message);
-        echo json_encode(['eligible' => false, 'message' => $error_message, 'promo' => $promo]);
-        exit();
-    }
-
-    // Check if the customer has already used this promo code today
-    $usageStmt = $conn->prepare("SELECT COUNT(*) FROM promo_usage WHERE promo_code = ? AND customer_id = ? AND DATE(date_used) = CURDATE()");
-    if (!$usageStmt) {
-        $error_message = "Failed to prepare promo usage query: " . $conn->error;
-        error_log($error_message);
-        logActivity($error_message);
-        echo json_encode(['success' => false, 'message' => $error_message]);
-        exit;
-    }
-    $usageStmt->bind_param("ss", $promo_code, $customerId);
-    $usageStmt->execute();
-    $usageResult = $usageStmt->get_result();
-    $usedCount = $usageResult->fetch_row()[0];
-
-    if ($usedCount > 0) {
-        $error_message = "You have already used this promo code today.";
-        error_log($error_message);
-        logActivity($error_message);
-        echo json_encode(['eligible' => false, 'message' => $error_message, 'promo' => $promo]);
-        $usageStmt->close();
-        $stmt->close();
-        $conn->close();
-        exit;
-    }
-
-    // Check eligibility criteria
-    if ($eligibility_criteria === "New Customers") {
-        // Fetch the customer's record to check registration date
-        $customerStmt = $conn->prepare("SELECT date_created FROM customers WHERE customer_id = ?");
-        if (!$customerStmt) {
-            $error_message = "Failed to prepare customer query: " . $conn->error;
-            error_log($error_message);
-            logActivity($error_message);
-            echo json_encode(['success' => false, 'message' => $error_message]);
-            exit;
-        }
-        $customerStmt->bind_param("s", $customerId);
-        $customerStmt->execute();
-        $customerResult = $customerStmt->get_result();
-
-        if ($customerData = $customerResult->fetch_assoc()) {
-            $registrationDate = new DateTime($customerData['date_created']);
-            $currentDate = new DateTime();
-
-            // Calculate the difference in days between registration and now
-            $daysSinceRegistration = $currentDate->diff($registrationDate)->days;
-
-            if ($daysSinceRegistration <= 5) {
-                // Customer is eligible as they registered within the last 5 days
-                $discount = ($discount_value / 100) * $total_order;
-                if ($discount > $max_discount) {
-                    $discount = $max_discount;
-                }
-                logActivity("Customer is eligible for the promo. Discount applied: " . $discount);
-                echo json_encode(['eligible' => true, 'promo' => $promo, 'discount' => $discount, 'discount_percent' => $discount_value, 'promo_code' => $promo_code]);
-            } else {
-                // Customer is not eligible
-                $error_message = "Promo is only for new customers registered within the last 5 days.";
-                error_log($error_message);
-                logActivity($error_message);
-                echo json_encode(['eligible' => false, 'message' => $error_message, 'promo' => $promo]);
-            }
-        } else {
-            $error_message = "Customer record not found.";
-            error_log($error_message);
-            logActivity($error_message);
-            echo json_encode(['eligible' => false, 'message' => $error_message, 'promo' => $promo]);
-        }
-
-        $customerStmt->close();
-    } elseif ($eligibility_criteria === "All Customers") {
-        // Customer is eligible as the criteria is for all customers
-        $discount = ($discount_value / 100) * $total_order;
-        if ($discount > $max_discount) {
-            $discount = $max_discount;
-        }
-        logActivity("Customer is eligible for the promo. Discount applied: " . $discount);
-        echo json_encode(['eligible' => true, 'promo' => $promo, 'discount' => $discount, 'discount_percent' => $discount_value, 'promo_code' => $promo_code, 'total_order' => $total_order]);
-    } else {
-        // Handle any other eligibility criteria if needed
-        $error_message = "Customer does not meet eligibility criteria.";
-        error_log($error_message);
-        logActivity($error_message);
-        echo json_encode(['eligible' => false, 'message' => $error_message, 'promo' => $promo]);
-    }
-    $usageStmt->close();
-} else {
-    // Promo code is not valid or expired
-    $error_message = "Promo not valid or expired.";
-    error_log($error_message);
-    logActivity($error_message);
-    echo json_encode(['eligible' => false, 'message' => $error_message, 'promo' => null]);
+if (!$stmt->bind_param("s", $promoCode) || !$stmt->execute()) {
+    $errorMsg = "Execute failed: " . $stmt->error;
+    logActivity($errorMsg);
+    echo json_encode(['success' => false, 'message' => 'System error']);
+    exit;
 }
 
+$promo = $stmt->get_result()->fetch_assoc();
+if (!$promo) {
+    $errorMsg = "Promo code not found or inactive: $promoCode";
+    logActivity($errorMsg);
+    echo json_encode(['eligible' => false, 'message' => 'Invalid or expired promo code']);
+    exit;
+}
+
+logActivity("Found valid promo: " . json_encode([
+    'id' => $promo['promo_id'],
+    'code' => $promo['promo_code'],
+    'min_order' => $promo['min_order_value']
+]));
+
+// Validate minimum order
+if ($totalOrder < $promo['min_order_value']) {
+    $errorMsg = "Order amount $totalOrder below minimum required " . $promo['min_order_value'];
+    logActivity($errorMsg);
+    echo json_encode([
+        'eligible' => false, 
+        'message' => 'Order must be at least N' . $promo['min_order_value'] . ' to use this promo'
+    ]);
+    exit;
+}
+
+// Check daily usage limit (without recording)
+$usageCheck = $conn->prepare("SELECT COUNT(*) FROM promo_usage 
+                            WHERE promo_code = ? AND customer_id = ? AND DATE(date_used) = CURDATE()");
+if (!$usageCheck) {
+    $errorMsg = "Usage check prepare failed: " . $conn->error;
+    logActivity($errorMsg);
+    echo json_encode(['success' => false, 'message' => 'System error']);
+    exit;
+}
+
+if (!$usageCheck->bind_param("ss", $promoCode, $customerId) || !$usageCheck->execute()) {
+    $errorMsg = "Usage check execute failed: " . $usageCheck->error;
+    logActivity($errorMsg);
+    echo json_encode(['success' => false, 'message' => 'System error']);
+    exit;
+}
+
+$usageCount = $usageCheck->get_result()->fetch_row()[0];
+logActivity("Current usage count for today: $usageCount");
+
+if ($usageCount > 0) {
+    $errorMsg = "Usage limit reached for customer $customerId .";
+    logActivity($errorMsg);
+    echo json_encode(['eligible' => false, 'message' => 'Promo code usage limit reached']);
+    exit;
+}
+
+// Check eligibility criteria
+$eligible = false;
+$criteria = $promo['eligibility_criteria'];
+logActivity("Checking eligibility criteria: $criteria");
+
+if ($criteria === "New Customers") {
+    $customerCheck = $conn->prepare("SELECT DATEDIFF(NOW(), date_created) <= 5 AS is_new 
+                                   FROM customers WHERE customer_id = ?");
+    if (!$customerCheck) {
+        $errorMsg = "Customer check prepare failed: " . $conn->error;
+        logActivity($errorMsg);
+        echo json_encode(['success' => false, 'message' => 'System error']);
+        exit;
+    }
+    
+    if (!$customerCheck->bind_param("s", $customerId) || !$customerCheck->execute()) {
+        $errorMsg = "Customer check execute failed: " . $customerCheck->error;
+        logActivity($errorMsg);
+        echo json_encode(['success' => false, 'message' => 'System error']);
+        exit;
+    }
+    
+    $result = $customerCheck->get_result()->fetch_assoc();
+    $eligible = $result['is_new'] ?? false;
+    
+    logActivity("New customer check result: " . ($eligible ? "Eligible" : "Not eligible"));
+} else {
+    $eligible = true; // For "All Customers" or other criteria
+    logActivity("No special eligibility criteria required");
+}
+
+if (!$eligible) {
+    $errorMsg = "Customer $customerId not eligible for promo $promoCode";
+    logActivity($errorMsg);
+    echo json_encode(['eligible' => false, 'message' => 'You are not eligible for this promo']);
+    exit;
+}
+
+// Calculate potential discount
+$discountValue = $promo['discount_value'];
+$maxDiscount = $promo['max_discount'];
+$discountAmount = min(($discountValue / 100) * $totalOrder, $maxDiscount);
+
+logActivity("Calculated discount: $discountAmount (value: $discountValue%, max: $maxDiscount)");
+
+// Return successful validation response
+$response = [
+    'eligible' => true,
+    'promo_code' => $promoCode,
+    'discount' => $discountAmount,
+    'discount_percent' => $discountValue,
+    'max_discount' => $maxDiscount,
+    'min_order' => $promo['min_order_value'],
+    'total_order' => $totalOrder,
+    'promo_id' => $promo['promo_id']
+];
+
+logActivity("Validation successful: " . json_encode($response));
+echo json_encode($response);
+
+// Clean up
 $stmt->close();
+if (isset($usageCheck)) $usageCheck->close();
+if (isset($customerCheck)) $customerCheck->close();
 $conn->close();
 
-// Log the end of the script
-logActivity("Promo code validation script completed.");
+logActivity("=== PROMO VALIDATION COMPLETED ===");

@@ -35,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Validate promo code
-    // Validate promo code (updated for pack structure)
     promoBtn.addEventListener('click', () => {
         const discountItem = document.getElementById('discount-item');
         const totalAfterDiscount = document.getElementById('total-after-discount');
@@ -52,16 +51,13 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // Use either new structure or legacy data
-                    const orderData = data.data || data.legacy_data;
-
                     // Calculate SUBTOTAL (just food items)
-                    const subtotal = parseFloat(orderData.total_order || orderData.totals?.subtotal);
+                    const subtotal = parseFloat(data.data.total_order);
 
                     // Calculate TOTAL ORDER (subtotal + fees)
-                    const serviceFee = parseFloat(orderData.service_fee || orderData.totals?.service_fee);
-                    const deliveryFee = parseFloat(orderData.delivery_fee || orderData.totals?.delivery_fee);
-                    const totalOrder = subtotal + serviceFee + deliveryFee;
+                    const totalOrder = subtotal +
+                        parseFloat(data.data.service_fee) +
+                        parseFloat(data.data.delivery_fee);
 
                     const promoDetails = {
                         promo_code: promoInput.value,
@@ -116,29 +112,22 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     });
 
-    // Fetch and display order data (updated for pack structure)
+    // Fetch order data from the server
     fetch('../v2/get_order_session.php')
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Use either new structure or legacy data
-                orderData = data.data || data.legacy_data;
+                orderData = data.data;
                 console.log("Order data retrieved from session:", orderData);
 
                 // Populate the checkout page order table
                 const orderTableBody = document.getElementById('orderSummaryTable').querySelector('tbody');
                 orderTableBody.innerHTML = ""; // Clear existing rows
 
-                // Get items from either packs structure or flat items array
-                const itemsToDisplay = orderData.packs
-                    ? Object.values(orderData.packs).flat()
-                    : orderData.order_items;
-
-                itemsToDisplay.forEach((item, index) => {
+                orderData.order_items.forEach((item, index) => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
                     <td>${index + 1}</td>
-                    ${orderData.packs ? `<td>${item.pack_id}</td>` : ''}
                     <td>${item.food_name}</td>
                     <td>${item.quantity}</td>
                     <td>N ${parseFloat(item.price_per_unit).toFixed(2)}</td>
@@ -148,9 +137,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 // Calculate totals CONSISTENTLY with promo validation
-                const subtotal = parseFloat(orderData.total_order || orderData.totals?.subtotal);
-                const serviceFee = parseFloat(orderData.service_fee || orderData.totals?.service_fee);
-                const deliveryFee = parseFloat(orderData.delivery_fee || orderData.totals?.delivery_fee);
+                const subtotal = parseFloat(orderData.total_order);
+                const serviceFee = parseFloat(orderData.service_fee);
+                const deliveryFee = parseFloat(orderData.delivery_fee);
 
                 // Calculate final amount (applying discount to subtotal only if that's your business rule)
                 let totalAmount;
@@ -179,6 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error("Error fetching order data:", error);
             alert("An error occurred while fetching order data. Please try again.");
         });
+
     const clearInputFields = (...fields) => {
         fields.forEach(fieldId => {
             const field = document.getElementById(fieldId);
@@ -232,115 +222,96 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Payment form submission handler
     checkoutForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
+        event.preventDefault();
 
-    // Show confirmation dialog
-    const isConfirmed = confirm('Are you sure you want to proceed with the payment?');
-    if (!isConfirmed) {
-        alert("Your Order Payment Process has been Cancelled!");
-        return;
-    }
-
-    // Create and show loader
-    const loaderOverlay = document.createElement('div');
-    loaderOverlay.className = 'loader-overlay';
-    loaderOverlay.innerHTML = '<div class="roller-loader"></div>';
-    document.body.appendChild(loaderOverlay);
-
-    try {
-        // Get current order data (supporting both old and new structures)
-        const sessionResponse = await fetch('../v2/get_order_session.php');
-        const sessionData = await sessionResponse.json();
-        
-        if (!sessionData.success) {
-            throw new Error("Failed to retrieve order data");
+        // Show confirmation dialog
+        const isConfirmed = confirm('Are you sure you want to proceed with the payment?');
+        if (!isConfirmed) {
+            alert("Your Order Payment Process has been Cancelled!");
+            return;
         }
 
-        const orderData = sessionData.data || sessionData.legacy_data;
-        const selectedPaymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
-        const customer_secret_answer = document.getElementById('customer_secret_answer').value;
-        const customer_token = document.getElementById('customer_token').value;
-        const receiptHtml = generateReceiptHtml();
-
-        // Calculate totals (supporting both old and new structures)
-        const subtotal = parseFloat(orderData.total_order || orderData.totals?.subtotal);
-        const serviceFee = parseFloat(orderData.service_fee || orderData.totals?.service_fee);
-        const deliveryFee = parseFloat(orderData.delivery_fee || orderData.totals?.delivery_fee);
-        let totalAmount = ((subtotal - (usePromo ? discount_value : 0)) + serviceFee + deliveryFee);
-
-        // Prepare payment data (now includes pack information)
-        let paymentDetails = {
-            payment_method: selectedPaymentMethod,
-            order_items: orderData.packs ? Object.values(orderData.packs).flat() : orderData.order_items,
-            packs: orderData.packs, // Include pack structure if available
-            pack_count: orderData.pack_count || 1, // Default to 1 if not specified
-            total_amount: totalAmount,
-            service_fee: serviceFee,
-            delivery_fee: deliveryFee,
-            total_order: subtotal,
-            using_promo: usePromo,
-            discount: discount_value,
-            discount_percent: discount_percent,
-            promo_code: promoCode,
-            customer_secret_answer: customer_secret_answer,
-            customer_token: customer_token,
-            receipt_html: receiptHtml
-        };
-
-        // Add payment method-specific details
-        if (selectedPaymentMethod === 'Card') {
-            paymentDetails = {
-                ...paymentDetails,
-                card_number: document.getElementById('card_number').value,
-                card_expiry: formatExpiryDate(document.getElementById('card_expiry').value),
-                card_cvv: document.getElementById('card_cvv').value,
-                card_pin: document.getElementById('card_pin').value
+        // Create and show loader
+        const loaderOverlay = document.createElement('div');
+        loaderOverlay.className = 'loader-overlay';
+        loaderOverlay.innerHTML = '<div class="roller-loader"></div>';
+        document.body.appendChild(loaderOverlay);
+// Disable form elements but keep print button enabled
+        // const formElements = checkoutForm.elements;
+        // for (let i = 0; i < formElements.length; i++) {
+        //     // Skip disabling if it's the print button
+        //     if (formElements[i].id !== 'receipt-btn') {
+        //         formElements[i].disabled = true;
+        //     }
+        // }
+        try {
+            const selectedPaymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
+            const customer_secret_answer = document.getElementById('customer_secret_answer').value;
+            const customer_token = document.getElementById('customer_token').value;
+            const receiptHtml = generateReceiptHtml();
+            let totalAmount = ((parseFloat(orderData.total_order) - discount_value) + parseFloat(orderData.service_fee) + parseFloat(orderData.delivery_fee));
+            let paymentDetails = {
+                payment_method: selectedPaymentMethod,
+                order_items: orderData.order_items,
+                total_amount: totalAmount,
+                service_fee: parseFloat(orderData.service_fee),
+                delivery_fee: parseFloat(orderData.delivery_fee),
+                total_order: parseFloat(orderData.total_order),
+                using_promo: usePromo,
+                discount: discount_value,
+                discount_percent: discount_percent,
+                promo_code: promoCode,
+                customer_secret_answer: customer_secret_answer,
+                customer_token: customer_token,
+                receipt_html: receiptHtml
             };
-        } else if (selectedPaymentMethod === 'paypal') {
-            paymentDetails.paypal_email = document.getElementById('paypal_email').value;
-        } else if (selectedPaymentMethod === 'bank_transfer') {
-            paymentDetails.bank_name = document.getElementById('bank_name').value;
-            paymentDetails.bank_account = document.getElementById('bank_account').value;
-        } else if (selectedPaymentMethod === 'credit') {
-            paymentDetails.is_credit = true;
+
+            // Add payment method-specific details
+            if (selectedPaymentMethod === 'Card') {
+                paymentDetails = {
+                    ...paymentDetails,
+                    card_number: document.getElementById('card_number').value,
+                    card_expiry: formatExpiryDate(document.getElementById('card_expiry').value),
+                    card_cvv: document.getElementById('card_cvv').value,
+                    card_pin: document.getElementById('card_pin').value
+                };
+            } else if (selectedPaymentMethod === 'paypal') {
+                paymentDetails.paypal_email = document.getElementById('paypal_email').value;
+            } else if (selectedPaymentMethod === 'bank_transfer') {
+                paymentDetails.bank_name = document.getElementById('bank_name').value;
+                paymentDetails.bank_account = document.getElementById('bank_account').value;
+            } else if (selectedPaymentMethod === 'credit') {
+                paymentDetails.is_credit = true;
+            }
+
+            // Send payment details to the server
+            const response = await fetch('../v2/process_paymentOld.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(paymentDetails)
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                alert('Your Order has been successfully received. Kindly wait for approval.');
+                printReceiptBtn.style.display = 'block';
+                placeOrderBtn.style.display = 'none';
+                disableFormElements();
+            } else {
+                alert('Error: ' + data.message);
+                console.log(data.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        } finally {
+            // Remove loader and re-enable form
+            loaderOverlay.remove();
         }
-
-        // Send payment details to the server (updated endpoint)
-        const response = await fetch('../v2/process_paymentOld.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(paymentDetails)
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-            alert('Your Order has been successfully received. Kindly wait for approval.');
-            
-            // Update UI
-            printReceiptBtn.style.display = 'block';
-            placeOrderBtn.style.display = 'none';
-            disableFormElements();
-            
-            // Clear session if needed
-            // if (data.clear_session) {
-            //     await fetch('../v2/clear_order_session.php');
-            // }
-        } else {
-            throw new Error(data.message || 'Payment processing failed');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Error: ' + error.message);
-    } finally {
-        // Remove loader
-        loaderOverlay.remove();
-    }
-});
-
-
+    });
     // Function to disable form elements
     function disableFormElements() {
         // Disable radio buttons
@@ -385,10 +356,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <link rel="stylesheet" href="../css/receipt.css">
             </head>
             <body>
-                ${generateReceiptHtml1()}
-                <div class="receipt-footer">
-                    <p>Thank you for your purchase!</p>
-                </div>
+                ${generateReceiptHtml()}
                 <script>
                     window.print();
                     window.onafterprint = function() { window.close(); }
@@ -398,34 +366,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `);
         printWindow.document.close();
     }
-    // Helper function to generate receipt HTML (updated for packs)
-function generateReceiptHtml() {
-    const orderTable = document.getElementById('orderSummaryTable').cloneNode(true);
-    
-    // Add pack headers if available
-    if (orderData.packs) {
-        const packGroups = {};
-        Array.from(orderTable.querySelectorAll('tbody tr')).forEach(row => {
-            const packId = row.cells[1].textContent; // Assuming pack ID is in second column
-            if (!packGroups[packId]) {
-                packGroups[packId] = document.createElement('tbody');
-                const headerRow = document.createElement('tr');
-                headerRow.innerHTML = `<td colspan="6" style="background:#f5f5f5;font-weight:bold">${packId}</td>`;
-                packGroups[packId].appendChild(headerRow);
-            }
-            packGroups[packId].appendChild(row.cloneNode(true));
-        });
-        
-        // Replace table body with organized packs
-        orderTable.querySelector('tbody').remove();
-        Object.values(packGroups).forEach(tbody => {
-            orderTable.appendChild(tbody);
-        });
-    }
-    
-    return orderTable.outerHTML;
-}
-    function generateReceiptHtml1() {
+    function generateReceiptHtml() {
         const orderSummary = document.querySelector('.order-summary').innerHTML;
         const selectedPaymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
         const now = new Date();
@@ -438,12 +379,13 @@ function generateReceiptHtml() {
                     <h2>Your Receipt</h2>
                     <p>Date & Time: ${dateTime}</p>
                 </div>
-                <div class = "payment-method"><span>Payment Method: </span>  <span>  ${selectedPaymentMethod} </span></div>
                 <div class="order-summary">
                     ${orderSummary}
                 </div>
-                
-                
+                <div class = "payment-method"><span>Payment Method: </span>  <span>  ${selectedPaymentMethod} </span></div>
+                <div class="receipt-footer">
+                    <p>Thank you for your purchase!</p>
+                </div>
             </div>
         `;
     }

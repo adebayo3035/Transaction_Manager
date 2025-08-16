@@ -50,6 +50,7 @@
                 <thead>
                     <tr>
                         <th>#</th>
+                        <th>Pack No.</th>
                         <th>Food Name</th>
                         <th>Quantity</th>
                         <th>Price per Unit</th>

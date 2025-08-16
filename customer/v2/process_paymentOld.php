@@ -39,6 +39,8 @@ $cardCvv = $data['card_cvv'] ?? null;
 $cardPin = $data['card_pin'] ?? null;
 // $card_id = $data['card_id'] ?? null;
 $orderItems = $data['order_items'] ?? [];
+
+$packItems = $data['packs'] ?? [];
 $serviceFee = $data['service_fee'] ?? 0;
 $deliveryFee = $data['delivery_fee'] ?? 0;
 $totalOrder = $data['total_order'] ?? 0;
@@ -55,6 +57,7 @@ $isCredit = $data['is_credit'] ?? false;
 $usingPromo = $data['using_promo'] ?? false;
 $promo_code = $data['promo_code'] ?? null;
 $discount = $data['discount'] ?? 0;
+$packCount = $data['pack_count'] ?? 1;
 $discount_percent = $data['discount_percent'] ?? 0;
 $receiptHtml = $data['receipt_html'] ?? null;
 $customer_email = $_SESSION['email'];
@@ -62,11 +65,12 @@ $customer_email = $_SESSION['email'];
 // Log payment method and other details
 logActivity("Payment method: " . $paymentMethod);
 logActivity("Order items: " . json_encode($orderItems));
-logActivity("Total order amount: " . $totalOrder);
+logActivity("Total order amount: " . $totalOrder . "Service fee: " . $serviceFee . "Delivery Fee: " . $deliveryFee );
 
 // Apply the discount if promo is used
 if ($usingPromo) {
-    $totalAmount = $data['total_amount'] - $discount;
+    // $totalAmount = $data['total_amount'] - $discount;
+    $totalAmount = $data['total_amount'];
     logActivity("Promo code applied. Discount: " . $discount . ", Total amount after discount: " . $totalAmount);
 } else {
     $totalAmount = $data['total_amount'] ?? 0;
@@ -86,7 +90,7 @@ switch ($paymentMethod) {
             if ($validationResult['success']) {
                 // Proceed with order processing
                 logActivity("Card validation successful for customer ID: " . $customerId);
-                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $secretAnswer, $token, $receiptHtml, $customer_email);
+                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $secretAnswer, $token, $receiptHtml, $customer_email, $packCount, $packItems);
                 logActivity("Order processed successfully for customer ID: " . $customerId);
             } else {
                 $response = $validationResult;
@@ -106,7 +110,7 @@ switch ($paymentMethod) {
         if ($eligibilityResult['success']) {
             // Process credit payment and the order
             logActivity("Credit eligibility check passed for customer ID: " . $customerId);
-            $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $secretAnswer, $token, $receiptHtml, $customer_email);
+            $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $secretAnswer, $token, $receiptHtml, $customer_email, $packCount, $packItems);
             logActivity("Credit order processed successfully for customer ID: " . $customerId);
         } else {
             $response = $eligibilityResult;
@@ -129,7 +133,7 @@ switch ($paymentMethod) {
             } else {
                 // Validate bank transfer and process the order
                 logActivity("Processing bank transfer for customer ID: " . $customerId);
-                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $secretAnswer, $token, $receiptHtml, $customer_email);
+                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $secretAnswer, $token, $receiptHtml, $customer_email, $packCount, $packItems);
                 logActivity("Bank transfer order processed successfully for customer ID: " . $customerId);
             }
         } else {
@@ -150,7 +154,7 @@ switch ($paymentMethod) {
                 logActivity("Paypal Details Validation passed for customer ID: " . $customerId);
                 // $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit);
                 // logActivity("Credit order processed successfully for customer ID: " . $customerId);
-                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $secretAnswer, $token, $receiptHtml, $customer_email);
+                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $secretAnswer, $token, $receiptHtml, $customer_email, $packCount, $packItems);
                 logActivity("PayPal order processed successfully for customer ID: " . $customerId);
             } else {
                 $response = $validatePaypal;
@@ -176,7 +180,7 @@ logActivity("Final response: " . json_encode($response));
 echo json_encode($response);
 
 // Function to process the order
-function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $providedSecretAnswer, $token, $receiptHtml, $customer_email)
+function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $providedSecretAnswer, $token, $receiptHtml, $customer_email, $packCount, $packs)
 {
 
     $response = ['success' => false, 'message' => 'Unknown error occurred'];
@@ -256,12 +260,49 @@ function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deli
         // Insert order
         $deliveryPin = rand(1000, 9999);
         logActivity("Attempting to Insert Record into orders table.");
-        $stmt = $conn->prepare("INSERT INTO orders (customer_id, order_date, service_fee, delivery_fee, total_order, discount, total_amount, delivery_pin, assigned_to, is_credit) VALUES (?, NOW(), ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("idddddiii", $customerId, $serviceFee, $deliveryFee, $totalOrder, $discount, $totalAmount, $deliveryPin, $superAdminUniqueId, $isCredit);
+        $stmt = $conn->prepare("INSERT INTO orders (customer_id, order_date, service_fee, delivery_fee, total_order, discount, total_amount, pack_count, delivery_pin, assigned_to, is_credit) VALUES (?, NOW(), ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("idddddiiii", $customerId, $serviceFee, $deliveryFee, $totalOrder, $discount, $totalAmount, $packCount, $deliveryPin, $superAdminUniqueId, $isCredit);
         $stmt->execute();
         $orderId = $stmt->insert_id;
         $stmt->close();
         logActivity("Order inserted successfully. Order ID: " . $orderId);
+
+        // Insert packs and pack items
+        if (!empty($packs)) {
+            logActivity("Attempting to insert packs and pack items.");
+            
+            // Prepare statements for pack and pack item insertion
+            $packStmt = $conn->prepare("INSERT INTO packs (pack_id, order_id, total_cost) VALUES (?, ?, ?)");
+            $packItemStmt = $conn->prepare("INSERT INTO pack_items (order_id, pack_id, food_id, food_name, quantity, price_per_unit, total_price) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            
+            foreach ($packs as $packId => $packItems) {
+                // Calculate total cost of each pack
+                 logActivity("Processing packs with cost calculation...");
+                 $packTotal = array_sum(array_column($packItems, 'total_price'));
+                // Insert the pack
+                $packStmt->bind_param("sid", $packId, $orderId, $packTotal);
+                $packStmt->execute();
+                
+                // Insert each item in the pack
+                foreach ($packItems as $item) {
+                    $packItemStmt->bind_param(
+                        "isisddd", 
+                        $orderId,
+                        $packId, 
+                        $item['food_id'], 
+                        $item['food_name'], 
+                        $item['quantity'], 
+                        $item['price_per_unit'], 
+                        $item['total_price']
+                    );
+                    $packItemStmt->execute();
+                }
+            }
+            
+            $packStmt->close();
+            $packItemStmt->close();
+            logActivity("Packs and pack items inserted successfully.");
+        }
 
         // Insert items and update food quantities
         logActivity("Attempting to Insert Record into order details table.");

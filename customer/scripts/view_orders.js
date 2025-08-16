@@ -214,6 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Assume these values exist at the top level in the response (you can adjust if nested):
             const summaryRows = [
+                { label: 'Number of Packs Ordered', value: order.pack_count || '1' },
                 { label: 'Total Order', value: utils.formatCurrency(order.total_order || 0) },
                 { label: 'Service Fee', value: utils.formatCurrency(order.service_fee || 0) },
                 { label: 'Delivery Fee', value: utils.formatCurrency(order.delivery_fee || 0) },
@@ -221,6 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 { label: 'Total Amount', value: utils.formatCurrency(order.total_amount || 0) },
                 { label: 'Delivery Status', value: order.delivery_status || 'N/A' },
                 { label: 'Delivery Pin', value: order.delivery_pin || 'N/A' },
+                
                 {
                     label: 'Driver\'s Name',
                     value: order.driver_firstname && order.driver_lastname

@@ -1,27 +1,23 @@
-document.addEventListener('DOMContentLoaded', function () {
+const orderSummaryTable = document.getElementById('orderSummaryTable').querySelector('tbody');
+let orderItems = []; // This is now properly global
+document.addEventListener('DOMContentLoaded', () => {
+    const createPackButton = document.getElementById('createPackButton');
+    const closePackButton = document.getElementById('closePack');
     const addFoodButton = document.getElementById('addFoodButton');
-    const submitOrderButton = document.getElementById('submitOrderButton');
-    const orderSummaryTable = document.getElementById('orderSummaryTable').querySelector('tbody');
-    let orderItems = [];
 
-    function updateTotalAmount(orderItems) {
-        const totalAmountElement = document.getElementById('totalAmount');
-        const totalAmountInput = document.getElementById('total_amount_input');
-        let totalAmount = orderItems.reduce((sum, item) => sum + item.total_price, 0);
-        totalAmountElement.textContent = `N ${totalAmount.toFixed(2)}`;
-        totalAmountInput.value = totalAmount.toFixed(2);
-    }
+    if (createPackButton) createPackButton.addEventListener('click', createPack);
+    // if (closePackButton) closePackButton.addEventListener('click', closePack);
 
     // Fetch available food items from the backend API
     fetch('../v2/get_food.php')
         .then(response => response.json())
         .then(data => {
             const foodSelect = document.getElementById('food-name');
-
             data.forEach(item => {
                 let option = document.createElement('option');
                 option.value = item.food_id;
                 option.setAttribute('data-price', item.food_price);
+                option.setAttribute('data-food_name', item.food_name);
                 option.text = item.food_name;
                 foodSelect.appendChild(option);
             });
@@ -30,154 +26,320 @@ document.addEventListener('DOMContentLoaded', function () {
 
     addFoodButton.addEventListener('click', function () {
         const foodSelect = document.getElementById('food-name');
+        const packSelect = document.getElementById('pack-selector');
         const foodId = foodSelect.value;
-        const foodName = foodSelect.options[foodSelect.selectedIndex].text;
+        const packId = packSelect.value;
+        const foodName = foodSelect.options[foodSelect.selectedIndex].getAttribute('data-food_name');
         const foodPrice = parseFloat(foodSelect.options[foodSelect.selectedIndex].getAttribute('data-price'));
         const quantityInput = document.getElementById('number-of-portion');
         const quantity = parseInt(quantityInput.value);
 
-        if (isNaN(quantity) || isNaN(foodPrice)) {
-            console.error('Invalid quantity or price');
-            alert("Please select a food item and Portion");
+        // Input validation
+        if (!packId || packId === '') {
+            alert('Please select a pack first');
             return;
         }
 
-        if (foodId && quantity > 0) {
-            let totalPrice = foodPrice * quantity;
-
-            const orderItem = {
-                food_id: foodId,
-                food_name: foodName,
-                quantity: parseInt(quantity),
-                price_per_unit: parseFloat(foodPrice),
-                total_price: parseFloat(totalPrice)
-            };
-
-            orderItems.push(orderItem);
-
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${orderItems.length}</td>
-                <td>${foodName}</td>
-                <td>${quantity}</td>
-                <td>N ${foodPrice.toFixed(2)}</td>
-                <td class="total-price">N ${totalPrice.toFixed(2)}</td>
-                <td class="buttons">
-                    <button type="button" class="edit-button">Edit</button>
-                    <button type="button" class="delete-button">Delete</button>
-                </td>
-            `;
-
-            orderSummaryTable.appendChild(row);
-            foodSelect.value = "";
-            quantityInput.value = "";
-
-            // Add event listeners for edit and delete buttons
-            const editButton = row.querySelector('.edit-button');
-            const deleteButton = row.querySelector('.delete-button');
-
-            editButton.addEventListener('click', function () {
-                const newQuantity = prompt("Enter new quantity:", quantity);
-                if (newQuantity !== null && !isNaN(newQuantity) && newQuantity > 0) {
-                    const newTotalPrice = foodPrice * newQuantity;
-                    row.cells[2].innerText = newQuantity;
-                    row.cells[4].innerText = `N ${newTotalPrice.toFixed(2)}`;
-
-                    orderItem.quantity = newQuantity;
-                    orderItem.total_price = newTotalPrice;
-
-                    updateTotalAmount(orderItems);
-                }
-            });
-
-            deleteButton.addEventListener('click', function () {
-                const index = orderItems.indexOf(orderItem);
-                if (index > -1) {
-                    orderItems.splice(index, 1);
-                }
-                orderSummaryTable.removeChild(row);
-                updateTotalAmount(orderItems);
-            });
-
-            updateTotalAmount(orderItems);
-        } else {
-            alert('Please select a food item and enter a valid quantity.');
+        if (isNaN(quantity) || isNaN(foodPrice) || quantity <= 0) {
+            alert("Please select a food item and enter a valid portion quantity");
+            return;
         }
+
+        if (!foodId) {
+            alert('Please select a food item');
+            return;
+        }
+
+        // Check if food item already exists in THIS PACK
+        const existingRow = findFoodItemInTable(foodId, packId);
+        if (existingRow) {
+            showDuplicateItemModal(foodName, existingRow);
+            return;
+        }
+
+        // If food item doesn't exist, proceed with adding it
+        addNewFoodItem(foodId, foodName, foodPrice, quantity, packId);
     });
 
     submitOrderButton.addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent default form submission behavior
-    
-        // Check if the cart (order items) is empty before proceeding
+        event.preventDefault();
+
+        // Validate cart and packs
         if (orderItems.length === 0) {
-            alert('Your cart is empty. Please add items to your cart before proceeding to checkout.');
-            return; // Stop further execution
+            alert('Your cart is empty. Please add items before checkout.');
+            return;
         }
-        console.log("Submitting order:", orderItems);
-    
-        // Validate quantities before sending the request
+
+        // Calculate pack count and organize items by pack
+        const packCount = document.getElementById('packQuantity').value;
+        const packs = {};
+
+        orderItems.forEach(item => {
+            if (!packs[item.pack_id]) {
+                packs[item.pack_id] = [];
+            }
+            packs[item.pack_id].push(item);
+        });
+
+        // Verify all packs have items
+        const actualPackCount = Object.keys(packs).length;
+        if (actualPackCount < packCount) {
+            alert(`Warning: You created ${packCount} packs but only ${actualPackCount} contain items.`);
+            return;
+        }
+
+        // Calculate totals
+        const totalAmount = orderItems.reduce((sum, item) => sum + item.total_price, 0);
+        const serviceFee = 0.06 * totalAmount;
+        const deliveryFee = 0.10 * totalAmount;
+
+        // Prepare data for backend
+        const orderData = {
+            order_items: orderItems,
+            packs: packs, // Organized by pack
+            pack_count: packCount,
+            total_order: totalAmount.toFixed(2),
+            service_fee: serviceFee.toFixed(2),
+            delivery_fee: deliveryFee.toFixed(2)
+        };
+
+        console.log("Submitting order:", orderData);
+
+        // Two-step validation and submission
         fetch('../v2/validate_quantities.php', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ order_items: orderItems })
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(orderData)
         })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
                 if (!data.success) {
-                    alert('Failed to place order: ' + data.message);
-                    return;
+                    throw new Error(data.message || 'Validation failed');
                 }
-    
-                // Calculate totals
-                const totalAmount = orderItems.reduce((sum, item) => sum + item.total_price, 0);
-                const serviceFee = 0.06 * totalAmount; // 6% service fee
-                const deliveryFee = 0.10 * totalAmount; // 10% delivery fee
-    
-                // Send order data to the server to store in session
-                fetch('../v2/save_order_session.php', {
+                return fetch('../v2/save_order_session.php', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        order_items: orderItems,
-                        total_order: totalAmount.toFixed(2),
-                        service_fee: serviceFee.toFixed(2),
-                        delivery_fee: deliveryFee.toFixed(2)
-                    })
-                })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        if (data.success) {
-                            console.log("Order has been saved to temporary DB");
-                            // Redirect to checkout page
-                            window.location.href = '../v1/checkout.php';
-                        } else {
-                            alert('Failed to save order data: ' + data.message);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert('An error occurred. Please try again.');
-                    });
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(orderData)
+                });
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = '../v1/checkout.php';
+                } else {
+                    throw new Error(data.message || 'Failed to save order');
+                }
             })
             .catch(error => {
                 console.error('Error:', error);
-                document.getElementById('message').textContent = 'An error occurred. Please try again.';
+                alert('Checkout error: ' + error.message);
             });
     });
-
-
 });
+
+const createPack = () => {
+    const packQuantityEl = document.getElementById('packQuantity');
+    const packSelector = document.getElementById('pack-selector');
+    const packContainer = document.getElementById('pack-container');
+    const orderSummaryContainer = document.getElementById('order-summary-container');
+
+    if (!packQuantityEl || !packSelector) return;
+
+    // parse and validate quantity
+    const qty = parseInt(packQuantityEl.value, 10);
+    if (Number.isNaN(qty) || qty < 1) {
+        if (typeof showErrorModal === 'function') showErrorModal('Enter a valid pack quantity (minimum 1).');
+        else alert('Enter a valid pack quantity (minimum 1).');
+        return;
+    }
+
+    const confirmed = window.confirm(`Create ${qty} pack${qty > 1 ? 's' : ''}? This will lock the pack count.`);
+    if (!confirmed) return;
+
+    // clear any existing options
+    packSelector.innerHTML = '';
+    // add default placeholder option
+    const defaultOpt = document.createElement('option');
+    defaultOpt.value = '';
+    defaultOpt.textContent = '-- Select a Pack --';
+    defaultOpt.disabled = true;
+    defaultOpt.selected = true;
+    packSelector.appendChild(defaultOpt);
+    // create options Pack-1 ... Pack-N
+    for (let i = 1; i <= qty; i++) {
+        const opt = document.createElement('option');
+        opt.value = `Pack-${i}`;
+        opt.textContent = `Pack-${i}`;
+        packSelector.appendChild(opt);
+    }
+
+    // disable the input and create button to lock the pack count
+    packQuantityEl.disabled = true;
+    const createBtn = document.getElementById('createPackButton');
+    if (createBtn) createBtn.disabled = true;
+    packContainer.style.display = 'flex';
+    orderSummaryContainer.style.display = "flex";
+
+    // focus the selector so user can pick a pack
+    packSelector.focus();
+
+    packSelector.addEventListener('change', () => {
+        const foodContainer = document.getElementById('food-selector-container');
+        foodContainer.style.display = 'flex';
+        const packNumberSpan = document.getElementById('pack-number');
+        if (packNumberSpan) packNumberSpan.textContent = packSelector.value;
+        // Don't disable the pack selector here - let user switch between packs
+    });
+};
+
+// function closePack() {
+//     const packSelector = document.getElementById('pack-selector');
+//     const foodContainer = document.getElementById('food-selector-container');
+
+//     if (!packSelector) return;
+
+//     const selectedValue = packSelector.value;
+//     if (!selectedValue) {
+//         alert('Please select a pack before closing.');
+//         return;
+//     }
+
+//     // Reset dropdown to default placeholder option
+//     packSelector.value = '';
+
+//     // Hide food selector container
+//     if (foodContainer) {
+//         foodContainer.style.display = 'none';
+//     }
+// }
+
+function updateTotalAmount() {
+    const totalAmountElement = document.getElementById('totalAmount');
+    const totalAmountInput = document.getElementById('total_amount_input');
+    let totalAmount = orderItems.reduce((sum, item) => sum + item.total_price, 0);
+    totalAmountElement.textContent = `N ${totalAmount.toFixed(2)}`;
+    totalAmountInput.value = totalAmount.toFixed(2);
+}
+
+// Helper function to find existing food item in table (now checks pack too)
+function findFoodItemInTable(foodId, packId) {
+    const rows = document.querySelectorAll('#orderSummaryTable tbody tr');
+    for (const row of rows) {
+        const rowFoodId = row.getAttribute('data-food-id');
+        const rowPackId = row.cells[1].textContent;
+        if (rowFoodId === foodId && rowPackId === packId) {
+            return row;
+        }
+    }
+    return null;
+}
+
+function showDuplicateItemModal(foodName, existingRow) {
+    const modal = document.createElement('div');
+    modal.className = 'duplicate-item-modal';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <h3>Item Already Added</h3>
+            <p>"${foodName}" is already in this pack.</p>
+            <p>Would you like to edit the existing item instead?</p>
+            <div class="modal-buttons">
+                <button id="edit-existing">Edit Existing</button>
+                <button id="cancel-add">Cancel</button>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    document.getElementById('edit-existing').addEventListener('click', function () {
+        document.body.removeChild(modal);
+        const editButton = existingRow.querySelector('.edit-button');
+        editButton.click();
+    });
+
+    document.getElementById('cancel-add').addEventListener('click', function () {
+        document.body.removeChild(modal);
+    });
+}
+
+function addNewFoodItem(foodId, foodName, foodPrice, quantity, packId) {
+    const totalPrice = foodPrice * quantity;
+    const orderItem = {
+        food_id: foodId,
+        food_name: foodName,
+        quantity: quantity,
+        price_per_unit: foodPrice,
+        total_price: totalPrice,
+        pack_id: packId
+    };
+
+    orderItems.push(orderItem);
+
+    const row = document.createElement('tr');
+    row.setAttribute('data-food-id', foodId);
+    row.innerHTML = `
+        <td>${orderItems.length}</td>
+        <td>${packId}</td>
+        <td>${foodName}</td>
+        <td>${quantity}</td>
+        <td>N ${foodPrice.toFixed(2)}</td>
+        <td class="total-price">N ${totalPrice.toFixed(2)}</td>
+        <td class="buttons">
+            <button type="button" class="edit-button">Edit</button>
+            <button type="button" class="delete-button">Delete</button>
+        </td>
+    `;
+
+    orderSummaryTable.appendChild(row);
+
+    // Clear input fields
+    document.getElementById('food-name').value = "";
+    document.getElementById('number-of-portion').value = "";
+
+    // Add event listeners for edit and delete buttons
+    addRowEventListeners(row, orderItem, foodPrice);
+
+    updateTotalAmount();
+}
+
+function addRowEventListeners(row, orderItem, foodPrice) {
+    const editButton = row.querySelector('.edit-button');
+    const deleteButton = row.querySelector('.delete-button');
+
+    editButton.addEventListener('click', function () {
+        const newQuantity = prompt("Enter new quantity:", orderItem.quantity);
+        if (newQuantity !== null && !isNaN(newQuantity) && newQuantity > 0) {
+            const newQuantityNum = parseInt(newQuantity);
+            const newTotalPrice = foodPrice * newQuantityNum;
+
+            // Update table row
+            row.cells[3].innerText = newQuantityNum;
+            row.cells[5].innerText = `N ${newTotalPrice.toFixed(2)}`;
+
+            // Update order item
+            orderItem.quantity = newQuantityNum;
+            orderItem.total_price = newTotalPrice;
+
+            updateTotalAmount();
+        }
+    });
+
+    deleteButton.addEventListener('click', function () {
+        if (confirm('Are you sure you want to remove this item?')) {
+            const index = orderItems.indexOf(orderItem);
+            if (index > -1) {
+                orderItems.splice(index, 1);
+            }
+            row.remove();
+            updateTotalAmount();
+            updateRowNumbers();
+        }
+    });
+}
+
+function updateRowNumbers() {
+    const rows = document.querySelectorAll('#orderSummaryTable tbody tr');
+    rows.forEach((row, index) => {
+        row.cells[0].innerText = index + 1;
+    });
+}
