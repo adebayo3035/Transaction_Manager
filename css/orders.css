@@ -71,6 +71,247 @@
     animation: spin 1s linear infinite;
 }
 
+/* Pack Details Styling */
+#packDetails {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+.main-header {
+    text-align: center;
+    margin-bottom: 30px;
+    color: white;
+}
+
+.main-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    font-weight: 300;
+}
+
+.order-id {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* Pack Card */
+.pack-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    margin-bottom: 25px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pack-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.pack-card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+}
+
+.pack-header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pack-icon {
+    font-size: 2rem;
+    margin-right: 15px;
+}
+
+.pack-info h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 500;
+}
+
+.pack-date {
+    margin: 5px 0 0 0;
+    opacity: 0.9;
+    font-size: 0.9rem;
+}
+
+.pack-total {
+    text-align: right;
+}
+
+.total-label {
+    display: block;
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin-bottom: 5px;
+}
+
+.total-amount {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Table Styling */
+.table-container {
+    padding: 20px;
+}
+
+.pack-items-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.pack-items-table th {
+    background: #f8f9fa;
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+    color: #495057;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.pack-items-table td {
+    padding: 15px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.pack-items-table tbody tr:hover {
+    background: #f8f9fa;
+}
+
+.food-item {
+    font-weight: 500;
+}
+
+.quantity, .unit-price, .item-total {
+    text-align: center;
+}
+
+.item-total {
+    font-weight: 600;
+    color: #28a745;
+}
+
+/* Table Footer */
+.pack-items-table tfoot {
+    background: #f8f9fa;
+}
+
+.pack-subtotal-label {
+    text-align: right;
+    font-weight: 600;
+    padding: 15px;
+}
+
+.pack-subtotal {
+    text-align: center;
+    font-weight: 700;
+    color: #007bff;
+    padding: 15px;
+}
+
+/* Order Summary */
+.order-summary-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    margin-top: 20px;
+}
+
+.summary-header {
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.summary-header h3 {
+    margin: 0;
+    color: #495057;
+    font-size: 1.4rem;
+}
+
+.summary-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+}
+
+.summary-row .label {
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.summary-row .value {
+    font-weight: 600;
+    color: #495057;
+}
+
+.summary-divider {
+    height: 1px;
+    background: #e9ecef;
+    margin: 10px 0;
+}
+
+.total-row {
+    border-top: 2px solid #007bff;
+    padding-top: 15px;
+    margin-top: 10px;
+}
+
+.total-row .label {
+    font-size: 1.2rem;
+    color: #007bff;
+}
+
+.total-row .value {
+    font-size: 1.4rem;
+    color: #007bff;
+    font-weight: 700;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .pack-header-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    .pack-total {
+        text-align: center;
+    }
+    
+    .pack-items-table {
+        font-size: 0.9rem;
+    }
+    
+    .pack-items-table th,
+    .pack-items-table td {
+        padding: 10px;
+    }
+    
+    #packDetails {
+        padding: 10px;
+    }
+}
+
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }

@@ -62,6 +62,7 @@
             <div class="actionBtn">
             <button type="button" id="receipt-btn">Print Receipt</button>
             <button type="button" id="reassign-order">Reassign Order</button>
+            <button type="button" id="view-pack" style = "background-color: purple">View Pack Details</button>
 
             </div>
             
@@ -81,6 +82,21 @@
             </div>
         </div>
     </div>
+
+    <div id="packModal" class="modal">
+        <div class="modal-content">
+            <span class="close closePackModal">&times;</span>
+            <h2>Order Food Pack Details</h2>
+            <table class="packDetails" id="packDetails">
+                <tbody>
+                    
+                </tbody>
+
+            </table>
+            
+        </div>
+    </div>
+
 
     <script src="scripts/view_orders.js"></script>
 </body>

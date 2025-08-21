@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
         apiEndpoints: {
             fetchOrders: '../v2/fetch_order_summary.php',
             fetchOrderDetails: '../v2/fetch_order_details.php',
-            cancelOrder: '../v2/cancel_order.php'
+            cancelOrder: '../v2/cancel_order.php',
+            fetchPackDetails: '../v2/fetch_pack_details.php'
         }
     };
 
@@ -24,15 +25,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: document.querySelector('#ordersTable tbody')
             },
             orderDetails: {
+                container: document.getElementById('orderDetailsTable'),
                 body: document.querySelector('#orderDetailsTable tbody')
+            },
+            packDetails: {
+                container: document.getElementById('packDetails'),
+                body: document.querySelector('#packDetails tbody')
             }
         },
         pagination: document.getElementById('pagination'),
         search: document.getElementById('liveSearch'),
         modal: document.getElementById('orderModal'),
+        packModal: document.getElementById('packModal'),
         buttons: {
             closeModal: document.querySelector('.modal .close'),
+            closePackModal: document.querySelector('.modal .closePackModal'),
             decline: document.getElementById('decline-btn'),
+            getPackDetails: document.getElementById('pack-details'),
             receipt: document.querySelector('#receipt-btn'),
             driverRating: document.querySelector('#driverRating-btn')
         },
@@ -54,16 +63,25 @@ document.addEventListener('DOMContentLoaded', () => {
         },
 
         showError: (container, message = 'Error loading data') => {
-            container.innerHTML = `
+            container.innerHTML += `
                 <tr>
                     <td colspan="6" class="error-message">${message}</td>
                 </tr>
             `;
         },
 
-        toggleModal: (show = true) => {
-            elements.modal.style.display = show ? 'block' : 'none';
+        toggleModal: (modal, show = true) => {
+            // Hide all modals first
+            elements.modal.style.display = 'none';
+            elements.packModal.style.display = 'none';
+
+            // Show only the requested one
+            if (show) {
+                if (modal === 'order') elements.modal.style.display = 'block';
+                if (modal === 'pack') elements.packModal.style.display = 'block';
+            }
         },
+
 
         createButton: (label, page, disabled = false, active = false) => {
             const btn = document.createElement('button');
@@ -106,22 +124,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
         },
 
-        fetchOrderDetails: (orderId) => {
-            return fetch(CONFIG.apiEndpoints.fetchOrderDetails, {
+        fetchOrderDetails: async (orderId) => {
+            const response = await fetch(CONFIG.apiEndpoints.fetchOrderDetails, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ order_id: orderId })
-            })
-                .then(response => response.json());
+            });
+            return await response.json();
         },
 
-        cancelOrder: (orderId) => {
-            return fetch(CONFIG.apiEndpoints.cancelOrder, {
+        fetchPackDetails: async (orderId) => {
+            const response = await fetch(CONFIG.apiEndpoints.fetchPackDetails, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ order_id: orderId })
+            });
+            return await response.json();
+        },
+
+
+        cancelOrder: async (orderId) => {
+            const response = await fetch(CONFIG.apiEndpoints.cancelOrder, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ order_id: orderId, status: 'Cancelled' })
-            })
-                .then(response => response.json());
+            });
+            return await response.json();
         }
     };
 
@@ -222,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 { label: 'Total Amount', value: utils.formatCurrency(order.total_amount || 0) },
                 { label: 'Delivery Status', value: order.delivery_status || 'N/A' },
                 { label: 'Delivery Pin', value: order.delivery_pin || 'N/A' },
-                
+
                 {
                     label: 'Driver\'s Name',
                     value: order.driver_firstname && order.driver_lastname
@@ -265,13 +293,150 @@ document.addEventListener('DOMContentLoaded', () => {
             if (elements.buttons.decline.style.display === 'block') {
                 elements.buttons.decline.dataset.orderId = order.order_id;
             }
+
             if (elements.buttons.driverRating.style.display === 'block') {
                 elements.buttons.driverRating.dataset.orderId = order.order_id;
             }
+            elements.buttons.getPackDetails.dataset.orderId = order.order_id;
 
-            utils.toggleModal();
+            utils.toggleModal('order', true);
         },
 
+        displayPackDetails: (order) => {
+            const container = document.getElementById("packDetails");
+            container.innerHTML = '';
+
+            // Create main container with beautiful styling
+            container.className = 'pack-details-container';
+
+            // Header section
+            const header = document.createElement('div');
+            header.className = 'pack-details-header';
+            header.innerHTML = `
+        <div class="header-content">
+            <h1>🍽️ Your Meal Packs</h1>
+            <p class="order-reference">Order #${order.order_id}</p>
+            <div class="header-decoration">
+                <div class="decoration-circle"></div>
+                <div class="decoration-circle"></div>
+                <div class="decoration-circle"></div>
+            </div>
+        </div>
+    `;
+            container.appendChild(header);
+
+            // Packs grid
+            const packsGrid = document.createElement('div');
+            packsGrid.className = 'packs-grid';
+
+            order.packs.forEach((pack, index) => {
+                const packCard = document.createElement('div');
+                packCard.className = 'pack-card';
+                packCard.innerHTML = `
+            <div class="pack-card-header">
+                <div class="pack-number">Pack ${index + 1}</div>
+                <div class="pack-id">#${pack.pack_id}</div>
+            </div>
+            
+            <div class="pack-card-body">
+                <div class="pack-info">
+                    <div class="info-item">
+                        <span class="info-label">🕐 Created</span>
+                        <span class="info-value">${utils.formatDate(pack.created_at)}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">💰 Total</span>
+                        <span class="info-value total-amount">${utils.formatCurrency(pack.total_cost)}</span>
+                    </div>
+                </div>
+                
+                <div class="items-list">
+                    <h4>📋 Items in this Pack</h4>
+                    ${pack.items.map(item => `
+                        <div class="food-item">
+                            <span class="food-name">${item.food_name}</span>
+                            <div class="food-details">
+                                <span class="quantity">${item.quantity}x</span>
+                                <span class="price">${utils.formatCurrency(item.price_per_unit)}</span>
+                                <span class="total">${utils.formatCurrency(item.total_price)}</span>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            
+            <div class="pack-card-footer">
+                <div class="pack-total">
+                    <span>Pack Total:</span>
+                    <strong>${utils.formatCurrency(pack.total_cost)}</strong>
+                </div>
+            </div>
+        `;
+                packsGrid.appendChild(packCard);
+            });
+
+            container.appendChild(packsGrid);
+
+            // Order summary card
+            const totalAmount = order.packs.reduce((sum, p) => sum + parseFloat(p.total_cost || 0), 0);
+            const totalItems = order.packs.reduce((sum, p) => sum + p.items.length, 0);
+
+            const summaryCard = document.createElement('div');
+            summaryCard.className = 'summary-card';
+            summaryCard.innerHTML = `
+        <div class="summary-header">
+            <h3>📊 Order Summary</h3>
+            <div class="summary-icon">💰</div>
+        </div>
+        
+        <div class="summary-content">
+            <div class="summary-row">
+                <div class="summary-label">
+                    <span class="icon">📦</span>
+                    Total Packs
+                </div>
+                <div class="summary-value">${order.packs.length}</div>
+            </div>
+            
+            <div class="summary-row">
+                <div class="summary-label">
+                    <span class="icon">🍽️</span>
+                    Total Items
+                </div>
+                <div class="summary-value">${totalItems}</div>
+            </div>
+            
+            <div class="summary-divider"></div>
+            
+            <div class="summary-row grand-total">
+                <div class="summary-label">
+                    <span class="icon">🎯</span>
+                    Grand Total
+                </div>
+                <div class="summary-value">${utils.formatCurrency(totalAmount)}</div>
+            </div>
+        </div>
+        
+        <div class="summary-footer">
+            <p>Thank you for choosing KaraKata! 🎉</p>
+        </div>
+    `;
+            container.appendChild(summaryCard);
+
+            // Action buttons
+    //         const actionBar = document.createElement('div');
+    //         actionBar.className = 'action-bar';
+    //         actionBar.innerHTML = `
+    //     <button class="btn-primary" onclick="window.print()">
+    //         🖨️ Print Receipt
+    //     </button>
+    //     <button class="btn-secondary" onclick="utils.toggleModal('pack', false)">
+    //         ← Back to Orders
+    //     </button>
+    // `;
+    //         container.appendChild(actionBar);
+            utils.toggleModal("pack", true);
+        },
 
         printReceipt: () => {
             const orderDetails = document.querySelector('#orderDetailsTable').outerHTML;
@@ -396,6 +561,50 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
         },
 
+        loadPackDetails: (orderId) => {
+            api.fetchPackDetails(orderId)
+                .then(response => {
+                    if (!response.success) {
+                        console.error('Failed to fetch Order food pack details:', response.message);
+                        // ui.showError(response.message || 'Unknown error');
+                        utils.showError(elements.tables.orderDetails.container, response.message);
+                        return;
+                    }
+
+                    const data = response.data;
+
+                    // Transform backend response to match frontend expectations
+                    const transformedPackData = {
+                        order_id: data.order_id,
+                        packs: Object.keys(data.packs).map(packId => {
+                            const pack = data.packs[packId];
+                            return {
+                                pack_id: pack.pack_info.pack_id,
+                                total_cost: pack.pack_info.total_cost,
+                                created_at: pack.pack_info.created_at,
+                                items: pack.items.map(item => ({
+                                    food_id: item.food_id,
+                                    food_name: item.food_name,
+                                    quantity: item.quantity,
+                                    price_per_unit: item.price_per_unit,
+                                    total_price: item.total_price
+
+                                }))
+                            };
+                        })
+                    };
+
+                    // ✅ Pass the transformed structure to the UI renderer
+                    ui.displayPackDetails(transformedPackData);
+                })
+                .catch(error => {
+                    console.error('Error fetching order details:', error);
+                    // ui.showError('Failed to load order details. Please try again.');
+                    utils.showError(elements.tables.packDetails.container, 'Failed to load order details. Please try again.');
+                });
+        },
+
+
         cancelOrder: (orderId) => {
             const userConfirmed = confirm("Are you sure you want to cancel this order? This action cannot be undone.");
 
@@ -419,23 +628,50 @@ document.addEventListener('DOMContentLoaded', () => {
     // Event Listeners
     const setupEventListeners = () => {
         // Modal close
+        // elements.buttons.closeModal.addEventListener('click', () => {
+        //     utils.toggleModal(false);
+        //     location.reload();
+        // });
+
+        // // Outside click to close modal
+        // window.addEventListener('click', (event) => {
+        //     if (event.target === elements.modal) {
+        //         utils.toggleModal(false);
+        //         location.reload();
+        //     }
+        // });
+
+        // Close buttons
         elements.buttons.closeModal.addEventListener('click', () => {
-            utils.toggleModal(false);
+            utils.toggleModal('order', false);
+            location.reload();
+        });
+
+        elements.buttons.closePackModal.addEventListener('click', () => {
+            utils.toggleModal('pack', false);
             location.reload();
         });
 
         // Outside click to close modal
         window.addEventListener('click', (event) => {
             if (event.target === elements.modal) {
-                utils.toggleModal(false);
+                utils.toggleModal('order', false);
+                location.reload();
+            }
+            if (event.target === elements.packModal) {
+                utils.toggleModal('pack', false);
                 location.reload();
             }
         });
+
 
         // Decline order button
         elements.buttons.decline.addEventListener('click', () => {
             order.cancelOrder(elements.buttons.decline.dataset.orderId);
         });
+        elements.buttons.getPackDetails.addEventListener('click', () => {
+            order.loadPackDetails(elements.buttons.getPackDetails.dataset.orderId);
+        })
 
         // Print receipt button
         elements.buttons.receipt.addEventListener('click', ui.printReceipt);

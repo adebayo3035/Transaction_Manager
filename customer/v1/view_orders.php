@@ -70,6 +70,7 @@
             <div class="modalActionButtons">
                 <button type="button" id="receipt-btn" style="display: none">Print Receipt</button>
                 <button type="button" id="decline-btn" style="display: none">Cancel Order</button>
+                <button type="button" id="pack-details" style="background-color: purple">View Pack Details</button>
                 <button type="button" id="driverRating-btn" style="display: none">Rate Order & Driver</button>
 
             </div>
@@ -83,6 +84,20 @@
             </div>
 
 
+        </div>
+    </div>
+
+    <div id="packModal" class="modal">
+        <div class="modal-content">
+            <span class="close closePackModal" id = "closePackModal">&times;</span>
+            <h2>Order Food Pack Details</h2>
+            <table class="packDetails" id="packDetails">
+                <tbody>
+                    
+                </tbody>
+
+            </table>
+            
         </div>
     </div>
 

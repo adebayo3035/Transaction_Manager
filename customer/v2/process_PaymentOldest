@@ -66,7 +66,7 @@ $customer_email = $_SESSION['email'];
 // Log payment method and other details
 logActivity("Payment method: " . $paymentMethod);
 logActivity("Order items: " . json_encode($orderItems));
-logActivity("Total order amount: " . $totalOrder . "Service fee: " . $serviceFee . "Delivery Fee: " . $deliveryFee );
+logActivity("Total order amount: " . $totalOrder . "Service fee: " . $serviceFee . "Delivery Fee: " . $deliveryFee);
 
 // Apply the discount if promo is used
 if ($usingPromo) {
@@ -91,7 +91,7 @@ switch ($paymentMethod) {
             if ($validationResult['success']) {
                 // Proceed with order processing
                 logActivity("Card validation successful for customer ID: " . $customerId);
-                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $secretAnswer, $token, $receiptHtml, $customer_email, $packCount, $packItems);
+                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $secretAnswer, $token, $receiptHtml, $customer_email, $packCount, $packItems, $receiptpdf);
                 logActivity("Order processed successfully for customer ID: " . $customerId);
             } else {
                 $response = $validationResult;
@@ -111,7 +111,7 @@ switch ($paymentMethod) {
         if ($eligibilityResult['success']) {
             // Process credit payment and the order
             logActivity("Credit eligibility check passed for customer ID: " . $customerId);
-            $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $secretAnswer, $token, $receiptHtml, $customer_email, $packCount, $packItems);
+            $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $secretAnswer, $token, $receiptHtml, $customer_email, $packCount, $packItems, $receiptpdf);
             logActivity("Credit order processed successfully for customer ID: " . $customerId);
         } else {
             $response = $eligibilityResult;
@@ -134,7 +134,7 @@ switch ($paymentMethod) {
             } else {
                 // Validate bank transfer and process the order
                 logActivity("Processing bank transfer for customer ID: " . $customerId);
-                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $secretAnswer, $token, $receiptHtml, $customer_email, $packCount, $packItems);
+                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $secretAnswer, $token, $receiptHtml, $customer_email, $packCount, $packItems, $receiptpdf);
                 logActivity("Bank transfer order processed successfully for customer ID: " . $customerId);
             }
         } else {
@@ -155,7 +155,7 @@ switch ($paymentMethod) {
                 logActivity("Paypal Details Validation passed for customer ID: " . $customerId);
                 // $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit);
                 // logActivity("Credit order processed successfully for customer ID: " . $customerId);
-                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $secretAnswer, $token, $receiptHtml, $customer_email, $packCount, $packItems);
+                $response = processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $secretAnswer, $token, $receiptHtml, $customer_email, $packCount, $packItems, $receiptpdf);
                 logActivity("PayPal order processed successfully for customer ID: " . $customerId);
             } else {
                 $response = $validatePaypal;
@@ -181,9 +181,8 @@ logActivity("Final response: " . json_encode($response));
 echo json_encode($response);
 
 // Function to process the order
-function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $providedSecretAnswer, $token, $receiptHtml, $customer_email, $packCount, $packs)
+function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deliveryFee, $totalOrder, $discount, $discount_percent, $paymentMethod, $promo_code, $conn, $isCredit, $providedSecretAnswer, $token, $receiptHtml, $customer_email, $packCount, $packs, $receiptpdf)
 {
-
     $response = ['success' => false, 'message' => 'Unknown error occurred'];
     $conn->begin_transaction();
 
@@ -203,8 +202,6 @@ function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deli
         } else {
             logActivity("Secret Answer and Token Validation successful for Customer ID: " . $customerId);
         }
-
-
         // Check wallet balance if not using credit
         if ($isCredit === false) {
             logActivity("Checking wallet balance for customer ID: " . $customerId);
@@ -271,35 +268,35 @@ function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deli
         // Insert packs and pack items
         if (!empty($packs)) {
             logActivity("Attempting to insert packs and pack items.");
-            
+
             // Prepare statements for pack and pack item insertion
             $packStmt = $conn->prepare("INSERT INTO packs (pack_id, order_id, total_cost) VALUES (?, ?, ?)");
             $packItemStmt = $conn->prepare("INSERT INTO pack_items (order_id, pack_id, food_id, food_name, quantity, price_per_unit, total_price) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            
+
             foreach ($packs as $packId => $packItems) {
                 // Calculate total cost of each pack
-                 logActivity("Processing packs with cost calculation...");
-                 $packTotal = array_sum(array_column($packItems, 'total_price'));
+                logActivity("Processing packs with cost calculation...");
+                $packTotal = array_sum(array_column($packItems, 'total_price'));
                 // Insert the pack
                 $packStmt->bind_param("sid", $packId, $orderId, $packTotal);
                 $packStmt->execute();
-                
+
                 // Insert each item in the pack
                 foreach ($packItems as $item) {
                     $packItemStmt->bind_param(
-                        "isisddd", 
+                        "isisddd",
                         $orderId,
-                        $packId, 
-                        $item['food_id'], 
-                        $item['food_name'], 
-                        $item['quantity'], 
-                        $item['price_per_unit'], 
+                        $packId,
+                        $item['food_id'],
+                        $item['food_name'],
+                        $item['quantity'],
+                        $item['price_per_unit'],
                         $item['total_price']
                     );
                     $packItemStmt->execute();
                 }
             }
-            
+
             $packStmt->close();
             $packItemStmt->close();
             logActivity("Packs and pack items inserted successfully.");
@@ -346,9 +343,9 @@ function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deli
         $eventType = "New Food Order";
         $eventDetails = "Customer placed an order on " . date('Y-m-d H:i:s');
         $logMessage = "Admin notification sent for order ID: " . $orderId;
-        
+
         sendAdminNotification($conn, $title, $eventType, $eventDetails, $superAdminUniqueId, $logMessage);
-        
+
 
         // Commit transaction
         $conn->commit();
@@ -363,10 +360,24 @@ function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deli
         logActivity("Token invalidated for customer ID: $customerId.");
         logActivity("Order processing completed successfully for customer ID: " . $customerId);
 
-        // Send transaction receipt to customer's email address
         try {
-            // Generate PDF - pass the actual order ID from your order processing
-            $pdfPath = generatePdfReceipt($receiptHtml, $orderId); // $orderId should come from your order processing
+            $attachments = [];
+
+            // Process the PDF from frontend if available
+            if ($receiptpdf) {
+                $pdfPathFromFrontend = processReceiptPdf($receiptpdf, $orderId);
+                if ($pdfPathFromFrontend) {
+                    $attachments[] = $pdfPathFromFrontend;
+                }
+            }
+
+            // Generate PDF from HTML as fallback if no PDF from frontend
+            if (empty($attachments) && $receiptHtml) {
+                $pdfPath = generatePdfReceipt($receiptHtml, $orderId);
+                if ($pdfPath && file_exists($pdfPath)) {
+                    $attachments[] = $pdfPath;
+                }
+            }
 
             // Send email with PDF attachment
             $subject = "Your KaraKata Order Receipt #" . $orderId;
@@ -376,32 +387,36 @@ function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deli
                 $customer_email,
                 $emailBody,
                 $subject,
-                [$pdfPath] // Attach the PDF
+                $attachments // Pass array of file paths
             );
 
             // Handle email sending result
             if (!$emailSent) {
                 logActivity("Failed to send receipt email for order #" . $orderId);
-                // You might want to still proceed with success since the order was processed
             } else {
                 logActivity("Receipt email sent successfully for order #" . $orderId);
             }
 
-            // Clean up temporary file
-            if (file_exists($pdfPath)) {
-                unlink($pdfPath);
-            }
         } catch (Exception $e) {
             logActivity("Error generating/sending receipt for order #" . $orderId . ": " . $e->getMessage());
             // Continue with order processing despite email failure
+        } finally {
+            // Clean up temporary files
+            foreach ($attachments as $attachmentPath) {
+                if (file_exists($attachmentPath)) {
+                    unlink($attachmentPath);
+                }
+            }
         }
-    } catch (Exception $e) {
-        $conn->rollback();
-        $response = ['success' => false, 'message' => "Error placing order: " . $e->getMessage()];
-        logActivity("Error placing order for customer ID: " . $customerId . ". Error: " . $e->getMessage());
-    }
 
-    return $response;
+        return $response;
+    }
+    catch (Exception $e) {
+        // Handle any exceptions that occur in the try block
+        $conn->rollback(); // Rollback transaction if active
+        logActivity("Error in processOrder: " . $e->getMessage());
+        return ['success' => false, 'message' => $e->getMessage()];
+    }
 }
 
 function generateTransactionReference()
@@ -460,7 +475,7 @@ function validateCardOwnership($cardDetails, $inputCardNumber, $inputCVV, $input
 
 function validateCardPIN($conn, $customerId, $cardId, $pin, $storedHash)
 {
-   $isPinValid = verifyAndUpgradePIN($conn, $customerId, $cardId, $pin, $storedHash);
+    $isPinValid = verifyAndUpgradePIN($conn, $customerId, $cardId, $pin, $storedHash);
 
     if (!$isPinValid) {
         throw new CardException("Invalid card PIN");
@@ -646,10 +661,10 @@ function validateSecretAnswer($providedSecretAnswer, $customerId, $conn)
 
     // Hash the provided answer and compare with the stored one
     if (!verifyAndUpgradeSecretAnswer($conn, $customerId, $providedSecretAnswer, $storedSecretAnswer)) {
-            logActivity("Invalid secret answer for Customer ID: $customerId.");
-            echo json_encode(['success' => false, 'message' => 'Account Validation Failed.']);
-            exit();
-        }
+        logActivity("Invalid secret answer for Customer ID: $customerId.");
+        echo json_encode(['success' => false, 'message' => 'Account Validation Failed.']);
+        exit();
+    }
     logActivity("Secret Answer Validation is Successful for Customer ID " . $customerId);
     return ["success" => true, "message" => "Secret Answer Validation Successful! 🎉"];
 }
@@ -861,4 +876,56 @@ function getReceiptCss()
 }
 
 
+function processReceiptPdf($pdfBase64, $orderId)
+{
+    try {
+        // Validate base64 data
+        if (empty($pdfBase64)) {
+            throw new Exception('Empty PDF data received');
+        }
 
+        // Decode base64 PDF data
+        $pdfData = base64_decode($pdfBase64);
+
+        if (!$pdfData) {
+            throw new Exception('Failed to decode base64 PDF data');
+        }
+
+        // Validate it's a PDF (check for PDF header)
+        if (strpos($pdfData, '%PDF') !== 0) {
+            throw new Exception('Invalid PDF format - missing PDF header');
+        }
+
+        // Create temporary file with order ID in filename
+        $tempDir = sys_get_temp_dir();
+        $filename = 'receipt_' . $orderId . '_' . uniqid() . '.pdf';
+        $filepath = $tempDir . '/' . $filename;
+
+        // Save PDF to temporary file
+        if (file_put_contents($filepath, $pdfData) === false) {
+            throw new Exception('Failed to save PDF to temporary file');
+        }
+
+        // Verify the file was created
+        if (!file_exists($filepath)) {
+            throw new Exception('Temporary PDF file was not created');
+        }
+
+        // Optional: Validate PDF file type
+        $fileInfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mimeType = finfo_file($fileInfo, $filepath);
+        finfo_close($fileInfo);
+
+        if ($mimeType !== 'application/pdf') {
+            logActivity('Warning: File MIME type is ' . $mimeType . ', expected application/pdf');
+            // Continue processing anyway
+        }
+
+        logActivity('PDF receipt processed successfully for order #' . $orderId);
+        return $filepath; // Return the file path, not the binary data
+
+    } catch (Exception $e) {
+        logActivity('Error processing PDF receipt: ' . $e->getMessage());
+        return null; // Return null on error
+    }
+}

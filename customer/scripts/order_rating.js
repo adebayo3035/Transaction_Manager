@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Initialize with extracted order details
     const { orderId, driverId } = populateOrderRatingPage();
+    limitInputCharsWithPopup("driverComment", 50);
+    limitInputCharsWithPopup("orderComment", 50);
 
     // Initialize ratings
     const ratingElements = {
@@ -10,52 +12,52 @@ document.addEventListener('DOMContentLoaded', function () {
         deliveryTime: 0
     };
 
-   function populateOrderRatingPage() {
-    // Get the stored order data from sessionStorage
-    const orderData = JSON.parse(sessionStorage.getItem('orderDetails'));
-    
-    // Check if data exists and has the expected structure
-    if (!orderData || !orderData.order_id || !orderData.driverID) {
-        // alert('Order details not available or incomplete.');
-        sessionStorage.removeItem('orderDetails');
-        window.location.href = '../v1/view_orders.php'; // Redirect if no data
-        return {};
+    function populateOrderRatingPage() {
+        // Get the stored order data from sessionStorage
+        const orderData = JSON.parse(sessionStorage.getItem('orderDetails'));
+
+        // Check if data exists and has the expected structure
+        if (!orderData || !orderData.order_id || !orderData.driverID) {
+            // alert('Order details not available or incomplete.');
+            sessionStorage.removeItem('orderDetails');
+            window.location.href = '../v1/view_orders.php'; // Redirect if no data
+            return {};
+        }
+
+        // Extract necessary information from the transformed data structure
+        const driverFullName = `${orderData.driver_firstname || ''} ${orderData.driver_lastname || ''}`.trim();
+        const driverPhoto = orderData.driver_photo
+            ? `../../backend/driver_photos/${orderData.driver_photo}`
+            : '../../assets/images/default-driver.jpg'; // Fallback image
+        const orderId = orderData.order_id;
+        const driverId = orderData.driverID;
+        const deliveryDate = new Date(orderData.order_date).toLocaleString();
+
+        // Update UI elements
+        const detailCard = document.querySelector('.detail-card');
+        if (detailCard) {
+            const title = detailCard.querySelector('h3');
+            const date = detailCard.querySelector('p');
+
+            if (title) title.textContent = `Order #${orderId}`;
+            if (date) date.textContent = `Delivered on: ${deliveryDate}`;
+        }
+
+        const driverNameElement = document.querySelector('.driver-name');
+        const driverPhotoElement = document.querySelector('.driver-photo');
+
+        if (driverNameElement) driverNameElement.textContent = driverFullName || 'Driver information not available';
+        if (driverPhotoElement) {
+            driverPhotoElement.src = driverPhoto;
+            driverPhotoElement.alt = driverFullName || 'Driver photo';
+        }
+
+        // Return essential IDs for later use
+        return {
+            orderId,
+            driverId
+        };
     }
-
-    // Extract necessary information from the transformed data structure
-    const driverFullName = `${orderData.driver_firstname || ''} ${orderData.driver_lastname || ''}`.trim();
-    const driverPhoto = orderData.driver_photo 
-        ? `../../backend/driver_photos/${orderData.driver_photo}`
-        : '../../assets/images/default-driver.jpg'; // Fallback image
-    const orderId = orderData.order_id;
-    const driverId = orderData.driverID;
-    const deliveryDate = new Date(orderData.order_date).toLocaleString();
-
-    // Update UI elements
-    const detailCard = document.querySelector('.detail-card');
-    if (detailCard) {
-        const title = detailCard.querySelector('h3');
-        const date = detailCard.querySelector('p');
-        
-        if (title) title.textContent = `Order #${orderId}`;
-        if (date) date.textContent = `Delivered on: ${deliveryDate}`;
-    }
-
-    const driverNameElement = document.querySelector('.driver-name');
-    const driverPhotoElement = document.querySelector('.driver-photo');
-    
-    if (driverNameElement) driverNameElement.textContent = driverFullName || 'Driver information not available';
-    if (driverPhotoElement) {
-        driverPhotoElement.src = driverPhoto;
-        driverPhotoElement.alt = driverFullName || 'Driver photo';
-    }
-
-    // Return essential IDs for later use
-    return {
-        orderId,
-        driverId
-    };
-}
 
     // Star rating functionality (unchanged)
     document.querySelectorAll('.stars').forEach(starsContainer => {
@@ -176,5 +178,24 @@ document.addEventListener('DOMContentLoaded', function () {
             star.classList.toggle('fas', index < upToIndex);
             star.classList.toggle('far', index >= upToIndex);
         });
+    }
+    function limitInputCharsWithPopup(inputId, maxLength = 100) {
+        const input = document.getElementById(inputId);
+
+        if (input) {
+            input.addEventListener("input", function () {
+                if (this.value.length > maxLength) {
+                    this.value = this.value.substring(0, maxLength);
+
+                    // show popup only once when limit is reached
+                    if (!this.dataset.limitReached) {
+                        showError("You have reached the maximum character limit of " + maxLength + ".");
+                        this.dataset.limitReached = "true";
+                    }
+                } else {
+                    this.dataset.limitReached = ""; // reset if user deletes characters
+                }
+            });
+        }
     }
 });

@@ -25,8 +25,19 @@ function sendEmailWithGmailSMTP($to, $body, $subject, $attachments = []) {
         // Add attachments if any
         if (!empty($attachments)) {
             foreach ($attachments as $attachment) {
+                // if (file_exists($attachment)) {
+                //     $mail->addAttachment($attachment);
+                // }
+
                 if (file_exists($attachment)) {
-                    $mail->addAttachment($attachment);
+                    // Use the original filename or create a nice name
+                    $filename = basename($attachment);
+                    if (strpos($filename, 'receipt_') === 0) {
+                        // Rename to something more user-friendly
+                        $mail->addAttachment($attachment, 'KaraKata_Receipt.pdf');
+                    } else {
+                        $mail->addAttachment($attachment);
+                    }
                 }
             }
         }

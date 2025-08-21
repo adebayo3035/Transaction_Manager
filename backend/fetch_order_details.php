@@ -74,6 +74,7 @@ try {
             o.service_fee,
             o.delivery_fee,
             o.total_order,
+            o.pack_count,
             o.total_amount,
             o.delivery_pin,
             o.delivery_status,
