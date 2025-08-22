@@ -32,7 +32,7 @@
                 <th>View Details</th>
             </tr>
         </thead>
-        <tbody id = "ordersTableBody">
+        <tbody id="ordersTableBody">
             <!-- Staffs Information will be dynamically inserted here -->
         </tbody>
 
@@ -60,12 +60,12 @@
 
             </table>
             <div class="actionBtn">
-            <button type="button" id="receipt-btn">Print Receipt</button>
-            <button type="button" id="reassign-order">Reassign Order</button>
-            <button type="button" id="view-pack" style = "background-color: purple">View Pack Details</button>
+                <button type="button" id="receipt-btn">Print Receipt</button>
+                <button type="button" id="reassign-order">Reassign Order</button>
+                <button type="button" id="view-pack" style="background-color: purple">View Pack Details</button>
 
             </div>
-            
+
 
             <!-- <button type="button" id="receipt-btn" style="display: none">Print Receipt</button> -->
             <!-- Reassign Order Form -->
@@ -75,7 +75,7 @@
                     <label for="driver">Select Driver:</label>
                     <select id="driver" name="driver">
                         <!-- Options will be dynamically populated -->
-                         <option value="">-- Select Driver --</option>
+                        <option value="">-- Select Driver --</option>
                     </select>
                 </div>
                 <button type="button" id="submitReassign">Submit</button>
@@ -89,11 +89,11 @@
             <h2>Order Food Pack Details</h2>
             <table class="packDetails" id="packDetails">
                 <tbody>
-                    
+
                 </tbody>
 
             </table>
-            
+
         </div>
     </div>
 

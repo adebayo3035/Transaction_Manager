@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const orderModal = document.getElementById('orderModal');
     const orderDetailsTableBodyHeader = document.querySelector('#orderDetailsTable thead tr');
     orderDetailsTableBodyHeader.style.color = "#000";
+    const packModal = document.getElementById('packModal');
+    const viewPackBtn = document.getElementById('view-pack');
 
     // Fetch orders with pagination
      function fetchOrders(page = 1) {
@@ -39,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ordersTableBody.innerHTML = `
                     <tr><td colspan="6" style="text-align:center;">No Order History at the moment</td></tr>
                 `;
-                    console.error('No credit data:', data.message);
+                    console.error('No Order Data:', data.message);
                 }
             })
             .catch(error => {
@@ -89,6 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             if (data.success) {
                 populateOrderDetails(data.order_details);
+                viewPackBtn.dataset.orderId = data.order_details[0].detail_order_id;
                 orderModal.style.display = 'block';
             } else {
                 console.error('Failed to fetch order details:', data.message);
@@ -114,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const firstDetail = details[0];
-
+        fragment.appendChild(createRow('Number of Packs', firstDetail.pack_count));
         fragment.appendChild(createRow('Date Last Modified', firstDetail.updated_at));
         fragment.appendChild(createRow('Delivery Fee', firstDetail.delivery_fee));
         fragment.appendChild(createRow("Customer's Name", `${firstDetail.customer_firstname} ${firstDetail.customer_lastname}`));
@@ -141,6 +144,11 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
         return row;
     }
+    viewPackBtn.addEventListener('click', (event) => {
+        const orderId = event.currentTarget.dataset.orderId;
+        console.log("Order ID:", orderId);
+        fetchPackDetails(orderId)
+    });
 
     // Update pagination
     // Function to update pagination
@@ -206,9 +214,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Close modal event
     document.querySelector('.modal .close').addEventListener('click', () => orderModal.style.display = 'none');
+    document.querySelector('#packModal .close').addEventListener('click', () => {
+        packModal.style.display = 'none'
+    });
     window.addEventListener('click', (event) => {
-        if (event.target === orderModal) {
+        if (event.target === orderModal || event.target === packModal) {
             orderModal.style.display = 'none';
+            packModal.style.display = "none";
         }
     });
 
@@ -243,6 +255,190 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (printButton) {
         printButton.addEventListener('click', printReceipt);
+    }
+
+
+    function fetchPackDetails(orderId) {
+        fetch('../../customer/v2/fetch_pack_details.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ order_id: orderId })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('API Response:', data); // Debug log
+
+                if (!data.success) {
+                    console.error('API returned unsuccessful:', data.message);
+                    return;
+                }
+
+                // ✅ Safely access nested data with optional chaining and null checks
+                const packsData = data.data?.packs;
+                const orderId = data.data?.order_id;
+
+                if (!packsData || typeof packsData !== 'object') {
+                    console.error('Invalid or missing packs data:', packsData);
+                    return;
+                }
+
+                // ✅ Transform API response
+                const transformedPackData = {
+                    order_id: orderId,
+                    packs: Object.keys(packsData).map(packId => {
+                        const pack = packsData[packId];
+
+                        // ✅ Additional safety checks
+                        if (!pack || !pack.pack_info || !pack.items) {
+                            console.warn('Invalid pack structure for packId:', packId, pack);
+                            return null;
+                        }
+
+                        return {
+                            pack_id: pack.pack_info.pack_id || packId,
+                            total_cost: parseFloat(pack.pack_info.total_cost || 0),
+                            created_at: pack.pack_info.created_at || new Date().toISOString(),
+                            items: (pack.items || []).map(item => ({
+                                food_id: item.food_id || 0,
+                                food_name: item.food_name || 'Unknown Item',
+                                quantity: parseInt(item.quantity || 0, 10),
+                                price_per_unit: parseFloat(item.price_per_unit || 0),
+                                total_price: parseFloat(item.total_price || 0)
+                            })).filter(item => item.food_id !== 0) // Filter out invalid items
+                        };
+                    }).filter(pack => pack !== null) // Filter out invalid packs
+                };
+
+                console.log('Transformed Data:', transformedPackData); // Debug log
+
+                // ✅ Render in UI
+                if (transformedPackData.packs.length > 0) {
+                    displayPackDetails(transformedPackData);
+                    packModal.style.display = 'block';
+                    orderModal.style.display = 'none';
+                } else {
+                    console.log('No valid packs found to display');
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching pack order details:', error);
+                // You might want to show a user-friendly error message here
+            });
+    }
+
+   const displayPackDetails = (order) => {
+    const container = document.getElementById("packDetails");
+    container.innerHTML = "";
+
+    // Add main header
+    const mainHeader = document.createElement("div");
+    mainHeader.className = "main-header";
+    mainHeader.innerHTML = `
+        <h1>📦 Order Packs Details</h1>
+        <p class="order-id">Order #${order.order_id}</p>
+    `;
+    container.appendChild(mainHeader);
+
+    order.packs.forEach((pack, index) => {
+        // Pack card container
+        const packCard = document.createElement("div");
+        packCard.className = "pack-card";
+        
+        // Pack header with elegant design
+        const packHeader = document.createElement("div");
+        packHeader.className = "pack-card-header";
+        packHeader.innerHTML = `
+            <div class="pack-header-content">
+                <div class="pack-icon">📦</div>
+                <div class="pack-info">
+                    <h3>Pack: ${pack.pack_id}</h3>
+                    <p class="pack-date">Created: ${formatDate(pack.created_at)}</p>
+                </div>
+                <div class="pack-total">
+                    <span class="total-label">Total</span>
+                    <span class="total-amount">${formatCurrency(pack.total_cost)}</span>
+                </div>
+            </div>
+        `;
+        packCard.appendChild(packHeader);
+
+        // Items table with modern design
+        const tableContainer = document.createElement("div");
+        tableContainer.className = "table-container";
+        tableContainer.innerHTML = `
+            <table class="pack-items-table">
+                <thead>
+                    <tr>
+                        <th>Food Item</th>
+                        <th>Qty</th>
+                        <th>Unit Price</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${pack.items.map(item => `
+                        <tr>
+                            <td class="food-item">
+                                <span class="food-name">${item.food_name}</span>
+                            </td>
+                            <td class="quantity">${item.quantity}</td>
+                            <td class="unit-price">${formatCurrency(item.price_per_unit)}</td>
+                            <td class="item-total">${formatCurrency(item.total_price)}</td>
+                        </tr>
+                    `).join("")}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="pack-subtotal-label">Pack Subtotal</td>
+                        <td class="pack-subtotal">${formatCurrency(pack.total_cost)}</td>
+                    </tr>
+                </tfoot>
+            </table>
+        `;
+        packCard.appendChild(tableContainer);
+
+        container.appendChild(packCard);
+    });
+
+    // Enhanced order summary
+    const totalAmount = order.packs.reduce((sum, p) => sum + parseFloat(p.total_cost || 0), 0);
+    
+    const summary = document.createElement("div");
+    summary.className = "order-summary-card";
+    summary.innerHTML = `
+        <div class="summary-header">
+            <h3>💰 Order Summary</h3>
+        </div>
+        <div class="summary-content">
+            <div class="summary-row">
+                <span class="label">Total Packs:</span>
+                <span class="value">${order.packs.length}</span>
+            </div>
+            <div class="summary-row">
+                <span class="label">Total Items:</span>
+                <span class="value">${order.packs.reduce((sum, p) => sum + p.items.length, 0)}</span>
+            </div>
+            <div class="summary-divider"></div>
+            <div class="summary-row total-row">
+                <span class="label">Grand Total:</span>
+                <span class="value">${formatCurrency(totalAmount)}</span>
+            </div>
+        </div>
+    `;
+    container.appendChild(summary);
+};
+
+    const formatDate = (dateString) => {
+        const options = { year: 'numeric', month: 'short', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString(undefined, options);
+    }
+    const formatCurrency = (amount) => {
+        return parseFloat(amount).toFixed(2);
     }
 
     // Initial fetch

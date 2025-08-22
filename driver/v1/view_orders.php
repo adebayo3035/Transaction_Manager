@@ -17,6 +17,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Orders</title>
     <link rel="stylesheet" href="../css/view_orders.css">
+    <link rel="stylesheet" href="../../css/orders.css">
+    <link rel="stylesheet" href="../../customer/css/checkout.css">
     
 </head>
 
@@ -66,8 +68,25 @@
                 </tbody>
 
             </table>
+            <div class="actionBtn">
+                <button type="button" id="receipt-btn">Print Receipt</button>
+                <button type="button" id="view-pack" style = "background-color: purple">View Pack Details</button>
+            </div>
+            
+        </div>
+    </div>
 
-            <button type="button" id="receipt-btn">Print Receipt</button>
+    <div id="packModal" class="modal">
+        <div class="modal-content">
+            <span class="close closePackModal">&times;</span>
+            <h2>Order Food Pack Details</h2>
+            <table class="packDetails" id="packDetails">
+                <tbody>
+
+                </tbody>
+
+            </table>
+
         </div>
     </div>
 
