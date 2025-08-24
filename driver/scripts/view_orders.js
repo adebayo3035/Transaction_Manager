@@ -327,6 +327,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .catch(error => {
                 console.error('Error fetching pack order details:', error);
+                alert("Unable to Fetch Pack Details!")
                 // You might want to show a user-friendly error message here
             });
     }

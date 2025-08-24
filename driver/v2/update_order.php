@@ -32,6 +32,14 @@ if (isInvalidTransition($currentStatus, $orderStatus)) {
     respond(false, "Invalid Order Status - From {$currentStatus} to {$orderStatus}", 400);
 }
 
+$validStatuses = [STATUS_DELIVERED, STATUS_CANCELLED, STATUS_IN_TRANSIT];
+
+if (!in_array($orderStatus, $validStatuses, true)) {
+    logActivity("Invalid Order Status Selected - Order ID: {$orderId}, From {$currentStatus} to {$orderStatus}");
+    respond(false, "Invalid Order Status for Order ID: {$orderId}, From {$currentStatus} to {$orderStatus}", 400);
+}
+
+
 // Verify delivery pin if required
 if (($orderStatus === STATUS_DELIVERED || $orderStatus === STATUS_CANCELLED) && isset($data['deliveryPin'])) {
     $deliveryPin = $data['deliveryPin'];
@@ -75,15 +83,6 @@ try {
 
 $conn->close();
 
-/**
- * Function definitions
- */
-
-// function respond($success, $message)
-// {
-//     echo json_encode(["success" => $success, "message" => $message]);
-//     exit();
-// }
 
 function respond($success, $message, $statusCode = 200)
 {

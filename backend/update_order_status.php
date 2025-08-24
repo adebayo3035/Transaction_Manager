@@ -61,8 +61,10 @@ if (isset($data['orders']) && is_array($data['orders'])) {
 
 // Function to generate transaction reference
 function generateTransactionReference() {
-    return strtoupper(uniqid('TRX', true) . mt_rand(1000, 9999));
+    // Prefix (3) + 7-char unique + 2-digit random = 12 chars total
+    return 'TRX' . strtoupper(substr(sha1(uniqid(mt_rand(), true)), 0, 7)) . mt_rand(10, 99);
 }
+
 
 // Check available drivers and food stock only for Approved orders
 $approvedOrders = array_filter($orders, function($order) {
@@ -74,7 +76,7 @@ if (!empty($approvedOrders)) {
     logActivity("Checking resource availability for approved orders.");
 
     // Check available drivers
-    $driverCountQuery = "SELECT COUNT(*) as available_drivers FROM driver WHERE status = 'Available' AND restriction = 0";
+    $driverCountQuery = "SELECT COUNT(*) as available_drivers FROM driver WHERE status = 'Available' AND restriction = 0 AND delete_status IS NULL";
     logActivity("Executing driver count query: $driverCountQuery");
     $driverCountResult = $conn->query($driverCountQuery);
 
