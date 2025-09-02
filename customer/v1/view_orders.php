@@ -49,7 +49,7 @@
     <div id="orderModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Order Details</h2>
+            <h2 id = "order-number">Details for Order</h2>
             <table id="orderDetailsTable" class="ordersTable">
                 <thead>
                     <tr>

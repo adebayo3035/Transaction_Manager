@@ -9,40 +9,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     logActivity("Received a POST request.");
     $input = json_decode(file_get_contents('php://input'), true);
     
-    // Remove duplicate line
-    // $input = json_decode(file_get_contents('php://input'), true);
-    
     if (!isset($input['order_id'])) {
         logActivity("Order ID is missing in the request.");
         echo json_encode(["success" => false, "message" => "Order ID is missing."]);
         exit();
     }
+    
     $orderId = $input['order_id'];
     logActivity("Processing Pending Order Details for order ID: $orderId for driver ID: $driverId.");
 
     $query = "
 SELECT 
-    order_details.food_id, 
-    order_details.quantity, 
-    food.food_name, 
-    order_details.order_date, 
-    order_details.status,
-    orders.updated_at,
-    orders.delivery_fee,
-    orders.delivery_status,
-    driver.firstname AS driver_firstname, 
-    driver.lastname AS driver_lastname,
-    customers.firstname AS customer_firstname,
-    customers.lastname AS customer_lastname,
-    customers.mobile_number AS customer_phone_number
-FROM order_details
-JOIN food ON order_details.food_id = food.food_id
-JOIN orders ON orders.order_id = order_details.order_id
-LEFT JOIN driver ON orders.driver_id = driver.id
-LEFT JOIN customers ON orders.customer_id = customers.customer_id
-WHERE order_details.order_id = ? 
-AND orders.driver_id = ?";
-
+    od.food_id, 
+    od.quantity, 
+    f.food_name, 
+    od.order_date, 
+    od.status as item_status,
+    o.updated_at,
+    o.delivery_fee,
+    o.delivery_status,
+    o.order_id,
+    d.firstname AS driver_firstname, 
+    d.lastname AS driver_lastname,
+    c.firstname AS customer_firstname,
+    c.lastname AS customer_lastname,
+    c.mobile_number AS customer_phone,
+    c.address AS customer_address
+FROM orders o
+JOIN order_details od ON o.order_id = od.order_id
+JOIN food f ON od.food_id = f.food_id
+LEFT JOIN driver d ON o.driver_id = d.id
+LEFT JOIN customers c ON o.customer_id = c.customer_id
+WHERE o.order_id = ? 
+AND o.driver_id = ?";
 
     $stmt = $conn->prepare($query);
     if ($stmt === false) {
@@ -59,21 +58,61 @@ AND orders.driver_id = ?";
     }
 
     $result = $stmt->get_result();
-    $orderDetails = [];
+    $orderItems = [];
+    $orderInfo = null;
+    
     while ($row = $result->fetch_assoc()) {
-    $orderDetails[] = $row;
-}
+        // Extract order-level information (same for all items) on first iteration
+        if ($orderInfo === null) {
+            $orderInfo = [
+                'order_id' => $row['order_id'],
+                'order_date' => $row['order_date'],
+                'updated_at' => $row['updated_at'],
+                'delivery_fee' => (float)$row['delivery_fee'],
+                'delivery_status' => $row['delivery_status'],
+                'customer' => [
+                    'firstname' => $row['customer_firstname'],
+                    'lastname' => $row['customer_lastname'],
+                    'phone' => $row['customer_phone'],
+                    'address' => $row['customer_address'] ?? null
+                ],
+                'driver' => [
+                    'firstname' => $row['driver_firstname'],
+                    'lastname' => $row['driver_lastname']
+                ]
+            ];
+        }
+        
+        // Extract item-specific information
+        $orderItems[] = [
+            'food_id' => $row['food_id'],
+            'food_name' => $row['food_name'],
+            'quantity' => (int)$row['quantity'],
+            'item_status' => $row['item_status']
+        ];
+    }
+    
     $stmt->close();
 
-    // Debug: Check what's actually being returned
-    logActivity("Retrieved " . count($orderDetails) . " order detail records for order ID: $orderId");
-    
-    if (count($orderDetails) > 0) {
-        logActivity("First record keys: " . implode(', ', array_keys($orderDetails[0])));
-        logActivity("Order ID in first record: " . ($orderDetails[0]['order_id'] ?? 'NOT FOUND'));
+    if ($orderInfo === null) {
+        logActivity("No order details found for order ID: $orderId");
+        echo json_encode([
+            "success" => false, 
+            "message" => "Order not found or you don't have permission to view it."
+        ]);
+        exit();
     }
 
-    echo json_encode(["success" => true, "order_details" => $orderDetails]);
+    logActivity("Retrieved order details for order ID: $orderId with " . count($orderItems) . " items");
+    
+    $response = [
+        "success" => true,
+        "order" => $orderInfo,
+        "items" => $orderItems
+    ];
+    
+    echo json_encode($response);
+    
 } else {
     logActivity("Invalid request method received.");
     echo json_encode(["success" => false, "message" => "Invalid request method."]);

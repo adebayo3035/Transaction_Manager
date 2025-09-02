@@ -239,7 +239,8 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
                 body.appendChild(row);
             });
-
+            const orderNumber = document.getElementById('order-number');
+           orderNumber.textContent += ` : ${order.order_id}`;
             // Assume these values exist at the top level in the response (you can adjust if nested):
             const summaryRows = [
                 { label: 'Number of Packs Ordered', value: order.pack_count || '1' },

@@ -63,6 +63,7 @@ td {
     padding: 10px;
     text-align: center;
     border-bottom: 1px solid #ddd;
+    font-size: 11px;
 }
 
 #orderSummaryTable th { 

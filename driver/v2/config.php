@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Africa/Lagos');
   include 'activity_logger.php';
   $hostname = "localhost";
   $username = "root";

@@ -42,7 +42,7 @@ $totalOrder = (float)$input['total_order'];
 logActivity("Validating promo code: $promoCode for order amount: $totalOrder");
 
 // Fetch active promo
-$stmt = $conn->prepare("SELECT * FROM promo WHERE promo_code = ? AND status = 1 AND NOW() BETWEEN start_date AND end_date");
+$stmt = $conn->prepare("SELECT * FROM promo WHERE promo_code = ? AND delete_id = 0 AND status = 1 AND NOW() BETWEEN start_date AND end_date");
 if (!$stmt) {
     $errorMsg = "Prepare failed: " . $conn->error;
     logActivity($errorMsg);

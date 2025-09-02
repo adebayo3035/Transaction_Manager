@@ -33,13 +33,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const fragment = document.createDocumentFragment();
 
         promos.forEach(promo => {
+             const statusText = promo.status == 1 ? 'Active' : 'Inactive';
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${promo.promo_code}</td>
                 <td>${promo.promo_name}</td>
                 <td>${promo.start_date}</td>
                 <td>${promo.end_date}</td>
-                <td>${promo.status}</td>
+                <td>${statusText}</td>
                 <td><button class="view-details-btn" data-promo-id="${promo.promo_id}">View Details</button></td>
             `;
             fragment.appendChild(row);

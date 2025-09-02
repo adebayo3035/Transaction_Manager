@@ -48,8 +48,8 @@ $recentTransactionsQuery = "
     SELECT 
         r.*, 
         o.delivery_status, 
-        d.firstname, 
-        d.lastname 
+        d.firstname AS driver_firstname, 
+        d.lastname AS driver_lastname
     FROM 
         revenue r
     JOIN 

@@ -87,106 +87,147 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Fetch order details for a specific order
-    function fetchOrderDetails(orderId) {
-        fetch('backend/fetch_order_details.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ order_id: orderId })
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    const headerText = document.getElementById('orderID').textContent = orderId;
-                    populateOrderDetails(data.order_details);
-                    // Check if the order status is "Assigned"
-                    const orderStatus = data.order_details[0].delivery_status; // Assuming it's in the first detail
-                    viewPackBtn.dataset.orderId = data.order_details[0].order_id;
-                    const reassignButton = document.getElementById('reassign-order');
+   function fetchOrderDetails(orderId) {
+    fetch('backend/fetch_order_details.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ order_id: orderId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('API Response:', data); // Debug log
+        if (data.success) {
+            const headerText = document.getElementById('orderID').textContent = orderId;
+            
+            // Check if items array exists and is valid
+            if (!data.items || !Array.isArray(data.items)) {
+                console.error('Invalid items data:', data.items);
+                data.items = []; // Set to empty array to prevent errors
+            }
+            
+            populateOrderDetails(data.order, data.items);
+            
+            // Check if the order status is "Assigned"
+            const orderStatus = data.order.delivery_status;
+            viewPackBtn.dataset.orderId = data.order.order_id;
+            const reassignButton = document.getElementById('reassign-order');
 
-                    if (orderStatus === "Assigned") {
-                        // Enable the "Reassign Order" button if the status is "Assigned"
-                        reassignButton.style.display = 'block';
-                        reassignButton.disabled = false; // Ensure it's not disabled
-                    } else {
-                        // Disable or hide the button for other statuses
-                        reassignButton.style.display = 'none';
-                        reassignButton.disabled = true;
-                    }
-                    orderModal.style.display = 'block';
-                } else {
-                    console.error('Failed to fetch order details:', data.message);
-                }
-            })
-            .catch(error => console.error('Error fetching order details:', error));
-    }
+            if (orderStatus === "Assigned") {
+                reassignButton.style.display = 'block';
+                reassignButton.disabled = false;
+            } else {
+                reassignButton.style.display = 'none';
+                reassignButton.disabled = true;
+            }
+            orderModal.style.display = 'block';
+        } else {
+            console.error('Failed to fetch order details:', data.message);
+        }
+    })
+    .catch(error => console.error('Error fetching order details:', error));
+}
 
-    // Populate order details table
-    function populateOrderDetails(details) {
-        orderDetailsTableBody.innerHTML = '';
-        const fragment = document.createDocumentFragment();
+// Populate order details table
+function populateOrderDetails(order, items) {
+    orderDetailsTableBody.innerHTML = '';
+    const fragment = document.createDocumentFragment();
 
-        details.forEach(detail => {
+    // Safely handle items array
+    if (items && Array.isArray(items)) {
+        items.forEach(item => {
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${detail.food_id}</td>
-                <td>${detail.food_name}</td>
-                <td>${detail.quantity}</td>
-                <td>${detail.price_per_unit}</td>
-                <td>${detail.total_price}</td>
+                <td>${item.food_id || ''}</td>
+                <td>${item.food_name || ''}</td>
+                <td>${item.quantity || ''}</td>
+                <td>${item.price_per_unit || ''}</td>
+                <td>${item.total_price || ''}</td>
             `;
             fragment.appendChild(row);
         });
+    } else {
+        console.warn('No items found or items is not an array');
+        // Add a message row if no items
+        const noItemsRow = document.createElement('tr');
+        noItemsRow.innerHTML = `
+            <td colspan="5" style="text-align: center; color: #999;">No food items found for this order</td>
+        `;
+        fragment.appendChild(noItemsRow);
+    }
 
-        const firstDetail = details[0];
+    // Add order metadata with safe property access
+    fragment.appendChild(createRow('Delivery Status', order?.delivery_status || 'N/A'));
+    fragment.appendChild(createRow('Date Last Modified', order?.updated_at || 'N/A'));
+    fragment.appendChild(createRow('Total Order', order?.total_order || 'N/A'));
+    fragment.appendChild(createRow('Service Fee', order?.service_fee || 'N/A'));
+    fragment.appendChild(createRow('Delivery Fee', order?.delivery_fee || 'N/A'));
+    fragment.appendChild(createRow('Number of Packs', order?.pack_count || 'N/A'));
+    fragment.appendChild(createRow('Refunded Amount', order?.revenue?.refunded_amount || '0.00'));
 
-        fragment.appendChild(createRow('Delivery Status', firstDetail.delivery_status));
-        fragment.appendChild(createRow('Date Last Modified', firstDetail.updated_at));
-        fragment.appendChild(createRow('Total Order', firstDetail.total_order));
-        fragment.appendChild(createRow('Service Fee', firstDetail.service_fee));
-        fragment.appendChild(createRow('Delivery Fee', firstDetail.delivery_fee));
-        fragment.appendChild(createRow('Number of Packs', firstDetail.pack_count));
-        fragment.appendChild(createRow('Refunded Amount', firstDetail.refunded_amount));
-
-
-        if (firstDetail.percentage_discount !== null) {
-            fragment.appendChild(createRow('Percentage Discount (%)', firstDetail.percentage_discount));
+    // Promotion details with safe access
+    if (order?.promotion) {
+        if (order.promotion.percentage_discount !== null && order.promotion.percentage_discount !== undefined) {
+            fragment.appendChild(createRow('Percentage Discount (%)', order.promotion.percentage_discount));
         }
-        if (firstDetail.discount_value !== null) {
-            fragment.appendChild(createRow('Discount Value (N)', firstDetail.discount_value));
+        if (order.promotion.discount_value !== null && order.promotion.discount_value !== undefined) {
+            fragment.appendChild(createRow('Discount Value (N)', order.promotion.discount_value));
         }
-        // fragment.appendChild(createRow('Total Amount', firstDetail.total_amount));
-        fragment.appendChild(createRow('Balance', firstDetail.retained_amount));
-        if (firstDetail.promo_code !== null) {
-            fragment.appendChild(createRow('Promo Code', firstDetail.promo_code));
-        }
-        if (firstDetail.assigned_admin_firstname !== null && firstDetail.assigned_admin_lastname !== null) {
-            fragment.appendChild(createRow('Order Assigned To', `${firstDetail.assigned_admin_firstname} ${firstDetail.assigned_admin_lastname}`));
-        }
-
-        if (firstDetail.delivery_status == 'Cancelled' && firstDetail.approver_firstname == null && firstDetail.approver_lastname == null) {
-            fragment.appendChild(createRow('Order Approved By', `Customer Cancelled Order`));
-        }
-        else if (firstDetail.approver_firstname !== null && firstDetail.approver_lastname !== null) {
-            fragment.appendChild(createRow('Order Approved By', `${firstDetail.approver_firstname} ${firstDetail.approver_lastname}`));
-        }
-        fragment.appendChild(createRow("Customer's Name", `${firstDetail.customer_firstname} ${firstDetail.customer_lastname}`));
-        fragment.appendChild(createRow("Customer's Mobile Number", firstDetail.customer_phone_number));
-
-
-        if (firstDetail.driver_firstname && firstDetail.driver_lastname) {
-            fragment.appendChild(createRow("Driver's Name", `${firstDetail.driver_firstname} ${firstDetail.driver_lastname}`));
-        }
-        if (firstDetail.delivery_status === "Cancelled") {
-            fragment.appendChild(createRow("Reason for Cancellation", `${firstDetail.cancellation_reason}`));
-        }
-
-        orderDetailsTableBody.appendChild(fragment);
-
-        if (firstDetail.delivery_status === "Delivered" || firstDetail.delivery_status === "Cancelled") {
-            printButton.style.display = "block";
+        if (order.promotion.promo_code !== null && order.promotion.promo_code !== undefined) {
+            fragment.appendChild(createRow('Promo Code', order.promotion.promo_code));
         }
     }
 
+    fragment.appendChild(createRow('Balance', order?.revenue?.retained_amount || '0.00'));
+
+    // Admin assignments with safe access
+    if (order?.assigned_admin) {
+        fragment.appendChild(createRow('Order Assigned To', `${order.assigned_admin.firstname || ''} ${order.assigned_admin.lastname || ''}`));
+    }
+
+    // Approval information with safe access
+    if (order?.delivery_status === 'Cancelled' && !order?.approver) {
+        fragment.appendChild(createRow('Order Approved By', 'Customer Cancelled Order'));
+    }
+    else if (order?.approver) {
+        fragment.appendChild(createRow('Order Approved By', `${order.approver.firstname || ''} ${order.approver.lastname || ''}`));
+    }
+
+    // Customer information with safe access
+    if (order?.customer) {
+        fragment.appendChild(createRow("Customer's Name", `${order.customer.firstname || ''} ${order.customer.lastname || ''}`));
+        fragment.appendChild(createRow("Customer's Mobile Number", order.customer.phone || 'N/A'));
+        fragment.appendChild(createRow("Customer's Address", order.customer.address || 'N/A'));
+    }
+
+    // Driver information with safe access
+    if (order?.driver) {
+        fragment.appendChild(createRow("Driver's Name", `${order.driver.firstname || ''} ${order.driver.lastname || ''}`));
+    }
+
+    // Cancellation reason with safe access
+    if (order?.delivery_status === "Cancelled") {
+        fragment.appendChild(createRow("Reason for Cancellation", order.cancellation_reason || "No reason provided"));
+    }
+
+    orderDetailsTableBody.appendChild(fragment);
+
+    // Show print button for completed/cancelled orders
+    if (order?.delivery_status === "Delivered" || order?.delivery_status === "Cancelled") {
+        printButton.style.display = "block";
+    } else {
+        printButton.style.display = "none";
+    }
+}
+
+// Helper function to create table rows
+// function createRow(label, value) {
+//     const row = document.createElement('tr');
+//     row.innerHTML = `
+//         <td><strong>${label}</strong></td>
+//         <td>${value}</td>
+//     `;
+//     return row;
+// }
     // Create a row for the details table
     function createRow(label, value) {
         const row = document.createElement('tr');

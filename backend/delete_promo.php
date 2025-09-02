@@ -35,6 +35,7 @@ try {
 
     $promoId = (int)$data['promo_id'];
     $deleteFlag = 1; // Soft delete flag
+    $status = 0;
     logActivity("Attempting to soft delete promo ID: " . $promoId);
 
     // Start transaction
@@ -65,7 +66,7 @@ try {
 
         // Prepare the soft delete update
         $updateSql = "UPDATE promo SET 
-                     delete_id = ?, 
+                     delete_id = ?, status = ?,
                      date_last_modified = NOW()
                      WHERE promo_id = ?";
         
@@ -76,7 +77,7 @@ try {
         }
 
         $modifiedBy = $_SESSION['unique_id'];
-        $stmtUpdate->bind_param("ii", $deleteFlag,  $promoId);
+        $stmtUpdate->bind_param("iii", $deleteFlag,   $status, $promoId);
         
         if (!$stmtUpdate->execute()) {
             throw new Exception("Execute failed for update: " . $stmtUpdate->error);

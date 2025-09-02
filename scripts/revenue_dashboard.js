@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${transaction.transaction_date}</td>
                 <td class="status">${transaction.status}</td>
                 <td>${transaction.delivery_status || 'N/A'}</td>
-                <td>${transaction.firstname && transaction.lastname ? `${transaction.firstname} ${transaction.lastname}` : 'No Driver Assigned'}</td>
+                <td>${transaction.driver_firstname && transaction.driver_lastname ? `${transaction.driver_firstname} ${transaction.driver_lastname}` : 'No Driver Assigned'}</td>
                 <td>${transaction.updated_at}</td>
             `;
             revenueTableBody.appendChild(row);

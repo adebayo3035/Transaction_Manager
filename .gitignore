@@ -1,3 +1,4 @@
-customer/v2/activity_log.txt
 /vendor/
-activity_log.txt
+# Ignore all activity log files in any folder
+**/activity_log.txt
+

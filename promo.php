@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="customer/css/checkout.css">
     <link rel="stylesheet" href="customer/css/cards.css">
     <link rel="stylesheet" href="css/view_driver.css">
-    <!-- <link rel="stylesheet" href="css/promo.css"> -->
+    <link rel="stylesheet" href="css/promo.css">
 </head>
 
 <body>
@@ -41,7 +41,7 @@
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Status</th>
-                <th>Delete Status</th>
+                <th>Deleted ?</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -111,11 +111,10 @@
                         </select>
                     </div>
 
-                    <div class="form-input">
-                        <label for="discount_value">Discount Percentage (%):</label>
+                    <div class="form-input" id = "discount-div">
+                        <label for="discount_value">Discount <span id = "discount_identifier">Percentage (%):</span></label>
                         <input type="number" id="discount" name="discount_value" min="1" max="100" required>
                     </div>
-
                     <div class="form-input">
                         <label for="eligibility_criteria">Eligibility Criteria:</label>
                         <select id="eligibility_criteria" name="eligibility_criteria" required>

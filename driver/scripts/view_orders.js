@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const viewPackBtn = document.getElementById('view-pack');
 
     // Fetch orders with pagination
-     function fetchOrders(page = 1) {
+    function fetchOrders(page = 1) {
         const ordersTableBody = document.getElementById('ordersTableBody');
 
         // Inject spinner
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateTable(orders) {
         ordersTableBody.innerHTML = '';
         const fragment = document.createDocumentFragment();
-        
+
         orders.forEach(order => {
             const row = document.createElement('tr');
             row.innerHTML = `
@@ -87,60 +87,74 @@ document.addEventListener('DOMContentLoaded', () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ order_id: orderId })
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                populateOrderDetails(data.order_details);
-                viewPackBtn.dataset.orderId = data.order_details[0].detail_order_id;
-                orderModal.style.display = 'block';
-            } else {
-                console.error('Failed to fetch order details:', data.message);
-            }
-        })
-        .catch(error => console.error('Error fetching order details:', error));
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    populateOrderDetails(data.order, data.items);
+                    viewPackBtn.dataset.orderId = data.order.order_id;
+                    orderModal.style.display = 'block';
+                } else {
+                    console.error('Failed to fetch order details:', data.message);
+                }
+            })
+            .catch(error => console.error('Error fetching order details:', error));
     }
 
     // Populate order details table
-    function populateOrderDetails(details) {
+    function populateOrderDetails(order, items) {
         orderDetailsTableBody.innerHTML = '';
         const fragment = document.createDocumentFragment();
+        const orderNumber = document.getElementById('order-number');
 
-        details.forEach(detail => {
+        // Set order number
+        orderNumber.textContent = `Order Number: ${order.order_id}`;
+
+        // Populate order items
+        items.forEach(item => {
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${detail.order_date}</td>
-                <td>${detail.food_name}</td>
-                <td>${detail.quantity}</td>
-                <td>${detail.status}</td>
-            `;
+            <td>${order.order_date}</td>
+            <td>${item.food_name}</td>
+            <td>${item.quantity}</td>
+            <td>${item.item_status}</td>
+        `;
             fragment.appendChild(row);
         });
 
-        const firstDetail = details[0];
-        fragment.appendChild(createRow('Number of Packs', firstDetail.pack_count));
-        fragment.appendChild(createRow('Date Last Modified', firstDetail.updated_at));
-        fragment.appendChild(createRow('Delivery Fee', firstDetail.delivery_fee));
-        fragment.appendChild(createRow("Customer's Name", `${firstDetail.customer_firstname} ${firstDetail.customer_lastname}`));
-        fragment.appendChild(createRow("Customer's Mobile Number", firstDetail.customer_phone_number));
-        fragment.appendChild(createRow('Delivery Status', firstDetail.delivery_status));
+        // Add order metadata
+         fragment.appendChild(createRow('', ''));
+        fragment.appendChild(createRow('Number of Packs', order.pack_count));
+        fragment.appendChild(createRow('Date Last Modified', order.updated_at));
+        fragment.appendChild(createRow('Delivery Fee', order.delivery_fee));
+        fragment.appendChild(createRow("Customer's Name", `${order.customer.firstname} ${order.customer.lastname}`));
+        fragment.appendChild(createRow("Customer's Mobile Number", order.customer.phone));
+        fragment.appendChild(createRow('Delivery Status', order.delivery_status));
 
-        if (firstDetail.driver_firstname && firstDetail.driver_lastname) {
-            fragment.appendChild(createRow("Driver's Name", `${firstDetail.driver_firstname} ${firstDetail.driver_lastname}`));
+        // Add customer address if available
+        if (order.customer.address) {
+            fragment.appendChild(createRow("Customer's Address", order.customer.address));
+        }
+
+        // Add driver information if available
+        if (order.driver && order.driver.firstname && order.driver.lastname) {
+            fragment.appendChild(createRow("Driver's Name", `${order.driver.firstname} ${order.driver.lastname}`));
         }
 
         orderDetailsTableBody.appendChild(fragment);
 
-        if (firstDetail.delivery_status === "Delivered" || firstDetail.delivery_status === "Canceled") {
+        // Show print button based on delivery status
+        if (order.delivery_status === "Delivered" || order.delivery_status === "Canceled") {
             printButton.style.display = "block";
         }
     }
 
+    // Helper function to create table rows (unchanged)
     // Create a row for the details table
     function createRow(label, value) {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td colspan="3"><strong>${label}</strong></td>
-            <td>${value}</td>
+            <td><strong>${label}</strong></td>
+            <td colspan="3">${value}</td>
         `;
         return row;
     }
@@ -332,28 +346,28 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-   const displayPackDetails = (order) => {
-    const container = document.getElementById("packDetails");
-    container.innerHTML = "";
+    const displayPackDetails = (order) => {
+        const container = document.getElementById("packDetails");
+        container.innerHTML = "";
 
-    // Add main header
-    const mainHeader = document.createElement("div");
-    mainHeader.className = "main-header";
-    mainHeader.innerHTML = `
+        // Add main header
+        const mainHeader = document.createElement("div");
+        mainHeader.className = "main-header";
+        mainHeader.innerHTML = `
         <h1>📦 Order Packs Details</h1>
         <p class="order-id">Order #${order.order_id}</p>
     `;
-    container.appendChild(mainHeader);
+        container.appendChild(mainHeader);
 
-    order.packs.forEach((pack, index) => {
-        // Pack card container
-        const packCard = document.createElement("div");
-        packCard.className = "pack-card";
-        
-        // Pack header with elegant design
-        const packHeader = document.createElement("div");
-        packHeader.className = "pack-card-header";
-        packHeader.innerHTML = `
+        order.packs.forEach((pack, index) => {
+            // Pack card container
+            const packCard = document.createElement("div");
+            packCard.className = "pack-card";
+
+            // Pack header with elegant design
+            const packHeader = document.createElement("div");
+            packHeader.className = "pack-card-header";
+            packHeader.innerHTML = `
             <div class="pack-header-content">
                 <div class="pack-icon">📦</div>
                 <div class="pack-info">
@@ -366,12 +380,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
         `;
-        packCard.appendChild(packHeader);
+            packCard.appendChild(packHeader);
 
-        // Items table with modern design
-        const tableContainer = document.createElement("div");
-        tableContainer.className = "table-container";
-        tableContainer.innerHTML = `
+            // Items table with modern design
+            const tableContainer = document.createElement("div");
+            tableContainer.className = "table-container";
+            tableContainer.innerHTML = `
             <table class="pack-items-table">
                 <thead>
                     <tr>
@@ -401,17 +415,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 </tfoot>
             </table>
         `;
-        packCard.appendChild(tableContainer);
+            packCard.appendChild(tableContainer);
 
-        container.appendChild(packCard);
-    });
+            container.appendChild(packCard);
+        });
 
-    // Enhanced order summary
-    const totalAmount = order.packs.reduce((sum, p) => sum + parseFloat(p.total_cost || 0), 0);
-    
-    const summary = document.createElement("div");
-    summary.className = "order-summary-card";
-    summary.innerHTML = `
+        // Enhanced order summary
+        const totalAmount = order.packs.reduce((sum, p) => sum + parseFloat(p.total_cost || 0), 0);
+
+        const summary = document.createElement("div");
+        summary.className = "order-summary-card";
+        summary.innerHTML = `
         <div class="summary-header">
             <h3>💰 Order Summary</h3>
         </div>
@@ -431,8 +445,8 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         </div>
     `;
-    container.appendChild(summary);
-};
+        container.appendChild(summary);
+    };
 
     const formatDate = (dateString) => {
         const options = { year: 'numeric', month: 'short', day: 'numeric' };

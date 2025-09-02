@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    populateOrderDetails(data.order_details);
+                    populateOrderDetails(data.order, data.items);
                     orderModal.style.display = 'block';
                 } else {
                     console.error('Failed to fetch order details:', data.message);
@@ -102,50 +102,61 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => console.error('Error fetching order details:', error));
     }
 
-    // Populate order details table
-    function populateOrderDetails(details) {
+    // Updated populateOrderDetails function to work with new structure
+    function populateOrderDetails(order, items) {
         orderDetailsTableBody.innerHTML = '';
         const fragment = document.createDocumentFragment();
 
-        details.forEach(detail => {
+        // Populate order items
+        items.forEach(item => {
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${detail.order_date}</td>
-                <td>${detail.food_name}</td>
-                <td>${detail.quantity}</td>
-                <td>${detail.status}</td>
-            `;
+            <td>${order.order_date}</td>
+            <td>${item.food_name}</td>
+            <td>${item.quantity}</td>
+            <td>${item.item_status}</td>
+        `;
             fragment.appendChild(row);
         });
 
-        const firstDetail = details[0];
+        // Add order metadata
+        fragment.appendChild(createRow('', ''));
+        fragment.appendChild(createRow('Date Last Modified', order.updated_at));
+        fragment.appendChild(createRow('Delivery Fee', order.delivery_fee));
+        fragment.appendChild(createRow("Customer's Name", `${order.customer.firstname} ${order.customer.lastname}`));
+        fragment.appendChild(createRow("Customer's Mobile Number", order.customer.phone));
+        fragment.appendChild(createRow("Customer's Address", order.customer.address));
+        fragment.appendChild(createRow('Delivery Status', order.delivery_status));
 
-        fragment.appendChild(createRow('Date Last Modified', firstDetail.updated_at));
-        fragment.appendChild(createRow('Delivery Fee', firstDetail.delivery_fee));
-        fragment.appendChild(createRow("Customer's Name", `${firstDetail.customer_firstname} ${firstDetail.customer_lastname}`));
-        fragment.appendChild(createRow("Customer's Mobile Number", firstDetail.customer_phone_number));
-        fragment.appendChild(createRow('Delivery Status', firstDetail.delivery_status));
-
-        if (firstDetail.driver_firstname && firstDetail.driver_lastname) {
-            fragment.appendChild(createRow("Driver's Name", `${firstDetail.driver_firstname} ${firstDetail.driver_lastname}`));
+        if (order.driver && order.driver.firstname && order.driver.lastname) {
+            fragment.appendChild(createRow("Driver's Name", `${order.driver.firstname} ${order.driver.lastname}`));
         }
 
         orderDetailsTableBody.appendChild(fragment);
 
-        if (firstDetail.delivery_status === "Delivered" || firstDetail.delivery_status === "Canceled") {
+        if (order.delivery_status === "Delivered" || order.delivery_status === "Canceled") {
             printButton.style.display = "block";
         }
     }
 
-    // Create a row for the details table
+    // Helper function to create table rows (unchanged)
     function createRow(label, value) {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td colspan="3" style="text-align: left"><strong>${label}</strong></td>
-            <td>${value}</td>
-        `;
+        <td><strong>${label}</strong></td>
+        <td colspan = "3">${value}</td>
+    `;
         return row;
     }
+    // Create a row for the details table
+    // function createRow(label, value) {
+    //     const row = document.createElement('tr');
+    //     row.innerHTML = `
+    //         <td colspan="3" style="text-align: left"><strong>${label}</strong></td>
+    //         <td>${value}</td>
+    //     `;
+    //     return row;
+    // }
 
     // Update pagination
     function updatePagination(totalItems, currentPage, itemsPerPage) {

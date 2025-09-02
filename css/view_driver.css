@@ -264,6 +264,23 @@ td.action-buttons {
   100% { transform: rotate(360deg); }
 }
 
+.delete-promo{
+  color: #fff;
+  background-color: #DC2626;
+  font-weight: 900;
+}
+.delete-promo:hover {
+  background-color: #B91C1C;
+}
+
+.update-promo{
+  color: #FFFFFF;
+  background-color: #2563EB;
+}
+.update-promo:hover{
+  background-color: #1E40AF;
+}
+
 @media screen and (max-width: 900px){
     #customer-form{
         display: flex;
