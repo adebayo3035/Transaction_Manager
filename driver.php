@@ -14,6 +14,7 @@
 <body>
     <?php include('navbar.php'); ?>
     <div class="container">
+
         <h1>KaraKata Drivers</h1>
         <!-- Separate row for "Add New Customer" button -->
         <div id="customer-form">
@@ -24,7 +25,30 @@
             <input type="text" id="liveSearch" placeholder="Search for Order...">
             <button type="submit">Search <i class="fa fa-search" aria-hidden="true"></i></button>
         </div>
+        <div class="filter-section">
+            <div id="driverFilters">
+                <select id="filterStatus" class="filterStatus">
+                    <option value="">All Status</option>
+                    <option value="Available">Available</option>
+                    <option value="Not Available">Not Available</option>
+                </select>
 
+                <select id="filterRestriction" class="filterRestriction">
+                    <option value="">All Restrictions</option>
+                    <option value="0">Not Restricted</option>
+                    <option value="1">Restricted</option>
+                </select>
+
+                <select id="filterDelete" class="filterDelete">
+                    <option value="">All Accounts</option>
+                    <option value="NULL">Activated</option>
+                    <option value="Yes">Deactivated</option>
+                </select>
+
+                <button id="applyFilters" class="filter-btn">Apply Filters</button>
+            </div>
+
+        </div>
 
     </div>
 
@@ -39,7 +63,7 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody id = "ordersTableBody">
+        <tbody id="ordersTableBody">
             <!-- Drivers will be dynamically inserted here -->
         </tbody>
 

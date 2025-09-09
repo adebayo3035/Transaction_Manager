@@ -15,34 +15,19 @@ document.addEventListener('DOMContentLoaded', () => {
     function fetchDrivers(page = 1) {
         const ordersTableBody = document.getElementById('ordersTableBody');
 
-        // Grab filter values (dropdowns or inputs you set up)
-        const status = document.getElementById("filterStatus")?.value || "";
-        const restriction = document.getElementById("filterRestriction")?.value || "";
-        const delete_status = document.getElementById("filterDelete")?.value || "";
-
         // Inject spinner
         ordersTableBody.innerHTML = `
-    <tr>
-        <td colspan="6" style="text-align:center; padding: 20px;">
-            <div class="spinner"
-                style="border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: auto;">
-            </div>
-        </td>
-    </tr>
-    `;
+        <tr>
+            <td colspan="6" style="text-align:center; padding: 20px;">
+                <div class="spinner"
+                    style="border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: auto;">
+                </div>
+            </td>
+        </tr>
+        `;
 
-        const minDelay = new Promise(resolve => setTimeout(resolve, 1000));
-
-        // Build query string dynamically
-        const query = new URLSearchParams({
-            page,
-            limit,
-            ...(status && { status }),
-            ...(restriction && { restriction }),
-            ...(delete_status && { delete_status })
-        });
-
-        const fetchData = fetch(`backend/get_drivers.php?${query.toString()}`)
+        const minDelay = new Promise(resolve => setTimeout(resolve, 1000)); // Spinner shows at least 500ms
+        const fetchData = fetch(`backend/get_drivers.php?page=${page}&limit=${limit}`)
             .then(res => res.json());
 
         Promise.all([fetchData, minDelay])
@@ -52,19 +37,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     updatePagination(data.pagination.total, data.pagination.page, data.pagination.limit);
                 } else {
                     ordersTableBody.innerHTML = `
-                <tr><td colspan="6" style="text-align:center;">No Driver data found</td></tr>
+                    <tr><td colspan="6" style="text-align:center;">No Order History at the moment</td></tr>
                 `;
-                    console.warn('No Driver data:', data.message);
+                    console.error('No Driver data:', data.message);
                 }
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
                 ordersTableBody.innerHTML = `
-            <tr><td colspan="6" style="text-align:center; color:red;">Error loading Driver data</td></tr>
+                <tr><td colspan="6" style="text-align:center; color:red;">Error loading Order data</td></tr>
             `;
             });
     }
-
 
     function updateTable(drivers) {
         const ordersTableBody = document.querySelector('#ordersTable tbody');
@@ -297,27 +281,27 @@ document.addEventListener('DOMContentLoaded', () => {
 </tr>
         `;
         const isRestricted = driver_details.restriction === 1;
-        const isDeactivated = driver_details.delete_status === 'Yes';
+const isDeactivated = driver_details.delete_status === 'Yes';
 
-        if (isRestricted || isDeactivated) {
-            // Disable all input and select elements
-            orderDetailsTable.querySelectorAll('input, select, textarea').forEach(el => {
-                el.disabled = true;
-            });
+if (isRestricted || isDeactivated) {
+    // Disable all input and select elements
+    orderDetailsTable.querySelectorAll('input, select, textarea').forEach(el => {
+        el.disabled = true;
+    });
 
-            // Optionally, also disable checkboxes
-            orderDetailsTable.querySelectorAll('input[type="checkbox"]').forEach(el => {
-                el.disabled = true;
-            });
-            // Display status note
-            const statusNote = document.createElement('tr');
-            statusNote.innerHTML = `
+    // Optionally, also disable checkboxes
+    orderDetailsTable.querySelectorAll('input[type="checkbox"]').forEach(el => {
+        el.disabled = true;
+    });
+     // Display status note
+    const statusNote = document.createElement('tr');
+    statusNote.innerHTML = `
         <td colspan="2" style="color: #d32f2f; text-align: center; font-weight: bold;">
             This account is ${isRestricted ? 'restricted' : 'deactivated'}. Fields are locked.
         </td>
     `;
-            orderDetailsTable.appendChild(statusNote);
-        }
+    orderDetailsTable.appendChild(statusNote);
+}
 
         // Display photo if available
         if (driver_details.photo) {
@@ -504,9 +488,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fetch initial drivers data
     fetchDrivers(currentPage);
-    document.getElementById("applyFilters").addEventListener("click", () => {
-        fetchDrivers(1); // Restart from page 1 whenever filters are applied
-    });
 
 
     // Module for adding new driver

@@ -24,14 +24,14 @@ try {
     logActivity("Request initiated by admin ID: $adminId (Role: $userRole)");
 
     // Validate and sanitize pagination parameters
-    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-    $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
-    
+    $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+    $limit = isset($_GET['limit']) ? (int) $_GET['limit'] : 10;
+
     if ($page < 1 || $limit < 1 || $limit > 100) {
         $errorMsg = "Invalid pagination parameters - Page: $page, Limit: $limit";
         logActivity($errorMsg);
         echo json_encode([
-            'success' => false, 
+            'success' => false,
             'message' => 'Invalid pagination parameters. Page must be ≥ 1 and limit between 1-100.'
         ]);
         exit();
@@ -40,16 +40,73 @@ try {
     $offset = ($page - 1) * $limit;
     logActivity("Fetching drivers - Page: $page, Limit: $limit, Offset: $offset");
 
+    // ✅ Grab filter parameters
+    // Sanitize & validate filter inputs
+    $status = isset($_GET['status']) ? trim($_GET['status']) : null;
+    $restriction = isset($_GET['restriction']) ? trim($_GET['restriction']) : null;
+    $delete_status = isset($_GET['delete_status']) ? trim($_GET['delete_status']) : null;
+
+    // Allowed values
+    $allowedStatuses = ['Available', 'Not Available'];
+    $allowedRestriction = ['0', '1'];   // or integers if your DB column is tinyint
+    $allowedDeleteStatus = ['Yes', 'NULL'];
+
+    // Validation
+    if ($status !== null && !in_array($status, $allowedStatuses, true)) {
+        echo json_encode(['success' => false, 'message' => "Invalid status value"]);
+        logActivity("Invalid Status Value");
+        exit();
+    }
+    if ($restriction !== null && !in_array($restriction, $allowedRestriction, true)) {
+        echo json_encode(['success' => false, 'message' => "Invalid restriction value"]);
+        logActivity("Invalid Transaction Value");
+        exit();
+    }
+    if ($delete_status !== null && !in_array($delete_status, $allowedDeleteStatus, true)) {
+        echo json_encode(['success' => false, 'message' => "Invalid delete_status value"]);
+        exit();
+    }
+
     try {
-        // Start transaction for consistent data view
         $conn->begin_transaction();
         logActivity("Database transaction started");
 
-        // Fetch total count of drivers
-        $totalQuery = "SELECT COUNT(*) as total FROM driver";
+        // ✅ Build WHERE clause dynamically
+        $where = [];
+        $params = [];
+        $types = "";
+
+        if ($status) {
+            $where[] = "status = ?";
+            $params[] = $status;
+            $types .= "s";
+        }
+        if ($restriction !== null && $restriction !== "") {
+            $where[] = "restriction = ?";
+            $params[] = (int) $restriction;
+            $types .= "i";
+        }
+        if ($delete_status !== null) {
+            if ($delete_status === 'NULL') {
+                $whereClauses[] = "delete_status IS NULL";
+            } else {
+                $whereClauses[] = "delete_status = ?";
+                $params[] = $delete_status;
+                $types .= 's';
+            }
+        }
+
+        $whereSql = $where ? "WHERE " . implode(" AND ", $where) : "";
+
+        // ✅ Count total drivers with filters
+        $totalQuery = "SELECT COUNT(*) as total FROM driver $whereSql";
         $countStmt = $conn->prepare($totalQuery);
         if (!$countStmt) {
             throw new Exception("Prepare failed for count query: " . $conn->error);
+        }
+
+        if ($types) {
+            $countStmt->bind_param($types, ...$params);
         }
 
         if (!$countStmt->execute()) {
@@ -59,30 +116,38 @@ try {
         $totalResult = $countStmt->get_result();
         $totalDrivers = $totalResult->fetch_assoc()['total'];
         $totalPages = ceil($totalDrivers / $limit);
-        logActivity("Total drivers found: $totalDrivers, Total pages: $totalPages");
+        logActivity("Total drivers found (with filters): $totalDrivers, Total pages: $totalPages");
 
-        // Fetch paginated drivers with essential fields only
+        // ✅ Fetch drivers with filters
         $query = "SELECT 
                     id,
-                    firstname, 
-                    lastname, 
-                    email, 
-                    phone_number, 
+                    firstname,
+                    lastname,
+                    email,
+                    phone_number,
                     license_number,
                     status,
                     restriction,
                     delete_status,
                     date_updated 
                   FROM driver
+                  $whereSql
                   ORDER BY restriction DESC, status DESC, date_updated DESC 
                   LIMIT ? OFFSET ?";
-        
+
         $stmt = $conn->prepare($query);
         if (!$stmt) {
             throw new Exception("Prepare failed for data query: " . $conn->error);
         }
 
-        $stmt->bind_param("ii", $limit, $offset);
+        // Merge params with pagination
+        $paramsWithPagination = $params;
+        $typesWithPagination = $types . "ii";
+        $paramsWithPagination[] = $limit;
+        $paramsWithPagination[] = $offset;
+
+        $stmt->bind_param($typesWithPagination, ...$paramsWithPagination);
+
         if (!$stmt->execute()) {
             throw new Exception("Execute failed for data query: " . $stmt->error);
         }
@@ -91,7 +156,6 @@ try {
         $drivers = [];
 
         while ($row = $result->fetch_assoc()) {
-            // Format data for better display
             $row['fullname'] = $row['firstname'] . ' ' . $row['lastname'];
             $row['phone_formatted'] = formatPhoneNumber($row['phone_number']);
             $row['license_masked'] = maskSensitiveData($row['license_number']);
@@ -101,7 +165,6 @@ try {
         $conn->commit();
         logActivity("Successfully retrieved " . count($drivers) . " drivers");
 
-        // Prepare response
         $response = [
             'success' => true,
             'drivers' => $drivers,
@@ -132,12 +195,11 @@ try {
     logActivity($errorMsg);
     http_response_code(500);
     echo json_encode([
-        'success' => false, 
+        'success' => false,
         'message' => 'Failed to fetch drivers',
         'error' => $e->getMessage()
     ]);
 } finally {
-    // Clean up resources
     if (isset($stmt) && $stmt instanceof mysqli_stmt) {
         $stmt->close();
     }
@@ -150,8 +212,9 @@ try {
     logActivity("Driver listing fetch process completed");
 }
 
-// Helper function to format phone numbers
-function formatPhoneNumber($phone) {
+// Helper: format phone numbers
+function formatPhoneNumber($phone)
+{
     $phone = preg_replace('/[^0-9]/', '', $phone);
     if (strlen($phone) == 10) {
         return '(' . substr($phone, 0, 3) . ') ' . substr($phone, 3, 3) . '-' . substr($phone, 6);
@@ -159,8 +222,9 @@ function formatPhoneNumber($phone) {
     return $phone;
 }
 
-// Helper function to mask sensitive data
-function maskSensitiveData($data, $visibleChars = 4) {
+// Helper: mask sensitive data
+function maskSensitiveData($data, $visibleChars = 4)
+{
     $length = strlen($data);
     if ($length <= $visibleChars * 2) {
         return substr($data, 0, $visibleChars) . str_repeat('*', $length - $visibleChars);

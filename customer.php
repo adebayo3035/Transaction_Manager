@@ -25,6 +25,27 @@
             <button type="submit">Search <i class="fa fa-search" aria-hidden="true"></i></button>
         </div>
 
+        <div class="filter-section customer-filters">
+            <select id="filterGender" class="filter-select">
+                <option value="">All Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+
+            <select id="filterRestriction" class="filter-select">
+                <option value="">All Restrictions</option>
+                <option value="0">Not Restricted</option>
+                <option value="1">Restricted</option>
+            </select>
+
+            <select id="filterDelete" class="filter-select">
+                <option value="">All Accounts</option>
+                <option value="NULL">Activated</option>
+                <option value="Yes">Deactivated</option>
+            </select>
+
+            <button id="applyCustomerFilters" class="filter-btn">Apply Filters</button>
+        </div>
 
     </div>
 
@@ -39,7 +60,7 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody id = "ordersTableBody">
+        <tbody id="ordersTableBody">
             <!-- Customers Information will be dynamically inserted here -->
         </tbody>
 
@@ -132,7 +153,7 @@
                 </select>
                 <div id="additionalInput">
                     <label for="selectedUnit">Select Unit:</label>
-                    <select id="selectedUnit" class ="selectedUnit" name="unit" required>
+                    <select id="selectedUnit" class="selectedUnit" name="unit" required>
                         <option value="">--Select a Unit--</option>
                         <!-- Options will be populated dynamically -->
                     </select>

@@ -97,8 +97,23 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchCustomers: (page = 1) => {
             utils.showSpinner(elements.tables.customers.container);
 
+            // Get filter values from dropdowns
+            const gender = document.getElementById('filterGender').value;
+            const restriction = document.getElementById('filterRestriction').value;
+            const delete_status = document.getElementById('filterDelete').value;
+
+            const params = new URLSearchParams({
+                page,
+                limit: CONFIG.itemsPerPage
+            });
+
+            // Add filters only if selected
+            if (gender) params.append('gender', gender);
+            if (restriction) params.append('restriction', restriction);
+            if (delete_status) params.append('delete_status', delete_status);
+
             const minDelay = new Promise(resolve => setTimeout(resolve, CONFIG.minSpinnerTime));
-            const fetchData = fetch(`backend/get_customers.php?page=${page}&limit=${CONFIG.itemsPerPage}`)
+            const fetchData = fetch(`backend/get_customers.php?${params.toString()}`)
                 .then(res => res.json());
 
             Promise.all([fetchData, minDelay])
@@ -114,6 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     utils.showError(elements.tables.customers.container, 'Error loading Customer data');
                 });
         },
+
 
         fetchCustomerDetails: (customerId) => {
             return fetch(`backend/fetch_customer_details.php`, {
@@ -660,6 +676,10 @@ document.addEventListener('DOMContentLoaded', () => {
         api.fetchCustomers(state.currentPage);
         customer.loadGroups(null, 'selectedGroup');
     };
+    // 🎯 Apply Filter button event listener
+    document.getElementById('applyCustomerFilters').addEventListener('click', () => {
+        api.fetchCustomers(1); // fetch from first page with filters applied
+    });
 
     init();
 });

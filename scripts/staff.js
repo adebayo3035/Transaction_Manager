@@ -56,7 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Modified fetchStaffs function
     function fetchStaffs(page = 1) {
         const ordersTableBody = document.getElementById('ordersTableBody');
 
@@ -69,10 +68,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </td>
         </tr>
-        `;
+    `;
 
-        const minDelay = new Promise(resolve => setTimeout(resolve, 1000)); // Spinner shows at least 500ms
-        const fetchData = fetch(`backend/get_staffs.php?page=${page}&limit=${limit}`)
+        // Collect filters
+        const role = document.getElementById('filterRoles').value;
+        const restriction = document.getElementById('filterRestriction').value;
+        const deleteStatus = document.getElementById('filterDelete').value;
+        const block = document.getElementById('filterBlock').value;
+        const gender = document.getElementById('filterGender').value;
+
+        const params = new URLSearchParams({
+            page,
+            limit,
+            role,
+            restriction,
+            delete_status: deleteStatus,
+            block,
+            gender
+        });
+
+        const minDelay = new Promise(resolve => setTimeout(resolve, 1000));
+        const fetchData = fetch(`backend/get_staffs.php?${params.toString()}`)
             .then(res => res.json());
 
         Promise.all([fetchData, minDelay])
@@ -95,6 +111,9 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             });
     }
+
+    // Attach to filter button
+    document.getElementById('applyFilters').addEventListener('click', () => fetchStaffs(1));
 
     // On initial page load
     document.addEventListener('DOMContentLoaded', () => {

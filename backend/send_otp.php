@@ -131,7 +131,7 @@ class OTPService {
             }
 
             $this->conn->commit();
-            return ['success' => true, 'message' => 'OTP sent successfully', 'code' => 200];
+            return ['success' => true, 'message' => 'OTP sent successfully', 'otp' => $otp, 'code' => 200];
 
         } catch (Exception $e) {
             $this->conn->rollback();

@@ -30,7 +30,39 @@
             <button type="submit">Search <i class="fa fa-search" aria-hidden="true"></i></button>
         </div>
 
+        <div class="filter-section">
+            <div id="driverFilters">
+                <select id="filterRoles">
+                    <option value="">All Roles</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Super Admin">Super Admin</option>
+                </select>
 
+                <select id="filterRestriction">
+                    <option value="">All Restrictions</option>
+                    <option value="0">Not Restricted</option>
+                    <option value="1">Restricted</option>
+                </select>
+
+                <select id="filterDelete">
+                    <option value="">All Accounts</option>
+                    <option value="NULL">Activated</option>
+                    <option value="Yes">Deactivated</option>
+                </select>
+                <select id="filterBlock">
+                    <option value="">All Accounts</option>
+                    <option value="0">Not Blocked</option>
+                    <option value="1">Blocked</option>
+                </select>
+                <select id="filterGender">
+                    <option value="">All Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+
+                <button id="applyFilters">Apply Filters</button>
+            </div>
+        </div>
     </div>
 
     <table id="ordersTable" class="ordersTable">
@@ -44,7 +76,7 @@
                 <th style="text-align: center;" colspan="2">Actions</th>
             </tr>
         </thead>
-        <tbody id = "ordersTableBody">
+        <tbody id="ordersTableBody">
             <!-- Staffs Information will be dynamically inserted here -->
         </tbody>
 
