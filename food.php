@@ -24,6 +24,24 @@
             <input type="text" id="liveSearch" placeholder="Search for Order...">
             <button type="submit">Search <i class="fa fa-search" aria-hidden="true"></i></button>
         </div>
+        <div class="filters">
+            <!-- Availability dropdown -->
+            <label for="availabilityFilter">Availability:</label>
+            <select id="availabilityFilter">
+                <option value="">All</option>
+                <option value="1">Available</option>
+                <option value="0">Not Available</option>
+            </select>
+
+            <!-- Price range inputs -->
+            <label for="minPrice">Min Price:</label>
+            <input type="number" id="minPrice" placeholder="0" min="0">
+
+            <label for="maxPrice">Max Price:</label>
+            <input type="number" id="maxPrice" placeholder="10000" min="0">
+
+            <button id="applyFiltersBtn">Apply Filters</button>
+        </div>
 
 
     </div>
@@ -36,10 +54,10 @@
                 <th>Price Per Portion</th>
                 <th>Quantity Available</th>
                 <th>Availability Status</th>
-                <th colspan ="2">Actions</th>
+                <th colspan="2">Actions</th>
             </tr>
         </thead>
-        <tbody id = "ordersTableBody">
+        <tbody id="ordersTableBody">
             <!-- Staffs Information will be dynamically inserted here -->
         </tbody>
 
@@ -50,9 +68,9 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Edit Food Item</h2>
-            
 
-            
+
+
             <table id="orderDetailsTable" class="ordersTable">
                 <tbody>
                     <!-- Driver details will be automatically populated here -->
@@ -85,14 +103,14 @@
                     <input type="number" id="add_food_quantity" name="add_food_quantity" required>
                 </div>
                 <div class="form-group">
-                <label for="available">Available:</label>
-                <select id="available" name="available">
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
-                </select>
-            </div>
-                
-                
+                    <label for="available">Available:</label>
+                    <select id="available" name="available">
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+
                 <button type="submit" id="submitBtnAdd">Add Food Item</button>
             </form>
 

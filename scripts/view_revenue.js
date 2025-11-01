@@ -11,7 +11,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fetch revenue with pagination
     function fetchInflowandOutflow(page = 1) {
-         const ordersTableBody = document.getElementById('ordersTableBody');
+        const ordersTableBody = document.getElementById('ordersTableBody');
+        const statusFilter = document.getElementById('statusFilter').value.trim();
+
+        // Allowed values
+        const validStatuses = ["", "Completed", "Cancelled"];
+
+        // Input validation
+        if (!validStatuses.includes(statusFilter)) {
+            console.error("Invalid status filter selected:", statusFilter);
+            alert("Invalid status filter selected!");
+            return;
+        }
 
         // Inject spinner
         ordersTableBody.innerHTML = `
@@ -22,32 +33,38 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </td>
         </tr>
-        `;
+    `;
 
-        const minDelay = new Promise(resolve => setTimeout(resolve, 1000)); // Spinner shows at least 500ms
-        const fetchData = fetch(`backend/fetch_revenue.php?page=${page}&limit=${limit}`)
-            .then(res => res.json());
+        const minDelay = new Promise(resolve => setTimeout(resolve, 1000));
+
+        // Build URL dynamically with filter
+        let url = `backend/fetch_revenue.php?page=${page}&limit=${limit}`;
+        if (statusFilter !== "") {
+            url += `&status=${encodeURIComponent(statusFilter)}`;
+        }
+
+        const fetchData = fetch(url).then(res => res.json());
 
         Promise.all([fetchData, minDelay])
             .then(([data]) => {
                 if (data.success && data.revenues.length > 0) {
                     updateTable(data.revenues);
-                    
                     updatePagination(data.total, data.page, data.limit);
                 } else {
                     ordersTableBody.innerHTML = `
                     <tr><td colspan="8" style="text-align:center;">No Revenue Details at the moment</td></tr>
                 `;
-                    console.error('No Revenue data:', data.message);
+                    console.error("No Revenue data:", data.message);
                 }
             })
             .catch(error => {
-                console.error('Error fetching data:', error);
+                console.error("Error fetching data:", error);
                 ordersTableBody.innerHTML = `
                 <tr><td colspan="8" style="text-align:center; color:red;">Error loading Revenue data</td></tr>
             `;
             });
     }
+
 
     // Update revenue table
     function updateTable(revenues) {
@@ -180,7 +197,9 @@ document.addEventListener('DOMContentLoaded', () => {
             row.style.display = found ? "" : "none";
         });
     }
-
+    document.getElementById('statusFilter').addEventListener('change', () => {
+        fetchInflowandOutflow(1) // Reset to page 1 when applying filters
+    });
     // Close modal event
     document.querySelector('.modal .close').addEventListener('click', () => {
         revenueModal.style.display = 'none';

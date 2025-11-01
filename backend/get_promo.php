@@ -8,7 +8,6 @@ logActivity("Fetching promos script started.");
 // Check if either 'unique_id' (for admin) or 'customer_id' (for customer) is set
 if (!isset($_SESSION['unique_id']) && !isset($_SESSION['customer_id'])) {
     $error_message = "Not logged in. Session IDs not found.";
-    error_log($error_message);
     logActivity($error_message);
     echo json_encode(["success" => false, "message" => $error_message]);
     exit();
@@ -23,58 +22,111 @@ if (isset($_SESSION['unique_id'])) {
 
 header('Content-Type: application/json');
 
-
-
 // Get pagination parameters
 $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 $limit = isset($_GET['limit']) ? (int) $_GET['limit'] : 10;
 $offset = ($page - 1) * $limit;
 
-// Log pagination parameters
+// Validate pagination
+if ($page < 1 || $limit < 1 || $limit > 100) {
+    logActivity("Invalid pagination parameters - Page: $page, Limit: $limit");
+    echo json_encode(["success" => false, "message" => "Invalid pagination parameters."]);
+    exit();
+}
+
+// Get filters and validate
+$statusFilter = isset($_GET['status']) ? intval($_GET['status']) : null;
+$deleteIdFilter = isset($_GET['delete_id']) ? intval($_GET['delete_id']) : null;
+
+$validStatus = [0, 1];
+$validDeleteId = [0, 1];
+
+if ($statusFilter !== null && !in_array($statusFilter, $validStatus)) {
+    logActivity("Invalid status filter: $statusFilter");
+    echo json_encode(["success" => false, "message" => "Invalid status filter."]);
+    exit();
+}
+
+if ($deleteIdFilter !== null && !in_array($deleteIdFilter, $validDeleteId)) {
+    logActivity("Invalid delete_id filter: $deleteIdFilter");
+    echo json_encode(["success" => false, "message" => "Invalid delete_id filter."]);
+    exit();
+}
+
 logActivity("Pagination parameters - Page: $page, Limit: $limit, Offset: $offset");
+logActivity("Applied filters - Status: " . ($statusFilter ?? 'All') . ", Delete ID: " . ($deleteIdFilter ?? 'All'));
 
 try {
-    // Fetch total count of promos
-    $totalQuery = "SELECT COUNT(*) as total FROM promo WHERE delete_id = 0";
-    $stmt = $conn->prepare($totalQuery);
-    if (!$stmt) {
-        logActivity("Failed to prepare total count query: " . $conn->error);
-        throw new Exception("Failed to prepare total count query: " . $conn->error);
+    // Fetch total count of promos with filters
+    $totalQuery = "SELECT COUNT(*) as total FROM promo WHERE 1=1";
+    $params = [];
+    $types = '';
+
+    if ($statusFilter !== null) {
+        $totalQuery .= " AND status = ?";
+        $params[] = $statusFilter;
+        $types .= 'i';
     }
+
+    if ($deleteIdFilter !== null) {
+        $totalQuery .= " AND delete_id = ?";
+        $params[] = $deleteIdFilter;
+        $types .= 'i';
+    }
+
+    $stmt = $conn->prepare($totalQuery);
+    if (!$stmt) throw new Exception("Failed to prepare total count query: " . $conn->error);
+
+    if (!empty($params)) {
+        $stmt->bind_param($types, ...$params);
+    }
+
     $stmt->execute();
     $totalResult = $stmt->get_result();
     $totalPromos = $totalResult->fetch_assoc()['total'];
     $stmt->close();
 
-    // Log total promos count
-    logActivity("Total promos count: " . $totalPromos);
+    logActivity("Total promos count after filters: " . $totalPromos);
 
-    // Update expired promos: set status = 0 and delete_id = 1 where end_date has passed
+    // Update expired promos
     $now = date('Y-m-d H:i:s');
     $updateExpiredQuery = "UPDATE promo SET status = 0, delete_id = 1 WHERE end_date < ? AND delete_id = 0";
     $stmt = $conn->prepare($updateExpiredQuery);
-    if (!$stmt) {
-        logActivity("Failed to prepare expired promos update query: " . $conn->error);
-        throw new Exception("Failed to prepare expired promos update query: " . $conn->error);
-    }
+    if (!$stmt) throw new Exception("Failed to prepare expired promos update query: " . $conn->error);
+
     $stmt->bind_param("s", $now);
     $stmt->execute();
     $affectedRows = $stmt->affected_rows;
     $stmt->close();
 
-    // Log number of expired promos updated
     logActivity("Updated $affectedRows expired promos (status = 0, delete_id = 1).");
 
+    // Fetch paginated promos with filters
+    $query = "SELECT * FROM promo WHERE 1=1";
+    $params = [];
+    $types = '';
 
-    // Fetch paginated promos
-    $query = "SELECT * FROM promo ORDER BY date_last_modified DESC, status DESC LIMIT ? OFFSET ?";
-    $stmt = $conn->prepare($query);
-    if (!$stmt) {
-        logActivity("Failed to prepare paginated promos query: " . $conn->error);
-        throw new Exception("Failed to prepare paginated promos query: " . $conn->error);
-
+    if ($statusFilter !== null) {
+        $query .= " AND status = ?";
+        $params[] = $statusFilter;
+        $types .= 'i';
     }
-    $stmt->bind_param("ii", $limit, $offset);
+
+    if ($deleteIdFilter !== null) {
+        $query .= " AND delete_id = ?";
+        $params[] = $deleteIdFilter;
+        $types .= 'i';
+    }
+
+    $query .= " ORDER BY date_last_modified DESC, status DESC LIMIT ? OFFSET ?";
+    $params[] = $limit;
+    $params[] = $offset;
+    $types .= 'ii';
+
+    $stmt = $conn->prepare($query);
+    if (!$stmt) throw new Exception("Failed to prepare paginated promos query: " . $conn->error);
+
+    $stmt->bind_param($types, ...$params);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -84,19 +136,15 @@ try {
     }
     $stmt->close();
 
-    // Log the number of paginated promos fetched
     logActivity("Fetched " . count($promos) . " paginated promos.");
 
-    // Fetch ongoing promos
-    $now = date('Y-m-d H:i:s');
-    $ongoingQuery = "SELECT promo_id, promo_name, promo_code, promo_description, discount_type, discount_value, max_discount,delete_id
+    // Fetch ongoing promos (status = 1 and delete_id = 0)
+    $ongoingQuery = "SELECT promo_id, promo_name, promo_code, promo_description, discount_type, discount_value, max_discount, delete_id
                      FROM promo 
                      WHERE status = 1 AND delete_id = 0 AND start_date <= ? AND end_date >= ? 
                      ORDER BY date_last_modified DESC";
     $stmt = $conn->prepare($ongoingQuery);
-    if (!$stmt) {
-        throw new Exception("Failed to prepare ongoing promos query: " . $conn->error);
-    }
+    if (!$stmt) throw new Exception("Failed to prepare ongoing promos query: " . $conn->error);
     $stmt->bind_param("ss", $now, $now);
     $stmt->execute();
     $ongoingResult = $stmt->get_result();
@@ -107,7 +155,6 @@ try {
     }
     $stmt->close();
 
-    // Log the number of ongoing promos fetched
     logActivity("Fetched " . count($ongoingPromos) . " ongoing promos.");
 
     // Return both paginated and ongoing promos
@@ -120,23 +167,16 @@ try {
         "total" => $totalPromos,
         "page" => $page,
         "limit" => $limit,
-        "message" => "Promo Record has been successfully retrieved"
+        "message" => "Promo records successfully retrieved"
     ]);
 
-    // Log the successful completion of the script
     logActivity("Fetching promos script completed successfully.");
 } catch (Exception $e) {
-    // Log the exception
-    error_log("Exception: " . $e->getMessage());
     logActivity("Exception: " . $e->getMessage());
-
-    // Return an error response
     echo json_encode([
         "success" => false,
         "message" => $e->getMessage()
     ]);
 } finally {
-    // Close the database connection
     $conn->close();
 }
-

@@ -40,7 +40,46 @@ class FoodManager {
         const tableBody = document.querySelector('#ordersTable tbody');
         this.showLoadingSpinner(tableBody);
 
-        fetch(`backend/fetch_foods.php?page=${page}&limit=${this.limit}`, {
+        // Get raw filter values
+        let availability = document.querySelector('#availabilityFilter').value;
+        let minPrice = document.querySelector('#minPrice').value.trim();
+        let maxPrice = document.querySelector('#maxPrice').value.trim();
+
+        // ---- Validation ----
+        // Ensure availability is only "" (all), "1", or "0"
+        if (!['', '0', '1'].includes(availability)) {
+            alert("Invalid availability filter");
+            availability = '';
+        }
+
+        // Ensure min/max are numeric & >= 0
+        if (minPrice !== '' && (!/^\d+$/.test(minPrice) || parseInt(minPrice) < 0)) {
+            alert("Invalid Min Price");
+            minPrice = '';
+        }
+        if (maxPrice !== '' && (!/^\d+$/.test(maxPrice) || parseInt(maxPrice) < 0)) {
+            alert("Invalid Max Price");
+            maxPrice = '';
+        }
+
+        // Ensure min ≤ max (if both are set)
+        if (minPrice !== '' && maxPrice !== '' && parseInt(minPrice) > parseInt(maxPrice)) {
+            alert("Min Price cannot be greater than Max Price");
+            location.reload()
+            return; // stop fetch
+        }
+
+        // Build query string
+        const queryParams = new URLSearchParams({
+            page,
+            limit: this.limit
+        });
+        if (availability !== '') queryParams.append('availability_status', availability);
+        if (minPrice !== '') queryParams.append('price_min', minPrice);
+        if (maxPrice !== '') queryParams.append('price_max', maxPrice);
+
+        // Fetch with filters
+        fetch(`backend/fetch_foods.php?${queryParams.toString()}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         })
@@ -55,6 +94,8 @@ class FoodManager {
             })
             .catch(error => this.handleFetchError(tableBody, error));
     }
+
+
 
     showLoadingSpinner(tableBody) {
         tableBody.innerHTML = `
@@ -336,4 +377,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const foodManager = new FoodManager();
     const addFoodForm = document.getElementById('addFoodForm');
     foodManager.addNewFood(addFoodForm);
+
+    document.querySelector('#applyFiltersBtn').addEventListener('click', () => {
+        foodManager.fetchFoods(1); // reload with page 1 and filters
+    });
+
 });

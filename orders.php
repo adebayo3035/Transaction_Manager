@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/orders.css">
     <link rel="stylesheet" href="customer/css/view_orders.css">
     <link rel="stylesheet" href="customer/css/checkout.css">
+    
 </head>
 
 <body>
@@ -18,7 +19,22 @@
             <input type="text" id="liveSearch" placeholder="Search for Order...">
             <button type="submit">Search <i class="fa fa-search" aria-hidden="true"></i></button>
         </div>
-        <h1>All Orders</h1>
+       
+        <div class="filters">
+            <label for="filterDeliveryStatus">Filter Orders:</label>
+            <select id="filterDeliveryStatus">
+                <option value="">-- All --</option>
+                <option value="Pending">Pending</option>
+                <option value="Assigned">Assigned</option>
+                <option value="In Transit">In Transit</option>
+                <option value="Delivered">Delivered</option>
+                <option value="Cancelled">Cancelled</option>
+                <option value="Declined">Declined</option>
+                <option value="Cancelled on Delivery">Cancelled on Delivery</option>
+            </select>
+            <!-- <button id="applyOrderFilters" class="filter-btn">Apply Filters</button> -->
+        </div>
+         <h1>All Orders</h1>
     </div>
 
     <table id="ordersTable" class="ordersTable">

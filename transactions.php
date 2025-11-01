@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/transaction.css">
@@ -22,6 +22,26 @@
             <input type="text" id="liveSearch" placeholder="Search for Transaction...">
             <button type="submit">Search <i class="fa fa-search" aria-hidden="true"></i></button>
         </div>
+        <div style="margin-bottom: 10px;" class="filter-section">
+            <label>Transaction Type:</label>
+            <select id="transactionTypeFilter">
+                <option value="">All</option>
+                <option value="Credit">Credit</option>
+                <option value="Debit">Debit</option>
+                <option value="Others">Others</option>
+            </select>
+
+            <label>Status:</label>
+            <select id="transactionStatusFilter">
+                <option value="">All</option>
+                <option value="Pending">Pending</option>
+                <option value="Completed">Completed</option>
+                <option value="Failed">Failed</option>
+                <option value="Declined">Declined</option>
+            </select>
+            <button id="applyTransactionFilters" class="filter-btn">Apply Filters</button>
+        </div>
+
         <h1>All Transactions</h1>
     </div>
 
@@ -37,7 +57,7 @@
                 <th>View Details</th>
             </tr>
         </thead>
-        <tbody id = "ordersTableBody">
+        <tbody id="ordersTableBody">
             <!-- Staffs Information will be dynamically inserted here -->
         </tbody>
     </table>
@@ -46,7 +66,8 @@
     <div id="transactionModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2 id="receipt-header">Transaction Details for Reference: <span id="transactionReference">Reference</span></h2>
+            <h2 id="receipt-header">Transaction Details for Reference: <span id="transactionReference">Reference</span>
+            </h2>
             <table id="transactionDetailsTable" class="transactionsTable">
                 <thead>
                     <tr>

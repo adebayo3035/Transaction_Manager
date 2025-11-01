@@ -59,8 +59,7 @@ try {
             $whereClauses[] = "l.reactivated_by IS NULL";
         } elseif ($deactivationStatus === 'reactivated') {
             $whereClauses[] = "l.reactivated_by IS NOT NULL";
-        }
-        elseif($deactivationStatus === 'declined'){
+        } elseif ($deactivationStatus === 'declined') {
             $whereClauses[] = "l.status = 'Declined'";
         }
     }
@@ -96,7 +95,7 @@ try {
     $total = $totalRow['total'];
     $stmt->close();
 
-    // Main query with filters
+    // Main query with filters - BASIC DETAILS ONLY
     $query = "
         SELECT 
             d.id AS deactivation_id,
@@ -110,11 +109,9 @@ try {
             a.firstname AS staff_firstname,
             a.lastname AS staff_lastname,
             a.email AS staff_email,
-            a.phone AS staff_phone,
             
             COALESCE(l.status, 'No Reactivation Request') AS reactivation_status,
             l.date_created AS reactivation_date,
-            l.date_last_updated as date_last_updated,
             l.reactivated_by as reactivated_by,
             reactivator.firstname AS reactivated_by_firstname,
             reactivator.lastname AS reactivated_by_lastname
@@ -160,13 +157,11 @@ try {
                 'staff_id' => $row['staff_id'],
                 'firstname' => $row['staff_firstname'],
                 'lastname' => $row['staff_lastname'],
-                'email' => $row['staff_email'],
-                'phone' => $row['staff_phone']
+                'email' => $row['staff_email']
             ],
             
             'reactivation_status' => $row['reactivation_status'],
             'reactivation_date' => $row['reactivation_date'] ?? null,
-            'date_last_updated' => $row['date_last_updated'] ?? null,
             
             'deactivated_by' => [
                 'admin_id' => $row['deactivated_by'],
@@ -202,13 +197,13 @@ try {
         $superAdminsStmt->close();
     }
 
-    logActivity("Super Admin ID: $admin_id fetched deleted staff list with filters. Found {$total} records.");
+    logActivity("Super Admin ID: $admin_id fetched basic deactivation list with filters. Found {$total} records.");
     
     echo json_encode([
         'success' => true,
         'message' => 'Deactivated Staff Account records fetched successfully',
         'deletedStaff' => $deletedStaff,
-        'super_admins' => $superAdmins, // For dropdown population
+        'super_admins' => $superAdmins,
         'total' => $total,
         'page' => $page,
         'limit' => $limit,
@@ -220,7 +215,7 @@ try {
     ]);
 
 } catch (Exception $e) {
-    logActivity("Error fetching deleted staff by Admin ID: $admin_id - " . $e->getMessage());
+    logActivity("Error fetching basic deactivation list by Admin ID: $admin_id - " . $e->getMessage());
     http_response_code(500);
     echo json_encode(["error" => "Internal Server Error: " . $e->getMessage()]);
 }

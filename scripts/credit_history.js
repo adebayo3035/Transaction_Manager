@@ -10,6 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
             fetchCreditDetails: 'backend/fetch_credit_details.php'
         }
     };
+    document.getElementById('applyFilters').addEventListener('click', () => {
+        api.fetchCredits(1); // restart from first page with filters applied
+    });
+
 
     // State management
     const state = {
@@ -105,9 +109,17 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchCredits: (page = 1) => {
             utils.showSpinner(elements.tables.credits.container);
 
+            // Get filter values
+            const repaymentStatus = document.getElementById('repaymentStatus')?.value || '';
+            const dueStatus = document.getElementById('dueStatus')?.value || '';
+
+            // Build query string
+            let url = `${CONFIG.apiEndpoints.fetchCredits}?page=${page}&limit=${CONFIG.itemsPerPage}`;
+            if (repaymentStatus) url += `&repayment_status=${encodeURIComponent(repaymentStatus)}`;
+            if (dueStatus) url += `&due_status=${encodeURIComponent(dueStatus)}`;
+
             const minDelay = new Promise(resolve => setTimeout(resolve, CONFIG.minSpinnerTime));
-            const fetchData = fetch(`${CONFIG.apiEndpoints.fetchCredits}?page=${page}&limit=${CONFIG.itemsPerPage}`)
-                .then(res => res.json());
+            const fetchData = fetch(url).then(res => res.json());
 
             Promise.all([fetchData, minDelay])
                 .then(([data]) => {
@@ -121,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else {
                         utils.showError(
                             elements.tables.credits.container,
-                            'No Credit History at the moment'
+                            data.message || 'No Credit History at the moment'
                         );
                     }
                 })
@@ -133,6 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     );
                 });
         },
+
 
         fetchCreditDetails: (creditId, page = 1) => {
             return fetch(CONFIG.apiEndpoints.fetchCreditDetails, {

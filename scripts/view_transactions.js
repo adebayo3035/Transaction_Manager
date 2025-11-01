@@ -11,43 +11,63 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fetch transactions with pagination
     // Modified fetchStaffs function
-    function fetchTransactions(page = 1) {
-        const ordersTableBody = document.getElementById('ordersTableBody');
+   function fetchTransactions(page = 1) {
+    const ordersTableBody = document.getElementById('ordersTableBody');
 
-        // Inject spinner
-        ordersTableBody.innerHTML = `
-        <tr>
-            <td colspan="7" style="text-align:center; padding: 20px;">
-                <div class="spinner"
-                    style="border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: auto;">
-                </div>
-            </td>
-        </tr>
-        `;
+    // Inject spinner
+    ordersTableBody.innerHTML = `
+    <tr>
+        <td colspan="7" style="text-align:center; padding: 20px;">
+            <div class="spinner"
+                style="border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: auto;">
+            </div>
+        </td>
+    </tr>
+    `;
 
-        const minDelay = new Promise(resolve => setTimeout(resolve, 1000)); // Spinner shows at least 500ms
-        const fetchData = fetch(`backend/fetch_transactions.php?page=${page}&limit=${limit}`)
-            .then(res => res.json());
+    // Read filter dropdowns
+    const typeFilter = document.getElementById('transactionTypeFilter')?.value || '';
+    const statusFilter = document.getElementById('transactionStatusFilter')?.value || '';
 
-        Promise.all([fetchData, minDelay])
-            .then(([data]) => {
-                if (data.success && data.transactions.length > 0) {
-                    updateTable(data.transactions);
-                    updatePagination(data.pagination.total, data.pagination.page, data.pagination.limit);
-                } else {
-                    ordersTableBody.innerHTML = `
-                    <tr><td colspan="7" style="text-align:center;">No Transaction Details at the moment</td></tr>
-                `;
-                    console.error('No Transaction data:', data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-                ordersTableBody.innerHTML = `
-                <tr><td colspan="7" style="text-align:center; color:red;">Error loading Transaction data</td></tr>
-            `;
-            });
+    // Allowed values
+    const allowedTypes = ["Credit", "Debit", "Others"];
+    const allowedStatuses = ["Pending", "Completed", "Failed", "Declined"];
+
+    // Build query params
+    let queryParams = `page=${page}&limit=${limit}`;
+
+    if (typeFilter && allowedTypes.includes(typeFilter)) {
+        queryParams += `&transaction_type=${encodeURIComponent(typeFilter)}`;
     }
+
+    if (statusFilter && allowedStatuses.includes(statusFilter)) {
+        queryParams += `&status=${encodeURIComponent(statusFilter)}`;
+    }
+
+    const minDelay = new Promise(resolve => setTimeout(resolve, 1000)); // Spinner visible at least 1s
+    const fetchData = fetch(`backend/fetch_transactions.php?${queryParams}`)
+        .then(res => res.json());
+
+    Promise.all([fetchData, minDelay])
+        .then(([data]) => {
+            if (data.success && data.transactions.length > 0) {
+                updateTable(data.transactions);
+                updatePagination(data.pagination.total, data.pagination.page, data.pagination.limit);
+            } else {
+                ordersTableBody.innerHTML = `
+                <tr><td colspan="7" style="text-align:center;">No Transaction Details at the moment</td></tr>
+                `;
+                console.warn('No Transaction data:', data.message || 'Empty result');
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+            ordersTableBody.innerHTML = `
+            <tr><td colspan="7" style="text-align:center; color:red;">Error loading Transaction data</td></tr>
+            `;
+        });
+}
+
 
 
     // Update transactions table
@@ -179,7 +199,9 @@ document.addEventListener('DOMContentLoaded', () => {
             row.style.display = found ? "" : "none";
         });
     }
-
+    document.getElementById('applyTransactionFilters').addEventListener('click', () => {
+      fetchTransactions(1); // Reset to page 1 when applying filters
+    });
     // Close modal event
     document.querySelector('.modal .close').addEventListener('click', () => {
         transactionModal.style.display = 'none';

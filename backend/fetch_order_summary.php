@@ -7,8 +7,7 @@ session_start();
 $stmt = null;
 $countStmt = null;
 
-// Initialize logging
-logActivity("Order listing fetch process started");
+logActivity("=== Order listing fetch process started ===");
 
 try {
     // Check authentication
@@ -40,61 +39,91 @@ try {
     $offset = ($page - 1) * $limit;
     logActivity("Fetching orders - Page: $page, Limit: $limit, Offset: $offset");
 
+    // Delivery status filter
+    $validStatuses = [
+        'Pending','Assigned','In Transit','Delivered',
+        'Cancelled','Declined','Cancelled on Delivery'
+    ];
+    $deliveryStatus = isset($_GET['delivery_status']) ? trim($_GET['delivery_status']) : null;
+
+    if ($deliveryStatus !== null && !in_array($deliveryStatus, $validStatuses, true)) {
+        $errorMsg = "Invalid delivery_status filter: $deliveryStatus";
+        logActivity($errorMsg);
+        echo json_encode([
+            'success' => false,
+            'message' => 'Invalid delivery status filter provided.'
+        ]);
+        exit();
+    }
+
+    logActivity("Delivery status filter: " . ($deliveryStatus ?: "none"));
+
     try {
         // Start transaction for consistent data view
         $conn->begin_transaction();
         logActivity("Database transaction started");
 
-        // Build queries based on role
+        // Base queries
         $baseQuery = "SELECT order_id, order_date, customer_id, total_amount, delivery_status FROM orders";
         $countQuery = "SELECT COUNT(*) as total FROM orders";
-        $condition = "";
-        $params = [];
-        $orderBy = " ORDER BY order_id DESC, delivery_status";
 
+        $where = [];
+        $params = [];
+        $types = "";
+
+        // Role-based filtering
         if ($userRole == "Admin") {
-            $condition = " WHERE assigned_to = ?";
+            $where[] = "assigned_to = ?";
             $params[] = $userId;
+            $types .= "i";
         } elseif ($userRole != "Super Admin") {
             throw new Exception("Unauthorized role: " . $userRole);
         }
 
-        // Execute count query first
-        $countQuery .= $condition;
-        $countStmt = $conn->prepare($countQuery);
-
-        if (!$countStmt) {
-            throw new Exception("Prepare failed for count query: " . $conn->error);
+        // Delivery status filter
+        if ($deliveryStatus !== null) {
+            $where[] = "delivery_status = ?";
+            $params[] = $deliveryStatus;
+            $types .= "s";
         }
 
-        if ($userRole == "Admin") {
-            $countStmt->bind_param("i", $userId);
+        $condition = count($where) ? " WHERE " . implode(" AND ", $where) : "";
+        logActivity("WHERE clause built: " . ($condition ?: "none"));
+
+        // Count query
+        $countQuery .= $condition;
+        $countStmt = $conn->prepare($countQuery);
+        if (!$countStmt) throw new Exception("Prepare failed for count query: " . $conn->error);
+
+        if ($params) {
+            $countStmt->bind_param($types, ...$params);
         }
 
         if (!$countStmt->execute()) {
             throw new Exception("Execute failed for count query: " . $countStmt->error);
         }
 
-        // Get and store count result immediately
         $countResult = $countStmt->get_result();
-        $totalOrders = $countResult->fetch_assoc()['total'];
-        $countStmt->close(); // Explicitly close the count statement
+        $totalOrders = $countResult->fetch_assoc()['total'] ?? 0;
+        $countStmt->close();
+
         $totalPages = ceil($totalOrders / $limit);
         logActivity("Total orders found: $totalOrders, Total pages: $totalPages");
 
-        // Now prepare and execute main data query
+        // Data query
+        $orderBy = " ORDER BY order_id DESC, delivery_status";
         $dataQuery = $baseQuery . $condition . $orderBy . " LIMIT ? OFFSET ?";
         $stmt = $conn->prepare($dataQuery);
+        if (!$stmt) throw new Exception("Prepare failed for data query: " . $conn->error);
 
-        if (!$stmt) {
-            throw new Exception("Prepare failed for data query: " . $conn->error);
-        }
+        // Bind parameters
+        $paramsMain = $params;
+        $typesMain = $types . "ii";
+        $paramsMain[] = $limit;
+        $paramsMain[] = $offset;
 
-        if ($userRole == "Admin") {
-            $stmt->bind_param("iii", $userId, $limit, $offset);
-        } else {
-            $stmt->bind_param("ii", $limit, $offset);
-        }
+        $stmt->bind_param($typesMain, ...$paramsMain);
+        logActivity("Executing main query with params -> Types: $typesMain, Values: " . json_encode($paramsMain));
 
         if (!$stmt->execute()) {
             throw new Exception("Execute failed for data query: " . $stmt->error);
@@ -102,9 +131,7 @@ try {
 
         $result = $stmt->get_result();
         $orders = [];
-
         while ($row = $result->fetch_assoc()) {
-            // Format numeric values
             $row['total_amount'] = number_format($row['total_amount'], 2);
             $orders[] = $row;
         }
@@ -112,7 +139,7 @@ try {
         $conn->commit();
         logActivity("Successfully retrieved " . count($orders) . " orders");
 
-        // Prepare response
+        // Response
         $response = [
             'success' => true,
             'orders' => $orders,
@@ -126,6 +153,9 @@ try {
             ],
             'requested_by' => $userId,
             'user_role' => $userRole,
+            'filters' => [
+                'delivery_status' => $deliveryStatus
+            ],
             'timestamp' => date('c')
         ];
 
@@ -133,10 +163,8 @@ try {
         logActivity("Order listing fetch completed successfully");
 
     } catch (Exception $e) {
-        if (isset($conn)) {
-            $conn->rollback();
-        }
-        $errorMsg = "Error fetching order listing: " . $e->getMessage();
+        if (isset($conn)) $conn->rollback();
+        $errorMsg = "Error fetching order listing (inner): " . $e->getMessage();
         logActivity($errorMsg);
         http_response_code(500);
         echo json_encode([
@@ -146,7 +174,7 @@ try {
         ]);
     } 
 } catch (Exception $e) {
-    $errorMsg = "Error fetching order listing: " . $e->getMessage();
+    $errorMsg = "Error fetching order listing (outer): " . $e->getMessage();
     logActivity($errorMsg);
     http_response_code(500);
     echo json_encode([
@@ -155,15 +183,7 @@ try {
         'error' => $e->getMessage()
     ]);
 } finally {
-    // Clean up resources
-    if (isset($stmt) && $stmt instanceof mysqli_stmt) {
-        $stmt->close();
-    }
-    // if (isset($countStmt) && $countStmt instanceof mysqli_stmt) {
-    //     $countStmt->close();
-    // }
-    if (isset($conn)) {
-        $conn->close();
-    }
-    logActivity("Order listing fetch process completed");
+    if (isset($stmt) && $stmt instanceof mysqli_stmt) $stmt->close();
+    if (isset($conn)) $conn->close();
+    logActivity("=== Order listing fetch process completed ===");
 }

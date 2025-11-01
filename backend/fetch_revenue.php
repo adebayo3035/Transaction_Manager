@@ -32,36 +32,83 @@ try {
     $offset = ($page - 1) * $limit;
     logActivity("Fetching revenue listing - Page: $page, Limit: $limit, Offset: $offset");
 
+    // Get and validate status filter
+    $status = isset($_GET['status']) ? trim($_GET['status']) : "";
+    $validStatuses = ["Cancelled", "Completed"];
+    $statusFilter = "";
+
+    if ($status !== "") {
+        if (!in_array($status, $validStatuses)) {
+            $errorMsg = "Invalid status filter provided: $status";
+            logActivity($errorMsg);
+            echo json_encode(['success' => false, 'message' => 'Invalid status filter']);
+            exit();
+        }
+        $statusFilter = $status;
+        logActivity("Status filter applied: $statusFilter");
+    } else {
+        logActivity("No status filter applied, fetching all revenue records");
+    }
+
     try {
         // Start transaction for consistent data view
         $conn->begin_transaction();
         logActivity("Transaction started for revenue listing fetch");
 
-        // Fetch total number of revenue records
-        $totalQuery = "SELECT COUNT(*) as total FROM revenue";
-        $totalResult = $conn->query($totalQuery);
-        
-        if (!$totalResult) {
-            throw new Exception("Total count query failed: " . $conn->error);
+        // Build base queries
+        $baseTotalQuery = "SELECT COUNT(*) as total FROM revenue";
+        $baseQuery = "SELECT revenue_id, order_id, customer_id, retained_amount, 
+                             status, transaction_date, updated_at 
+                      FROM revenue";
+
+        $whereClause = "";
+        $params = [];
+        $types = "";
+
+        if ($statusFilter !== "") {
+            $whereClause = " WHERE status = ?";
+            $params[] = $statusFilter;
+            $types .= "s";
         }
 
+        // Get total count
+        $totalQuery = $baseTotalQuery . $whereClause;
+        $stmtTotal = $conn->prepare($totalQuery);
+        if (!$stmtTotal) {
+            throw new Exception("Prepare failed for total count: " . $conn->error);
+        }
+
+        if ($statusFilter !== "") {
+            $stmtTotal->bind_param($types, ...$params);
+        }
+
+        if (!$stmtTotal->execute()) {
+            throw new Exception("Execute failed for total count: " . $stmtTotal->error);
+        }
+
+        $totalResult = $stmtTotal->get_result();
         $totalRow = $totalResult->fetch_assoc();
         $total = $totalRow['total'];
-        logActivity("Total revenue records found: " . $total);
+        logActivity("Total revenue records found (with filter): " . $total);
+        $stmtTotal->close();
 
         // Fetch paginated revenue records
-        $query = "SELECT revenue_id, order_id, customer_id, retained_amount, 
-                         status, transaction_date, updated_at 
-                  FROM revenue 
-                  ORDER BY updated_at DESC 
-                  LIMIT ?, ?";
+        $query = $baseQuery . $whereClause . " ORDER BY updated_at DESC LIMIT ?, ?";
         $stmt = $conn->prepare($query);
-        
+
         if (!$stmt) {
             throw new Exception("Prepare failed for revenue listing: " . $conn->error);
         }
 
-        $stmt->bind_param("ii", $offset, $limit);
+        if ($statusFilter !== "") {
+            $params[] = $offset;
+            $params[] = $limit;
+            $types .= "ii";
+            $stmt->bind_param($types, ...$params);
+        } else {
+            $stmt->bind_param("ii", $offset, $limit);
+        }
+
         if (!$stmt->execute()) {
             throw new Exception("Execute failed for revenue listing: " . $stmt->error);
         }
@@ -73,9 +120,7 @@ try {
             $revenues[] = $row;
         }
 
-        // $stmt->close();
         $conn->commit();
-
         logActivity("Successfully retrieved " . count($revenues) . " revenue records");
 
         // Prepare response
@@ -87,7 +132,8 @@ try {
             'limit' => $limit,
             'totalPages' => ceil($total / $limit),
             'requested_by' => $adminId,
-            'timestamp' => date('c')
+            'timestamp' => date('c'),
+            'status_filter' => $statusFilter
         ];
 
         echo json_encode($response);

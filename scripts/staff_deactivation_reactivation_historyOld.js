@@ -7,72 +7,94 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentPage = 1;
     loadSuperAdmins()
 
-    // Function to fetch basic list
-function fetchDeactivationList(page = 1) {
-    currentPage = page;
-    toggleLoader(true);
-    toggleTable(false);
+    function fetchDeletedStaffs(page = 1, filters = {}) {
+        currentPage = page;
+        toggleLoader(true);
+        toggleTable(false);
 
-    // Get filter values
-    const deactivator = document.getElementById('deactivator').value;
-    const reactivator = document.getElementById('reactivator').value;
-    const deactivationStatus = document.getElementById('deactivationStatus').value;
+        // Get filter values
+        const deactivator = document.getElementById('deactivator').value;
+        const reactivator = document.getElementById('reactivator').value;
+        const deactivationStatus = document.getElementById('deactivationStatus').value;
 
-    // Build query string with filters
-    const params = new URLSearchParams({
-        page: page,
-        limit: limit,
-        ...(deactivator && { deactivator: deactivator }),
-        ...(reactivator && { reactivator: reactivator }),
-        ...(deactivationStatus && { deactivationStatus: deactivationStatus })
-    });
+        // Build query string with filters
+        const params = new URLSearchParams({
+            page: page,
+            limit: limit,
+            ...(deactivator && { deactivator: deactivator }),
+            ...(reactivator && { reactivator: reactivator }),
+            ...(deactivationStatus && { deactivationStatus: deactivationStatus })
+        });
 
-    fetch(`backend/get_deactivation_reactivation_list.php?${params}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            setTimeout(() => {
-                if (data.deletedStaff.length === 0) {
-                    const tableBody = document.querySelector('#ordersTable tbody');
-                    tableBody.innerHTML = `
+        fetch(`backend/get_staff_deactivation_reactivation_history.php?${params}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    setTimeout(() => {
+                        if (data.deletedStaff.length === 0) {
+                            const tableBody = document.querySelector('#ordersTable tbody');
+                            tableBody.innerHTML = `
                         <tr>
                             <td colspan="9" style="text-align: center; font-style: italic;">No Record Found</td>
                         </tr>
                     `;
-                    togglePagination(false);
+                            togglePagination(false);
+                        } else {
+                            updateTable(data.deletedStaff);
+                            updatePagination(data.total, data.page, data.limit);
+                        }
+
+                        // Populate dropdowns with Super Admins if returned
+                        if (data.super_admins) {
+                            populateAdminDropdowns(data.super_admins);
+                        }
+
+                        toggleLoader(false);
+                        toggleTable(true);
+                    }, 1000);
                 } else {
-                    updateTable(data.deletedStaff);
-                    updatePagination(data.total, data.page, data.limit);
+                    toggleLoader(false);
+                    showErrorModal(`Failed to fetch Staff Records: ${data.error || 'Unknown error'}`);
+                    console.error('Failed to fetch Staff Records:', data.error);
                 }
-                
-                // Populate dropdowns with Super Admins if returned
-                if (data.super_admins) {
-                    populateAdminDropdowns(data.super_admins);
-                }
-                
+            })
+            .catch(error => {
                 toggleLoader(false);
-                toggleTable(true);
-            }, 1000);
-        } else {
-            toggleLoader(false);
-            showErrorModal(`Failed to fetch records: ${data.error || 'Unknown error'}`);
-            console.error('Failed to fetch records:', data.error);
-        }
-    })
-    .catch(error => {
-        toggleLoader(false);
-        showErrorModal('Error fetching data. Please try again later.');
-        console.error('Error fetching data:', error);
-    });
-}
+                showErrorModal('Error fetching data. Please try again later.');
+                console.error('Error fetching data:', error);
+            });
+    }
+
+    // Function to populate dropdowns
+    // function populateAdminDropdowns(superAdmins) {
+    //     const deactivatorSelect = document.getElementById('deactivator');
+    //     const reactivatorSelect = document.getElementById('reactivator');
+
+    //     // Clear existing options (except the first one)
+    //     deactivatorSelect.innerHTML = '<option value="">--All Admin--</option>';
+    //     reactivatorSelect.innerHTML = '<option value="">All</option>';
+
+    //     // Add Super Admin options using firstname + lastname
+    //     superAdmins.forEach(admin => {
+    //         const fullName = `${admin.firstname} ${admin.lastname}`.trim();
+    //         const displayText = fullName || `Admin ${admin.unique_id}`;
+
+    //         const deactivatorOption = new Option(displayText, admin.unique_id);
+    //         const reactivatorOption = new Option(displayText, admin.unique_id);
+
+    //         deactivatorSelect.add(deactivatorOption);
+    //         reactivatorSelect.add(reactivatorOption);
+    //     });
+    // }
+
     // Apply filters function
     function applyFilters() {
-        fetchDeletedfetchDeactivationList(1); // Reset to page 1 when filters are applied
+        fetchDeletedStaffs(1); // Reset to page 1 when filters are applied
     }
 
     // Event listener for Apply Filters button

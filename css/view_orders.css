@@ -243,7 +243,6 @@ tr:nth-child(even) {
     cursor: not-allowed;
 }
 
-
 @media (max-width: 800px) {
 
     table,

@@ -295,13 +295,22 @@ async function fetchPromos(page = 1) {
     const ordersTableBody = document.getElementById('ordersTableBody');
     const paginationContainer = document.getElementById('pagination');
 
+    // Read filter values
+    const statusFilter = document.getElementById('statusFilter').value;
+    const deleteFilter = document.getElementById('deleteFilter').value;
+
+    // Build query string dynamically
+    let queryParams = `page=${page}&limit=${limit}`;
+    if (statusFilter !== "") queryParams += `&status=${statusFilter}`;
+    if (deleteFilter !== "") queryParams += `&delete_id=${deleteFilter}`;
+
     // Show spinner
     ordersTableBody.innerHTML = createSpinnerHTML();
 
     try {
         const [data] = await Promise.all([
-            fetch(`backend/get_promo.php?page=${page}&limit=${limit}`).then(res => res.json()),
-            new Promise(resolve => setTimeout(resolve, 1000))
+            fetch(`backend/get_promo.php?${queryParams}`).then(res => res.json()),
+            new Promise(resolve => setTimeout(resolve, 1000)) // artificial delay for spinner
         ]);
 
         if (data.success && data.promos?.all?.length > 0) {
@@ -315,6 +324,12 @@ async function fetchPromos(page = 1) {
         ordersTableBody.innerHTML = createErrorHTML();
     }
 }
+
+// Event listener for filter button
+document.getElementById('applyPromoFilters').addEventListener('click', () => {
+    fetchPromos(1); // reset to first page when applying filters
+});
+
 
 function updateTable(promos) {
     const ordersTableBody = document.querySelector('#ordersTable tbody');
@@ -440,7 +455,7 @@ function populatePromoDetails(promoDetails, userRole) {
             max_discount: document.getElementById('max_discount'),
             status: document.getElementById('status')
         };
-        
+
         console.log('Form elements initialized:', {
             promoId: !!promoFormElements.promoId,
             promoCode: !!promoFormElements.promoCode,
@@ -559,7 +574,7 @@ async function updatePromo(promoId) {
     if (!confirm("Are you sure you want to Update Promo Details?")) return;
 
     const promoData = collectPromoData();
-    
+
     // Debug: Check what data is being sent
     console.log('Sending data to backend:', promoData);
     console.log('Expected promoId:', promoId);
@@ -639,12 +654,12 @@ function validatePromoData(promoData) {
         if (promoData.discount_value < 0.1 || promoData.discount_value > 100) {
             errors.push('- Percentage discount must be between 0.1% and 100%');
         }
-        
+
         // For percentage, max_discount should be a reasonable cap
         if (promoData.max_discount <= 0) {
             errors.push('- Maximum discount must be greater than 0');
         }
-        
+
     } else if (promoData.discount_type === 'flat') {
         if (promoData.discount_value <= 0) {
             errors.push('- Flat discount must be greater than 0');
@@ -745,12 +760,12 @@ function createErrorDiv() {
     errorDiv.style.color = 'red';
     errorDiv.style.marginTop = '5px';
     errorDiv.style.display = 'none';
-    
+
     const discountRow = document.querySelector('tr:has(#discountInput)');
     if (discountRow) {
         discountRow.querySelector('td:last-child').appendChild(errorDiv);
     }
-    
+
     return errorDiv;
 }
 
@@ -774,7 +789,7 @@ function collectPromoData() {
             max_discount: parseFloat(document.getElementById('max_discount').value) || 0,
             status: parseInt(document.getElementById('status').value) || 0
         };
-        
+
         console.log('Collected promo data:', data);
         return data;
     } catch (error) {

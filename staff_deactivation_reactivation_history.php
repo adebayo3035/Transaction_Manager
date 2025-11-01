@@ -57,6 +57,30 @@
             <button type="submit">Search <i class="fa fa-search" aria-hidden="true"></i></button>
         </div>
 
+        <div class="filters">
+            <div class="applyFilters">
+                <label>Deactivated by</label>
+                <select id="deactivator">
+                    <option value="">--All Admin--</option>
+                </select>
+
+                <label>Reactivated By</label>
+                <select id="reactivator">
+                    <option value="">All</option>
+                </select>
+                <label>Status </label>
+                <select id="deactivationStatus">
+                    <option value="">All</option>
+                    <option value="reactivated">Reactivated</option>
+                    <option value="deactivated">Deactivated</option>
+                    <option value="declined">Declined</option>
+                </select>
+
+                <button id="applyFilters" class="btn btn-primary">Apply</button>
+            </div>
+        </div>
+
+
 
     </div>
     <div class="spinner" id="spinner">

@@ -23,17 +23,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Inject spinner
         ordersTableBody.innerHTML = `
-        <tr>
-            <td colspan="6" style="text-align:center; padding: 20px;">
-                <div class="spinner"
-                    style="border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 60%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: auto;">
-                </div>
-            </td>
-        </tr>
-        `;
+    <tr>
+        <td colspan="6" style="text-align:center; padding: 20px;">
+            <div class="spinner"
+                style="border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 60%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: auto;">
+            </div>
+        </td>
+    </tr>
+    `;
 
-        const minDelay = new Promise(resolve => setTimeout(resolve, 1000)); // Spinner shows at least 600ms
-        const fetchData = fetch(`backend/fetch_order_summary.php?page=${page}&limit=${limit}`)
+        const minDelay = new Promise(resolve => setTimeout(resolve, 1000));
+
+        // 🔹 Validate delivery_status input
+        const deliveryStatusInput = document.getElementById('filterDeliveryStatus')?.value || "";
+        const allowedStatuses = [
+            "", "Pending", "Assigned", "In Transit", "Delivered", "Cancelled", "Declined", "Cancelled on Delivery"
+        ];
+
+        let deliveryStatus = "";
+        if (allowedStatuses.includes(deliveryStatusInput)) {
+            deliveryStatus = deliveryStatusInput;
+        } else {
+            console.warn("Invalid delivery status selected on frontend:", deliveryStatusInput);
+            alert("Invalid delivery status filter. Please choose a valid option.");
+            return; // 🚫 Stop fetch if invalid
+        }
+
+        // 🔹 Build query string
+        const params = new URLSearchParams({ page, limit });
+        if (deliveryStatus) {
+            params.append('delivery_status', deliveryStatus);
+        }
+
+        const fetchData = fetch(`backend/fetch_order_summary.php?${params.toString()}`)
             .then(res => res.json());
 
         Promise.all([fetchData, minDelay])
@@ -43,15 +65,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     updatePagination(data.pagination.total, data.pagination.page, data.pagination.limit);
                 } else {
                     ordersTableBody.innerHTML = `
-                    <tr><td colspan="6" style="text-align:center;">No Order at the moment</td></tr>
+                <tr><td colspan="6" style="text-align:center;">No Order at the moment</td></tr>
                 `;
-                    console.error('No Order data:', data.message);
+                    console.warn('No Order data:', data.message || "No records found");
                 }
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
                 ordersTableBody.innerHTML = `
-                <tr><td colspan="6" style="text-align:center; color:red;">Error loading Order data</td></tr>
+            <tr><td colspan="6" style="text-align:center; color:red;">Error loading Order data</td></tr>
             `;
             });
     }
@@ -87,147 +109,147 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Fetch order details for a specific order
-   function fetchOrderDetails(orderId) {
-    fetch('backend/fetch_order_details.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ order_id: orderId })
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('API Response:', data); // Debug log
-        if (data.success) {
-            const headerText = document.getElementById('orderID').textContent = orderId;
-            
-            // Check if items array exists and is valid
-            if (!data.items || !Array.isArray(data.items)) {
-                console.error('Invalid items data:', data.items);
-                data.items = []; // Set to empty array to prevent errors
-            }
-            
-            populateOrderDetails(data.order, data.items);
-            
-            // Check if the order status is "Assigned"
-            const orderStatus = data.order.delivery_status;
-            viewPackBtn.dataset.orderId = data.order.order_id;
-            const reassignButton = document.getElementById('reassign-order');
+    function fetchOrderDetails(orderId) {
+        fetch('backend/fetch_order_details.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ order_id: orderId })
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('API Response:', data); // Debug log
+                if (data.success) {
+                    const headerText = document.getElementById('orderID').textContent = orderId;
 
-            if (orderStatus === "Assigned") {
-                reassignButton.style.display = 'block';
-                reassignButton.disabled = false;
-            } else {
-                reassignButton.style.display = 'none';
-                reassignButton.disabled = true;
-            }
-            orderModal.style.display = 'block';
-        } else {
-            console.error('Failed to fetch order details:', data.message);
-        }
-    })
-    .catch(error => console.error('Error fetching order details:', error));
-}
+                    // Check if items array exists and is valid
+                    if (!data.items || !Array.isArray(data.items)) {
+                        console.error('Invalid items data:', data.items);
+                        data.items = []; // Set to empty array to prevent errors
+                    }
 
-// Populate order details table
-function populateOrderDetails(order, items) {
-    orderDetailsTableBody.innerHTML = '';
-    const fragment = document.createDocumentFragment();
+                    populateOrderDetails(data.order, data.items);
 
-    // Safely handle items array
-    if (items && Array.isArray(items)) {
-        items.forEach(item => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
+                    // Check if the order status is "Assigned"
+                    const orderStatus = data.order.delivery_status;
+                    viewPackBtn.dataset.orderId = data.order.order_id;
+                    const reassignButton = document.getElementById('reassign-order');
+
+                    if (orderStatus === "Assigned") {
+                        reassignButton.style.display = 'block';
+                        reassignButton.disabled = false;
+                    } else {
+                        reassignButton.style.display = 'none';
+                        reassignButton.disabled = true;
+                    }
+                    orderModal.style.display = 'block';
+                } else {
+                    console.error('Failed to fetch order details:', data.message);
+                }
+            })
+            .catch(error => console.error('Error fetching order details:', error));
+    }
+
+    // Populate order details table
+    function populateOrderDetails(order, items) {
+        orderDetailsTableBody.innerHTML = '';
+        const fragment = document.createDocumentFragment();
+
+        // Safely handle items array
+        if (items && Array.isArray(items)) {
+            items.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
                 <td>${item.food_id || ''}</td>
                 <td>${item.food_name || ''}</td>
                 <td>${item.quantity || ''}</td>
                 <td>${item.price_per_unit || ''}</td>
                 <td>${item.total_price || ''}</td>
             `;
-            fragment.appendChild(row);
-        });
-    } else {
-        console.warn('No items found or items is not an array');
-        // Add a message row if no items
-        const noItemsRow = document.createElement('tr');
-        noItemsRow.innerHTML = `
+                fragment.appendChild(row);
+            });
+        } else {
+            console.warn('No items found or items is not an array');
+            // Add a message row if no items
+            const noItemsRow = document.createElement('tr');
+            noItemsRow.innerHTML = `
             <td colspan="5" style="text-align: center; color: #999;">No food items found for this order</td>
         `;
-        fragment.appendChild(noItemsRow);
-    }
-
-    // Add order metadata with safe property access
-    fragment.appendChild(createRow('Delivery Status', order?.delivery_status || 'N/A'));
-    fragment.appendChild(createRow('Date Last Modified', order?.updated_at || 'N/A'));
-    fragment.appendChild(createRow('Total Order', order?.total_order || 'N/A'));
-    fragment.appendChild(createRow('Service Fee', order?.service_fee || 'N/A'));
-    fragment.appendChild(createRow('Delivery Fee', order?.delivery_fee || 'N/A'));
-    fragment.appendChild(createRow('Number of Packs', order?.pack_count || 'N/A'));
-    fragment.appendChild(createRow('Refunded Amount', order?.revenue?.refunded_amount || '0.00'));
-
-    // Promotion details with safe access
-    if (order?.promotion) {
-        if (order.promotion.percentage_discount !== null && order.promotion.percentage_discount !== undefined) {
-            fragment.appendChild(createRow('Percentage Discount (%)', order.promotion.percentage_discount));
+            fragment.appendChild(noItemsRow);
         }
-        if (order.promotion.discount_value !== null && order.promotion.discount_value !== undefined) {
-            fragment.appendChild(createRow('Discount Value (N)', order.promotion.discount_value));
+
+        // Add order metadata with safe property access
+        fragment.appendChild(createRow('Delivery Status', order?.delivery_status || 'N/A'));
+        fragment.appendChild(createRow('Date Last Modified', order?.updated_at || 'N/A'));
+        fragment.appendChild(createRow('Total Order', order?.total_order || 'N/A'));
+        fragment.appendChild(createRow('Service Fee', order?.service_fee || 'N/A'));
+        fragment.appendChild(createRow('Delivery Fee', order?.delivery_fee || 'N/A'));
+        fragment.appendChild(createRow('Number of Packs', order?.pack_count || 'N/A'));
+        fragment.appendChild(createRow('Refunded Amount', order?.revenue?.refunded_amount || '0.00'));
+
+        // Promotion details with safe access
+        if (order?.promotion) {
+            if (order.promotion.percentage_discount !== null && order.promotion.percentage_discount !== undefined) {
+                fragment.appendChild(createRow('Percentage Discount (%)', order.promotion.percentage_discount));
+            }
+            if (order.promotion.discount_value !== null && order.promotion.discount_value !== undefined) {
+                fragment.appendChild(createRow('Discount Value (N)', order.promotion.discount_value));
+            }
+            if (order.promotion.promo_code !== null && order.promotion.promo_code !== undefined) {
+                fragment.appendChild(createRow('Promo Code', order.promotion.promo_code));
+            }
         }
-        if (order.promotion.promo_code !== null && order.promotion.promo_code !== undefined) {
-            fragment.appendChild(createRow('Promo Code', order.promotion.promo_code));
+
+        fragment.appendChild(createRow('Balance', order?.revenue?.retained_amount || '0.00'));
+
+        // Admin assignments with safe access
+        if (order?.assigned_admin) {
+            fragment.appendChild(createRow('Order Assigned To', `${order.assigned_admin.firstname || ''} ${order.assigned_admin.lastname || ''}`));
+        }
+
+        // Approval information with safe access
+        if (order?.delivery_status === 'Cancelled' && !order?.approver) {
+            fragment.appendChild(createRow('Order Approved By', 'Customer Cancelled Order'));
+        }
+        else if (order?.approver) {
+            fragment.appendChild(createRow('Order Approved By', `${order.approver.firstname || ''} ${order.approver.lastname || ''}`));
+        }
+
+        // Customer information with safe access
+        if (order?.customer) {
+            fragment.appendChild(createRow("Customer's Name", `${order.customer.firstname || ''} ${order.customer.lastname || ''}`));
+            fragment.appendChild(createRow("Customer's Mobile Number", order.customer.phone || 'N/A'));
+            fragment.appendChild(createRow("Customer's Address", order.customer.address || 'N/A'));
+        }
+
+        // Driver information with safe access
+        if (order?.driver) {
+            fragment.appendChild(createRow("Driver's Name", `${order.driver.firstname || ''} ${order.driver.lastname || ''}`));
+        }
+
+        // Cancellation reason with safe access
+        if (order?.delivery_status === "Cancelled") {
+            fragment.appendChild(createRow("Reason for Cancellation", order.cancellation_reason || "No reason provided"));
+        }
+
+        orderDetailsTableBody.appendChild(fragment);
+
+        // Show print button for completed/cancelled orders
+        if (order?.delivery_status === "Delivered" || order?.delivery_status === "Cancelled") {
+            printButton.style.display = "block";
+        } else {
+            printButton.style.display = "none";
         }
     }
 
-    fragment.appendChild(createRow('Balance', order?.revenue?.retained_amount || '0.00'));
-
-    // Admin assignments with safe access
-    if (order?.assigned_admin) {
-        fragment.appendChild(createRow('Order Assigned To', `${order.assigned_admin.firstname || ''} ${order.assigned_admin.lastname || ''}`));
-    }
-
-    // Approval information with safe access
-    if (order?.delivery_status === 'Cancelled' && !order?.approver) {
-        fragment.appendChild(createRow('Order Approved By', 'Customer Cancelled Order'));
-    }
-    else if (order?.approver) {
-        fragment.appendChild(createRow('Order Approved By', `${order.approver.firstname || ''} ${order.approver.lastname || ''}`));
-    }
-
-    // Customer information with safe access
-    if (order?.customer) {
-        fragment.appendChild(createRow("Customer's Name", `${order.customer.firstname || ''} ${order.customer.lastname || ''}`));
-        fragment.appendChild(createRow("Customer's Mobile Number", order.customer.phone || 'N/A'));
-        fragment.appendChild(createRow("Customer's Address", order.customer.address || 'N/A'));
-    }
-
-    // Driver information with safe access
-    if (order?.driver) {
-        fragment.appendChild(createRow("Driver's Name", `${order.driver.firstname || ''} ${order.driver.lastname || ''}`));
-    }
-
-    // Cancellation reason with safe access
-    if (order?.delivery_status === "Cancelled") {
-        fragment.appendChild(createRow("Reason for Cancellation", order.cancellation_reason || "No reason provided"));
-    }
-
-    orderDetailsTableBody.appendChild(fragment);
-
-    // Show print button for completed/cancelled orders
-    if (order?.delivery_status === "Delivered" || order?.delivery_status === "Cancelled") {
-        printButton.style.display = "block";
-    } else {
-        printButton.style.display = "none";
-    }
-}
-
-// Helper function to create table rows
-// function createRow(label, value) {
-//     const row = document.createElement('tr');
-//     row.innerHTML = `
-//         <td><strong>${label}</strong></td>
-//         <td>${value}</td>
-//     `;
-//     return row;
-// }
+    // Helper function to create table rows
+    // function createRow(label, value) {
+    //     const row = document.createElement('tr');
+    //     row.innerHTML = `
+    //         <td><strong>${label}</strong></td>
+    //         <td>${value}</td>
+    //     `;
+    //     return row;
+    // }
     // Create a row for the details table
     function createRow(label, value) {
         const row = document.createElement('tr');
@@ -369,6 +391,13 @@ function populateOrderDetails(order, items) {
     document.querySelector('#packModal .close').addEventListener('click', () => {
         packModal.style.display = 'none'
     });
+    // document.getElementById('applyOrderFilters').addEventListener('click', () => {
+    //     fetchOrders(1); // Reset to page 1 when applying filters
+    // });
+    document.getElementById('filterDeliveryStatus').addEventListener('change', () => {
+        fetchOrders(1); // Reset to page 1 when applying filters
+    });
+
     window.addEventListener('click', (event) => {
         if (event.target === orderModal || event.target === reassignForm || event.target === packModal) {
             orderModal.style.display = 'none';
@@ -478,28 +507,28 @@ function populateOrderDetails(order, items) {
             });
     }
 
-   const displayPackDetails = (order) => {
-    const container = document.getElementById("packDetails");
-    container.innerHTML = "";
+    const displayPackDetails = (order) => {
+        const container = document.getElementById("packDetails");
+        container.innerHTML = "";
 
-    // Add main header
-    const mainHeader = document.createElement("div");
-    mainHeader.className = "main-header";
-    mainHeader.innerHTML = `
+        // Add main header
+        const mainHeader = document.createElement("div");
+        mainHeader.className = "main-header";
+        mainHeader.innerHTML = `
         <h1>📦 Order Packs Details</h1>
         <p class="order-id">Order #${order.order_id}</p>
     `;
-    container.appendChild(mainHeader);
+        container.appendChild(mainHeader);
 
-    order.packs.forEach((pack, index) => {
-        // Pack card container
-        const packCard = document.createElement("div");
-        packCard.className = "pack-card";
-        
-        // Pack header with elegant design
-        const packHeader = document.createElement("div");
-        packHeader.className = "pack-card-header";
-        packHeader.innerHTML = `
+        order.packs.forEach((pack, index) => {
+            // Pack card container
+            const packCard = document.createElement("div");
+            packCard.className = "pack-card";
+
+            // Pack header with elegant design
+            const packHeader = document.createElement("div");
+            packHeader.className = "pack-card-header";
+            packHeader.innerHTML = `
             <div class="pack-header-content">
                 <div class="pack-icon">📦</div>
                 <div class="pack-info">
@@ -512,12 +541,12 @@ function populateOrderDetails(order, items) {
                 </div>
             </div>
         `;
-        packCard.appendChild(packHeader);
+            packCard.appendChild(packHeader);
 
-        // Items table with modern design
-        const tableContainer = document.createElement("div");
-        tableContainer.className = "table-container";
-        tableContainer.innerHTML = `
+            // Items table with modern design
+            const tableContainer = document.createElement("div");
+            tableContainer.className = "table-container";
+            tableContainer.innerHTML = `
             <table class="pack-items-table">
                 <thead>
                     <tr>
@@ -547,17 +576,17 @@ function populateOrderDetails(order, items) {
                 </tfoot>
             </table>
         `;
-        packCard.appendChild(tableContainer);
+            packCard.appendChild(tableContainer);
 
-        container.appendChild(packCard);
-    });
+            container.appendChild(packCard);
+        });
 
-    // Enhanced order summary
-    const totalAmount = order.packs.reduce((sum, p) => sum + parseFloat(p.total_cost || 0), 0);
-    
-    const summary = document.createElement("div");
-    summary.className = "order-summary-card";
-    summary.innerHTML = `
+        // Enhanced order summary
+        const totalAmount = order.packs.reduce((sum, p) => sum + parseFloat(p.total_cost || 0), 0);
+
+        const summary = document.createElement("div");
+        summary.className = "order-summary-card";
+        summary.innerHTML = `
         <div class="summary-header">
             <h3>💰 Order Summary</h3>
         </div>
@@ -577,8 +606,8 @@ function populateOrderDetails(order, items) {
             </div>
         </div>
     `;
-    container.appendChild(summary);
-};
+        container.appendChild(summary);
+    };
 
     if (printButton) {
         printButton.addEventListener('click', printReceipt);

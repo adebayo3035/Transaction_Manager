@@ -14,19 +14,40 @@
 
 <body>
     <?php include('navbar.php'); ?>
-     <?php include('dashboard_navbar.php'); ?>
+    <?php include('dashboard_navbar.php'); ?>
     <div class="container">
         <h1>Promo Archives</h1>
-        
+
         <!-- Separate row for "Add New Customer" button -->
         <div id="customer-form">
             <button onclick="toggleModal('addNewPromoModal')"><i class="fa fa-plus" aria-hidden="true"></i> Add New
                 Promo</button>
         </div>
-        
+
         <div class="livesearch">
             <input type="text" id="liveSearch" placeholder="Search for Order...">
             <button type="submit">Search <i class="fa fa-search" aria-hidden="true"></i></button>
+        </div>
+
+        <div style="margin-bottom: 10px;" class="filter-section">
+            <div class="promoFilters">
+                <label>Status:</label>
+                <select id="statusFilter">
+                    <option value="">All</option>
+                    <option value="1">Active</option>
+                    <option value="0">InActive</option>
+                </select>
+            
+                <label>Delete Status:</label>
+                <select id="deleteFilter">
+                    <option value="">All</option>
+                    <option value="1">Deleted</option>
+                    <option value="0">Not Deleted</option>
+                </select>
+                <button id="applyPromoFilters" class="filter-btn">Apply Filters</button>
+            </div>
+            
+            
         </div>
 
 
@@ -45,7 +66,7 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody id = "ordersTableBody">
+        <tbody id="ordersTableBody">
             <!-- Promo Information will be dynamically inserted here -->
         </tbody>
 
@@ -87,9 +108,9 @@
 
                     <div class="form-input">
                         <label for="promo_description">Promo Description:</label>
-                        <textarea id="promoDescription" name="promo_description" placeholder="Describe the promo details"
-                            required maxlength="150"></textarea>
-                            <div id="charCount" class="char-counter">150 characters remaining</div>
+                        <textarea id="promoDescription" name="promo_description"
+                            placeholder="Describe the promo details" required maxlength="150"></textarea>
+                        <div id="charCount" class="char-counter">150 characters remaining</div>
                     </div>
 
                     <div class="form-input">
@@ -111,8 +132,9 @@
                         </select>
                     </div>
 
-                    <div class="form-input" id = "discount-div">
-                        <label for="discount_value">Discount <span id = "discount_identifier">Percentage (%):</span></label>
+                    <div class="form-input" id="discount-div">
+                        <label for="discount_value">Discount <span id="discount_identifier">Percentage
+                                (%):</span></label>
                         <input type="number" id="discount" name="discount_value" min="1" max="100" required>
                     </div>
                     <div class="form-input">
