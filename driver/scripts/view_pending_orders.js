@@ -121,6 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Add order metadata
         fragment.appendChild(createRow('', ''));
+        fragment.appendChild(createRow('Number of Packs', order.pack_count));
         fragment.appendChild(createRow('Date Last Modified', order.updated_at));
         fragment.appendChild(createRow('Delivery Fee', order.delivery_fee));
         fragment.appendChild(createRow("Customer's Name", `${order.customer.firstname} ${order.customer.lastname}`));

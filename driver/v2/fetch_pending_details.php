@@ -29,6 +29,7 @@ SELECT
     o.delivery_fee,
     o.delivery_status,
     o.order_id,
+    o.pack_count,
     d.firstname AS driver_firstname, 
     d.lastname AS driver_lastname,
     c.firstname AS customer_firstname,
@@ -66,9 +67,10 @@ AND o.driver_id = ?";
         if ($orderInfo === null) {
             $orderInfo = [
                 'order_id' => $row['order_id'],
+                'pack_count' => $row['pack_count'],
                 'order_date' => $row['order_date'],
                 'updated_at' => $row['updated_at'],
-                'delivery_fee' => (float)$row['delivery_fee'],
+                'delivery_fee' => ((float)$row['delivery_fee']),
                 'delivery_status' => $row['delivery_status'],
                 'customer' => [
                     'firstname' => $row['customer_firstname'],

@@ -273,34 +273,47 @@ function addNewFoodItem(foodId, foodName, foodPrice, quantity, packId) {
         pack_id: packId
     };
 
+    // Add to array
     orderItems.push(orderItem);
 
-    const row = document.createElement('tr');
-    row.setAttribute('data-food-id', foodId);
-    row.innerHTML = `
-        <td>${orderItems.length}</td>
-        <td>${packId}</td>
-        <td>${foodName}</td>
-        <td>${quantity}</td>
-        <td>N ${foodPrice.toFixed(2)}</td>
-        <td class="total-price">N ${totalPrice.toFixed(2)}</td>
-        <td class="buttons">
-            <button type="button" class="edit-button">Edit</button>
-            <button type="button" class="delete-button">Delete</button>
-        </td>
-    `;
+    // ✅ Sort items alphabetically by packId (case-insensitive)
+    orderItems.sort((a, b) => a.pack_id.localeCompare(b.pack_id, undefined, { sensitivity: 'base' }));
 
-    orderSummaryTable.appendChild(row);
+    // ✅ Re-render table
+    renderOrderTable();
+    updateTotalAmount();
 
     // Clear input fields
     document.getElementById('food-name').value = "";
     document.getElementById('number-of-portion').value = "";
-
-    // Add event listeners for edit and delete buttons
-    addRowEventListeners(row, orderItem, foodPrice);
-
-    updateTotalAmount();
 }
+
+function renderOrderTable() {
+    // Clear existing rows
+    orderSummaryTable.innerHTML = "";
+
+    // Recreate rows based on sorted orderItems
+    orderItems.forEach((item, index) => {
+        const row = document.createElement('tr');
+        row.setAttribute('data-food-id', item.food_id);
+        row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${item.pack_id}</td>
+            <td>${item.food_name}</td>
+            <td>${item.quantity}</td>
+            <td>N ${item.price_per_unit.toFixed(2)}</td>
+            <td class="total-price">N ${item.total_price.toFixed(2)}</td>
+            <td class="buttons">
+                <button type="button" class="edit-button">Edit</button>
+                <button type="button" class="delete-button">Delete</button>
+            </td>
+        `;
+
+        orderSummaryTable.appendChild(row);
+        addRowEventListeners(row, item, item.price_per_unit);
+    });
+}
+
 
 function addRowEventListeners(row, orderItem, foodPrice) {
     const editButton = row.querySelector('.edit-button');
