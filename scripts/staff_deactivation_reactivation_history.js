@@ -120,7 +120,7 @@ function fetchDeactivationList(page = 1) {
         const retryButton = document.getElementById('retryButton');
         if (retryButton) {
             retryButton.onclick = function () {
-                fetchDeletedStaffs(currentPage);
+                fetchDeactivationList(currentPage);
                 errorModal.style.display = 'none';
             };
         }
@@ -225,7 +225,7 @@ function fetchDeactivationList(page = 1) {
             const btn = document.createElement('button');
             btn.textContent = label;
             if (disabled) btn.disabled = true;
-            btn.addEventListener('click', () => fetchDeletedStaffs(page));
+            btn.addEventListener('click', () => fetchDeactivationList(page));
             paginationContainer.appendChild(btn);
         };
 
@@ -242,7 +242,7 @@ function fetchDeactivationList(page = 1) {
             const btn = document.createElement('button');
             btn.textContent = i;
             if (i === currentPage) btn.classList.add('active');
-            btn.addEventListener('click', () => fetchDeletedStaffs(i));
+            btn.addEventListener('click', () => fetchDeactivationList(i));
             paginationButtons.push(btn);
             paginationContainer.appendChild(btn);
         }
@@ -274,7 +274,7 @@ function fetchDeactivationList(page = 1) {
     }
 
     // Initial load
-    fetchDeletedStaffs(currentPage);
+    fetchDeactivationList(currentPage);
 
     function toggleLoader(show) {
         const loader = document.getElementById('spinner');

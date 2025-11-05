@@ -40,6 +40,7 @@
                         <option value="In Transit"> In Transit</option>
                         <option value="Delivered"> Delivered</option>
                         <option value="Cancelled on Delivery"> Cancelled</option>
+                        <option value="Terminated"> Terminated</option>
                     </select>
                 </div>
                 <div class="form-input" id="delivery_auth">
@@ -48,7 +49,7 @@
                 </div>
                 <!-- This textarea is hidden by default and will appear if the driver selects "Cancelled" -->
                 <div class="form-input" id="cancelReasonContainer">
-                    <label for="cancelReason">Reason for Cancellation:</label>
+                    <label for="cancelReason" id ="lblCancelReason"></label>
                     <textarea id="cancelReason" name="cancelReason" placeholder="Enter reason for cancellation"
                         maxlength="100"></textarea>
                 </div>

@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const ORDER_STATUS = document.getElementById('order-status');
     const NEW_STATUS = document.getElementById('new-status');
     const CANCEL_REASON_CONTAINER = document.getElementById('cancelReasonContainer');
+    const CANCEL_REASON_LABEL = document.getElementById('lblCancelReason');
 
     // Event listener for order ID selection
     SELECT_ELEMENT.addEventListener('change', handleOrderSelection);
@@ -39,12 +40,18 @@ document.addEventListener('DOMContentLoaded', function () {
     // Function to handle order status change
     function handleOrderStatusChange() {
         const orderValue = ORDER_STATUS.value;
-        const isDeliveryOrCancel = orderValue === "Delivered" || orderValue === "Cancelled on Delivery";
+        const isDeliveryOrCancel = orderValue === "Delivered" || orderValue === "Cancelled on Delivery" || orderValue === "Terminated";
 
         DELIVERY_AUTH.style.display = isDeliveryOrCancel ? "flex" : "none";
         UPDATE_DELIVERY_STATUS.style.display = (isDeliveryOrCancel || orderValue === "In Transit") ? "flex" : "none";
 
-        CANCEL_REASON_CONTAINER.style.display = orderValue === "Cancelled on Delivery" ? "flex" : "none";
+        CANCEL_REASON_CONTAINER.style.display = orderValue === "Cancelled on Delivery" || orderValue === "Terminated" ? "flex" : "none";
+        if(orderValue === "Terminated") {
+            CANCEL_REASON_LABEL.textContent = "Reason for Termination";
+        }
+        else if(orderValue === "Cancelled on Delivery") {
+            CANCEL_REASON_LABEL.textContent = "Reason for Cancellation";
+        }
     }
 
     // Function to update order status
