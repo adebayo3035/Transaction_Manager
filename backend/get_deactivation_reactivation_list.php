@@ -113,6 +113,7 @@ try {
             COALESCE(l.status, 'No Reactivation Request') AS reactivation_status,
             l.date_created AS reactivation_date,
             l.reactivated_by as reactivated_by,
+            l.date_last_updated as date_last_updated,
             reactivator.firstname AS reactivated_by_firstname,
             reactivator.lastname AS reactivated_by_lastname
             
@@ -162,6 +163,7 @@ try {
             
             'reactivation_status' => $row['reactivation_status'],
             'reactivation_date' => $row['reactivation_date'] ?? null,
+            'date_last_updated' => $row['date_last_updated'] ?? null,
             
             'deactivated_by' => [
                 'admin_id' => $row['deactivated_by'],

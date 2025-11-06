@@ -58152,3 +58152,1043 @@ Source: session_data.php (Line 7)
 Message: Session check successful for driver ID: 11
 ----------------------------------------
 
+[2025-11-05 18:23:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 6)
+Message: Session validated successfully for Driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:23:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 12)
+Message: Driver ID: 11 requested orders. Page: 1, Limit: 10.
+----------------------------------------
+
+[2025-11-05 18:23:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 32)
+Message: Total orders found for driver ID: 11: 1.
+----------------------------------------
+
+[2025-11-05 18:23:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 58)
+Message: Successfully fetched 1 paginated orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:23:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 86)
+Message: Successfully fetched 1 pending orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:23:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 6)
+Message: Session validated successfully for Driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:23:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 12)
+Message: Driver ID: 11 requested orders. Page: 1, Limit: 10.
+----------------------------------------
+
+[2025-11-05 18:23:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 32)
+Message: Total orders found for driver ID: 11: 1.
+----------------------------------------
+
+[2025-11-05 18:23:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 58)
+Message: Successfully fetched 1 paginated orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:23:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 86)
+Message: Successfully fetched 1 pending orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:23:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 11)
+Message: Driver ID: 11 requested their profile details.
+----------------------------------------
+
+[2025-11-05 18:23:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 13)
+Message: Session validated successfully for Driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:23:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 41)
+Message: Successfully fetched driver details for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:23:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/session_data.php
+Source: session_data.php (Line 7)
+Message: Session check successful for driver ID: 11
+----------------------------------------
+
+[2025-11-05 18:25:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 6)
+Message: Session validated successfully for Driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:25:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 12)
+Message: Driver ID: 11 requested orders. Page: 1, Limit: 10.
+----------------------------------------
+
+[2025-11-05 18:25:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 32)
+Message: Total orders found for driver ID: 11: 1.
+----------------------------------------
+
+[2025-11-05 18:25:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 58)
+Message: Successfully fetched 1 paginated orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:25:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 86)
+Message: Successfully fetched 1 pending orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:25:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 6)
+Message: Session validated successfully for Driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:25:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 12)
+Message: Driver ID: 11 requested orders. Page: 1, Limit: 10.
+----------------------------------------
+
+[2025-11-05 18:25:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 32)
+Message: Total orders found for driver ID: 11: 1.
+----------------------------------------
+
+[2025-11-05 18:25:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 58)
+Message: Successfully fetched 1 paginated orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:25:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 86)
+Message: Successfully fetched 1 pending orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:25:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/session_data.php
+Source: session_data.php (Line 7)
+Message: Session check successful for driver ID: 11
+----------------------------------------
+
+[2025-11-05 18:25:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 11)
+Message: Driver ID: 11 requested their profile details.
+----------------------------------------
+
+[2025-11-05 18:25:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 13)
+Message: Session validated successfully for Driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:25:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 41)
+Message: Successfully fetched driver details for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:27:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 6)
+Message: Session validated successfully for Driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:27:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 12)
+Message: Driver ID: 11 requested orders. Page: 1, Limit: 10.
+----------------------------------------
+
+[2025-11-05 18:27:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 32)
+Message: Total orders found for driver ID: 11: 1.
+----------------------------------------
+
+[2025-11-05 18:27:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 58)
+Message: Successfully fetched 1 paginated orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:27:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 86)
+Message: Successfully fetched 1 pending orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:27:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 6)
+Message: Session validated successfully for Driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:27:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 12)
+Message: Driver ID: 11 requested orders. Page: 1, Limit: 10.
+----------------------------------------
+
+[2025-11-05 18:27:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 32)
+Message: Total orders found for driver ID: 11: 1.
+----------------------------------------
+
+[2025-11-05 18:27:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 58)
+Message: Successfully fetched 1 paginated orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:27:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 86)
+Message: Successfully fetched 1 pending orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:27:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 11)
+Message: Driver ID: 11 requested their profile details.
+----------------------------------------
+
+[2025-11-05 18:27:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 13)
+Message: Session validated successfully for Driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:27:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 41)
+Message: Successfully fetched driver details for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:27:01]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/session_data.php
+Source: session_data.php (Line 7)
+Message: Session check successful for driver ID: 11
+----------------------------------------
+
+[2025-11-05 18:29:02]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 6)
+Message: Session validated successfully for Driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:29:02]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 12)
+Message: Driver ID: 11 requested orders. Page: 1, Limit: 10.
+----------------------------------------
+
+[2025-11-05 18:29:02]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 32)
+Message: Total orders found for driver ID: 11: 1.
+----------------------------------------
+
+[2025-11-05 18:29:02]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 58)
+Message: Successfully fetched 1 paginated orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:29:02]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 86)
+Message: Successfully fetched 1 pending orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:29:02]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 6)
+Message: Session validated successfully for Driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:29:02]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 12)
+Message: Driver ID: 11 requested orders. Page: 1, Limit: 10.
+----------------------------------------
+
+[2025-11-05 18:29:02]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 32)
+Message: Total orders found for driver ID: 11: 1.
+----------------------------------------
+
+[2025-11-05 18:29:02]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 58)
+Message: Successfully fetched 1 paginated orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:29:02]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 86)
+Message: Successfully fetched 1 pending orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:29:02]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/session_data.php
+Source: session_data.php (Line 7)
+Message: Session check successful for driver ID: 11
+----------------------------------------
+
+[2025-11-05 18:29:02]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 11)
+Message: Driver ID: 11 requested their profile details.
+----------------------------------------
+
+[2025-11-05 18:29:02]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 13)
+Message: Session validated successfully for Driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:29:02]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 41)
+Message: Successfully fetched driver details for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:31:03]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 6)
+Message: Session validated successfully for Driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:31:03]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 12)
+Message: Driver ID: 11 requested orders. Page: 1, Limit: 10.
+----------------------------------------
+
+[2025-11-05 18:31:03]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 32)
+Message: Total orders found for driver ID: 11: 1.
+----------------------------------------
+
+[2025-11-05 18:31:03]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 58)
+Message: Successfully fetched 1 paginated orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:31:03]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 86)
+Message: Successfully fetched 1 pending orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:31:03]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 6)
+Message: Session validated successfully for Driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:31:03]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 12)
+Message: Driver ID: 11 requested orders. Page: 1, Limit: 10.
+----------------------------------------
+
+[2025-11-05 18:31:03]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 32)
+Message: Total orders found for driver ID: 11: 1.
+----------------------------------------
+
+[2025-11-05 18:31:03]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 58)
+Message: Successfully fetched 1 paginated orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:31:03]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 86)
+Message: Successfully fetched 1 pending orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:31:03]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 11)
+Message: Driver ID: 11 requested their profile details.
+----------------------------------------
+
+[2025-11-05 18:31:03]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 13)
+Message: Session validated successfully for Driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:31:03]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 41)
+Message: Successfully fetched driver details for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:31:03]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/session_data.php
+Source: session_data.php (Line 7)
+Message: Session check successful for driver ID: 11
+----------------------------------------
+
+[2025-11-05 18:33:04]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 6)
+Message: Session validated successfully for Driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:33:04]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 12)
+Message: Driver ID: 11 requested orders. Page: 1, Limit: 10.
+----------------------------------------
+
+[2025-11-05 18:33:04]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 32)
+Message: Total orders found for driver ID: 11: 1.
+----------------------------------------
+
+[2025-11-05 18:33:04]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 58)
+Message: Successfully fetched 1 paginated orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:33:04]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 86)
+Message: Successfully fetched 1 pending orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:33:04]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 6)
+Message: Session validated successfully for Driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:33:04]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 12)
+Message: Driver ID: 11 requested orders. Page: 1, Limit: 10.
+----------------------------------------
+
+[2025-11-05 18:33:04]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 32)
+Message: Total orders found for driver ID: 11: 1.
+----------------------------------------
+
+[2025-11-05 18:33:04]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 58)
+Message: Successfully fetched 1 paginated orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:33:04]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 86)
+Message: Successfully fetched 1 pending orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:33:04]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/session_data.php
+Source: session_data.php (Line 7)
+Message: Session check successful for driver ID: 11
+----------------------------------------
+
+[2025-11-05 18:33:04]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 11)
+Message: Driver ID: 11 requested their profile details.
+----------------------------------------
+
+[2025-11-05 18:33:04]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 13)
+Message: Session validated successfully for Driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:33:04]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 41)
+Message: Successfully fetched driver details for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:35:05]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 6)
+Message: Session validated successfully for Driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:35:05]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 12)
+Message: Driver ID: 11 requested orders. Page: 1, Limit: 10.
+----------------------------------------
+
+[2025-11-05 18:35:05]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 32)
+Message: Total orders found for driver ID: 11: 1.
+----------------------------------------
+
+[2025-11-05 18:35:05]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 58)
+Message: Successfully fetched 1 paginated orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:35:05]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 86)
+Message: Successfully fetched 1 pending orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:35:05]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 6)
+Message: Session validated successfully for Driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:35:05]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 12)
+Message: Driver ID: 11 requested orders. Page: 1, Limit: 10.
+----------------------------------------
+
+[2025-11-05 18:35:05]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 32)
+Message: Total orders found for driver ID: 11: 1.
+----------------------------------------
+
+[2025-11-05 18:35:05]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 58)
+Message: Successfully fetched 1 paginated orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:35:05]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 86)
+Message: Successfully fetched 1 pending orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:35:05]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 11)
+Message: Driver ID: 11 requested their profile details.
+----------------------------------------
+
+[2025-11-05 18:35:05]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 13)
+Message: Session validated successfully for Driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:35:05]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 41)
+Message: Successfully fetched driver details for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:35:05]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/session_data.php
+Source: session_data.php (Line 7)
+Message: Session check successful for driver ID: 11
+----------------------------------------
+
+[2025-11-05 18:37:06]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 6)
+Message: Session validated successfully for Driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:37:06]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 12)
+Message: Driver ID: 11 requested orders. Page: 1, Limit: 10.
+----------------------------------------
+
+[2025-11-05 18:37:06]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 32)
+Message: Total orders found for driver ID: 11: 1.
+----------------------------------------
+
+[2025-11-05 18:37:06]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 58)
+Message: Successfully fetched 1 paginated orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:37:06]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php
+Source: fetch_pending_order.php (Line 86)
+Message: Successfully fetched 1 pending orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:37:06]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 6)
+Message: Session validated successfully for Driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:37:06]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 12)
+Message: Driver ID: 11 requested orders. Page: 1, Limit: 10.
+----------------------------------------
+
+[2025-11-05 18:37:06]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 32)
+Message: Total orders found for driver ID: 11: 1.
+----------------------------------------
+
+[2025-11-05 18:37:06]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 58)
+Message: Successfully fetched 1 paginated orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:37:06]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/fetch_pending_order.php?page=1&limit=10
+Source: fetch_pending_order.php (Line 86)
+Message: Successfully fetched 1 pending orders for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:37:06]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/session_data.php
+Source: session_data.php (Line 7)
+Message: Session check successful for driver ID: 11
+----------------------------------------
+
+[2025-11-05 18:37:06]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 11)
+Message: Driver ID: 11 requested their profile details.
+----------------------------------------
+
+[2025-11-05 18:37:06]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 13)
+Message: Session validated successfully for Driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:37:06]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 41)
+Message: Successfully fetched driver details for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:38:13]
+UserID: 11
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/fetch_driver_history.php
+Source: fetch_driver_history.php (Line 35)
+Message: DRIVER_API_REQUEST: Driver 11 requesting RESTRICT logs (Page: 1, Limit: 10)
+----------------------------------------
+
+[2025-11-05 18:38:13]
+UserID: 11
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/fetch_driver_history.php
+Source: fetch_driver_history.php (Line 44)
+Message: DRIVER_API_TABLE_SELECTED: Using table 'account_restriction_audit_log' for action type 'RESTRICT'
+----------------------------------------
+
+[2025-11-05 18:38:13]
+UserID: 11
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/fetch_driver_history.php
+Source: fetch_driver_history.php (Line 52)
+Message: DRIVER_API_COUNT_QUERY: Preparing count query - SELECT COUNT(*) FROM `account_restriction_audit_log` WHERE account_id = ? AND account_type = 'DRIVER' AND action_type = ?
+----------------------------------------
+
+[2025-11-05 18:38:13]
+UserID: 11
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/fetch_driver_history.php
+Source: fetch_driver_history.php (Line 74)
+Message: DRIVER_API_COUNT_RESULT: Found 1 records for driver 11
+----------------------------------------
+
+[2025-11-05 18:38:13]
+UserID: 11
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/fetch_driver_history.php
+Source: fetch_driver_history.php (Line 94)
+Message: DRIVER_API_MAIN_QUERY: Preparing main query -      SELECT        ar.reference_id,        ar.account_id,       ar.account_type,       ar.action_type,       ar.created_at,       CONCAT(ad.firstname, ' ', ad.lastname) AS initiator     FROM `account_restriction_audit_log` ar     LEFT JOIN admin_tbl ad ON ar.initiated_by = ad.unique_id     WHERE ar.account_id = ?      AND ar.account_type = 'DRIVER'      AND ar.action_type = ?     ORDER BY ar.id DESC     LIMIT ?, ?
+----------------------------------------
+
+[2025-11-05 18:38:13]
+UserID: 11
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/fetch_driver_history.php
+Source: fetch_driver_history.php (Line 117)
+Message: DRIVER_API_RECORDS_FETCHED: Retrieved 1 records for driver 11
+----------------------------------------
+
+[2025-11-05 18:38:13]
+UserID: 11
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/fetch_driver_history.php
+Source: fetch_driver_history.php (Line 140)
+Message: DRIVER_API_REFERENCE_MASKED: Masked reference ID for driver 11 - Original: eac37c9cf22122cb5960395e3b99261b
+----------------------------------------
+
+[2025-11-05 18:38:13]
+UserID: 11
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/fetch_driver_history.php
+Source: fetch_driver_history.php (Line 145)
+Message: DRIVER_API_RESPONSE_PREPARED: Preparing response for driver 11 with 1 records
+----------------------------------------
+
+[2025-11-05 18:38:13]
+UserID: 11
+Method: POST
+URL: http://localhost/transaction_manager/driver/v2/fetch_driver_history.php
+Source: fetch_driver_history.php (Line 172)
+Message: DRIVER_API_RESOURCES_CLEANED: Database resources released for driver 11
+----------------------------------------
+
+[2025-11-05 18:38:13]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 11)
+Message: Driver ID: 11 requested their profile details.
+----------------------------------------
+
+[2025-11-05 18:38:13]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 13)
+Message: Session validated successfully for Driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:38:13]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/profile.php
+Source: profile.php (Line 41)
+Message: Successfully fetched driver details for driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:38:13]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/session_data.php
+Source: session_data.php (Line 7)
+Message: Session check successful for driver ID: 11
+----------------------------------------
+
+[2025-11-05 18:38:16]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/logout.php
+Source: logout.php (Line 9)
+Message: Session validated successfully for Driver ID: 11.
+----------------------------------------
+
+[2025-11-05 18:38:16]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/logout.php
+Source: logout.php (Line 15)
+Message: Logout attempt for driver_id: 11
+----------------------------------------
+
+[2025-11-05 18:38:16]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/logout.php
+Source: logout.php (Line 40)
+Message: Retrieved session_id: h33ep687h4k2bb36lrf51s270g for driver_id: 11.
+----------------------------------------
+
+[2025-11-05 18:38:16]
+UserID: 11
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/logout.php
+Source: logout.php (Line 58)
+Message: Updated session status to 'Inactive' for session_id: h33ep687h4k2bb36lrf51s270g.
+----------------------------------------
+
+[2025-11-05 18:38:16]
+UserID: guest
+Method: GET
+URL: http://localhost/transaction_manager/driver/v2/logout.php
+Source: logout.php (Line 64)
+Message: Session destroyed for driver_id: 11.
+----------------------------------------
+

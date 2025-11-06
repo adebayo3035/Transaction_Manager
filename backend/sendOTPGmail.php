@@ -1,17 +1,18 @@
 <?php
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+include '../secrets.php';
 
 require '../vendor/autoload.php';
 function sendEmailWithGmailSMTP($to, $body, $subject, $attachments = []) {
     $mail = new PHPMailer(true);
-
+     $config = include "../secrets.php";
     try {
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'rahmondebayo@gmail.com';
-        $mail->Password   = 'kwmrmfjyuvtahiwm';
+        $mail->Username   = $config['gmail_username'];
+        $mail->Password   = $config['gmail_password'];
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $mail->Port       = 465;
 
