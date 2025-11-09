@@ -49,7 +49,7 @@
                 </div>
                 <!-- This textarea is hidden by default and will appear if the driver selects "Cancelled" -->
                 <div class="form-input" id="cancelReasonContainer">
-                    <label for="cancelReason" id ="lblCancelReason"></label>
+                    <label for="cancelReason" id="lblCancelReason"></label>
                     <textarea id="cancelReason" name="cancelReason" placeholder="Enter reason for cancellation"
                         maxlength="100"></textarea>
                 </div>
@@ -62,7 +62,7 @@
                         <i class="fas fa-question-circle"></i>
                         <h2>Confirm Action</h2>
                     </div>
-                    <p id="confirmationMessage" class = "modal-message"></p>
+                    <p id="confirmationMessage" class="modal-message"></p>
                     <div style="text-align:right; margin-top:20px;" class="modal-footer">
                         <button id="confirmCancel" class="modal-btn confirm-btn"
                             style="margin-right:10px;">Cancel</button>
@@ -83,7 +83,7 @@
                         <th>Order Date</th>
                         <th>Delivery Fee</th>
                         <th>Delivery Status</th>
-                        <th>Actions</th>
+                        <th colspan="2">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -115,6 +115,28 @@
                 </div>
             </div>
 
+            <div id="reportOrderModal" class="modal">
+                <div class="modal-content">
+                    <span class="close-report-modal">&times;</span>
+                    <h3>Report Order</h3>
+                    <form id="reportOrderForm">
+                        <label>Order ID:</label>
+                        <input type="text" id="report-order-id" name="order_id" readonly><br>
+
+                        <label>Customer ID:</label>
+                        <input type="text" id="report-customer-id" name="customer_id" readonly><br>
+
+                        <label>Driver ID:</label>
+                        <input type="text" id="report-driver-id" name="driver_id" readonly><br>
+
+                        <label>Action to be Taken (max 300 characters):</label>
+                        <textarea id="report-action" name="action" rows="4" maxlength="30"
+                            placeholder="Describe action to be taken..."></textarea><br>
+
+                        <button type="submit" id="submit-report">Submit Report</button>
+                    </form>
+                </div>
+            </div>
 
             <script src="../scripts/update_order.js"></script>
             <script src="../scripts/view_pending_orders.js"></script>
