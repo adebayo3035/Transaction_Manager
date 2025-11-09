@@ -26,7 +26,7 @@ if (isset($data['orders']) && is_array($data['orders'])) {
     $orders = $data['orders']; // Bulk update
     logActivity("Bulk orders received: " . json_encode($orders));
 } elseif (isset($data['order_id'], $data['status'])) {
-    $orders = [[ 'order_id' => $data['order_id'], 'status' => $data['status'] ]]; // Convert single order to array
+    $orders = [['order_id' => $data['order_id'], 'status' => $data['status']]]; // Convert single order to array
     logActivity("Single order received: " . json_encode($orders));
 } else {
     logActivity("Invalid request data. Missing order_id or orders array.");
@@ -60,14 +60,15 @@ if (isset($data['orders']) && is_array($data['orders'])) {
 }
 
 // Function to generate transaction reference
-function generateTransactionReference() {
+function generateTransactionReference()
+{
     // Prefix (3) + 7-char unique + 2-digit random = 12 chars total
     return 'TRX' . strtoupper(substr(sha1(uniqid(mt_rand(), true)), 0, 7)) . mt_rand(10, 99);
 }
 
 
 // Check available drivers and food stock only for Approved orders
-$approvedOrders = array_filter($orders, function($order) {
+$approvedOrders = array_filter($orders, function ($order) {
     return $order['status'] === 'Approved';
 });
 logActivity("Filtered approved orders: " . json_encode($approvedOrders));
@@ -156,21 +157,24 @@ if (!empty($approvedOrders)) {
 }
 // Begin database transaction
 $conn->begin_transaction();
+logActivity("Transaction started by approver $approvalID for Order Status Update processing.");
 
 try {
     foreach ($orders as $order) {
         $order_id = $order['order_id'];
         $status = $order['status'];
+        logActivity("Processing order ID $order_id with requested status '$status'");
 
         if ($status === 'Approved') {
+            logActivity("Attempting to assign driver for approved order ID $order_id");
             // Find an available driver
-            $findDriverQuery = "SELECT id FROM driver WHERE status = 'Available' AND restriction = 0 ORDER BY RAND() LIMIT 1";
+            $findDriverQuery = "SELECT id FROM driver WHERE status = 'Available' AND restriction = 0 ORDER BY RAND() LIMIT 1 FOR UPDATE";
             $result = $conn->query($findDriverQuery);
 
             if ($result->num_rows > 0) {
                 $driver = $result->fetch_assoc();
                 $driver_id = $driver['id'];
-
+                logActivity("Available driver found for order ID $order_id → Driver ID $driver_id");
                 // Assign driver to order
                 $assignDriverQuery = "UPDATE orders SET driver_id = ?, delivery_status = 'Assigned', status = ?, updated_at = NOW(), approved_by = ? WHERE order_id = ?";
                 $stmt = $conn->prepare($assignDriverQuery);
@@ -181,6 +185,7 @@ try {
                 logActivity("Driver assigned to order #$order_id. Driver ID: $driver_id by approver $approvalID");
 
                 // Update driver status
+                logActivity("About to Update Driver ID: $driver_id status from Available to Not Available");
                 $updateDriverStatusQuery = "UPDATE driver SET status = 'Not Available' WHERE id = ?";
                 $stmt = $conn->prepare($updateDriverStatusQuery);
                 $stmt->bind_param('i', $driver_id);
@@ -190,6 +195,7 @@ try {
                 logActivity("Driver status set to 'Not Available'. Driver ID: $driver_id");
 
                 // Check if order is on credit
+                logActivity("Checking credit status for order ID $order_id");
                 $checkCreditQuery = "SELECT is_credit, total_amount, customer_id FROM orders WHERE order_id = ?";
                 $stmt = $conn->prepare($checkCreditQuery);
                 $stmt->bind_param("i", $order_id);
@@ -209,9 +215,11 @@ try {
                 }
 
             } else {
+                logActivity("No available drivers found for order ID: $order_id. Throwing exception.");
                 throw new Exception("No available drivers for order ID: $order_id");
             }
         } elseif ($status === 'Declined') {
+            logActivity("Decline operation initiated for order ID $order_id");
             // Refund process
             $stmt = $conn->prepare("SELECT total_amount, customer_id, is_credit FROM orders WHERE order_id = ?");
             $stmt->bind_param("i", $order_id);
@@ -219,6 +227,7 @@ try {
             $stmt->bind_result($totalAmount, $customerId, $isCredit);
             $stmt->fetch();
             $stmt->close();
+            logActivity("Fetched decline details → Customer ID: $customerId, Amount: ₦$totalAmount, Credit: " . ($isCredit ? 'Yes' : 'No'));
 
             $transactionReference = generateTransactionReference();
 
@@ -258,7 +267,7 @@ try {
 
                 logActivity("Credit order marked as Declined/Void. Order ID: $order_id");
             }
-
+            logActivity("Logging refunded transaction in transactions table for order ID $order_id");
             $transaction_type = 'Others';
             $status1 = 'Declined';
             $paymentMethod = 'Declined Order';
@@ -271,7 +280,8 @@ try {
             logActivity("Logged refund transaction in transactions table. Ref: $transactionReference");
 
             // Return food quantity to stock
-            $stmt = $conn->prepare("SELECT food_id, quantity FROM order_details WHERE order_id = ?");
+            logActivity("Restocking food items for declined order ID $order_id");
+            $stmt = $conn->prepare("SELECT food_id, quantity FROM order_details WHERE order_id = ? FOR UPDATE");
             $stmt->bind_param("i", $order_id);
             $stmt->execute();
             $result = $stmt->get_result();
@@ -289,6 +299,7 @@ try {
             $stmt->close();
 
             // Update delivery status to Declined
+            logActivity("About to update delivery status for order ID $order_id");
             $updateDeliveryStatusQuery = "UPDATE orders SET delivery_status = 'Declined', updated_at = NOW(), approved_by = ? WHERE order_id = ?";
             $stmt = $conn->prepare($updateDeliveryStatusQuery);
             $stmt->bind_param("ii", $approvalID, $order_id);
@@ -296,13 +307,15 @@ try {
             $stmt->close();
 
             logActivity("Delivery status updated to Declined for order ID $order_id");
-        }
-        elseif ($status === 'Cancelled') {
+        } elseif ($status === 'Cancelled') {
             // Refund process
-            $stmt = $conn->prepare("SELECT total_amount, customer_id, is_credit FROM orders WHERE order_id = ?");
+            logActivity("Cancellation operation initiated for order ID $order_id");
+            logActivity("Fetching cancellation details for order ID $order_id");
+            logActivity("About to check Credit status for order ID $order_id");
+            $stmt = $conn->prepare("SELECT total_amount, customer_id, driver_id, is_credit FROM orders WHERE order_id = ?");
             $stmt->bind_param("i", $order_id);
             $stmt->execute();
-            $stmt->bind_result($totalAmount, $customerId, $isCredit);
+            $stmt->bind_result($totalAmount, $customerId, $driver_id, $isCredit);
             $stmt->fetch();
             $stmt->close();
 
@@ -310,6 +323,7 @@ try {
 
             if (!$isCredit) {
                 // Refund to wallet
+                logActivity("About to refund to wallet into customer ID $customerId for cancelled order ID $order_id");
                 $stmt = $conn->prepare("UPDATE wallets SET balance = balance + ? WHERE customer_id = ?");
                 $stmt->bind_param("di", $totalAmount, $customerId);
                 $stmt->execute();
@@ -318,6 +332,7 @@ try {
                 logActivity("Refunded ₦$totalAmount to customer ID $customerId for Cancelled order ID $order_id");
 
                 // Insert refund transaction
+                logActivity("About to log refund transaction for cancelled order ID $order_id into customer_transactions table for customer ID $customerId");
                 $description = "Cancelled Order Refund for - Order ID: $order_id";
                 $paymentMethod = "Transaction Refund";
                 $stmt = $conn->prepare("INSERT INTO customer_transactions (transaction_ref, customer_id, amount, date_created, transaction_type, payment_method, description) VALUES (?, ?, ?, NOW(), 'credit', ?, ?)");
@@ -327,6 +342,7 @@ try {
 
                 logActivity("Customer transaction logged for refund. Ref: $transactionReference");
             } else {
+                logActivity("About to log refund transaction for cancelled Credit order ID $order_id into customer_transactions table for customer ID $customerId");
                 $description = "Cancelled Food Order on Credit for Order ID: " . $order_id;
                 $paymentMethod = "Not Applicable";
                 $stmt = $conn->prepare("INSERT INTO customer_transactions (transaction_ref, customer_id, amount, date_created, transaction_type, payment_method, description) VALUES (?, ?, ?, NOW(), 'Others', ?, ?)");
@@ -337,6 +353,7 @@ try {
                 logActivity("Credit order Cancelled logged in customer_transactions. Ref: $transactionReference");
 
                 // Declined credit order update
+                logActivity("About to Update credit order status to Declined/Void for cancelled order ID $order_id");
                 $stmt = $conn->prepare("UPDATE credit_orders SET status = 'Declined', repayment_status = 'Void' WHERE order_id = ?");
                 $stmt->bind_param("i", $order_id);
                 $stmt->execute();
@@ -344,7 +361,7 @@ try {
 
                 logActivity("Credit order marked as Declined/Void. Order ID: $order_id");
             }
-
+            logActivity("About to log refunded transaction in transactions table for cancelled order ID $order_id");
             $transaction_type = 'Others';
             $status1 = 'Declined';
             $paymentMethod = 'Declined Order';
@@ -357,7 +374,8 @@ try {
             logActivity("Logged refund transaction in transactions table. Ref: $transactionReference");
 
             // Return food quantity to stock
-            $stmt = $conn->prepare("SELECT food_id, quantity FROM order_details WHERE order_id = ?");
+            logActivity("About to restock food items for cancelled order ID $order_id");
+            $stmt = $conn->prepare("SELECT food_id, quantity FROM order_details WHERE order_id = ? FOR UPDATE");
             $stmt->bind_param("i", $order_id);
             $stmt->execute();
             $result = $stmt->get_result();
@@ -365,6 +383,7 @@ try {
             while ($row = $result->fetch_assoc()) {
                 $foodId = $row['food_id'];
                 $quantity = $row['quantity'];
+                logActivity("About to Update food Database for food item ID $foodId by $quantity units from order ID $order_id");
                 $updateFoodStmt = $conn->prepare("UPDATE food SET available_quantity = available_quantity + ? WHERE food_id = ?");
                 $updateFoodStmt->bind_param("ii", $quantity, $foodId);
                 $updateFoodStmt->execute();
@@ -375,16 +394,27 @@ try {
             $stmt->close();
 
             // Update delivery status to Cancelled
+            logActivity("About to update delivery status for order ID $order_id and approve cancellation by $approvalID");
             $updateDeliveryStatusQuery = "UPDATE orders SET delivery_status = 'Cancelled', updated_at = NOW(), approved_by = ? WHERE order_id = ?";
             $stmt = $conn->prepare($updateDeliveryStatusQuery);
             $stmt->bind_param("ii", $approvalID, $order_id);
             $stmt->execute();
             $stmt->close();
+            logActivity("Delivery status updated to Cancelled for order ID $order_id by approver $approvalID");
+
+            logActivity("About to check and update driver status for Driver ID $driver_id for cancelled order ID $order_id");
+            // Update driver status
+            $updateDriverStatusQuery = "UPDATE driver SET status = 'Available' WHERE id = ?";
+            $stmt = $conn->prepare($updateDriverStatusQuery);
+            $stmt->bind_param('i', $driver_id);
+            $stmt->execute();
+            $stmt->close();
+            logActivity("Driver $driver_id Status has been Updated to Available for order ID:  $order_id Cancelled by Admin");
 
             logActivity("Delivery status updated to Cancelled for order ID $order_id");
         }
 
-
+        logActivity("Updating order and order details status for order ID $order_id to '$status'");
         // Common updates to order and order_details
         $updateStatusQueries = [
             "UPDATE orders SET status = ?, updated_at = NOW() WHERE order_id = ?",
@@ -395,13 +425,14 @@ try {
             $stmt->bind_param("si", $status, $order_id);
             $stmt->execute();
             $stmt->close();
+
         }
 
         logActivity("Order and order details status updated for order ID $order_id to '$status'");
     }
 
     $conn->commit();
-    echo json_encode(['success' => true, 'message' => 'Order update successful.']);
+    echo json_encode(['success' => true, 'message' => 'Order Status has been UpdateD successful.']);
     logActivity("All order operations committed successfully by approver $approvalID");
 } catch (Exception $e) {
     $conn->rollback();
