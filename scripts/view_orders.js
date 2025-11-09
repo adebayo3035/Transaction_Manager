@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitReassign = document.getElementById('submitReassign');
     const driverSelect = document.getElementById('driver');
     const viewPackBtn = document.getElementById('view-pack');
+    const cancelOrderBtn = document.getElementById('cancel-order');
 
     // Fetch orders with pagination
     function fetchOrders(page = 1) {
@@ -109,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Fetch order details for a specific order
-    function fetchOrderDetails(orderId) {
+    async function fetchOrderDetails(orderId) {
         fetch('backend/fetch_order_details.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -136,10 +137,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     if (orderStatus === "Assigned") {
                         reassignButton.style.display = 'block';
+                        cancelOrderBtn.style.display = 'block';
                         reassignButton.disabled = false;
-                    } else {
+                        cancelOrderBtn.disabled = false;
+                    } 
+                    else if (orderStatus === "In Transit"){
+                        cancelOrderBtn.style.display = 'block';
+                        cancelOrderBtn.disabled = false;
                         reassignButton.style.display = 'none';
                         reassignButton.disabled = true;
+                    }else {
+                        reassignButton.style.display = 'none';
+                        cancelOrderBtn.style.display = 'none';
+                        reassignButton.disabled = true;
+                        cancelOrderBtn.disabled = true;
                     }
                     orderModal.style.display = 'block';
                 } else {
@@ -241,15 +252,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Helper function to create table rows
-    // function createRow(label, value) {
-    //     const row = document.createElement('tr');
-    //     row.innerHTML = `
-    //         <td><strong>${label}</strong></td>
-    //         <td>${value}</td>
-    //     `;
-    //     return row;
-    // }
     // Create a row for the details table
     function createRow(label, value) {
         const row = document.createElement('tr');
@@ -258,6 +260,37 @@ document.addEventListener('DOMContentLoaded', () => {
             <td>${value}</td>
         `;
         return row;
+    }
+
+    // function to Cancel Order In Assigned or In Transit Status
+    cancelOrderBtn.addEventListener('click', () => {
+         const orderId = document.getElementById('orderID').textContent;
+        updateOrderStatus(orderId, 'Cancelled');
+    });
+
+    function updateOrderStatus(orderId, status) {
+        if (confirm(`Are you sure you want to ${status} this order?`)) {
+            fetch('backend/update_order_status.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ order_id: orderId, status: status })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Order has been successfully ' + status);
+                        location.reload();
+                    } else {
+                        console.error('Failed to update order status:', data.message);
+                        alert("Failed to Update Customer Order: " + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating order status:', error);
+                });
+        }
     }
 
     // REASSIGN ORDER MODULE

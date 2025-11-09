@@ -78,6 +78,7 @@
             <div class="actionBtn">
                 <button type="button" id="receipt-btn">Print Receipt</button>
                 <button type="button" id="reassign-order">Reassign Order</button>
+                <button type="button" id="cancel-order">Cancel Order</button>
                 <button type="button" id="view-pack" style="background-color: purple">View Pack Details</button>
 
             </div>

@@ -35,7 +35,7 @@ if (isset($data['orders']) && is_array($data['orders'])) {
 }
 
 // Validate order statuses
-$valid_statuses = ['Approved', 'Declined'];
+$valid_statuses = ['Approved', 'Declined', 'Cancelled'];
 
 if (isset($data['orders']) && is_array($data['orders'])) {
     foreach ($data['orders'] as $order) {
@@ -297,6 +297,93 @@ try {
 
             logActivity("Delivery status updated to Declined for order ID $order_id");
         }
+        elseif ($status === 'Cancelled') {
+            // Refund process
+            $stmt = $conn->prepare("SELECT total_amount, customer_id, is_credit FROM orders WHERE order_id = ?");
+            $stmt->bind_param("i", $order_id);
+            $stmt->execute();
+            $stmt->bind_result($totalAmount, $customerId, $isCredit);
+            $stmt->fetch();
+            $stmt->close();
+
+            $transactionReference = generateTransactionReference();
+
+            if (!$isCredit) {
+                // Refund to wallet
+                $stmt = $conn->prepare("UPDATE wallets SET balance = balance + ? WHERE customer_id = ?");
+                $stmt->bind_param("di", $totalAmount, $customerId);
+                $stmt->execute();
+                $stmt->close();
+
+                logActivity("Refunded ₦$totalAmount to customer ID $customerId for Cancelled order ID $order_id");
+
+                // Insert refund transaction
+                $description = "Cancelled Order Refund for - Order ID: $order_id";
+                $paymentMethod = "Transaction Refund";
+                $stmt = $conn->prepare("INSERT INTO customer_transactions (transaction_ref, customer_id, amount, date_created, transaction_type, payment_method, description) VALUES (?, ?, ?, NOW(), 'credit', ?, ?)");
+                $stmt->bind_param("sidss", $transactionReference, $customerId, $totalAmount, $paymentMethod, $description);
+                $stmt->execute();
+                $stmt->close();
+
+                logActivity("Customer transaction logged for refund. Ref: $transactionReference");
+            } else {
+                $description = "Cancelled Food Order on Credit for Order ID: " . $order_id;
+                $paymentMethod = "Not Applicable";
+                $stmt = $conn->prepare("INSERT INTO customer_transactions (transaction_ref, customer_id, amount, date_created, transaction_type, payment_method, description) VALUES (?, ?, ?, NOW(), 'Others', ?, ?)");
+                $stmt->bind_param("sidss", $transactionReference, $customerId, $totalAmount, $paymentMethod, $description);
+                $stmt->execute();
+                $stmt->close();
+
+                logActivity("Credit order Cancelled logged in customer_transactions. Ref: $transactionReference");
+
+                // Declined credit order update
+                $stmt = $conn->prepare("UPDATE credit_orders SET status = 'Declined', repayment_status = 'Void' WHERE order_id = ?");
+                $stmt->bind_param("i", $order_id);
+                $stmt->execute();
+                $stmt->close();
+
+                logActivity("Credit order marked as Declined/Void. Order ID: $order_id");
+            }
+
+            $transaction_type = 'Others';
+            $status1 = 'Declined';
+            $paymentMethod = 'Declined Order';
+            $revenue_type = 6;
+            $stmt = $conn->prepare("INSERT INTO transactions (transaction_ref, customer_id, order_id, transaction_type, amount, transaction_date, payment_method, status, created_at, revenue_type_id) VALUES (?, ?, ?, ?, ?, NOW(), ?, ?, NOW(), ?)");
+            $stmt->bind_param("siisdssi", $transactionReference, $customerId, $order_id, $transaction_type, $totalAmount, $paymentMethod, $status1, $revenue_type);
+            $stmt->execute();
+            $stmt->close();
+
+            logActivity("Logged refund transaction in transactions table. Ref: $transactionReference");
+
+            // Return food quantity to stock
+            $stmt = $conn->prepare("SELECT food_id, quantity FROM order_details WHERE order_id = ?");
+            $stmt->bind_param("i", $order_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            while ($row = $result->fetch_assoc()) {
+                $foodId = $row['food_id'];
+                $quantity = $row['quantity'];
+                $updateFoodStmt = $conn->prepare("UPDATE food SET available_quantity = available_quantity + ? WHERE food_id = ?");
+                $updateFoodStmt->bind_param("ii", $quantity, $foodId);
+                $updateFoodStmt->execute();
+                $updateFoodStmt->close();
+
+                logActivity("Restocked food item ID $foodId by $quantity units from order ID $order_id");
+            }
+            $stmt->close();
+
+            // Update delivery status to Cancelled
+            $updateDeliveryStatusQuery = "UPDATE orders SET delivery_status = 'Cancelled', updated_at = NOW(), approved_by = ? WHERE order_id = ?";
+            $stmt = $conn->prepare($updateDeliveryStatusQuery);
+            $stmt->bind_param("ii", $approvalID, $order_id);
+            $stmt->execute();
+            $stmt->close();
+
+            logActivity("Delivery status updated to Cancelled for order ID $order_id");
+        }
+
 
         // Common updates to order and order_details
         $updateStatusQueries = [

@@ -4,6 +4,12 @@
            text-align: left;
            border-bottom: 1px solid #ddd;
        }
+       #cancel-order{
+        background-color: red;
+       }
+       #reassign-order{
+        background-color: orange;
+       }
 
        .modal .reassign-form {
            margin-top: 20px;
