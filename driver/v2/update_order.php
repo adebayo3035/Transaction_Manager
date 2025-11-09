@@ -60,6 +60,17 @@ if ($orderStatus === STATUS_CANCELLED) {
         respond(false, "You cannot cancel an order placed on credit.", 403);
     }
 }
+
+// Disallow Updating Cancelled Orders
+// Restrict credit order cancellation
+if ($orderStatus === STATUS_CANCELLED || $orderStatus === STATUS_DELIVERED || $orderStatus === STATUS_IN_TRANSIT) {
+    $orderDetails = getOrderDetailsWithCustomer($orderId, $driverId);
+
+    if ($orderDetails['delivery_status'] === 'Cancelled') {
+        logActivity("Attempt to update cancelled order by Admin blocked for - Order ID: {$orderId}, Driver ID: {$driverId}");
+        respond(false, "Order has been Cancelled by Admin, Kindly refresh Page.", 403);
+    }
+}
 // Begin transaction
 $conn->begin_transaction();
 
@@ -147,7 +158,7 @@ function getOrderDetailsWithCustomer($orderId, $driverId)
     global $conn;
     logActivity("Fetching order details. Order ID: {$orderId}, Driver ID: {$driverId}");
 
-    $sql = "SELECT total_amount, delivery_fee, customer_id, order_date, delivery_pin, is_credit 
+    $sql = "SELECT total_amount, delivery_fee, customer_id, order_date, delivery_pin, is_credit, delivery_status
             FROM orders WHERE order_id = ? AND driver_id = ?";
 
     $stmt = $conn->prepare($sql);
