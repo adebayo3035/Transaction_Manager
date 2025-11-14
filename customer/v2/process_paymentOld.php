@@ -66,7 +66,7 @@ $customer_email = $_SESSION['email'];
 // Log payment method and other details
 logActivity("Payment method: " . $paymentMethod);
 logActivity("Order items: " . json_encode($orderItems));
-logActivity("Total order amount: " . $totalOrder . "Service fee: " . $serviceFee . "Delivery Fee: " . $deliveryFee );
+logActivity("Total order amount: " . $totalOrder . "Service fee: " . $serviceFee . "Delivery Fee: " . $deliveryFee);
 
 // Apply the discount if promo is used
 if ($usingPromo) {
@@ -271,35 +271,35 @@ function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deli
         // Insert packs and pack items
         if (!empty($packs)) {
             logActivity("Attempting to insert packs and pack items.");
-            
+
             // Prepare statements for pack and pack item insertion
             $packStmt = $conn->prepare("INSERT INTO packs (pack_id, order_id, total_cost) VALUES (?, ?, ?)");
             $packItemStmt = $conn->prepare("INSERT INTO pack_items (order_id, pack_id, food_id, food_name, quantity, price_per_unit, total_price) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            
+
             foreach ($packs as $packId => $packItems) {
                 // Calculate total cost of each pack
-                 logActivity("Processing packs with cost calculation...");
-                 $packTotal = array_sum(array_column($packItems, 'total_price'));
+                logActivity("Processing packs with cost calculation...");
+                $packTotal = array_sum(array_column($packItems, 'total_price'));
                 // Insert the pack
                 $packStmt->bind_param("sid", $packId, $orderId, $packTotal);
                 $packStmt->execute();
-                
+
                 // Insert each item in the pack
                 foreach ($packItems as $item) {
                     $packItemStmt->bind_param(
-                        "isisddd", 
+                        "isisddd",
                         $orderId,
-                        $packId, 
-                        $item['food_id'], 
-                        $item['food_name'], 
-                        $item['quantity'], 
-                        $item['price_per_unit'], 
+                        $packId,
+                        $item['food_id'],
+                        $item['food_name'],
+                        $item['quantity'],
+                        $item['price_per_unit'],
                         $item['total_price']
                     );
                     $packItemStmt->execute();
                 }
             }
-            
+
             $packStmt->close();
             $packItemStmt->close();
             logActivity("Packs and pack items inserted successfully.");
@@ -346,9 +346,9 @@ function processOrder($customerId, $orderItems, $totalAmount, $serviceFee, $deli
         $eventType = "New Food Order";
         $eventDetails = "Customer placed an order on " . date('Y-m-d H:i:s');
         $logMessage = "Admin notification sent for order ID: " . $orderId;
-        
+
         sendAdminNotification($conn, $title, $eventType, $eventDetails, $superAdminUniqueId, $logMessage);
-        
+
 
         // Commit transaction
         $conn->commit();
@@ -446,6 +446,51 @@ function getDecryptedCardDetails($customerId, $dbConnection, $key, $iv)
 
     return $cardDetails;
 }
+/**
+ * Mask card details for logs, responses, or display
+ * Ensures sensitive information is never exposed.
+ */
+
+function maskCardNumber(string $cardNumber): string
+{
+    // Keep only last 4 digits
+    $last4 = substr($cardNumber, -4);
+    return str_repeat('*', max(0, strlen($cardNumber) - 4)) . $last4;
+}
+
+function maskCVV(string $cvv): string
+{
+    // Never expose CVV, return ***
+    return str_repeat('*', strlen($cvv));
+}
+
+function maskExpiry(string $expiry): string
+{
+    /**
+     * Expected formats: MM/YY or MM/YYYY
+     * Return **/
+    return "**/**";
+}
+
+function maskPin(string $pin): string
+{
+    // Never expose PIN, return ****
+    return str_repeat('*', strlen($pin));
+}
+
+/**
+ * Mask full card data as an array (optional helper)
+ */
+function maskCardDetails(array $data): array
+{
+    return [
+        "card_id" => $data['card_id'] ?? null,
+        "card_number" => isset($data['card_number']) ? maskCardNumber($data['card_number']) : null,
+        "cvv" => isset($data['cvv']) ? maskCVV($data['cvv']) : null,
+        "expiry_date" => isset($data['expiry_date']) ? maskExpiry($data['expiry_date']) : null,
+        "card_pin" => isset($data['encryptedCardPIN']) ? maskPin($data['encryptedCardPIN']) : null
+    ];
+}
 
 function validateCardOwnership($cardDetails, $inputCardNumber, $inputCVV, $inputExpiryDate)
 {
@@ -460,7 +505,7 @@ function validateCardOwnership($cardDetails, $inputCardNumber, $inputCVV, $input
 
 function validateCardPIN($conn, $customerId, $cardId, $pin, $storedHash)
 {
-   $isPinValid = verifyAndUpgradePIN($conn, $customerId, $cardId, $pin, $storedHash);
+    $isPinValid = verifyAndUpgradePIN($conn, $customerId, $cardId, $pin, $storedHash);
 
     if (!$isPinValid) {
         throw new CardException("Invalid card PIN");
@@ -503,10 +548,21 @@ function validateCardPayment($customerId, $inputCardNumber, $inputCVV, $inputExp
     logActivity("Validating card payment for customer ID: " . $customerId);
     $cardDetails = getDecryptedCardDetails($customerId, $dbConnection, $key, $iv);
     $cardDetails = getDecryptedCardDetails($customerId, $dbConnection, $key, $iv);
-    logActivity("Decrypted Card Details: " . print_r($cardDetails, true));
-    logActivity("Input Card Number: " . $inputCardNumber);
-    logActivity("Input CVV: " . $inputCVV);
-    logActivity("Input Expiry Date: " . $inputExpiryDate);
+    // logActivity("DEBUG RAW CARD DETAILS: " . print_r($cardDetails, true));
+
+    $maskedCards = [];
+
+    foreach ($cardDetails as $card) {
+        $maskedCards[] = maskCardDetails($card);
+    }
+
+    logActivity("Decrypted Card Details Returned for Customer: " . print_r($maskedCards, true));
+
+
+    // logActivity("Decrypted Card Details Returened for Customer: " . print_r(maskCardDetails($cardDetails), true));
+    logActivity("Input Card Number: " . maskCardNumber($inputCardNumber));
+    logActivity("Input CVV: " . maskCVV($inputCVV));
+    logActivity("Input Expiry Date: " . maskExpiry($inputExpiryDate));
     $validCard = validateCardOwnership($cardDetails, $inputCardNumber, $inputCVV, $inputExpiryDate);
 
     if (!$validCard) {
@@ -646,10 +702,10 @@ function validateSecretAnswer($providedSecretAnswer, $customerId, $conn)
 
     // Hash the provided answer and compare with the stored one
     if (!verifyAndUpgradeSecretAnswer($conn, $customerId, $providedSecretAnswer, $storedSecretAnswer)) {
-            logActivity("Invalid secret answer for Customer ID: $customerId.");
-            echo json_encode(['success' => false, 'message' => 'Account Validation Failed.']);
-            exit();
-        }
+        logActivity("Invalid secret answer for Customer ID: $customerId.");
+        echo json_encode(['success' => false, 'message' => 'Account Validation Failed.']);
+        exit();
+    }
     logActivity("Secret Answer Validation is Successful for Customer ID " . $customerId);
     return ["success" => true, "message" => "Secret Answer Validation Successful! 🎉"];
 }
