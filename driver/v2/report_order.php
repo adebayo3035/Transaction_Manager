@@ -38,7 +38,7 @@ try {
 
     // ✅ Verify order existence
     $check = $conn->prepare("
-        SELECT order_id, delivery_status, assigned_to, approved_by 
+        SELECT order_id, delivery_status, assigned_to, approved_by, reported 
         FROM orders 
         WHERE order_id = ? AND customer_id = ? AND driver_id = ?
     ");
@@ -54,6 +54,9 @@ try {
 
     if ($order['delivery_status'] !== 'In Transit') {
         throw new Exception("Only orders that are 'In Transit' can be reported.");
+    }
+    if ($order['reported'] == 1) {
+        throw new Exception("This order has already been reported.");
     }
 
     // ✅ Insert report record

@@ -61,6 +61,16 @@ if ($orderStatus === STATUS_CANCELLED) {
     }
 }
 
+// Restrict Changes for a reported Order In Transit
+if ($orderStatus === STATUS_CANCELLED || $orderStatus === STATUS_DELIVERED) {
+    $orderDetails = getOrderDetailsWithCustomer($orderId, $driverId);
+
+    if (($orderDetails['reported'] == 1) && ($orderDetails['delivery_status'] == 'In Transit')) {
+        logActivity("About to change status of Reported Order from in Transit. Reported Order status change blocked - Order ID: {$orderId}, Driver ID: {$driverId}");
+        respond(false, "You cannot change the status of a Reported Order.", 403);
+    }
+}
+
 // Disallow Updating Cancelled Orders
 // Restrict credit order cancellation
 if ($orderStatus === STATUS_CANCELLED || $orderStatus === STATUS_DELIVERED || $orderStatus === STATUS_IN_TRANSIT) {
@@ -158,7 +168,7 @@ function getOrderDetailsWithCustomer($orderId, $driverId)
     global $conn;
     logActivity("Fetching order details. Order ID: {$orderId}, Driver ID: {$driverId}");
 
-    $sql = "SELECT total_amount, delivery_fee, customer_id, order_date, delivery_pin, is_credit, delivery_status
+    $sql = "SELECT total_amount, delivery_fee, customer_id, order_date, delivery_pin, is_credit, delivery_status,reported
             FROM orders WHERE order_id = ? AND driver_id = ?";
 
     $stmt = $conn->prepare($sql);

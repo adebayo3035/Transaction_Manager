@@ -23,8 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const viewPackBtn = document.getElementById("view-pack");
   const cancelOrderBtn = document.getElementById("cancel-order");
   const resolveReportButton = document.getElementById("resolve-order");
-  const resolveOption = document.getElementById("resolveOption");
-  const submitResolveReportBtn = document.getElementById("submitResolveReport");
 
   // Fetch orders with pagination
   function fetchOrders(page = 1) {
@@ -166,8 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Always set dataset
       if (viewPackBtn) viewPackBtn.dataset.orderId = order.order_id;
-      if (resolveReportButton)
-        resolveReportButton.dataset.orderId = order.order_id;
+      if (resolveReportButton) resolveReportButton.dataset.orderId = order.order_id;
 
       // Reset all buttons first
       [reassignButton, cancelOrderBtn, resolveReportButton].forEach((btn) => {
@@ -495,154 +492,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // END OF REASSIGN MODULE
 
-  // Resolve Issue with Reported Order
-  submitResolveReportBtn.addEventListener("click", () => {
-    const resolveOptionValue = resolveOption.value;
-    const orderId = document.getElementById("orderID").textContent;
-    const reportNote = document.getElementById("report-note");
-
-    if (resolveOptionValue === "") {
-      alert("Please Select a Valid Resolution " + orderId);
-      return;
-    }
-
-    const allowedResolution = ["Resolved", "Cancelled"];
-    if (!allowedResolution.includes(resolveOptionValue)) {
-      alert("Invalid resolution option selected.");
-      return;
-    }
-
-    // Disable the entire page and show loading state
-    disablePage();
-
-    fetch("backend/resolve_order.php", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        order_id: orderId,
-        resolution: resolveOptionValue,
-        resolutionNote: reportNote.value,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          alert("Order resolved successfully");
-          resolveOrderModal.style.display = "none";
-        } else {
-          alert(data.message);
-          console.error("Failed to resolve order:", data.message);
-        }
-      })
-      .catch((error) => {
-        console.error("Error resolving order:", error);
-        alert("An error occurred while resolving the order. Please try again.");
-      })
-      .finally(() => {
-        // Re-enable the page regardless of success or failure
-        enablePage();
-      });
-  });
-
-  // Function to disable the entire page
-  function disablePage() {
-    // Create overlay if it doesn't exist
-    let overlay = document.getElementById("pageOverlay");
-    if (!overlay) {
-      overlay = document.createElement("div");
-      overlay.id = "pageOverlay";
-      overlay.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 9998;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        `;
-
-      // Create loading spinner
-      const spinner = document.createElement("div");
-      spinner.style.cssText = `
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #3498db;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-        `;
-
-      // Add CSS for spinner animation
-      if (!document.querySelector("#spinnerStyles")) {
-        const style = document.createElement("style");
-        style.id = "spinnerStyles";
-        style.textContent = `
-                @keyframes spin {
-                    0% { transform: rotate(0deg); }
-                    100% { transform: rotate(360deg); }
-                }
-            `;
-        document.head.appendChild(style);
-      }
-
-      overlay.appendChild(spinner);
-      document.body.appendChild(overlay);
-    } else {
-      overlay.style.display = "flex";
-    }
-
-    // Disable all interactive elements
-    const interactiveElements = document.querySelectorAll(
-      "button, input, select, textarea, a"
-    );
-    interactiveElements.forEach((element) => {
-      element.setAttribute(
-        "data-was-disabled",
-        element.disabled || element.style.pointerEvents === "none"
-      );
-      element.disabled = true;
-      element.style.pointerEvents = "none";
-      element.style.opacity = "0.6";
-    });
-
-    // Disable the submit button specifically with more obvious styling
-    submitResolveReportBtn.disabled = true;
-    submitResolveReportBtn.style.opacity = "0.5";
-    submitResolveReportBtn.style.cursor = "not-allowed";
-    submitResolveReportBtn.textContent = "Processing...";
-  }
-
-  // Function to re-enable the page
-  function enablePage() {
-    // Remove overlay
-    const overlay = document.getElementById("pageOverlay");
-    if (overlay) {
-      overlay.style.display = "none";
-    }
-
-    // Re-enable all interactive elements
-    const interactiveElements = document.querySelectorAll(
-      "button, input, select, textarea, a"
-    );
-    interactiveElements.forEach((element) => {
-      const wasDisabled = element.getAttribute("data-was-disabled") === "true";
-      if (!wasDisabled) {
-        element.disabled = false;
-        element.style.pointerEvents = "";
-        element.style.opacity = "";
-      }
-      element.removeAttribute("data-was-disabled");
-    });
-
-    // Re-enable the submit button
-    submitResolveReportBtn.disabled = false;
-    submitResolveReportBtn.style.opacity = "";
-    submitResolveReportBtn.style.cursor = "";
-    submitResolveReportBtn.textContent = "Submit Resolution";
-  }
   // Update pagination
   function updatePagination(totalItems, currentPage, itemsPerPage) {
     const paginationContainer = document.getElementById("pagination");

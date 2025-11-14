@@ -4,11 +4,13 @@
            text-align: left;
            border-bottom: 1px solid #ddd;
        }
-       #cancel-order{
-        background-color: red;
+
+       #cancel-order {
+           background-color: red;
        }
-       #reassign-order{
-        background-color: orange;
+
+       #reassign-order {
+           background-color: orange;
        }
 
        .modal .reassign-form {
@@ -321,6 +323,35 @@
            border-color: #2563eb;
            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.3);
            outline: none;
+       }
+
+       #resolveForm label {
+           margin-top: 10px;
+       }
+
+       .resolution-textarea {
+           width: 100%;
+           min-height: 100px;
+           padding: 12px 16px;
+           border: 1px solid #444;
+           border-radius: 6px;
+           /* font-family: 'Inter', sans-serif; */
+           font-size: 14px;
+           line-height: 1.5;
+           color: #e1e5e9;
+           background-color: #1a1d21;
+           resize: vertical;
+           transition: all 0.3s ease;
+       }
+
+       .resolution-textarea:focus {
+           outline: none;
+           border-color: #58a6ff;
+           box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
+       }
+
+       .resolution-textarea::placeholder {
+           color: #8b949e;
        }
 
        /* Responsive Design */

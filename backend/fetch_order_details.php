@@ -65,6 +65,7 @@ try {
         o.order_date,
         o.updated_at,
         o.cancellation_reason,
+        o.reported,
         c.firstname AS customer_firstname,
         c.lastname AS customer_lastname,
         c.mobile_number AS customer_phone,
@@ -129,6 +130,7 @@ try {
                 'order_date' => $row['order_date'],
                 'updated_at' => $row['updated_at'],
                 'cancellation_reason' => $row['cancellation_reason'],
+                'reported' => $row['reported'],
                 'customer' => [
                     'firstname' => $row['customer_firstname'],
                     'lastname' => $row['customer_lastname'],

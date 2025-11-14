@@ -79,6 +79,7 @@
                 <button type="button" id="receipt-btn">Print Receipt</button>
                 <button type="button" id="reassign-order">Reassign Order</button>
                 <button type="button" id="cancel-order">Cancel Order</button>
+                <button type = "button" id = "resolve-order">Resolve Order</button>
                 <button type="button" id="view-pack" style="background-color: purple">View Pack Details</button>
 
             </div>
@@ -110,6 +111,28 @@
                 </tbody>
 
             </table>
+
+        </div>
+    </div>
+
+    <div id="resolveOrderModal" class="modal">
+        <div class="modal-content">
+            <span class="close resolveOrderModal">&times;</span>
+            <h2 id = "modal-header">Resolve Order Report for Order</h2>
+            <div class="resolve-form" id="resolveForm">
+                <h3>Resolve Report</h3>
+                <div class="form-input">
+                    <label for="resolutionAction">Action Taken:</label>
+                    <select name="resolveOption" id="resolveOption">
+                        <option value="Resolved">Resolved</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                    <label for="report-note">Action Taken:</label>
+                   <textarea id="report-note" class="resolution-textarea" name="report-note" rows="4" maxlength="100"
+                            placeholder="Describe action that was taken..."></textarea><br>
+
+                </div>
+                <button type="button" id="submitResolveReport">Submit</button>
 
         </div>
     </div>
