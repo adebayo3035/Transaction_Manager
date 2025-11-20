@@ -83,7 +83,7 @@
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     flex-direction: column;
-    border: 3px solid red;
+    
 }
 
 .food-selector h2 {

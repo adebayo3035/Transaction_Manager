@@ -16,10 +16,10 @@ if (!$customerId) {
 
 // Validate and sanitize inputs
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-logActivity("PAGINATION: Page number set to $page");
-
 $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
-logActivity("PAGINATION: Limit set to $limit records per page");
+$deliveryStatus = isset($_GET['delivery_status']) ? trim($_GET['delivery_status']) : '';
+
+logActivity("INPUT: Page = $page, Limit = $limit, Delivery Status Filter = '$deliveryStatus'");
 
 if ($page < 1 || $limit < 1) {
     $errorMessage = "Invalid page ($page) or limit ($limit). Must be positive integers.";
@@ -29,34 +29,63 @@ if ($page < 1 || $limit < 1) {
 }
 
 $offset = ($page - 1) * $limit;
-logActivity("PAGINATION: Calculated offset: $offset");
+logActivity("PAGINATION: Calculated offset = $offset");
 
 try {
-    // Fetch total count of orders
-    $totalQuery = "SELECT COUNT(*) as total FROM orders WHERE customer_id = ?";
-    logActivity("DATABASE: Executing total orders query: $totalQuery");
-    
-    $stmt = $conn->prepare($totalQuery);
-    $stmt->bind_param("i", $customerId);
+    // ---------------------------------------
+    // 1️⃣ Fetch total count (with filter)
+    // ---------------------------------------
+
+    if ($deliveryStatus !== '') {
+        $totalQuery = "SELECT COUNT(*) AS total FROM orders WHERE customer_id = ? AND delivery_status = ?";
+        logActivity("DATABASE: Running filtered total count query (delivery_status = '$deliveryStatus')");
+        $stmt = $conn->prepare($totalQuery);
+        $stmt->bind_param("is", $customerId, $deliveryStatus);
+    } else {
+        $totalQuery = "SELECT COUNT(*) AS total FROM orders WHERE customer_id = ?";
+        logActivity("DATABASE: Running unfiltered total count query");
+        $stmt = $conn->prepare($totalQuery);
+        $stmt->bind_param("i", $customerId);
+    }
+
     $stmt->execute();
     $totalResult = $stmt->get_result();
     $totalOrders = $totalResult->fetch_assoc()['total'];
     $stmt->close();
 
-    logActivity("DATABASE RESULT: Customer $customerId has $totalOrders total orders");
+    logActivity("DATABASE RESULT: Total orders after filtering = $totalOrders");
 
-    // Fetch paginated orders
-    $query = "
-        SELECT order_id, order_date, total_amount, discount, delivery_status 
-        FROM orders 
-        WHERE customer_id = ? 
-        ORDER BY order_date DESC, delivery_status ASC 
-        LIMIT ? OFFSET ?";
-    
-    logActivity("DATABASE: Fetching orders for customer $customerId (Page: $page, Limit: $limit)");
-    
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("iii", $customerId, $limit, $offset);
+    // ---------------------------------------
+    // 2️⃣ Fetch paginated records (with filter)
+    // ---------------------------------------
+
+    if ($deliveryStatus !== '') {
+        $query = "
+            SELECT order_id, order_date, total_amount, discount, delivery_status
+            FROM orders
+            WHERE customer_id = ? AND delivery_status = ?
+            ORDER BY order_date DESC, delivery_status ASC
+            LIMIT ? OFFSET ?
+        ";
+
+        logActivity("DATABASE: Fetching filtered orders (delivery_status = '$deliveryStatus')");
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("isii", $customerId, $deliveryStatus, $limit, $offset);
+
+    } else {
+        $query = "
+            SELECT order_id, order_date, total_amount, discount, delivery_status
+            FROM orders
+            WHERE customer_id = ?
+            ORDER BY order_date DESC, delivery_status ASC
+            LIMIT ? OFFSET ?
+        ";
+
+        logActivity("DATABASE: Fetching unfiltered orders");
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("iii", $customerId, $limit, $offset);
+    }
+
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -66,11 +95,11 @@ try {
     }
     $stmt->close();
 
-    $ordersCount = count($orders);
-    logActivity("DATABASE RESULT: Retrieved $ordersCount orders for customer $customerId");
+    logActivity("DATABASE RESULT: Retrieved " . count($orders) . " orders for customer $customerId");
 
-    // Return the response
-    logActivity("SUCCESS: Returning order data to client");
+    // ---------------------------------------
+    // 3️⃣ Return the response
+    // ---------------------------------------
     echo json_encode([
         "success" => true,
         "orders" => $orders,
@@ -83,7 +112,6 @@ try {
     $errorMessage = $e->getMessage();
     logActivity("ERROR: Exception occurred - " . $errorMessage);
     echo json_encode(["success" => false, "message" => "Server error. Please try again later."]);
-
 } finally {
     if (isset($conn)) {
         $conn->close();
