@@ -72,7 +72,7 @@ function fetchDeactivationList(page = 1) {
 }
     // Apply filters function
     function applyFilters() {
-        fetchDeletedfetchDeactivationList(1); // Reset to page 1 when filters are applied
+        fetchDeactivationList(1); // Reset to page 1 when filters are applied
     }
 
     // Event listener for Apply Filters button

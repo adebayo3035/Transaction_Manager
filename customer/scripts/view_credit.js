@@ -1,29 +1,49 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
     const limit = 10;
     let currentPage = 1;
 
-    const ordersTableBody = document.querySelector('#ordersTable tbody');
-    const orderDetailsTableBody = document.querySelector('#orderDetailsTable tbody');
-    const paginationContainer = document.getElementById('pagination');
+    const ordersTableBody = document.querySelector("#ordersTable tbody");
+    const orderDetailsTableBody = document.querySelector(
+        "#orderDetailsTable tbody"
+    );
+    const paginationContainer = document.getElementById("pagination");
     const liveSearchInput = document.getElementById("liveSearch");
-    const orderModal = document.getElementById('orderModal');
-    const orderDetailsTableBodyHeader = document.querySelector('#orderDetailsTable thead tr');
+    const orderModal = document.getElementById("orderModal");
+    const orderDetailsTableBodyHeader = document.querySelector(
+        "#orderDetailsTable thead tr"
+    );
     orderDetailsTableBodyHeader.style.color = "#000";
-    const repayBtn = document.getElementById('repay-btn');
-    const repaymentForm = document.getElementById('reassignForm');
-    const submitRepayment = document.getElementById('submitRepayment');
-    const repayAmountInput = document.getElementById('repayAmountInput');
-    const repaymentMethodSelect = document.getElementById('repayment_method');
-    const repayAmountLabel = document.getElementById('repayAmountLabel');
+    const repayBtn = document.getElementById("repay-btn");
+    const repaymentForm = document.getElementById("reassignForm");
+    const submitRepayment = document.getElementById("submitRepayment");
+    const repayAmountInput = document.getElementById("repayAmountInput");
+    const repaymentMethodSelect = document.getElementById("repayment_method");
+    const repayAmountLabel = document.getElementById("repayAmountLabel");
 
-    const repaymentHistoryBtn = document.getElementById('repayment-history');
-    const repaymentHistoryModal = document.getElementById('repaymentHistoryModal');
-    const repaymentHistoryTableBody = document.querySelector('#repaymentHistoryTable tbody');
+    const repaymentHistoryBtn = document.getElementById("repayment-history");
+    const repaymentHistoryModal = document.getElementById(
+        "repaymentHistoryModal"
+    );
+    const repaymentHistoryTableBody = document.querySelector(
+        "#repaymentHistoryTable tbody"
+    );
     let currentCreditId = null; // To store the current credit ID for repayment history
+    const repaymentStatus =
+        document.getElementById("repaymentStatus")?.value || "";
+    const dueStatus = document.getElementById("dueStatus")?.value || "";
+    const applyFiltersBtn = document.getElementById("applyFilters");
 
     // Fetch orders with pagination
+    function getRepaymentStatus() {
+        return document.getElementById("repaymentStatus")?.value || "";
+    }
+
+    function getDueStatus() {
+        return document.getElementById("dueStatus")?.value || "";
+    }
+
     function fetchCredits(page = 1) {
-        const ordersTableBody = document.getElementById('ordersTableBody');
+        const ordersTableBody = document.getElementById("ordersTableBody");
 
         // Inject spinner
         ordersTableBody.innerHTML = `
@@ -36,9 +56,10 @@ document.addEventListener('DOMContentLoaded', () => {
         </tr>
         `;
 
-        const minDelay = new Promise(resolve => setTimeout(resolve, 1000)); // Spinner shows at least 500ms
-        const fetchData = fetch(`../v2/fetch_credit_summary.php?page=${page}&limit=${limit}`)
-            .then(res => res.json());
+        const minDelay = new Promise((resolve) => setTimeout(resolve, 1000)); // Spinner shows at least 500ms
+        const fetchData = fetch(
+            `../v2/fetch_credit_summary.php?page=${page}&limit=${limit}&repayment_status=${getRepaymentStatus()}&due_status=${getDueStatus()}`
+        ).then((res) => res.json());
 
         Promise.all([fetchData, minDelay])
             .then(([data]) => {
@@ -49,25 +70,30 @@ document.addEventListener('DOMContentLoaded', () => {
                     ordersTableBody.innerHTML = `
                     <tr><td colspan="6" style="text-align:center;">No Credit History at the moment</td></tr>
                 `;
-                    console.error('No credit data:', data.message);
+                    console.error("No credit data:", data.message);
                 }
             })
-            .catch(error => {
-                console.error('Error fetching data:', error);
+            .catch((error) => {
+                console.error("Error fetching data:", error);
                 ordersTableBody.innerHTML = `
                 <tr><td colspan="6" style="text-align:center; color:red;">Error loading credit data</td></tr>
             `;
             });
     }
 
+    applyFiltersBtn.addEventListener("click", () => {
+        currentPage = 1; // restart pagination when filtering
+        fetchCredits(currentPage);
+        alert("Filters applied");
+    });
 
     // Update orders table
     function updateTable(credits) {
-        ordersTableBody.innerHTML = '';
+        ordersTableBody.innerHTML = "";
         const fragment = document.createDocumentFragment();
 
-        credits.forEach(credit => {
-            const row = document.createElement('tr');
+        credits.forEach((credit) => {
+            const row = document.createElement("tr");
             row.innerHTML = `
                 <td>${credit.order_id}</td>
                 <td>${credit.credit_order_id}</td>
@@ -83,55 +109,57 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Delegate event listener for view details buttons
-    ordersTableBody.addEventListener('click', (event) => {
-        if (event.target.classList.contains('view-details-btn')) {
-            const creditId = event.target.getAttribute('data-credit-id');
+    ordersTableBody.addEventListener("click", (event) => {
+        if (event.target.classList.contains("view-details-btn")) {
+            const creditId = event.target.getAttribute("data-credit-id");
             fetchCreditDetails(creditId);
         }
     });
 
     // Fetch order details for a specific order
     function fetchCreditDetails(creditId) {
-        fetch('../v2/fetch_credit_details.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ credit_id: creditId })
+        fetch("../v2/fetch_credit_details.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ credit_id: creditId }),
         })
-            .then(response => response.json())
-            .then(data => {
+            .then((response) => response.json())
+            .then((data) => {
                 if (data.success) {
                     populateCreditDetails(data.credit_details);
                     // Check if the order status is "Assigned"
                     const creditStatus = data.credit_details[0].repayment_status; // Assuming it's in the first detail
-                    const repaymentButton = document.getElementById('repay-btn');
+                    const repaymentButton = document.getElementById("repay-btn");
 
                     if (creditStatus === "Pending" || creditStatus === "Partially Paid") {
                         // Enable the "Reassign Order" button if the status is "Assigned"
-                        repaymentButton.style.display = 'block';
+                        repaymentButton.style.display = "block";
                         repaymentButton.disabled = false; // Ensure it's not disabled
                     } else {
                         // Disable or hide the button for other statuses
-                        repaymentButton.style.display = 'none';
+                        repaymentButton.style.display = "none";
                         repaymentButton.disabled = true;
                     }
-                    orderModal.style.display = 'block';
+                    orderModal.style.display = "block";
                 } else {
-                    console.error('Failed to fetch Credit details:', data.message);
+                    console.error("Failed to fetch Credit details:", data.message);
                 }
             })
-            .catch(error => console.error('Error fetching credit details:', error));
+            .catch((error) => console.error("Error fetching credit details:", error));
     }
     let currentOrderId = null; // Variable to store the current order_id
 
     // Populate order details table
     function populateCreditDetails(details) {
-        const orderDetailsTableBody = document.querySelector('#orderDetailsTable tbody');
-        orderDetailsTableBody.innerHTML = '';
-        details.forEach(detail => {
+        const orderDetailsTableBody = document.querySelector(
+            "#orderDetailsTable tbody"
+        );
+        orderDetailsTableBody.innerHTML = "";
+        details.forEach((detail) => {
             currentOrderId = detail.order_id; // Store the order_id for later use
             currentCreditId = detail.credit_order_id; // Store the credit_id for repayment history
-            document.getElementById('creditID').value = detail.credit_order_id;
-            const row = document.createElement('tr');
+            document.getElementById("creditID").value = detail.credit_order_id;
+            const row = document.createElement("tr");
             row.innerHTML = `
                 <td>${detail.order_id}</td>
                  <td>${detail.total_credit_amount}</td>
@@ -141,20 +169,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 
             `;
             orderDetailsTableBody.appendChild(row);
-        })
+        });
 
         const fragment = document.createDocumentFragment();
 
         const firstDetail = details[0];
         const detailsArray = [
-            { label: 'Credit ID', value: firstDetail.credit_order_id },
-            { label: 'Order Date', value: firstDetail.created_at },
-            { label: 'Due Date', value: firstDetail.due_date },
-            { label: 'Credit Repayment Status', value: firstDetail.repayment_status },
-            { label: 'Credit Due for Payment', value: firstDetail.is_due }
+            { label: "Credit ID", value: firstDetail.credit_order_id },
+            { label: "Order Date", value: firstDetail.created_at },
+            { label: "Due Date", value: firstDetail.due_date },
+            { label: "Credit Repayment Status", value: firstDetail.repayment_status },
+            { label: "Credit Due for Payment", value: firstDetail.is_due },
         ];
 
-        detailsArray.forEach(detail => {
+        detailsArray.forEach((detail) => {
             const row = createRow(detail.label, detail.value);
             fragment.appendChild(row);
         });
@@ -164,68 +192,73 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Create a row for the details table
     function createRow(label, value) {
-        const row = document.createElement('tr');
+        const row = document.createElement("tr");
         row.innerHTML = `<td colspan="4"><strong>${label}</strong></td><td>${value}</td>`;
         return row;
     }
 
     // REPAY CREDIT MODULE
     // Show the Repayment form when the button is clicked
-    repayBtn.addEventListener('click', () => {
+    repayBtn.addEventListener("click", () => {
         // fetchAvailableDrivers();
-        repaymentForm.style.display = 'block';
+        repaymentForm.style.display = "block";
     });
 
     // Event listener for repayment method change
-    repaymentMethodSelect.addEventListener('change', () => {
+    repaymentMethodSelect.addEventListener("change", () => {
         const selectedMethod = repaymentMethodSelect.value;
         if (selectedMethod === "Full Repayment") {
-            repayAmountInput.style.display = 'none';
-            repayAmountLabel.style.display = 'none';
+            repayAmountInput.style.display = "none";
+            repayAmountLabel.style.display = "none";
             submitRepayment.style.display = "flex";
         } else if (selectedMethod === "Partial Repayment") {
-            repayAmountInput.style.display = 'block';
-            repayAmountLabel.style.display = 'block';
+            repayAmountInput.style.display = "block";
+            repayAmountLabel.style.display = "block";
             submitRepayment.style.display = "flex";
-        }
-        else {
-            repayAmountInput.style.display = 'none';
-            repayAmountLabel.style.display = 'none';
+        } else {
+            repayAmountInput.style.display = "none";
+            repayAmountLabel.style.display = "none";
             submitRepayment.style.display = "none";
         }
     });
     // Handle form submission
-    submitRepayment.addEventListener('click', () => {
+    submitRepayment.addEventListener("click", () => {
         const selectedMethod = repaymentMethodSelect.value;
-        const repayAmount = document.getElementById('repayAmountInput').value;
-        const creditId = document.getElementById('creditID').value;
+        const repayAmount = document.getElementById("repayAmountInput").value;
+        const creditId = document.getElementById("creditID").value;
 
         // Show confirmation dialog
-        const confirmMessage = selectedMethod === "Full Repayment" ?
-            "Are you sure you want to make a full repayment?" :
-            `Are you sure you want to make a partial repayment of ${repayAmount}?`;
+        const confirmMessage =
+            selectedMethod === "Full Repayment"
+                ? "Are you sure you want to make a full repayment?"
+                : `Are you sure you want to make a partial repayment of ${repayAmount}?`;
 
         if (confirm(confirmMessage)) {
-            fetch('../v2/credit_repayment.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ credit_order_id: creditId, repay_amount: selectedMethod === "Full Repayment" ? "Full" : repayAmount, repaymentMethod: selectedMethod, order_id: currentOrderId })
+            fetch("../v2/credit_repayment.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    credit_order_id: creditId,
+                    repay_amount:
+                        selectedMethod === "Full Repayment" ? "Full" : repayAmount,
+                    repaymentMethod: selectedMethod,
+                    order_id: currentOrderId,
+                }),
             })
-                .then(response => response.json())
-                .then(data => {
+                .then((response) => response.json())
+                .then((data) => {
                     if (data.success) {
-                        alert('Your repayment has been successfully submitted');
+                        alert("Your repayment has been successfully submitted");
                         // Hide form after successful submission
-                        document.querySelector('.reassign-form').style.display = 'none';
+                        document.querySelector(".reassign-form").style.display = "none";
                     } else {
                         alert(data.message);
-                        console.error('Failed to repay credit order:', data.message);
+                        console.error("Failed to repay credit order:", data.message);
                     }
                 })
-                .catch(error => console.error('Error repaying credit order:', error));
+                .catch((error) => console.error("Error repaying credit order:", error));
         }
     });
-
 
     // END OF REPAYMENT MODULE
 
@@ -235,13 +268,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentRepaymentPage = 1;
     let totalRepaymentPages = 1;
 
-
     // Modify your existing fetchRepaymentHistory function
     function fetchRepaymentHistory(creditId, page = 1) {
         currentCreditId = creditId;
         currentRepaymentPage = page;
 
-        const tbody = document.getElementById('repaymentHistoryTableBody');
+        const tbody = document.getElementById("repaymentHistoryTableBody");
         tbody.innerHTML = `
         <tr>
             <td colspan="3" style="text-align:center; padding: 20px;">
@@ -252,12 +284,12 @@ document.addEventListener('DOMContentLoaded', () => {
         </tr>
     `;
 
-        const minDisplayTime = new Promise(resolve => setTimeout(resolve, 500)); // Ensures spinner shows at least 500ms
-        const fetchData = fetch('../v2/fetch_repayment_history.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ credit_id: creditId, page })
-        }).then(res => res.json());
+        const minDisplayTime = new Promise((resolve) => setTimeout(resolve, 500)); // Ensures spinner shows at least 500ms
+        const fetchData = fetch("../v2/fetch_repayment_history.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ credit_id: creditId, page }),
+        }).then((res) => res.json());
 
         Promise.all([fetchData, minDisplayTime])
             .then(([data]) => {
@@ -269,33 +301,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     populateRepaymentHistory(data.history);
                     updatePaginationControls(); // already uses currentRepaymentPage & totalRepaymentPages
-                    repaymentHistoryModal.style.display = 'block';
+                    repaymentHistoryModal.style.display = "block";
                 } else {
                     tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;">${data.message}</td></tr>`;
                 }
             })
-            .catch(error => {
-                console.error('Error fetching repayment history:', error);
+            .catch((error) => {
+                console.error("Error fetching repayment history:", error);
                 tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;">Error loading repayment history</td></tr>`;
             });
     }
 
-
     // Update your populateRepaymentHistory function (minor adjustment)
     function populateRepaymentHistory(history) {
-        repaymentHistoryTableBody.innerHTML = '';
+        repaymentHistoryTableBody.innerHTML = "";
 
         if (history.length === 0) {
-            const row = document.createElement('tr');
+            const row = document.createElement("tr");
             row.innerHTML = `<td colspan="3" style="text-align:center;">No repayment history found</td>`;
             repaymentHistoryTableBody.appendChild(row);
             return;
         }
 
-        history.forEach(payment => {
-            const row = document.createElement('tr');
+        history.forEach((payment) => {
+            const row = document.createElement("tr");
             row.innerHTML = `
-            <td>${payment.repayment_id || 'N/A'}</td>
+            <td>${payment.repayment_id || "N/A"}</td>
             <td>${payment.payment_date}</td>
             <td>${payment.amount_paid}</td>
         `;
@@ -305,109 +336,108 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add these new functions for pagination control
     function updatePaginationControls() {
-    const paginationWrapper = document.getElementById('paginationWrapper');
-    const paginationNumbers = document.getElementById('paginationNumbers');
-    const firstBtn = document.getElementById('firstPageBtn');
-    const prevBtn = document.getElementById('prevPageBtn');
-    const nextBtn = document.getElementById('nextPageBtn');
-    const lastBtn = document.getElementById('lastPageBtn');
+        const paginationWrapper = document.getElementById("paginationWrapper");
+        const paginationNumbers = document.getElementById("paginationNumbers");
+        const firstBtn = document.getElementById("firstPageBtn");
+        const prevBtn = document.getElementById("prevPageBtn");
+        const nextBtn = document.getElementById("nextPageBtn");
+        const lastBtn = document.getElementById("lastPageBtn");
 
-    // Show pagination only if needed
-    if (totalRepaymentPages > 1) {
-        paginationWrapper.style.display = 'flex';
+        // Show pagination only if needed
+        if (totalRepaymentPages > 1) {
+            paginationWrapper.style.display = "flex";
 
-        // Enable/disable buttons
-        firstBtn.disabled = currentRepaymentPage === 1;
-        prevBtn.disabled = currentRepaymentPage === 1;
-        nextBtn.disabled = currentRepaymentPage === totalRepaymentPages;
-        lastBtn.disabled = currentRepaymentPage === totalRepaymentPages;
+            // Enable/disable buttons
+            firstBtn.disabled = currentRepaymentPage === 1;
+            prevBtn.disabled = currentRepaymentPage === 1;
+            nextBtn.disabled = currentRepaymentPage === totalRepaymentPages;
+            lastBtn.disabled = currentRepaymentPage === totalRepaymentPages;
 
-        // Generate number buttons
-        paginationNumbers.innerHTML = '';
+            // Generate number buttons
+            paginationNumbers.innerHTML = "";
 
-        for (let i = 1; i <= totalRepaymentPages; i++) {
-            const btn = document.createElement('button');
-            btn.classList.add('pagination-page');
-            btn.textContent = i;
-            if (i === currentRepaymentPage) {
-                btn.classList.add('active');
-            }
-
-            btn.addEventListener('click', () => {
-                if (i !== currentRepaymentPage) {
-                    fetchRepaymentHistory(currentCreditId, i);
+            for (let i = 1; i <= totalRepaymentPages; i++) {
+                const btn = document.createElement("button");
+                btn.classList.add("pagination-page");
+                btn.textContent = i;
+                if (i === currentRepaymentPage) {
+                    btn.classList.add("active");
                 }
-            });
 
-            paginationNumbers.appendChild(btn);
+                btn.addEventListener("click", () => {
+                    if (i !== currentRepaymentPage) {
+                        fetchRepaymentHistory(currentCreditId, i);
+                    }
+                });
+
+                paginationNumbers.appendChild(btn);
+            }
+        } else {
+            paginationWrapper.style.display = "none";
         }
-
-    } else {
-        paginationWrapper.style.display = 'none';
     }
-}
-
-
 
     // Add event listeners for pagination buttons
-    document.getElementById('prevPageBtn').addEventListener('click', () => {
+    document.getElementById("prevPageBtn").addEventListener("click", () => {
         if (currentRepaymentPage > 1) {
             fetchRepaymentHistory(currentCreditId, currentRepaymentPage - 1);
         }
     });
 
-    document.getElementById('nextPageBtn').addEventListener('click', () => {
+    document.getElementById("nextPageBtn").addEventListener("click", () => {
         if (currentRepaymentPage < totalRepaymentPages) {
             fetchRepaymentHistory(currentCreditId, currentRepaymentPage + 1);
         }
     });
-    document.getElementById('firstPageBtn').addEventListener('click', () => {
-    if (currentRepaymentPage > 1) {
-        fetchRepaymentHistory(currentCreditId, 1);
-    }
-});
+    document.getElementById("firstPageBtn").addEventListener("click", () => {
+        if (currentRepaymentPage > 1) {
+            fetchRepaymentHistory(currentCreditId, 1);
+        }
+    });
 
-document.getElementById('lastPageBtn').addEventListener('click', () => {
-    if (currentRepaymentPage < totalRepaymentPages) {
-        fetchRepaymentHistory(currentCreditId, totalRepaymentPages);
-    }
-});
+    document.getElementById("lastPageBtn").addEventListener("click", () => {
+        if (currentRepaymentPage < totalRepaymentPages) {
+            fetchRepaymentHistory(currentCreditId, totalRepaymentPages);
+        }
+    });
 
     // Add event listener for repayment history button
-    repaymentHistoryBtn.addEventListener('click', () => {
+    repaymentHistoryBtn.addEventListener("click", () => {
         if (currentCreditId) {
             fetchRepaymentHistory(currentCreditId);
         } else {
-            alert('No credit selected');
+            alert("No credit selected");
         }
     });
 
     // Add event listener to close repayment history modal
-    repaymentHistoryModal.querySelector('.close').addEventListener('click', () => {
-        repaymentHistoryModal.style.display = 'none';
-    });
+    repaymentHistoryModal
+        .querySelector(".close")
+        .addEventListener("click", () => {
+            repaymentHistoryModal.style.display = "none";
+        });
 
     //END OF CREDIT REPAYMENT HISTORY MODULE
 
     // Update pagination
     function updatePagination(totalItems, currentPage, itemsPerPage) {
-        const paginationContainer = document.getElementById('pagination');
-        paginationContainer.innerHTML = '';
+        const paginationContainer = document.getElementById("pagination");
+        paginationContainer.innerHTML = "";
 
         const totalPages = Math.ceil(totalItems / itemsPerPage);
         paginationButtons = [];
 
         const createButton = (label, page, disabled = false) => {
-            const btn = document.createElement('button');
+            const btn = document.createElement("button");
             btn.textContent = label;
             if (disabled) btn.disabled = true;
-            btn.addEventListener('click', () => fetchCredits(page));
+            btn.addEventListener("click", () => fetchCredits(page));
             paginationContainer.appendChild(btn);
         };
 
         // Show: First, Prev
-        createButton('« First', 1, currentPage === 1);
-        createButton('‹ Prev', currentPage - 1, currentPage === 1);
+        createButton("« First", 1, currentPage === 1);
+        createButton("‹ Prev", currentPage - 1, currentPage === 1);
 
         // Show range around current page (e.g. ±2)
         const maxVisible = 2;
@@ -415,23 +445,22 @@ document.getElementById('lastPageBtn').addEventListener('click', () => {
         const end = Math.min(totalPages, currentPage + maxVisible);
 
         for (let i = start; i <= end; i++) {
-            const btn = document.createElement('button');
+            const btn = document.createElement("button");
             btn.textContent = i;
-            if (i === currentPage) btn.classList.add('active');
-            btn.addEventListener('click', () => fetchCredits(i));
+            if (i === currentPage) btn.classList.add("active");
+            btn.addEventListener("click", () => fetchCredits(i));
             paginationButtons.push(btn);
             paginationContainer.appendChild(btn);
         }
 
         // Show: Next, Last
-        createButton('Next ›', currentPage + 1, currentPage === totalPages);
-        createButton('Last »', totalPages, currentPage === totalPages);
+        createButton("Next ›", currentPage + 1, currentPage === totalPages);
+        createButton("Last »", totalPages, currentPage === totalPages);
     }
-
 
     // Debounced search filtering
     let searchTimeout;
-    liveSearchInput.addEventListener('input', () => {
+    liveSearchInput.addEventListener("input", () => {
         clearTimeout(searchTimeout);
         searchTimeout = setTimeout(filterTable, 300);
     });
@@ -440,27 +469,31 @@ document.getElementById('lastPageBtn').addEventListener('click', () => {
         const input = liveSearchInput.value.toLowerCase();
         const rows = ordersTableBody.getElementsByTagName("tr");
 
-        Array.from(rows).forEach(row => {
+        Array.from(rows).forEach((row) => {
             const cells = row.getElementsByTagName("td");
-            const found = Array.from(cells).some(cell => cell.textContent.toLowerCase().includes(input));
+            const found = Array.from(cells).some((cell) =>
+                cell.textContent.toLowerCase().includes(input)
+            );
             row.style.display = found ? "" : "none";
         });
     }
 
     // Close modal event
-    document.querySelector('.modal .close').addEventListener('click', () => {
-        orderModal.style.display = 'none'
-        repaymentForm.style.display = 'none';
+    document.querySelector(".modal .close").addEventListener("click", () => {
+        orderModal.style.display = "none";
+        repaymentForm.style.display = "none";
         location.reload();
     });
-    document.querySelector('.closeRepaymentForm').addEventListener('click', () => {
-        repaymentForm.style.display = 'none';
-        location.reload();
-    })
-    window.addEventListener('click', (event) => {
+    document
+        .querySelector(".closeRepaymentForm")
+        .addEventListener("click", () => {
+            repaymentForm.style.display = "none";
+            location.reload();
+        });
+    window.addEventListener("click", (event) => {
         if (event.target === orderModal || event.target === repaymentForm) {
-            orderModal.style.display = 'none';
-            repaymentForm.style.display = 'none';
+            orderModal.style.display = "none";
+            repaymentForm.style.display = "none";
             location.reload();
         }
     });

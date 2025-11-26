@@ -19,6 +19,26 @@
             <button type="submit">Search <i class="fa fa-search" aria-hidden="true"></i></button>
         </div>
         <h1>My Credits History</h1>
+        <div class="filters">
+            <div class="applyFilters">
+                <label>Repayment Status:</label>
+                <select id="repaymentStatus">
+                    <option value="">All</option>
+                    <option value="Paid">Paid</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Void">Void</option>
+                </select>
+
+                <label>Due Status:</label>
+                <select id="dueStatus">
+                    <option value="">All</option>
+                    <option value="Due">Due</option>
+                    <option value="Overdue">Overdue</option>
+                </select>
+
+                <button id="applyFilters" class="btn btn-primary">Apply</button>
+            </div>
+        </div>
     </div>
 
     <table id="ordersTable" class="ordersTable">
@@ -104,13 +124,15 @@
                         </tbody>
                     </table>
                     <!-- Add pagination controls -->
-                    <div id="paginationWrapper" class="pagination-controls" style="display: none; justify-content: center; margin-top: 15px;">
-    <button id="firstPageBtn" class="pagination-btn">« First</button>
-    <button id="prevPageBtn" class="pagination-btn">< Prev</button>
-    <span id="paginationNumbers"></span>
-    <button id="nextPageBtn" class="pagination-btn">Next ></button>
-    <button id="lastPageBtn" class="pagination-btn">Last »</button>
-</div>
+                    <div id="paginationWrapper" class="pagination-controls"
+                        style="display: none; justify-content: center; margin-top: 15px;">
+                        <button id="firstPageBtn" class="pagination-btn">« First</button>
+                        <button id="prevPageBtn" class="pagination-btn">
+                            < Prev</button>
+                                <span id="paginationNumbers"></span>
+                                <button id="nextPageBtn" class="pagination-btn">Next ></button>
+                                <button id="lastPageBtn" class="pagination-btn">Last »</button>
+                    </div>
 
 
 
