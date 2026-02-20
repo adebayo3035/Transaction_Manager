@@ -17,7 +17,7 @@
         <h1>KaraKata Customers</h1>
         <!-- Separate row for "Add New Customer" button -->
         <div id="customer-form">
-            <button onclick="toggleModal('addNewDriverModal')"><i class="fa fa-plus" aria-hidden="true"></i> Add New
+            <button id="addNewDriverBtn"><i class="fa fa-plus" aria-hidden="true"></i> Add New
                 Customer</button>
         </div>
         <div class="livesearch">

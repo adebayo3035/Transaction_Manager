@@ -20,6 +20,8 @@
         <div id="customer-form">
             <button onclick="toggleModal('addNewDriverModal')"><i class="fa fa-plus" aria-hidden="true"></i> Add New
                 Driver</button>
+
+               <a href="driver_withdrawal.php"><button><i class="fa fa-plus" aria-hidden="true"></i> Manage Withdrawals</button></a> 
         </div>
         <div class="livesearch">
             <input type="text" id="liveSearch" placeholder="Search for Order...">

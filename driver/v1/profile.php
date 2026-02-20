@@ -60,6 +60,7 @@
             </div>
             <button id="modifyDriverDetails"> Edit Profile </button>
             <button id="reset-link" style="background-color: #000;"> Reset Secret Question and Answer </button>
+            <button id="add-bank" style="background-color: #111074;"> Add Bank Account </button>
         </div>
     </div>
 
@@ -132,6 +133,36 @@
                 </div>
               
                 <button type="submit" class="button" value="Reset">Reset</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add new Bank Modal -->
+      <!-- Modal Structure to Reset Secret Question and Answer -->
+    <div id="addBankModal" class="modal">
+        <div class="modal-content">
+            <span class="close close3">&times;</span>
+            <h2>Add a new Bank Account</h2>
+            <form id="addNewBankForm" autocomplete="off">
+                <div class="input-box">
+                    <label for="bankName">Select Bank Name</label>
+                        <select name="bankName" id="bankName" required>
+                            <option value="">--Select Bank Name -- </option>
+                        </select>
+                </div>
+                <div class="input-box">
+                    <label for="accountNumber">Enter your Account Number</label>
+                    <input type="number" name="accountNumber" id="accountNumber" placeholder="Enter Your Account Number"
+                        required autocomplete = "off">
+                </div>
+              
+                <div class="input-box">
+                    <label for="verifySecretAnswer">Enter your Secret Answer</label>
+                    <input type="password" name="verifySecretAnswer" id="verifySecretAnswer"
+                        placeholder="Enter Secret Answer" autocomplete = "off" required />
+                </div>
+                
+                <button type="submit" class="button" value="Add Account">Add New Account</button>
             </form>
         </div>
     </div>

@@ -24,6 +24,9 @@
             <li><a href="view_orders.php" id="viewOrders">My Orders</a></li>
             <li><a href="profile.php" id="fundWallet">My Profile</a></li>
             <li><a href="account_history.php" id="fundWallet">Account History</a></li>
+            <li><a href="driver_bank.php" id="driverBank">Manage Bank Accounts</a></li>
+            <li><a href="withdrawal.php" id="fundWithdrawal"> Withdraw Fund</a></li>
+            <li><a href="payments.php" id="manageWithdrawal"> Manage Withdrawals</a></li>
         </ul>
         <span id="wallet">Loading Balance...</span>
         <span id="dateTimeLabel">Loading Time...</span>

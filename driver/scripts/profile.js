@@ -1,114 +1,147 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // Modal toggle function
-    function toggleModal(modalId, display) {
-        const modal = document.getElementById(modalId);
-        if (modal) {
-            modal.style.display = display;
-        }
-    } 
-    // Get elements and bind events
-    const modal = document.getElementById("profileModal");
-    const editButton = document.querySelector('.edit-icon');
-    const modifyDriverDetails = document.querySelector('#modifyDriverDetails');
-    const resetLink = document.querySelector('#reset-link');
-    const closeModalButtons = document.querySelectorAll(".close");
-
-    // Event listeners for modals
-    editButton?.addEventListener('click', () => toggleModal("profileModal", "block"));
-    modifyDriverDetails?.addEventListener('click', () => toggleModal('orderModal', 'block'));
-    resetLink?.addEventListener('click', () => toggleModal('resetQuestionAnswerModal', 'block'));
-    closeModalButtons.forEach(btn => btn.addEventListener('click', () => btn.closest('.modal').style.display = 'none'));
-
-    // Close modals when clicking outside
-    window.onclick = function (event) {
-        if (event.target.classList.contains('modal')) {
-            event.target.style.display = "none";
-        }
+document.addEventListener("DOMContentLoaded", function () {
+    loadBanksForSelect();
+  // Modal toggle function
+  function toggleModal(modalId, display) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+      modal.style.display = display;
     }
+  }
+  // Get elements and bind events
+  const modal = document.getElementById("profileModal");
+  const editButton = document.querySelector(".edit-icon");
+  const modifyDriverDetails = document.querySelector("#modifyDriverDetails");
+  const resetLink = document.querySelector("#reset-link");
+  const addBank = document.querySelector("#add-bank");
+  const closeModalButtons = document.querySelectorAll(".close");
 
-    // Fetch profile data
-    fetch('../v2/profile.php')
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('profile-picture').src = '../../backend/driver_photos/' + data.photo;
-            document.getElementById('uploadedPhoto').src = '../../backend/driver_photos/' + data.photo;
-            document.getElementById('customer-name').textContent = `${data.firstname} ${data.lastname}`;
-            document.getElementById('first-name').textContent = data.firstname;
-            document.getElementById('last-name').textContent = data.lastname;
+  // Event listeners for modals
+  editButton?.addEventListener("click", () =>
+    toggleModal("profileModal", "block"),
+  );
+  modifyDriverDetails?.addEventListener("click", () =>
+    toggleModal("orderModal", "block"),
+  );
+  resetLink?.addEventListener("click", () =>
+    toggleModal("resetQuestionAnswerModal", "block"),
+  );
+  addBank?.addEventListener("click", () =>
+    toggleModal("addBankModal", "block"),
+  );
+  closeModalButtons.forEach((btn) =>
+    btn.addEventListener(
+      "click",
+      () => (btn.closest(".modal").style.display = "none"),
+    ),
+  );
 
-            const email = data.email;
-            const phone = data.phone_number;
-            const maskedEmail = email.replace(/(.{2})(.*)(@.*)/, "$1****$3");
-            const maskedPhone = phone.replace(/(\d{4})(.*)(\d{4})/, "$1****$3");
+  // Close modals when clicking outside
+  window.onclick = function (event) {
+    if (event.target.classList.contains("modal")) {
+      event.target.style.display = "none";
+    }
+  };
 
-            const toggleEmail = document.getElementById('toggle-checkbox');
-            const togglePhone = document.getElementById('toggle-checkbox1');
-            const displayEmail = document.getElementById('display-email');
-            const displayPhone = document.getElementById('display-phone');
-            displayEmail.textContent = maskedEmail;
-            displayPhone.textContent = maskedPhone;
+  // Fetch profile data
+  fetch("../v2/profile.php")
+    .then((response) => response.json())
+    .then((data) => {
+      document.getElementById("profile-picture").src =
+        "../../backend/driver_photos/" + data.photo;
+      document.getElementById("uploadedPhoto").src =
+        "../../backend/driver_photos/" + data.photo;
+      document.getElementById("customer-name").textContent =
+        `${data.firstname} ${data.lastname}`;
+      document.getElementById("first-name").textContent = data.firstname;
+      document.getElementById("last-name").textContent = data.lastname;
 
-            // Toggle email/phone display
-            const toggleDisplay = (toggleCheckbox, resultElement, unmasked, masked) => {
-                toggleCheckbox.addEventListener('change', () => {
-                    resultElement.textContent = toggleCheckbox.checked ? unmasked : masked;
-                });
-            }
-            toggleDisplay(toggleEmail, displayEmail, email, maskedEmail);
-            toggleDisplay(togglePhone, displayPhone, phone, maskedPhone);
-        })
-        .catch(error => console.error('Error fetching customer data:', error));
+      const email = data.email;
+      const phone = data.phone_number;
+      const maskedEmail = email.replace(/(.{2})(.*)(@.*)/, "$1****$3");
+      const maskedPhone = phone.replace(/(\d{4})(.*)(\d{4})/, "$1****$3");
 
-    // FUNCTION TO HANDLE IMAGE UPDATE
-    document.getElementById('adminForm')?.addEventListener('submit', async function (event) {
-        event.preventDefault();
-    
-        // Show confirmation dialog
-        const confirmUpdate = confirm("Are you sure you want to update the profile picture?");
-        if (!confirmUpdate) {
-            alert("Profile picture update cancelled");
-            console.log("Profile picture update cancelled.");
-            return; // Stop execution if the user clicks "No"
+      const toggleEmail = document.getElementById("toggle-checkbox");
+      const togglePhone = document.getElementById("toggle-checkbox1");
+      const displayEmail = document.getElementById("display-email");
+      const displayPhone = document.getElementById("display-phone");
+      displayEmail.textContent = maskedEmail;
+      displayPhone.textContent = maskedPhone;
+
+      // Toggle email/phone display
+      const toggleDisplay = (
+        toggleCheckbox,
+        resultElement,
+        unmasked,
+        masked,
+      ) => {
+        toggleCheckbox.addEventListener("change", () => {
+          resultElement.textContent = toggleCheckbox.checked
+            ? unmasked
+            : masked;
+        });
+      };
+      toggleDisplay(toggleEmail, displayEmail, email, maskedEmail);
+      toggleDisplay(togglePhone, displayPhone, phone, maskedPhone);
+    })
+    .catch((error) => console.error("Error fetching customer data:", error));
+
+  // FUNCTION TO HANDLE IMAGE UPDATE
+  document
+    .getElementById("adminForm")
+    ?.addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      // Show confirmation dialog
+      const confirmUpdate = confirm(
+        "Are you sure you want to update the profile picture?",
+      );
+      if (!confirmUpdate) {
+        alert("Profile picture update cancelled");
+        console.log("Profile picture update cancelled.");
+        return; // Stop execution if the user clicks "No"
+      }
+
+      const form = event.currentTarget;
+      const formData = new FormData(form);
+      const messageElement = document.getElementById("message");
+
+      try {
+        const response = await fetch("../v2/update_picture.php", {
+          method: "POST",
+          body: formData,
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          document.getElementById("uploadedPhoto").src =
+            "../../backend/driver_photos/" + data.file;
+          messageElement.textContent = "Profile picture updated successfully!";
+          messageElement.style.color = "green";
+          alert("Customer Profile Picture Updated Successfully");
+          location.reload();
+        } else {
+          messageElement.textContent = data.message;
+          messageElement.style.color = "red";
         }
-    
-        const form = event.currentTarget;
-        const formData = new FormData(form);
-        const messageElement = document.getElementById('message');
-    
-        try {
-            const response = await fetch('../v2/update_picture.php', {
-                method: 'POST',
-                body: formData
-            });
-    
-            const data = await response.json();
-    
-            if (data.success) {
-                document.getElementById('uploadedPhoto').src = '../../backend/driver_photos/' + data.file;
-                messageElement.textContent = 'Profile picture updated successfully!';
-                messageElement.style.color = 'green';
-                alert('Customer Profile Picture Updated Successfully');
-                location.reload();
-            } else {
-                messageElement.textContent = data.message;
-                messageElement.style.color = 'red';
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            messageElement.textContent = 'An error occurred while uploading the file.';
-            messageElement.style.color = 'red';
-        }
+      } catch (error) {
+        console.error("Error:", error);
+        messageElement.textContent =
+          "An error occurred while uploading the file.";
+        messageElement.style.color = "red";
+      }
     });
-    
 
-    // Fetch and display driver info for update
-    fetch('../v2/profile.php')
-        .then(response => response.json())
-        .then(data => {
-            const orderDetailsTable = document.querySelector('#orderDetailsTable tbody');
-            const photoCell = document.querySelector('#driverPhoto');
+  // Fetch and display driver info for update
+  fetch("../v2/profile.php")
+    .then((response) => response.json())
+    .then((data) => {
+      const orderDetailsTable = document.querySelector(
+        "#orderDetailsTable tbody",
+      );
+      const photoCell = document.querySelector("#driverPhoto");
 
-            orderDetailsTable.innerHTML = `
+      orderDetailsTable.innerHTML = `
                 <tr>
                     <td>Date Onboarded</td>
                     <td><input type="text" id="dateCreated" value="${data.date_created}" disabled></td>
@@ -133,8 +166,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     <td>Gender</td>
                     <td>
                         <select id="gender">
-                            <option value="Male" ${data.gender === 'Male' ? 'selected' : ''}>Male</option>
-                            <option value="Female" ${data.gender === 'Female' ? 'selected' : ''}>Female</option>
+                            <option value="Male" ${data.gender === "Male" ? "selected" : ""}>Male</option>
+                            <option value="Female" ${data.gender === "Female" ? "selected" : ""}>Female</option>
                         </select>
                     </td>
                 </tr>
@@ -150,18 +183,18 @@ document.addEventListener('DOMContentLoaded', function () {
                     <td>Vehicle Type</td>
                     <td>
                         <select id="vehicleType" name="vehicleType">
-                            <option value="Bicycle" ${data.vehicle_type === 'Bicycle' ? 'selected' : ''}>Bicycle</option>
-                            <option value="Bike" ${data.vehicle_type === 'Bike' ? 'selected' : ''}>Bike</option>
-                            <option value="Motorcycle" ${data.vehicle_type === 'Motorcycle' ? 'selected' : ''}>Motorcycle</option>
-                            <option value="Tricycle" ${data.vehicle_type === 'Tricycle' ? 'selected' : ''}>Tricycle</option>
-                            <option value="Car" ${data.vehicle_type === 'Car' ? 'selected' : ''}>Car</option>
-                            <option value="Bus" ${data.vehicle_type === 'Bus' ? 'selected' : ''}>Bus</option>
-                            <option value="Lorry" ${data.vehicle_type === 'Lorry' ? 'selected' : ''}>Lorry</option>
-                            <option value="Others" ${data.vehicle_type === 'Others' ? 'selected' : ''}>Others</option>
+                            <option value="Bicycle" ${data.vehicle_type === "Bicycle" ? "selected" : ""}>Bicycle</option>
+                            <option value="Bike" ${data.vehicle_type === "Bike" ? "selected" : ""}>Bike</option>
+                            <option value="Motorcycle" ${data.vehicle_type === "Motorcycle" ? "selected" : ""}>Motorcycle</option>
+                            <option value="Tricycle" ${data.vehicle_type === "Tricycle" ? "selected" : ""}>Tricycle</option>
+                            <option value="Car" ${data.vehicle_type === "Car" ? "selected" : ""}>Car</option>
+                            <option value="Bus" ${data.vehicle_type === "Bus" ? "selected" : ""}>Bus</option>
+                            <option value="Lorry" ${data.vehicle_type === "Lorry" ? "selected" : ""}>Lorry</option>
+                            <option value="Others" ${data.vehicle_type === "Others" ? "selected" : ""}>Others</option>
                         </select>
                     </td>
                 </tr>
-                <tr id="otherVehicleContainer" style="display: ${data.vehicle_type === 'Others' ? 'table-row' : 'none'};">
+                <tr id="otherVehicleContainer" style="display: ${data.vehicle_type === "Others" ? "table-row" : "none"};">
                     <td>Other Vehicle Type</td>
                     <td><input type="text" id="vehicleTypeOther" placeholder="Specify other vehicle type"></td>
                 </tr>
@@ -176,126 +209,185 @@ document.addEventListener('DOMContentLoaded', function () {
                 </tr>
             `;
 
-            // Element references
-            const vehicleTypeSelect = document.getElementById('vehicleType');
-            const otherVehicleContainer = document.getElementById('otherVehicleContainer');
-            const vehicleTypeOther = document.getElementById('vehicleTypeOther');
+      // Element references
+      const vehicleTypeSelect = document.getElementById("vehicleType");
+      const otherVehicleContainer = document.getElementById(
+        "otherVehicleContainer",
+      );
+      const vehicleTypeOther = document.getElementById("vehicleTypeOther");
 
-            // Toggle otherVehicleContainer based on vehicle type selection
-            vehicleTypeSelect.addEventListener('change', function () {
-                if (vehicleTypeSelect.value === 'Others') {
-                    otherVehicleContainer.style.display = 'table-row';
-                } else {
-                    otherVehicleContainer.style.display = 'none';
-                    vehicleTypeOther.value = ''; // Clear other vehicle input when not needed
-                }
+      // Toggle otherVehicleContainer based on vehicle type selection
+      vehicleTypeSelect.addEventListener("change", function () {
+        if (vehicleTypeSelect.value === "Others") {
+          otherVehicleContainer.style.display = "table-row";
+        } else {
+          otherVehicleContainer.style.display = "none";
+          vehicleTypeOther.value = ""; // Clear other vehicle input when not needed
+        }
+      });
+      // Display photo if available
+      if (data.photo) {
+        const photo = data.photo;
+        photoCell.innerHTML = `<img src="../../backend/driver_photos/${photo}" alt="Driver Photo" class="driver-photo">`;
+      } else {
+        photoCell.innerHTML = `<p>No photo available</p>`;
+      }
 
-            });
-            // Display photo if available
-            if (data.photo) {
-                const photo = data.photo;
-                photoCell.innerHTML = `<img src="../../backend/driver_photos/${photo}" alt="Driver Photo" class="driver-photo">`;
-            } else {
-                photoCell.innerHTML = `<p>No photo available</p>`;
-            }
+      // Attach event listener after the button is created
+      document
+        .getElementById("updateDriverBtn")
+        .addEventListener("click", () => {
+          if (confirm("Are you sure you want to update the driver status?")) {
+            updateDriver(data.id);
+          } else {
+            alert("Your Driver update request has been cancelled.");
+          }
+        });
+    })
+    .catch((error) => console.error("Error fetching customer data:", error));
 
-            // Attach event listener after the button is created
-            document.getElementById('updateDriverBtn').addEventListener('click', () => {
-                if (confirm("Are you sure you want to update the driver status?")) {
-                    updateDriver(data.id);
-                } else {
-                    alert("Your Driver update request has been cancelled.");
-                }
-            });
-            
-        })
-        .catch(error => console.error('Error fetching customer data:', error));
+  // Reset Secret Question and Answer
+  const resetQuestionAnswerForm = document.getElementById(
+    "resetQuestionAnswerForm",
+  );
+  resetQuestionAnswerForm?.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-    // Reset Secret Question and Answer
-    const resetQuestionAnswerForm = document.getElementById("resetQuestionAnswerForm");
-    resetQuestionAnswerForm?.addEventListener('submit', async (e) => {
+    const resetEmail = document.getElementById("resetEmail")?.value;
+    const resetPassword = document.getElementById("resetPassword")?.value;
+    const secretQuestion = document.getElementById("secretQuestion")?.value;
+    const resetSecretAnswer =
+      document.getElementById("resetSecretAnswer")?.value;
+    const confirmAnswer = document.getElementById("confirmAnswer")?.value;
+
+    if (
+      !resetEmail ||
+      !resetPassword ||
+      !secretQuestion ||
+      !resetSecretAnswer ||
+      !confirmAnswer
+    ) {
+      alert("All fields are required!");
+      return;
+    }
+
+    // Show confirmation dialog
+    const confirmUpdate = confirm(
+      "Are you sure you want to reset your secret question and answer?",
+    );
+    if (!confirmUpdate) {
+      alert("Secret question and answer reset cancelled.");
+      console.log("Secret question and answer reset cancelled.");
+      return; // Stop execution if the user clicks "No"
+    }
+
+    try {
+      const response = await fetch("../v2/reset_answer.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: resetEmail,
+          password: resetPassword,
+          secret_question: secretQuestion,
+          secret_answer: resetSecretAnswer,
+          confirm_answer: confirmAnswer,
+        }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        alert("Secret Question and Answer successfully updated!");
+        toggleModal("resetQuestionAnswerModal", "none");
+      } else {
+        alert(`Error resetting Secret Question and Answer: ${data.message}`);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred. Please try again.");
+    }
+  });
+
+   // Reset Secret Question and Answer
+    const addBankForm = document.getElementById("addNewBankForm");
+    addBankForm?.addEventListener('submit', async (e) => {
         e.preventDefault();
     
-        const resetEmail = document.getElementById("resetEmail")?.value;
-        const resetPassword = document.getElementById("resetPassword")?.value;
-        const secretQuestion = document.getElementById("secretQuestion")?.value;
-        const resetSecretAnswer = document.getElementById("resetSecretAnswer")?.value;
-        const confirmAnswer = document.getElementById("confirmAnswer")?.value;
+        const bankCode = document.getElementById("bankName")?.value;
+        const accountNumber = document.getElementById("accountNumber")?.value;
+        const secretAnswer = document.getElementById("verifySecretAnswer")?.value;
     
-        if (!resetEmail || !resetPassword || !secretQuestion || !resetSecretAnswer || !confirmAnswer) {
-            alert("All fields are required!");
+        if (!bankCode || !accountNumber || !secretAnswer) {
+            alert("Please Fill all required Fields!");
             return;
         }
     
         // Show confirmation dialog
-        const confirmUpdate = confirm("Are you sure you want to reset your secret question and answer?");
-        if (!confirmUpdate) {
-            alert("Secret question and answer reset cancelled.");
-            console.log("Secret question and answer reset cancelled.");
+        const confirmAddBank = confirm("Are you sure you want to Add anew Bank Account to your Profile?");
+        if (!confirmAddBank) {
+            alert("Bank Profiling has been Cancelled.");
+            console.log("Bank Profiling has been Cancelled.");
             return; // Stop execution if the user clicks "No"
         }
     
         try {
-            const response = await fetch('../v2/reset_answer.php', {
+            const response = await fetch('../v2/add_bank.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    email: resetEmail,
-                    password: resetPassword,
-                    secret_question: secretQuestion,
-                    secret_answer: resetSecretAnswer,
-                    confirm_answer: confirmAnswer
+                    bankCode: bankCode,
+                    accountNumber: accountNumber,
+                    secretAnswer: secretAnswer
                 })
             });
     
             const data = await response.json();
             if (data.success) {
-                alert("Secret Question and Answer successfully updated!");
-                toggleModal("resetQuestionAnswerModal", "none");
+                alert("Bank has been Added to your Profile Successfully!");
+                toggleModal("addBankModal", "none");
             } else {
-                alert(`Error resetting Secret Question and Answer: ${data.message}`);
+                alert(`Error Adding Bank to Driver Profile: ${data.message}`);
             }
         } catch (error) {
             console.error('Error:', error);
             alert("An error occurred. Please try again.");
         }
     });
-    // Asynchronous function to update driver details
-async function updateDriver(driverId) {
+  // Asynchronous function to update driver details
+  async function updateDriver(driverId) {
     const driverData = {
-        id: driverId,
-        email: document.getElementById('email')?.value,
-        phone_number: document.getElementById('phoneNumber')?.value,
-        gender: document.getElementById('gender')?.value,
-        address: document.getElementById('address')?.value,
-        vehicle_type: document.getElementById('vehicleType')?.value,
-        vehicle_type_others: document.getElementById('vehicleTypeOther')?.value,
-        secret_answer: document.getElementById('secretAnswer')?.value
+      id: driverId,
+      email: document.getElementById("email")?.value,
+      phone_number: document.getElementById("phoneNumber")?.value,
+      gender: document.getElementById("gender")?.value,
+      address: document.getElementById("address")?.value,
+      vehicle_type: document.getElementById("vehicleType")?.value,
+      vehicle_type_others: document.getElementById("vehicleTypeOther")?.value,
+      secret_answer: document.getElementById("secretAnswer")?.value,
     };
 
     try {
-        const response = await fetch('../v2/update_driver.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(driverData)
-        });
+      const response = await fetch("../v2/update_driver.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(driverData),
+      });
 
-        const data = await response.json();
+      const data = await response.json();
 
-        if (data.success) {
-            alert('Your record has been successfully updated.');
-            location.reload();
-        } else {
-            alert('Failed to update record.');
-        }
+      if (data.success) {
+        alert("Your record has been successfully updated.");
+        location.reload();
+      } else {
+        alert("Failed to update record.");
+      }
     } catch (error) {
-        console.error('Error updating driver data:', error);
-        alert('An error occurred while updating the driver data.');
+      console.error("Error updating driver data:", error);
+      alert("An error occurred while updating the driver data.");
     }
-}
+  }
 
-// Asynchronous function to display photo
-async function displayPhoto(input) {
+  // Asynchronous function to display photo
+  async function displayPhoto(input) {
     var file = input.files[0];
     if (!file) return;
 
@@ -303,21 +395,55 @@ async function displayPhoto(input) {
     var reader = new FileReader();
 
     reader.onload = async function (e) {
-        var uploadedPhoto = document.getElementById('uploadedPhoto');
-        uploadedPhoto.setAttribute('src', e.target.result);
-        document.getElementById('photoContainer').style.display = 'block'; // Show the photo container
+      var uploadedPhoto = document.getElementById("uploadedPhoto");
+      uploadedPhoto.setAttribute("src", e.target.result);
+      document.getElementById("photoContainer").style.display = "block"; // Show the photo container
 
-        // Set the new file name to a hidden input field if needed
-        // document.getElementById('photo_name').value = time + file.name;
+      // Set the new file name to a hidden input field if needed
+      // document.getElementById('photo_name').value = time + file.name;
     };
 
     reader.readAsDataURL(file);
+  }
+
+  // In your driver_withdrawal.js, add this method:
+
+async function loadBanksForSelect() {
+    try {
+        const response = await fetch('../v2/get_active_banks.php');
+        const data = await response.json();
+        
+        if (data.success) {
+            const bankSelect = document.getElementById('bankName'); // or your bank select element
+            const bankSelect2 = document.getElementById('bankName'); // main withdrawal form select
+            
+            // Clear existing options
+            [bankSelect, bankSelect2].forEach(select => {
+                if (select) {
+                    select.innerHTML = '<option value="">Select Bank</option>';
+                    
+                    // Add banks to select
+                    data.banks.forEach(bank => {
+                        const option = document.createElement('option');
+                        option.value = bank.code; // Store bank code as value
+                        option.textContent = bank.display || bank.name; // Use display name with code
+                        option.dataset.name = bank.name;
+                        select.appendChild(option);
+                    });
+                }
+            });
+            
+            console.log(`Loaded ${data.count} banks successfully`);
+        } else {
+            console.error('Failed to load banks:', data.message);
+        }
+    } catch (error) {
+        console.error('Error loading banks:', error);
+    }
 }
-    //CALL UPLOAD PHOTO FUNCTION
-    let uploadBtn = document.getElementById('photo');
-    uploadBtn.addEventListener('change', (event) => {
-        displayPhoto(event.target);
-    })
-
+  //CALL UPLOAD PHOTO FUNCTION
+  let uploadBtn = document.getElementById("photo");
+  uploadBtn.addEventListener("change", (event) => {
+    displayPhoto(event.target);
+  });
 });
-

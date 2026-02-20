@@ -1,318 +1,351 @@
 // Function to toggle modals
 function toggleModal(modalId) {
-    let modal = document.getElementById(modalId);
-    modal.style.display = (modal.style.display === "none" || modal.style.display === "") ? "block" : "none";
+  let modal = document.getElementById(modalId);
+  modal.style.display =
+    modal.style.display === "none" || modal.style.display === ""
+      ? "block"
+      : "none";
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Function to populate a select input with card options
-    function populateCardSelect(selectId, cards) {
-        const cardSelect = document.querySelector(`#${selectId}`); // Select input for card numbers
-        // Populate options
-        cards.forEach(card => {
-            // Mask the card number
-            const maskedCardNumber = maskCardNumber(card.card_number);
+function allowNumbersWithDigitLimit(input, minDigits, maxDigits) {
+  // Remove non-numeric characters
+  input.value = input.value.replace(/[^0-9]/g, "");
 
-            // Create option element for the select input
-            const optionElement = document.createElement('option');
-            optionElement.value = card.card_number; // Use the unmasked card number as the value
-            optionElement.textContent = `${maskedCardNumber} - ${card.bank_name}`; // Display the masked card number
+  // Enforce maximum digits
+  if (input.value.length > maxDigits) {
+    input.value = input.value.slice(0, maxDigits);
+  }
+}
 
-            // Append option to the select input
-            cardSelect.appendChild(optionElement);
+document.addEventListener("DOMContentLoaded", () => {
+  // Function to populate a select input with card options
+  function populateCardSelect(selectId, cards) {
+    const cardSelect = document.querySelector(`#${selectId}`); // Select input for card numbers
+    // Populate options
+    cards.forEach((card) => {
+      // Mask the card number
+      const maskedCardNumber = maskCardNumber(card.card_number);
+
+      // Create option element for the select input
+      const optionElement = document.createElement("option");
+      optionElement.value = card.card_number; // Use the unmasked card number as the value
+      optionElement.textContent = `${maskedCardNumber} - ${card.bank_name}`; // Display the masked card number
+
+      // Append option to the select input
+      cardSelect.appendChild(optionElement);
+    });
+  }
+
+  const pinInputs = document.querySelectorAll(".pinInput");
+  const cvvInputs = document.querySelectorAll(".cvvInput")
+  const cardNumber = document.getElementById("card_number")
+
+pinInputs.forEach(function(input) {
+  input.addEventListener("input", function () {
+    allowNumbersWithDigitLimit(this, 4, 4);
+  });
+});
+
+cvvInputs.forEach(function(input) {
+  input.addEventListener("input", function () {
+    allowNumbersWithDigitLimit(this, 3, 3);
+  });
+});
+
+cardNumber.addEventListener('input', function () {
+    allowNumbersWithDigitLimit(this, 16, 16); // min 12 digits, max 19 digits
+});
+
+  fetch("../v2/get_cards.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success) {
+        // Define the IDs of the select elements to populate
+        const selectIds = ["card_numbers", "select_card_delete"];
+
+        // Populate each select input
+        selectIds.forEach((selectId) => {
+          populateCardSelect(selectId, data.cards);
         });
-    }
-
-    fetch('../v2/get_cards.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        }
+      } else {
+        console.error("Failed to fetch Cards:", data.message);
+      }
     })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // Define the IDs of the select elements to populate
-                const selectIds = ['card_numbers', 'select_card_delete'];
+    .catch((error) => {
+      console.error("Error fetching Cards:", error);
+    });
 
-                // Populate each select input
-                selectIds.forEach(selectId => {
-                    populateCardSelect(selectId, data.cards);
-                });
-            }
-            else {
-                console.error('Failed to fetch Cards:', data.message);
-            }
+  // Function to mask the card number
+  function maskCardNumber(cardNumber) {
+    return cardNumber.slice(0, 4) + " **** **** " + cardNumber.slice(-4);
+  }
+
+  // Close modals
+  document.querySelectorAll(".modal .close").forEach((closeBtn) => {
+    closeBtn.addEventListener("click", () => {
+      closeBtn.closest(".modal").style.display = "none";
+      location.reload();
+    });
+  });
+
+  window.addEventListener("click", (event) => {
+    document.querySelectorAll(".modal").forEach((modal) => {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+  });
+
+  // Set the minimum month for expiry date
+  setMinMonth();
+
+  // Add funds form submission
+  const addFundsForm = document.getElementById("addFundsForm");
+  function handleFormSubmission(form) {
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const amount = form.querySelector("#amount").value;
+      const pin = form.querySelector("#pin_addFund").value;
+      const token = form.querySelector("#token_addFund").value;
+      const card_number = form.querySelector("#card_numbers").value;
+      const card_cvv = form.querySelector("#cvv_addFund").value;
+      const messageDiv = document.getElementById("fundsMessage");
+
+      fetch("../v2/add_funds.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: `card_number=${card_number}&card_cvv=${card_cvv}&amount=${amount}&pin=${pin}&token=${token}`,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            console.log("Success:", data.message);
+            messageDiv.textContent =
+              "Your wallet has been successfully Credited!";
+            alert("Your wallet has been successfully Credited!");
+            form.reset();
+            window.location.href = "../v1/dashboard.php";
+          } else {
+            console.log("Error:", data.message);
+            messageDiv.textContent = data.message;
+            alert(data.message);
+          }
         })
-        .catch(error => {
-            console.error('Error fetching Cards:', error);
+        .catch((error) => {
+          console.error("Error:", error);
+          messageDiv.textContent = "Error: " + error.message;
+          alert("An error occurred. Please Try Again Later");
         });
+    });
+  }
+  handleFormSubmission(addFundsForm);
 
-    // Function to mask the card number
-    function maskCardNumber(cardNumber) {
-        return cardNumber.slice(0, 4) + ' **** **** ' + cardNumber.slice(-4);
-    }
+  // function to format card expiry date
+  const formatExpiryDate = (expiryDate) => {
+    const [year, month] = expiryDate.split("-");
+    return `${month.padStart(2, "0")}-${year}`;
+  };
 
-    // Close modals
-    document.querySelectorAll('.modal .close').forEach(closeBtn => {
-        closeBtn.addEventListener('click', () => {
-            closeBtn.closest('.modal').style.display = 'none';
-            location.reload();
+  // Function to handle Adding new Card
+  const addCardsForm = document.getElementById("addCardsForm");
+  const addCardmessage = document.getElementById("addCardmessage");
+  function handleCardInsertion(form) {
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const bank_name = form.querySelector("#bank_name").value;
+      const card_number = form.querySelector("#card_number").value;
+      const card_holder = form.querySelector("#card_holder").value;
+      const card_pin = form.querySelector("#pin").value;
+      const card_cvv = document.getElementById("cvv").value;
+
+      let cardDetails = {
+        bank_name: bank_name,
+        card_number: card_number,
+        card_holder: card_holder,
+        // expiry_date: formatExpiryDate(document.getElementById('expiry_date').value),
+        expiry_date: formatExpiryDate(form.querySelector("#expiry_date").value),
+        card_pin: card_pin,
+        card_cvv: card_cvv,
+      };
+      if (confirm(`Are you sure you want to Add New Card`)) {
+        fetch("../v2/add_cards.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: JSON.stringify(cardDetails),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              console.log("Success:", data.message);
+              addCardmessage.textContent = data.message;
+              alert(data.message);
+              form.reset();
+              window.location.href = "../v1/cards.php";
+            } else {
+              console.log("Error:", data.message);
+              addCardmessage.textContent = data.message;
+              alert(data.message);
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            addCardmessage.textContent = "Error: " + error.message;
+            alert("An error occurred. Please Try Again Later");
+          });
+      }
+    });
+  }
+  handleCardInsertion(addCardsForm);
+
+  // Function to handle Deletion of Card
+  const deleteCardsForm = document.getElementById("deleteCardsForm");
+  const deleteCardmessage = document.getElementById("deleteCardMessage");
+  function handleCardDelete(form) {
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      // Show confirmation dialog before deleting
+      if (!confirm("Are you sure you want to delete this card?")) {
+        return; // Stop the form submission if not confirmed
+      }
+      const card_number = form.querySelector("#select_card_delete").value;
+      const secret_answer = form.querySelector(
+        "#secret_answer_deleteCard",
+      ).value;
+      const token = form.querySelector("#token_deleteCard").value;
+
+      let cardDetails = {
+        card_number: card_number,
+        secret_answer: secret_answer,
+        token: token,
+      };
+
+      fetch("../v2/delete_card.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: JSON.stringify(cardDetails),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            alert(data.message);
+            console.log("Success:", data.message);
+            deleteCardmessage.textContent = data.message;
+            form.reset();
+            window.location.href = "../v1/cards.php";
+          } else {
+            alert(data.message);
+            console.log("Error:", data.message);
+            deleteCardmessage.textContent = data.message;
+          }
+        })
+        .catch((error) => {
+          alert("An error occurred. Please Try Again Later");
+          console.error("Error:", error);
+          deleteCardmessage.textContent = "Error: " + error.message;
         });
     });
 
-    window.addEventListener('click', (event) => {
-        document.querySelectorAll('.modal').forEach(modal => {
-            if (event.target === modal) {
-                modal.style.display = 'none';
-            }
+    // Function to handle Card Delete
+  }
+  handleCardDelete(deleteCardsForm);
+
+  // Function to handle Deletion of Card
+  const updateQuestionForm = document.getElementById(
+    "reset_seccret_question_answer",
+  );
+  const updateQuestionmessage = document.getElementById(
+    "updateQuestionmessage",
+  );
+  function handleUpdateSecretQuestionAndAnswer(form) {
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      // Show confirmation dialog before deleting
+      if (
+        !confirm("Are you sure you want to Change secret Question and Answer?")
+      ) {
+        return; // Stop the form submission if not confirmed
+      }
+      const new_question = form.querySelector("#new_question").value;
+      const new_answer = form.querySelector("#new_answer").value;
+      const confirm_answer = form.querySelector("#confirm_answer").value;
+      const token_question = form.querySelector("#token_question").value;
+
+      if (new_answer !== confirm_answer) {
+        alert("Data Mismatch. Please Try again");
+        return;
+      }
+
+      let secretQuestion_Answer = {
+        new_question: new_question,
+        new_answer: new_answer,
+        confirm_answer: confirm_answer,
+        token_question: token_question,
+      };
+
+      fetch("../v2/reset_question.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: JSON.stringify(secretQuestion_Answer),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            alert(data.message);
+            console.log("Success:", data.message);
+            updateQuestionmessage.textContent = data.message;
+            form.reset();
+            window.location.href = "../v1/cards.php";
+          } else {
+            alert(data.message);
+            console.log("Error:", data.message);
+            updateQuestionmessage.textContent = data.message;
+          }
+        })
+        .catch((error) => {
+          alert("An error occurred. Please Try Again Later");
+          console.error("Error:", error);
+          updateQuestionmessage.textContent = "Error: " + error.message;
         });
     });
 
-    // Set the minimum month for expiry date
-    setMinMonth();
+    // Function to handle Card Delete
+  }
+  handleUpdateSecretQuestionAndAnswer(updateQuestionForm);
 
-   
-    // Add funds form submission
-    const addFundsForm = document.getElementById('addFundsForm');
-    function handleFormSubmission(form) {
-        form.addEventListener('submit', function (event) {
-            event.preventDefault();
+  // Function to set minimum month value
+  function setMinMonth() {
+    const monthControl = document.querySelector('input[type="month"]');
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const currentMonth = `${year}-${month}`;
+    monthControl.min = currentMonth;
+  }
 
-            const amount = form.querySelector('#amount').value;
-            const pin = form.querySelector('#pin_addFund').value;
-            const token = form.querySelector('#token_addFund').value;
-            const card_number = form.querySelector('#card_numbers').value;
-            const card_cvv = form.querySelector('#cvv_addFund').value;
-            const messageDiv = document.getElementById('fundsMessage');
+  // Show and hide fields based on selected update option
+  const updateOption = document.getElementById("update_option");
+  const updateFields = document.getElementById("updateFields");
 
-            fetch('../v2/add_funds.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: `card_number=${card_number}&card_cvv=${card_cvv}&amount=${amount}&pin=${pin}&token=${token}`
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        console.log('Success:', data.message);
-                        messageDiv.textContent = 'Your wallet has been successfully Credited!';
-                        alert('Your wallet has been successfully Credited!')
-                        form.reset();
-                        window.location.href = '../v1/dashboard.php'
-                    } else {
-                        console.log('Error:', data.message);
-                        messageDiv.textContent = data.message;
-                        alert(data.message)
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    messageDiv.textContent = 'Error: ' + error.message;
-                    alert('An error occurred. Please Try Again Later')
-                });
-        });
+  updateOption.addEventListener("change", function () {
+    if (this.value !== "") {
+      updateFields.style.display = "block";
+    } else {
+      updateFields.style.display = "none";
     }
-    handleFormSubmission(addFundsForm);
-
-    // function to format card expiry date
-    const formatExpiryDate = (expiryDate) => {
-        const [year, month] = expiryDate.split('-');
-        return `${month.padStart(2, '0')}-${year}`;
-    };
-
-    // Function to handle Adding new Card
-    const addCardsForm = document.getElementById('addCardsForm');
-    const addCardmessage = document.getElementById('addCardmessage');
-    function handleCardInsertion(form) {
-        form.addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            const bank_name = form.querySelector('#bank_name').value;
-            const card_number = form.querySelector('#card_number').value;
-            const card_holder = form.querySelector('#card_holder').value;
-            const card_pin = form.querySelector('#pin').value;
-            const card_cvv = document.getElementById('cvv').value;
-
-            let cardDetails = {
-                bank_name: bank_name,
-                card_number: card_number,
-                card_holder: card_holder,
-                // expiry_date: formatExpiryDate(document.getElementById('expiry_date').value),
-                expiry_date: formatExpiryDate(form.querySelector('#expiry_date').value),
-                card_pin: card_pin,
-                card_cvv: card_cvv
-            };
-            if (confirm(`Are you sure you want to Add New Card`)){
-                fetch('../v2/add_cards.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: JSON.stringify(cardDetails)
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            console.log('Success:', data.message);
-                            addCardmessage.textContent = data.message;
-                            alert(data.message)
-                            form.reset();
-                            window.location.href = '../v1/cards.php'
-                        } else {
-                            console.log('Error:', data.message);
-                            addCardmessage.textContent = data.message;
-                            alert(data.message)
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        addCardmessage.textContent = 'Error: ' + error.message;
-                        alert('An error occurred. Please Try Again Later')
-                    });
-            } 
-            
-        });
-    }
-    handleCardInsertion(addCardsForm)
-
-    // Function to handle Deletion of Card
-    const deleteCardsForm = document.getElementById('deleteCardsForm');
-    const deleteCardmessage = document.getElementById('deleteCardMessage');
-    function handleCardDelete(form) {
-        form.addEventListener('submit', function (event) {
-            event.preventDefault();
-            // Show confirmation dialog before deleting
-            if (!confirm('Are you sure you want to delete this card?')) {
-                return; // Stop the form submission if not confirmed
-            }
-            const card_number = form.querySelector('#select_card_delete').value;
-            const secret_answer = form.querySelector('#secret_answer_deleteCard').value;
-            const token = form.querySelector('#token_deleteCard').value;
-
-            let cardDetails = {
-                card_number: card_number,
-                secret_answer: secret_answer,
-                token: token
-            };
-
-            fetch('../v2/delete_card.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: JSON.stringify(cardDetails)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert(data.message)
-                        console.log('Success:', data.message);
-                        deleteCardmessage.textContent = data.message;
-                        form.reset();
-                        window.location.href = '../v1/cards.php'
-                    } else {
-                        alert(data.message)
-                        console.log('Error:', data.message);
-                        deleteCardmessage.textContent = data.message;
-                       
-                    }
-                })
-                .catch(error => {
-                    alert('An error occurred. Please Try Again Later')
-                    console.error('Error:', error);
-                    deleteCardmessage.textContent = 'Error: ' + error.message;
-                    
-                });
-        });
-
-        // Function to handle Card Delete
-    }
-    handleCardDelete(deleteCardsForm);
-
-    // Function to handle Deletion of Card
-    const updateQuestionForm = document.getElementById('reset_seccret_question_answer');
-    const updateQuestionmessage = document.getElementById('updateQuestionmessage');
-    function handleUpdateSecretQuestionAndAnswer(form) {
-        form.addEventListener('submit', function (event) {
-            event.preventDefault();
-            // Show confirmation dialog before deleting
-            if (!confirm('Are you sure you want to Change secret Question and Answer?')) {
-                return; // Stop the form submission if not confirmed
-            }
-            const new_question = form.querySelector('#new_question').value;
-            const new_answer = form.querySelector('#new_answer').value;
-            const confirm_answer = form.querySelector('#confirm_answer').value;
-            const token_question = form.querySelector('#token_question').value;
-
-            if(new_answer !== confirm_answer){
-                alert("Data Mismatch. Please Try again");
-                return;
-            }
-
-            let secretQuestion_Answer = {
-                new_question: new_question,
-                new_answer: new_answer,
-                confirm_answer : confirm_answer,
-                token_question: token_question
-            };
-
-            fetch('../v2/reset_question.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: JSON.stringify(secretQuestion_Answer)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert(data.message)
-                        console.log('Success:', data.message);
-                        updateQuestionmessage.textContent = data.message;
-                        form.reset();
-                        window.location.href = '../v1/cards.php'
-                    } else {
-                        alert(data.message)
-                        console.log('Error:', data.message);
-                        updateQuestionmessage.textContent = data.message;
-                       
-                    }
-                })
-                .catch(error => {
-                    alert('An error occurred. Please Try Again Later')
-                    console.error('Error:', error);
-                    updateQuestionmessage.textContent = 'Error: ' + error.message;
-                    
-                });
-        });
-
-        // Function to handle Card Delete
-    }
-    handleUpdateSecretQuestionAndAnswer(updateQuestionForm);
-
-
-
-    // Function to set minimum month value
-    function setMinMonth() {
-        const monthControl = document.querySelector('input[type="month"]');
-        const now = new Date();
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        const currentMonth = `${year}-${month}`;
-        monthControl.min = currentMonth;
-    }
-
-    // Show and hide fields based on selected update option
-    const updateOption = document.getElementById('update_option');
-    const updateFields = document.getElementById('updateFields');
-
-    updateOption.addEventListener('change', function () {
-        if (this.value !== "") {
-            updateFields.style.display = 'block';
-        } else {
-            updateFields.style.display = 'none';
-        }
-    });
+  });
 });

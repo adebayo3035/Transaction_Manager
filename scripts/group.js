@@ -1,3 +1,7 @@
+ function toggleModal(modalId) {
+    const modal = document.getElementById(modalId);
+    modal.style.display = (modal.style.display === "none" || modal.style.display === "") ? "block" : "none";
+}
 class GroupManager {
     constructor() {
         this.limit = 10;
@@ -32,10 +36,7 @@ class GroupManager {
         });
     }
 
-    toggleModal(modalId) {
-        const modal = document.getElementById(modalId);
-        modal.style.display = (modal.style.display === "none" || modal.style.display === "") ? "block" : "none";
-    }
+   
 
     /** ------------------------- Form Submission ------------------------- **/
     setupAddGroupForm() {

@@ -50,7 +50,7 @@
                 </div>
                 <div class="form-input">
                     <label for="card_number">Card Number:</label>
-                    <input type="text" id="card_number" name="card_number" maxlength="16" pattern="\d*"
+                    <input type="number" id="card_number" name="card_number" maxlength="16" pattern="\d*"
                         inputmode="numeric" placeholder="Enter 16-digit card number" required>
                 </div>
                 <div class="form-input">
@@ -65,13 +65,13 @@
                     </div>
                     <div class="cvv">
                         <label for="pin">PIN:</label>
-                        <input type="password" id="pin" name="pin" maxlength="4" required>
+                        <input type="password" id="pin" class="pinInput" name="pin" maxlength="4" inputmode="numeric" required>
                     </div>
 
 
                     <div class="cvv">
                         <label for="cvv">CVV:</label>
-                        <input type="password" id="cvv" name="cvv" maxlength="3" required>
+                        <input type="password" id="cvv" name="cvv" class = "cvvInput" maxlength="3" inputmode="numeric" required>
                     </div>
                     <input type="hidden" id="formatted_expiry_date" name="formatted_expiry_date">
 
@@ -100,11 +100,11 @@
                 </div>
                 <div class="form-input">
                     <label for="pin">Pin:</label>
-                    <input type="password" id="pin_addFund" name="pin_addFund" required>
+                    <input type="password" id="pin_addFund" class="pinInput" name="pin_addFund" maxlength="4" inputmode="numeric" required>
                 </div>
                 <div class="form-input">
                     <label for="card_cvv">CVV:</label>
-                    <input type="password" id="cvv_addFund" name="cvv_addFund" required>
+                    <input type="password" id="cvv_addFund" class = "cvvInput" name="cvv_addFund" maxlength="3" inputmode="numeric" required>
                 </div>
                 <div class="form-input">
                     <label for="token">Token:</label>
