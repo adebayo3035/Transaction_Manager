@@ -791,7 +791,7 @@ function simulateAccountVerification($bank_code, $account_number) {
     }
     
     // Return a name based on bank code (in production, this comes from bank API)
-    $account_name = $testNames[$bank_code] ?? 'VALID ACCOUNT NAME';
+    $account_name = $testNames[$bank_code] ?? $_SESSION['driver_name'];
     
     return [
         'success' => true,
