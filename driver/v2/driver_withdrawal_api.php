@@ -469,36 +469,43 @@ function createWithdrawal($conn, $driver_id, $data) {
         // Check if secret answer needs rehash
         if (password_needs_rehash($driver['secret_answer'], PASSWORD_DEFAULT)) {
             $newHash = password_hash($secret_answer, PASSWORD_DEFAULT);
-            $rehashStmt = $conn->prepare("UPDATE driver SET secret_answer = ? WHERE driver_id = ?");
+            $rehashStmt = $conn->prepare("UPDATE driver SET secret_answer = ? WHERE id = ?");
             $rehashStmt->bind_param("si", $newHash, $driver_id);
             $rehashStmt->execute();
             $rehashStmt->close();
         }
         
-        // Check sufficient balance
+        // Calculate 80% of current balance
+        $maxWithdrawable = 0.80 * $driver['wallet_balance'];
+        
+        // Check sufficient balance first
         if ($driver['wallet_balance'] < $amount) {
-            logActivity("[WITHDRAWAL_AMOUNT_FAILED] [ID:{$requestId}] Attempt to withdraw amount greater than wallet balance by driver {$driver_id}");
+            logActivity("[WITHDRAWAL_AMOUNT_FAILED] [ID:{$requestId}] Insufficient balance. Driver: {$driver_id}, Balance: {$driver['wallet_balance']}, Requested: {$amount}");
             throw new Exception('Insufficient wallet balance');
         }
-
+        
+        // Check 80% limit
+        if ($amount > $maxWithdrawable) {
+            logActivity("[WITHDRAWAL_80_PERCENT_LIMIT] [ID:{$requestId}] 80% limit exceeded. Driver: {$driver_id}, Balance: {$driver['wallet_balance']}, Max Withdrawable: {$maxWithdrawable}, Requested: {$amount}");
+            throw new Exception('You can only withdraw up to 80% of your wallet balance. Maximum withdrawable amount is ₦' . number_format($maxWithdrawable, 2));
+        }
 
         // Get Bank name from Bank table
         $bankStmt = $conn->prepare("
-            SELECT bank_name from banks where bank_code = ? AND is_active = '1'
+            SELECT bank_name FROM banks WHERE bank_code = ? AND is_active = '1'
         ");
         $bankStmt->bind_param("s", $bank_code);
         $bankStmt->execute();
         $bankResult = $bankStmt->get_result();
         
         if ($bankResult->num_rows === 0) {
-            throw new Exception('Selected Bank Cannot be found or not Active');
+            throw new Exception('Selected Bank cannot be found or not Active');
         }
         
         $bank = $bankResult->fetch_assoc();
         $bankStmt->close();
 
         $bank_name = $bank['bank_name'];
-        
         
         // Check for existing pending withdrawal (prevent duplicates)
         $pendingStmt = $conn->prepare("
@@ -545,17 +552,22 @@ function createWithdrawal($conn, $driver_id, $data) {
         $withdrawal_id = $insertStmt->insert_id;
         $insertStmt->close();
         
-        // Deduct from wallet (pending amount)
+        // Deduct from wallet
         $updateStmt = $conn->prepare("
             UPDATE driver 
-            SET wallet_balance = wallet_balance - ? 
+            SET wallet_balance = wallet_balance - ?, 
+                total_withdrawn = total_withdrawn + ? 
             WHERE id = ? AND wallet_balance >= ?
         ");
         
-        $updateStmt->bind_param("dii", $amount, $driver_id, $amount);
+        $updateStmt->bind_param("ddii", $amount, $amount, $driver_id, $amount);
         
-        if (!$updateStmt->execute() || $updateStmt->affected_rows === 0) {
-            throw new Exception('Failed to update wallet balance');
+        if (!$updateStmt->execute()) {
+            throw new Exception('Failed to update wallet balance: ' . $updateStmt->error);
+        }
+        
+        if ($updateStmt->affected_rows === 0) {
+            throw new Exception('Failed to update wallet balance. Insufficient funds or concurrent withdrawal detected.');
         }
         
         $updateStmt->close();
@@ -563,20 +575,21 @@ function createWithdrawal($conn, $driver_id, $data) {
         // Commit transaction
         $conn->commit();
         
-        logActivity("[WITHDRAWAL_CREATED] [ID:{$requestId}] Withdrawal created: {$reference}, Amount: ₦{$amount}");
+        logActivity("[WITHDRAWAL_CREATED] [ID:{$requestId}] Withdrawal created: {$reference}, Amount: ₦{$amount}, Balance before: {$driver['wallet_balance']}, 80% limit: {$maxWithdrawable}");
         
-        // // Create notification for driver
-        // try {
-        //     createNotification($conn, [
-        //         'user_id' => $driver_id,
-        //         'title' => 'Withdrawal Request Submitted',
-        //         'message' => "Your withdrawal request of ₦" . number_format($amount, 2) . " has been submitted. Reference: {$reference}",
-        //         'type' => 'INFO',
-        //         'category' => 'withdrawal'
-        //     ]);
-        // } catch (Exception $e) {
-        //     logActivity("[WITHDRAWAL_NOTIFICATION_ERROR] [ID:{$requestId}] " . $e->getMessage());
-        // }
+        // Create notification for driver
+        try {
+            // Uncomment when notification function is available
+            // createNotification($conn, [
+            //     'user_id' => $driver_id,
+            //     'title' => 'Withdrawal Request Submitted',
+            //     'message' => "Your withdrawal request of ₦" . number_format($amount, 2) . " has been submitted. Reference: {$reference}",
+            //     'type' => 'INFO',
+            //     'category' => 'withdrawal'
+            // ]);
+        } catch (Exception $e) {
+            logActivity("[WITHDRAWAL_NOTIFICATION_ERROR] [ID:{$requestId}] " . $e->getMessage());
+        }
         
         // Get updated balance
         $newBalanceStmt = $conn->prepare("SELECT wallet_balance FROM driver WHERE id = ?");
@@ -607,8 +620,7 @@ function createWithdrawal($conn, $driver_id, $data) {
     } catch (Exception $e) {
         $conn->rollback();
         logActivity("[WITHDRAWAL_CREATE_ERROR] [ID:{$requestId}] " . $e->getMessage());
-        echo json_encode(['success' => false, 'message' => 'Withdrawal failed']);
-
+        echo json_encode(['success' => false, 'message' => 'Withdrawal failed. ' . $e->getMessage()]);
     }
 }
 

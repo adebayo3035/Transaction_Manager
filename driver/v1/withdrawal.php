@@ -57,8 +57,8 @@
                                     max="12450" step="100" required>
                             </div>
                             <div class="amount-hints">
-                                <span>Min: ₦100</span>
-                                <span>Max: ₦12,450</span>
+                                <span id = "min_hint">Min: ₦100</span>
+                                <span id = "max_hint">Max: ₦12,450</span>
                                 <button type="button" class="btn-link" id="withdrawAll">Withdraw All</button>
                             </div>
                         </div>

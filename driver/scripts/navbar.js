@@ -1,34 +1,145 @@
 // Global variables
-const inactivityTimeout = 60 * 10000000; // 1 minute for testing; adjust as needed
-//const inactivityTimeout = 60 * 1000; // 1 minute for testing
+const inactivityTimeout = 60 * 60 * 1000; // 1 hour
 let inactivityTimers = {};
 
 // Helper function to set error message
 function setError(elementId, message) {
-    document.getElementById(elementId).textContent = message;
+    const elements = document.querySelectorAll(`[id="${elementId}"], [id="sidebar${elementId}"], [id="desktop${elementId}"]`);
+    elements.forEach(element => {
+        if (element) {
+            element.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+        }
+    });
+}
+
+// Mobile sidebar functionality
+function setupMobileSidebar() {
+    const menuBtn = document.getElementById('mobileMenuBtn');
+    const sidebar = document.getElementById('mobileSidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    const closeBtn = document.getElementById('sidebarClose');
+
+    if (menuBtn && sidebar && overlay) {
+        // Open sidebar
+        menuBtn.addEventListener('click', () => {
+            sidebar.classList.add('show');
+            overlay.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        });
+
+        // Close sidebar function
+        const closeSidebar = () => {
+            sidebar.classList.remove('show');
+            overlay.classList.remove('show');
+            document.body.style.overflow = '';
+        };
+
+        // Close with close button
+        if (closeBtn) {
+            closeBtn.addEventListener('click', closeSidebar);
+        }
+
+        // Close with overlay click
+        overlay.addEventListener('click', closeSidebar);
+
+        // Close on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && sidebar.classList.contains('show')) {
+                closeSidebar();
+            }
+        });
+    }
 }
 
 // Function to load driver info
 function loadDriverInfo() {
+    // Set loading states for all elements
+    const loadingElements = [
+        'customerName', 'walletBalance', 'wallet',
+        'sidebarCustomerName', 'sidebarWalletBalance', 'sidebarWallet',
+        'desktopCustomerName', 'desktopWalletBalance', 'desktopWallet'
+    ];
+
+    loadingElements.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            if (id.includes('sidebarCustomerName')) {
+                element.innerHTML = `
+                    <span class="user-name loading">Loading...</span>
+                    <span class="user-status"><i class="fas fa-circle"></i> <span class="loading">Loading...</span></span>
+                `;
+            } else if (id.includes('walletBalance') || id.includes('sidebarWalletBalance')) {
+                element.innerHTML = `<i class="fas fa-circle"></i> <span class="loading">Loading...</span>`;
+            } else if (id.includes('wallet') || id.includes('sidebarWallet')) {
+                element.innerHTML = `<i class="fas fa-wallet"></i> <span class="loading">Loading...</span>`;
+            } else if (element.tagName === 'DIV' && element.classList.contains('user-details')) {
+                // Handle sidebar user details separately
+            } else {
+                element.innerHTML = '<span class="loading">Loading...</span>';
+            }
+        }
+    });
+
     fetch('../v2/profile.php')
         .then(response => {
             if (!response.ok) throw new Error('Unauthorized or failed to fetch driver info');
             return response.json();
         })
         .then(data => {
-            document.getElementById('customerName').textContent = `Welcome, ${data.firstname} - ${data.lastname}`;
-            document.getElementById('walletBalance').textContent = `Your Current Status is: ${data.status}`;
-            document.getElementById('wallet').textContent = `Wallet Balance: N ${data.wallet_balance}`;
+            // Update desktop elements
+            const desktopCustomer = document.getElementById('desktopCustomerName');
+            if (desktopCustomer) {
+                desktopCustomer.innerHTML = `
+                    <i class="far fa-user-circle"></i>
+                    <span>Welcome, ${data.firstname} ${data.lastname}</span>
+                `;
+            }
+
+            const desktopBalance = document.getElementById('desktopWalletBalance');
+            if (desktopBalance) {
+                desktopBalance.innerHTML = `
+                    <i class="fas fa-circle" style="color: ${data.status === 'active' ? '#4ade80' : '#fbbf24'}"></i>
+                    <span>${data.status.charAt(0).toUpperCase() + data.status.slice(1)}</span>
+                `;
+            }
+
+            const desktopWallet = document.getElementById('desktopWallet');
+            if (desktopWallet) {
+                desktopWallet.innerHTML = `
+                    <i class="fas fa-wallet"></i>
+                    <span>₦ ${parseFloat(data.wallet_balance).toLocaleString()}</span>
+                `;
+            }
+
+            // Update sidebar elements
+            const sidebarCustomer = document.getElementById('sidebarCustomerName');
+            if (sidebarCustomer) {
+                sidebarCustomer.innerHTML = `
+                    <span class="user-name">${data.firstname} ${data.lastname}</span>
+                    <span class="user-status">
+                        <i class="fas fa-circle" style="color: ${data.status === 'active' ? '#4ade80' : '#fbbf24'}"></i>
+                        ${data.status.charAt(0).toUpperCase() + data.status.slice(1)}
+                    </span>
+                `;
+            }
+
+            const sidebarWallet = document.getElementById('sidebarWallet');
+            if (sidebarWallet) {
+                sidebarWallet.innerHTML = `
+                    <i class="fas fa-wallet"></i>
+                    <span>₦ ${parseFloat(data.wallet_balance).toLocaleString()}</span>
+                `;
+            }
         })
         .catch(error => {
-            setError('customerName', 'Error loading Driver Name');
-            setError('walletBalance', 'Error loading current Status');
-            setError('wallet', 'Error loading Wallet Balance');
             console.error('Error:', error);
+            setError('customerName', 'Error loading');
+            setError('walletBalance', 'Error');
+            setError('wallet', 'Error');
         });
 }
 
-// Function to reset inactivity timer and log out if timeout is reached
+// Function to reset inactivity timer
 function resetInactivityTimer(userId) {
     clearTimeout(inactivityTimers[userId]);
     inactivityTimers[userId] = setTimeout(() => {
@@ -36,7 +147,7 @@ function resetInactivityTimer(userId) {
     }, inactivityTimeout);
 }
 
-// Function to set up session data and initialize inactivity tracking
+// Function to get session data
 function getSessionData() {
     fetch('../v2/session_data.php')
         .then(response => response.json())
@@ -44,39 +155,101 @@ function getSessionData() {
             const userId = data.driver_id;
             if (userId) {
                 resetInactivityTimer(userId);
-                // Add event listeners for user interaction to reset inactivity timer
-                ['mousemove', 'keydown'].forEach(event =>
+                ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'].forEach(event =>
                     document.addEventListener(event, () => resetInactivityTimer(userId))
                 );
             } else {
-                window.location.href = '../v1/index.php'; // Redirect if no session
+                window.location.href = '../v1/index.php';
             }
         })
         .catch(error => {
             console.error('Error fetching session data:', error);
-            window.location.href = '../v1/index.php'; // Redirect on error
+            window.location.href = '../v1/index.php';
         });
 }
+
+// Function to update date and time
 function updateDateTime() {
     const now = new Date();
-    const formattedDateTime = now.toLocaleString('en-GB', { 
-        year: 'numeric', 
-        month: '2-digit', 
-        day: '2-digit', 
-        hour: '2-digit', 
-        minute: '2-digit', 
-        second: '2-digit',
-        hour12: false // 24-hour format
-    }).replace(',', ''); // Removes unwanted comma
-
-    document.getElementById('dateTimeLabel').textContent = formattedDateTime;
+    const options = {
+        year: 'numeric',
+        month: 'short',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+    };
+    
+    const formattedDateTime = now.toLocaleString('en-US', options);
+    
+    // Update desktop datetime
+    const desktopDateTime = document.getElementById('desktopDateTime');
+    if (desktopDateTime) {
+        desktopDateTime.innerHTML = `
+            <i class="far fa-calendar-alt"></i>
+            <span>${formattedDateTime}</span>
+        `;
+    }
+    
+    // Update sidebar datetime
+    const sidebarDateTime = document.getElementById('sidebarDateTime');
+    if (sidebarDateTime) {
+        sidebarDateTime.innerHTML = `
+            <i class="far fa-calendar-alt"></i>
+            <span>${formattedDateTime}</span>
+        `;
+    }
 }
-// Load session data and driver info on page load
-window.onload = function() {
+
+// Set active nav link
+function setActiveNavLink() {
+    const currentPage = window.location.pathname.split('/').pop();
+    
+    // Desktop nav links
+    document.querySelectorAll('.nav-link').forEach(link => {
+        const href = link.getAttribute('href');
+        if (href === currentPage) {
+            link.classList.add('active');
+        }
+    });
+    
+    // Sidebar nav links
+    document.querySelectorAll('.sidebar-link').forEach(link => {
+        const href = link.getAttribute('href');
+        if (href === currentPage) {
+            link.classList.add('active');
+        }
+    });
+}
+
+// Handle logout
+function setupLogout() {
+    const logoutButtons = [
+        document.getElementById('desktopLogout'),
+        document.getElementById('sidebarLogout')
+    ];
+    
+    logoutButtons.forEach(btn => {
+        if (btn) {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (confirm('Are you sure you want to logout?')) {
+                    window.location.href = '../v2/logout.php';
+                }
+            });
+        }
+    });
+}
+
+// Initialize everything
+document.addEventListener('DOMContentLoaded', function() {
+    setupMobileSidebar();
     getSessionData();
     loadDriverInfo();
-    // Update the date and time every second
-setInterval(updateDateTime, 1000);
-// Call the function immediately to avoid waiting 1 second
-updateDateTime();
-};
+    setActiveNavLink();
+    setupLogout();
+    
+    // Update date and time every second
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+});

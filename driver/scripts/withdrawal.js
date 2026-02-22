@@ -251,6 +251,11 @@ class DriverWithdrawal {
     document.querySelector(".balance-amount").textContent =
       `₦${this.formatNumber(this.balance)}`;
 
+    document.querySelector("#max_hint").textContent =
+      `Max: ₦${this.formatNumber(this.balance * 0.80)}`;
+
+    
+
     // Update last updated time
     const now = new Date();
     document.querySelector(".balance-updated").textContent =
@@ -273,9 +278,10 @@ class DriverWithdrawal {
   setupEventListeners() {
     // Withdraw all button
     document.getElementById("withdrawAll").addEventListener("click", () => {
-      document.getElementById("withdrawalAmount").value = this.balance;
+      document.getElementById("withdrawalAmount").value = (0.80 * this.balance);
       this.validateAmount();
     });
+
 
     // Amount validation
     document
@@ -359,9 +365,9 @@ class DriverWithdrawal {
     if (amount < 100) {
       submitBtn.disabled = true;
       this.showInputError("Amount must be at least ₦100");
-    } else if (amount > this.balance) {
+    } else if (amount > (this.balance * 0.80)) {
       submitBtn.disabled = true;
-      this.showInputError("Amount exceeds available balance");
+      this.showInputError("Amount exceeds Maximum withdrawal allowed");
     } else {
       submitBtn.disabled = false;
       this.clearInputError();
@@ -546,18 +552,22 @@ class DriverWithdrawal {
         }),
       });
 
-      const result = await response.json();
+      let result;
+      try {
+        result = await response.json();
+      } catch {
+        throw new Error("Invalid server response");
+      }
 
-      if (!response.ok || result.status !== "success") {
+      if (!response.ok || !result.success) {
         throw new Error(result.message || "Withdrawal request failed");
       }
 
-      // Prefer backend returned balance
+      // Update balance from backend
       if (result.new_balance !== undefined) {
         this.balance = result.new_balance;
+        this.updateBalanceDisplay();
       }
-
-      this.updateBalanceDisplay();
 
       this.addToHistory({
         ...formData,
@@ -566,11 +576,20 @@ class DriverWithdrawal {
         date: new Date().toISOString(),
       });
 
+      document.getElementById("successAmount").textContent =
+        result.withdrawal.formatted_amount;
+
+      document.getElementById("successBank").textContent =
+        result.withdrawal.bank_name;
+
+      document.getElementById("successRef").textContent =
+        result.withdrawal.reference;
+
       this.showModal("successModal");
       this.showToast("success", result.message || "Withdrawal submitted!");
 
       document.getElementById("withdrawalForm").reset();
-      document.getElementById("accountName").value = "";
+      window.location.reload();
     } catch (error) {
       console.error(error);
       this.showToast("error", error.message);
@@ -671,7 +690,7 @@ class DriverWithdrawal {
                         <span class="bank-name">${bank.bank_name}</span>
                         <span class="bank-details">${bank.account_number} - ${bank.account_name}</span>
                     </div>
-                    <button class="btn-use" onclick="window.driverWithdrawal.useSavedBank('${bank.account_number}')">
+                    <button class="btn-use" onclick="window.driverWithdrawal.useSavedBank('${bank.bank_code}')">
                         <i class="fas fa-check"></i> Use
                     </button>
                 </div>
@@ -712,10 +731,10 @@ class DriverWithdrawal {
     }
   }
 
-  useSavedBank(account) {
+  useSavedBank(bank_code) {
     const select = document.getElementById("bankName");
 
-    select.value = account; // Must match option.value
+    select.value = bank_code; // Must match option.value
     select.dispatchEvent(new Event("change"));
 
     this.showToast("success", "Bank details filled");
@@ -762,26 +781,127 @@ class DriverWithdrawal {
     document.body.style.overflow = "";
   }
 
-  showToast(type, message) {
-    // Create toast element if not exists
-    let toast = document.querySelector(".toast-notification");
-    if (!toast) {
-      toast = document.createElement("div");
-      toast.className = "toast-notification";
-      document.body.appendChild(toast);
+  showToast(type, message, options = {}) {
+    const {
+      duration = 3000,
+      position = "bottom-right",
+      showProgress = true,
+      showClose = true,
+      animate = true,
+    } = options;
+
+    // Create or get toast container
+    let container = document.querySelector(".toast-container");
+    if (!container) {
+      container = document.createElement("div");
+      container.className = `toast-container toast-${position}`;
+      document.body.appendChild(container);
     }
 
+    // Create toast element
+    const toast = document.createElement("div");
     toast.className = `toast-notification toast-${type}`;
-    toast.innerHTML = `
-            <i class="fas fa-${type === "success" ? "check-circle" : "exclamation-circle"}"></i>
-            <span>${message}</span>
+
+    // Get icon based on type
+    const icons = {
+      success: "check-circle",
+      error: "exclamation-circle",
+      warning: "exclamation-triangle",
+      info: "info-circle",
+    };
+
+    const icon = icons[type] || "info-circle";
+
+    // Build toast HTML
+    let html = `
+        <i class="fas fa-${icon}"></i>
+        <span>${message}</span>
+    `;
+
+    // Add close button if enabled
+    if (showClose) {
+      html += `<button class="toast-close" onclick="this.closest('.toast-notification').remove()">&times;</button>`;
+    }
+
+    // Add progress bar if enabled
+    if (showProgress) {
+      html += `
+            <div class="toast-progress">
+                <div class="toast-progress-bar"></div>
+            </div>
         `;
+    }
 
-    toast.classList.add("show");
+    toast.innerHTML = html;
 
-    setTimeout(() => {
-      toast.classList.remove("show");
-    }, 3000);
+    // Add to container
+    container.appendChild(toast);
+
+    // Trigger animation
+    setTimeout(() => toast.classList.add("show"), 1000);
+
+    // Auto remove after duration
+    const timeoutId = setTimeout(() => {
+      if (animate) {
+        toast.classList.add("hide");
+        setTimeout(() => {
+          if (toast.parentNode) {
+            toast.remove();
+          }
+          // Remove container if empty
+          if (container.children.length === 0) {
+            container.remove();
+          }
+        }, 600);
+      } else {
+        toast.remove();
+        if (container.children.length === 0) {
+          container.remove();
+        }
+      }
+    }, duration);
+
+    // Allow click to dismiss
+    toast.addEventListener("click", (e) => {
+      if (!e.target.classList.contains("toast-close")) {
+        clearTimeout(timeoutId);
+        if (animate) {
+          toast.classList.add("hide");
+          setTimeout(() => {
+            if (toast.parentNode) {
+              toast.remove();
+            }
+            if (container.children.length === 0) {
+              container.remove();
+            }
+          }, 600);
+        } else {
+          toast.remove();
+          if (container.children.length === 0) {
+            container.remove();
+          }
+        }
+      }
+    });
+
+    return toast;
+  }
+
+  // Convenience methods
+  showSuccess(message, options) {
+    return this.showToast("success", message, options);
+  }
+
+  showError(message, options) {
+    return this.showToast("error", message, options);
+  }
+
+  showWarning(message, options) {
+    return this.showToast("warning", message, options);
+  }
+
+  showInfo(message, options) {
+    return this.showToast("info", message, options);
   }
 
   formatDate(dateString) {
