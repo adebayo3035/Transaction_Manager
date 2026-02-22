@@ -716,10 +716,10 @@ function processWithdrawal($conn, $admin_id, $data) {
                 // Refund amount to wallet
                 $refundStmt = $conn->prepare("
                     UPDATE driver 
-                    SET wallet_balance = wallet_balance + ? 
+                    SET wallet_balance = wallet_balance + ?, total_withdrawn = total_withdrawn - ? 
                     WHERE id = ?
                 ");
-                $refundStmt->bind_param("di", $withdrawal['amount'], $withdrawal['driver_id']);
+                $refundStmt->bind_param("ddi", $withdrawal['amount'], $withdrawal['amount'], $withdrawal['driver_id']);
                 if (!$refundStmt->execute()) {
                     throw new Exception('Failed to refund amount to wallet');
                 }
@@ -784,15 +784,6 @@ function processWithdrawal($conn, $admin_id, $data) {
             } else {
                 $message = "Your withdrawal of ₦" . number_format($withdrawal['amount'], 2) . " has been " . $new_status . ". " . ($reject_reason ?: $failed_reason);
             }
-            
-            // Uncomment when notification function is available
-            // createNotification($conn, [
-            //     'user_id' => $withdrawal['driver_id'],
-            //     'title' => 'Withdrawal ' . ucfirst($new_status),
-            //     'message' => $message,
-            //     'type' => $new_status === 'completed' ? 'SUCCESS' : 'WARNING',
-            //     'category' => 'withdrawal'
-            // ]);
             
             logActivity("[ADMIN_WITHDRAWAL_NOTIFICATION] [ID:{$requestId}] Notification would be sent to driver {$withdrawal['driver_id']}: {$message}");
         } catch (Exception $e) {
@@ -883,10 +874,10 @@ function bulkProcessWithdrawals($conn, $admin_id, $data) {
                         // Refund amount to wallet
                         $refundStmt = $conn->prepare("
                             UPDATE driver 
-                            SET wallet_balance = wallet_balance + ? 
+                            SET wallet_balance = wallet_balance + ?, total_withdrawn = total_withdrawn - ?  
                             WHERE id = ?
                         ");
-                        $refundStmt->bind_param("di", $withdrawal['amount'], $withdrawal['driver_id']);
+                        $refundStmt->bind_param("ddi", $withdrawal['amount'], $withdrawal['amount'], $withdrawal['driver_id']);
                         if (!$refundStmt->execute()) {
                             throw new Exception('Failed to refund amount');
                         }

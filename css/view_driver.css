@@ -100,7 +100,8 @@ td.action-buttons {
   }
   #customer-form{
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
+    align-items: center;
   }
   .delete-btn {
     padding: 10px;

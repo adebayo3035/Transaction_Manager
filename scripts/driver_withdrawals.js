@@ -539,9 +539,7 @@ class AdminWithdrawalManager {
                 <td>
                     <span class="driver-name">${w.driver_name}</span>
                     <span class="driver-email">${w.driver_email}</span>
-                    <button class="btn-link view-driver" onclick="adminManager.viewDriver(${w.driver_id})">
-                        <i class="fas fa-user"></i> View
-                    </button>
+                    
                 </td>
                 <td>
                     <span class="date">${w.date_formatted}</span>
@@ -826,6 +824,7 @@ class AdminWithdrawalManager {
     toggleProcessFields();
 
     this.showModal("processModal");
+    this.hideModal('detailsModal');
   }
   showDetailsModal(withdrawal) {
     const detailsContent = document.getElementById("detailsContent");

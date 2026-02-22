@@ -775,7 +775,7 @@ function creditDeliveryFee($conn, $orderId, $driverId, $amount, $transactionRefe
         logActivity("Delivery fee inserted successfully for order ID: $orderId.");
 
         // Update driver's wallet
-        $walletUpdateSql = "UPDATE driver SET wallet_balance = wallet_balance + ? WHERE id = ?";
+        $walletUpdateSql = "UPDATE driver SET wallet_balance = wallet_balance + ?, total_inflow = total_inflow + ? WHERE id = ?";
         $stmt = $conn->prepare($walletUpdateSql);
 
         if ($stmt === false) {
@@ -783,9 +783,9 @@ function creditDeliveryFee($conn, $orderId, $driverId, $amount, $transactionRefe
         }
 
         // Log SQL query and parameters
-        logActivity("Executing SQL query: $walletUpdateSql | Params: [$amount, $driverId]");
+        logActivity("Executing SQL query: $walletUpdateSql | Params: [$amount, $amount,  $driverId]");
 
-        $stmt->bind_param("di", $amount, $driverId);
+        $stmt->bind_param("ddi", $amount, $amount, $driverId);
         if (!$stmt->execute()) {
             throw new Exception("Failed to update driver's wallet: " . $stmt->error);
         }
