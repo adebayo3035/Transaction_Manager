@@ -41,6 +41,7 @@ class BankManager {
             
             if (data.success) {
                 this.banks = data.banks;
+                this.driverBankCount = data.driver_bank_stats.distinct_banks_used;
                 this.renderBanks(data.banks);
                 this.renderPagination(data.pagination);
                 
@@ -213,7 +214,7 @@ class BankManager {
         document.getElementById('totalBanks').textContent = total;
         document.getElementById('activeBanks').textContent = active;
         document.getElementById('inactiveBanks').textContent = inactive;
-        // document.getElementById('usedBanks').textContent = '?'; // Implement if needed
+        document.getElementById('usedBanks').textContent = this.driverBankCount; // Implement if needed
     }
 
     setupEventListeners() {
