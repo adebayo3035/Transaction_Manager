@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Withdrawal Management</title>
     <link rel="stylesheet" href="css/driver_withdrawal.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 </head>
+
 <body>
     <?php include('navbar.php'); ?>
-    
+
     <div class="container">
         <!-- Page Header -->
         <div class="page-header">
@@ -21,9 +26,30 @@
                 <button class="btn btn-outline" id="refreshBtn">
                     <i class="fas fa-sync-alt"></i> Refresh
                 </button>
-                <button class="btn btn-primary" id="exportBtn">
+                <!-- <button class="btn btn-primary" id="exportBtn">
                     <i class="fas fa-download"></i> Export Report
-                </button>
+                </button> -->
+            </div>
+            <div class="export-actions">
+                <div class="export-dropdown">
+                    <button id="exportBtn" class="btn btn-primary">
+                        <i class="fas fa-download"></i> Export
+                    </button>
+                    <div class="dropdown-menu" id="exportMenu">
+                        <button onclick="adminManager.exportReport('csv')">
+                            <i class="fas fa-file-csv"></i> CSV
+                        </button>
+                        <button onclick="adminManager.exportReport('excel')">
+                            <i class="fas fa-file-excel"></i> Excel
+                        </button>
+                        <button onclick="adminManager.exportReport('pdf')">
+                            <i class="fas fa-file-pdf"></i> PDF
+                        </button>
+                        <button onclick="adminManager.exportReport('print')">
+                            <i class="fas fa-print"></i> Print
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -39,7 +65,7 @@
                     <span class="summary-sub" id="pendingAmount">₦0.00</span>
                 </div>
             </div>
-            
+
             <div class="summary-card processing">
                 <div class="summary-icon">
                     <i class="fas fa-spinner"></i>
@@ -50,7 +76,7 @@
                     <span class="summary-sub" id="processingAmount">₦0.00</span>
                 </div>
             </div>
-            
+
             <div class="summary-card completed">
                 <div class="summary-icon">
                     <i class="fas fa-check-circle"></i>
@@ -61,7 +87,7 @@
                     <span class="summary-sub" id="completedAmount">₦0.00</span>
                 </div>
             </div>
-            
+
             <div class="summary-card total-all">
                 <div class="summary-icon">
                     <i class="fas fa-chart-line"></i>
@@ -87,22 +113,22 @@
                     <option value="cancelled">Cancelled</option>
                 </select>
             </div>
-            
+
             <div class="filter-group">
                 <label for="driverSearch">Driver:</label>
                 <input type="text" id="driverSearch" class="filter-input" placeholder="Search driver...">
             </div>
-            
+
             <div class="filter-group">
                 <label for="dateFrom">From:</label>
                 <input type="date" id="dateFrom" class="filter-input">
             </div>
-            
+
             <div class="filter-group">
                 <label for="dateTo">To:</label>
                 <input type="date" id="dateTo" class="filter-input">
             </div>
-            
+
             <div class="filter-actions">
                 <button class="btn btn-secondary" id="clearFiltersBtn">
                     <i class="fas fa-times"></i> Clear
@@ -114,26 +140,26 @@
         </div>
 
         <!-- Bulk Actions Bar - Hidden by default -->
-<div class="bulk-actions-bar" id="bulkActionsBar" style="display: none;">
-    <div class="bulk-info">
-        <i class="fas fa-check-square"></i>
-        <span id="selectedCount">0</span> withdrawals selected
-    </div>
-    <div class="bulk-buttons">
-        <button class="btn btn-primary" onclick="adminManager.showBulkModal('approve')">
-            <i class="fas fa-check-circle"></i> Approve Selected
-        </button>
-        <button class="btn btn-warning" onclick="adminManager.showBulkModal('reject')">
-            <i class="fas fa-times-circle"></i> Reject Selected
-        </button>
-        <button class="btn btn-danger" onclick="adminManager.showBulkModal('mark_failed')">
-            <i class="fas fa-exclamation-circle"></i> Mark as Failed
-        </button>
-        <button class="btn btn-secondary" onclick="adminManager.clearSelection()">
-            <i class="fas fa-times"></i> Clear
-        </button>
-    </div>
-</div>
+        <div class="bulk-actions-bar" id="bulkActionsBar" style="display: none;">
+            <div class="bulk-info">
+                <i class="fas fa-check-square"></i>
+                <span id="selectedCount">0</span> withdrawals selected
+            </div>
+            <div class="bulk-buttons">
+                <button class="btn btn-primary" onclick="adminManager.showBulkModal('approve')">
+                    <i class="fas fa-check-circle"></i> Approve Selected
+                </button>
+                <button class="btn btn-warning" onclick="adminManager.showBulkModal('reject')">
+                    <i class="fas fa-times-circle"></i> Reject Selected
+                </button>
+                <button class="btn btn-danger" onclick="adminManager.showBulkModal('mark_failed')">
+                    <i class="fas fa-exclamation-circle"></i> Mark as Failed
+                </button>
+                <button class="btn btn-secondary" onclick="adminManager.clearSelection()">
+                    <i class="fas fa-times"></i> Clear
+                </button>
+            </div>
+        </div>
 
         <!-- Quick Actions -->
         <div class="quick-actions">
@@ -163,7 +189,7 @@
                     <span id="showingInfo">Showing 0 entries</span>
                 </div>
             </div>
-            
+
             <div class="table-responsive">
                 <table class="withdrawals-table" id="withdrawalsTable">
                     <thead>
@@ -214,7 +240,7 @@
                 <div class="withdrawal-details" id="processDetails">
                     <!-- Details will be loaded here -->
                 </div>
-                
+
                 <div class="form-group">
                     <label for="processAction">Action:</label>
                     <select id="processAction" class="form-control" onchange="toggleProcessFields()">
@@ -223,35 +249,35 @@
                         <option value="mark_failed">Mark as Failed</option>
                     </select>
                 </div>
-                
+
                 <div id="approveFields">
                     <div class="form-group">
                         <label for="transactionReference">Transaction Reference:</label>
-                        <input type="text" id="transactionReference" class="form-control" 
-                               placeholder="Enter bank transaction reference">
+                        <input type="text" id="transactionReference" class="form-control"
+                            placeholder="Enter bank transaction reference">
                     </div>
                 </div>
-                
+
                 <div id="rejectFields" style="display: none;">
                     <div class="form-group">
                         <label for="rejectReason">Rejection Reason:</label>
-                        <textarea id="rejectReason" class="form-control" rows="3" 
-                                  placeholder="Explain why this withdrawal is being rejected"></textarea>
+                        <textarea id="rejectReason" class="form-control" rows="3"
+                            placeholder="Explain why this withdrawal is being rejected"></textarea>
                     </div>
                 </div>
-                
+
                 <div id="failedFields" style="display: none;">
                     <div class="form-group">
                         <label for="failedReason">Failure Reason:</label>
-                        <textarea id="failedReason" class="form-control" rows="3" 
-                                  placeholder="Explain why this withdrawal failed"></textarea>
+                        <textarea id="failedReason" class="form-control" rows="3"
+                            placeholder="Explain why this withdrawal failed"></textarea>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="adminNotes">Admin Notes:</label>
-                    <textarea id="adminNotes" class="form-control" rows="2" 
-                              placeholder="Additional notes (optional)"></textarea>
+                    <textarea id="adminNotes" class="form-control" rows="2"
+                        placeholder="Additional notes (optional)"></textarea>
                 </div>
             </div>
             <div class="modal-footer">
@@ -299,70 +325,72 @@
 
     <!-- Bulk Action Modal -->
     <!-- Bulk Action Modal -->
-<div id="bulkModal" class="modal">
-    <div class="modal-content modal-sm">
-        <div class="modal-header">
-            <h3 id="bulkModalTitle"><i class="fas fa-tasks"></i> Bulk Action</h3>
-            <button class="close-modal" onclick="closeBulkModal()">&times;</button>
-        </div>
-        <div class="modal-body">
-            <div class="bulk-summary" style="background: #e8f4fd; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center;">
-                <p>Processing <strong id="bulkCount">0</strong> selected withdrawals</p>
+    <div id="bulkModal" class="modal">
+        <div class="modal-content modal-sm">
+            <div class="modal-header">
+                <h3 id="bulkModalTitle"><i class="fas fa-tasks"></i> Bulk Action</h3>
+                <button class="close-modal" onclick="closeBulkModal()">&times;</button>
             </div>
-            
-            <div class="form-group">
-                <label for="bulkActionType">Action:</label>
-                <select id="bulkActionType" class="form-control" onchange="updateBulkModalTitle()">
-                    <option value="approve">Approve Selected</option>
-                    <option value="reject">Reject Selected</option>
-                    <option value="mark_failed">Mark as Failed</option>
-                </select>
-            </div>
-            
-            <div id="bulkApproveFields">
+            <div class="modal-body">
+                <div class="bulk-summary"
+                    style="background: #e8f4fd; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center;">
+                    <p>Processing <strong id="bulkCount">0</strong> selected withdrawals</p>
+                </div>
+
                 <div class="form-group">
-                    <label for="bulkTransactionRef">Transaction Reference (optional):</label>
-                    <input type="text" id="bulkTransactionRef" class="form-control" 
-                           placeholder="Common transaction reference">
-                    <small style="color: #666; font-size: 12px;">Leave blank if different references</small>
+                    <label for="bulkActionType">Action:</label>
+                    <select id="bulkActionType" class="form-control" onchange="updateBulkModalTitle()">
+                        <option value="approve">Approve Selected</option>
+                        <option value="reject">Reject Selected</option>
+                        <option value="mark_failed">Mark as Failed</option>
+                    </select>
+                </div>
+
+                <div id="bulkApproveFields">
+                    <div class="form-group">
+                        <label for="bulkTransactionRef">Transaction Reference (optional):</label>
+                        <input type="text" id="bulkTransactionRef" class="form-control"
+                            placeholder="Common transaction reference">
+                        <small style="color: #666; font-size: 12px;">Leave blank if different references</small>
+                    </div>
+                </div>
+
+                <div id="bulkRejectFields" style="display: none;">
+                    <div class="form-group">
+                        <label for="bulkRejectReason">Rejection Reason:</label>
+                        <textarea id="bulkRejectReason" class="form-control" rows="3"
+                            placeholder="Reason for rejection"></textarea>
+                    </div>
+                </div>
+
+                <div id="bulkFailedFields" style="display: none;">
+                    <div class="form-group">
+                        <label for="bulkFailedReason">Failure Reason:</label>
+                        <textarea id="bulkFailedReason" class="form-control" rows="3"
+                            placeholder="Reason for failure"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="bulkAdminNotes">Admin Notes (optional):</label>
+                    <textarea id="bulkAdminNotes" class="form-control" rows="2"
+                        placeholder="Additional notes for all selected withdrawals"></textarea>
+                </div>
+
+                <div class="warning-box"
+                    style="margin-top: 15px; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 12px 15px; display: flex; align-items: center; gap: 10px; color: #856404;">
+                    <i class="fas fa-exclamation-triangle" style="color: #e17055;"></i>
+                    <span>This action will be applied to all selected withdrawals and cannot be undone.</span>
                 </div>
             </div>
-            
-            <div id="bulkRejectFields" style="display: none;">
-                <div class="form-group">
-                    <label for="bulkRejectReason">Rejection Reason:</label>
-                    <textarea id="bulkRejectReason" class="form-control" rows="3" 
-                              placeholder="Reason for rejection"></textarea>
-                </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeBulkModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="processBulkAction()" id="bulkProcessBtn">
+                    <i class="fas fa-check"></i> Process Selected
+                </button>
             </div>
-            
-            <div id="bulkFailedFields" style="display: none;">
-                <div class="form-group">
-                    <label for="bulkFailedReason">Failure Reason:</label>
-                    <textarea id="bulkFailedReason" class="form-control" rows="3" 
-                              placeholder="Reason for failure"></textarea>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label for="bulkAdminNotes">Admin Notes (optional):</label>
-                <textarea id="bulkAdminNotes" class="form-control" rows="2" 
-                          placeholder="Additional notes for all selected withdrawals"></textarea>
-            </div>
-            
-            <div class="warning-box" style="margin-top: 15px; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 12px 15px; display: flex; align-items: center; gap: 10px; color: #856404;">
-                <i class="fas fa-exclamation-triangle" style="color: #e17055;"></i>
-                <span>This action will be applied to all selected withdrawals and cannot be undone.</span>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-secondary" onclick="closeBulkModal()">Cancel</button>
-            <button class="btn btn-primary" onclick="processBulkAction()" id="bulkProcessBtn">
-                <i class="fas fa-check"></i> Process Selected
-            </button>
         </div>
     </div>
-</div>
 
     <!-- Success Modal -->
     <div id="successModal" class="modal">
@@ -385,4 +413,5 @@
 
     <script src="scripts/driver_withdrawals.js"></script>
 </body>
+
 </html>

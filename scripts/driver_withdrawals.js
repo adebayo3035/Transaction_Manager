@@ -21,6 +21,7 @@ class AdminWithdrawalManager {
     this.setupEventListeners();
     this.setupModals();
     this.hideLoading();
+    this.exportReport();
   }
 
   async loadSummary() {
@@ -522,16 +523,18 @@ class AdminWithdrawalManager {
       row.dataset.id = w.id;
 
       const statusClass = this.getStatusClass(w.status);
-      
+
       // Define which statuses can have checkboxes (editable)
-      const editableStatuses = ['pending', 'processing'];
+      const editableStatuses = ["pending", "processing"];
       const isEditable = editableStatuses.includes(w.status);
 
       row.innerHTML = `
                 <td>
-                    ${isEditable ? 
-                      `<input type="checkbox" class="withdrawal-checkbox" value="${w.id}">` : 
-                      ''}
+                    ${
+                      isEditable
+                        ? `<input type="checkbox" class="withdrawal-checkbox" value="${w.id}">`
+                        : ""
+                    }
                 </td>
                 <td>
                     <span class="reference">${w.reference}</span>
@@ -590,7 +593,7 @@ class AdminWithdrawalManager {
     });
 
     this.setupCheckboxListeners();
-}
+  }
   renderPagination(pagination) {
     const container = document.getElementById("pagination");
 
@@ -651,44 +654,45 @@ class AdminWithdrawalManager {
   setupCheckboxListeners() {
     // Only set up listeners on checkboxes that actually exist
     document.querySelectorAll(".withdrawal-checkbox").forEach((checkbox) => {
-        checkbox.addEventListener("change", (e) => {
-            const id = e.target.value;
-            
-            if (e.target.checked) {
-                this.selectedWithdrawals.add(id);
-            } else {
-                this.selectedWithdrawals.delete(id);
-            }
-            
-            this.updateSelectAll();
-            this.updateBulkActionsBar();
-        });
+      checkbox.addEventListener("change", (e) => {
+        const id = e.target.value;
+
+        if (e.target.checked) {
+          this.selectedWithdrawals.add(id);
+        } else {
+          this.selectedWithdrawals.delete(id);
+        }
+
+        this.updateSelectAll();
+        this.updateBulkActionsBar();
+      });
     });
-}
+  }
   updateSelectAll() {
     const selectAll = document.getElementById("selectAll");
     const checkboxes = document.querySelectorAll(".withdrawal-checkbox");
-    
+
     // If there are no editable withdrawals, hide or disable select all
     if (checkboxes.length === 0) {
-        if (selectAll) {
-            selectAll.checked = false;
-            selectAll.disabled = true;
-            selectAll.indeterminate = false;
-        }
-        return;
+      if (selectAll) {
+        selectAll.checked = false;
+        selectAll.disabled = true;
+        selectAll.indeterminate = false;
+      }
+      return;
     }
-    
-    if (selectAll) {
-        selectAll.disabled = false;
-        selectAll.checked = checkboxes.length > 0 && 
-            Array.from(checkboxes).every((cb) => cb.checked);
 
-        selectAll.indeterminate =
-            Array.from(checkboxes).some((cb) => cb.checked) &&
-            !Array.from(checkboxes).every((cb) => cb.checked);
+    if (selectAll) {
+      selectAll.disabled = false;
+      selectAll.checked =
+        checkboxes.length > 0 &&
+        Array.from(checkboxes).every((cb) => cb.checked);
+
+      selectAll.indeterminate =
+        Array.from(checkboxes).some((cb) => cb.checked) &&
+        !Array.from(checkboxes).every((cb) => cb.checked);
     }
-}
+  }
 
   // Add this to your updateBulkActionsBar method
   updateBulkActionsBar() {
@@ -824,7 +828,7 @@ class AdminWithdrawalManager {
     toggleProcessFields();
 
     this.showModal("processModal");
-    this.hideModal('detailsModal');
+    this.hideModal("detailsModal");
   }
   showDetailsModal(withdrawal) {
     const detailsContent = document.getElementById("detailsContent");
@@ -1170,6 +1174,589 @@ class AdminWithdrawalManager {
   }
 
   hideLoading() {}
+
+  // Export function
+  /**
+   * Export withdrawals report based on current filters and selection
+   * @param {string} format - export format: 'csv', 'excel', 'pdf', 'print'
+   */
+  async exportReport(format = "csv") {
+    try {
+      // Show loading state
+      this.showExportLoading(true);
+
+      // Get current filters and selection
+      const selectedIds = this.getSelectedWithdrawalIds();
+      const exportType = selectedIds.length > 0 ? "selected" : "filtered";
+
+      // Prepare export parameters
+      const params = new URLSearchParams({
+        action: "export",
+        format: format,
+        export_type: exportType,
+        page: this.currentPage,
+        limit: this.limit,
+        ...this.filters,
+      });
+
+      // Add selected IDs if any
+      if (selectedIds.length > 0) {
+        params.append("ids", selectedIds.join(","));
+      }
+
+      // Get date range for filename
+      const dateStr = new Date().toISOString().slice(0, 10);
+      const filename = `withdrawals_${dateStr}_${Date.now()}`;
+
+      // Handle different export formats
+      switch (format) {
+        case "csv":
+          await this.exportToCSV(params, filename);
+          break;
+        case "excel":
+          await this.exportToExcel(params, filename);
+          break;
+        case "pdf":
+          await this.exportToPDF(params, filename);
+          break;
+        case "print":
+          await this.printReport();
+          break;
+        default:
+          await this.exportToCSV(params, filename);
+      }
+
+      // Log export action
+      this.logExportAction(format, selectedIds.length, exportType);
+    } catch (error) {
+      console.error("Export failed:", error);
+      this.showExportError("Failed to export report. Please try again.");
+    } finally {
+      this.showExportLoading(false);
+    }
+  }
+
+  /**
+   * Export to CSV format
+   */
+  async exportToCSV(params, filename) {
+    try {
+      const response = await fetch(`${this.apiUrl}?${params.toString()}`);
+      const data = await response.json();
+
+      if (!data.success || !data.data) {
+        throw new Error(data.message || "Failed to fetch export data");
+      }
+
+      // Convert data to CSV
+      const csv = this.convertToCSV(data.data);
+
+      // Create and download CSV file
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+
+      if (navigator.msSaveBlob) {
+        // IE 10+
+        navigator.msSaveBlob(blob, `${filename}.csv`);
+      } else {
+        link.href = URL.createObjectURL(blob);
+        link.download = `${filename}.csv`;
+        link.style.display = "none";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(link.href);
+      }
+
+      this.showExportSuccess("CSV file downloaded successfully");
+    } catch (error) {
+      console.error("CSV export error:", error);
+      throw error;
+    }
+  }
+
+  /**
+   * Convert data to CSV format
+   */
+  convertToCSV(data) {
+    if (!data || !data.length) return "";
+
+    // Define headers
+    const headers = [
+      "Reference",
+      "Driver Name",
+      "Driver Email",
+      "Date",
+      "Time",
+      "Amount",
+      "Bank",
+      "Account Number",
+      "Account Name",
+      "Status",
+    ];
+
+    // Create CSV rows
+    const rows = data.map((item) => {
+      return [
+        this.escapeCSV(item.reference || ""),
+        this.escapeCSV(item.driver_name || ""),
+        this.escapeCSV(item.driver_email || ""),
+        this.escapeCSV(item.date_formatted || ""),
+        this.escapeCSV(item.time_formatted || ""),
+        this.escapeCSV(item.amount || ""),
+        this.escapeCSV(item.bank_name || ""),
+        this.escapeCSV(item.masked_account || ""),
+        this.escapeCSV(item.account_name || ""),
+        this.escapeCSV(item.status_text || ""),
+      ].join(",");
+    });
+
+    return [headers.join(","), ...rows].join("\n");
+  }
+
+  /**
+   * Escape CSV field (handle commas, quotes, newlines)
+   */
+  escapeCSV(field) {
+    if (field === null || field === undefined) return "";
+
+    const stringField = String(field);
+
+    // If field contains comma, quote, or newline, wrap in quotes
+    if (
+      stringField.includes(",") ||
+      stringField.includes('"') ||
+      stringField.includes("\n") ||
+      stringField.includes("\r")
+    ) {
+      return `"${stringField.replace(/"/g, '""')}"`;
+    }
+
+    return stringField;
+  }
+
+  /**
+   * Export to Excel format
+   */
+  async exportToExcel(params, filename) {
+    try {
+      // For Excel, we can use the same CSV approach but with .xlsx extension
+      // Or use a library like SheetJS (xlsx)
+
+      // Option 1: Simple CSV renamed to .xlsx
+      await this.exportToCSV(params, filename);
+
+      // Option 2: Use SheetJS for proper Excel format (if available)
+      if (typeof XLSX !== "undefined") {
+        const response = await fetch(`${this.apiUrl}?${params.toString()}`);
+        const data = await response.json();
+
+        if (!data.success || !data.data) {
+          throw new Error(data.message || "Failed to fetch export data");
+        }
+
+        // Create worksheet
+        const wsData = [
+          [
+            "Reference",
+            "Driver Name",
+            "Driver Email",
+            "Date",
+            "Time",
+            "Amount",
+            "Bank",
+            "Account Number",
+            "Account Name",
+            "Status",
+          ],
+          ...data.data.map((item) => [
+            item.reference,
+            item.driver_firstname + " " + item.driver_lastname,
+            item.driver_email,
+            item.date_formatted,
+            item.time_formatted,
+            item.amount,
+            item.bank_name,
+            item.masked_account,
+            item.account_name,
+            item.status_text,
+          ]),
+        ];
+
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.aoa_to_sheet(wsData);
+
+        // Style the header
+        ws["!cols"] = [
+          { wch: 20 }, // Reference
+          { wch: 20 }, // Driver Name
+          { wch: 25 }, // Driver Email
+          { wch: 12 }, // Date
+          { wch: 10 }, // Time
+          { wch: 15 }, // Amount
+          { wch: 15 }, // Bank
+          { wch: 15 }, // Account Number
+          { wch: 20 }, // Account Name
+          { wch: 12 }, // Status
+        ];
+
+        XLSX.utils.book_append_sheet(wb, ws, "Withdrawals");
+        XLSX.writeFile(wb, `${filename}.xlsx`);
+
+        this.showExportSuccess("Excel file downloaded successfully");
+      }
+    } catch (error) {
+      console.error("Excel export error:", error);
+      throw error;
+    }
+  }
+
+  /**
+   * Export to PDF format
+   */
+  async exportToPDF(params, filename) {
+    try {
+      const response = await fetch(`${this.apiUrl}?${params.toString()}`);
+      const data = await response.json();
+
+      if (!data.success || !data.data) {
+        throw new Error(data.message || "Failed to fetch export data");
+      }
+
+      // Check if jsPDF is available
+      if (typeof jspdf === "undefined") {
+        // Fallback to print
+        await this.printReport();
+        return;
+      }
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({
+        orientation: "landscape",
+        unit: "mm",
+        format: "a4",
+      });
+
+      // Add title
+      doc.setFontSize(16);
+      doc.setTextColor(40);
+      doc.text("Withdrawals Report", 14, 15);
+
+      // Add metadata
+      doc.setFontSize(10);
+      doc.setTextColor(100);
+
+      const metadata = [
+        `Generated: ${new Date().toLocaleString()}`,
+        `Status Filter: ${this.filters.status || "All"}`,
+        `Date Range: ${this.filters.date_from || "Any"} to ${this.filters.date_to || "Any"}`,
+        `Total Records: ${data.data.length}`,
+      ];
+
+      let yPos = 25;
+      metadata.forEach((line) => {
+        if (line) {
+          doc.text(line, 14, yPos);
+          yPos += 5;
+        }
+      });
+
+      yPos += 5;
+
+      // Prepare table data
+      const tableData = data.data.map((item) => [
+        item.reference || "",
+        item.driver_firstname + " " + item.driver_lastname || "",
+        item.driver_email || "",
+        item.date_formatted || "",
+        item.time_formatted || "",
+        item.amount || "",
+        item.bank_name || "",
+        item.status_text || "",
+      ]);
+
+      // Add table
+      doc.autoTable({
+        head: [
+          [
+            "Reference",
+            "Driver's Name",
+            "Email",
+            "Date",
+            "Time",
+            "Amount",
+            "Bank",
+            "Status",
+          ],
+        ],
+        body: tableData,
+        startY: yPos,
+        theme: "grid",
+        styles: {
+          fontSize: 8,
+          cellPadding: 2,
+          overflow: "linebreak",
+        },
+        headStyles: {
+          fillColor: [41, 128, 185],
+          textColor: 255,
+          fontStyle: "bold",
+        },
+        alternateRowStyles: {
+          fillColor: [245, 245, 245],
+        },
+        didDrawPage: (data) => {
+          // Footer with page number
+          doc.setFontSize(8);
+          doc.setTextColor(150);
+          doc.text(
+            `Page ${data.pageNumber} of ${data.pageCount}`,
+            data.settings.margin.left,
+            doc.internal.pageSize.height - 10,
+          );
+        },
+      });
+
+      // Save PDF
+      doc.save(`${filename}.pdf`);
+
+      this.showExportSuccess("PDF file downloaded successfully");
+    } catch (error) {
+      console.error("PDF export error:", error);
+      throw error;
+    }
+  }
+
+  /**
+   * Print report
+   */
+  async printReport() {
+    try {
+      const printWindow = window.open("", "_blank");
+
+      // Get current table HTML
+      const tableHTML = document.querySelector(".withdrawals-table").outerHTML;
+      const filtersHTML = this.getFiltersHTML();
+
+      const html = `
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Withdrawals Report</title>
+                <style>
+                    @media print {
+                        body {
+                            font-family: Arial, sans-serif;
+                            margin: 15mm;
+                        }
+                        h1 {
+                            color: #333;
+                            text-align: center;
+                            margin-bottom: 20px;
+                        }
+                        .filters {
+                            margin-bottom: 20px;
+                            padding: 10px;
+                            background: #f5f5f5;
+                            border-radius: 5px;
+                        }
+                        table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin-top: 20px;
+                        }
+                        th {
+                            background-color: #3498db;
+                            color: white;
+                            padding: 8px;
+                            text-align: left;
+                        }
+                        td {
+                            padding: 6px;
+                            border: 1px solid #ddd;
+                        }
+                        tr:nth-child(even) {
+                            background-color: #f9f9f9;
+                        }
+                        .footer {
+                            margin-top: 20px;
+                            text-align: center;
+                            color: #666;
+                            font-size: 12px;
+                        }
+                        .status-badge {
+                            padding: 3px 8px;
+                            border-radius: 12px;
+                            font-size: 11px;
+                            font-weight: 500;
+                        }
+                        .status-pending { background: #fff3cd; color: #856404; }
+                        .status-processing { background: #cce5ff; color: #004085; }
+                        .status-completed { background: #d4edda; color: #155724; }
+                        .status-cancelled { background: #f8d7da; color: #721c24; }
+                    }
+                </style>
+            </head>
+            <body>
+                <h1>Withdrawals Report</h1>
+                
+                <div class="filters">
+                    <h3>Applied Filters:</h3>
+                    ${filtersHTML}
+                </div>
+                
+                ${tableHTML}
+                
+                <div class="footer">
+                    Generated on ${new Date().toLocaleString()}<br>
+                    Total Records: ${document.querySelectorAll("#withdrawalsBody tr").length}
+                </div>
+                
+                <script>
+                    setTimeout(() => {
+                        window.print();
+                        setTimeout(() => window.close(), 500);
+                    }, 500);
+                <\/script>
+            </body>
+            </html>
+        `;
+
+      printWindow.document.write(html);
+      printWindow.document.close();
+    } catch (error) {
+      console.error("Print error:", error);
+      throw error;
+    }
+  }
+
+  /**
+   * Get filters HTML for print
+   */
+  getFiltersHTML() {
+    let filtersHTML = "<ul>";
+
+    if (this.filters.status) {
+      filtersHTML += `<li>Status: ${this.filters.status}</li>`;
+    }
+    if (this.filters.driver_name) {
+      filtersHTML += `<li>Driver: ${this.filters.driver_name}</li>`;
+    }
+    if (this.filters.date_from) {
+      filtersHTML += `<li>From Date: ${this.filters.date_from}</li>`;
+    }
+    if (this.filters.date_to) {
+      filtersHTML += `<li>To Date: ${this.filters.date_to}</li>`;
+    }
+    if (this.filters.reference) {
+      filtersHTML += `<li>Reference: ${this.filters.reference}</li>`;
+    }
+
+    if (filtersHTML === "<ul>") {
+      filtersHTML += "<li>No filters applied (all records)</li>";
+    }
+
+    filtersHTML += "</ul>";
+    return filtersHTML;
+  }
+
+  /**
+   * Get selected withdrawal IDs
+   */
+  getSelectedWithdrawalIds() {
+    const checkboxes = document.querySelectorAll(
+      ".withdrawal-checkbox:checked",
+    );
+    return Array.from(checkboxes).map((cb) => cb.value);
+  }
+
+  /**
+   * Show export loading state
+   */
+  showExportLoading(isLoading) {
+    const exportBtn = document.getElementById("exportBtn");
+
+    if (isLoading) {
+      exportBtn.disabled = true;
+      exportBtn.innerHTML =
+        '<i class="fas fa-spinner fa-spin"></i> Exporting...';
+    } else {
+      exportBtn.disabled = false;
+      exportBtn.innerHTML = '<i class="fas fa-download"></i> Export';
+    }
+  }
+
+  /**
+   * Show export success message
+   */
+  showExportSuccess(message) {
+    this.showToast(message, "success");
+  }
+
+  /**
+   * Show export error message
+   */
+  showExportError(message) {
+    this.showToast(message, "error");
+  }
+
+  /**
+   * Show toast notification
+   */
+  showToast(message, type = "info") {
+    // Create toast element
+    const toast = document.createElement("div");
+    toast.className = `toast toast-${type}`;
+    toast.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 12px 20px;
+        background: ${type === "success" ? "#4CAF50" : type === "error" ? "#f44336" : "#2196F3"};
+        color: white;
+        border-radius: 4px;
+        z-index: 9999;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        animation: slideIn 0.3s ease;
+    `;
+
+    toast.innerHTML = `
+        <i class="fas ${type === "success" ? "fa-check-circle" : type === "error" ? "fa-exclamation-circle" : "fa-info-circle"}"></i>
+        ${message}
+    `;
+
+    document.body.appendChild(toast);
+
+    // Auto remove after 3 seconds
+    setTimeout(() => {
+      toast.style.animation = "fadeOut 0.3s ease";
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
+  }
+
+  /**
+   * Log export action
+   */
+  logExportAction(format, selectedCount, exportType) {
+    console.log(
+      `Export: ${format} | Type: ${exportType} | Selected: ${selectedCount} | Time: ${new Date().toISOString()}`,
+    );
+
+    // You can also send to server for logging
+    // fetch("backend/log_action.php", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({
+    //     action: "export",
+    //     format: format,
+    //     selected_count: selectedCount,
+    //     export_type: exportType,
+    //     timestamp: new Date().toISOString(),
+    //   }),
+    // }).catch((err) => console.error("Failed to log export:", err));
+  }
+
+  // end of export function
 }
 
 // Initialize
