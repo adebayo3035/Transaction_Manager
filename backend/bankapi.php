@@ -16,8 +16,6 @@ if (!isset($_SESSION['unique_id'])) {
     exit;
 }
 
-
-
 // Check if user is admin (you can adjust role check based on your system)
 $user_id = $_SESSION['unique_id'];
 $user_role = $_SESSION['role'] ?? '';
@@ -171,7 +169,7 @@ function getBanks($conn)
 {
     global $requestId;
 
-    logActivity("[BANKS_GET_START] [ID:{$requestId}] Fetching banks list");
+    logActivity("[BANKS_GET_START] [ID:{$requestId}] Fetching banks list from banks_paystack table");
 
     // Pagination
     $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
@@ -182,9 +180,9 @@ function getBanks($conn)
 
     logActivity("[BANKS_GET_PARAMS] [ID:{$requestId}] Page: {$page}, Limit: {$limit}, Offset: {$offset}, Search: '{$search}', Show Inactive: " . ($show_inactive ? 'true' : 'false'));
 
-    // Build query
-    $query = "SELECT * FROM banks WHERE 1=1";
-    $countQuery = "SELECT COUNT(*) as total FROM banks WHERE 1=1";
+    // Build query for banks_paystack table
+    $query = "SELECT * FROM banks_paystack WHERE 1=1";
+    $countQuery = "SELECT COUNT(*) as total FROM banks_paystack WHERE 1=1";
     $params = [];
     $types = "";
 
@@ -230,39 +228,72 @@ function getBanks($conn)
     $countResult = $countStmt->get_result();
     $totalCount = $countResult->fetch_assoc()['total'];
 
+    // Get counts for active and inactive banks from banks_paystack
+    $bankCountsQuery = "
+    SELECT 
+        COUNT(*) as total_banks,
+        SUM(CASE WHEN is_active = 1 THEN 1 ELSE 0 END) as active_banks,
+        SUM(CASE WHEN is_active = 0 THEN 1 ELSE 0 END) as inactive_banks
+    FROM banks_paystack
+";
+
+    logActivity("[BANKS_GET_COUNTS_QUERY] [ID:{$requestId}] Query: {$bankCountsQuery}");
+
+    $countsStmt = $conn->prepare($bankCountsQuery);
+    $totalBanks = 0;
+    $activeBanks = 0;
+    $inactiveBanks = 0;
+
+    if (!$countsStmt) {
+        logActivity("[BANKS_GET_ERROR] [ID:{$requestId}] Failed to prepare bank counts statement: " . $conn->error);
+    } else {
+        if (!$countsStmt->execute()) {
+            logActivity("[BANKS_GET_ERROR] [ID:{$requestId}] Failed to execute bank counts query: " . $countsStmt->error);
+            $countsStmt->close();
+        } else {
+            $countsResult = $countsStmt->get_result();
+            $countsData = $countsResult->fetch_assoc();
+            $totalBanks = (int) $countsData['total_banks'];
+            $activeBanks = (int) $countsData['active_banks'];
+            $inactiveBanks = (int) $countsData['inactive_banks'];
+            $countsStmt->close();
+        }
+    }
+
+    logActivity("[BANKS_GET_COUNTS] [ID:{$requestId}] Total banks: {$totalBanks}, Active: {$activeBanks}, Inactive: {$inactiveBanks}");
+
     // Get distinct number of banks used by drivers
-$driverBankQuery = "
+    $driverBankQuery = "
     SELECT COUNT(DISTINCT bank_code) as used_bank_count 
     FROM driver_banks
 ";
 
-logActivity("[BANKS_GET_DRIVER_COUNT_QUERY] [ID:{$requestId}] Query: {$driverBankQuery}");
+    logActivity("[BANKS_GET_DRIVER_COUNT_QUERY] [ID:{$requestId}] Query: {$driverBankQuery}");
 
-$driverStmt = $conn->prepare($driverBankQuery);
+    $driverStmt = $conn->prepare($driverBankQuery);
+    $distinctDriverBanks = 0;
 
-if (!$driverStmt) {
-    logActivity("[BANKS_GET_ERROR] [ID:{$requestId}] Failed to prepare driver bank count statement: " . $conn->error);
-    echo json_encode(['success' => false, 'message' => 'Database error']);
-    return;
-}
+    if (!$driverStmt) {
+        logActivity("[BANKS_GET_ERROR] [ID:{$requestId}] Failed to prepare driver bank count statement: " . $conn->error);
+    } else {
+        if (!$driverStmt->execute()) {
+            logActivity("[BANKS_GET_ERROR] [ID:{$requestId}] Failed to execute driver bank count query: " . $driverStmt->error);
+            $driverStmt->close();
+        } else {
+            $driverResult = $driverStmt->get_result();
+            $driverData = $driverResult->fetch_assoc();
+            $distinctDriverBanks = (int) $driverData['used_bank_count'];
+            $driverStmt->close();
+        }
+    }
 
-if (!$driverStmt->execute()) {
-    logActivity("[BANKS_GET_ERROR] [ID:{$requestId}] Failed to execute driver bank count query: " . $driverStmt->error);
-    $driverStmt->close();
-    echo json_encode(['success' => false, 'message' => 'Database error']);
-    return;
-}
-
-$driverResult = $driverStmt->get_result();
-$driverData = $driverResult->fetch_assoc();
-$distinctDriverBanks = (int) $driverData['used_bank_count'];
-
-$driverStmt->close();
-
-logActivity("[BANKS_GET_DRIVER_COUNT] [ID:{$requestId}] Distinct driver banks used: {$distinctDriverBanks}");
-    $countStmt->close();
+    logActivity("[BANKS_GET_DRIVER_COUNT] [ID:{$requestId}] Distinct driver banks used: {$distinctDriverBanks}");
 
     logActivity("[BANKS_GET_TOTAL] [ID:{$requestId}] Total banks found: {$totalCount}");
+
+
+
+
 
     // Add pagination
     $query .= " ORDER BY bank_name ASC LIMIT ? OFFSET ?";
@@ -307,10 +338,19 @@ logActivity("[BANKS_GET_DRIVER_COUNT] [ID:{$requestId}] Distinct driver banks us
     while ($row = $result->fetch_assoc()) {
         $banks[] = [
             'id' => $row['id'],
+            'bank_id' => $row['bank_id'] ?? null,
             'bank_code' => $row['bank_code'],
             'bank_name' => $row['bank_name'],
-            'sort_code' => $row['sort_code'],
+            'longcode' => $row['longcode'] ?? '',
+            'slug' => $row['slug'] ?? '',
+            'gateway' => $row['gateway'] ?? null,
+            'pay_with_bank' => (bool) ($row['pay_with_bank'] ?? false),
+            'supports_transfer' => (bool) ($row['supports_transfer'] ?? true),
+            'available_for_direct_debit' => (bool) ($row['available_for_direct_debit'] ?? false),
             'is_active' => (bool) $row['is_active'],
+            'country' => $row['country'] ?? 'Nigeria',
+            'currency' => $row['currency'] ?? 'NGN',
+            'type' => $row['type'] ?? 'nuban',
             'created_at' => $row['created_at'],
             'updated_at' => $row['updated_at']
         ];
@@ -321,18 +361,21 @@ logActivity("[BANKS_GET_DRIVER_COUNT] [ID:{$requestId}] Distinct driver banks us
     logActivity("[BANKS_GET_SUCCESS] [ID:{$requestId}] Retrieved " . count($banks) . " banks successfully");
 
     echo json_encode([
-    'success' => true,
-    'banks' => $banks,
-    'driver_bank_stats' => [
-        'distinct_banks_used' => $distinctDriverBanks
-    ],
-    'pagination' => [
-        'total' => $totalCount,
-        'page' => $page,
-        'limit' => $limit,
-        'total_pages' => ceil($totalCount / $limit)
-    ]
-]);
+        'success' => true,
+        'banks' => $banks,
+        'bank_stats' => [
+            'total' => $totalBanks,
+            'active' => $activeBanks,
+            'inactive' => $inactiveBanks,
+            'used_by_drivers' => $distinctDriverBanks
+        ],
+        'pagination' => [
+            'total' => $totalCount,
+            'page' => $page,
+            'limit' => $limit,
+            'total_pages' => ceil($totalCount / $limit)
+        ]
+    ]);
 }
 
 function getBank($conn, $params)
@@ -342,7 +385,7 @@ function getBank($conn, $params)
     $bank_id = $params['bank_id'] ?? 0;
     $bank_code = $params['bank_code'] ?? '';
 
-    logActivity("[BANK_GET_START] [ID:{$requestId}] Fetching bank details - ID: {$bank_id}, Code: '{$bank_code}'");
+    logActivity("[BANK_GET_START] [ID:{$requestId}] Fetching bank details from banks_paystack - ID: {$bank_id}, Code: '{$bank_code}'");
 
     if (!$bank_id && !$bank_code) {
         logActivity("[BANK_GET_ERROR] [ID:{$requestId}] Neither bank_id nor bank_code provided");
@@ -350,7 +393,7 @@ function getBank($conn, $params)
         return;
     }
 
-    $query = "SELECT * FROM banks WHERE ";
+    $query = "SELECT * FROM banks_paystack WHERE ";
     $types = "";
     $values = [];
 
@@ -409,10 +452,19 @@ function getBank($conn, $params)
         'success' => true,
         'bank' => [
             'id' => $row['id'],
+            'bank_id' => $row['bank_id'] ?? null,
             'bank_code' => $row['bank_code'],
             'bank_name' => $row['bank_name'],
-            'sort_code' => $row['sort_code'],
+            'longcode' => $row['longcode'] ?? '',
+            'slug' => $row['slug'] ?? '',
+            'gateway' => $row['gateway'] ?? null,
+            'pay_with_bank' => (bool) ($row['pay_with_bank'] ?? false),
+            'supports_transfer' => (bool) ($row['supports_transfer'] ?? true),
+            'available_for_direct_debit' => (bool) ($row['available_for_direct_debit'] ?? false),
             'is_active' => (bool) $row['is_active'],
+            'country' => $row['country'] ?? 'Nigeria',
+            'currency' => $row['currency'] ?? 'NGN',
+            'type' => $row['type'] ?? 'nuban',
             'created_at' => $row['created_at'],
             'updated_at' => $row['updated_at']
         ]
@@ -423,9 +475,9 @@ function getBankCodes($conn)
 {
     global $requestId;
 
-    logActivity("[BANK_CODES_START] [ID:{$requestId}] Fetching active bank codes");
+    logActivity("[BANK_CODES_START] [ID:{$requestId}] Fetching active bank codes from banks_paystack");
 
-    $stmt = $conn->prepare("SELECT bank_code, bank_name FROM banks WHERE is_active = 1 ORDER BY bank_name ASC");
+    $stmt = $conn->prepare("SELECT bank_code, bank_name FROM banks_paystack WHERE is_active = 1 ORDER BY bank_name ASC");
     if (!$stmt) {
         logActivity("[BANK_CODES_ERROR] [ID:{$requestId}] Failed to prepare statement: " . $conn->error);
         echo json_encode(['success' => false, 'message' => 'Database error']);
@@ -467,9 +519,17 @@ function createBank($conn, $user_id, $data)
 
     $bank_code = trim(strtoupper($data['bank_code'] ?? ''));
     $bank_name = trim($data['bank_name'] ?? '');
-    $sort_code = trim($data['sort_code'] ?? '');
+    $longcode = trim($data['longcode'] ?? '');
+    $slug = trim($data['slug'] ?? '');
+    $gateway = isset($data['gateway']) ? trim($data['gateway']) : null;
+    $pay_with_bank = isset($data['pay_with_bank']) ? (int) $data['pay_with_bank'] : 0;
+    $supports_transfer = isset($data['supports_transfer']) ? (int) $data['supports_transfer'] : 1;
+    $available_for_direct_debit = isset($data['available_for_direct_debit']) ? (int) $data['available_for_direct_debit'] : 0;
+    $country = $data['country'] ?? 'Nigeria';
+    $currency = $data['currency'] ?? 'NGN';
+    $type = $data['type'] ?? 'nuban';
 
-    logActivity("[BANK_CREATE_START] [ID:{$requestId}] Creating new bank - Code: {$bank_code}, Name: {$bank_name}, Sort Code: {$sort_code}, By User: {$user_id}");
+    logActivity("[BANK_CREATE_START] [ID:{$requestId}] Creating new bank in banks_paystack - Code: {$bank_code}, Name: {$bank_name}, By User: {$user_id}");
 
     // Validate inputs
     $errors = [];
@@ -484,14 +544,13 @@ function createBank($conn, $user_id, $data)
         return;
     }
 
-    // Check if bank code, sort code, or similar bank name already exists
-    logActivity("[BANK_CREATE_CHECK] [ID:{$requestId}] Checking for existing bank with code: {$bank_code} or sort code: {$sort_code} or name similar to: {$bank_name}");
+    // Check if bank code already exists
+    logActivity("[BANK_CREATE_CHECK] [ID:{$requestId}] Checking for existing bank with code: {$bank_code}");
 
     $checkStmt = $conn->prepare("
-        SELECT id, bank_code, sort_code, bank_name 
-        FROM banks 
+        SELECT id, bank_code, bank_name 
+        FROM banks_paystack 
         WHERE bank_code = ? 
-           OR sort_code = ? 
            OR LOWER(bank_name) = LOWER(?)
     ");
 
@@ -501,9 +560,7 @@ function createBank($conn, $user_id, $data)
         return;
     }
 
-    // Use exact match for bank name instead of LIKE with wildcards
-    // This prevents partial matches (e.g., "GTB" matching "GTBank")
-    $checkStmt->bind_param("sss", $bank_code, $sort_code, $bank_name);
+    $checkStmt->bind_param("ss", $bank_code, $bank_name);
 
     if (!$checkStmt->execute()) {
         logActivity("[BANK_CREATE_ERROR] [ID:{$requestId}] Failed to execute check query: " . $checkStmt->error);
@@ -518,7 +575,6 @@ function createBank($conn, $user_id, $data)
         $duplicateFields = [];
         $existingRecords = [];
 
-        // Check all matching records to identify all duplicates
         while ($row = $checkResult->fetch_assoc()) {
             $existingRecords[] = $row;
 
@@ -526,22 +582,13 @@ function createBank($conn, $user_id, $data)
                 $duplicateFields['Bank Code'] = $row['bank_code'];
             }
 
-            if (!empty($sort_code) && $row['sort_code'] === $sort_code) {
-                $duplicateFields['Sort Code'] = $row['sort_code'];
-            }
-
             if (strcasecmp($row['bank_name'], $bank_name) === 0) {
                 $duplicateFields['Bank Name'] = $row['bank_name'];
             }
         }
 
-        // Build duplicate message
-        if (!empty($duplicateFields)) {
-            $fieldNames = array_keys($duplicateFields);
-            $duplicateMessage = implode(", ", $fieldNames) . " already exist" . (count($fieldNames) > 1 ? "" : "s") . ".";
-        } else {
-            $duplicateMessage = "A similar bank record already exists.";
-        }
+        $fieldNames = array_keys($duplicateFields);
+        $duplicateMessage = implode(", ", $fieldNames) . " already exist" . (count($fieldNames) > 1 ? "" : "s") . ".";
 
         logActivity("[BANK_CREATE_DUPLICATE] [ID:{$requestId}] Duplicate detected: {$duplicateMessage} - Existing records: " . json_encode($existingRecords));
 
@@ -558,10 +605,13 @@ function createBank($conn, $user_id, $data)
 
     logActivity("[BANK_CREATE_UNIQUE] [ID:{$requestId}] No duplicates found, proceeding with insert");
 
-    // Insert new bank
+    // Insert new bank into banks_paystack
     $stmt = $conn->prepare("
-        INSERT INTO banks (bank_code, bank_name, sort_code, created_by, updated_by) 
-        VALUES (?, ?, ?, ?, ?)
+        INSERT INTO banks_paystack (
+            bank_code, bank_name, longcode, slug, gateway, 
+            pay_with_bank, supports_transfer, available_for_direct_debit, 
+            is_active, country, currency, type, created_by, updated_by
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?)
     ");
 
     if (!$stmt) {
@@ -570,11 +620,26 @@ function createBank($conn, $user_id, $data)
         return;
     }
 
-    $stmt->bind_param("sssii", $bank_code, $bank_name, $sort_code, $user_id, $user_id);
+    $stmt->bind_param(
+        "sssssiiisssii",
+        $bank_code,
+        $bank_name,
+        $longcode,
+        $slug,
+        $gateway,
+        $pay_with_bank,
+        $supports_transfer,
+        $available_for_direct_debit,
+        $country,
+        $currency,
+        $type,
+        $user_id,
+        $user_id
+    );
 
     if ($stmt->execute()) {
         $bank_id = $stmt->insert_id;
-        logActivity("[BANK_CREATE_SUCCESS] [ID:{$requestId}] Bank created successfully - ID: {$bank_id}, Code: {$bank_code}, Name: {$bank_name}");
+        logActivity("[BANK_CREATE_SUCCESS] [ID:{$requestId}] Bank created successfully in banks_paystack - ID: {$bank_id}, Code: {$bank_code}, Name: {$bank_name}");
 
         echo json_encode([
             'success' => true,
@@ -584,8 +649,16 @@ function createBank($conn, $user_id, $data)
                 'id' => $bank_id,
                 'bank_code' => $bank_code,
                 'bank_name' => $bank_name,
-                'sort_code' => $sort_code,
-                'is_active' => true
+                'longcode' => $longcode,
+                'slug' => $slug,
+                'gateway' => $gateway,
+                'pay_with_bank' => (bool) $pay_with_bank,
+                'supports_transfer' => (bool) $supports_transfer,
+                'available_for_direct_debit' => (bool) $available_for_direct_debit,
+                'is_active' => true,
+                'country' => $country,
+                'currency' => $currency,
+                'type' => $type
             ]
         ]);
     } else {
@@ -603,9 +676,18 @@ function updateBank($conn, $user_id, $data)
     $bank_id = $data['bank_id'] ?? 0;
     $bank_code = trim(strtoupper($data['bank_code'] ?? ''));
     $bank_name = trim($data['bank_name'] ?? '');
-    $sort_code = trim($data['sort_code'] ?? '');
+    $longcode = trim($data['longcode'] ?? '');
+    $slug = trim($data['slug'] ?? '');
+    $gateway = isset($data['gateway']) ? trim($data['gateway']) : null;
+    $pay_with_bank = isset($data['pay_with_bank']) ? (int) $data['pay_with_bank'] : 0;
+    $supports_transfer = isset($data['supports_transfer']) ? (int) $data['supports_transfer'] : 1;
+    $available_for_direct_debit = isset($data['available_for_direct_debit']) ? (int) $data['available_for_direct_debit'] : 0;
+    $country = $data['country'] ?? 'Nigeria';
+    $currency = $data['currency'] ?? 'NGN';
+    $type = $data['type'] ?? 'nuban';
+    $status = isset($data['is_active']) ? (int) $data['is_active'] : 1;
 
-    logActivity("[BANK_UPDATE_START] [ID:{$requestId}] Updating bank ID: {$bank_id} - New Code: {$bank_code}, Name: {$bank_name}, Sort Code: {$sort_code}, By User: {$user_id}");
+    logActivity("[BANK_UPDATE_START] [ID:{$requestId}] Updating bank in banks_paystack - ID: {$bank_id} - New Code: {$bank_code}, Name: {$bank_name}, By User: {$user_id}");
 
     if (!$bank_id) {
         logActivity("[BANK_UPDATE_ERROR] [ID:{$requestId}] Bank ID is required but not provided");
@@ -627,45 +709,44 @@ function updateBank($conn, $user_id, $data)
     }
 
     // First, get current bank details for comparison
-    $currentStmt = $conn->prepare("SELECT bank_code, bank_name, sort_code FROM banks WHERE id = ?");
+    $currentStmt = $conn->prepare("SELECT bank_code, bank_name FROM banks_paystack WHERE id = ?");
     $currentStmt->bind_param("i", $bank_id);
     $currentStmt->execute();
     $currentResult = $currentStmt->get_result();
-    
+
     if ($currentResult->num_rows === 0) {
-        logActivity("[BANK_UPDATE_ERROR] [ID:{$requestId}] Bank ID {$bank_id} not found");
+        logActivity("[BANK_UPDATE_ERROR] [ID:{$requestId}] Bank ID {$bank_id} not found in banks_paystack");
         echo json_encode(['success' => false, 'message' => 'Bank not found']);
         $currentStmt->close();
         return;
     }
-    
+
     $currentBank = $currentResult->fetch_assoc();
     $currentStmt->close();
-    
-    logActivity("[BANK_UPDATE_CURRENT] [ID:{$requestId}] Current bank details - Code: {$currentBank['bank_code']}, Name: {$currentBank['bank_name']}, Sort Code: {$currentBank['sort_code']}");
+
+    logActivity("[BANK_UPDATE_CURRENT] [ID:{$requestId}] Current bank details - Code: {$currentBank['bank_code']}, Name: {$currentBank['bank_name']}");
 
     // Check for duplicates in other banks
     logActivity("[BANK_UPDATE_CHECK] [ID:{$requestId}] Checking for duplicates in other banks");
-    
+
     $checkStmt = $conn->prepare("
-        SELECT id, bank_code, bank_name, sort_code 
-        FROM banks 
+        SELECT id, bank_code, bank_name 
+        FROM banks_paystack 
         WHERE id != ? 
           AND (
               bank_code = ? 
-              OR sort_code = ? 
               OR LOWER(bank_name) = LOWER(?)
           )
     ");
-    
+
     if (!$checkStmt) {
         logActivity("[BANK_UPDATE_ERROR] [ID:{$requestId}] Failed to prepare check statement: " . $conn->error);
         echo json_encode(['success' => false, 'message' => 'Database error']);
         return;
     }
 
-    $checkStmt->bind_param("isss", $bank_id, $bank_code, $sort_code, $bank_name);
-    
+    $checkStmt->bind_param("iss", $bank_id, $bank_code, $bank_name);
+
     if (!$checkStmt->execute()) {
         logActivity("[BANK_UPDATE_ERROR] [ID:{$requestId}] Failed to execute check query: " . $checkStmt->error);
         $checkStmt->close();
@@ -678,66 +759,43 @@ function updateBank($conn, $user_id, $data)
     if ($checkResult->num_rows > 0) {
         $duplicateFields = [];
         $duplicateRecords = [];
-        
+
         while ($row = $checkResult->fetch_assoc()) {
             $duplicateRecords[] = $row;
-            
+
             if ($row['bank_code'] === $bank_code) {
                 $duplicateFields['Bank Code'] = $row['bank_code'];
             }
-            
-            if (!empty($sort_code) && $row['sort_code'] === $sort_code) {
-                $duplicateFields['Sort Code'] = $row['sort_code'];
-            }
-            
+
             if (strcasecmp($row['bank_name'], $bank_name) === 0) {
                 $duplicateFields['Bank Name'] = $row['bank_name'];
             }
         }
 
-        // Build duplicate message
-        if (!empty($duplicateFields)) {
-            $fieldNames = array_keys($duplicateFields);
-            $duplicateMessage = implode(", ", $fieldNames) . " already exist" . (count($fieldNames) > 1 ? "" : "s") . " in another bank.";
-        } else {
-            $duplicateMessage = "A similar bank record already exists.";
-        }
+        $fieldNames = array_keys($duplicateFields);
+        $duplicateMessage = implode(", ", $fieldNames) . " already exist" . (count($fieldNames) > 1 ? "" : "s") . " in another bank.";
 
         logActivity("[BANK_UPDATE_DUPLICATE] [ID:{$requestId}] Duplicate detected: {$duplicateMessage} - Duplicate records: " . json_encode($duplicateRecords));
-        
+
         $checkStmt->close();
-        
+
         echo json_encode([
             'success' => false,
             'message' => $duplicateMessage
         ]);
         return;
     }
-    
-    $checkStmt->close();
 
-    // Also check if sort code is being used by another bank (if provided and different from current)
-    if (!empty($sort_code) && $sort_code !== $currentBank['sort_code']) {
-        $sortCheckStmt = $conn->prepare("SELECT id FROM banks WHERE sort_code = ? AND id != ?");
-        $sortCheckStmt->bind_param("si", $sort_code, $bank_id);
-        $sortCheckStmt->execute();
-        $sortCheckResult = $sortCheckStmt->get_result();
-        
-        if ($sortCheckResult->num_rows > 0) {
-            logActivity("[BANK_UPDATE_DUPLICATE] [ID:{$requestId}] Sort code '{$sort_code}' already exists in another bank");
-            $sortCheckStmt->close();
-            echo json_encode(['success' => false, 'message' => 'Sort code already exists in another bank']);
-            return;
-        }
-        $sortCheckStmt->close();
-    }
+    $checkStmt->close();
 
     logActivity("[BANK_UPDATE_UNIQUE] [ID:{$requestId}] All checks passed, proceeding with update");
 
-    // Update bank
+    // Update bank in banks_paystack
     $stmt = $conn->prepare("
-        UPDATE banks 
-        SET bank_code = ?, bank_name = ?, sort_code = ?, updated_by = ? 
+        UPDATE banks_paystack 
+        SET bank_code = ?, bank_name = ?, longcode = ?, slug = ?, gateway = ?,
+            pay_with_bank = ?, supports_transfer = ?, available_for_direct_debit = ?,
+            country = ?, currency = ?, type = ?, updated_by = ? 
         WHERE id = ?
     ");
 
@@ -747,21 +805,36 @@ function updateBank($conn, $user_id, $data)
         return;
     }
 
-    $stmt->bind_param("sssii", $bank_code, $bank_name, $sort_code, $user_id, $bank_id);
+    $stmt->bind_param(
+        "sssssiiisssii",
+        $bank_code,
+        $bank_name,
+        $longcode,
+        $slug,
+        $gateway,
+        $pay_with_bank,
+        $supports_transfer,
+        $available_for_direct_debit,
+        $country,
+        $currency,
+        $type,
+        $user_id,
+        $bank_id
+    );
 
     if ($stmt->execute()) {
         $affectedRows = $stmt->affected_rows;
-        
+
         // Get updated bank details for confirmation
-        $confirmStmt = $conn->prepare("SELECT bank_code, bank_name, sort_code FROM banks WHERE id = ?");
+        $confirmStmt = $conn->prepare("SELECT bank_code, bank_name FROM banks_paystack WHERE id = ?");
         $confirmStmt->bind_param("i", $bank_id);
         $confirmStmt->execute();
         $confirmResult = $confirmStmt->get_result();
         $updatedBank = $confirmResult->fetch_assoc();
         $confirmStmt->close();
-        
-        logActivity("[BANK_UPDATE_SUCCESS] [ID:{$requestId}] Bank updated successfully - ID: {$bank_id}, Affected rows: {$affectedRows}");
-        logActivity("[BANK_UPDATE_CONFIRM] [ID:{$requestId}] Updated bank details - Code: {$updatedBank['bank_code']}, Name: {$updatedBank['bank_name']}, Sort Code: {$updatedBank['sort_code']}");
+
+        logActivity("[BANK_UPDATE_SUCCESS] [ID:{$requestId}] Bank updated successfully in banks_paystack - ID: {$bank_id}, Affected rows: {$affectedRows}");
+        logActivity("[BANK_UPDATE_CONFIRM] [ID:{$requestId}] Updated bank details - Code: {$updatedBank['bank_code']}, Name: {$updatedBank['bank_name']}");
 
         echo json_encode([
             'success' => true,
@@ -770,7 +843,16 @@ function updateBank($conn, $user_id, $data)
                 'id' => $bank_id,
                 'bank_code' => $bank_code,
                 'bank_name' => $bank_name,
-                'sort_code' => $sort_code
+                'longcode' => $longcode,
+                'slug' => $slug,
+                'gateway' => $gateway,
+                'pay_with_bank' => (bool) $pay_with_bank,
+                'supports_transfer' => (bool) $supports_transfer,
+                'available_for_direct_debit' => (bool) $available_for_direct_debit,
+                'is_active' => (bool) $status,
+                'country' => $country,
+                'currency' => $currency,
+                'type' => $type
             ]
         ]);
     } else {
@@ -780,6 +862,7 @@ function updateBank($conn, $user_id, $data)
 
     $stmt->close();
 }
+
 function toggleBankStatus($conn, $user_id, $data)
 {
     global $requestId;
@@ -787,7 +870,7 @@ function toggleBankStatus($conn, $user_id, $data)
     $bank_id = $data['bank_id'] ?? 0;
     $is_active = isset($data['is_active']) ? (int) $data['is_active'] : null;
 
-    logActivity("[BANK_STATUS_START] [ID:{$requestId}] Toggling bank status - Bank ID: {$bank_id}, New Status: " . ($is_active !== null ? ($is_active ? 'active' : 'inactive') : 'null') . ", By User: {$user_id}");
+    logActivity("[BANK_STATUS_START] [ID:{$requestId}] Toggling bank status in banks_paystack - Bank ID: {$bank_id}, New Status: " . ($is_active !== null ? ($is_active ? 'active' : 'inactive') : 'null') . ", By User: {$user_id}");
 
     if (!$bank_id || $is_active === null) {
         $errorMsg = "Bank ID and status are required";
@@ -800,8 +883,8 @@ function toggleBankStatus($conn, $user_id, $data)
         return;
     }
 
-    // Optional: Get current bank details before update for logging
-    $checkStmt = $conn->prepare("SELECT bank_name, bank_code, is_active FROM banks WHERE id = ?");
+    // Get current bank details before update for logging
+    $checkStmt = $conn->prepare("SELECT bank_name, bank_code, is_active FROM banks_paystack WHERE id = ?");
     if ($checkStmt) {
         $checkStmt->bind_param("i", $bank_id);
         $checkStmt->execute();
@@ -810,14 +893,17 @@ function toggleBankStatus($conn, $user_id, $data)
             $bank = $checkResult->fetch_assoc();
             logActivity("[BANK_STATUS_CURRENT] [ID:{$requestId}] Current bank state - Name: {$bank['bank_name']}, Code: {$bank['bank_code']}, Current Status: " . ($bank['is_active'] ? 'active' : 'inactive'));
         } else {
-            logActivity("[BANK_STATUS_WARNING] [ID:{$requestId}] Bank ID {$bank_id} not found in database");
+            logActivity("[BANK_STATUS_WARNING] [ID:{$requestId}] Bank ID {$bank_id} not found in banks_paystack");
+            echo json_encode(['success' => false, 'message' => 'Bank not found']);
+            $checkStmt->close();
+            return;
         }
         $checkStmt->close();
     }
 
-    logActivity("[BANK_STATUS_QUERY] [ID:{$requestId}] Preparing update: UPDATE banks SET is_active = {$is_active}, updated_by = {$user_id} WHERE id = {$bank_id}");
+    logActivity("[BANK_STATUS_QUERY] [ID:{$requestId}] Preparing update: UPDATE banks_paystack SET is_active = {$is_active}, updated_by = {$user_id} WHERE id = {$bank_id}");
 
-    $stmt = $conn->prepare("UPDATE banks SET is_active = ?, updated_by = ? WHERE id = ?");
+    $stmt = $conn->prepare("UPDATE banks_paystack SET is_active = ?, updated_by = ? WHERE id = ?");
     if (!$stmt) {
         logActivity("[BANK_STATUS_ERROR] [ID:{$requestId}] Failed to prepare statement: " . $conn->error);
         echo json_encode(['success' => false, 'message' => 'Database error']);
@@ -841,7 +927,7 @@ function toggleBankStatus($conn, $user_id, $data)
         logActivity("[BANK_STATUS_SUCCESS] [ID:{$requestId}] Bank ID {$bank_id} {$status} successfully. Affected rows: {$affectedRows}");
 
         // Get updated bank details for confirmation
-        $confirmStmt = $conn->prepare("SELECT bank_name, bank_code, is_active FROM banks WHERE id = ?");
+        $confirmStmt = $conn->prepare("SELECT bank_name, bank_code, is_active FROM banks_paystack WHERE id = ?");
         if ($confirmStmt) {
             $confirmStmt->bind_param("i", $bank_id);
             $confirmStmt->execute();
@@ -870,7 +956,7 @@ function deleteBank($conn, $user_id, $bank_id)
 {
     global $requestId;
 
-    logActivity("[BANK_DELETE_START] [ID:{$requestId}] Attempting to delete/deactivate bank - Bank ID: {$bank_id}, By User: {$user_id}");
+    logActivity("[BANK_DELETE_START] [ID:{$requestId}] Attempting to delete/deactivate bank from banks_paystack - Bank ID: {$bank_id}, By User: {$user_id}");
 
     if (!$bank_id) {
         logActivity("[BANK_DELETE_ERROR] [ID:{$requestId}] Bank ID is required but not provided");
@@ -879,7 +965,7 @@ function deleteBank($conn, $user_id, $bank_id)
     }
 
     // First, get bank details for logging
-    $detailsStmt = $conn->prepare("SELECT bank_name, bank_code, is_active FROM banks WHERE id = ?");
+    $detailsStmt = $conn->prepare("SELECT bank_name, bank_code, is_active FROM banks_paystack WHERE id = ?");
     if (!$detailsStmt) {
         logActivity("[BANK_DELETE_WARNING] [ID:{$requestId}] Could not prepare details query: " . $conn->error);
     } else {
@@ -891,20 +977,21 @@ function deleteBank($conn, $user_id, $bank_id)
             $bank = $detailsResult->fetch_assoc();
             logActivity("[BANK_DELETE_DETAILS] [ID:{$requestId}] Bank to delete - Name: {$bank['bank_name']}, Code: {$bank['bank_code']}, Current Status: " . ($bank['is_active'] ? 'active' : 'inactive'));
         } else {
-            logActivity("[BANK_DELETE_WARNING] [ID:{$requestId}] Bank ID {$bank_id} not found in database");
+            logActivity("[BANK_DELETE_WARNING] [ID:{$requestId}] Bank ID {$bank_id} not found in banks_paystack");
+            echo json_encode(['success' => false, 'message' => 'Bank not found']);
+            $detailsStmt->close();
+            return;
         }
         $detailsStmt->close();
     }
 
-    // Check if bank is being used by drivers (optional dependency check)
-    logActivity("[BANK_DELETE_CHECK] [ID:{$requestId}] Checking if bank is referenced by other tables");
+    // Check if bank is being used by drivers
+    logActivity("[BANK_DELETE_CHECK] [ID:{$requestId}] Checking if bank is referenced by driver_banks table");
 
-    // Check driver_banks table for any drivers using this bank
     $usageStmt = $conn->prepare("
         SELECT COUNT(*) as usage_count 
-        FROM driver_banks db
-        JOIN banks b ON db.bank_code = b.bank_code
-        WHERE b.id = ?
+        FROM driver_banks 
+        WHERE bank_code = (SELECT bank_code FROM banks_paystack WHERE id = ?)
     ");
 
     if ($usageStmt) {
@@ -925,9 +1012,9 @@ function deleteBank($conn, $user_id, $bank_id)
     }
 
     // Soft delete by deactivating instead of hard delete
-    logActivity("[BANK_DELETE_QUERY] [ID:{$requestId}] Preparing soft delete: UPDATE banks SET is_active = 0, updated_by = {$user_id} WHERE id = {$bank_id}");
+    logActivity("[BANK_DELETE_QUERY] [ID:{$requestId}] Preparing soft delete: UPDATE banks_paystack SET is_active = 0, updated_by = {$user_id} WHERE id = {$bank_id}");
 
-    $stmt = $conn->prepare("UPDATE banks SET is_active = 0, updated_by = ? WHERE id = ?");
+    $stmt = $conn->prepare("UPDATE banks_paystack SET is_active = 0, updated_by = ? WHERE id = ?");
     if (!$stmt) {
         logActivity("[BANK_DELETE_ERROR] [ID:{$requestId}] Failed to prepare delete statement: " . $conn->error);
         echo json_encode(['success' => false, 'message' => 'Database error']);
@@ -951,7 +1038,7 @@ function deleteBank($conn, $user_id, $bank_id)
             logActivity("[BANK_DELETE_SUCCESS] [ID:{$requestId}] Bank ID {$bank_id} deactivated successfully. Affected rows: {$affectedRows}");
 
             // Verify the deactivation
-            $verifyStmt = $conn->prepare("SELECT is_active FROM banks WHERE id = ?");
+            $verifyStmt = $conn->prepare("SELECT is_active FROM banks_paystack WHERE id = ?");
             if ($verifyStmt) {
                 $verifyStmt->bind_param("i", $bank_id);
                 $verifyStmt->execute();

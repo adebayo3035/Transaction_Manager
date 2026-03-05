@@ -7,6 +7,7 @@ class BankManager {
         this.searchTerm = '';
         this.showInactive = false;
         this.sortBy = 'name_asc';
+        // Fix the API URL to point to the correct endpoint
         this.apiUrl = '../transaction_manager/backend/bankapi.php';
         
         this.init();
@@ -23,9 +24,10 @@ class BankManager {
         const loadingRow = document.getElementById('loadingRow');
         const emptyState = document.getElementById('emptyState');
         const tableBody = document.getElementById('banksTableBody');
+        const paginationContainer = document.getElementById('pagination');
         
-        loadingRow.style.display = '';
-        emptyState.style.display = 'none';
+        if (loadingRow) loadingRow.style.display = '';
+        if (emptyState) emptyState.style.display = 'none';
         
         try {
             const params = new URLSearchParams({
@@ -41,31 +43,38 @@ class BankManager {
             
             if (data.success) {
                 this.banks = data.banks;
-                this.driverBankCount = data.driver_bank_stats.distinct_banks_used;
+                this.pagination = data.pagination;
+                this.bank_stats = data.bank_stats;
+                // this.driverBankCount = data.driver_bank_stats?.distinct_banks_used || 0;
                 this.renderBanks(data.banks);
+                
+                // Always render pagination, even if total_pages is 1 (the method handles it)
                 this.renderPagination(data.pagination);
                 
                 if (data.banks.length === 0) {
-                    loadingRow.style.display = 'none';
-                    emptyState.style.display = 'block';
+                    if (loadingRow) loadingRow.style.display = 'none';
+                    if (emptyState) emptyState.style.display = 'block';
                 } else {
-                    loadingRow.style.display = 'none';
+                    if (loadingRow) loadingRow.style.display = 'none';
                 }
                 
                 this.updateStats();
             } else {
                 this.showToast('error', data.message || 'Failed to load banks');
+                if (loadingRow) loadingRow.style.display = 'none';
+                if (emptyState) emptyState.style.display = 'block';
             }
         } catch (error) {
             console.error('Error loading banks:', error);
             this.showToast('error', 'Failed to load banks');
-            loadingRow.style.display = 'none';
-            emptyState.style.display = 'block';
+            if (loadingRow) loadingRow.style.display = 'none';
+            if (emptyState) emptyState.style.display = 'block';
         }
     }
 
     renderBanks(banks) {
         const tableBody = document.getElementById('banksTableBody');
+        if (!tableBody) return;
         
         // Clear existing rows
         Array.from(tableBody.children).forEach(row => {
@@ -81,13 +90,17 @@ class BankManager {
             const statusClass = bank.is_active ? 'status-active' : 'status-inactive';
             const statusText = bank.is_active ? 'Active' : 'Inactive';
             
+            // Format additional fields
+            const supportsTransfer = bank.supports_transfer ? '✓' : '✗';
+            const payWithBank = bank.pay_with_bank ? '✓' : '✗';
+            
             row.innerHTML = `
                 <td>
                     <input type="checkbox" class="bank-checkbox" value="${bank.id}">
                 </td>
                 <td><span class="badge badge-code">${bank.bank_code}</span></td>
                 <td><strong>${this.escapeHtml(bank.bank_name)}</strong></td>
-                <td>${bank.sort_code || '-'}</td>
+                <td>${bank.longcode || '-'}</td>
                 <td><span class="status-badge ${statusClass}">${statusText}</span></td>
                 <td>${this.formatDate(bank.created_at)}</td>
                 <td>${this.formatDate(bank.updated_at)}</td>
@@ -115,9 +128,23 @@ class BankManager {
 
     renderPagination(pagination) {
         const container = document.getElementById('pagination');
-        
-        if (pagination.total_pages <= 1) {
-            container.innerHTML = '';
+        if (!container) {
+            console.error('Pagination container not found');
+            return;
+        }
+
+        // Always show pagination container
+        container.innerHTML = '';
+
+        // If no pagination data or total_pages <= 1, show simple message
+        if (!pagination || pagination.total_pages <= 1) {
+            if (pagination && pagination.total > 0) {
+                container.innerHTML = `
+                    <div class="page-info">
+                        Showing all ${pagination.total} banks
+                    </div>
+                `;
+            }
             return;
         }
 
@@ -127,6 +154,12 @@ class BankManager {
         if (this.currentPage > 1) {
             buttons += `
                 <button class="page-btn" data-page="${this.currentPage - 1}">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            `;
+        } else {
+            buttons += `
+                <button class="page-btn disabled" disabled>
                     <i class="fas fa-chevron-left"></i>
                 </button>
             `;
@@ -157,6 +190,12 @@ class BankManager {
                     <i class="fas fa-chevron-right"></i>
                 </button>
             `;
+        } else {
+            buttons += `
+                <button class="page-btn disabled" disabled>
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            `;
         }
 
         // Page info
@@ -168,11 +207,11 @@ class BankManager {
 
         container.innerHTML = buttons + pageInfo;
 
-        // Add event listeners
+        // Add event listeners to page buttons
         document.querySelectorAll('.page-btn[data-page]').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const page = parseInt(btn.dataset.page);
-                if (page !== this.currentPage) {
+            btn.addEventListener('click', (e) => {
+                const page = parseInt(e.target.dataset.page);
+                if (page && page !== this.currentPage) {
                     this.currentPage = page;
                     this.loadBanks();
                     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -197,122 +236,179 @@ class BankManager {
 
     updateSelectedCount() {
         const count = this.selectedBanks.size;
-        document.getElementById('selectedCount').textContent = `${count} selected`;
-        document.getElementById('bulkDeleteBtn').disabled = count === 0;
+        const selectedCountEl = document.getElementById('selectedCount');
+        const bulkDeleteBtn = document.getElementById('bulkDeleteBtn');
+        
+        if (selectedCountEl) {
+            selectedCountEl.textContent = `${count} selected`;
+        }
+        
+        if (bulkDeleteBtn) {
+            bulkDeleteBtn.disabled = count === 0;
+        }
         
         const selectAll = document.getElementById('selectAll');
         if (selectAll) {
-            selectAll.checked = count === document.querySelectorAll('.bank-checkbox').length;
+            const totalCheckboxes = document.querySelectorAll('.bank-checkbox').length;
+            selectAll.checked = count === totalCheckboxes && totalCheckboxes > 0;
         }
     }
 
     updateStats() {
-        const total = this.banks.length;
-        const active = this.banks.filter(b => b.is_active).length;
-        const inactive = total - active;
+        const total = this.bank_stats.total;
+        // const active = this.banks.filter(b => b.is_active).length;
+        const active = this.bank_stats.active
+        const inactive = this.bank_stats.inactive
+        const driverBankCount = this.bank_stats.used_by_drivers
         
-        document.getElementById('totalBanks').textContent = total;
-        document.getElementById('activeBanks').textContent = active;
-        document.getElementById('inactiveBanks').textContent = inactive;
-        document.getElementById('usedBanks').textContent = this.driverBankCount; // Implement if needed
+        const totalEl = document.getElementById('totalBanks');
+        const activeEl = document.getElementById('activeBanks');
+        const inactiveEl = document.getElementById('inactiveBanks');
+        const usedEl = document.getElementById('usedBanks');
+        
+        if (totalEl) totalEl.textContent = total;
+        if (activeEl) activeEl.textContent = active;
+        if (inactiveEl) inactiveEl.textContent = inactive;
+        if (usedEl) usedEl.textContent = driverBankCount || 0;
     }
 
     setupEventListeners() {
         // Search
         const searchInput = document.getElementById('searchInput');
-        let searchTimeout;
-        
-        searchInput.addEventListener('input', () => {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                this.searchTerm = searchInput.value.trim();
-                this.currentPage = 1;
-                this.loadBanks();
-            }, 500);
-        });
+        if (searchInput) {
+            let searchTimeout;
+            searchInput.addEventListener('input', () => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    this.searchTerm = searchInput.value.trim();
+                    this.currentPage = 1;
+                    this.loadBanks();
+                }, 500);
+            });
+        }
 
         // Show inactive checkbox
-        document.getElementById('showInactive').addEventListener('change', (e) => {
-            this.showInactive = e.target.checked;
-            this.currentPage = 1;
-            this.loadBanks();
-        });
+        const showInactiveCheckbox = document.getElementById('showInactive');
+        if (showInactiveCheckbox) {
+            showInactiveCheckbox.addEventListener('change', (e) => {
+                this.showInactive = e.target.checked;
+                this.currentPage = 1;
+                this.loadBanks();
+            });
+        }
 
         // Sort
-        document.getElementById('sortBy').addEventListener('change', (e) => {
-            this.sortBy = e.target.value;
-            this.sortBanks();
-        });
+        const sortBySelect = document.getElementById('sortBy');
+        if (sortBySelect) {
+            sortBySelect.addEventListener('change', (e) => {
+                this.sortBy = e.target.value;
+                this.sortBanks();
+            });
+        }
 
         // Select all
-        document.getElementById('selectAll').addEventListener('change', (e) => {
-            const isChecked = e.target.checked;
-            document.querySelectorAll('.bank-checkbox').forEach(checkbox => {
-                checkbox.checked = isChecked;
-                const bankId = checkbox.value;
-                if (isChecked) {
-                    this.selectedBanks.add(bankId);
-                } else {
-                    this.selectedBanks.delete(bankId);
-                }
+        const selectAllCheckbox = document.getElementById('selectAll');
+        if (selectAllCheckbox) {
+            selectAllCheckbox.addEventListener('change', (e) => {
+                const isChecked = e.target.checked;
+                document.querySelectorAll('.bank-checkbox').forEach(checkbox => {
+                    checkbox.checked = isChecked;
+                    const bankId = checkbox.value;
+                    if (isChecked) {
+                        this.selectedBanks.add(bankId);
+                    } else {
+                        this.selectedBanks.delete(bankId);
+                    }
+                });
+                this.updateSelectedCount();
             });
-            this.updateSelectedCount();
-        });
+        }
 
         // Refresh button
-        document.getElementById('refreshBtn').addEventListener('click', () => {
-            this.loadBanks();
-            this.showToast('success', 'Banks list refreshed');
-        });
+        const refreshBtn = document.getElementById('refreshBtn');
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', () => {
+                this.loadBanks();
+                this.showToast('success', 'Banks list refreshed');
+            });
+        }
 
         // Add bank button
-        document.getElementById('addBankBtn').addEventListener('click', () => {
-            this.openAddModal();
-        });
+        const addBankBtn = document.getElementById('addBankBtn');
+        if (addBankBtn) {
+            addBankBtn.addEventListener('click', () => {
+                this.openAddModal();
+            });
+        }
 
         // Bulk delete
-        document.getElementById('bulkDeleteBtn').addEventListener('click', () => {
-            this.openBulkDeleteModal();
-        });
+        const bulkDeleteBtn = document.getElementById('bulkDeleteBtn');
+        if (bulkDeleteBtn) {
+            bulkDeleteBtn.addEventListener('click', () => {
+                this.openBulkDeleteModal();
+            });
+        }
     }
 
     setupModals() {
         // Bank modal
         const bankModal = document.getElementById('bankModal');
-        const closeBankModal = bankModal.querySelector('.close-modal');
-        const cancelBankBtn = document.getElementById('cancelBankBtn');
-        const saveBankBtn = document.getElementById('saveBankBtn');
+        if (bankModal) {
+            const closeBankModal = bankModal.querySelector('.close-modal');
+            const cancelBankBtn = document.getElementById('cancelBankBtn');
+            const saveBankBtn = document.getElementById('saveBankBtn');
 
-        [closeBankModal, cancelBankBtn].forEach(btn => {
-            btn.addEventListener('click', () => this.hideModal('bankModal'));
-        });
+            if (closeBankModal) {
+                closeBankModal.addEventListener('click', () => this.hideModal('bankModal'));
+            }
+            
+            if (cancelBankBtn) {
+                cancelBankBtn.addEventListener('click', () => this.hideModal('bankModal'));
+            }
 
-        saveBankBtn.addEventListener('click', () => this.saveBank());
+            if (saveBankBtn) {
+                saveBankBtn.addEventListener('click', () => this.saveBank());
+            }
+        }
 
         // Delete modal
         const deleteModal = document.getElementById('deleteModal');
-        const closeDeleteModal = deleteModal.querySelector('.close-modal');
-        const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
-        const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+        if (deleteModal) {
+            const closeDeleteModal = deleteModal.querySelector('.close-modal');
+            const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+            const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
 
-        [closeDeleteModal, cancelDeleteBtn].forEach(btn => {
-            btn.addEventListener('click', () => this.hideModal('deleteModal'));
-        });
+            if (closeDeleteModal) {
+                closeDeleteModal.addEventListener('click', () => this.hideModal('deleteModal'));
+            }
+            
+            if (cancelDeleteBtn) {
+                cancelDeleteBtn.addEventListener('click', () => this.hideModal('deleteModal'));
+            }
 
-        confirmDeleteBtn.addEventListener('click', () => this.confirmDelete());
+            if (confirmDeleteBtn) {
+                confirmDeleteBtn.addEventListener('click', () => this.confirmDelete());
+            }
+        }
 
         // View modal
         const viewModal = document.getElementById('viewModal');
-        const closeViewModal = viewModal.querySelector('.close-modal');
-        closeViewModal.addEventListener('click', () => this.hideModal('viewModal'));
+        if (viewModal) {
+            const closeViewModal = viewModal.querySelector('.close-modal');
+            if (closeViewModal) {
+                closeViewModal.addEventListener('click', () => this.hideModal('viewModal'));
+            }
+        }
 
         // Close on outside click
         [bankModal, deleteModal, viewModal].forEach(modal => {
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    this.hideModal(modal.id);
-                }
-            });
+            if (modal) {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        this.hideModal(modal.id);
+                    }
+                });
+            }
         });
 
         this.bankModal = bankModal;
@@ -321,10 +417,26 @@ class BankManager {
     }
 
     openAddModal() {
-        document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus-circle"></i> Add New Bank';
-        document.getElementById('bankForm').reset();
-        document.getElementById('bankId').value = '';
-        document.getElementById('bankStatus').value = '1';
+        const modalTitle = document.getElementById('modalTitle');
+        if (modalTitle) {
+            modalTitle.innerHTML = '<i class="fas fa-plus-circle"></i> Add New Bank';
+        }
+        
+        const bankForm = document.getElementById('bankForm');
+        if (bankForm) {
+            bankForm.reset();
+        }
+        
+        const bankId = document.getElementById('bankId');
+        if (bankId) {
+            bankId.value = '';
+        }
+        
+        const bankStatus = document.getElementById('bankStatus');
+        if (bankStatus) {
+            bankStatus.value = '1';
+        }
+        
         this.showModal('bankModal');
     }
 
@@ -335,12 +447,36 @@ class BankManager {
             
             if (data.success) {
                 const bank = data.bank;
-                document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit"></i> Edit Bank';
-                document.getElementById('bankId').value = bank.id;
-                document.getElementById('bankCode').value = bank.bank_code;
-                document.getElementById('bankName').value = bank.bank_name;
-                document.getElementById('sortCode').value = bank.sort_code || '';
-                document.getElementById('bankStatus').value = bank.is_active ? '1' : '0';
+                const modalTitle = document.getElementById('modalTitle');
+                if (modalTitle) {
+                    modalTitle.innerHTML = '<i class="fas fa-edit"></i> Edit Bank';
+                }
+                
+                const bankIdField = document.getElementById('bankId');
+                if (bankIdField) {
+                    bankIdField.value = bank.id;
+                }
+                
+                const bankCodeField = document.getElementById('bankCode');
+                if (bankCodeField) {
+                    bankCodeField.value = bank.bank_code;
+                }
+                
+                const bankNameField = document.getElementById('bankName');
+                if (bankNameField) {
+                    bankNameField.value = bank.bank_name;
+                }
+                
+                const sortCodeField = document.getElementById('sortCode');
+                if (sortCodeField) {
+                    sortCodeField.value = bank.longcode || '';
+                }
+                
+                const bankStatusField = document.getElementById('bankStatus');
+                if (bankStatusField) {
+                    bankStatusField.value = bank.is_active ? '1' : '0';
+                }
+                
                 this.showModal('bankModal');
             } else {
                 this.showToast('error', 'Failed to load bank details');
@@ -358,17 +494,51 @@ class BankManager {
             
             if (data.success) {
                 const bank = data.bank;
-                document.getElementById('viewId').textContent = bank.id;
-                document.getElementById('viewCode').textContent = bank.bank_code;
-                document.getElementById('viewName').textContent = bank.bank_name;
-                document.getElementById('viewSortCode').textContent = bank.sort_code || '-';
+                
+                const viewId = document.getElementById('viewId');
+                if (viewId) viewId.textContent = bank.id;
+                
+                const viewCode = document.getElementById('viewCode');
+                if (viewCode) viewCode.textContent = bank.bank_code;
+                
+                const viewName = document.getElementById('viewName');
+                if (viewName) viewName.textContent = bank.bank_name;
+                
+                const viewLongcode = document.getElementById('viewLongcode');
+                if (viewLongcode) viewLongcode.textContent = bank.longcode || '-';
+                
+                const viewSlug = document.getElementById('viewSlug');
+                if (viewSlug) viewSlug.textContent = bank.slug || '-';
+                
+                const viewGateway = document.getElementById('viewGateway');
+                if (viewGateway) viewGateway.textContent = bank.gateway || '-';
+                
+                const viewCountry = document.getElementById('viewCountry');
+                if (viewCountry) viewCountry.textContent = bank.country || 'Nigeria';
+                
+                const viewCurrency = document.getElementById('viewCurrency');
+                if (viewCurrency) viewCurrency.textContent = bank.currency || 'NGN';
+                
+                const viewType = document.getElementById('viewType');
+                if (viewType) viewType.textContent = bank.type || 'nuban';
                 
                 const statusClass = bank.is_active ? 'status-active' : 'status-inactive';
                 const statusText = bank.is_active ? 'Active' : 'Inactive';
-                document.getElementById('viewStatus').innerHTML = `<span class="status-badge ${statusClass}">${statusText}</span>`;
                 
-                document.getElementById('viewCreated').textContent = this.formatDateTime(bank.created_at);
-                document.getElementById('viewUpdated').textContent = this.formatDateTime(bank.updated_at);
+                const viewStatus = document.getElementById('viewStatus');
+                if (viewStatus) {
+                    viewStatus.innerHTML = `<span class="status-badge ${statusClass}">${statusText}</span>`;
+                }
+                
+                const viewCreated = document.getElementById('viewCreated');
+                if (viewCreated) {
+                    viewCreated.textContent = this.formatDateTime(bank.created_at);
+                }
+                
+                const viewUpdated = document.getElementById('viewUpdated');
+                if (viewUpdated) {
+                    viewUpdated.textContent = this.formatDateTime(bank.updated_at);
+                }
                 
                 this.showModal('viewModal');
             } else {
@@ -381,27 +551,34 @@ class BankManager {
     }
 
     async saveBank() {
-        const bankId = document.getElementById('bankId').value;
-        const bankData = {
-            bank_code: document.getElementById('bankCode').value.trim().toUpperCase(),
-            bank_name: document.getElementById('bankName').value.trim(),
-            sort_code: document.getElementById('sortCode').value.trim(),
-            is_active: parseInt(document.getElementById('bankStatus').value)
-        };
+        const bankId = document.getElementById('bankId')?.value;
+        const bankCode = document.getElementById('bankCode')?.value.trim().toUpperCase();
+        const bankName = document.getElementById('bankName')?.value.trim();
+        const longcode = document.getElementById('sortCode')?.value.trim();
+        const isActive = parseInt(document.getElementById('bankStatus')?.value || '1');
 
         // Validate
-        if (!bankData.bank_code) {
+        if (!bankCode) {
             this.showToast('error', 'Bank code is required');
             return;
         }
-        if (!bankData.bank_name) {
+        if (!bankName) {
             this.showToast('error', 'Bank name is required');
             return;
         }
 
+        const bankData = {
+            bank_code: bankCode,
+            bank_name: bankName,
+            longcode: longcode || '',
+            is_active: isActive
+        };
+
         const saveBtn = document.getElementById('saveBankBtn');
-        saveBtn.disabled = true;
-        saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+        if (saveBtn) {
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+        }
 
         try {
             let response;
@@ -441,8 +618,10 @@ class BankManager {
             console.error('Error saving bank:', error);
             this.showToast('error', 'Failed to save bank');
         } finally {
-            saveBtn.disabled = false;
-            saveBtn.innerHTML = '<i class="fas fa-save"></i> Save Bank';
+            if (saveBtn) {
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = '<i class="fas fa-save"></i> Save Bank';
+            }
         }
     }
 
@@ -453,12 +632,19 @@ class BankManager {
         this.selectedBanks.clear();
         this.selectedBanks.add(bankId.toString());
         
-        document.getElementById('deleteMessage').textContent = `Are you sure you want to delete "${bank.bank_name}"?`;
-        document.getElementById('banksToDelete').innerHTML = `
-            <div class="bank-item">
-                <strong>${bank.bank_code}</strong> - ${bank.bank_name}
-            </div>
-        `;
+        const deleteMessage = document.getElementById('deleteMessage');
+        if (deleteMessage) {
+            deleteMessage.textContent = `Are you sure you want to delete "${bank.bank_name}"?`;
+        }
+        
+        const banksToDelete = document.getElementById('banksToDelete');
+        if (banksToDelete) {
+            banksToDelete.innerHTML = `
+                <div class="bank-item">
+                    <strong>${bank.bank_code}</strong> - ${bank.bank_name}
+                </div>
+            `;
+        }
         
         this.showModal('deleteModal');
     }
@@ -471,7 +657,10 @@ class BankManager {
 
         const selectedBanks = this.banks.filter(b => this.selectedBanks.has(b.id.toString()));
         
-        document.getElementById('deleteMessage').textContent = `Are you sure you want to delete ${selectedBanks.length} bank(s)?`;
+        const deleteMessage = document.getElementById('deleteMessage');
+        if (deleteMessage) {
+            deleteMessage.textContent = `Are you sure you want to delete ${selectedBanks.length} bank(s)?`;
+        }
         
         const banksList = selectedBanks.map(bank => `
             <div class="bank-item">
@@ -479,14 +668,20 @@ class BankManager {
             </div>
         `).join('');
         
-        document.getElementById('banksToDelete').innerHTML = banksList;
+        const banksToDelete = document.getElementById('banksToDelete');
+        if (banksToDelete) {
+            banksToDelete.innerHTML = banksList;
+        }
+        
         this.showModal('deleteModal');
     }
 
     async confirmDelete() {
         const deleteBtn = document.getElementById('confirmDeleteBtn');
-        deleteBtn.disabled = true;
-        deleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Deleting...';
+        if (deleteBtn) {
+            deleteBtn.disabled = true;
+            deleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Deleting...';
+        }
 
         let successCount = 0;
         let failCount = 0;
@@ -522,8 +717,10 @@ class BankManager {
             this.showToast('error', `Failed to delete ${failCount} bank(s)`);
         }
 
-        deleteBtn.disabled = false;
-        deleteBtn.innerHTML = '<i class="fas fa-trash"></i> Delete';
+        if (deleteBtn) {
+            deleteBtn.disabled = false;
+            deleteBtn.innerHTML = '<i class="fas fa-trash"></i> Delete';
+        }
     }
 
     sortBanks() {
@@ -559,13 +756,19 @@ class BankManager {
     }
 
     showModal(modalId) {
-        document.getElementById(modalId).classList.add('show');
-        document.body.style.overflow = 'hidden';
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
     }
 
     hideModal(modalId) {
-        document.getElementById(modalId).classList.remove('show');
-        document.body.style.overflow = '';
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.remove('show');
+            document.body.style.overflow = '';
+        }
     }
 
     closeViewModal() {
@@ -574,29 +777,43 @@ class BankManager {
 
     formatDate(dateString) {
         if (!dateString) return '-';
-        const date = new Date(dateString);
-        return date.toLocaleDateString();
+        try {
+            const date = new Date(dateString);
+            return date.toLocaleDateString();
+        } catch (e) {
+            return '-';
+        }
     }
 
     formatDateTime(dateString) {
         if (!dateString) return '-';
-        const date = new Date(dateString);
-        return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+        try {
+            const date = new Date(dateString);
+            return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+        } catch (e) {
+            return '-';
+        }
     }
 
     escapeHtml(text) {
+        if (!text) return '';
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
     }
 
     showToast(type, message) {
-        let toast = document.querySelector('.toast-notification');
-        if (!toast) {
-            toast = document.createElement('div');
-            toast.className = 'toast-notification';
-            document.body.appendChild(toast);
+        // Check if toast container exists, create if not
+        let toastContainer = document.getElementById('toastContainer');
+        if (!toastContainer) {
+            toastContainer = document.createElement('div');
+            toastContainer.id = 'toastContainer';
+            toastContainer.className = 'toast-container';
+            document.body.appendChild(toastContainer);
         }
+        
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
         
         const icons = {
             success: 'check-circle',
@@ -604,80 +821,125 @@ class BankManager {
             warning: 'exclamation-triangle'
         };
         
-        toast.className = `toast-notification toast-${type}`;
         toast.innerHTML = `
             <i class="fas fa-${icons[type] || 'info-circle'}"></i>
             <span>${message}</span>
         `;
         
-        toast.classList.add('show');
+        toastContainer.appendChild(toast);
         
+        // Trigger animation
+        setTimeout(() => toast.classList.add('show'), 10);
+        
+        // Remove after 3 seconds
         setTimeout(() => {
             toast.classList.remove('show');
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.remove();
+                }
+                // Remove container if empty
+                if (toastContainer.children.length === 0) {
+                    toastContainer.remove();
+                }
+            }, 300);
         }, 3000);
     }
 }
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    window.bankManager = new BankManager();
+    // Check if we're on the bank management page
+    if (document.getElementById('banksTableBody')) {
+        window.bankManager = new BankManager();
+    }
 });
 
-// Add toast styles
-const style = document.createElement('style');
-style.textContent = `
-    .toast-notification {
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        padding: 15px 25px;
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        transform: translateY(100px);
-        opacity: 0;
-        transition: all 0.3s;
-        z-index: 2000;
-    }
-    
-    .toast-notification.show {
-        transform: translateY(0);
-        opacity: 1;
-    }
-    
-    .toast-success {
-        border-left: 4px solid #28a745;
-    }
-    
-    .toast-success i {
-        color: #28a745;
-    }
-    
-    .toast-error {
-        border-left: 4px solid #dc3545;
-    }
-    
-    .toast-error i {
-        color: #dc3545;
-    }
-    
-    .toast-warning {
-        border-left: 4px solid #ffc107;
-    }
-    
-    .toast-warning i {
-        color: #ffc107;
-    }
-    
-    .badge-code {
-        background: #e9ecef;
-        padding: 3px 8px;
-        border-radius: 4px;
-        font-family: monospace;
-        font-size: 12px;
-    }
-`;
-document.head.appendChild(style);
+// Add toast styles if not already present
+if (!document.querySelector('#toast-styles')) {
+    const style = document.createElement('style');
+    style.id = 'toast-styles';
+    style.textContent = `
+        .toast-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 350px;
+            width: 100%;
+            pointer-events: none;
+        }
+        
+        .toast {
+            background: white;
+            border-radius: 8px;
+            padding: 15px 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transform: translateX(400px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.35);
+            pointer-events: auto;
+            border-left: 4px solid transparent;
+        }
+        
+        .toast.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        
+        .toast-success {
+            border-left-color: #28a745;
+        }
+        
+        .toast-success i {
+            color: #28a745;
+        }
+        
+        .toast-error {
+            border-left-color: #dc3545;
+        }
+        
+        .toast-error i {
+            color: #dc3545;
+        }
+        
+        .toast-warning {
+            border-left-color: #ffc107;
+        }
+        
+        .toast-warning i {
+            color: #ffc107;
+        }
+        
+        .toast i {
+            font-size: 20px;
+        }
+        
+        .toast span {
+            flex: 1;
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .page-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        
+        .badge-code {
+            background: #e9ecef;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+    `;
+    document.head.appendChild(style);
+}

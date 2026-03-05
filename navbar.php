@@ -35,6 +35,7 @@
             <div class="dropdown-content">
                 <a href='staff_profile.php'>Profile</a>
                 <a href="settings.php">Settings</a>
+                <a href="bank_upload.php">Upload Banks</a>
                 <a href="banks.php">Manage Banks</a>
                 <a href="admin_notification.php">Notifications (<span id="notification-badge">0</span>)</a>
                 <a href="javascript:void(0);" id="logoutButton">Logout</a>

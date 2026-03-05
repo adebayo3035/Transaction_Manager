@@ -18,6 +18,9 @@
                 <p>Manage bank codes and information for withdrawals</p>
             </div>
             <div class="header-actions">
+                <a href="bank_upload.php" class="btn btn-secondary" style="margin-right: 10px;">
+                    <i class="fas fa-upload"></i> Import Banks
+                </a>
                 <button class="btn btn-primary" id="addBankBtn">
                     <i class="fas fa-plus"></i> Add New Bank
                 </button>
@@ -110,7 +113,7 @@
                             </th>
                             <th>Bank Code</th>
                             <th>Bank Name</th>
-                            <th>Sort Code</th>
+                            <th>Longcode</th>
                             <th>Status</th>
                             <th>Created</th>
                             <th>Last Updated</th>
@@ -147,7 +150,7 @@
 
     <!-- Bank Modal (Add/Edit) -->
     <div id="bankModal" class="modal">
-        <div class="modal-content">
+        <div class="modal-content modal-lg">
             <div class="modal-header">
                 <h3 id="modalTitle"><i class="fas fa-plus-circle"></i> Add New Bank</h3>
                 <button class="close-modal">&times;</button>
@@ -164,7 +167,7 @@
                             <input type="text" 
                                    id="bankCode" 
                                    name="bank_code" 
-                                   maxlength="10" 
+                                   maxlength="20" 
                                    placeholder="e.g., 058"
                                    required>
                             <small class="field-hint">Unique bank identifier code</small>
@@ -184,14 +187,105 @@
                     
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="sortCode">
-                                <i class="fas fa-sort-numeric-up"></i> Sort Code
+                            <label for="longcode">
+                                <i class="fas fa-sort-numeric-up"></i> Longcode
                             </label>
                             <input type="text" 
-                                   id="sortCode" 
-                                   name="sort_code" 
-                                   maxlength="20" 
+                                   id="longcode" 
+                                   name="longcode" 
+                                   maxlength="50" 
                                    placeholder="e.g., 058">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="slug">
+                                <i class="fas fa-link"></i> Slug
+                            </label>
+                            <input type="text" 
+                                   id="slug" 
+                                   name="slug" 
+                                   placeholder="e.g., gtbank-nigeria">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="gateway">
+                                <i class="fas fa-network-wired"></i> Gateway
+                            </label>
+                            <input type="text" 
+                                   id="gateway" 
+                                   name="gateway" 
+                                   placeholder="e.g., paystack">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="bankType">
+                                <i class="fas fa-tag"></i> Type
+                            </label>
+                            <input type="text" 
+                                   id="bankType" 
+                                   name="type" 
+                                   placeholder="e.g., nuban"
+                                   value="nuban">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="country">
+                                <i class="fas fa-globe"></i> Country
+                            </label>
+                            <input type="text" 
+                                   id="country" 
+                                   name="country" 
+                                   value="Nigeria"
+                                   placeholder="Country">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="currency">
+                                <i class="fas fa-money-bill-wave"></i> Currency
+                            </label>
+                            <input type="text" 
+                                   id="currency" 
+                                   name="currency" 
+                                   value="NGN"
+                                   placeholder="Currency">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="payWithBank">
+                                <i class="fas fa-credit-card"></i> Pay with Bank
+                            </label>
+                            <select id="payWithBank" name="pay_with_bank">
+                                <option value="1">Yes</option>
+                                <option value="0" selected>No</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="supportsTransfer">
+                                <i class="fas fa-exchange-alt"></i> Supports Transfer
+                            </label>
+                            <select id="supportsTransfer" name="supports_transfer">
+                                <option value="1" selected>Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="availableForDirectDebit">
+                                <i class="fas fa-bolt"></i> Available for Direct Debit
+                            </label>
+                            <select id="availableForDirectDebit" name="available_for_direct_debit">
+                                <option value="1">Yes</option>
+                                <option value="0" selected>No</option>
+                            </select>
                         </div>
                         
                         <div class="form-group">
@@ -241,40 +335,87 @@
 
     <!-- View Bank Details Modal -->
     <div id="viewModal" class="modal">
-        <div class="modal-content">
+        <div class="modal-content modal-lg">
             <div class="modal-header">
                 <h3><i class="fas fa-info-circle"></i> Bank Details</h3>
                 <button class="close-modal">&times;</button>
             </div>
             <div class="modal-body">
-                <div class="details-card">
-                    <div class="detail-row">
-                        <span class="detail-label">Bank ID:</span>
-                        <span class="detail-value" id="viewId"></span>
+                <div class="details-grid">
+                    <div class="details-section">
+                        <h4>Basic Information</h4>
+                        <div class="detail-row">
+                            <span class="detail-label">ID:</span>
+                            <span class="detail-value" id="viewId"></span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Bank Code:</span>
+                            <span class="detail-value" id="viewCode"></span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Bank Name:</span>
+                            <span class="detail-value" id="viewName"></span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Longcode:</span>
+                            <span class="detail-value" id="viewLongcode"></span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Slug:</span>
+                            <span class="detail-value" id="viewSlug"></span>
+                        </div>
                     </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Bank Code:</span>
-                        <span class="detail-value" id="viewCode"></span>
+                    
+                    <div class="details-section">
+                        <h4>Configuration</h4>
+                        <div class="detail-row">
+                            <span class="detail-label">Gateway:</span>
+                            <span class="detail-value" id="viewGateway"></span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Type:</span>
+                            <span class="detail-value" id="viewType"></span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Country:</span>
+                            <span class="detail-value" id="viewCountry"></span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Currency:</span>
+                            <span class="detail-value" id="viewCurrency"></span>
+                        </div>
                     </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Bank Name:</span>
-                        <span class="detail-value" id="viewName"></span>
+                    
+                    <div class="details-section">
+                        <h4>Features</h4>
+                        <div class="detail-row">
+                            <span class="detail-label">Pay with Bank:</span>
+                            <span class="detail-value" id="viewPayWithBank"></span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Supports Transfer:</span>
+                            <span class="detail-value" id="viewSupportsTransfer"></span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Direct Debit:</span>
+                            <span class="detail-value" id="viewDirectDebit"></span>
+                        </div>
                     </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Sort Code:</span>
-                        <span class="detail-value" id="viewSortCode"></span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Status:</span>
-                        <span class="detail-value" id="viewStatus"></span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Created:</span>
-                        <span class="detail-value" id="viewCreated"></span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Last Updated:</span>
-                        <span class="detail-value" id="viewUpdated"></span>
+                    
+                    <div class="details-section">
+                        <h4>Status & Timeline</h4>
+                        <div class="detail-row">
+                            <span class="detail-label">Status:</span>
+                            <span class="detail-value" id="viewStatus"></span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Created:</span>
+                            <span class="detail-value" id="viewCreated"></span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Last Updated:</span>
+                            <span class="detail-value" id="viewUpdated"></span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -284,5 +425,51 @@
         </div>
     </div>
 
+    <!-- Import Banks Modal (Optional) -->
+    <div id="importModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-upload"></i> Import Banks</h3>
+                <button class="close-modal" onclick="closeImportModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Upload a JSON file containing bank data from Paystack.</p>
+                <form id="importForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="importFile">Select JSON File:</label>
+                        <input type="file" id="importFile" accept=".json" required>
+                    </div>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="truncateExisting" checked>
+                            <span>Truncate existing data before import</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="updateExisting" checked>
+                            <span>Update existing records</span>
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeImportModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="startImport()">
+                    <i class="fas fa-upload"></i> Import
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script src="scripts/bank.js"></script>
+    <script>
+        // Import modal functions (if needed)
+        function closeImportModal() {
+            document.getElementById('importModal').classList.remove('show');
+        }
+        
+        function startImport() {
+            window.location.href = 'bank_upload.html';
+        }
+    </script>
 </body>
+</html>
